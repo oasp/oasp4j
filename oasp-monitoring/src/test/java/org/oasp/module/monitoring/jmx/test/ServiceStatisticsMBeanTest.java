@@ -1,4 +1,4 @@
-package com.capgemini.jsp.common.jmx.test;
+package org.oasp.module.monitoring.jmx.test;
 
 import org.junit.Assert;
 import org.junit.Test;
