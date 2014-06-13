@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<settings>
+	<!-- The "localRepository" has to be set to ensure consistent behaviour across command-line and Eclipse.
+       To change it edit variables[-customized].bat -->
+  <localRepository>${M2_REPO}</localRepository>
+  
+  <profiles>
+    <profile>
+      <id>apache</id>
+      <repositories>
+        <repository>
+          <id>apache.org</id>
+          <name>Maven Snapshots</name>
+          <url>http://people.apache.org/repo/m2-snapshot-repository</url>
+          <releases>
+            <enabled>false</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>apache.org</id>
+          <name>Maven Plugin Snapshots</name>
+          <url>http://people.apache.org/repo/m2-snapshot-repository</url>
+          <releases>
+            <enabled>false</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+
+    <profile>
+      <id>codehaus</id>
+      <repositories>
+        <repository>
+          <id>codehaus.org</id>
+          <name>CodeHaus Snapshots</name>
+          <url>http://snapshots.repository.codehaus.org</url>
+          <releases>
+            <enabled>false</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>codehaus.org</id>
+          <name>CodeHaus Plugin Snapshots</name>
+          <url>http://snapshots.repository.codehaus.org</url>
+          <releases>
+            <enabled>false</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>    
+  </profiles>
+  <activeProfiles>
+  </activeProfiles>
+</settings>

@@ -1,0 +1,6 @@
+In Eclipse ist ein Spell-Checker eingebaut:
+Preferences > Editors > Text Editors > Spelling
+Dort aktivieren und ein ASCII Dictionary einbinden.
+Korrekturvorschläge mit [Ctrl.][1]
+Für weitere Details siehe hier:
+http://sww.sdm.de/app/snuggets/bin/view/Technik/Eclipse#Rechtschreibpr%FCfung
