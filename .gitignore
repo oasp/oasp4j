@@ -2,6 +2,7 @@
 *.classpath
 *.project
 *.iml
+.idea/
 target/
 
 # Mobile Tools for Java (J2ME)
