@@ -1,0 +1,5 @@
+#Fri Feb 03 19:17:14 CET 2012
+org.eclipse.jdt.debug.ui.javaDebug.SuspendOnUncaughtExceptions=false
+org.eclipse.debug.ui.VariableView.org.eclipse.jdt.debug.ui.show_null_entries=true
+eclipse.preferences.version=1
+org.eclipse.jdt.debug.ui.prompt_unable_to_install_breakpoint=false

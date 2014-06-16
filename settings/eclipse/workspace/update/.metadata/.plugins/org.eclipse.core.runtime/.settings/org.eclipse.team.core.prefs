@@ -1,0 +1,2 @@
+file_types=bat\n1\ncat\n1\ncheckstyle\n1\ncmd\n1\nexp\n1\ngenignore\n1\nini\n1\njelly\n1\njsp\n1\nmdl\n1\npackage\n1\npl\n1\npm\n1\npool\n1\nprefs\n1\npsf\n1\nrc\n1\nsh\n1\nsql\n1\ntest-restriction\n1\ntype\n1\nvm\n1\nxsd\n1\nxslt\n1\n
+ignore_files=*$\nfalse\n*.swp\ntrue\ntarget\ntrue\n
