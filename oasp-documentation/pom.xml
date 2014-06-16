@@ -24,7 +24,7 @@
           <!--<backend>pdf</backend>-->
           <backend>docbook5</backend>
           <sourceDirectory>${basedir}/../../oasp4j.wiki/</sourceDirectory>
-          <sourceDocumentName>OASP-Java.asciidoc</sourceDocumentName>
+          <sourceDocumentName>OASP4J.asciidoc</sourceDocumentName>
           <doctype>book</doctype>
         </configuration>
         <executions>
@@ -43,7 +43,7 @@
         <version>2.0.15</version>
         <configuration>
           <sourceDirectory>${basedir}/target/generated-docs</sourceDirectory>
-          <includes>OASP-Java.xml</includes>
+          <includes>OASP4J.xml</includes>
           <xincludeSupported>true</xincludeSupported>
           <chunkedOutput>false</chunkedOutput>
           <foCustomization>${basedir}/src/main/docbook/xsl/pdf.xsl</foCustomization>
