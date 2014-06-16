@@ -7,7 +7,7 @@
   <version>1.0.0</version>
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
-  <description>Modules of the Open Application Standard Platform (OASP) for Java.</description>
+  <description>Modules of the Open Application Standard Platform for Java (OASP4J).</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -23,7 +23,7 @@
         <configuration>
           <!--<backend>pdf</backend>-->
           <backend>docbook5</backend>
-          <sourceDirectory>${basedir}/../../oasp-java.wiki/</sourceDirectory>
+          <sourceDirectory>${basedir}/../../oasp4j.wiki/</sourceDirectory>
           <sourceDocumentName>OASP-Java.asciidoc</sourceDocumentName>
           <doctype>book</doctype>
         </configuration>

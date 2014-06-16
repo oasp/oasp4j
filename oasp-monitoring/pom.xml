@@ -10,6 +10,7 @@
   <artifactId>oasp-monitoring</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <name>${project.artifactId}</name>
+  <description>Monitoring Module of the Open Application Standard Platform for Java (OASP4J).</description>
 
   <dependencies>
     <!-- Benoetigt u.a. fuer JMX -->
