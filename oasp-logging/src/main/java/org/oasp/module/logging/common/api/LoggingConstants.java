@@ -1,4 +1,4 @@
-package org.oasp.module.logging;
+package org.oasp.module.logging.common.api;
 
 /**
  * Central constants for logging.

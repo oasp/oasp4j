@@ -2,7 +2,7 @@ package org.oasp.module.monitoring.jmx.test;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.oasp.module.monitoring.jmx.ServiceStatisticsMBean;
+import org.oasp.module.monitoring.service.impl.jmx.ServiceStatisticsMBean;
 
 /**
  * Test case for {@link ServiceStatisticsMBean}.

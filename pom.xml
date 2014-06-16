@@ -19,6 +19,7 @@
   <modules>
     <module>oasp-logging</module>
     <module>oasp-monitoring</module>
+    <module>oasp-configuration</module>
   </modules>
 
   <properties>

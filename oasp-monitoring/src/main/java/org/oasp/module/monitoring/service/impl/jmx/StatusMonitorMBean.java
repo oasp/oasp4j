@@ -1,4 +1,4 @@
-package org.oasp.module.monitoring.jmx;
+package org.oasp.module.monitoring.service.impl.jmx;
 
 import java.util.Calendar;
 import java.util.Date;

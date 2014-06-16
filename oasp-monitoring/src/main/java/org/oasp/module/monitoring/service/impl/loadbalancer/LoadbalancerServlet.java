@@ -1,4 +1,4 @@
-package org.oasp.module.monitoring.service.loadbalancer;
+package org.oasp.module.monitoring.service.impl.loadbalancer;
 
 import java.io.File;
 import java.io.IOException;
