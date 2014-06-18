@@ -17,9 +17,9 @@
   <inceptionYear>2014</inceptionYear>
 
   <modules>
-    <module>oasp-logging</module>
-    <module>oasp-monitoring</module>
-    <module>oasp-configuration</module>
+    <module>oasp4j-logging</module>
+    <module>oasp4j-monitoring</module>
+    <module>oasp4j-configuration</module>
   </modules>
 
   <properties>
