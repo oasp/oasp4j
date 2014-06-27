@@ -51,15 +51,6 @@
       <version>2.3</version>
     </dependency>
 
-
-    <!-- slf4j-api -->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>${slf4j.version}</version>
-    </dependency>
-
-
   </dependencies>
 
 </project>

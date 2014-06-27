@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<security xmlns="http://oasp.org/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://oasp.org/security ../schema/roles.xsd">
+
+  <roles>
+    <role name="Waiter">
+      <permission name="GET_TABLE"/>
+    </role>
+    <role name="Barkeeper">
+
+    </role>
+    <role name="Cook">
+
+    </role>
+    <role name="Chief">
+      <include ref="Waiter"/>
+      <include ref="Barkeeper"/>
+      <include ref="Cook"/>
+      <permission name="ADD_TABLE"/>
+      <permission name="REMOVE_TABLE"/>
+    </role>
+  </roles>
+
+</security>

@@ -5,6 +5,7 @@
 .*
 target/
 eclipse-target/
+**/src/generated/
 
 # Package Files #
 *.jar

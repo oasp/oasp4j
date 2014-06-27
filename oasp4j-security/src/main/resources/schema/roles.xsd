@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://oasp.org/security" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+  targetNamespace="http://oasp.org/security" elementFormDefault="qualified">
+
+  <xs:element name="security">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="tns:roles"/>
+      </xs:sequence>
+    </xs:complexType>
+
+    <xs:key name="roleId">
+      <xs:selector xpath="./roles/role"/>
+      <xs:field xpath="@name"/>
+    </xs:key>
+    <xs:keyref name="roleIdRef" refer="tns:roleId">
+      <xs:selector xpath="./roles/role/include"/>
+      <xs:field xpath="@ref"/>
+    </xs:keyref>
+
+  </xs:element>
+
+  <xs:element name="roles">
+    <xs:complexType>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="tns:role"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="role">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="tns:include" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="tns:permission" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="name" type="xs:NCName" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="include">
+    <xs:complexType>
+      <xs:attribute name="ref" type="xs:NCName" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="permission">
+    <xs:complexType>
+      <xs:attribute name="name" type="xs:NCName" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
