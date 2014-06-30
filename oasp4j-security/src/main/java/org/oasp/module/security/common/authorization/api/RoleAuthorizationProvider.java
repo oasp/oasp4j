@@ -2,9 +2,11 @@ package org.oasp.module.security.common.authorization.api;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,6 +22,7 @@ import org.oasp.security.Role;
 import org.oasp.security.Security;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.core.io.Resource;
 
 /**
@@ -34,6 +37,11 @@ public class RoleAuthorizationProvider {
    * Logger instance
    */
   private static final Logger LOG = LoggerFactory.getLogger(RoleAuthorizationProvider.class);
+
+  /**
+   * Role provider to check a user's roles
+   */
+  private RolesProvider rolesProvider;
 
   /**
    * Mapping from permission id to list of roles, having this permission
@@ -60,6 +68,52 @@ public class RoleAuthorizationProvider {
       LOG.error("Could not parse file. Configuration does not match the schema definition.");
       throw new InvalidConfigurationException(
           "Could not parse file. Configuration does not match the schema definition.", e);
+    }
+  }
+
+  /**
+   * Validates whether the given user roles are sufficient to match the given target permission.
+   * 
+   * @param userToken user token
+   * @param targetPermission permission to be granted
+   * @throws PermissionDeniedException if none of the user's roles contains the target permission
+   */
+  public void authorize(Object userToken, String targetPermission) throws PermissionDeniedException {
+
+    authorize(userToken, Arrays.asList(targetPermission));
+  }
+
+  /**
+   * Validates whether the given user roles are sufficient to match the given target permission.
+   * 
+   * @param userToken user token
+   * @param targetPermissions permissions to be granted
+   * @throws PermissionDeniedException if none of the user's roles contains the target permission
+   */
+  public void authorize(Object userToken, List<String> targetPermissions) throws PermissionDeniedException {
+
+    if (targetPermissions.isEmpty())
+      return;
+
+    Set<String> possibleRoles = new HashSet<>();
+    for (String targetPermission : targetPermissions) {
+      if (this.flattenPermissions.get(targetPermission) != null) {
+        possibleRoles.addAll(this.flattenPermissions.get(targetPermission));
+      } else {
+        LOG.error(
+            "Permission denied due to requested permission is not declared in the security configuration! Permission "
+                + "'{}' not declared in accessControlSchema.", targetPermission);
+        throw new IllegalArgumentException(
+            "Permission denied due to requested permission is not declared in the security configuration! Permission "
+                + "'" + targetPermission + "' not declared in accessControlSchema.");
+      }
+    }
+
+    if (!this.rolesProvider.hasOneOf(userToken, new LinkedList<>(possibleRoles))) {
+      // TODO (mbrunnli) message handling
+      LOG.error("Permission denied: the given user roles do not include the target permission.");
+      throw new PermissionDeniedException(
+          "Permission denied: the given user roles do not include the target permission.");
     }
   }
 
@@ -136,28 +190,13 @@ public class RoleAuthorizationProvider {
   }
 
   /**
-   * Validates whether the given user roles are sufficient to match the given target permission.
+   * Sets the field 'rolesProvider'
    * 
-   * @param userRoles roles of the user
-   * @param targetPermission permission to be granted
-   * @throws PermissionDeniedException if none of the user's roles contains the target permission
+   * @param rolesProvider new value for rolesProvider
    */
-  public void authorize(Set<String> userRoles, String targetPermission) throws PermissionDeniedException {
+  @Required
+  public void setRolesProvider(RolesProvider rolesProvider) {
 
-    Set<String> possibleRoles = this.flattenPermissions.get(targetPermission);
-    if (possibleRoles == null) {
-      // TODO (mbrunnli) message handling
-      LOG.error("Permission denied due to requested permission is not declared in the security configuration!");
-      throw new IllegalArgumentException(
-          "Permission denied due to requested permission is not declared in the security configuration!");
-    }
-    HashSet<String> _userRoles = new HashSet<>(userRoles);
-    _userRoles.retainAll(possibleRoles);
-    if (_userRoles.isEmpty()) {
-      // TODO (mbrunnli) message handling
-      LOG.error("Permission denied: the given user roles do not include the target permission.");
-      throw new PermissionDeniedException(
-          "Permission denied: the given user roles do not include the target permission.");
-    }
+    this.rolesProvider = rolesProvider;
   }
 }

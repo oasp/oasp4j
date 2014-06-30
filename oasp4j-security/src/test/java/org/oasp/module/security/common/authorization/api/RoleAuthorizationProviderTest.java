@@ -1,9 +1,14 @@
 package org.oasp.module.security.common.authorization.api;
 
+import static org.mockito.Mockito.when;
+
 import java.io.IOException;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.oasp.module.security.common.exception.InvalidConfigurationException;
 import org.oasp.module.security.common.exception.PermissionDeniedException;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +16,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 
 /**
  * Tests the {@link RoleAuthorizationProvider} implementation
@@ -28,6 +33,18 @@ public class RoleAuthorizationProviderTest {
 
   @Value("classpath:/config/accessControlSchema_acyclic.xml")
   private Resource accessControlSchema_acyclic;
+
+  @Mock
+  private RolesProvider rolesProvider;
+
+  /**
+   * Initialize Mocks
+   */
+  @Before
+  public void setUp() {
+
+    MockitoAnnotations.initMocks(this);
+  }
 
   /**
    * Tests, whether the {@link RoleAuthorizationProvider} detects include loops over 3 edges
@@ -54,8 +71,10 @@ public class RoleAuthorizationProviderTest {
 
     RoleAuthorizationProvider roleAuthorizationProvider = new RoleAuthorizationProvider(
         this.accessControlSchema_acyclic);
+    roleAuthorizationProvider.setRolesProvider(this.rolesProvider);
+    when(this.rolesProvider.hasOneOf("Waiter", Lists.newArrayList("Waiter", "Chief"))).thenReturn(true);
 
-    roleAuthorizationProvider.authorize(Sets.newHashSet("Waiter"), "GET_TABLE");
+    roleAuthorizationProvider.authorize("Waiter", "GET_TABLE");
   }
 
   /**
@@ -71,8 +90,10 @@ public class RoleAuthorizationProviderTest {
 
     RoleAuthorizationProvider roleAuthorizationProvider = new RoleAuthorizationProvider(
         this.accessControlSchema_acyclic);
+    roleAuthorizationProvider.setRolesProvider(this.rolesProvider);
+    when(this.rolesProvider.hasOneOf("Waiter", Lists.newArrayList("Waiter", "Chief"))).thenReturn(false);
 
-    roleAuthorizationProvider.authorize(Sets.newHashSet("Waiter"), "REMOVE_TABLE");
+    roleAuthorizationProvider.authorize("Waiter", "REMOVE_TABLE");
   }
 
   /**
@@ -88,7 +109,9 @@ public class RoleAuthorizationProviderTest {
 
     RoleAuthorizationProvider roleAuthorizationProvider = new RoleAuthorizationProvider(
         this.accessControlSchema_acyclic);
+    roleAuthorizationProvider.setRolesProvider(this.rolesProvider);
+    when(this.rolesProvider.hasOneOf("Chief", Lists.newArrayList("Waiter", "Chief"))).thenReturn(true);
 
-    roleAuthorizationProvider.authorize(Sets.newHashSet("Chief"), "GET_TABLE");
+    roleAuthorizationProvider.authorize("Chief", "GET_TABLE");
   }
 }
