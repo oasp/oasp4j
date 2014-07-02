@@ -10,19 +10,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.inject.Inject;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.oasp.module.security.common.exception.InvalidConfigurationException;
-import org.oasp.module.security.common.exception.PermissionDeniedException;
 import org.oasp.security.Include;
 import org.oasp.security.Permission;
 import org.oasp.security.Role;
 import org.oasp.security.Security;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.core.io.Resource;
 
 /**
@@ -55,7 +54,7 @@ public class RoleAuthorizationProvider {
    * @throws IOException if the configuration file could not be read.
    * @throws InvalidConfigurationException if the configuration file does not match the security schema definition
    */
-  public RoleAuthorizationProvider(Resource accessControlSchema) throws IOException, InvalidConfigurationException {
+  public RoleAuthorizationProvider(Resource accessControlSchema) throws IOException {
 
     InputStream in = accessControlSchema.getInputStream();
     try {
@@ -76,9 +75,9 @@ public class RoleAuthorizationProvider {
    * 
    * @param userToken user token
    * @param targetPermission permission to be granted
-   * @throws PermissionDeniedException if none of the user's roles contains the target permission
+   * @throws SecurityException if none of the user's roles contains the target permission
    */
-  public void authorize(Object userToken, String targetPermission) throws PermissionDeniedException {
+  public void authorize(Object userToken, String targetPermission) throws SecurityException {
 
     authorize(userToken, Arrays.asList(targetPermission));
   }
@@ -88,9 +87,9 @@ public class RoleAuthorizationProvider {
    * 
    * @param userToken user token
    * @param targetPermissions permissions to be granted
-   * @throws PermissionDeniedException if none of the user's roles contains the target permission
+   * @throws SecurityException if none of the user's roles contains the target permission
    */
-  public void authorize(Object userToken, List<String> targetPermissions) throws PermissionDeniedException {
+  public void authorize(Object userToken, List<String> targetPermissions) throws SecurityException {
 
     if (targetPermissions.isEmpty())
       return;
@@ -112,8 +111,7 @@ public class RoleAuthorizationProvider {
     if (!this.rolesProvider.hasOneOf(userToken, new LinkedList<>(possibleRoles))) {
       // TODO (mbrunnli) message handling
       LOG.error("Permission denied: the given user roles do not include the target permission.");
-      throw new PermissionDeniedException(
-          "Permission denied: the given user roles do not include the target permission.");
+      throw new SecurityException("Permission denied: the given user roles do not include the target permission.");
     }
   }
 
@@ -194,7 +192,7 @@ public class RoleAuthorizationProvider {
    * 
    * @param rolesProvider new value for rolesProvider
    */
-  @Required
+  @Inject
   public void setRolesProvider(RolesProvider rolesProvider) {
 
     this.rolesProvider = rolesProvider;

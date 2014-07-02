@@ -10,7 +10,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.oasp.module.security.common.exception.InvalidConfigurationException;
-import org.oasp.module.security.common.exception.PermissionDeniedException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.ContextConfiguration;
@@ -62,12 +61,10 @@ public class RoleAuthorizationProviderTest {
    * Tests a simple (direct related) valid permission
    * 
    * @throws IOException test fails
-   * @throws InvalidConfigurationException test fails
-   * @throws PermissionDeniedException test fails
+   * @throws SecurityException test fails
    */
   @Test
-  public void testAuthorization_simpleValid() throws IOException, InvalidConfigurationException,
-      PermissionDeniedException {
+  public void testAuthorization_simpleValid() throws IOException, SecurityException {
 
     RoleAuthorizationProvider roleAuthorizationProvider = new RoleAuthorizationProvider(
         this.accessControlSchema_acyclic);
@@ -81,12 +78,10 @@ public class RoleAuthorizationProviderTest {
    * Tests a simple (direct related) invalid permission
    * 
    * @throws IOException test fails
-   * @throws InvalidConfigurationException test fails
-   * @throws PermissionDeniedException expected
+   * @throws SecurityException expected
    */
-  @Test(expected = PermissionDeniedException.class)
-  public void testAuthorization_simpleInvalid() throws IOException, InvalidConfigurationException,
-      PermissionDeniedException {
+  @Test(expected = SecurityException.class)
+  public void testAuthorization_simpleInvalid() throws IOException, SecurityException {
 
     RoleAuthorizationProvider roleAuthorizationProvider = new RoleAuthorizationProvider(
         this.accessControlSchema_acyclic);
@@ -100,12 +95,10 @@ public class RoleAuthorizationProviderTest {
    * Tests a transitive declared valid permission
    * 
    * @throws IOException test fails
-   * @throws InvalidConfigurationException test fails
-   * @throws PermissionDeniedException test fails
+   * @throws SecurityException test fails
    */
   @Test
-  public void testAuthorization_transitiveValid() throws IOException, InvalidConfigurationException,
-      PermissionDeniedException {
+  public void testAuthorization_transitiveValid() throws IOException, SecurityException {
 
     RoleAuthorizationProvider roleAuthorizationProvider = new RoleAuthorizationProvider(
         this.accessControlSchema_acyclic);
