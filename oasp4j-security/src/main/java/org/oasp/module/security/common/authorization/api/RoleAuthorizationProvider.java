@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 
 /**
- * The {@link RoleAuthorizationProvider} provides a simple authorization managment of roles and permissions.
+ * The {@link RoleAuthorizationProvider} provides a simple authorization management of roles and permissions.
  * 
  * @author mbrunnli
  * @version $Id:$
