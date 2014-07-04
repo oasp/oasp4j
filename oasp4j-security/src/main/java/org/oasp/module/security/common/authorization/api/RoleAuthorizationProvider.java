@@ -25,7 +25,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 
 /**
- * The {@link RoleAuthorizationProvider} provides a simple authorization management of roles and permissions.
+ * The {@link RoleAuthorizationProvider} provides a simple authorization
+ * management of roles and permissions.
  * 
  * @author mbrunnli
  * @version $Id:$
@@ -48,11 +49,13 @@ public class RoleAuthorizationProvider {
   private Map<String, Set<String>> flattenPermissions = new HashMap<>();
 
   /**
-   * Creates a new {@link RoleAuthorizationProvider} with the given {@link Resource} as configuration.
+   * Creates a new {@link RoleAuthorizationProvider} with the given
+   * {@link Resource} as configuration.
    * 
    * @param accessControlSchema configuration file
    * @throws IOException if the configuration file could not be read.
-   * @throws InvalidConfigurationException if the configuration file does not match the security schema definition
+   * @throws InvalidConfigurationException if the configuration file does not
+   *         match the security schema definition
    */
   public RoleAuthorizationProvider(Resource accessControlSchema) throws IOException {
 
@@ -71,11 +74,13 @@ public class RoleAuthorizationProvider {
   }
 
   /**
-   * Validates whether the given user roles are sufficient to match the given target permission.
+   * Validates whether the user's roles are sufficient to match the given target
+   * permission.
    * 
    * @param userToken user token
    * @param targetPermission permission to be granted
-   * @throws SecurityException if none of the user's roles contains the target permission
+   * @throws SecurityException if none of the user's roles contains the target
+   *         permission
    */
   public void authorize(Object userToken, String targetPermission) throws SecurityException {
 
@@ -83,11 +88,13 @@ public class RoleAuthorizationProvider {
   }
 
   /**
-   * Validates whether the given user roles are sufficient to match the given target permission.
+   * Validates whether the user's roles are sufficient to match at least one of
+   * the given target permissions.
    * 
    * @param userToken user token
    * @param targetPermissions permissions to be granted
-   * @throws SecurityException if none of the user's roles contains the target permission
+   * @throws SecurityException if none of the user's roles contains the target
+   *         permission
    */
   public void authorize(Object userToken, List<String> targetPermissions) throws SecurityException {
 
@@ -116,10 +123,12 @@ public class RoleAuthorizationProvider {
   }
 
   /**
-   * Calculates the permission to all parent roles mapping of the given security configuration
+   * Calculates the permission to all parent roles mapping of the given security
+   * configuration
    * 
    * @param configuration {@link Security} configuration instance
-   * @throws InvalidConfigurationException if a include cycle has been detected between the roles
+   * @throws InvalidConfigurationException if a include cycle has been detected
+   *         between the roles
    */
   private void calculatePermissionToRoleMapping(Security configuration) throws InvalidConfigurationException {
 
@@ -152,13 +161,15 @@ public class RoleAuthorizationProvider {
   }
 
   /**
-   * Collects all parents (including transitive ones) for the given {@link Permission}. Therefore it needs the child to
-   * parent mapping of all roles.
+   * Collects all parents (including transitive ones) for the given
+   * {@link Permission}. Therefore it needs the child to parent mapping of all
+   * roles.
    * 
    * @param childToParentsMapping mapping of all child roles to their parents
    * @param role first role to calculate all parents for
    * @return all parents for the given permission
-   * @throws InvalidConfigurationException if a include cycle has been detected between the roles
+   * @throws InvalidConfigurationException if a include cycle has been detected
+   *         between the roles
    */
   private Set<String> calculateTransitiveClosure(Map<String, Set<String>> childToParentsMapping, Role role)
       throws InvalidConfigurationException {
@@ -171,11 +182,9 @@ public class RoleAuthorizationProvider {
       // include loop detection and handling
       if (visitedRoles.contains(currentParent)) {
         // TODO (mbrunnli) message handling
-        LOG.error("The security configuration contains an include cycle of roles. Detected at role '{}'",
-            currentParent);
+        LOG.error("The security configuration contains an include cycle of roles. Detected at role '{}'", currentParent);
         throw new InvalidConfigurationException(
-            "The security configuration contains an include cycle of roles. Detected at role '" + currentParent
-                + "'");
+            "The security configuration contains an include cycle of roles. Detected at role '" + currentParent + "'");
       }
 
       Set<String> parentRoles = childToParentsMapping.get(currentParent);
