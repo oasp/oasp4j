@@ -66,7 +66,6 @@ public class RoleAuthorizationProvider {
       Security configuration = (Security) unmarschaller.unmarshal(in);
       calculatePermissionToRoleMapping(configuration);
     } catch (JAXBException e) {
-      // TODO (mbrunnli) message handling
       LOG.error("Could not parse file. Configuration does not match the schema definition.");
       throw new InvalidConfigurationException(
           "Could not parse file. Configuration does not match the schema definition.", e);
@@ -116,7 +115,6 @@ public class RoleAuthorizationProvider {
     }
 
     if (!this.rolesProvider.hasOneOf(userToken, new LinkedList<>(possibleRoles))) {
-      // TODO (mbrunnli) message handling
       LOG.error("Permission denied: the given user roles do not include the target permission.");
       throw new SecurityException("Permission denied: the given user roles do not include the target permission.");
     }
@@ -181,7 +179,6 @@ public class RoleAuthorizationProvider {
       String currentParent = parentWorklist.pop();
       // include loop detection and handling
       if (visitedRoles.contains(currentParent)) {
-        // TODO (mbrunnli) message handling
         LOG.error("The security configuration contains an include cycle of roles. Detected at role '{}'", currentParent);
         throw new InvalidConfigurationException(
             "The security configuration contains an include cycle of roles. Detected at role '" + currentParent + "'");
