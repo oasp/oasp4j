@@ -6,7 +6,7 @@ package org.oasp.module.security.common.exception;
  * @author mbrunnli
  * @version $Id:$
  */
-public class InvalidConfigurationException extends Exception {
+public class InvalidConfigurationException extends RuntimeException {
 
   /**
    * Default serial version UID

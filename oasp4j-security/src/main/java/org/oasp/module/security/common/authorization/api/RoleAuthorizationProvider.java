@@ -10,23 +10,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.inject.Inject;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.oasp.module.security.common.exception.InvalidConfigurationException;
-import org.oasp.module.security.common.exception.PermissionDeniedException;
 import org.oasp.security.Include;
 import org.oasp.security.Permission;
 import org.oasp.security.Role;
 import org.oasp.security.Security;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.core.io.Resource;
 
 /**
- * The {@link RoleAuthorizationProvider} provides a simple authorization managment of roles and permissions.
+ * The {@link RoleAuthorizationProvider} provides a simple authorization
+ * management of roles and permissions.
  * 
  * @author mbrunnli
  * @version $Id:$
@@ -49,13 +49,15 @@ public class RoleAuthorizationProvider {
   private Map<String, Set<String>> flattenPermissions = new HashMap<>();
 
   /**
-   * Creates a new {@link RoleAuthorizationProvider} with the given {@link Resource} as configuration.
+   * Creates a new {@link RoleAuthorizationProvider} with the given
+   * {@link Resource} as configuration.
    * 
    * @param accessControlSchema configuration file
    * @throws IOException if the configuration file could not be read.
-   * @throws InvalidConfigurationException if the configuration file does not match the security schema definition
+   * @throws InvalidConfigurationException if the configuration file does not
+   *         match the security schema definition
    */
-  public RoleAuthorizationProvider(Resource accessControlSchema) throws IOException, InvalidConfigurationException {
+  public RoleAuthorizationProvider(Resource accessControlSchema) throws IOException {
 
     InputStream in = accessControlSchema.getInputStream();
     try {
@@ -64,7 +66,6 @@ public class RoleAuthorizationProvider {
       Security configuration = (Security) unmarschaller.unmarshal(in);
       calculatePermissionToRoleMapping(configuration);
     } catch (JAXBException e) {
-      // TODO (mbrunnli) message handling
       LOG.error("Could not parse file. Configuration does not match the schema definition.");
       throw new InvalidConfigurationException(
           "Could not parse file. Configuration does not match the schema definition.", e);
@@ -72,25 +73,29 @@ public class RoleAuthorizationProvider {
   }
 
   /**
-   * Validates whether the given user roles are sufficient to match the given target permission.
+   * Validates whether the user's roles are sufficient to match the given target
+   * permission.
    * 
    * @param userToken user token
    * @param targetPermission permission to be granted
-   * @throws PermissionDeniedException if none of the user's roles contains the target permission
+   * @throws SecurityException if none of the user's roles contains the target
+   *         permission
    */
-  public void authorize(Object userToken, String targetPermission) throws PermissionDeniedException {
+  public void authorize(Object userToken, String targetPermission) throws SecurityException {
 
     authorize(userToken, Arrays.asList(targetPermission));
   }
 
   /**
-   * Validates whether the given user roles are sufficient to match the given target permission.
+   * Validates whether the user's roles are sufficient to match at least one of
+   * the given target permissions.
    * 
    * @param userToken user token
    * @param targetPermissions permissions to be granted
-   * @throws PermissionDeniedException if none of the user's roles contains the target permission
+   * @throws SecurityException if none of the user's roles contains the target
+   *         permission
    */
-  public void authorize(Object userToken, List<String> targetPermissions) throws PermissionDeniedException {
+  public void authorize(Object userToken, List<String> targetPermissions) throws SecurityException {
 
     if (targetPermissions.isEmpty())
       return;
@@ -110,18 +115,18 @@ public class RoleAuthorizationProvider {
     }
 
     if (!this.rolesProvider.hasOneOf(userToken, new LinkedList<>(possibleRoles))) {
-      // TODO (mbrunnli) message handling
       LOG.error("Permission denied: the given user roles do not include the target permission.");
-      throw new PermissionDeniedException(
-          "Permission denied: the given user roles do not include the target permission.");
+      throw new SecurityException("Permission denied: the given user roles do not include the target permission.");
     }
   }
 
   /**
-   * Calculates the permission to all parent roles mapping of the given security configuration
+   * Calculates the permission to all parent roles mapping of the given security
+   * configuration
    * 
    * @param configuration {@link Security} configuration instance
-   * @throws InvalidConfigurationException if a include cycle has been detected between the roles
+   * @throws InvalidConfigurationException if a include cycle has been detected
+   *         between the roles
    */
   private void calculatePermissionToRoleMapping(Security configuration) throws InvalidConfigurationException {
 
@@ -154,13 +159,15 @@ public class RoleAuthorizationProvider {
   }
 
   /**
-   * Collects all parents (including transitive ones) for the given {@link Permission}. Therefore it needs the child to
-   * parent mapping of all roles.
+   * Collects all parents (including transitive ones) for the given
+   * {@link Permission}. Therefore it needs the child to parent mapping of all
+   * roles.
    * 
    * @param childToParentsMapping mapping of all child roles to their parents
    * @param role first role to calculate all parents for
    * @return all parents for the given permission
-   * @throws InvalidConfigurationException if a include cycle has been detected between the roles
+   * @throws InvalidConfigurationException if a include cycle has been detected
+   *         between the roles
    */
   private Set<String> calculateTransitiveClosure(Map<String, Set<String>> childToParentsMapping, Role role)
       throws InvalidConfigurationException {
@@ -172,12 +179,9 @@ public class RoleAuthorizationProvider {
       String currentParent = parentWorklist.pop();
       // include loop detection and handling
       if (visitedRoles.contains(currentParent)) {
-        // TODO (mbrunnli) message handling
-        LOG.error("The security configuration contains an include cycle of roles. Detected at role '{}'",
-            currentParent);
+        LOG.error("The security configuration contains an include cycle of roles. Detected at role '{}'", currentParent);
         throw new InvalidConfigurationException(
-            "The security configuration contains an include cycle of roles. Detected at role '" + currentParent
-                + "'");
+            "The security configuration contains an include cycle of roles. Detected at role '" + currentParent + "'");
       }
 
       Set<String> parentRoles = childToParentsMapping.get(currentParent);
@@ -194,7 +198,7 @@ public class RoleAuthorizationProvider {
    * 
    * @param rolesProvider new value for rolesProvider
    */
-  @Required
+  @Inject
   public void setRolesProvider(RolesProvider rolesProvider) {
 
     this.rolesProvider = rolesProvider;
