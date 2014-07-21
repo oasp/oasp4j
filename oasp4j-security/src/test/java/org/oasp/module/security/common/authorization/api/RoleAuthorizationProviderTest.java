@@ -1,21 +1,24 @@
 package org.oasp.module.security.common.authorization.api;
 
-import static org.mockito.Mockito.when;
-
-import java.io.IOException;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.oasp.module.security.common.exception.InvalidConfigurationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.google.common.collect.Lists;
+import java.io.IOException;
+import java.util.List;
+
+import static org.mockito.Matchers.anyList;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.stub;
 
 /**
  * Tests the {@link RoleAuthorizationProvider} implementation
@@ -45,9 +48,20 @@ public class RoleAuthorizationProviderTest {
     MockitoAnnotations.initMocks(this);
   }
 
+  private void mockRolesProvider() {
+      stub(this.rolesProvider.hasOneOf(anyString(), anyList())).toAnswer(new Answer<Boolean>() {
+          @Override
+          public Boolean answer(InvocationOnMock invocationOnMock) throws Throwable {
+              String userToken = (String) invocationOnMock.getArguments()[0];
+              List<String> roles = (List<String>) invocationOnMock.getArguments()[1];
+              return roles.contains(userToken);
+          }
+      });
+  }
+
   /**
    * Tests, whether the {@link RoleAuthorizationProvider} detects include loops over 3 edges
-   * 
+   *
    * @throws IOException test fails
    * @throws InvalidConfigurationException expected
    */
@@ -59,7 +73,7 @@ public class RoleAuthorizationProviderTest {
 
   /**
    * Tests a simple (direct related) valid permission
-   * 
+   *
    * @throws IOException test fails
    * @throws SecurityException test fails
    */
@@ -69,12 +83,12 @@ public class RoleAuthorizationProviderTest {
     RoleAuthorizationProvider roleAuthorizationProvider = new RoleAuthorizationProvider(
         this.accessControlSchema_acyclic);
     roleAuthorizationProvider.setRolesProvider(this.rolesProvider);
-    when(this.rolesProvider.hasOneOf("Waiter", Lists.newArrayList("Waiter", "Chief"))).thenReturn(true);
+    mockRolesProvider();
 
     roleAuthorizationProvider.authorize("Waiter", "GET_TABLE");
   }
 
-  /**
+    /**
    * Tests a simple (direct related) invalid permission
    * 
    * @throws IOException test fails
@@ -86,7 +100,7 @@ public class RoleAuthorizationProviderTest {
     RoleAuthorizationProvider roleAuthorizationProvider = new RoleAuthorizationProvider(
         this.accessControlSchema_acyclic);
     roleAuthorizationProvider.setRolesProvider(this.rolesProvider);
-    when(this.rolesProvider.hasOneOf("Waiter", Lists.newArrayList("Waiter", "Chief"))).thenReturn(false);
+    mockRolesProvider();
 
     roleAuthorizationProvider.authorize("Waiter", "REMOVE_TABLE");
   }
@@ -103,7 +117,7 @@ public class RoleAuthorizationProviderTest {
     RoleAuthorizationProvider roleAuthorizationProvider = new RoleAuthorizationProvider(
         this.accessControlSchema_acyclic);
     roleAuthorizationProvider.setRolesProvider(this.rolesProvider);
-    when(this.rolesProvider.hasOneOf("Chief", Lists.newArrayList("Waiter", "Chief"))).thenReturn(true);
+    mockRolesProvider();
 
     roleAuthorizationProvider.authorize("Chief", "GET_TABLE");
   }
