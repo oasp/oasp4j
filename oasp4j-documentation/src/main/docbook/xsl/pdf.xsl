@@ -21,6 +21,7 @@ under the License.
 				xmlns:d="http://docbook.org/ns/docbook"
 				xmlns:fo="http://www.w3.org/1999/XSL/Format"
 				xmlns:xslthl="http://xslthl.sf.net"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
 				exclude-result-prefixes="xslthl d"
 				version='1.0'>
 
@@ -195,14 +196,8 @@ under the License.
 		</xsl:variable>
 
 		<xsl:variable name="Title">
-			<xsl:choose>
-				<xsl:when test="//productname">
-					<xsl:value-of select="//productname"/><xsl:text> </xsl:text>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:text>please define title in your docbook file!</xsl:text>
-				</xsl:otherwise>
-			</xsl:choose>
+      This documentation is licensed under the 
+      <link xlink:href="http://creativecommons.org/licenses/by-nd/4.0/">Creative Commons License (Attribution-NoDerivatives 4.0 International).</link>
 		</xsl:variable>
 
 		<xsl:choose>
