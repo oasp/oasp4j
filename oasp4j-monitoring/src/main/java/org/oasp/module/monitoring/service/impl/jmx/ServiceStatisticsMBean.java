@@ -14,6 +14,8 @@ import org.springframework.jmx.export.annotation.ManagedResource;
 @ManagedResource(description = "Returns information about the service.")
 public class ServiceStatisticsMBean implements MethodInterceptor {
 
+  private static final int MILLIS_PER_MINUTE = 60000;
+
   private static final int NUM_OF_EXECS_FOR_AVARAGE = 10;
 
   private volatile int numOfCallsLastMinute;
@@ -66,7 +68,7 @@ public class ServiceStatisticsMBean implements MethodInterceptor {
   private synchronized void updateTimeWindow() {
 
     // get current minute
-    int currentMinute = (int) (System.currentTimeMillis() / 60000);
+    int currentMinute = (int) (System.currentTimeMillis() / MILLIS_PER_MINUTE);
 
     if (currentMinute != this.lastMinute) {
       this.lastMinute = currentMinute;
@@ -81,23 +83,22 @@ public class ServiceStatisticsMBean implements MethodInterceptor {
   @ManagedAttribute(description = "Returns the avarage execution time of the last 10 calls in millis.")
   public Long getAvarageExecTime() {
 
-    Long result = new Long(0);
+    long result = 0;
 
     if (this.execTimes.size() > 0) {
       // copy to array to avoid concurrent changes
-      Long[] execTimesArray = new Long[this.execTimes.size()];
-      this.execTimes.toArray(execTimesArray);
+      Long[] execTimesArray = this.execTimes.toArray(new Long[this.execTimes.size()]);
 
-      Long sum = new Long(0);
+      long sum = 0;
 
       for (Long execTime : execTimesArray) {
-        sum += execTime;
+        sum += execTime.longValue();
       }
 
       result = sum / execTimesArray.length;
     }
 
-    return result;
+    return Long.valueOf(result);
 
   }
 
