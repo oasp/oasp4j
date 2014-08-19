@@ -90,6 +90,7 @@
           <sourceDirectory>${oasp4j.asciidoc.target}</sourceDirectory>
           <sourceDocumentName>OASP4J.asciidoc</sourceDocumentName>
           <doctype>book</doctype>
+          <imagesDir>./</imagesDir>
         </configuration>
         <executions>
           <execution>
@@ -114,7 +115,7 @@
           <useExtensions>1</useExtensions>
           <highlightSource>1</highlightSource>
           <highlightXslthlConfig>${basedir}/src/main/docbook/xsl/xslthl-config.xml</highlightXslthlConfig>
-          <targetDirectory>${basedir}/target/docbook/</targetDirectory>
+          <targetDirectory>${basedir}/target/generated-docs/</targetDirectory>
         </configuration>
         <dependencies>
           <dependency>

@@ -9,7 +9,7 @@
         </fileset>
       </path>
     </foreach>
-    <copy todir="${basedir}/target/docbook/">
+    <copy todir="${basedir}/target/generated-docs/">
       <path>
         <fileset dir="${oasp4j.asciidoc.source}">
           <exclude name="**/*.asciidoc"/>
@@ -41,23 +41,5 @@
         </tokenfilter>
       </filterchain>
     </copy>
-    <!--
-    <replaceregexp file="${asciidoc-file}" byline="true">
-      <regexp pattern="^(=)+ (.*)"/>
-      <substitution expression="\1 \2${line.separator}[[\L2]]"/>
-    </replaceregexp>
-    <replaceregexp file="${asciidoc-file}">
-      <regexp pattern="xref:(\w)"/>
-      <substitution expression="xref:${filename}_\1"/>
-    </replaceregexp>
-    <replaceregexp file="${asciidoc-file}">
-      <regexp pattern="link:([^\[#:]*)"/>
-      <substitution expression="xref:\1"/>
-    </replaceregexp>
-    <replaceregexp file="${asciidoc-file}">
-      <regexp pattern="link:(\w)[#](\w)"/>
-      <substitution expression="xref:\1_\2"/>
-    </replaceregexp>
-    -->
   </target>
 </project>
