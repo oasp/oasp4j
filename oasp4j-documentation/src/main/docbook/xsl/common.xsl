@@ -37,6 +37,9 @@
 	<!-- Table of Contents -->
 	<xsl:param name="generate.toc">book toc,title</xsl:param>
 	<xsl:param name="toc.section.depth">3</xsl:param>
+  <!--<xsl:param name="section.autolabel">1</xsl:param>-->
+  <xsl:param name="section.autolabel.max.depth">5</xsl:param>
+  <xsl:param name="insert.olink.pdf.frag">0</xsl:param>
 
 	<!-- Hide revhistory -->
 	<xsl:template match="revhistory" mode="titlepage.mode"/>
