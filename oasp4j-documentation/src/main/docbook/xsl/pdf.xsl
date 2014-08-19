@@ -22,7 +22,8 @@ under the License.
 				xmlns:fo="http://www.w3.org/1999/XSL/Format"
 				xmlns:xslthl="http://xslthl.sf.net"
         xmlns:xlink="http://www.w3.org/1999/xlink"
-				exclude-result-prefixes="xslthl d"
+        xmlns:date="java:java.util.Date"
+				exclude-result-prefixes="xslthl d date"
 				version='1.0'>
 
 	<xsl:import href="http://docbook.sourceforge.net/release/xsl/current/fo/docbook.xsl"/>
@@ -97,7 +98,7 @@ under the License.
 							</fo:block>
 
 							<fo:block font-family="Helvetica" font-size="10pt" padding="5mm" padding-before="25em">
-								<xsl:text>Copyright &#xA9; </xsl:text><xsl:value-of select="bookinfo/copyright"/>
+								<xsl:text>Copyright &#xA9; 2014-</xsl:text><xsl:value-of select="1900 + date:getYear(date:new())" /><xsl:text> the OASP team</xsl:text>
 							</fo:block>
 
 							<fo:block font-family="Helvetica" font-size="8pt" padding="1mm">

@@ -91,6 +91,9 @@
           <sourceDocumentName>OASP4J.asciidoc</sourceDocumentName>
           <doctype>book</doctype>
           <imagesDir>./</imagesDir>
+          <attributes>
+            <docinfo>true</docinfo>
+          </attributes>
         </configuration>
         <executions>
           <execution>
