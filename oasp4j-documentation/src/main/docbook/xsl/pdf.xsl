@@ -524,7 +524,11 @@ under the License.
 			</xsl:choose>
 		</fo:basic-link>
 	</xsl:template>
-
+	<!-- This should resolve to linkage to correct parts within the document -->
+	<xsl:template match="xref">
+		<xsl:param name="insert.olink.pdf.frag" select="0"></xsl:param>
+	</xsl:template>
+	
 	<!-- admon -->
 	<xsl:param name="admon.graphics" select="0"/>
 
