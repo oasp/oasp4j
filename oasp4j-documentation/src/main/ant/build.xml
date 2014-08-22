@@ -16,6 +16,14 @@
         </fileset>
       </path>
     </copy>
+    <!--
+    <mkdir dir="${oasp4j.external.images}"/>
+    <get dest="${oasp4j.external.images}">
+      <url url="http://oasp.github.io/oasp4j/images/T-Architecture.svg"/>
+    </get>
+    <xslt basedir="${oasp4j.external.images}" destdir="${basedir}/target/generated-docs/images"
+       extension=".svg" style="${basedir}/src/main/xsl/svg.xsl"/>
+     -->
   </target>
   <target name="pre-process-asciidoc">
     <basename property="filename" file="${asciidoc-file}" suffix=".asciidoc"/>
@@ -23,10 +31,14 @@
       <filterchain>
         <tokenfilter>
           <linetokenizer/>
+          <replaceregex pattern="\[\[" replace="[[${filename}_" flags="g"/>
           <replaceregex pattern="^(==+) (.*)" replace="[[${filename}_\2]]${line.separator}\1 \2" flags="g"/>
           <replaceregex pattern="^(=) (.*)" replace="[[${filename}]]${line.separator}\1 \2" flags="g"/>
           <!--
           <replaceregex pattern="include\:\:([^.]*)" replace="[[\1]]${line.separator}include::\1" flags="g"/>
+          -->
+          <!--
+          <replaceregex pattern="http://oasp.github.io/oasp4j/" replace="./" flags="g"/>
           -->
           <replaceregex pattern="xref:(\w*)" replace="xref:${filename}_\1" flags="g"/>
           <replaceregex pattern="link:([^#:]*)\[" replace="xref:\1[" flags="g"/>

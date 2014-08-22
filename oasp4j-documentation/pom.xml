@@ -14,6 +14,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <oasp4j.asciidoc.source>${basedir}/../../oasp4j.wiki/</oasp4j.asciidoc.source>
     <oasp4j.asciidoc.target>${basedir}/target/asciidoc/</oasp4j.asciidoc.target>
+    <oasp4j.external.images>${basedir}/target/images/</oasp4j.external.images>
   </properties>
 
   <build>
@@ -83,7 +84,7 @@
       <plugin>
         <groupId>org.asciidoctor</groupId>
         <artifactId>asciidoctor-maven-plugin</artifactId>
-        <version>0.1.4</version>
+        <version>1.5.0</version>
         <configuration>
           <!--<backend>pdf</backend>-->
           <backend>docbook5</backend>
