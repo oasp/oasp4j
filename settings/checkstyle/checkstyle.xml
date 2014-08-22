@@ -80,7 +80,7 @@
       <property name="max" value="5"/>
     </module>
     <module name="ParameterAssignment">
-      <property name="severity" value="error"/>
+      <property name="severity" value="warning"/>
     </module>
     <module name="InterfaceIsType"/>
     <module name="VisibilityModifier"/>
