@@ -22,6 +22,7 @@
     <module>oasp4j-configuration</module>
     <module>oasp4j-beanmapping</module>
     <module>oasp4j-security</module>
+    <module>oasp4j-rest</module>
   </modules>
 
   <properties>
@@ -60,6 +61,11 @@
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
         <version>1.7.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-jaxrs</artifactId>
+        <version>1.9.9</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
