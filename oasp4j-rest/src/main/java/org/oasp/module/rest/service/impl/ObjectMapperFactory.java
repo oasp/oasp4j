@@ -50,24 +50,23 @@ public class ObjectMapperFactory {
     setSubtypeList(Arrays.asList(subtypeList));
   }
 
-  // TODO refactor to generic method, into config of spring
+  /**
+   * @return an instance of ObjectMapper with baseClasses and their
+   *         correspondent subclasses set for polymorphic resolution
+   * @throws ClassNotFoundException if any baseClass could not be found
+   */
   public ObjectMapper createInstance() throws ClassNotFoundException {
 
     ObjectMapper mapper = new ObjectMapper();
     mapper.enableDefaultTyping();
 
-    // AbstractBo.class
-    SimpleModule polymorphieModule = new MixInAnnotationsModule(this.baseClasses);
-    mapper.registerModule(polymorphieModule);
+    SimpleModule polymorphyModule = new MixInAnnotationsModule(this.baseClasses);
+    mapper.registerModule(polymorphyModule);
 
     SubtypeResolver subtypeResolver = mapper.getSubtypeResolver();
     for (NamedType subtype : this.subtypeList) {
       subtypeResolver.registerSubtypes(subtype);
     }
-    // subtypeResolver.registerSubtypes(new NamedType(MealBo.class, "Meal"));
-    // subtypeResolver.registerSubtypes(new NamedType(DrinkBo.class, "Drink"));
-    // subtypeResolver.registerSubtypes(new NamedType(SideDishBo.class,
-    // "SideDish"));
     mapper.setSubtypeResolver(subtypeResolver);
 
     return mapper;

@@ -14,11 +14,12 @@ public class MixInAnnotationsModule extends SimpleModule {
   private final Class<?>[] baseClasses;
 
   /**
-   *
+   * @param baseClasses the baseClasses to be resolved into correspondent
+   *        subclasses
    */
   public MixInAnnotationsModule(Class<?>... baseClasses) {
 
-    super("PolymorphieModule", new Version(0, 0, 1, null));
+    super("PolymorphyModule", new Version(0, 0, 1, null));
     this.baseClasses = baseClasses;
   }
 
@@ -33,6 +34,12 @@ public class MixInAnnotationsModule extends SimpleModule {
     }
   }
 
+  /**
+   * The blueprint class for the following JSON-annotation allowing to convert
+   * from JSON to POJO and vice versa
+   * 
+   * @author agreul
+   */
   @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.PROPERTY, property = "@type")
   public static class JacksonPolymorphicAnnotation {
 
