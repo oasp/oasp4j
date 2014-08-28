@@ -26,8 +26,12 @@ under the License.
 				exclude-result-prefixes="xslthl d date"
 				version='1.0'>
 
+  <!--
 	<xsl:import href="http://docbook.sourceforge.net/release/xsl/current/fo/docbook.xsl"/>
 	<xsl:import href="http://docbook.sourceforge.net/release/xsl/current/fo/highlight.xsl"/>
+  -->
+	<xsl:import href="fo/docbook.xsl"/>
+	<xsl:import href="fo/highlight.xsl"/>
 	<xsl:import href="common.xsl"/>
 
 	<!-- Extensions -->
