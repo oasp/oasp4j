@@ -1,4 +1,4 @@
-package org.oasp.module.rest.service.impl;
+package org.oasp.module.rest.service.impl.json;
 
 import java.util.Arrays;
 import java.util.List;

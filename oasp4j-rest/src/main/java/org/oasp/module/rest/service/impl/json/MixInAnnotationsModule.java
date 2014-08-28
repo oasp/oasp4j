@@ -1,4 +1,4 @@
-package org.oasp.module.rest.service.impl;
+package org.oasp.module.rest.service.impl.json;
 
 import org.codehaus.jackson.Version;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
