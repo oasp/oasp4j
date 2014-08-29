@@ -51,23 +51,26 @@ public class ObjectMapperFactory {
   }
 
   /**
-   * @return an instance of ObjectMapper with baseClasses and their
-   *         correspondent subclasses set for polymorphic resolution
+   * @return an instance of ObjectMapper with baseClasses and their correspondent subclasses set for polymorphic
+   *         resolution
    * @throws ClassNotFoundException if any baseClass could not be found
    */
   public ObjectMapper createInstance() throws ClassNotFoundException {
 
     ObjectMapper mapper = new ObjectMapper();
-    mapper.enableDefaultTyping();
 
-    SimpleModule polymorphyModule = new MixInAnnotationsModule(this.baseClasses);
-    mapper.registerModule(polymorphyModule);
-
-    SubtypeResolver subtypeResolver = mapper.getSubtypeResolver();
-    for (NamedType subtype : this.subtypeList) {
-      subtypeResolver.registerSubtypes(subtype);
+    if ((this.baseClasses != null) && (this.baseClasses.length > 0)) {
+      SimpleModule polymorphyModule = new MixInAnnotationsModule(this.baseClasses);
+      mapper.registerModule(polymorphyModule);
     }
-    mapper.setSubtypeResolver(subtypeResolver);
+
+    if (this.subtypeList != null) {
+      SubtypeResolver subtypeResolver = mapper.getSubtypeResolver();
+      for (NamedType subtype : this.subtypeList) {
+        subtypeResolver.registerSubtypes(subtype);
+      }
+      mapper.setSubtypeResolver(subtypeResolver);
+    }
 
     return mapper;
   }
