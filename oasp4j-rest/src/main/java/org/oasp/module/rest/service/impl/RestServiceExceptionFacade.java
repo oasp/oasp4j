@@ -3,6 +3,7 @@ package org.oasp.module.rest.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.ValidationException;
 import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -15,6 +16,7 @@ import net.sf.mmm.util.exception.api.TechnicalErrorUserException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.AuthenticationServiceException;
 
 /**
  * This is an implementation of {@link ExceptionMapper} that acts as generic exception facade for REST services.
@@ -59,14 +61,27 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
    * This method registers the {@link #registerToplevelSecurityException(Class) top-level security exceptions}. You may
    * override it to add additional or other classes.
    */
-  @SuppressWarnings("unchecked")
   protected void registerToplevelSecurityExceptions() {
 
     this.securityExceptions.add(SecurityException.class);
+    registerToplevelSecurityExceptions("org.springframework.security.access.AccessDeniedException");
+    registerToplevelSecurityExceptions("org.springframework.security.authentication.AuthenticationServiceException");
+    registerToplevelSecurityExceptions("org.springframework.security.authentication.AuthenticationCredentialsNotFoundException");
+    registerToplevelSecurityExceptions("org.springframework.security.authentication.BadCredentialsException");
+    registerToplevelSecurityExceptions("org.springframework.security.authentication.AccountExpiredException");
+    registerToplevelSecurityExceptions("javax.ws.rs.BadRequestException");
+    registerToplevelSecurityExceptions("javax.ws.rs.NotFoundException");
+  }
+
+  /**
+   * @param className the className to be registered
+   */
+  protected void registerToplevelSecurityExceptions(String className) {
+
     try {
-      @SuppressWarnings("rawtypes")
-      Class springSecurityException = Class.forName("org.springframework.security.access.AccessDeniedException");
-      registerToplevelSecurityException(springSecurityException);
+      @SuppressWarnings("unchecked")
+      Class<? extends Throwable> securityException = (Class<? extends Throwable>) Class.forName(className);
+      registerToplevelSecurityException(securityException);
     } catch (ClassNotFoundException e) {
       LOG.info(
           "Spring security was not found on classpath. Spring security exceptions will not be handled as such by {}",
@@ -80,7 +95,6 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
   @Override
   public Response toResponse(Throwable exception) {
 
-    LOG.error("Service request failed: ", exception);
     // business exceptions
     if (exception instanceof ServerErrorException) {
       LOG.error("Service failed on server", exception);
@@ -88,6 +102,10 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     } else if (exception instanceof WebApplicationException) {
       LOG.warn("Service failed due to unexpected request: {}", exception.toString());
       return ((WebApplicationException) exception).getResponse();
+    } else if (exception instanceof ValidationException) {
+      // return handleBusinessError(exception);
+      LOG.warn("Service failed due to validation exception: {}", exception.toString());
+      return Response.status(Status.BAD_REQUEST).entity(exception.getMessage()).build();
     } else {
       Class<?> exceptionClass = exception.getClass();
       for (Class<?> securityError : this.securityExceptions) {
@@ -95,11 +113,17 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
           return handleSecurityError(exception);
         }
       }
-      return handleGenericError(exception);
+      // NlsRuntimeException userError = TechnicalErrorUserException.getOrCreateUserException(exception);
+      return /** handleTechnicalError(exception, userError); */
+      handleGenericError(exception);
     }
   }
 
-  private Response handleGenericError(Throwable exception) {
+  /**
+   * @param exception the exception thrown
+   * @return the response build from error status
+   */
+  protected Response handleGenericError(Throwable exception) {
 
     NlsRuntimeException userError = TechnicalErrorUserException.getOrCreateUserException(exception);
     if (userError.isTechnical()) {
@@ -109,7 +133,11 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     }
   }
 
-  private Response handleBusinessError(Throwable exception) {
+  /**
+   * @param exception the exception thrown
+   * @return the response build from error status
+   */
+  protected Response handleBusinessError(Throwable exception) {
 
     // *** business error ***
     String message = exception.toString();
@@ -117,7 +145,12 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     return Response.status(Status.BAD_REQUEST).entity(message).build();
   }
 
-  private Response handleTechnicalError(Throwable exception, NlsRuntimeException userError) {
+  /**
+   * @param exception the exception thrown
+   * @param userError the runtime error
+   * @return the response build from error status
+   */
+  protected Response handleTechnicalError(Throwable exception, NlsRuntimeException userError) {
 
     // *** technical error ***
     LOG.error("Service failed on server", exception);
@@ -125,13 +158,21 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     return Response.status(Status.INTERNAL_SERVER_ERROR).entity(message).build();
   }
 
-  private Response handleSecurityError(Throwable exception) {
+  /**
+   * @param exception the exception thrown
+   * @return the response build from error status
+   */
+  protected Response handleSecurityError(Throwable exception) {
 
     // *** security error ***
     LOG.error("Service failed due to security error", exception);
     // NOTE: for security reasons we do not send any details about the error
     // to the client!
-    return Response.status(Status.FORBIDDEN).build();
+    if (exception.getClass() == AuthenticationServiceException.class) {
+      return Response.status(Status.UNAUTHORIZED).build();
+    } else {
+      return Response.status(Status.FORBIDDEN).build();
+    }
   }
 
   /**
