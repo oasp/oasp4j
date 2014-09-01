@@ -9,7 +9,13 @@ import org.codehaus.jackson.map.jsontype.SubtypeResolver;
 import org.codehaus.jackson.map.module.SimpleModule;
 
 /**
+ * A generic factory to {@link #createInstance() create} instances of a Jackson {@link ObjectMapper}. It allows to
+ * configure the {@link ObjectMapper} for polymorphic transfer-objects.
  *
+ * @see #setBaseClasses(Class...)
+ * @see #setSubtypes(NamedType...)
+ *
+ * @author hohwille
  * @author agreul
  */
 public class ObjectMapperFactory {
@@ -27,7 +33,9 @@ public class ObjectMapperFactory {
   }
 
   /**
-   * @param baseClasses the baseClasses to set
+   * @param baseClasses are the base classes that are polymorphic (e.g. abstract transfer-object classes that have
+   *        sub-types). You also need to register all sub-types of these polymorphic classes via
+   *        {@link #setSubtypes(NamedType...)}.
    */
   public void setBaseClasses(Class<?>... baseClasses) {
 
@@ -35,7 +43,9 @@ public class ObjectMapperFactory {
   }
 
   /**
-   * @param subtypeList the subtypeList to set
+   * @see #setSubtypes(NamedType...)
+   *
+   * @param subtypeList the {@link List} of {@link NamedType}s to register the subtypes.
    */
   public void setSubtypeList(List<NamedType> subtypeList) {
 
@@ -43,7 +53,8 @@ public class ObjectMapperFactory {
   }
 
   /**
-   * @param subtypeList the subtypeList to set
+   * @param subtypeList the {@link NamedType}s as pair of {@link Class} reflecting a polymorphic sub-type together with
+   *        its unique name in JSON format.
    */
   public void setSubtypes(NamedType... subtypeList) {
 
@@ -51,11 +62,9 @@ public class ObjectMapperFactory {
   }
 
   /**
-   * @return an instance of ObjectMapper with baseClasses and their correspondent subclasses set for polymorphic
-   *         resolution
-   * @throws ClassNotFoundException if any baseClass could not be found
+   * @return an instance of {@link ObjectMapper} configured for polymorphic resolution.
    */
-  public ObjectMapper createInstance() throws ClassNotFoundException {
+  public ObjectMapper createInstance() {
 
     ObjectMapper mapper = new ObjectMapper();
 

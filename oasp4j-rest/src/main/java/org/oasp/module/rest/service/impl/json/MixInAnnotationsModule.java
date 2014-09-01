@@ -6,21 +6,22 @@ import org.codehaus.jackson.annotate.JsonTypeInfo.As;
 import org.codehaus.jackson.map.module.SimpleModule;
 
 /**
+ * A {@link SimpleModule} to extend Jackson to mixin annotations for polymorphic types.
  *
+ * @author hohwille
  * @author agreul
  */
 public class MixInAnnotationsModule extends SimpleModule {
 
-  private final Class<?>[] baseClasses;
+  private final Class<?>[] polymorphicClasses;
 
   /**
-   * @param baseClasses the baseClasses to be resolved into correspondent
-   *        subclasses
+   * @param polymorphicClasses the classes reflecting JSON transfer-objects that are polymorphic.
    */
-  public MixInAnnotationsModule(Class<?>... baseClasses) {
+  public MixInAnnotationsModule(Class<?>... polymorphicClasses) {
 
     super("PolymorphyModule", new Version(0, 0, 1, null));
-    this.baseClasses = baseClasses;
+    this.polymorphicClasses = polymorphicClasses;
   }
 
   /**
@@ -29,15 +30,14 @@ public class MixInAnnotationsModule extends SimpleModule {
   @Override
   public void setupModule(SetupContext context) {
 
-    for (Class<?> baseClass : this.baseClasses) {
-      context.setMixInAnnotations(baseClass, JacksonPolymorphicAnnotation.class);
+    for (Class<?> type : this.polymorphicClasses) {
+      context.setMixInAnnotations(type, JacksonPolymorphicAnnotation.class);
     }
   }
 
   /**
-   * The blueprint class for the following JSON-annotation allowing to convert
-   * from JSON to POJO and vice versa
-   * 
+   * The blueprint class for the following JSON-annotation allowing to convert from JSON to POJO and vice versa
+   *
    * @author agreul
    */
   @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.PROPERTY, property = "@type")
