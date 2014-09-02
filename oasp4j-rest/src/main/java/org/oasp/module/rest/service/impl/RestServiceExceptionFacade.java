@@ -16,7 +16,6 @@ import net.sf.mmm.util.exception.api.TechnicalErrorUserException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.authentication.AuthenticationServiceException;
 
 /**
  * This is an implementation of {@link ExceptionMapper} that acts as generic exception facade for REST services.
@@ -69,8 +68,6 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     registerToplevelSecurityExceptions("org.springframework.security.authentication.AuthenticationCredentialsNotFoundException");
     registerToplevelSecurityExceptions("org.springframework.security.authentication.BadCredentialsException");
     registerToplevelSecurityExceptions("org.springframework.security.authentication.AccountExpiredException");
-    registerToplevelSecurityExceptions("javax.ws.rs.BadRequestException");
-    registerToplevelSecurityExceptions("javax.ws.rs.NotFoundException");
   }
 
   /**
@@ -168,11 +165,7 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     LOG.error("Service failed due to security error", exception);
     // NOTE: for security reasons we do not send any details about the error
     // to the client!
-    if (exception.getClass() == AuthenticationServiceException.class) {
-      return Response.status(Status.UNAUTHORIZED).build();
-    } else {
-      return Response.status(Status.FORBIDDEN).build();
-    }
+    return Response.status(Status.FORBIDDEN).build();
   }
 
   /**
