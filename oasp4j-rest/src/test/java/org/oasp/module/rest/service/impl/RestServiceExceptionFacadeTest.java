@@ -14,7 +14,6 @@ import org.junit.Test;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
-import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 
@@ -56,21 +55,6 @@ public class RestServiceExceptionFacadeTest extends Assert {
     assertEquals(403, response.getStatus());
     response = exceptionFacade.toResponse(new InternalAuthenticationServiceException(secretMessage));
     assertEquals(403, response.getStatus());
-  }
-
-  /**
-   * Tests {@link RestServiceExceptionFacade#toResponse(Throwable)} with unauthorized security exception including
-   * subclasses.
-   */
-  @Test
-  public void testSecurityUnauthorizedException() {
-
-    RestServiceExceptionFacade exceptionFacade = getExceptionFacade();
-    String secretMessage = "You are not authorized to view this information";
-    Response response = exceptionFacade.toResponse(new AuthenticationServiceException(secretMessage));
-    assertEquals(401, response.getStatus());
-    Object entity = response.getEntity();
-    assertNull(entity); // no content
   }
 
   /**
