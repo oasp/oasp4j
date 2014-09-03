@@ -20,7 +20,7 @@ public class MixInAnnotationsModule extends SimpleModule {
    */
   public MixInAnnotationsModule(Class<?>... polymorphicClasses) {
 
-    super("PolymorphyModule", new Version(0, 0, 1, null));
+    super("oasp.PolymorphyModule", new Version(1, 0, 0, null));
     this.polymorphicClasses = polymorphicClasses;
   }
 

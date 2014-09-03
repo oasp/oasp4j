@@ -3,6 +3,7 @@ package org.oasp.module.rest.service.impl.json;
 import java.util.Arrays;
 import java.util.List;
 
+import org.codehaus.jackson.Version;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.jsontype.NamedType;
 import org.codehaus.jackson.map.jsontype.SubtypeResolver;
@@ -24,12 +25,30 @@ public class ObjectMapperFactory {
 
   private List<NamedType> subtypeList;
 
+  private SimpleModule extensionModule;
+
   /**
    * The constructor.
    */
   public ObjectMapperFactory() {
 
     super();
+  }
+
+  /**
+   * Gets access to a generic extension {@link SimpleModule module} for customizations to Jackson JSON mapping.
+   *
+   * @see SimpleModule#addSerializer(Class, org.codehaus.jackson.map.JsonSerializer)
+   * @see SimpleModule#addDeserializer(Class, org.codehaus.jackson.map.JsonDeserializer)
+   *
+   * @return extensionModule
+   */
+  public SimpleModule getExtensionModule() {
+
+    if (this.extensionModule == null) {
+      this.extensionModule = new SimpleModule("oasp.ExtensionModule", new Version(1, 0, 0, null));
+    }
+    return this.extensionModule;
   }
 
   /**
@@ -73,6 +92,10 @@ public class ObjectMapperFactory {
       mapper.registerModule(polymorphyModule);
     }
 
+    if (this.extensionModule != null) {
+      mapper.registerModule(this.extensionModule);
+    }
+
     if (this.subtypeList != null) {
       SubtypeResolver subtypeResolver = mapper.getSubtypeResolver();
       for (NamedType subtype : this.subtypeList) {
@@ -83,4 +106,5 @@ public class ObjectMapperFactory {
 
     return mapper;
   }
+
 }

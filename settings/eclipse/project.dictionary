@@ -2,3 +2,5 @@ plugins
 plugin
 seamlessly
 polymorphic
+deserialize
+deserialized
