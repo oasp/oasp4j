@@ -57,11 +57,23 @@
         <artifactId>mmm-util-core</artifactId>
         <version>5.0.0</version>
       </dependency>
+      <!-- Library with advanced collection support -->
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-collections4</artifactId>
+        <version>4.0</version>
+      </dependency>
       <!-- Support for money datatype including operations/calculations -->
       <dependency>
         <groupId>org.javamoney</groupId>
         <artifactId>moneta</artifactId>
         <version>0.8</version>
+      </dependency>
+      <!-- Support for dynamic and type-safe JPA queries -->
+      <dependency>
+        <groupId>com.mysema.querydsl</groupId>
+        <artifactId>querydsl-jpa</artifactId>
+        <version>3.4.3</version>
       </dependency>
       <!-- DataBase Connection Pooling -->
       <dependency>
