@@ -1,9 +1,9 @@
 package org.oasp.module.rest.service.impl.json;
 
-import org.codehaus.jackson.Version;
-import org.codehaus.jackson.annotate.JsonTypeInfo;
-import org.codehaus.jackson.annotate.JsonTypeInfo.As;
-import org.codehaus.jackson.map.module.SimpleModule;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
 /**
  * A {@link SimpleModule} to extend Jackson to mixin annotations for polymorphic types.
@@ -20,7 +20,8 @@ public class MixInAnnotationsModule extends SimpleModule {
    */
   public MixInAnnotationsModule(Class<?>... polymorphicClasses) {
 
-    super("oasp.PolymorphyModule", new Version(1, 0, 0, null));
+    super("oasp.PolymorphyModule", new Version(1, 0, 0, null, ObjectMapperFactory.GROUP_ID,
+        ObjectMapperFactory.ARTIFACT_ID));
     this.polymorphicClasses = polymorphicClasses;
   }
 

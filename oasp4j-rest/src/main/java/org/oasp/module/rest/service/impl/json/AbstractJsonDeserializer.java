@@ -3,11 +3,11 @@ package org.oasp.module.rest.service.impl.json;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.JsonProcessingException;
-import org.codehaus.jackson.map.DeserializationContext;
-import org.codehaus.jackson.map.JsonDeserializer;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * Helper class to simplify implementation of {@link JsonDeserializer}.
@@ -34,11 +34,11 @@ public abstract class AbstractJsonDeserializer<T> extends JsonDeserializer<T> {
       if (!childNode.isNull()) {
         try {
           if (type == String.class) {
-            value = type.cast(childNode.getTextValue());
+            value = type.cast(childNode.asText());
           } else if (type == BigDecimal.class) {
             value = type.cast(new BigDecimal(childNode.asText()));
           } else if (type == Boolean.class) {
-            value = (V) Boolean.valueOf(childNode.getBooleanValue());
+            value = (V) Boolean.valueOf(childNode.booleanValue());
           } else if (type == Integer.class) {
             value = (V) Integer.valueOf(childNode.asText());
           } else if (type == Double.class) {

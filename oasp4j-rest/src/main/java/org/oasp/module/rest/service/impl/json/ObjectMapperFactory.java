@@ -3,11 +3,11 @@ package org.oasp.module.rest.service.impl.json;
 import java.util.Arrays;
 import java.util.List;
 
-import org.codehaus.jackson.Version;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.jsontype.NamedType;
-import org.codehaus.jackson.map.jsontype.SubtypeResolver;
-import org.codehaus.jackson.map.module.SimpleModule;
+import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsontype.NamedType;
+import com.fasterxml.jackson.databind.jsontype.SubtypeResolver;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
 /**
  * A generic factory to {@link #createInstance() create} instances of a Jackson {@link ObjectMapper}. It allows to
@@ -20,6 +20,10 @@ import org.codehaus.jackson.map.module.SimpleModule;
  * @author agreul
  */
 public class ObjectMapperFactory {
+
+  static final String GROUP_ID = "io.oasp.java";
+
+  static final String ARTIFACT_ID = "oasp4j-rest";
 
   private Class<?>[] baseClasses;
 
@@ -38,15 +42,16 @@ public class ObjectMapperFactory {
   /**
    * Gets access to a generic extension {@link SimpleModule module} for customizations to Jackson JSON mapping.
    *
-   * @see SimpleModule#addSerializer(Class, org.codehaus.jackson.map.JsonSerializer)
-   * @see SimpleModule#addDeserializer(Class, org.codehaus.jackson.map.JsonDeserializer)
+   * @see SimpleModule#addSerializer(Class, com.fasterxml.jackson.databind.JsonSerializer)
+   * @see SimpleModule#addDeserializer(Class, com.fasterxml.jackson.databind.JsonDeserializer)
    *
    * @return extensionModule
    */
   public SimpleModule getExtensionModule() {
 
     if (this.extensionModule == null) {
-      this.extensionModule = new SimpleModule("oasp.ExtensionModule", new Version(1, 0, 0, null));
+      this.extensionModule =
+          new SimpleModule("oasp.ExtensionModule", new Version(1, 0, 0, null, GROUP_ID, ARTIFACT_ID));
     }
     return this.extensionModule;
   }
