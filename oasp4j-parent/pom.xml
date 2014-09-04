@@ -58,6 +58,7 @@
       </plugin>
 
       <!-- http://mojo.codehaus.org/flatten-maven-plugin/ -->
+      <!--
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>flatten-maven-plugin</artifactId>
@@ -82,6 +83,7 @@
           </execution>
         </executions>
       </plugin>
+      -->
       <!-- configure java compiler -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
