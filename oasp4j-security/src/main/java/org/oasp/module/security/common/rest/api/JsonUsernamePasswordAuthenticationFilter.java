@@ -25,6 +25,8 @@ public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthentica
 
   private boolean postOnly = true;
 
+  // REVIEW may-bee (hohwille) We have a centralized and custom-configured object mapper as spring bean. IMHO we should
+  // inject that instance here.
   private ObjectMapper objectMapper = new ObjectMapper();
 
   public JsonUsernamePasswordAuthenticationFilter(RequestMatcher requiresAuthenticationRequestMatcher) {

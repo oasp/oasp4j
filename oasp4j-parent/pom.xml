@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.oasp.java</groupId>
+    <artifactId>oasp4j-dependencies</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+  <artifactId>oasp4j-parent</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>${project.artifactId}</name>
+  <description>Modules of the Open Application Standard Platform for Java (OASP4J).</description>
+  <url>http://oasp.org/</url>
+  <inceptionYear>2014</inceptionYear>
+
+  <modules>
+    <module>../oasp4j-logging</module>
+    <module>../oasp4j-configuration</module>
+    <module>../oasp4j-monitoring</module>
+    <module>../oasp4j-beanmapping</module>
+    <module>../oasp4j-rest</module>
+    <module>../oasp4j-security</module>
+  </modules>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <encoding>${project.build.sourceEncoding}</encoding>
+          <includeEmptyDirs>true</includeEmptyDirs>
+        </configuration>
+      </plugin>
+
+      <!-- http://mojo.codehaus.org/flatten-maven-plugin/ -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
+        <version>1.0.0-beta-3-SNAPSHOT</version>
+        <configuration>
+          <flattenMode>oss</flattenMode>
+        </configuration>
+        <executions>
+          <execution>
+            <id>flatten</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>flatten</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>flatten.clean</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- configure java compiler -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <encoding>${project.build.sourceEncoding}</encoding>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+
+      <!-- advanced manifests -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+
+      <!-- also generate source JARs -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- avoid version in local war files, exclude sources JARs from WARs -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <packagingExcludes>WEB-INF/lib/*-sources.jar</packagingExcludes>
+          <warName>${project.artifactId}</warName>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <!-- Surefire changed the default to the project.build.directory causing trouble with file paths to test resources -->
+          <workingDirectory>${basedir}</workingDirectory>
+        </configuration>
+      </plugin>
+
+      <!-- JaCoCo for test coverage -->
+      <!--
+        <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <executions>
+        <execution>
+        <id>default-prepare-agent</id>
+        <phase>pre-site</phase>
+        <goals>
+        <goal>prepare-agent</goal>
+        </goals>
+        </execution>
+        <execution>
+        <id>default-report</id>
+        <phase>prepare-package</phase>
+        <goals>
+        <goal>report</goal>
+        </goals>
+        </execution>
+        </executions>
+        </plugin>
+      -->
+
+      <!-- site generation settings -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+      </plugin>
+    </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+         <groupId>org.eclipse.m2e</groupId>
+         <artifactId>lifecycle-mapping</artifactId>
+         <version>1.0.0</version>
+         <configuration>
+           <lifecycleMappingMetadata>
+             <pluginExecutions>
+               <pluginExecution>
+                 <pluginExecutionFilter>
+                   <groupId>org.codehaus.mojo</groupId>
+                   <artifactId>flatten-maven-plugin</artifactId>
+                   <versionRange>[0.0,)</versionRange>
+                   <goals>
+                     <goal>flatten</goal>
+                     <goal>clean</goal>
+                   </goals>
+                 </pluginExecutionFilter>
+                 <action>
+                   <ignore />
+                 </action>
+               </pluginExecution>
+             </pluginExecutions>
+           </lifecycleMappingMetadata>
+         </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <!--<notree>true</notree> -->
+          <show>protected</show>
+          <encoding>${project.reporting.outputEncoding}</encoding>
+          <charset>${project.build.sourceEncoding}</charset>
+          <docfilessubdirs>true</docfilessubdirs>
+          <links>
+            <link>http://docs.oracle.com/javase/7/docs/api/</link>
+          </links>
+          <doctitle>JavaDocs for ${project.name} ${project.version}</doctitle>
+          <windowtitle>JavaDocs for ${project.name} ${project.version}</windowtitle>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>taglist-maven-plugin</artifactId>
+        <configuration>
+          <tags>
+            <tag>TODO</tag>
+            <tag>@todo</tag>
+            <tag>FIXME</tag>
+            <tag>@deprecated</tag>
+          </tags>
+        </configuration>
+      </plugin>
+      <!--
+        <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changelog-plugin</artifactId>
+        </plugin>
+      -->
+      <!--
+        <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changes-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+        <xmlPath>${basedir}/src/site/changes.xml</xmlPath>
+        <issueLinkTemplate>%URL%/%ISSUE%</issueLinkTemplate>
+        <issueLinkTemplatePerSystem>
+        <github>%URL%/%ISSUE%</github>
+        </issueLinkTemplatePerSystem>
+        <escapeHTML>false</escapeHTML>
+        </configuration>
+        <reportSets>
+        <reportSet>
+        <reports>
+        <report>changes-report</report>
+        </reports>
+        </reportSet>
+        </reportSets>
+        </plugin>
+      -->
+    </plugins>
+  </reporting>
+
+  <profiles>
+    <profile>
+      <id>deploy</id>
+      <build>
+        <plugins>
+          <!-- also generate javadoc JARs -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <!-- Sign artifacts with PGP -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <configuration>
+              <!--<keyname>todo</keyname> -->
+            </configuration>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <!-- separate eclipse build from command-line... -->
+      <id>eclipse</id>
+      <activation>
+        <property>
+          <name>eclipse.application</name>
+        </property>
+      </activation>
+      <build>
+        <directory>eclipse-target</directory>
+      </build>
+    </profile>
+  </profiles>
+  <issueManagement>
+    <system>GitHub</system>
+    <url>http://github.com/oasp/oasp-java/issues</url>
+  </issueManagement>
+  <scm>
+    <connection>scm:git:git@github.com:oasp/oasp-java.git</connection>
+    <developerConnection>scm:git:git@github.com:oasp/oasp-java.git</developerConnection>
+    <url>https://github.com/oasp/oasp-java/tree/master</url>
+    <tag/>
+  </scm>
+  <distributionManagement>
+    <repository>
+      <id>sonatype-nexus-staging</id>
+      <name>Staging Repository</name>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+    <snapshotRepository>
+      <id>sonatype-nexus-snapshots</id>
+      <name>Snapshot Repository</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    </snapshotRepository>
+    <site>
+      <id>oasp.org</id>
+      <url>${java.io.tmpdir}/oasp-site</url>
+    </site>
+  </distributionManagement>
+  <!--
+    <mailingLists>
+    <mailingList>
+    <name>oasp-devel</name>
+    <subscribe>TODO</subscribe>
+    <unsubscribe>TODO</unsubscribe>
+    <post>TODO</post>
+    <archive>TODO</archive>
+    </mailingList>
+    </mailingLists>
+  -->
+  <organization>
+    <name>OASP-Team</name>
+    <url>http://oasp.org/team-list.html</url>
+  </organization>
+  <developers>
+    <developer>
+      <id>hohwille</id>
+      <name>J&#246;rg Hohwiller</name>
+      <email>hohwille@users.sourceforge.net</email>
+      <organization></organization>
+      <organizationUrl/>
+      <roles>
+        <role>admin</role>
+        <role>designer</role>
+        <role>developer</role>
+      </roles>
+      <timezone>+1</timezone>
+      <properties/>
+    </developer>
+  </developers>
+  <licenses>
+    <license>
+      <name>Apache Software Licenese</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repro</distribution>
+      <comments/>
+    </license>
+  </licenses>
+</project>
