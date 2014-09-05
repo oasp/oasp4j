@@ -59,30 +59,30 @@
 
       <!-- http://mojo.codehaus.org/flatten-maven-plugin/ -->
       <!--
-      <plugin>
+        <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>flatten-maven-plugin</artifactId>
         <version>1.0.0-beta-3-SNAPSHOT</version>
         <configuration>
-          <flattenMode>oss</flattenMode>
+        <flattenMode>oss</flattenMode>
         </configuration>
         <executions>
-          <execution>
-            <id>flatten</id>
-            <phase>process-test-resources</phase>
-            <goals>
-              <goal>flatten</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>flatten.clean</id>
-            <phase>clean</phase>
-            <goals>
-              <goal>clean</goal>
-            </goals>
-          </execution>
+        <execution>
+        <id>flatten</id>
+        <phase>process-test-resources</phase>
+        <goals>
+        <goal>flatten</goal>
+        </goals>
+        </execution>
+        <execution>
+        <id>flatten.clean</id>
+        <phase>clean</phase>
+        <goals>
+        <goal>clean</goal>
+        </goals>
+        </execution>
         </executions>
-      </plugin>
+        </plugin>
       -->
       <!-- configure java compiler -->
       <plugin>
@@ -172,33 +172,60 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-eclipse-plugin</artifactId>
+        <version>2.9</version>
+        <configuration>
+          <additionalProjectnatures>
+            <projectnature>net.sf.eclipsecs.core.CheckstyleNature</projectnature>
+          </additionalProjectnatures>
+          <additionalBuildcommands>
+            <buildcommand>net.sf.eclipsecs.core.CheckstyleBuilder</buildcommand>
+          </additionalBuildcommands>
+          <downloadSources>true</downloadSources>
+          <downloadJavadocs>true</downloadJavadocs>
+          <additionalConfig>
+            <file>
+              <name>.checkstyle</name>
+              <content>
+       <![CDATA[<fileset-config file-format-version="1.2.0" simple-config="false" sync-formatter="false">
+  <fileset name="all" enabled="true" check-config-name="clientpe" local="false">
+    <file-match-pattern match-pattern="src/main/." include-pattern="true"/>
+  </fileset>
+</fileset-config>]]>
+              </content>
+            </file>
+          </additionalConfig>
+        </configuration>
+      </plugin>
     </plugins>
     <pluginManagement>
       <plugins>
         <plugin>
-         <groupId>org.eclipse.m2e</groupId>
-         <artifactId>lifecycle-mapping</artifactId>
-         <version>1.0.0</version>
-         <configuration>
-           <lifecycleMappingMetadata>
-             <pluginExecutions>
-               <pluginExecution>
-                 <pluginExecutionFilter>
-                   <groupId>org.codehaus.mojo</groupId>
-                   <artifactId>flatten-maven-plugin</artifactId>
-                   <versionRange>[0.0,)</versionRange>
-                   <goals>
-                     <goal>flatten</goal>
-                     <goal>clean</goal>
-                   </goals>
-                 </pluginExecutionFilter>
-                 <action>
-                   <ignore />
-                 </action>
-               </pluginExecution>
-             </pluginExecutions>
-           </lifecycleMappingMetadata>
-         </configuration>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>flatten-maven-plugin</artifactId>
+                    <versionRange>[0.0,)</versionRange>
+                    <goals>
+                      <goal>flatten</goal>
+                      <goal>clean</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore/>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
