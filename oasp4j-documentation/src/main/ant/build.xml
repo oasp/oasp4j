@@ -34,6 +34,7 @@
           <replaceregex pattern="\[\[" replace="[[${filename}_" flags="g"/>
           <replaceregex pattern="^(==+) (.*)" replace="[[${filename}_\2]]${line.separator}\1 \2" flags="g"/>
           <replaceregex pattern="^(=) (.*)" replace="[[${filename}]]${line.separator}\1 \2" flags="g"/>
+          <replaceregex pattern="include\:\:([^\[]*)" replace="include::\1.asciidoc" flags="g"/>
           <!--
           <replaceregex pattern="include\:\:([^.]*)" replace="[[\1]]${line.separator}include::\1" flags="g"/>
           -->
