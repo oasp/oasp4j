@@ -2,9 +2,8 @@ package org.oasp.module.security.common.exception;
 
 /**
  * Signals an exception during reading the security configuration
- * 
+ *
  * @author mbrunnli
- * @version $Id:$
  */
 public class InvalidConfigurationException extends RuntimeException {
 
@@ -15,7 +14,7 @@ public class InvalidConfigurationException extends RuntimeException {
 
   /**
    * Creates a new {@link InvalidConfigurationException} with the given message
-   * 
+   *
    * @param message error message
    */
   public InvalidConfigurationException(String message) {
@@ -25,7 +24,7 @@ public class InvalidConfigurationException extends RuntimeException {
 
   /**
    * Creates a new {@link InvalidConfigurationException} with the given message and the given cause
-   * 
+   *
    * @param message error message
    * @param ex cause of the created exception
    */

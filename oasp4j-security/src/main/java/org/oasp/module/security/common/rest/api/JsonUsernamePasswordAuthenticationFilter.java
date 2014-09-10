@@ -47,7 +47,7 @@ public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthentica
     UsernamePasswordAuthenticationToken authRequest =
         new UsernamePasswordAuthenticationToken(usernameAndPasswordParser.getTrimmedUsername(),
             usernameAndPasswordParser.getPassword());
-    authRequest.setDetails(this.authenticationDetailsSource.buildDetails(request));
+    // authRequest.setDetails(this.authenticationDetailsSource.buildDetails(request));
     return getAuthenticationManager().authenticate(authRequest);
   }
 
@@ -151,5 +151,6 @@ public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthentica
 
       return this.password == null ? "" : this.password;
     }
+
   }
 }
