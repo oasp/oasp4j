@@ -1,22 +1,13 @@
 package io.oasp.module.security.common.authorization.api;
 
-import static org.mockito.Matchers.anyList;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.stub;
-import io.oasp.module.security.common.authorization.api.RoleAuthorizationProvider;
-import io.oasp.module.security.common.authorization.api.RolesProvider;
 import io.oasp.module.security.common.exception.InvalidConfigurationException;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.ContextConfiguration;
@@ -34,12 +25,12 @@ public class RoleAuthorizationProviderTest {
   /**
    * Login as Role Chief.
    */
-  private static final String LOGIN_CHIEF = "Chief";
+  private static final String ROLE_CHIEF = "Chief";
 
   /**
    * Login as Role Waiter.
    */
-  private static final String LOGIN_WAITER = "Waiter";
+  private static final String ROLE_WAITER = "Waiter";
 
   @Value("classpath:/config/accessControlSchema_cyclic.xml")
   private Resource accessControlSchema_cyclic;
@@ -50,31 +41,6 @@ public class RoleAuthorizationProviderTest {
   @Value("classpath:/config/accessControlSchema_corrupted.xml")
   private Resource accessControlSchema_corrupted;
 
-  @Mock
-  private RolesProvider rolesProvider;
-
-  /**
-   * Initialize Mocks
-   */
-  @Before
-  public void setUp() {
-
-    MockitoAnnotations.initMocks(this);
-  }
-
-  private void mockRolesProvider() {
-
-    stub(this.rolesProvider.hasOneOf(anyString(), anyList())).toAnswer(new Answer<Boolean>() {
-      @Override
-      public Boolean answer(InvocationOnMock invocationOnMock) throws Throwable {
-
-        String userToken = (String) invocationOnMock.getArguments()[0];
-        List<String> roles = (List<String>) invocationOnMock.getArguments()[1];
-        return roles.contains(userToken);
-      }
-    });
-  }
-
   /**
    * Tests, whether the {@link RoleAuthorizationProvider} detects include loops over 3 edges
    *
@@ -84,7 +50,7 @@ public class RoleAuthorizationProviderTest {
   @Test(expected = InvalidConfigurationException.class)
   public void testCyclicConfiguration() throws IOException, InvalidConfigurationException {
 
-    new RoleAuthorizationProvider(this.accessControlSchema_cyclic);
+    new RoleAuthorizationProvider<DummyUser>(this.accessControlSchema_cyclic);
   }
 
   /**
@@ -96,7 +62,15 @@ public class RoleAuthorizationProviderTest {
   @Test(expected = InvalidConfigurationException.class)
   public void testCorruptedConfiguration() throws IOException, InvalidConfigurationException {
 
-    new RoleAuthorizationProvider(this.accessControlSchema_corrupted);
+    new RoleAuthorizationProvider<DummyUser>(this.accessControlSchema_corrupted);
+  }
+
+  private RoleAuthorizationProvider<DummyUser> createAuthorizationProvider() throws IOException {
+
+    RoleAuthorizationProvider<DummyUser> roleAuthorizationProvider =
+        new RoleAuthorizationProvider<>(this.accessControlSchema_acyclic);
+    roleAuthorizationProvider.setRolesProvider(new DummyRolesProvider());
+    return roleAuthorizationProvider;
   }
 
   /**
@@ -108,12 +82,7 @@ public class RoleAuthorizationProviderTest {
   @Test
   public void testAuthorization_simpleValid() throws IOException, SecurityException {
 
-    RoleAuthorizationProvider roleAuthorizationProvider =
-        new RoleAuthorizationProvider(this.accessControlSchema_acyclic);
-    roleAuthorizationProvider.setRolesProvider(this.rolesProvider);
-    mockRolesProvider();
-
-    roleAuthorizationProvider.authorize(LOGIN_WAITER, "GET_TABLE");
+    createAuthorizationProvider().authorize(new DummyUser(ROLE_WAITER), "GET_TABLE");
   }
 
   /**
@@ -125,12 +94,7 @@ public class RoleAuthorizationProviderTest {
   @Test(expected = SecurityException.class)
   public void testAuthorization_simpleInvalid() throws IOException, SecurityException {
 
-    RoleAuthorizationProvider roleAuthorizationProvider =
-        new RoleAuthorizationProvider(this.accessControlSchema_acyclic);
-    roleAuthorizationProvider.setRolesProvider(this.rolesProvider);
-    mockRolesProvider();
-
-    roleAuthorizationProvider.authorize(LOGIN_WAITER, "REMOVE_TABLE");
+    createAuthorizationProvider().authorize(new DummyUser(ROLE_WAITER), "REMOVE_TABLE");
   }
 
   /**
@@ -142,12 +106,7 @@ public class RoleAuthorizationProviderTest {
   @Test(expected = IllegalArgumentException.class)
   public void testAuthorizationRequestedPermission_simpleInvalid() throws IOException, SecurityException {
 
-    RoleAuthorizationProvider roleAuthorizationProvider =
-        new RoleAuthorizationProvider(this.accessControlSchema_acyclic);
-    roleAuthorizationProvider.setRolesProvider(this.rolesProvider);
-    mockRolesProvider();
-
-    roleAuthorizationProvider.authorize(LOGIN_WAITER, "STASH_TABLE");
+    createAuthorizationProvider().authorize(new DummyUser(ROLE_WAITER), "STASH_TABLE");
   }
 
   /**
@@ -159,11 +118,55 @@ public class RoleAuthorizationProviderTest {
   @Test
   public void testAuthorization_transitiveValid() throws IOException, SecurityException {
 
-    RoleAuthorizationProvider roleAuthorizationProvider =
-        new RoleAuthorizationProvider(this.accessControlSchema_acyclic);
-    roleAuthorizationProvider.setRolesProvider(this.rolesProvider);
-    mockRolesProvider();
+    createAuthorizationProvider().authorize(new DummyUser(ROLE_CHIEF), "GET_TABLE");
+  }
 
-    roleAuthorizationProvider.authorize(LOGIN_CHIEF, "GET_TABLE");
+  private static class DummyUser implements Principal {
+
+    private final String role;
+
+    public DummyUser(String role) {
+
+      this.role = role;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getName() {
+
+      return this.role;
+    }
+
+    /**
+     * @return role
+     */
+    public String getRole() {
+
+      return this.role;
+    }
+  }
+
+  private static class DummyRolesProvider implements RolesProvider<DummyUser> {
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasOneOf(DummyUser userToken, List<String> roles) {
+
+      return roles.contains(userToken.getRole());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean has(DummyUser userToken, String role) {
+
+      return userToken.getRole().equals(role);
+    }
+
   }
 }

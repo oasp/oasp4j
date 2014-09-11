@@ -9,6 +9,7 @@ import java.util.List;
  * @param <P> is the generic type of the object representing the {@link Principal} (user that logged in).
  * @author mbrunnli
  */
+// REVIEW mbrunnli (hohwille) The name of this interface does not fit to its signature. It does not provide roles!
 public interface RolesProvider<P extends Principal> {
 
   /**
