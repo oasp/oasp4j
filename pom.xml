@@ -13,7 +13,7 @@
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
   <description>Dependencies of the Open Application Standard Platform for Java (OASP4J) based on spring boot.</description>
-  <url>http://oasp.org/</url>
+  <url>http://oasp.io/</url>
   <inceptionYear>2014</inceptionYear>
 
   <properties>
