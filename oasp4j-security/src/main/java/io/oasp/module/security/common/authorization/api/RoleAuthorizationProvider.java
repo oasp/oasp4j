@@ -8,6 +8,7 @@ import io.oasp.security.Security;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,9 +29,10 @@ import org.springframework.core.io.Resource;
 /**
  * The {@link RoleAuthorizationProvider} provides a simple authorization management of roles and permissions.
  *
+ * @param <P> is the generic type of the object representing the {@link Principal} (user that logged in).
  * @author mbrunnli
  */
-public class RoleAuthorizationProvider {
+public class RoleAuthorizationProvider<P extends Principal> {
 
   /**
    * Logger instance.
@@ -40,7 +42,7 @@ public class RoleAuthorizationProvider {
   /**
    * Role provider to check a user's roles.
    */
-  private RolesProvider rolesProvider;
+  private RolesProvider<P> rolesProvider;
 
   /**
    * Mapping from permission id to list of roles, having this permission.
@@ -71,23 +73,23 @@ public class RoleAuthorizationProvider {
   /**
    * Validates whether the user's roles are sufficient to match the given target permission.
    *
-   * @param userToken user token
+   * @param principal the {@link Principal} to authorize.
    * @param targetPermission permission to be granted
    * @throws SecurityException if none of the user's roles contains the target permission
    */
-  public void authorize(Object userToken, String targetPermission) throws SecurityException {
+  public void authorize(P principal, String targetPermission) throws SecurityException {
 
-    authorize(userToken, Arrays.asList(targetPermission));
+    authorize(principal, Arrays.asList(targetPermission));
   }
 
   /**
    * Validates whether the user's roles are sufficient to match at least one of the given target permissions.
    *
-   * @param userToken user token
+   * @param principal the {@link Principal} to authorize.
    * @param targetPermissions permissions to be granted
    * @throws SecurityException if none of the user's roles contains the target permission
    */
-  public void authorize(Object userToken, List<String> targetPermissions) throws SecurityException {
+  public void authorize(P principal, List<String> targetPermissions) throws SecurityException {
 
     if (targetPermissions.isEmpty()) {
       return;
@@ -107,7 +109,7 @@ public class RoleAuthorizationProvider {
       }
     }
 
-    if (!this.rolesProvider.hasOneOf(userToken, new LinkedList<>(possibleRoles))) {
+    if (!this.rolesProvider.hasOneOf(principal, new LinkedList<>(possibleRoles))) {
       LOG.error("Permission denied: the given user roles do not include the target permission.");
       throw new SecurityException("Permission denied: the given user roles do not include the target permission.");
     }
@@ -188,7 +190,7 @@ public class RoleAuthorizationProvider {
    * @param rolesProvider new value for rolesProvider
    */
   @Inject
-  public void setRolesProvider(RolesProvider rolesProvider) {
+  public void setRolesProvider(RolesProvider<P> rolesProvider) {
 
     this.rolesProvider = rolesProvider;
   }
