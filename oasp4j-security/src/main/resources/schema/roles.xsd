@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://oasp.org/security" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
-  targetNamespace="http://oasp.org/security" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://oasp.io/security" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+  targetNamespace="http://oasp.io/security" elementFormDefault="qualified">
 
   <xs:element name="security">
     <xs:complexType>

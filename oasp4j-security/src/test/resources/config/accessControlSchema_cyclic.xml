@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<security xmlns="http://oasp.org/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://oasp.org/security ../schema/roles.xsd">
+<security xmlns="http://oasp.io/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://oasp.io/security ../schema/roles.xsd">
 
   <roles>
     <role name="Waiter">
