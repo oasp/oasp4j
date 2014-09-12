@@ -1,4 +1,4 @@
-package org.oasp.module.entity.common.api;
+package io.oasp.module.entity.common.api;
 
 
 /**

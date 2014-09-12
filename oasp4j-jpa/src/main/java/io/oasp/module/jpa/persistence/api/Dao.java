@@ -1,7 +1,23 @@
-package org.oasp.module.entity.persistence.api;
+package io.oasp.module.jpa.persistence.api;
+
+import io.oasp.module.entity.common.api.PersistenceEntity;
 
 /**
- * This is the interface for a Data Access Object (DAO).
+ * This is the interface for a <em>Data Access Object</em> (DAO). It acts as a manager responsible for the persistence
+ * operations on a specific {@link PersistenceEntity entity} {@literal <E>}.<br/>
+ * This is base interface contains the CRUD operations:
+ * <ul>
+ * <li>Create: call {@link #save(PersistenceEntity)} on a new entity.</li>
+ * <li>Retrieve: use <code>find*</code> methods such as {@link #findOne(Long)}. More specific queries will be added in
+ * dedicated DAO interfaces.</li>
+ * <li>Update: done automatically by JPA vendor (hibernate) on commit or call {@link #save(PersistenceEntity)} to
+ * {@link javax.persistence.EntityManager#merge(Object) merge} an entity.</li>
+ * <li>Delete: call {@link #delete(PersistenceEntity)} or {@link #delete(Long)}.</li>
+ * </ul>
+ * For each (non-abstract) implementation of {@link PersistenceEntity entity} <code>MyEntity</code> you should create an
+ * interface interface <code>MyEntityDao</code> that inherits from this {@link Dao} interface. Also you create an
+ * implementation of that interface <code>MyEntityDaoImpl</code> that you derive from
+ * {@link io.oasp.module.jpa.persistence.base.AbstractDao}.
  *
  * @param <E> is the generic type of the {@link PersistenceEntity}.
  *
@@ -54,8 +70,8 @@ public interface Dao<E extends PersistenceEntity> {
   /**
    * Returns all instances of the type with the given IDs.
    *
-   * @param ids
-   * @return
+   * @param ids are the IDs of all entities to retrieve e.g. as {@link java.util.List}.
+   * @return an {@link Iterable} with all {@link PersistenceEntity entites} for the given <code>ids</code>.
    */
   Iterable<E> findAll(Iterable<Long> ids);
 

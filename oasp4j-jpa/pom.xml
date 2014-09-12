@@ -8,20 +8,27 @@
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>../oasp4j-parent/pom.xml</relativePath>
   </parent>
-  <artifactId>oasp4j-entity</artifactId>
+  <artifactId>oasp4j-jpa</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <name>${project.artifactId}</name>
-  <description>Module for (persistent) entity infrastructure of the Open Application Standard Platform for Java (OASP4J).</description>
+  <description>JPA-based persistence infrastructure of the Open Application Standard Platform for Java (OASP4J).</description>
 
   <dependencies>
+    <dependency>
+      <groupId>io.oasp.java</groupId>
+      <artifactId>oasp4j-entity</artifactId>
+    </dependency>
     <dependency>
       <groupId>javax.inject</groupId>
       <artifactId>javax.inject</artifactId>
     </dependency>
     <dependency>
-      <!-- Only for javadoc links -->
       <groupId>org.hibernate.javax.persistence</groupId>
       <artifactId>hibernate-jpa-2.1-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
       <optional>true</optional>
     </dependency>
   </dependencies>

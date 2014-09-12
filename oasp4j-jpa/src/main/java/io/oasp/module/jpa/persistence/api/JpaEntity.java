@@ -1,12 +1,13 @@
-package org.oasp.module.entity.persistence.api;
+package io.oasp.module.jpa.persistence.api;
+
+import io.oasp.module.entity.common.api.AbstractEntity;
+import io.oasp.module.entity.common.api.PersistenceEntity;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
-
-import org.oasp.module.entity.common.api.AbstractEntity;
 
 /**
  * Abstract Entity for all persistent entities.

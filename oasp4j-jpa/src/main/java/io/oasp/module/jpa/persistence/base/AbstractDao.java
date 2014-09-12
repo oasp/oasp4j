@@ -1,13 +1,19 @@
-package org.oasp.module.entity.persistence.api;
+package io.oasp.module.jpa.persistence.base;
+
+import io.oasp.module.entity.common.api.PersistenceEntity;
+import io.oasp.module.jpa.persistence.api.Dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 /**
- * TODO hohwille This type ...
+ * This is the abstract base-implementation of the {@link Dao} interface.
+ *
+ * @param <E> is the generic type of the managed {@link PersistenceEntity}.
  *
  * @author hohwille
  */
@@ -24,6 +30,9 @@ public abstract class AbstractDao<E extends PersistenceEntity> implements Dao<E>
     super();
   }
 
+  /**
+   * @return the {@link Class} reflecting the managed entity.
+   */
   protected abstract Class<E> getEntityClass();
 
   /**
@@ -86,14 +95,29 @@ public abstract class AbstractDao<E extends PersistenceEntity> implements Dao<E>
   }
 
   /**
+   * @return an {@link Iterable} to find ALL {@link #getEntityClass() managed entities} from the persistent store. Not
+   *         exposed to API by default as this might not make sense for all kind of entities.
+   */
+  protected Iterable<E> findAll() {
+
+    CriteriaQuery<E> query = this.entityManager.getCriteriaBuilder().createQuery(getEntityClass());
+    Root<E> root = query.from(getEntityClass());
+    query.select(root);
+    TypedQuery<E> typedQuery = this.entityManager.createQuery(query);
+    return typedQuery.getResultList();
+  }
+
+  /**
    * {@inheritDoc}
    */
   @Override
   public Iterable<E> findAll(Iterable<Long> ids) {
 
-    CriteriaQuery<E> query = this.entityManager.getCriteriaBuilder().createQuery(getEntityClass());
+    CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+    CriteriaQuery<E> query = builder.createQuery(getEntityClass());
     Root<E> root = query.from(getEntityClass());
     query.select(root);
+    query.where(root.get("id").in(ids));
     TypedQuery<E> typedQuery = this.entityManager.createQuery(query);
     return typedQuery.getResultList();
   }
