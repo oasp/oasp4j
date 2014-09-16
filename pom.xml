@@ -17,7 +17,7 @@
   <inceptionYear>2014</inceptionYear>
 
   <properties>
-    <cxf.version>3.0.0</cxf.version>
+    <cxf.version>3.0.1</cxf.version>
   </properties>
   
   <modules>
