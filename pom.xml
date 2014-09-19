@@ -81,6 +81,11 @@
         <artifactId>hibernate-jpa-2.1-api</artifactId>
         <version>1.0.0.Final</version>
       </dependency>
+      <dependency>
+        <groupId>cglib</groupId>
+        <artifactId>cglib</artifactId>
+        <version>3.1</version>
+      </dependency>
       <!-- Support for dynamic and type-safe JPA queries -->
       <dependency>
         <groupId>com.mysema.querydsl</groupId>
