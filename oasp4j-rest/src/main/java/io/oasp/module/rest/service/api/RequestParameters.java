@@ -91,7 +91,7 @@ public class RequestParameters {
       for (T instance : targetType.getEnumConstants()) {
         Enum<?> e = (Enum<?>) instance;
         if (e.name().equalsIgnoreCase(value)) {
-          result = instance;
+          return instance;
         }
       }
       throw new IllegalArgumentException("Enum constant not found!");
