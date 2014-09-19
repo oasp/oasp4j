@@ -1,5 +1,7 @@
 package io.oasp.module.security.common.api.accesscontrol;
 
+import java.util.Objects;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -7,8 +9,6 @@ import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import com.google.common.base.Objects;
 
 /**
  * This is the abstract base class for a node of the {@link AccessControlSchema} that represents a tree of
@@ -91,7 +91,7 @@ public abstract class AccessControl {
       return false;
     }
     AccessControl other = (AccessControl) obj;
-    if (!Objects.equal(this.id, other.id)) {
+    if (!Objects.equals(this.id, other.id)) {
       return false;
     }
     return true;

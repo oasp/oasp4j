@@ -2,13 +2,12 @@ package io.oasp.module.security.common.api.accesscontrol;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import com.google.common.base.Objects;
 
 /**
  * This class represents the security configuration for the mapping of {@link AccessControlGroup}s to
@@ -79,7 +78,7 @@ public class AccessControlSchema {
       return false;
     }
     AccessControlSchema other = (AccessControlSchema) obj;
-    if (!Objects.equal(this.groups, other.groups)) {
+    if (!Objects.equals(this.groups, other.groups)) {
       return false;
     }
     return true;

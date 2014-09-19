@@ -2,13 +2,12 @@ package io.oasp.module.security.common.api.accesscontrol;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import com.google.common.base.Objects;
 
 /**
  * A {@link AccessControlGroup} represents a collection of {@link AccessControlPermission permissions}. A security
@@ -149,10 +148,10 @@ public class AccessControlGroup extends AccessControl { // implements java.secur
     // if (!Objects.equal(this.inherits, other.inherits)) {
     // return false;
     // }
-    if (!Objects.equal(this.permissions, other.permissions)) {
+    if (!Objects.equals(this.permissions, other.permissions)) {
       return false;
     }
-    if (!Objects.equal(this.type, other.type)) {
+    if (!Objects.equals(this.type, other.type)) {
       return false;
     }
     return true;
