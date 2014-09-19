@@ -25,10 +25,12 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-aop</artifactId>
     </dependency>
+    <!--
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-aspects</artifactId>
     </dependency>
+     -->
     <!-- TODO: why do we need this??? -->
     <!--
     <dependency>

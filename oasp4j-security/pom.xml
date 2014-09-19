@@ -41,6 +41,10 @@
       <groupId>javax.inject</groupId>
       <artifactId>javax.inject</artifactId>
     </dependency>
+    <dependency>
+      <groupId>javax.annotation</groupId>
+      <artifactId>javax.annotation-api</artifactId>
+    </dependency>
 
     <!-- Used by JsonUsernamePasswordAuthenticationFilter -->
     <dependency>
@@ -56,8 +60,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>jcl-over-slf4j</artifactId>
+      <groupId>io.oasp.java</groupId>
+      <artifactId>oasp4j-logging</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -71,49 +75,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <build>
-    <plugins>
-      <!-- JAXB Code generation -->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>build-helper-maven-plugin</artifactId>
-        <version>1.4</version>
-        <executions>
-          <execution>
-            <id>add-jaxb-source</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>add-source</goal>
-            </goals>
-            <configuration>
-              <sources>
-                <source>${basedir}/src/generated/java</source>
-              </sources>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>jaxb2-maven-plugin</artifactId>
-        <version>1.6</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>xjc</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <schemaDirectory>${basedir}/src/main/resources/schema</schemaDirectory>
-          <outputDirectory>${basedir}/src/generated/java</outputDirectory>
-          <includeSchemas>
-            <includeSchema>roles.xsd</includeSchema>
-          </includeSchemas>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-
 </project>

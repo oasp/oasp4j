@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <property name="logPattern" value="[D: %d{ISO8601}] [P: %-5p] [L: %c] - [M: %m]  %n"/>
+
+
+  <!-- TODO: Console appender should only be active in development environment -->
+  <appender name="CONSOLE_APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>${logPattern}</pattern>
+    </encoder>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>DEBUG</level>
+    </filter>
+  </appender>
+
+  <root level="DEBUG">
+    <appender-ref ref="CONSOLE_APPENDER"/>
+  </root>
+</configuration>
