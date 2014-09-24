@@ -3,69 +3,117 @@
 <settings>
 	<!-- The "localRepository" has to be set to ensure consistent behaviour across command-line and Eclipse.
        To change it edit variables[-customized].bat -->
-  <localRepository>${M2_REPO}</localRepository>
-  
-  <profiles>
-    <profile>
-      <id>apache</id>
-      <repositories>
-        <repository>
-          <id>apache.org</id>
-          <name>Maven Snapshots</name>
-          <url>http://people.apache.org/repo/m2-snapshot-repository</url>
-          <releases>
-            <enabled>false</enabled>
-          </releases>
-          <snapshots>
-            <enabled>true</enabled>
-          </snapshots>
-        </repository>
-      </repositories>
-      <pluginRepositories>
-        <pluginRepository>
-          <id>apache.org</id>
-          <name>Maven Plugin Snapshots</name>
-          <url>http://people.apache.org/repo/m2-snapshot-repository</url>
-          <releases>
-            <enabled>false</enabled>
-          </releases>
-          <snapshots>
-            <enabled>true</enabled>
-          </snapshots>
-        </pluginRepository>
-      </pluginRepositories>
-    </profile>
-
-    <profile>
-      <id>codehaus</id>
-      <repositories>
-        <repository>
-          <id>codehaus.org</id>
-          <name>CodeHaus Snapshots</name>
-          <url>http://snapshots.repository.codehaus.org</url>
-          <releases>
-            <enabled>false</enabled>
-          </releases>
-          <snapshots>
-            <enabled>true</enabled>
-          </snapshots>
-        </repository>
-      </repositories>
-      <pluginRepositories>
-        <pluginRepository>
-          <id>codehaus.org</id>
-          <name>CodeHaus Plugin Snapshots</name>
-          <url>http://snapshots.repository.codehaus.org</url>
-          <releases>
-            <enabled>false</enabled>
-          </releases>
-          <snapshots>
-            <enabled>true</enabled>
-          </snapshots>
-        </pluginRepository>
-      </pluginRepositories>
-    </profile>    
-  </profiles>
-  <activeProfiles>
-  </activeProfiles>
+	<localRepository>${M2_REPO}</localRepository>
+	
+	<!-- When you are using the oasp4j-ide, define your credentials in the variables-customized.bat 
+	     using the variables OASP_NEXUS_USER for the user name and OASP_NEXUS_PASSWD for the password.
+		 If you not yet have access to the nexus instance, just contact Jörg Hohwiller or Krzysztof Sobkowiak. -->
+	<servers>
+		<server>
+            <id>nexus.central</id>
+            <username>${OASP_NEXUS_USER}</username>
+            <password>${OASP_NEXUS_PASSWD}</password>
+        </server>
+		<server>
+            <id>public</id>
+            <username>${OASP_NEXUS_USER}</username>
+            <password>${OASP_NEXUS_PASSWD}</password>
+        </server>
+        <server>
+            <id>3rd.party</id>
+            <username>${OASP_NEXUS_USER}</username>
+            <password>${OASP_NEXUS_PASSWD}</password>
+        </server>
+		<server>
+			<id>oasp.releases</id>
+			<username>${OASP_NEXUS_USER}</username>
+			<password>${OASP_NEXUS_PASSWD}</password>
+		</server>
+		<server>
+			<id>oasp.snapshots</id>
+			<username>${OASP_NEXUS_USER}</username>
+			<password>${OASP_NEXUS_PASSWD}</password>
+		</server>
+    </servers>
+	
+	<mirrors>
+        <mirror>
+			<id>nexus.central</id>
+            <mirrorOf>central</mirrorOf>
+            <name>central-mirror</name>
+            <url>http://oasp-ci.cloudapp.net/nexus/content/repositories/central</url>
+        </mirror>
+    </mirrors>
+	
+	<profiles>
+		<profile>
+			<id>oasp.nexus</id>
+			<properties>
+				<nexusurl>http://oasp-ci.cloudapp.net/nexus/content</nexusurl>
+                <repositoryurl>${nexusurl}/repositories</repositoryurl>
+            </properties>
+			<repositories>
+				<repository>
+					<id>public</id>
+					<name>Public Repositories</name>
+					<url>${nexusurl}/groups/public/</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+				<repository>
+					<id>3rd.party</id>
+					<name>3rd party</name>
+					<url>${repositoryurl}/thirdparty</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+				<repository>
+					<id>oasp.releases</id>
+					<name>OASP Releases</name>
+					<url>${repositoryurl}/releases</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+				<repository>
+					<id>oasp.snapshots</id>
+					<name>OASP Snapshots</name>
+					<url>${repositoryurl}/snapshots</url>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>public</id>
+					<name>Public Repositories</name>
+					<url>${nexusurl}/groups/public/</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+	</profiles>
+	<activeProfiles>
+		<activeProfile>oasp.nexus</activeProfile>
+	</activeProfiles>
 </settings>
