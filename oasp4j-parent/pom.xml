@@ -348,30 +348,14 @@
   </profiles>
   <issueManagement>
     <system>GitHub</system>
-    <url>http://github.com/oasp/oasp-java/issues</url>
+    <url>https://github.com/oasp/oasp4j/issues</url>
   </issueManagement>
   <scm>
     <connection>scm:git:git@github.com:oasp/oasp-java.git</connection>
     <developerConnection>scm:git:git@github.com:oasp/oasp-java.git</developerConnection>
-    <url>https://github.com/oasp/oasp-java/tree/master</url>
+    <url>https://github.com/oasp/oasp4j/tree/master</url>
     <tag/>
   </scm>
-  <distributionManagement>
-    <repository>
-      <id>sonatype-nexus-staging</id>
-      <name>Staging Repository</name>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-    <snapshotRepository>
-      <id>sonatype-nexus-snapshots</id>
-      <name>Snapshot Repository</name>
-      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-    </snapshotRepository>
-    <site>
-      <id>oasp.org</id>
-      <url>${java.io.tmpdir}/oasp-site</url>
-    </site>
-  </distributionManagement>
   <!--
     <mailingLists>
     <mailingList>
