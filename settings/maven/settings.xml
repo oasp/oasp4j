@@ -43,28 +43,16 @@
       <name>central-mirror</name>
       <url>http://oasp-ci.cloudapp.net/nexus/content/repositories/central</url>
     </mirror>
-    <!--<mirror>
-      <id>nexus.eclipse.platform</id>
-      <mirrorOf>eclipse.platform</mirrorOf>
-      <layout>p2</layout>
-      <mirrorOfLayouts>p2</mirrorOfLayouts>
-      <name>eclipse-p2-mirror</name>
-      <url>http://oasp-ci.cloudapp.net/nexus/content/repositories/p2test/</url>
-      </mirror> -->
   </mirrors>
 
   <profiles>
     <profile>
       <id>oasp.nexus</id>
-      <properties>
-        <nexusurl>http://oasp-ci.cloudapp.net/nexus/content</nexusurl>
-        <repositoryurl>${nexusurl}/repositories</repositoryurl>
-      </properties>
       <repositories>
         <repository>
           <id>public</id>
           <name>Public Repositories</name>
-          <url>${nexusurl}/groups/public/</url>
+          <url>http://oasp-ci.cloudapp.net/nexus/content/groups/public/</url>
           <releases>
             <enabled>true</enabled>
             <updatePolicy>always</updatePolicy>
@@ -77,7 +65,7 @@
         <repository>
           <id>3rd.party</id>
           <name>3rd party</name>
-          <url>${repositoryurl}/thirdparty</url>
+          <url>http://oasp-ci.cloudapp.net/nexus/content/repositories/thirdparty</url>
           <releases>
             <enabled>true</enabled>
             <updatePolicy>always</updatePolicy>
@@ -90,7 +78,7 @@
         <repository>
           <id>oasp.releases</id>
           <name>OASP Releases</name>
-          <url>${repositoryurl}/releases</url>
+          <url>http://oasp-ci.cloudapp.net/nexus/content/repositories/releases</url>
           <releases>
             <enabled>true</enabled>
             <updatePolicy>always</updatePolicy>
@@ -103,7 +91,7 @@
         <repository>
           <id>oasp.snapshots</id>
           <name>OASP Snapshots</name>
-          <url>${repositoryurl}/snapshots</url>
+          <url>http://oasp-ci.cloudapp.net/nexus/content/repositories/snapshots</url>
           <releases>
             <enabled>false</enabled>
             <updatePolicy>always</updatePolicy>
@@ -118,7 +106,7 @@
         <pluginRepository>
           <id>public</id>
           <name>Public Repositories</name>
-          <url>${nexusurl}/groups/public/</url>
+          <url>http://oasp-ci.cloudapp.net/nexus/content/groups/public/</url>
           <releases>
             <enabled>true</enabled>
             <updatePolicy>always</updatePolicy>
