@@ -22,6 +22,7 @@
     <module>../oasp4j-beanmapping</module>
     <module>../oasp4j-rest</module>
     <module>../oasp4j-security</module>
+    <module>../oasp4j-jpa</module>
   </modules>
 
   <properties>

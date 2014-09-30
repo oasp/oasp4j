@@ -15,12 +15,8 @@
 
   <dependencies>
     <dependency>
-      <groupId>io.oasp.java</groupId>
-      <artifactId>oasp4j-entity</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>javax.inject</groupId>
-      <artifactId>javax.inject</artifactId>
+      <groupId>net.sf.m-m-m</groupId>
+      <artifactId>mmm-util-core</artifactId>
     </dependency>
     <dependency>
       <groupId>org.hibernate.javax.persistence</groupId>
