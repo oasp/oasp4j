@@ -1,7 +1,5 @@
 package io.oasp.module.rest.service.impl;
 
-import io.oasp.module.rest.service.impl.RestServiceExceptionFacade;
-
 import javax.validation.ValidationException;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
@@ -122,7 +120,7 @@ public class RestServiceExceptionFacadeTest extends Assert {
     Object entity = response.getEntity();
     assertTrue(entity instanceof String);
     String result = (String) entity;
-    assertTrue(result.startsWith("TechnicalError:"));
+    assertTrue(result.contains("TechnicalError"));
   }
 
   /**
@@ -140,7 +138,8 @@ public class RestServiceExceptionFacadeTest extends Assert {
     Object entity = response.getEntity();
     assertTrue(entity instanceof String);
     String result = (String) entity;
-    assertEquals("TechnicalError:" + exception.getUuid(), result);
+    assertTrue(result.contains("TechnicalError"));
+    assertTrue(result.contains(exception.getUuid().toString()));
   }
 
   /**

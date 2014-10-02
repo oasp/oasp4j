@@ -1,7 +1,9 @@
 package io.oasp.module.rest.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.ValidationException;
 import javax.ws.rs.ServerErrorException;
@@ -16,6 +18,9 @@ import net.sf.mmm.util.exception.api.TechnicalErrorUserException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * This is an implementation of {@link ExceptionMapper} that acts as generic exception facade for REST services.
@@ -172,14 +177,21 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
    * Responsible for creating the technical error response message.
    *
    * @param technicalError the thrown technical error user exception
-   * @return complete error response message
+   * @return complete error response message as JSON-String
    */
   protected String createTechnicalErrorResponseMessage(NlsRuntimeException technicalError) {
 
-    StringBuilder buffer = new StringBuilder(technicalError.getCode());
-    buffer.append(':');
-    buffer.append(technicalError.getUuid());
-    String message = buffer.toString();
+    Map<String, String> jsonMap = new HashMap<>();
+    jsonMap.put("code", technicalError.getCode());
+    jsonMap.put("uuid", technicalError.getUuid().toString());
+    jsonMap.put("message", technicalError.getMessage());
+    String message = "";
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      message = mapper.writeValueAsString(jsonMap);
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+    }
     return message;
   }
 }
