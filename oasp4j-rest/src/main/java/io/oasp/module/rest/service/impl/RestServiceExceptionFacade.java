@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.validation.ValidationException;
 import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.WebApplicationException;
@@ -37,6 +38,8 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
   private static final Logger LOG = LoggerFactory.getLogger(RestServiceExceptionFacade.class);
 
   private final List<Class<? extends Throwable>> securityExceptions;
+
+  private ObjectMapper mapper;
 
   /**
    * The constructor.
@@ -100,14 +103,14 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     // business exceptions
     if (exception instanceof ServerErrorException) {
       LOG.error("Service failed on server", exception);
-      return ((ServerErrorException) exception).getResponse();
+      return addErrorResponseMessage(exception, ((ServerErrorException) exception).getResponse());
     } else if (exception instanceof WebApplicationException) {
       LOG.warn("Service failed due to unexpected request: {}", exception.toString());
-      return ((WebApplicationException) exception).getResponse();
+      return addErrorResponseMessage(exception, ((WebApplicationException) exception).getResponse());
     } else if (exception instanceof ValidationException) {
-      // return handleBusinessError(exception);
       LOG.warn("Service failed due to validation exception: {}", exception.toString());
-      return Response.status(Status.BAD_REQUEST).entity(exception.getMessage()).build();
+      String message = createErrorResponseMessage(exception.getMessage(), null, null);
+      return Response.status(Status.BAD_REQUEST).entity(message).build();
     } else {
       Class<?> exceptionClass = exception.getClass();
       for (Class<?> securityError : this.securityExceptions) {
@@ -115,13 +118,13 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
           return handleSecurityError(exception);
         }
       }
-      // NlsRuntimeException userError = TechnicalErrorUserException.getOrCreateUserException(exception);
-      return /** handleTechnicalError(exception, userError); */
-      handleGenericError(exception);
+      return handleGenericError(exception);
     }
   }
 
   /**
+   * Exception handling depending on technical Exception or not.
+   *
    * @param exception the exception thrown
    * @return the response build from error status
    */
@@ -129,38 +132,16 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
 
     NlsRuntimeException userError = TechnicalErrorUserException.getOrCreateUserException(exception);
     if (userError.isTechnical()) {
-      return handleTechnicalError(exception, userError);
+      LOG.error("Service failed on server", exception);
     } else {
-      return handleBusinessError(exception);
+      LOG.warn("Service failed due to business error: {}", exception.getMessage());
     }
+    return createResponse(userError);
   }
 
   /**
-   * @param exception the exception thrown
-   * @return the response build from error status
-   */
-  protected Response handleBusinessError(Throwable exception) {
-
-    // *** business error ***
-    String message = exception.toString();
-    LOG.warn("Service failed due to business error: {}", message);
-    return Response.status(Status.BAD_REQUEST).entity(message).build();
-  }
-
-  /**
-   * @param exception the exception thrown
-   * @param userError the runtime error
-   * @return the response build from error status
-   */
-  protected Response handleTechnicalError(Throwable exception, NlsRuntimeException userError) {
-
-    // *** technical error ***
-    LOG.error("Service failed on server", exception);
-    String message = createTechnicalErrorResponseMessage(userError);
-    return Response.status(Status.INTERNAL_SERVER_ERROR).entity(message).build();
-  }
-
-  /**
+   * Exception handling for security exceptions.
+   *
    * @param exception the exception thrown
    * @return the response build from error status
    */
@@ -170,28 +151,80 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     LOG.error("Service failed due to security error", exception);
     // NOTE: for security reasons we do not send any details about the error
     // to the client!
-    return Response.status(Status.FORBIDDEN).build();
+    String message = createErrorResponseMessage("forbidden", null, null);
+    return Response.status(Status.FORBIDDEN).entity(message).build();
   }
 
   /**
    * Responsible for creating the technical error response message.
    *
-   * @param technicalError the thrown technical error user exception
+   * @param error the thrown technical error user exception
    * @return complete error response message as JSON-String
    */
-  protected String createTechnicalErrorResponseMessage(NlsRuntimeException technicalError) {
+  protected Response createResponse(NlsRuntimeException error) {
+
+    if (error.isTechnical()) {
+      String message = createErrorResponseMessage(error.getMessage(), error.getCode(), error.getUuid().toString());
+      return Response.status(Status.INTERNAL_SERVER_ERROR).entity(message).build();
+    } else {
+      String message = createErrorResponseMessage(error.getMessage(), null, error.getUuid().toString());
+      LOG.warn("Service failed due to business error: {}", message);
+      return Response.status(Status.BAD_REQUEST).entity(message).build();
+    }
+  }
+
+  /**
+   * Create a response message as a JSON-String from the given parts.
+   *
+   * @param message the message of the response message
+   * @param code the code of the response message
+   * @param uuid the uuid of the response message
+   * @return the response message as a JSON-String
+   */
+  protected String createErrorResponseMessage(String message, String code, String uuid) {
 
     Map<String, String> jsonMap = new HashMap<>();
-    jsonMap.put("code", technicalError.getCode());
-    jsonMap.put("uuid", technicalError.getUuid().toString());
-    jsonMap.put("message", technicalError.getMessage());
-    String message = "";
-    ObjectMapper mapper = new ObjectMapper();
+    if (message != null) {
+      jsonMap.put("message", message);
+    }
+    if (code != null) {
+      jsonMap.put("code", code);
+    }
+    if (uuid != null) {
+      jsonMap.put("uuid", uuid);
+    }
+
+    setMapper(new ObjectMapper());
+    String responseMessage = "";
     try {
-      message = mapper.writeValueAsString(jsonMap);
+      responseMessage = this.mapper.writeValueAsString(jsonMap);
     } catch (JsonProcessingException e) {
       e.printStackTrace();
     }
-    return message;
+    return responseMessage;
+  }
+
+  /**
+   * Add a response message to an existing response.
+   *
+   * @param exception the exception a response is needed for
+   * @param response the generated response from the exception
+   * @return the response with the response message added
+   */
+  protected Response addErrorResponseMessage(Throwable exception, Response response) {
+
+    String message = createErrorResponseMessage(exception.getMessage(), null, null);
+    response.getEntity();
+    Response newResponse = Response.status(response.getStatus()).entity(message).build();
+    return newResponse;
+  }
+
+  /**
+   * @param mapper the mapper to set
+   */
+  @Inject
+  public void setMapper(ObjectMapper mapper) {
+
+    this.mapper = mapper;
   }
 }

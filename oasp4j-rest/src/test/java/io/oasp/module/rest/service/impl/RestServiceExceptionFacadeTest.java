@@ -46,7 +46,9 @@ public class RestServiceExceptionFacadeTest extends Assert {
     Response response = exceptionFacade.toResponse(new AccessDeniedException(secretMessage));
     assertEquals(403, response.getStatus());
     Object entity = response.getEntity();
-    assertNull(entity); // no content
+    assertTrue(entity instanceof String);
+    String result = (String) entity;
+    assertEquals("{\"message\":\"forbidden\"}", result);
     response = exceptionFacade.toResponse(new AuthenticationCredentialsNotFoundException(secretMessage));
     assertEquals(403, response.getStatus());
     response = exceptionFacade.toResponse(new BadCredentialsException(secretMessage));
@@ -69,7 +71,9 @@ public class RestServiceExceptionFacadeTest extends Assert {
     Response response = exceptionFacade.toResponse(new InternalServerErrorException(secretMessage));
     assertEquals(500, response.getStatus());
     Object entity = response.getEntity();
-    assertNull(entity); // no content
+    assertTrue(entity instanceof String);
+    String result = (String) entity;
+    assertTrue(result.contains(secretMessage));
   }
 
   /**
@@ -84,11 +88,15 @@ public class RestServiceExceptionFacadeTest extends Assert {
     Response response = exceptionFacade.toResponse(new BadRequestException(secretMessage));
     assertEquals(400, response.getStatus());
     Object entity = response.getEntity();
-    assertNull(entity); // no content
+    assertTrue(entity instanceof String);
+    String result = (String) entity;
+    assertTrue(result.contains(secretMessage));
     response = exceptionFacade.toResponse(new ValidationException(secretMessage));
     assertEquals(400, response.getStatus());
     entity = response.getEntity();
-    assertEquals(entity.toString(), "The HTTP request is invalid");
+    assertTrue(entity instanceof String);
+    result = (String) entity;
+    assertTrue(result.contains(secretMessage));
   }
 
   /**
@@ -103,7 +111,11 @@ public class RestServiceExceptionFacadeTest extends Assert {
     Response response = exceptionFacade.toResponse(new NotFoundException(secretMessage));
     assertEquals(404, response.getStatus());
     Object entity = response.getEntity();
-    assertNull(entity); // no content
+    assertTrue(entity instanceof String);
+    String result = (String) entity;
+    assertTrue(result.startsWith("{"));
+    assertTrue(result.contains("message"));
+    assertTrue(result.contains(secretMessage));
   }
 
   /**
@@ -156,6 +168,7 @@ public class RestServiceExceptionFacadeTest extends Assert {
     Object entity = response.getEntity();
     assertTrue(entity instanceof String);
     String result = (String) entity;
-    assertEquals(exception.toString(), result);
+    assertTrue(result.contains(exception.getUuid().toString()));
+    assertTrue(result.replace("\\", "").contains(exception.getMessage()));
   }
 }
