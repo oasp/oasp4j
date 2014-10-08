@@ -163,14 +163,14 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
    */
   protected Response createResponse(NlsRuntimeException error) {
 
+    String message = createErrorResponseMessage(error.getMessage(), error.getCode(), error.getUuid().toString());
+    Status status;
     if (error.isTechnical()) {
-      String message = createErrorResponseMessage(error.getMessage(), error.getCode(), error.getUuid().toString());
-      return Response.status(Status.INTERNAL_SERVER_ERROR).entity(message).build();
+      status = Status.INTERNAL_SERVER_ERROR;
     } else {
-      String message = createErrorResponseMessage(error.getMessage(), null, error.getUuid().toString());
-      LOG.warn("Service failed due to business error: {}", message);
-      return Response.status(Status.BAD_REQUEST).entity(message).build();
+      status = Status.BAD_REQUEST;
     }
+    return Response.status(status).entity(message).build();
   }
 
   /**
