@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.validation.ValidationException;
+import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -14,11 +16,15 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
+import net.sf.mmm.util.exception.api.NlsIllegalStateException;
 import net.sf.mmm.util.exception.api.NlsRuntimeException;
 import net.sf.mmm.util.exception.api.TechnicalErrorUserException;
+import net.sf.mmm.util.security.api.SecurityErrorUserException;
+import net.sf.mmm.util.validation.api.ValidationErrorUserException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,6 +39,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 @Provider
 public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
+
+  /** JSON key for {@link Throwable#getMessage() error message}. */
+  public static final String KEY_MESSAGE = "message";
+
+  /** JSON key for {@link NlsRuntimeException#getUuid() error ID}. */
+  public static final String KEY_UUID = "uuid";
+
+  /** JSON key for {@link NlsRuntimeException#getCode() error code}. */
+  public static final String KEY_CODE = "code";
 
   /** Logger instance. */
   private static final Logger LOG = LoggerFactory.getLogger(RestServiceExceptionFacade.class);
@@ -71,6 +86,7 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
   protected void registerToplevelSecurityExceptions() {
 
     this.securityExceptions.add(SecurityException.class);
+    this.securityExceptions.add(SecurityErrorUserException.class);
     registerToplevelSecurityExceptions("org.springframework.security.access.AccessDeniedException");
     registerToplevelSecurityExceptions("org.springframework.security.authentication.AuthenticationServiceException");
     registerToplevelSecurityExceptions("org.springframework.security.authentication.AuthenticationCredentialsNotFoundException");
@@ -101,16 +117,13 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
   public Response toResponse(Throwable exception) {
 
     // business exceptions
-    if (exception instanceof ServerErrorException) {
-      LOG.error("Service failed on server", exception);
-      return addErrorResponseMessage(exception, ((ServerErrorException) exception).getResponse());
-    } else if (exception instanceof WebApplicationException) {
-      LOG.warn("Service failed due to unexpected request: {}", exception.toString());
-      return addErrorResponseMessage(exception, ((WebApplicationException) exception).getResponse());
+    if (exception instanceof WebApplicationException) {
+      return createResponse((WebApplicationException) exception);
     } else if (exception instanceof ValidationException) {
-      LOG.warn("Service failed due to validation exception: {}", exception.toString());
-      String message = createErrorResponseMessage(exception.getMessage(), null, null);
-      return Response.status(Status.BAD_REQUEST).entity(message).build();
+      ValidationErrorUserException error = new ValidationErrorUserException(exception);
+      return createResponse(exception, error);
+    } else if (exception instanceof ValidationErrorUserException) {
+      return createResponse(exception, (ValidationErrorUserException) exception);
     } else {
       Class<?> exceptionClass = exception.getClass();
       for (Class<?> securityError : this.securityExceptions) {
@@ -119,6 +132,23 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
         }
       }
       return handleGenericError(exception);
+    }
+  }
+
+  /**
+   * Creates the {@link Response} for the given validation exception.
+   *
+   * @param exception is the original validation exception.
+   * @param error is the wrapped exception or the same as <code>exception</code>.
+   * @return the requested {@link Response}.
+   */
+  protected Response createResponse(Throwable exception, ValidationErrorUserException error) {
+
+    LOG.warn("Service failed due to validation failure.", error);
+    if (exception == error) {
+      return createResponse(Status.BAD_REQUEST, error);
+    } else {
+      return createResponse(Status.BAD_REQUEST, error, exception.getMessage());
     }
   }
 
@@ -148,29 +178,74 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
   protected Response handleSecurityError(Throwable exception) {
 
     // *** security error ***
-    LOG.error("Service failed due to security error", exception);
+    NlsRuntimeException error;
+    if (exception instanceof NlsRuntimeException) {
+      error = (NlsRuntimeException) exception;
+    } else {
+      error = new SecurityErrorUserException(exception);
+    }
+    LOG.error("Service failed due to security error", error);
     // NOTE: for security reasons we do not send any details about the error
     // to the client!
-    String message = createErrorResponseMessage("forbidden", null, null);
+    String message = createJsonErrorResponseMessage("forbidden", null, error.getUuid());
     return Response.status(Status.FORBIDDEN).entity(message).build();
   }
 
   /**
-   * Responsible for creating the technical error response message.
+   * Create the {@link Response} for the given {@link NlsRuntimeException}.
    *
-   * @param error the thrown technical error user exception
-   * @return complete error response message as JSON-String
+   * @param error the generic {@link NlsRuntimeException}.
+   * @return the corresponding {@link Response}.
    */
   protected Response createResponse(NlsRuntimeException error) {
 
-    String message = createErrorResponseMessage(error.getMessage(), error.getCode(), error.getUuid().toString());
     Status status;
     if (error.isTechnical()) {
       status = Status.INTERNAL_SERVER_ERROR;
     } else {
       status = Status.BAD_REQUEST;
     }
-    return Response.status(status).entity(message).build();
+    return createResponse(status, error);
+  }
+
+  /**
+   * Create a response message as a JSON-String from the given parts.
+   *
+   * @param status is the HTTP {@link Status}.
+   * @param error is the catched or wrapped {@link NlsRuntimeException}.
+   * @return the corresponding {@link Response}.
+   */
+  protected Response createResponse(Status status, NlsRuntimeException error) {
+
+    return createResponse(status, error, error.getLocalizedMessage(LocaleContextHolder.getLocale()));
+  }
+
+  /**
+   * Create a response message as a JSON-String from the given parts.
+   *
+   * @param status is the HTTP {@link Status}.
+   * @param error is the catched or wrapped {@link NlsRuntimeException}.
+   * @param message is the JSON message attribute.
+   * @return the corresponding {@link Response}.
+   */
+  protected Response createResponse(Status status, NlsRuntimeException error, String message) {
+
+    return createResponse(status, error, message, error.getCode());
+  }
+
+  /**
+   * Create a response message as a JSON-String from the given parts.
+   *
+   * @param status is the HTTP {@link Status}.
+   * @param error is the catched or wrapped {@link NlsRuntimeException}.
+   * @param message is the JSON message attribute.
+   * @param code is the {@link NlsRuntimeException#getCode() error code}.
+   * @return the corresponding {@link Response}.
+   */
+  protected Response createResponse(Status status, NlsRuntimeException error, String message, String code) {
+
+    String json = createJsonErrorResponseMessage(message, code, error.getUuid());
+    return Response.status(status).entity(json).build();
   }
 
   /**
@@ -181,20 +256,19 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
    * @param uuid the uuid of the response message
    * @return the response message as a JSON-String
    */
-  protected String createErrorResponseMessage(String message, String code, String uuid) {
+  protected String createJsonErrorResponseMessage(String message, String code, UUID uuid) {
 
     Map<String, String> jsonMap = new HashMap<>();
     if (message != null) {
-      jsonMap.put("message", message);
+      jsonMap.put(KEY_MESSAGE, message);
     }
     if (code != null) {
-      jsonMap.put("code", code);
+      jsonMap.put(KEY_CODE, code);
     }
     if (uuid != null) {
-      jsonMap.put("uuid", uuid);
+      jsonMap.put(KEY_UUID, uuid.toString());
     }
 
-    setMapper(new ObjectMapper());
     String responseMessage = "";
     try {
       responseMessage = this.mapper.writeValueAsString(jsonMap);
@@ -207,16 +281,38 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
   /**
    * Add a response message to an existing response.
    *
-   * @param exception the exception a response is needed for
-   * @param response the generated response from the exception
+   * @param exception the {@link WebApplicationException}.
    * @return the response with the response message added
    */
-  protected Response addErrorResponseMessage(Throwable exception, Response response) {
+  protected Response createResponse(WebApplicationException exception) {
 
-    String message = createErrorResponseMessage(exception.getMessage(), null, null);
-    response.getEntity();
-    Response newResponse = Response.status(response.getStatus()).entity(message).build();
-    return newResponse;
+    Response response = exception.getResponse();
+    int statusCode = response.getStatus();
+    Status status = Status.fromStatusCode(statusCode);
+    NlsRuntimeException error;
+    if (exception instanceof ServerErrorException) {
+      error = new TechnicalErrorUserException(exception);
+      LOG.error("Service failed on server", error);
+      return createResponse(status, error);
+    } else {
+      // exception type does not fit properly. We need some exception to generate UUID and include in stacktrace
+      error = new NlsIllegalStateException(exception);
+      if (exception instanceof ClientErrorException) {
+        LOG.warn("Service failed due to unexpected request", error);
+      } else {
+        LOG.warn("Service caused redirect or other error", error);
+      }
+      return createResponse(status, error, exception.getMessage(), String.valueOf(statusCode));
+    }
+
+  }
+
+  /**
+   * @return the {@link ObjectMapper} for JSON mapping.
+   */
+  public ObjectMapper getMapper() {
+
+    return this.mapper;
   }
 
   /**

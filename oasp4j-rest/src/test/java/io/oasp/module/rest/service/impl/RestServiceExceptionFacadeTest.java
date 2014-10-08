@@ -1,5 +1,7 @@
 package io.oasp.module.rest.service.impl;
 
+import java.util.Map;
+
 import javax.validation.ValidationException;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
@@ -7,7 +9,10 @@ import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 
 import net.sf.mmm.util.exception.api.IllegalCaseException;
+import net.sf.mmm.util.exception.api.NlsRuntimeException;
 import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
+import net.sf.mmm.util.exception.api.TechnicalErrorUserException;
+import net.sf.mmm.util.security.api.SecurityErrorUserException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,6 +22,8 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * Test-case for {@link RestServiceExceptionFacade}.
  *
@@ -24,12 +31,20 @@ import org.springframework.security.authentication.InternalAuthenticationService
  */
 public class RestServiceExceptionFacadeTest extends Assert {
 
+  /** Value of {@link TechnicalErrorUserException#getCode()}. */
+  private static final String CODE_TECHNICAL_ERROR = "TechnicalError";
+
+  /** Placeholder for any UUID. */
+  private static final String UUID_ANY = "<any-uuid>";
+
   /**
    * @return the {@link RestServiceExceptionFacade} instance to test.
    */
   protected RestServiceExceptionFacade getExceptionFacade() {
 
-    return new RestServiceExceptionFacade();
+    RestServiceExceptionFacade facade = new RestServiceExceptionFacade();
+    facade.setMapper(new ObjectMapper());
+    return facade;
   }
 
   /**
@@ -43,20 +58,65 @@ public class RestServiceExceptionFacadeTest extends Assert {
 
     String secretMessage = "Secret information not to be revealed on client - only to be logged on server!";
 
-    Response response = exceptionFacade.toResponse(new AccessDeniedException(secretMessage));
-    assertEquals(403, response.getStatus());
+    int statusCode = 403;
+    String message = "forbidden";
+    String code = null;
+
+    checkFacade(exceptionFacade, new AccessDeniedException(secretMessage), statusCode, message, UUID_ANY, code);
+    checkFacade(exceptionFacade, new AuthenticationCredentialsNotFoundException(secretMessage), statusCode, message,
+        UUID_ANY, code);
+    checkFacade(exceptionFacade, new BadCredentialsException(secretMessage), statusCode, message, UUID_ANY, code);
+    checkFacade(exceptionFacade, new AccountExpiredException(secretMessage), statusCode, message, UUID_ANY, code);
+    checkFacade(exceptionFacade, new InternalAuthenticationServiceException(secretMessage), statusCode, message,
+        UUID_ANY, code);
+    SecurityErrorUserException error = new SecurityErrorUserException();
+    checkFacade(exceptionFacade, error, statusCode, message, error.getUuid().toString(), code);
+  }
+
+  /**
+   * Checks that the specified {@link RestServiceExceptionFacade} provides the expected results for the given
+   * {@link Throwable}.
+   *
+   * @param exceptionFacade is the {@link RestServiceExceptionFacade} to test.
+   * @param error is the {@link Throwable} to convert.
+   * @param statusCode is the expected {@link Response#getStatus() status} code.
+   * @param message is the expected {@link Throwable#getMessage() error message} from the JSON result.
+   * @param uuid is the expected {@link NlsRuntimeException#getUuid() UUID} from the JSON result. May be
+   *        <code>null</code>.
+   * @param code is the expected {@link NlsRuntimeException#getCode() error code} from the JSON result. May be
+   *        <code>null</code>.
+   * @return the JSON result for potential further asserts.
+   */
+  protected String checkFacade(RestServiceExceptionFacade exceptionFacade, Throwable error, int statusCode,
+      String message, String uuid, String code) {
+
+    Response response = exceptionFacade.toResponse(error);
+    assertNotNull(response);
+    assertEquals(statusCode, response.getStatus());
+
     Object entity = response.getEntity();
     assertTrue(entity instanceof String);
     String result = (String) entity;
-    assertEquals("{\"message\":\"forbidden\"}", result);
-    response = exceptionFacade.toResponse(new AuthenticationCredentialsNotFoundException(secretMessage));
-    assertEquals(403, response.getStatus());
-    response = exceptionFacade.toResponse(new BadCredentialsException(secretMessage));
-    assertEquals(403, response.getStatus());
-    response = exceptionFacade.toResponse(new AccountExpiredException(secretMessage));
-    assertEquals(403, response.getStatus());
-    response = exceptionFacade.toResponse(new InternalAuthenticationServiceException(secretMessage));
-    assertEquals(403, response.getStatus());
+
+    if (statusCode == 403) {
+      assertFalse(result.contains(error.getMessage()));
+    }
+    try {
+      Map<String, String> valueMap = exceptionFacade.getMapper().readValue(result, Map.class);
+      assertEquals(message, valueMap.get(RestServiceExceptionFacade.KEY_MESSAGE));
+      assertEquals(code, valueMap.get(RestServiceExceptionFacade.KEY_CODE));
+      String actualUuid = valueMap.get(RestServiceExceptionFacade.KEY_UUID);
+      if (UUID_ANY.equals(uuid)) {
+        if (actualUuid == null) {
+          fail("UUID expected but not found in response: " + result);
+        }
+      } else {
+        assertEquals(uuid, actualUuid);
+      }
+    } catch (Exception e) {
+      throw new IllegalStateException(e.getMessage(), e);
+    }
+    return result;
   }
 
   /**
@@ -67,13 +127,10 @@ public class RestServiceExceptionFacadeTest extends Assert {
   public void testJaxrsInternalServerException() {
 
     RestServiceExceptionFacade exceptionFacade = getExceptionFacade();
-    String secretMessage = "The HTTP request is invalid";
-    Response response = exceptionFacade.toResponse(new InternalServerErrorException(secretMessage));
-    assertEquals(500, response.getStatus());
-    Object entity = response.getEntity();
-    assertTrue(entity instanceof String);
-    String result = (String) entity;
-    assertTrue(result.contains(secretMessage));
+    String internalMessage = "The HTTP request is invalid";
+    int statusCode = 500;
+    checkFacade(exceptionFacade, new InternalServerErrorException(internalMessage), statusCode,
+        new TechnicalErrorUserException(new IllegalStateException()).getMessage(), UUID_ANY, CODE_TECHNICAL_ERROR);
   }
 
   /**
@@ -107,15 +164,8 @@ public class RestServiceExceptionFacadeTest extends Assert {
   public void testJaxrsNotFoundException() {
 
     RestServiceExceptionFacade exceptionFacade = getExceptionFacade();
-    String secretMessage = "Either the service URL is wrong or the requested resource does not exist";
-    Response response = exceptionFacade.toResponse(new NotFoundException(secretMessage));
-    assertEquals(404, response.getStatus());
-    Object entity = response.getEntity();
-    assertTrue(entity instanceof String);
-    String result = (String) entity;
-    assertTrue(result.startsWith("{"));
-    assertTrue(result.contains("message"));
-    assertTrue(result.contains(secretMessage));
+    String internalMessage = "Either the service URL is wrong or the requested resource does not exist";
+    checkFacade(exceptionFacade, new NotFoundException(internalMessage), 404, internalMessage, UUID_ANY, "404");
   }
 
   /**
@@ -127,12 +177,9 @@ public class RestServiceExceptionFacadeTest extends Assert {
 
     RestServiceExceptionFacade exceptionFacade = getExceptionFacade();
     String secretMessage = "Internal server error occurred";
-    Response response = exceptionFacade.toResponse(new IllegalArgumentException(secretMessage));
-    assertEquals(500, response.getStatus());
-    Object entity = response.getEntity();
-    assertTrue(entity instanceof String);
-    String result = (String) entity;
-    assertTrue(result.contains("TechnicalError"));
+    IllegalArgumentException error = new IllegalArgumentException(secretMessage);
+    TechnicalErrorUserException technicalErrorUserException = new TechnicalErrorUserException(error);
+    checkFacade(exceptionFacade, error, 500, technicalErrorUserException.getMessage(), UUID_ANY, CODE_TECHNICAL_ERROR);
   }
 
   /**
@@ -143,15 +190,10 @@ public class RestServiceExceptionFacadeTest extends Assert {
   public void testTechnicalCustomRuntimeServerException() {
 
     RestServiceExceptionFacade exceptionFacade = getExceptionFacade();
-    String secretMessage = "Internal server error occurred";
-    IllegalCaseException exception = new IllegalCaseException(secretMessage);
-    Response response = exceptionFacade.toResponse(exception);
-    assertEquals(500, response.getStatus());
-    Object entity = response.getEntity();
-    assertTrue(entity instanceof String);
-    String result = (String) entity;
-    assertTrue(result.contains("TechnicalError"));
-    assertTrue(result.contains(exception.getUuid().toString()));
+    String message = "Internal server error occurred";
+    IllegalCaseException error = new IllegalCaseException(message);
+    String expectedMessage = new TechnicalErrorUserException(error).getMessage();
+    checkFacade(exceptionFacade, error, 500, expectedMessage, error.getUuid().toString(), CODE_TECHNICAL_ERROR);
   }
 
   /**
@@ -162,13 +204,7 @@ public class RestServiceExceptionFacadeTest extends Assert {
   public void testBusinessException() {
 
     RestServiceExceptionFacade exceptionFacade = getExceptionFacade();
-    ObjectNotFoundUserException exception = new ObjectNotFoundUserException(4711L);
-    Response response = exceptionFacade.toResponse(exception);
-    assertEquals(400, response.getStatus());
-    Object entity = response.getEntity();
-    assertTrue(entity instanceof String);
-    String result = (String) entity;
-    assertTrue(result.contains(exception.getUuid().toString()));
-    assertTrue(result.replace("\\", "").contains(exception.getMessage()));
+    ObjectNotFoundUserException error = new ObjectNotFoundUserException(4711L);
+    checkFacade(exceptionFacade, error, 400, error.getMessage(), error.getUuid().toString(), "NotFound");
   }
 }
