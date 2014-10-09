@@ -1,6 +1,7 @@
 package io.oasp.module.jpa.persistence.api;
 
 import net.sf.mmm.util.entity.api.PersistenceEntity;
+import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
 
 /**
  * This is the interface for a <em>Data Access Object</em> (DAO). It acts as a manager responsible for the persistence
@@ -42,6 +43,17 @@ public interface GenericDao<ID, E extends PersistenceEntity<ID>> {
    * @throws IllegalArgumentException in case the given entity is (@literal null}.
    */
   void save(Iterable<? extends E> entities);
+
+  /**
+   * Retrieves an entity by its id.
+   *
+   * @param id must not be {@literal null}.
+   * @return the entity with the given id or {@literal null} if none found
+   * @throws IllegalArgumentException if {@code id} is {@literal null}.
+   * @throws ObjectNotFoundUserException if the requested entity does not exists (use {@link #findOne(Object)} to
+   *         prevent).
+   */
+  E find(ID id) throws ObjectNotFoundUserException;
 
   /**
    * Retrieves an entity by its id.
