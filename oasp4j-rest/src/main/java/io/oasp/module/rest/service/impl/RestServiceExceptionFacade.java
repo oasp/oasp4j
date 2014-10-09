@@ -16,7 +16,6 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import net.sf.mmm.util.exception.api.NlsIllegalStateException;
 import net.sf.mmm.util.exception.api.NlsRuntimeException;
 import net.sf.mmm.util.exception.api.TechnicalErrorUserException;
 import net.sf.mmm.util.security.api.SecurityErrorUserException;
@@ -244,7 +243,21 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
    */
   protected Response createResponse(Status status, NlsRuntimeException error, String message, String code) {
 
-    String json = createJsonErrorResponseMessage(message, code, error.getUuid());
+    return createResponse(status, message, code, error.getUuid());
+  }
+
+  /**
+   * Create a response message as a JSON-String from the given parts.
+   *
+   * @param status is the HTTP {@link Status}.
+   * @param message is the JSON message attribute.
+   * @param code is the {@link NlsRuntimeException#getCode() error code}.
+   * @param uuid the {@link UUID} of the response message.
+   * @return the corresponding {@link Response}.
+   */
+  protected Response createResponse(Status status, String message, String code, UUID uuid) {
+
+    String json = createJsonErrorResponseMessage(message, code, uuid);
     return Response.status(status).entity(json).build();
   }
 
@@ -295,14 +308,13 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
       LOG.error("Service failed on server", error);
       return createResponse(status, error);
     } else {
-      // exception type does not fit properly. We need some exception to generate UUID and include in stacktrace
-      error = new NlsIllegalStateException(exception);
+      UUID uuid = UUID.randomUUID();
       if (exception instanceof ClientErrorException) {
-        LOG.warn("Service failed due to unexpected request", error);
+        LOG.warn("Service failed due to unexpected request. UUDI: {}, reason: {} ", uuid, exception.getMessage());
       } else {
-        LOG.warn("Service caused redirect or other error", error);
+        LOG.warn("Service caused redirect or other error. UUID: {}, reason: {}", uuid, exception.getMessage());
       }
-      return createResponse(status, error, exception.getMessage(), String.valueOf(statusCode));
+      return createResponse(status, exception.getMessage(), String.valueOf(statusCode), uuid);
     }
 
   }
