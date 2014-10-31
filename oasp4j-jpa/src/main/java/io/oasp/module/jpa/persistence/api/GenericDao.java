@@ -1,5 +1,7 @@
 package io.oasp.module.jpa.persistence.api;
 
+import java.util.List;
+
 import net.sf.mmm.util.entity.api.PersistenceEntity;
 import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
 
@@ -73,20 +75,13 @@ public interface GenericDao<ID, E extends PersistenceEntity<ID>> {
    */
   boolean exists(ID id);
 
-  // /**
-  // * Returns all instances of the type.
-  // *
-  // * @return all entities
-  // */
-  // Iterable<E> findAll();
-
   /**
    * Returns all instances of the type with the given IDs.
    *
    * @param ids are the IDs of all entities to retrieve e.g. as {@link java.util.List}.
    * @return an {@link Iterable} with all {@link PersistenceEntity entites} for the given <code>ids</code>.
    */
-  Iterable<E> findAll(Iterable<ID> ids);
+  List<E> findAll(Iterable<ID> ids);
 
   // /**
   // * Returns the number of entities available.
@@ -118,10 +113,5 @@ public interface GenericDao<ID, E extends PersistenceEntity<ID>> {
    * @throws IllegalArgumentException in case the given {@link Iterable} is (@literal null}.
    */
   void delete(Iterable<? extends E> entities);
-
-  // /**
-  // * Deletes all entities managed by the repository.
-  // */
-  // void deleteAll();
 
 }

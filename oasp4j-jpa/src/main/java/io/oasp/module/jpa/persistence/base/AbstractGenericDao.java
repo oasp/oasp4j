@@ -152,7 +152,7 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
    * @return an {@link Iterable} to find ALL {@link #getEntityClass() managed entities} from the persistent store. Not
    *         exposed to API by default as this might not make sense for all kind of entities.
    */
-  protected Iterable<E> findAll() {
+  protected List<E> findAll() {
 
     CriteriaQuery<E> query = this.entityManager.getCriteriaBuilder().createQuery(getEntityClass());
     Root<E> root = query.from(getEntityClass());
@@ -167,7 +167,7 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
    * {@inheritDoc}
    */
   @Override
-  public Iterable<E> findAll(Iterable<ID> ids) {
+  public List<E> findAll(Iterable<ID> ids) {
 
     CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
     CriteriaQuery<E> query = builder.createQuery(getEntityClass());
