@@ -243,7 +243,7 @@
             <encoding>${project.reporting.outputEncoding}</encoding>
             <charset>${project.build.sourceEncoding}</charset>
             <docfilessubdirs>true</docfilessubdirs>
-            <additionalparam>-Xdoclint:none</additionalparam>
+            <!--<additionalparam>-Xdoclint:none</additionalparam>-->
             <links>
               <link>http://docs.oracle.com/javase/7/docs/api/</link>
               <link>http://m-m-m.sourceforge.net/apidocs/</link>
