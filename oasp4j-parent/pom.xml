@@ -140,35 +140,12 @@
         </configuration>
       </plugin>
 
-      <!-- JaCoCo for test coverage -->
-      <!--
-        <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <executions>
-        <execution>
-        <id>default-prepare-agent</id>
-        <phase>pre-site</phase>
-        <goals>
-        <goal>prepare-agent</goal>
-        </goals>
-        </execution>
-        <execution>
-        <id>default-report</id>
-        <phase>prepare-package</phase>
-        <goals>
-        <goal>report</goal>
-        </goals>
-        </execution>
-        </executions>
-        </plugin>
-      -->
-
       <!-- site generation settings -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
       </plugin>
+      <!-- https://github.com/oasp/oasp4j-ide/issues/1 -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-eclipse-plugin</artifactId>
@@ -200,9 +177,142 @@
     <pluginManagement>
       <plugins>
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.7</version>
+        </plugin>
+        <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-compiler-plugin</artifactId>
+           <version>3.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.5.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>2.6</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.5</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>2.9.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+          <version>2.7</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jxr-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.9.1</version>
+          <configuration>
+            <!-- http://jira.codehaus.org/browse/MJAVADOC-308 -->
+            <!--<maxmemory>5048m</maxmemory>-->
+            <notree>true</notree>
+            <show>private</show>
+            <encoding>${project.reporting.outputEncoding}</encoding>
+            <charset>${project.build.sourceEncoding}</charset>
+            <docfilessubdirs>true</docfilessubdirs>
+            <additionalparam>-Xdoclint:none</additionalparam>
+            <links>
+              <link>http://docs.oracle.com/javase/7/docs/api/</link>
+              <link>http://m-m-m.sourceforge.net/apidocs/</link>
+            </links>
+            <doctitle>JavaDocs for ${project.name}</doctitle>
+            <windowtitle>JavaDocs for ${project.name}</windowtitle>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.17</version>
+          <configuration>
+            <!-- Surefire changed the default to the project.build.directory causing trouble with file paths to test resources -->
+            <workingDirectory>${basedir}</workingDirectory>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-report-plugin</artifactId>
+          <version>2.9</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-pmd-plugin</artifactId>
+          <version>3.2</version>
+          <configuration>
+            <targetJdk>${java.version}</targetJdk>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>2.5</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <version>1.5</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-help-plugin</artifactId>
+          <version>2.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>cobertura-maven-plugin</artifactId>
+          <version>2.6</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>findbugs-maven-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>taglist-maven-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
+        <plugin>
           <groupId>org.eclipse.m2e</groupId>
           <artifactId>lifecycle-mapping</artifactId>
-          <version>1.0.0</version>
+            <version>1.0.0</version>
           <configuration>
             <lifecycleMappingMetadata>
               <pluginExecutions>
@@ -233,6 +343,9 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
+        <configuration>
+          <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+        </configuration>        
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -242,17 +355,34 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
-          <!--<notree>true</notree> -->
-          <show>protected</show>
+          <!--<notree>true</notree>-->
+          <show>private</show>
           <encoding>${project.reporting.outputEncoding}</encoding>
           <charset>${project.build.sourceEncoding}</charset>
           <docfilessubdirs>true</docfilessubdirs>
+          <stylesheetfile>${user.dir}/src/main/javadoc/stylesheet.css</stylesheetfile>
+          <!--<additionalparam>-Xdoclint:none -source ${java.version}</additionalparam>-->
           <links>
             <link>http://docs.oracle.com/javase/7/docs/api/</link>
+            <link>http://oasp.github.io/oasp4j/maven/apidocs/</link>
           </links>
-          <doctitle>JavaDocs for ${project.name} ${project.version}</doctitle>
-          <windowtitle>JavaDocs for ${project.name} ${project.version}</windowtitle>
+          <doctitle>JavaDocs for ${project.name}</doctitle>
+          <windowtitle>JavaDocs for ${project.name}</windowtitle>
         </configuration>
+        <reportSets>
+          <reportSet>
+            <id>oasp.javadoc</id>
+            <reports>
+              <report>javadoc</report>
+            </reports>
+          </reportSet>
+          <reportSet>
+            <id>oasp.javadoc.aggregate</id>
+            <reports>
+              <report>aggregate</report>
+            </reports>
+          </reportSet>
+        </reportSets>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -263,37 +393,10 @@
             <tag>@todo</tag>
             <tag>FIXME</tag>
             <tag>@deprecated</tag>
+            <tag>REVIEW</tag>
           </tags>
         </configuration>
       </plugin>
-      <!--
-        <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-changelog-plugin</artifactId>
-        </plugin>
-      -->
-      <!--
-        <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-changes-plugin</artifactId>
-        <version>2.2</version>
-        <configuration>
-        <xmlPath>${basedir}/src/site/changes.xml</xmlPath>
-        <issueLinkTemplate>%URL%/%ISSUE%</issueLinkTemplate>
-        <issueLinkTemplatePerSystem>
-        <github>%URL%/%ISSUE%</github>
-        </issueLinkTemplatePerSystem>
-        <escapeHTML>false</escapeHTML>
-        </configuration>
-        <reportSets>
-        <reportSet>
-        <reports>
-        <report>changes-report</report>
-        </reports>
-        </reportSet>
-        </reportSets>
-        </plugin>
-      -->
     </plugins>
   </reporting>
 
@@ -348,16 +451,19 @@
       </build>
     </profile>
   </profiles>
+  
   <issueManagement>
     <system>GitHub</system>
     <url>https://github.com/oasp/oasp4j/issues</url>
   </issueManagement>
+  
   <scm>
     <connection>scm:git:git@github.com:oasp/oasp-java.git</connection>
     <developerConnection>scm:git:git@github.com:oasp/oasp-java.git</developerConnection>
     <url>https://github.com/oasp/oasp4j/tree/master</url>
     <tag/>
   </scm>
+  
   <!--
     <mailingLists>
     <mailingList>
@@ -371,8 +477,9 @@
   -->
   <organization>
     <name>OASP-Team</name>
-    <url>http://oasp.org/team-list.html</url>
+    <url>http://oasp.io/oasp4j/maven/team-list.html</url>
   </organization>
+  
   <developers>
     <developer>
       <id>hohwille</id>
@@ -389,6 +496,7 @@
       <properties/>
     </developer>
   </developers>
+  
   <licenses>
     <license>
       <name>Apache Software Licenese</name>
@@ -397,4 +505,5 @@
       <comments/>
     </license>
   </licenses>
+  
 </project>

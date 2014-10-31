@@ -17,6 +17,10 @@
   <inceptionYear>2014</inceptionYear>
 
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    
+    <java.version>1.7</java.version>
     <cxf.version>3.0.2</cxf.version>
   </properties>
   
@@ -228,19 +232,6 @@
     </dependencies>
   </dependencyManagement>
 
-  <organization>
-    <name>OASP-Team</name>
-    <url>http://oasp.org/team-list.html</url>
-  </organization>
-  <licenses>
-    <license>
-      <name>Apache Software Licenese</name>
-      <url>http://oasp.github.io/terms-of-use.html</url>
-      <distribution>repro</distribution>
-      <comments/>
-    </license>
-  </licenses>
-  
   <distributionManagement>
     <repository>
       <id>oasp.releases</id>
@@ -252,5 +243,10 @@
       <name>OASP Snapshots</name>
       <url>http://oasp-ci.cloudapp.net/nexus/content/repositories/snapshots/</url>
     </snapshotRepository>
+    <site>
+      <id>oasp-site</id>
+      <url>file://${user.dir}/target/oasp4j/maven</url>
+    </site>
   </distributionManagement>
+  
 </project>
