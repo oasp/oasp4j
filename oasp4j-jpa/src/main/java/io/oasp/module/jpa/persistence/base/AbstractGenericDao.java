@@ -2,6 +2,8 @@ package io.oasp.module.jpa.persistence.base;
 
 import io.oasp.module.jpa.persistence.api.GenericDao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -13,6 +15,9 @@ import javax.persistence.criteria.Root;
 import net.sf.mmm.util.entity.api.PersistenceEntity;
 import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
 import net.sf.mmm.util.search.base.AbstractSearchCriteria;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.mysema.query.jpa.impl.JPAQuery;
 
@@ -26,6 +31,9 @@ import com.mysema.query.jpa.impl.JPAQuery;
  */
 // @Repository
 public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> implements GenericDao<ID, E> {
+
+  /** Logger instance. */
+  private static final Logger LOG = LoggerFactory.getLogger(AbstractGenericDao.class);
 
   private EntityManager entityManager;
 
@@ -60,6 +68,14 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
   }
 
   /**
+   * @return the name of the managed entity.
+   */
+  protected String getEntityName() {
+
+    return getEntityClass().getSimpleName();
+  }
+
+  /**
    * {@inheritDoc}
    */
   @Override
@@ -67,9 +83,12 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
 
     if (isNew(entity)) {
       this.entityManager.persist(entity);
+      LOG.debug("Saved new {} with id {}.", getEntityName(), entity.getId());
       return entity;
     } else {
-      return this.entityManager.merge(entity);
+      E update = this.entityManager.merge(entity);
+      LOG.debug("Updated {} with id {}.", getEntityName(), entity.getId());
+      return update;
     }
   }
 
@@ -139,7 +158,9 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
     Root<E> root = query.from(getEntityClass());
     query.select(root);
     TypedQuery<E> typedQuery = this.entityManager.createQuery(query);
-    return typedQuery.getResultList();
+    List<E> resultList = typedQuery.getResultList();
+    LOG.debug("Query for all {} objects returned {} hit(s).", getEntityName(), resultList.size());
+    return resultList;
   }
 
   /**
@@ -154,7 +175,9 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
     query.select(root);
     query.where(root.get("id").in(ids));
     TypedQuery<E> typedQuery = this.entityManager.createQuery(query);
-    return typedQuery.getResultList();
+    List<E> resultList = typedQuery.getResultList();
+    LOG.debug("Query for selection of {} objects returned {} hit(s).", getEntityName(), resultList.size());
+    return resultList;
   }
 
   /**
@@ -165,7 +188,7 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
 
     E entity = this.entityManager.getReference(getEntityClass(), id);
     this.entityManager.remove(entity);
-
+    LOG.debug("Deleted {} with ID {}.", getEntityName(), id);
   }
 
   /**
@@ -174,8 +197,10 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
   @Override
   public void delete(E entity) {
 
+    // entity might be detached and could cause trouble in entityManager on remove
     if (this.entityManager.contains(entity)) {
       this.entityManager.remove(entity);
+      LOG.debug("Deleted {} with ID {}.", getEntityName(), entity.getId());
     } else {
       delete(entity.getId());
     }
