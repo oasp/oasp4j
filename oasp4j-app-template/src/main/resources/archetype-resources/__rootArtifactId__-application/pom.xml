@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>${groupId}</groupId>
+    <artifactId>${rootArtifactId}</artifactId>
+    <version>${version}</version>
+  </parent>
+  <artifactId>${artifactId}</artifactId>
+  <packaging>war</packaging>
+  <name>Restaurant application - a simple example using the Open Application Standard Platform for Java (OASP4J).</name>
+  <version>${version}</version>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>io.oasp.java</groupId>
+      <artifactId>oasp4j-monitoring</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.oasp.java</groupId>
+      <artifactId>oasp4j-logging</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.oasp.java</groupId>
+      <artifactId>oasp4j-beanmapping</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.oasp.java</groupId>
+      <artifactId>oasp4j-configuration</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.oasp.java</groupId>
+      <artifactId>oasp4j-security</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.oasp.java</groupId>
+      <artifactId>oasp4j-rest</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.oasp.java</groupId>
+      <artifactId>oasp4j-jpa</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.oasp.java</groupId>
+      <artifactId>oasp4j-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aop</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- for SpringDispatcher Servlet -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+    </dependency>
+
+    <!-- for HttpInvoker -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+    </dependency>
+
+    <!-- for Object Relational Mapping (JPA/Hibernate) -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+    </dependency>
+
+    <!-- JSP -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+    </dependency>
+
+    <!-- Spring Security -->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-config</artifactId>
+    </dependency>
+
+    <!-- Hibernate-EntityManager für JPA -->
+    <!-- Hibernate core wird transitiv geladen. -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>net.sf.m-m-m</groupId>
+      <artifactId>mmm-util-core</artifactId>
+    </dependency>
+
+    <!-- Database -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+    </dependency>
+
+    <!-- hibernate -->
+    <dependency>
+      <groupId>org.hibernate.javax.persistence</groupId>
+      <artifactId>hibernate-jpa-2.1-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>cglib</groupId>
+      <artifactId>cglib</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+    </dependency>
+
+    <!-- CXF for REST and Webservices -->
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-jaxws</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>asm</groupId>
+          <artifactId>asm</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-transports-http</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.jaxrs</groupId>
+      <artifactId>jackson-jaxrs-json-provider</artifactId>
+    </dependency>
+
+
+    <!-- local transport for fast testing -->
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-transports-local</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-rs-client</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Moneta - Reference Implementation of JSR 354 -->
+    <!--
+    <dependency>
+      <groupId>org.javamoney</groupId>
+      <artifactId>moneta</artifactId>
+    </dependency>
+     -->
+  </dependencies>
+
+  <!-- Overlays for JavaScript client -->
+  <profiles>
+    <profile>
+      <id>jsclient</id>
+      <activation>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>io.oasp.js</groupId>
+          <artifactId>oasp4js-sample</artifactId>
+          <version>1.0.0-SNAPSHOT</version>
+          <type>zip</type>
+          <classifier>web</classifier>
+          <scope>runtime</scope>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>2.4</version>
+            <configuration>
+              <overlays>
+                <overlay>
+                  <groupId>io.oasp.js</groupId>
+                  <artifactId>oasp4js-sample</artifactId>
+                  <type>zip</type>
+                  <classifier>web</classifier>
+                  <targetPath>jsclient</targetPath>
+                </overlay>
+              </overlays>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+</project>

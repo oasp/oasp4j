@@ -1,0 +1,77 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<access-control-schema>
+  <group id="ReadMasterData">
+    <permissions>
+      <!-- offermanagement -->
+      <permission id="FindOffer"/>
+      <permission id="FindProduct"/>
+      <!-- tablemanagement -->
+      <permission id="FindTable"/>
+      <!-- staffmanagement -->
+      <permission id="FindStaffMember"/>
+    </permissions>
+    <type>group</type>
+  </group>
+
+  <group id="Waiter">
+    <inherits>
+      <group-ref>Barkeeper</group-ref>
+    </inherits>
+    <permissions>
+      <!-- tablemanagement -->
+      <permission id="UpdateTable"/>
+    </permissions>
+    <type>role</type>
+  </group>
+  <group id="Barkeeper">
+    <inherits>
+      <group-ref>Cook</group-ref>
+    </inherits>
+    <permissions>
+      <!-- salesmanagement -->
+      <permission id="CreateBill"/>
+      <permission id="UpdateBill"/>
+      <permission id="FindBill"/>
+      <permission id="DeleteBill"/>
+      <permission id="CreateOrder"/>
+      <permission id="DeleteOrder"/>
+    </permissions>
+    <type>role</type>
+  </group>
+  <group id="Cook">
+    <inherits>
+      <group-ref>ReadMasterData</group-ref>
+    </inherits>
+    <permissions>
+      <!-- salesmanagement -->
+      <permission id="UpdateOrder"/>
+      <permission id="FindOrder"/>
+    </permissions>
+    <type>role</type>
+  </group>
+  <group id="Chief">
+    <inherits>
+      <group-ref>Waiter</group-ref>
+    </inherits>
+    <permissions>
+      <!-- offermanagement -->
+      <permission id="CreateOffer"/>
+      <permission id="UpdateOffer"/>
+      <permission id="DeleteOffer"/>
+      <permission id="CreateProduct"/>
+      <permission id="UpdateProduct"/>
+      <permission id="DeleteProduct"/>
+      <!-- staffmanagement -->
+      <permission id="CreateStaffMember"/>
+      <permission id="UpdateStaffMember"/>
+      <permission id="DeleteStaffMember"/>
+      <!-- tablemanagement -->
+      <permission id="CreateTable"/>
+      <permission id="DeleteTable"/>
+    </permissions>
+    <type>role</type>
+  </group>
+</access-control-schema>

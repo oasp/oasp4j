@@ -1,0 +1,127 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+      version="3.0">
+
+  <display-name>Restaurant</display-name>
+
+  <!-- Spring: Registration of ApplicationContext -->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:config/app/beans-application.xml</param-value>
+  </context-param>
+  <!-- Definition of the WebAppRooKey. This is necessary if multiple applications are handled by Tomcat, because
+    the Tomcat-server does not manage the WebAppRoot for all applications separately. -->
+  <context-param>
+    <param-name>webAppRootKey</param-name>
+    <!-- <param-value>restaurant</param-value> -->
+    <param-value>oasp-example-application</param-value>
+  </context-param>
+
+  <!-- Bootstrap Listener to start the Spring Main-WebApplicationContexts of Spring. Delegates to the ContextLoader.
+    If the Log4jConfigListener is used it has to be registered before the ContextLoaderListener in the web.xml. -->
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
+  <!-- Servlet for the communication with the Loadbalancer. This Servlet checks for every HTTP-GET-Request, whether
+    a isAlive-file exists. If so, HTTP-OK is send back. If no, HTTP-FORBIDDEN. -->
+  <servlet>
+    <servlet-name>Loadbalancer</servlet-name>
+    <servlet-class>io.oasp.module.monitoring.service.impl.loadbalancer.LoadbalancerServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Loadbalancer</servlet-name>
+    <url-pattern>/Loadbalancer</url-pattern>
+  </servlet-mapping>
+
+
+  <!-- Servlet for handling httpinvoker service requests. -->
+  <!--
+    <servlet>
+    <servlet-name>remoting</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>/WEB-INF/classes/resources/spring/service/remoting-servlet.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+    </servlet>
+  -->
+
+  <!-- REST Servlet -->
+  <servlet>
+    <description>Apache CXF Endpoint</description>
+    <display-name>cxf</display-name>
+    <servlet-name>cxf</servlet-name>
+    <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>cxf</servlet-name>
+    <url-pattern>/services/*</url-pattern>
+  </servlet-mapping>
+
+  <!-- JSP Servlet -->
+  <servlet>
+    <servlet-name>mvc-dispatcher</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:config/app/gui/dispatcher-servlet.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>mvc-dispatcher</servlet-name>
+    <url-pattern>/security/*</url-pattern>
+  </servlet-mapping>
+
+  <filter>
+    <filter-name>DiagnosticContextFilter</filter-name>
+    <filter-class>io.oasp.module.logging.common.impl.DiagnosticContextFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>DiagnosticContextFilter</filter-name>
+    <url-pattern>/services/*</url-pattern>
+  </filter-mapping>
+
+  <!-- Spring Security Filter -->
+  <filter>
+    <filter-name>SecurityFilterChain</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>SecurityFilterChain</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+    <!-- Filter to set special characters correctly ("Umlaute"). -->
+  <filter>
+    <filter-name>SetCharacterEncodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>forceEncoding</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>SetCharacterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+
+</web-app>

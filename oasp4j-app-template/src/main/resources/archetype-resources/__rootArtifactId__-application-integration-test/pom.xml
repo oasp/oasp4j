@@ -1,0 +1,129 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>${groupId}</groupId>
+    <artifactId>${rootArtifactId}</artifactId>
+    <version>${version}</version>
+  </parent>
+
+  <artifactId>${rootArtifactId}-application-integration-test</artifactId>
+<!--   <packaging>jar</packaging> -->
+  <name>Restaurant application integration test</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+      <version>4.11</version>
+    </dependency>
+    <!-- local transport for fast testing -->
+    <!-- <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-transports-http</artifactId>
+      <version>2.2.3</version>
+    </dependency> -->
+
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-rs-client</artifactId>
+      <version>3.0.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.jaxrs</groupId>
+      <artifactId>jackson-jaxrs-json-provider</artifactId>
+      <version>2.4.3</version>
+    </dependency>
+
+
+
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.3.5</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpcore</artifactId>
+      <version>4.3.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>${groupId}</groupId>
+      <artifactId>${rootArtifactId}-application</artifactId>
+      <version>${version}</version>
+      <type>jar</type>
+    </dependency>
+
+
+    <dependency>
+      <groupId>${groupId}</groupId>
+      <artifactId>${rootArtifactId}-application</artifactId>
+      <version>${version}</version>
+      <type>war</type>
+    </dependency>
+
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.cargo</groupId>
+        <artifactId>cargo-maven2-plugin</artifactId>
+        <version>1.2.2</version>
+        <configuration>
+          <container>
+            <containerId>tomcat7x</containerId>
+            <zipUrlInstaller>
+              <url>http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.30/bin/apache-tomcat-7.0.30.zip</url>
+            </zipUrlInstaller>
+          </container>
+          <configuration>
+            <type>standalone</type>
+            <properties>
+              <cargo.servlet.port>8081</cargo.servlet.port>
+            </properties>
+            <deployables>
+              <deployable>
+                <artifactId>${artifactId}-application</artifactId>
+                <groupId>${groupId}</groupId>
+                <properties>
+                  <context>${artifactId}-application</context>
+                </properties>
+                <type>war</type>
+              </deployable>
+            </deployables>
+          </configuration>
+        </configuration>
+        <executions>
+          <execution>
+            <id>start-server</id>
+            <phase>process-test-classes</phase>
+            <goals>
+              <goal>start</goal>
+            </goals>
+          </execution>
+         <execution>
+            <id>stop-server</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>stop</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
