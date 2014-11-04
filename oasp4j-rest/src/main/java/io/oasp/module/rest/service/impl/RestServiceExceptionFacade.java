@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.inject.Inject;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.ServerErrorException;
@@ -18,6 +21,7 @@ import javax.ws.rs.ext.Provider;
 
 import net.sf.mmm.util.exception.api.NlsRuntimeException;
 import net.sf.mmm.util.exception.api.TechnicalErrorUserException;
+import net.sf.mmm.util.lang.api.StringUtil;
 import net.sf.mmm.util.security.api.SecurityErrorUserException;
 import net.sf.mmm.util.validation.api.ValidationErrorUserException;
 
@@ -119,8 +123,27 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     if (exception instanceof WebApplicationException) {
       return createResponse((WebApplicationException) exception);
     } else if (exception instanceof ValidationException) {
-      ValidationErrorUserException error = new ValidationErrorUserException(exception);
-      return createResponse(exception, error);
+      Throwable t = exception;
+      if (exception instanceof ConstraintViolationException) {
+        ConstraintViolationException constraintViolationException = (ConstraintViolationException) exception;
+        Set<ConstraintViolation<?>> violations = constraintViolationException.getConstraintViolations();
+        StringBuilder buffer = new StringBuilder();
+        boolean first = true;
+        for (ConstraintViolation<?> violation : violations) {
+          if (first) {
+            first = false;
+          } else {
+            buffer.append(StringUtil.LINE_SEPARATOR);
+          }
+          buffer.append(violation.getMessage());
+          buffer.append(" (");
+          buffer.append(violation.getPropertyPath());
+          buffer.append(")");
+        }
+        t = new ValidationException(buffer.toString());
+      }
+      ValidationErrorUserException error = new ValidationErrorUserException(t);
+      return createResponse(t, error);
     } else if (exception instanceof ValidationErrorUserException) {
       return createResponse(exception, (ValidationErrorUserException) exception);
     } else {
