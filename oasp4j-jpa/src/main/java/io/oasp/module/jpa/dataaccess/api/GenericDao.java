@@ -1,4 +1,4 @@
-package io.oasp.module.jpa.persistence.api;
+package io.oasp.module.jpa.dataaccess.api;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
  * For each (non-abstract) implementation of {@link PersistenceEntity entity} <code>MyEntity</code> you should create an
  * interface interface <code>MyEntityDao</code> that inherits from this {@link GenericDao} interface. Also you create an
  * implementation of that interface <code>MyEntityDaoImpl</code> that you derive from
- * {@link io.oasp.module.jpa.persistence.base.AbstractGenericDao}.
+ * {@link io.oasp.module.jpa.dataaccess.base.AbstractGenericDao}.
  *
  * @param <ID> is the generic type if the {@link PersistenceEntity#getId() primary key}.
  * @param <E> is the generic type of the {@link PersistenceEntity}.

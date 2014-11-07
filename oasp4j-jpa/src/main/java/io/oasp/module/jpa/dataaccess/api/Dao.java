@@ -1,4 +1,4 @@
-package io.oasp.module.jpa.persistence.api;
+package io.oasp.module.jpa.dataaccess.api;
 
 import net.sf.mmm.util.entity.api.PersistenceEntity;
 

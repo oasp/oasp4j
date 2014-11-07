@@ -1,7 +1,7 @@
-package io.oasp.module.jpa.persistence.base;
+package io.oasp.module.jpa.dataaccess.base;
 
-import io.oasp.module.jpa.persistence.api.AbstractPersistenceEntity;
-import io.oasp.module.jpa.persistence.api.MasterDataDao;
+import io.oasp.module.jpa.dataaccess.api.AbstractPersistenceEntity;
+import io.oasp.module.jpa.dataaccess.api.MasterDataDao;
 
 import java.util.List;
 

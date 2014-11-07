@@ -17,7 +17,7 @@ public final class ApplicationConfigurationConstants {
   public static final String BEANS_LOGIC = "classpath:/config/app/logic/beans-logic.xml";
 
   /** Path to the spring XML configuration file for the persistence layer. */
-  public static final String BEANS_PERSISTENCE = "classpath:/config/app/persistence/beans-persistence.xml";
+  public static final String BEANS_DATA_ACCESS = "classpath:/config/app/dataaccess/beans-dataaccess.xml";
 
   /**
    * Path to the spring XML configuration file for the common and cross-cutting code that is not assigned to any layer.

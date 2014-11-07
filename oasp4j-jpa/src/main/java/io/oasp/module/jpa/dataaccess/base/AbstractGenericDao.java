@@ -1,6 +1,6 @@
-package io.oasp.module.jpa.persistence.base;
+package io.oasp.module.jpa.dataaccess.base;
 
-import io.oasp.module.jpa.persistence.api.GenericDao;
+import io.oasp.module.jpa.dataaccess.api.GenericDao;
 
 import java.util.List;
 
