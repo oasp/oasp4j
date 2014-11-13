@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-dependencies</artifactId>
-    <version>1.1.8.RELEASE</version>
+    <version>1.1.9.RELEASE</version>
   </parent>
   <groupId>io.oasp.java</groupId>
   <artifactId>oasp4j-dependencies</artifactId>
