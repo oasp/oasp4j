@@ -65,7 +65,7 @@
       <dependency>
         <groupId>net.sf.m-m-m</groupId>
         <artifactId>mmm-util-core</artifactId>
-        <version>5.0.0</version>
+        <version>6.0.0</version>
       </dependency>
       <!-- Library with advanced collection support -->
       <dependency>
