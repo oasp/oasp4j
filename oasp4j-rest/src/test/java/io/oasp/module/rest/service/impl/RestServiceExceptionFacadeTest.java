@@ -12,6 +12,7 @@ import net.sf.mmm.util.exception.api.IllegalCaseException;
 import net.sf.mmm.util.exception.api.NlsRuntimeException;
 import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
 import net.sf.mmm.util.exception.api.TechnicalErrorUserException;
+import net.sf.mmm.util.lang.api.StringUtil;
 import net.sf.mmm.util.security.api.SecurityErrorUserException;
 import net.sf.mmm.util.validation.api.ValidationErrorUserException;
 
@@ -75,6 +76,27 @@ public class RestServiceExceptionFacadeTest extends Assert {
   }
 
   /**
+   * Tests {@link RestServiceExceptionFacade#toResponse(Throwable)} with forbidden security exception including
+   * subclasses.
+   */
+  @Test
+  public void testSecurityExceptionExposed() {
+
+    RestServiceExceptionFacade exceptionFacade = getExceptionFacade();
+    exceptionFacade.setExposeInternalErrorDetails(true);
+
+    String secretMessage = "Secret information not to be revealed on client - only to be logged on server!";
+
+    int statusCode = 403;
+    String message =
+        "The operation failed due to security restrictions. Please contact the support in case of a permission problem.";
+    String code = null;
+
+    checkFacade(exceptionFacade, new AccessDeniedException(secretMessage), statusCode, "SecurityErrorUserException: "
+        + message + StringUtil.LINE_SEPARATOR + "AccessDeniedException: " + secretMessage, UUID_ANY, code);
+  }
+
+  /**
    * Checks that the specified {@link RestServiceExceptionFacade} provides the expected results for the given
    * {@link Throwable}.
    *
@@ -99,9 +121,6 @@ public class RestServiceExceptionFacadeTest extends Assert {
     assertTrue(entity instanceof String);
     String result = (String) entity;
 
-    if (statusCode == 403) {
-      assertFalse(result.contains(error.getMessage()));
-    }
     try {
       Map<String, String> valueMap = exceptionFacade.getMapper().readValue(result, Map.class);
       String msg = message;
@@ -109,6 +128,9 @@ public class RestServiceExceptionFacadeTest extends Assert {
         msg = error.getLocalizedMessage();
       }
       assertEquals(msg, valueMap.get(RestServiceExceptionFacade.KEY_MESSAGE));
+      if ((statusCode == 403) && (!exceptionFacade.isExposeInternalErrorDetails())) {
+        assertFalse(result.contains(error.getMessage()));
+      }
       assertEquals(code, valueMap.get(RestServiceExceptionFacade.KEY_CODE));
       String actualUuid = valueMap.get(RestServiceExceptionFacade.KEY_UUID);
       if (UUID_ANY.equals(uuid)) {
@@ -200,6 +222,23 @@ public class RestServiceExceptionFacadeTest extends Assert {
     String message = "Internal server error occurred";
     IllegalCaseException error = new IllegalCaseException(message);
     String expectedMessage = new TechnicalErrorUserException(error).getLocalizedMessage();
+    checkFacade(exceptionFacade, error, 500, expectedMessage, error.getUuid().toString(), CODE_TECHNICAL_ERROR);
+  }
+
+  /**
+   * Tests {@link RestServiceExceptionFacade#toResponse(Throwable)} with bad request technical exception including
+   * subclasses.
+   */
+  @Test
+  public void testTechnicalCustomRuntimeServerExceptionExposed() {
+
+    RestServiceExceptionFacade exceptionFacade = getExceptionFacade();
+    exceptionFacade.setExposeInternalErrorDetails(true);
+    String message = "Internal server error occurred";
+    IllegalCaseException error = new IllegalCaseException(message);
+    String expectedMessage =
+        "TechnicalErrorUserException: An unexpected error has occurred! We apologize any inconvenience. Please try again later."
+            + StringUtil.LINE_SEPARATOR + error.getClass().getSimpleName() + ": " + error.getLocalizedMessage();
     checkFacade(exceptionFacade, error, 500, expectedMessage, error.getUuid().toString(), CODE_TECHNICAL_ERROR);
   }
 

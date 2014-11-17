@@ -27,7 +27,6 @@ import net.sf.mmm.util.validation.api.ValidationErrorUserException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.i18n.LocaleContextHolder;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -58,6 +57,8 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
   private final List<Class<? extends Throwable>> securityExceptions;
 
   private ObjectMapper mapper;
+
+  private boolean exposeInternalErrorDetails;
 
   /**
    * The constructor.
@@ -209,8 +210,34 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     LOG.error("Service failed due to security error", error);
     // NOTE: for security reasons we do not send any details about the error
     // to the client!
-    String message = createJsonErrorResponseMessage("forbidden", null, error.getUuid());
-    return Response.status(Status.FORBIDDEN).entity(message).build();
+    String message;
+    String code = null;
+    if (this.exposeInternalErrorDetails) {
+      message = getExposedErrorDetails(error);
+    } else {
+      message = "forbidden";
+    }
+    return createResponse(Status.FORBIDDEN, message, code, error.getUuid());
+  }
+
+  /**
+   * @param error is the {@link Throwable} to extract message details from.
+   * @return the exposed message(s).
+   */
+  protected String getExposedErrorDetails(Throwable error) {
+
+    StringBuilder buffer = new StringBuilder();
+    Throwable e = error;
+    while (e != null) {
+      if (buffer.length() > 0) {
+        buffer.append(StringUtil.LINE_SEPARATOR);
+      }
+      buffer.append(e.getClass().getSimpleName());
+      buffer.append(": ");
+      buffer.append(e.getLocalizedMessage());
+      e = e.getCause();
+    }
+    return buffer.toString();
   }
 
   /**
@@ -239,7 +266,13 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
    */
   protected Response createResponse(Status status, NlsRuntimeException error) {
 
-    return createResponse(status, error, error.getLocalizedMessage(LocaleContextHolder.getLocale()));
+    String message;
+    if (this.exposeInternalErrorDetails) {
+      message = getExposedErrorDetails(error);
+    } else {
+      message = error.getLocalizedMessage();
+    }
+    return createResponse(status, error, message);
   }
 
   /**
@@ -359,4 +392,32 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
 
     this.mapper = mapper;
   }
+
+  /**
+   * @param exposeInternalErrorDetails - <code>true</code> if internal exception details shall be exposed to clients
+   *        (useful for debugging and testing), <code>false</code> if such details are hidden to prevent <a
+   *        href="https://www.owasp.org/index.php/Top_10_2013-A6-Sensitive_Data_Exposure">Sensitive Data Exposure</a>
+   *        (default, has to be used in production environment).
+   */
+  public void setExposeInternalErrorDetails(boolean exposeInternalErrorDetails) {
+
+    this.exposeInternalErrorDetails = exposeInternalErrorDetails;
+    if (exposeInternalErrorDetails) {
+      String message =
+          "****** Exposing of internal error details is enabled! This violates OWASP A6 (Sensitive Data Exposure) and shall only be used for testing/debugging and never in production. ******";
+      LOG.warn(message);
+      // CHECKSTYLE:OFF (for development only)
+      System.err.println(message);
+      // CHECKSTYLE:ON
+    }
+  }
+
+  /**
+   * @return exposeInternalErrorDetails the value set by {@link #setExposeInternalErrorDetails(boolean)}.
+   */
+  public boolean isExposeInternalErrorDetails() {
+
+    return this.exposeInternalErrorDetails;
+  }
+
 }
