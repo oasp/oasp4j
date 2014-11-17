@@ -13,6 +13,7 @@ import net.sf.mmm.util.exception.api.NlsRuntimeException;
 import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
 import net.sf.mmm.util.exception.api.TechnicalErrorUserException;
 import net.sf.mmm.util.security.api.SecurityErrorUserException;
+import net.sf.mmm.util.validation.api.ValidationErrorUserException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -139,26 +140,27 @@ public class RestServiceExceptionFacadeTest extends Assert {
   }
 
   /**
-   * Tests {@link RestServiceExceptionFacade#toResponse(Throwable)} with bad request technical exception including
-   * subclasses.
+   * Tests {@link RestServiceExceptionFacade#toResponse(Throwable)} with bad request technical exception.
    */
   @Test
   public void testJaxrsBadRequestException() {
 
     RestServiceExceptionFacade exceptionFacade = getExceptionFacade();
-    String secretMessage = "The HTTP request is invalid";
-    Response response = exceptionFacade.toResponse(new BadRequestException(secretMessage));
-    assertEquals(400, response.getStatus());
-    Object entity = response.getEntity();
-    assertTrue(entity instanceof String);
-    String result = (String) entity;
-    assertTrue(result.contains(secretMessage));
-    response = exceptionFacade.toResponse(new ValidationException(secretMessage));
-    assertEquals(400, response.getStatus());
-    entity = response.getEntity();
-    assertTrue(entity instanceof String);
-    result = (String) entity;
-    assertTrue(result.contains(secretMessage));
+    String message = "The HTTP request is invalid";
+    Throwable error = new BadRequestException(message);
+    checkFacade(exceptionFacade, error, 400, message, UUID_ANY, "400");
+  }
+
+  /**
+   * Tests {@link RestServiceExceptionFacade#toResponse(Throwable)} with a {@link ValidationException}.
+   */
+  @Test
+  public void testValidationException() {
+
+    RestServiceExceptionFacade exceptionFacade = getExceptionFacade();
+    String message = "Validation failed!";
+    Throwable error = new ValidationException(message);
+    checkFacade(exceptionFacade, error, 400, message, UUID_ANY, ValidationErrorUserException.CODE);
   }
 
   /**

@@ -309,7 +309,8 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     try {
       responseMessage = this.mapper.writeValueAsString(jsonMap);
     } catch (JsonProcessingException e) {
-      e.printStackTrace();
+      LOG.error("Exception facade failed to create JSON.", e);
+      responseMessage = "{}";
     }
     return responseMessage;
   }
