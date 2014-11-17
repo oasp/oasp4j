@@ -103,7 +103,11 @@ public class RestServiceExceptionFacadeTest extends Assert {
     }
     try {
       Map<String, String> valueMap = exceptionFacade.getMapper().readValue(result, Map.class);
-      assertEquals(message, valueMap.get(RestServiceExceptionFacade.KEY_MESSAGE));
+      String msg = message;
+      if (msg == null) {
+        msg = error.getLocalizedMessage();
+      }
+      assertEquals(msg, valueMap.get(RestServiceExceptionFacade.KEY_MESSAGE));
       assertEquals(code, valueMap.get(RestServiceExceptionFacade.KEY_CODE));
       String actualUuid = valueMap.get(RestServiceExceptionFacade.KEY_UUID);
       if (UUID_ANY.equals(uuid)) {
@@ -129,8 +133,9 @@ public class RestServiceExceptionFacadeTest extends Assert {
     RestServiceExceptionFacade exceptionFacade = getExceptionFacade();
     String internalMessage = "The HTTP request is invalid";
     int statusCode = 500;
-    checkFacade(exceptionFacade, new InternalServerErrorException(internalMessage), statusCode,
-        new TechnicalErrorUserException(new IllegalStateException()).getMessage(), UUID_ANY, CODE_TECHNICAL_ERROR);
+    InternalServerErrorException error = new InternalServerErrorException(internalMessage);
+    String expectedMessage = new TechnicalErrorUserException(error).getLocalizedMessage();
+    checkFacade(exceptionFacade, error, statusCode, expectedMessage, UUID_ANY, CODE_TECHNICAL_ERROR);
   }
 
   /**
@@ -178,8 +183,8 @@ public class RestServiceExceptionFacadeTest extends Assert {
     RestServiceExceptionFacade exceptionFacade = getExceptionFacade();
     String secretMessage = "Internal server error occurred";
     IllegalArgumentException error = new IllegalArgumentException(secretMessage);
-    TechnicalErrorUserException technicalErrorUserException = new TechnicalErrorUserException(error);
-    checkFacade(exceptionFacade, error, 500, technicalErrorUserException.getMessage(), UUID_ANY, CODE_TECHNICAL_ERROR);
+    String expectedMessage = new TechnicalErrorUserException(error).getLocalizedMessage();
+    checkFacade(exceptionFacade, error, 500, expectedMessage, UUID_ANY, CODE_TECHNICAL_ERROR);
   }
 
   /**
@@ -192,7 +197,7 @@ public class RestServiceExceptionFacadeTest extends Assert {
     RestServiceExceptionFacade exceptionFacade = getExceptionFacade();
     String message = "Internal server error occurred";
     IllegalCaseException error = new IllegalCaseException(message);
-    String expectedMessage = new TechnicalErrorUserException(error).getMessage();
+    String expectedMessage = new TechnicalErrorUserException(error).getLocalizedMessage();
     checkFacade(exceptionFacade, error, 500, expectedMessage, error.getUuid().toString(), CODE_TECHNICAL_ERROR);
   }
 
@@ -205,6 +210,6 @@ public class RestServiceExceptionFacadeTest extends Assert {
 
     RestServiceExceptionFacade exceptionFacade = getExceptionFacade();
     ObjectNotFoundUserException error = new ObjectNotFoundUserException(4711L);
-    checkFacade(exceptionFacade, error, 400, error.getMessage(), error.getUuid().toString(), "NotFound");
+    checkFacade(exceptionFacade, error, 400, null, error.getUuid().toString(), "NotFound");
   }
 }
