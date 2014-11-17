@@ -8,7 +8,7 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>oasp4j-parent</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>dev-SNAPSHOT</version> <!-- This POM will never be released -->
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
   <description>Modules of the Open Application Standard Platform for Java (OASP4J).</description>

@@ -5,11 +5,11 @@
   <parent>
     <groupId>io.oasp.java</groupId>
     <artifactId>oasp4j-parent</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>dev-SNAPSHOT</version>
     <relativePath>../oasp4j-parent/pom.xml</relativePath>
   </parent>
   <artifactId>oasp4j-monitoring</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>${oasp4j.version}</version>
   <name>${project.artifactId}</name>
   <description>Monitoring Module of the Open Application Standard Platform for Java (OASP4J).</description>
 

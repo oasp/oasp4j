@@ -22,6 +22,7 @@
     
     <java.version>1.7</java.version>
     <cxf.version>3.0.2</cxf.version>
+    <oasp4j.version>1.0.0-SNAPSHOT</oasp4j.version>
   </properties>
   
   <modules>
@@ -192,42 +193,42 @@
       <dependency>
         <groupId>io.oasp.java</groupId>
         <artifactId>oasp4j-monitoring</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>${oasp4j.version}</version>
       </dependency>
       <dependency>
         <groupId>io.oasp.java</groupId>
         <artifactId>oasp4j-logging</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>${oasp4j.version}</version>
       </dependency>
       <dependency>
         <groupId>io.oasp.java</groupId>
         <artifactId>oasp4j-beanmapping</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>${oasp4j.version}</version>
       </dependency>
       <dependency>
         <groupId>io.oasp.java</groupId>
         <artifactId>oasp4j-configuration</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>${oasp4j.version}</version>
       </dependency>
       <dependency>
         <groupId>io.oasp.java</groupId>
         <artifactId>oasp4j-security</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>${oasp4j.version}</version>
       </dependency>
       <dependency>
         <groupId>io.oasp.java</groupId>
         <artifactId>oasp4j-rest</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>${oasp4j.version}</version>
       </dependency>
       <dependency>
         <groupId>io.oasp.java</groupId>
         <artifactId>oasp4j-jpa</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>${oasp4j.version}</version>
       </dependency>
       <dependency>
         <groupId>io.oasp.java</groupId>
         <artifactId>oasp4j-web</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>${oasp4j.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
