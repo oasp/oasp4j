@@ -12,7 +12,7 @@
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
   <description>Modules of the Open Application Standard Platform for Java (OASP4J).</description>
-  <url>http://oasp.org/</url>
+  <url>http://oasp.io/oasp4j/maven/oasp4j</url>
   <inceptionYear>2014</inceptionYear>
 
   <modules>
@@ -456,10 +456,9 @@
   </issueManagement>
   
   <scm>
-    <connection>scm:git:git@github.com:oasp/oasp-java.git</connection>
-    <developerConnection>scm:git:git@github.com:oasp/oasp-java.git</developerConnection>
-    <url>https://github.com/oasp/oasp4j/tree/master</url>
-    <tag/>
+    <connection>scm:git:https://github.com/oasp/oasp4j.git</connection>
+    <developerConnection>scm:git:https://github.com/oasp/oasp4j.git</developerConnection>
+    <url>https://github.com/oasp/oasp4j/tree/master/develop/src</url>
   </scm>
   
   <!--
