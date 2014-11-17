@@ -456,8 +456,6 @@
   </issueManagement>
   
   <scm>
-    <connection>scm:git:https://github.com/oasp/oasp4j.git</connection>
-    <developerConnection>scm:git:https://github.com/oasp/oasp4j.git</developerConnection>
     <url>https://github.com/oasp/oasp4j/tree/master/develop/src</url>
   </scm>
   
