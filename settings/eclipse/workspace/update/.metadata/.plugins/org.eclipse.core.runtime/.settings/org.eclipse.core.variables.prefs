@@ -1,3 +1,0 @@
-#Tue Feb 22 11:28:45 CET 2011
-eclipse.preferences.version=1
-org.eclipse.core.variables.valueVariables=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<valueVariables>\r\n<valueVariable description\="Path for SSH Key" name\="futura_ssh_key_file" readOnly\="false" value\=""/>\r\n</valueVariables>\r\n
