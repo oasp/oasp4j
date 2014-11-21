@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 
 /**
  * A {@link AccessControlGroup} represents a collection of {@link AccessControlPermission permissions}. A security
@@ -17,15 +19,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  * strategic function. Therefore not every {@link AccessControlGroup group} is a role. Often a user can only have one
  * role or can only act under one role at a time. Unfortunately these terms are often mixed up what is causing
  * confusion.
- *
+ * 
  * @author hohwille
  */
 @XmlRootElement(name = "group")
 public class AccessControlGroup extends AccessControl { // implements java.security.acl.Group {
 
   /** @see #getInherits() */
-  @XmlElementWrapper(name = "inherits")
   @XmlIDREF
+  @XmlElementWrapper(name = "inherits")
   @XmlElement(name = "group-ref")
   private List<AccessControlGroup> inherits;
 
@@ -35,6 +37,8 @@ public class AccessControlGroup extends AccessControl { // implements java.secur
   private List<AccessControlPermission> permissions;
 
   /** @see #getType() */
+  @XmlAttribute(name = "type", required = false)
+  @XmlSchemaType(name = "string")
   private String type;
 
   /**
@@ -47,7 +51,7 @@ public class AccessControlGroup extends AccessControl { // implements java.secur
 
   /**
    * The constructor.
-   *
+   * 
    * @param id the {@link #getId() ID}.
    */
   public AccessControlGroup(String id) {

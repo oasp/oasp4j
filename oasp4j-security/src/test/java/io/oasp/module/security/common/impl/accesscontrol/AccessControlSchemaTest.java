@@ -13,6 +13,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -21,13 +22,16 @@ import org.springframework.core.io.ClassPathResource;
 
 /**
  * This is the test-case for {@link AccessControlSchema} and {@link AccessControlSchemaXmlMapper}.
- *
+ * 
  * @author hohwille
  */
 public class AccessControlSchemaTest extends Assert {
 
   /** The location of the reference configuration for regression tests. */
   private static final String SCHEMA_XML = "config/app/security/access-control-schema.xml";
+
+  /** The location of the reference configuration with group type declaration */
+  private static final String SCHEMA_XML_GROUP_TYPES = "config/app/security/access-control-schema_groupTypes.xml";
 
   /** The location of the configuration with a cyclic dependency. */
   private static final String SCHEMA_XML_CYCLIC = "config/app/security/access-control-schema_cyclic.xml";
@@ -48,7 +52,7 @@ public class AccessControlSchemaTest extends Assert {
 
   /**
    * Regression test for {@link AccessControlSchemaXmlMapper#write(AccessControlSchema, java.io.OutputStream)}.
-   *
+   * 
    * @throws Exception if something goes wrong.
    */
   @Test
@@ -67,7 +71,7 @@ public class AccessControlSchemaTest extends Assert {
 
   /**
    * Regression test for {@link AccessControlSchemaXmlMapper#read(InputStream)}.
-   *
+   * 
    * @throws Exception if something goes wrong.
    */
   @Test
@@ -157,6 +161,30 @@ public class AccessControlSchemaTest extends Assert {
     assertFalse(permissions.contains(provider.getAccessControl("System_DeleteUser")));
     assertEquals(5, permissions.size());
 
+  }
+
+  /**
+   * Tests the correct extraction of group types
+   */
+  @Test
+  public void testGroupTypes() {
+
+    ClassPathResource resource = new ClassPathResource(SCHEMA_XML_GROUP_TYPES);
+    AccessControlSchemaProviderImpl accessControlSchemaProvider = new AccessControlSchemaProviderImpl();
+    accessControlSchemaProvider.setAccessControlSchema(resource);
+    AccessControlSchema accessControlSchema = accessControlSchemaProvider.loadSchema();
+    List<AccessControlGroup> groups = accessControlSchema.getGroups();
+
+    Assert.assertNotNull(groups);
+    Assert.assertEquals(3, groups.size());
+
+    for (AccessControlGroup group : groups) {
+      if (group.getId().equals("Admin")) {
+        Assert.assertEquals("role", group.getType());
+      } else if (group.getId().equals("ReadOnly") || group.getId().equals("ReadWrite")) {
+        Assert.assertEquals("group", group.getType());
+      }
+    }
   }
 
   private AccessControlProvider createProvider(String location) {
