@@ -8,6 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Sends the OK status code upon successful logout.
+ *
+ * @see JsonUsernamePasswordAuthenticationFilter
+ * @author Marek Matczak
+ */
 public class LogoutSuccessHandlerReturningOkHttpStatusCode implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
