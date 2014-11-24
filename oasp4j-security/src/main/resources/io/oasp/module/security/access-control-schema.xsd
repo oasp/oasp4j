@@ -9,7 +9,7 @@
 
   <xs:complexType name="accessControlSchema">
     <xs:sequence>
-      <xs:element ref="group" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:element ref="group" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -31,8 +31,8 @@
               </xs:sequence>
             </xs:complexType>
           </xs:element>
-          <xs:element name="type" type="xs:string" minOccurs="0"/>
         </xs:sequence>
+        <xs:attribute name="type" type="xs:string"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
