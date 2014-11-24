@@ -18,6 +18,41 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * <p>
+ * Processes authentication where credentials are sent as a JSON object.
+ * <p/>
+ * <p>
+ * The JSON object must contain two properties: a username and a password. The default properties' names to use are
+ * contained in the static fields {@link UsernamePasswordAuthenticationFilter#SPRING_SECURITY_FORM_USERNAME_KEY} and
+ * {@link UsernamePasswordAuthenticationFilter#SPRING_SECURITY_FORM_PASSWORD_KEY}. The JSON object properties' names can
+ * also be changed by setting the {@code usernameParameter} and {@code passwordParameter} properties. Assuming the
+ * default properties' names were not changed, if the credentials <code>user</code>/<code>pass</code> are to be sent, the
+ * following JSON object is expected:
+ * <pre><code>
+ *     {
+ *        "j_username": "user",
+ *        "j_password": "pass",
+ *    }
+ * </code></pre>
+ * <p/>
+ * <p>
+ * The URL this filter responds to is passed as a constructor parameter.
+ * <p/>
+ * <p>
+ * This authentication filter is intended for One Page Applications which handle a login page/dialog/pop-up on their
+ * own. This filter combined with:
+ * <ul>
+ *     <li>{@link AuthenticationSuccessHandlerSendingOkHttpStatusCode}</li>
+ *     <li>{@link org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler} created using
+ *     the default constructor (thus leaving the {@code defaultFailureUrl} unset)</li>
+ *     <li>{@link LogoutSuccessHandlerReturningOkHttpStatusCode}</li>
+ * </ul>
+ * makes the login/logout API fully RESTful.
+ * </p>
+ *
+ * @author Marek Matczak
+ */
 public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
   private String usernameParameter = UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY;
 

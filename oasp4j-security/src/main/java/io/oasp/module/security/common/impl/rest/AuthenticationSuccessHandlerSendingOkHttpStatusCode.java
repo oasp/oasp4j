@@ -10,6 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Sends the OK status code upon successful authentication.
+ *
+ * @see JsonUsernamePasswordAuthenticationFilter
+ * @author Marek Matczak
+ */
 public class AuthenticationSuccessHandlerSendingOkHttpStatusCode implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
