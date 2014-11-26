@@ -5,7 +5,7 @@
   <parent>
     <groupId>io.oasp.java</groupId>
     <artifactId>oasp4j-parent</artifactId>
-    <version>dev-SNAPSHOT</version>
+    <version>1.0.0-BOOT-SNAPSHOT</version>
     <relativePath>../oasp4j-parent/pom.xml</relativePath>
   </parent>
   <artifactId>oasp4j-web</artifactId>

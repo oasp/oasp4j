@@ -9,7 +9,7 @@
   </parent>
   <groupId>io.oasp.java</groupId>
   <artifactId>oasp4j-dependencies</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0-BOOT-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
   <description>Dependencies of the Open Application Standard Platform for Java (OASP4J) based on spring boot.</description>
@@ -22,7 +22,7 @@
     
     <java.version>1.7</java.version>
     <cxf.version>3.0.2</cxf.version>
-    <oasp4j.version>1.0.0-SNAPSHOT</oasp4j.version>
+    <oasp4j.version>1.0.0-BOOT-SNAPSHOT</oasp4j.version>
   </properties>
   
   <modules>
