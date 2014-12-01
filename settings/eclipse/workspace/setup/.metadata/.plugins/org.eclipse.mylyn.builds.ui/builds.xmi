@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<builds:BuildModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:builds="http://eclipse.org/mylyn/models/build">
+  <servers url="http://oasp-ci.cloudapp.net/jenkins/" name="OASP Jenkins" refreshDate="2014-10-13T16:48:34.700+0200" connectorKind="org.eclipse.mylyn.hudson">
+    <attributes key="id" value="http://oasp-ci.cloudapp.net/jenkins/"/>
+    <attributes key="url" value="http://oasp-ci.cloudapp.net/jenkins/"/>
+    <attributes key="label" value="OASP Jenkins"/>
+    <attributes key="org.eclipse.mylyn.tasklist.repositories.enabled" value="true"/>
+    <attributes key="org.eclipse.mylyn.repositories.username" value="${user.name}"/>
+  </servers>
+</builds:BuildModel>

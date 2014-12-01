@@ -1,0 +1,3 @@
+#Thu Mar 15 16:30:47 CET 2012
+org.eclipse.mylyn.team.commit.template=\#${task.key} - ${task.description} \r\nTODO
+eclipse.preferences.version=1

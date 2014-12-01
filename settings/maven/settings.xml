@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<settings>
+  <!-- The "localRepository" has to be set to ensure consistent behaviour across command-line and Eclipse.
+    To change it edit variables[-customized].bat -->
+  <localRepository>${M2_REPO}</localRepository>
+
+  <!-- When you are using the oasp4j-ide, define your credentials in the variables-customized.bat
+    using the variables OASP_NEXUS_USER for the user name and OASP_NEXUS_PASSWD for the password.
+    If you not yet have access to the nexus instance, just contact Jörg Hohwiller or Krzysztof Sobkowiak. -->
+  <servers>
+    <server>
+      <id>nexus.central</id>
+      <username>${OASP_NEXUS_USER}</username>
+      <password>${OASP_NEXUS_PASSWD}</password>
+    </server>
+    <server>
+      <id>public</id>
+      <username>${OASP_NEXUS_USER}</username>
+      <password>${OASP_NEXUS_PASSWD}</password>
+    </server>
+    <server>
+      <id>3rd.party</id>
+      <username>${OASP_NEXUS_USER}</username>
+      <password>${OASP_NEXUS_PASSWD}</password>
+    </server>
+    <server>
+      <id>oasp.releases</id>
+      <username>${OASP_NEXUS_USER}</username>
+      <password>${OASP_NEXUS_PASSWD}</password>
+    </server>
+    <server>
+      <id>oasp.snapshots</id>
+      <username>${OASP_NEXUS_USER}</username>
+      <password>${OASP_NEXUS_PASSWD}</password>
+    </server>
+  </servers>
+
+  <!--
+  <mirrors>
+    <mirror>
+      <id>nexus.central</id>
+      <mirrorOf>central</mirrorOf>
+      <name>central-mirror</name>
+      <url>http://oasp-ci.cloudapp.net/nexus/content/repositories/central</url>
+    </mirror>
+  </mirrors>
+  -->
+
+  <profiles>
+    <profile>
+      <id>oasp.nexus</id>
+      <repositories>
+        <repository>
+          <id>public</id>
+          <name>Public Repositories</name>
+          <url>http://oasp-ci.cloudapp.net/nexus/content/groups/public/</url>
+          <releases>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+          </snapshots>
+        </repository>
+        <repository>
+          <id>3rd.party</id>
+          <name>3rd party</name>
+          <url>http://oasp-ci.cloudapp.net/nexus/content/repositories/thirdparty</url>
+          <releases>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+            <updatePolicy>always</updatePolicy>
+          </snapshots>
+        </repository>
+        <repository>
+          <id>oasp.releases</id>
+          <name>OASP Releases</name>
+          <url>http://oasp-ci.cloudapp.net/nexus/content/repositories/releases</url>
+          <releases>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+            <updatePolicy>always</updatePolicy>
+          </snapshots>
+        </repository>
+        <repository>
+          <id>oasp.snapshots</id>
+          <name>OASP Snapshots</name>
+          <url>http://oasp-ci.cloudapp.net/nexus/content/repositories/snapshots</url>
+          <releases>
+            <enabled>false</enabled>
+            <updatePolicy>always</updatePolicy>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+          </snapshots>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>public</id>
+          <name>Public Repositories</name>
+          <url>http://oasp-ci.cloudapp.net/nexus/content/groups/public/</url>
+          <releases>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+          </snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+  <activeProfiles>
+    <!--
+    <activeProfile>oasp.nexus</activeProfile>
+    -->
+  </activeProfiles>
+</settings>

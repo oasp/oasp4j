@@ -1,0 +1,334 @@
+<?xml version="1.0"?>
+<!-- 
+  	This filter contains rules that will most of the time produce 
+  	violations which are not really important or are false positives.
+  	
+  	@version 2009-03-26
+  	@author Markus Grossmann, Capgemini sd&amp;m
+ -->
+<FindBugsFilter>
+     <Match>
+       <Bug pattern="DMI_RANDOM_USED_ONLY_ONCE" />
+     </Match>
+     <Match>
+       <Bug pattern="CN_IMPLEMENTS_CLONE_BUT_NOT_CLONEABLE" />
+     </Match>
+     <Match>
+       <Bug pattern="DM_EXIT" />
+     </Match>
+     <Match>
+       <Bug pattern="EQ_COMPARETO_USE_OBJECT_EQUALS" />
+     </Match>
+     <Match>
+       <Bug pattern="EQ_GETCLASS_AND_CLASS_CONSTANT" />
+     </Match>
+     <Match>
+       <Bug pattern="FI_FINALIZER_ONLY_NULLS_FIELDS" />
+     </Match>
+     <Match>
+       <Bug pattern="GC_UNCHECKED_TYPE_IN_GENERIC_CALL" />
+     </Match>
+     <Match>
+       <Bug pattern="ISC_INSTANTIATE_STATIC_CLASS" />
+     </Match>
+     <Match>
+       <Bug pattern="J2EE_STORE_OF_NON_SERIALIZABLE_OBJECT_INTO_SESSION" />
+     </Match>
+     <Match>
+       <Bug pattern="JCIP_FIELD_ISNT_FINAL_IN_IMMUTABLE_CLASS" />
+     </Match>
+     <Match>
+       <Bug pattern="NP_CLONE_COULD_RETURN_NULL" />
+     </Match>
+     <Match>
+       <Bug pattern="NM_CLASS_NOT_EXCEPTION" />
+     </Match>
+     <Match>
+       <Bug pattern="NM_FIELD_NAMING_CONVENTION" />
+     </Match>
+     <Match>
+       <Bug pattern="NM_METHOD_NAMING_CONVENTION" />
+     </Match>
+     <Match>
+       <Bug pattern="NM_VERY_CONFUSING_INTENTIONAL" />
+     </Match>
+     <Match>
+       <Bug pattern="NM_WRONG_PACKAGE_INTENTIONAL" />
+     </Match>
+     <Match>
+       <Bug pattern="RV_RETURN_VALUE_IGNORED_BAD_PRACTICE" />
+     </Match>
+     <Match>
+       <Bug pattern="SI_INSTANCE_BEFORE_FINALS_ASSIGNED" />
+     </Match>
+     <Match>
+       <Bug pattern="SW_SWING_METHODS_INVOKED_IN_SWING_THREAD" />
+     </Match>
+     <Match>
+       <Bug pattern="SE_COMPARATOR_SHOULD_BE_SERIALIZABLE" />
+     </Match>
+     <Match>
+       <Bug pattern="SE_INNER_CLASS" />
+     </Match>
+     <Match>
+       <Bug pattern="SE_TRANSIENT_FIELD_NOT_RESTORED" />
+     </Match>
+     <Match>
+       <Bug pattern="UI_INHERITANCE_UNSAFE_GETRESOURCE" />
+     </Match>
+     <Match>
+       <Bug pattern="BOA_BADLY_OVERRIDDEN_ADAPTER" />
+     </Match>
+     <Match>
+       <Bug pattern="ICAST_BAD_SHIFT_AMOUNT" />
+     </Match>
+     <Match>
+       <Bug pattern="BX_UNBOXED_AND_COERCED_FOR_TERNARY_OPERATOR" />
+     </Match>
+     <Match>
+       <Bug pattern="DLS_DEAD_LOCAL_STORE_IN_RETURN" />
+     </Match>
+     <Match>
+       <Bug pattern="DLS_DEAD_STORE_OF_CLASS_LITERAL" />
+     </Match>
+     <Match>
+       <Bug pattern="DMI_USING_REMOVEALL_TO_CLEAR_COLLECTION" />
+     </Match>
+     <Match>
+       <Bug pattern="DMI_ANNOTATION_IS_NOT_VISIBLE_TO_REFLECTION" />
+     </Match>
+     <Match>
+       <Bug pattern="IJU_BAD_SUITE_METHOD" />
+     </Match>
+     <Match>
+       <Bug pattern="IJU_NO_TESTS" />
+     </Match>
+     <Match>
+       <Bug pattern="NP_NULL_ON_SOME_PATH" />
+     </Match>
+     <Match>
+       <Bug pattern="NP_NULL_ON_SOME_PATH_EXCEPTION" />
+     </Match>
+     <Match>
+       <Bug pattern="NM_WRONG_PACKAGE" />
+     </Match>
+     <Match>
+       <Bug pattern="RE_CANT_USE_FILE_SEPARATOR_AS_REGULAR_EXPRESSION" />
+     </Match>
+     <Match>
+       <Bug pattern="RE_POSSIBLE_UNINTENDED_PATTERN" />
+     </Match>
+     <Match>
+       <Bug pattern="RV_RETURN_VALUE_IGNORED" />
+     </Match>
+     <Match>
+       <Bug pattern="SIO_SUPERFLUOUS_INSTANCEOF" />
+     </Match>
+     <Match>
+       <Bug pattern="TQ_MAYBE_SOURCE_VALUE_REACHES_ALWAYS_SINK" />
+     </Match>
+     <Match>
+       <Bug pattern="TQ_MAYBE_SOURCE_VALUE_REACHES_NEVER_SINK" />
+     </Match>
+     <Match>
+       <Bug pattern="TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED" />
+     </Match>
+     <Match>
+       <Bug pattern="UMAC_UNCALLABLE_METHOD_OF_ANONYMOUS_CLASS" />
+     </Match>
+     <Match>
+       <Bug pattern="UR_UNINIT_READ" />
+     </Match>
+     <Match>
+       <Bug pattern="UWF_NULL_FIELD" />
+     </Match>
+     <Match>
+       <Bug pattern="UWF_UNWRITTEN_FIELD" />
+     </Match>
+     <Match>
+       <Bug pattern="VA_PRIMITIVE_ARRAY_PASSED_TO_OBJECT_VARARG" />
+     </Match>
+     <Match>
+       <Bug pattern="DM_CONVERT_CASE" />
+     </Match>
+     <Match>
+       <Bug pattern="EI_EXPOSE_REP" />
+     </Match>
+     <Match>
+       <Bug pattern="EI_EXPOSE_REP2" />
+     </Match>
+     <Match>
+       <Bug pattern="FI_PUBLIC_SHOULD_BE_PROTECTED" />
+     </Match>
+     <Match>
+       <Bug pattern="EI_EXPOSE_STATIC_REP2" />
+     </Match>
+     <Match>
+       <Bug pattern="MS_CANNOT_BE_FINAL" />
+     </Match>
+     <Match>
+       <Bug pattern="MS_EXPOSE_REP" />
+     </Match>
+     <Match>
+       <Bug pattern="MS_FINAL_PKGPROTECT" />
+     </Match>
+     <Match>
+       <Bug pattern="MS_MUTABLE_ARRAY" />
+     </Match>
+     <Match>
+       <Bug pattern="MS_MUTABLE_HASHTABLE" />
+     </Match>
+     <Match>
+       <Bug pattern="MS_OOI_PKGPROTECT" />
+     </Match>
+     <Match>
+       <Bug pattern="MS_PKGPROTECT" />
+     </Match>
+     <Match>
+       <Bug pattern="MS_SHOULD_BE_FINAL" />
+     </Match>
+     <Match>
+       <Bug pattern="DC_DOUBLECHECK" />
+     </Match>
+     <Match>
+       <Bug pattern="IS2_INCONSISTENT_SYNC" />
+     </Match>
+     <Match>
+       <Bug pattern="NN_NAKED_NOTIFY" />
+     </Match>
+     <Match>
+       <Bug pattern="SP_SPIN_ON_FIELD" />
+     </Match>
+     <Match>
+       <Bug pattern="STCAL_INVOKE_ON_STATIC_CALENDAR_INSTANCE" />
+     </Match>
+     <Match>
+       <Bug pattern="STCAL_INVOKE_ON_STATIC_DATE_FORMAT_INSTANCE" />
+     </Match>
+     <Match>
+       <Bug pattern="STCAL_STATIC_CALENDAR_INSTANCE" />
+     </Match>
+     <Match>
+       <Bug pattern="STCAL_STATIC_SIMPLE_DATE_FORMAT_INSTANCE" />
+     </Match>
+     <Match>
+       <Bug pattern="HSC_HUGE_SHARED_STRING_CONSTANT" />
+     </Match>
+     <Match>
+       <Bug pattern="ITA_INEFFICIENT_TO_ARRAY" />
+     </Match>
+     <Match>
+       <Bug pattern="SBSC_USE_STRINGBUFFER_CONCATENATION" />
+     </Match>
+     <Match>
+       <Bug pattern="SIC_INNER_SHOULD_BE_STATIC" />
+     </Match>
+     <Match>
+       <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
+     </Match>
+     <Match>
+       <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS" />
+     </Match>
+     <Match>
+       <Bug pattern="SS_SHOULD_BE_STATIC" />
+     </Match>
+     <Match>
+       <Bug pattern="UPM_UNCALLED_PRIVATE_METHOD" />
+     </Match>
+     <Match>
+       <Bug pattern="URF_UNREAD_FIELD" />
+     </Match>
+     <Match>
+       <Bug pattern="UUF_UNUSED_FIELD" />
+     </Match>
+     <Match>
+       <Bug pattern="WMI_WRONG_MAP_ITERATOR" />
+     </Match>
+     <Match>
+       <Bug pattern="DMI_CONSTANT_DB_PASSWORD" />
+     </Match>
+     <Match>
+       <Bug pattern="DMI_EMPTY_DB_PASSWORD" />
+     </Match>
+     <Match>
+       <Bug pattern="SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE" />
+     </Match>
+     <Match>
+       <Bug pattern="SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING" />
+     </Match>
+     <Match>
+       <Bug pattern="BC_BAD_CAST_TO_ABSTRACT_COLLECTION" />
+     </Match>
+     <Match>
+       <Bug pattern="BC_BAD_CAST_TO_CONCRETE_COLLECTION" />
+     </Match>
+     <Match>
+       <Bug pattern="BC_UNCONFIRMED_CAST" />
+     </Match>
+     <Match>
+       <Bug pattern="ICAST_QUESTIONABLE_UNSIGNED_RIGHT_SHIFT" />
+     </Match>
+     <Match>
+       <Bug pattern="DLS_DEAD_LOCAL_STORE" />
+     </Match>
+     <Match>
+       <Bug pattern="DLS_DEAD_LOCAL_STORE_OF_NULL" />
+     </Match>
+     <Match>
+       <Bug pattern="DMI_HARDCODED_ABSOLUTE_FILENAME" />
+     </Match>
+     <Match>
+       <Bug pattern="DMI_UNSUPPORTED_METHOD" />
+     </Match>
+     <Match>
+       <Bug pattern="EQ_DOESNT_OVERRIDE_EQUALS" />
+     </Match>
+     <Match>
+       <Bug pattern="EQ_UNUSUAL" />
+     </Match>
+     <Match>
+       <Bug pattern="VA_FORMAT_STRING_BAD_CONVERSION_TO_BOOLEAN" />
+     </Match>
+     <Match>
+       <Bug pattern="NP_NULL_ON_SOME_PATH_MIGHT_BE_INFEASIBLE" />
+     </Match>
+     <Match>
+       <Bug pattern="NS_DANGEROUS_NON_SHORT_CIRCUIT" />
+     </Match>
+     <Match>
+       <Bug pattern="NS_NON_SHORT_CIRCUIT" />
+     </Match>
+     <Match>
+       <Bug pattern="PZLA_PREFER_ZERO_LENGTH_ARRAYS" />
+     </Match>
+     <Match>
+       <Bug pattern="QF_QUESTIONABLE_FOR_LOOP" />
+     </Match>
+     <Match>
+       <Bug pattern="REC_CATCH_EXCEPTION" />
+     </Match>
+     <Match>
+       <Bug pattern="RV_CHECK_FOR_POSITIVE_INDEXOF" />
+     </Match>
+     <Match>
+       <Bug pattern="RV_DONT_JUST_NULL_CHECK_READLINE" />
+     </Match>
+     <Match>
+       <Bug pattern="SF_SWITCH_FALLTHROUGH" />
+     </Match>
+     <Match>
+       <Bug pattern="SF_SWITCH_NO_DEFAULT" />
+     </Match>
+     <Match>
+       <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
+     </Match>
+     <Match>
+       <Bug pattern="SE_PRIVATE_READ_RESOLVE_NOT_INHERITED" />
+     </Match>
+     <Match>
+       <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" />
+     </Match>
+     <Match>
+       <Bug pattern="XFB_XML_FACTORY_BYPASS" />
+     </Match>
+</FindBugsFilter>

@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<ruleset name="Custom ruleset"
+    xmlns="http://pmd.sf.net/ruleset/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+    xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+
+  <description>
+  	This ruleset checks the code for correctness and bad practice issues. It is thought to
+  	be a ready-to-use default configuration for PMD, projects can start with.
+  	It defines a set of rules, where violations shouldn't be tolerated. So it tries to pick
+  	the obvious rules that indicate "smelly code" and tries to leave out those rules that 
+  	will most of the time produce violations which are not really important or are false
+  	positives.
+  	However, these rules are not set in stone. Projects may adapt or extends them by their needs.
+  	
+  	@version 2009-03-26
+  	@author Markus Grossmann, Capgemini sd&amp;m
+  </description>
+
+  <rule ref="rulesets/unusedcode.xml"/>
+  <rule ref="rulesets/basic.xml">
+    	<exclude name="EmptyCatchBlock"/>
+  </rule>
+  <rule ref="rulesets/basic.xml/EmptyCatchBlock">
+    <properties>
+        <property name="allowCommentedBlocks" value="true"/>
+    </properties>
+  </rule>
+  
+  <rule ref="rulesets/design.xml/SwitchStmtsShouldHaveDefault"/>
+  <rule ref="rulesets/design.xml/CloseResource"/>
+  <rule ref="rulesets/design.xml/DefaultLabelNotLastInSwitchStmt"/>
+  <rule ref="rulesets/design.xml/EqualsNull"/>
+  <rule ref="rulesets/design.xml/IdempotentOperations"/>
+  <rule ref="rulesets/design.xml/MissingBreakInSwitch"/>
+  <rule ref="rulesets/design.xml/PositionLiteralsFirstInComparisons"/>
+  <rule ref="rulesets/design.xml/UncommentedEmptyMethod"/>
+    
+  <rule ref="rulesets/controversial.xml/DoNotCallGarbageCollectionExplicitly"/>
+
+  <rule ref="rulesets/codesize.xml/ExcessiveMethodLength">
+    <properties>
+        <property name="minimum" value="250"/>
+    </properties>
+  </rule>
+  <rule ref="rulesets/codesize.xml/ExcessiveClassLength">
+    <properties>
+        <property name="minimum" value="1000"/>
+    </properties>
+  </rule>
+  <rule ref="rulesets/codesize.xml/CyclomaticComplexity">
+    <properties>
+        <property name="reportLevel" value="20"/>
+    </properties>
+  </rule>
+  <rule ref="rulesets/codesize.xml/ExcessivePublicCount">
+    <properties>
+        <property name="minimum" value="50"/>
+    </properties>
+  </rule> 
+  <rule ref="rulesets/codesize.xml/TooManyFields">
+    <properties>
+        <property name="maxfields" value="50"/>
+    </properties>
+  </rule>
+  
+  <rule ref="rulesets/coupling.xml/ExcessiveImports">
+    <properties>
+        <property name="minimum" value="50"/>
+    </properties>
+  </rule>  
+
+  <rule ref="rulesets/finalizers.xml/EmptyFinalizer"/>
+  <rule ref="rulesets/finalizers.xml/FinalizeOnlyCallsSuperFinalize"/>
+  <rule ref="rulesets/finalizers.xml/FinalizeOverloaded"/>
+  <rule ref="rulesets/finalizers.xml/FinalizeDoesNotCallSuperFinalize"/>  
+  
+  <rule ref="rulesets/imports.xml/DuplicateImports"/>  
+  <rule ref="rulesets/imports.xml/DontImportJavaLang"/> 
+  <rule ref="rulesets/imports.xml/ImportFromSamePackage"/> 
+
+  <rule ref="rulesets/migrating.xml/AvoidEnumAsIdentifier"/> 
+  <rule ref="rulesets/migrating.xml/AvoidAssertAsIdentifier"/> 
+  
+  <rule ref="rulesets/naming.xml/SuspiciousHashcodeMethodName"/> 
+  <rule ref="rulesets/naming.xml/AvoidFieldNameMatchingMethodName"/> 
+  <rule ref="rulesets/naming.xml/NoPackage"/>
+  
+  <rule ref="rulesets/optimizations.xml/UseArrayListInsteadOfVector"/>
+
+  <rule ref="rulesets/strings.xml/UseEqualsToCompareStrings"/>  
+</ruleset>

@@ -1,0 +1,7 @@
+#Mon Dec 12 17:15:49 CET 2011
+eclipse.m2.defaultPomEditorPage=true
+eclipse.m2.downloadSources=true
+eclipse.m2.offline=false
+eclipse.m2.updateIndexes=false
+eclipse.m2.userSettingsFile=${client.env.home}/conf/.m2/settings.xml
+eclipse.preferences.version=1

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tomcat-users>
+
+  <!-- 
+    ATTENTION: 
+    This is a very simple approach that we are using to keep the sample application simple.
+    In reality never ever store passwords unencrypted and/or in flat files. Also never ever even
+    think about implementing your own user/password store. There are many implicit demands like
+    salting and hashing passwords, expiry of passwords, notification for expiring passwords,
+    password renewal, rest in case of lost passwords, central password policies, etc.
+    In a real enterprise scenario use an access manager for the central identity management and for
+    authentication.
+    
+    NOTE: 
+    We do not keep the roles here as JAAS and Servlet API does not allow to retrieve the roles
+    of an arbitrary user in a portable or even in any way. However, for our business scenario we 
+    have demands for this.
+    We try our best in using and relying on Java/JEE standards but in this case the standards are 
+    so poor that there is no other way.
+    -->
+
+  <user username="chief" password="chief"/>
+  <user username="waiter" password="waiter"/>
+  <user username="barkeeper" password="barkeeper"/>
+  <user username="cook" password="cook"/>
+
+</tomcat-users>
