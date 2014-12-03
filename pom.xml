@@ -192,11 +192,6 @@
       <!-- *** INTERNAL DEPENDENCIES *** -->
       <dependency>
         <groupId>io.oasp.java</groupId>
-        <artifactId>oasp4j-monitoring</artifactId>
-        <version>${oasp4j.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java</groupId>
         <artifactId>oasp4j-logging</artifactId>
         <version>${oasp4j.version}</version>
       </dependency>

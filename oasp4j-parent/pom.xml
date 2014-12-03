@@ -18,7 +18,6 @@
   <modules>
     <module>../oasp4j-logging</module>
     <module>../oasp4j-configuration</module>
-    <module>../oasp4j-monitoring</module>
     <module>../oasp4j-beanmapping</module>
     <module>../oasp4j-rest</module>
     <module>../oasp4j-security</module>
@@ -522,7 +521,7 @@
   <licenses>
     <license>
       <name>Apache Software Licenese</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <url>http://oasp.github.io/terms-of-use.html</url>
       <distribution>repro</distribution>
       <comments/>
     </license>
