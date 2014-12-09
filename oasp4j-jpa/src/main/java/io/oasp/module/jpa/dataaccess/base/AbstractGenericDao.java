@@ -5,6 +5,7 @@ import io.oasp.module.jpa.dataaccess.api.GenericDao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -86,9 +87,13 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
       LOG.debug("Saved new {} with id {}.", getEntityName(), entity.getId());
       return entity;
     } else {
-      E update = this.entityManager.merge(entity);
-      LOG.debug("Updated {} with id {}.", getEntityName(), entity.getId());
-      return update;
+      if (this.entityManager.find(entity.getClass(), entity.getId()) != null) {
+        E update = this.entityManager.merge(entity);
+        LOG.debug("Updated {} with id {}.", getEntityName(), entity.getId());
+        return update;
+      } else {
+        throw new EntityNotFoundException("Entity not found");
+      }
     }
   }
 
