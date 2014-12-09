@@ -51,6 +51,7 @@ public class RequestParameters {
    * @throws WebApplicationException if an error occurred. E.g. {@link BadRequestException} if a required parameter is
    *         missing or {@link InternalServerErrorException} if the given <code>targetType</code> is not supported.
    */
+  @SuppressWarnings("unchecked")
   public <T> T get(String key, Class<T> targetType, boolean required) throws WebApplicationException {
 
     String value = get(key);
@@ -58,7 +59,27 @@ public class RequestParameters {
       if (required) {
         throw new BadRequestException("Missing parameter: " + key);
       }
-      return null;
+      Object result = null;
+      if (targetType.isPrimitive()) {
+        if (targetType == boolean.class) {
+          result = Boolean.FALSE;
+        } else if (targetType == int.class) {
+          result = Integer.valueOf(0);
+        } else if (targetType == long.class) {
+          result = Long.valueOf(0);
+        } else if (targetType == double.class) {
+          result = Double.valueOf(0);
+        } else if (targetType == float.class) {
+          result = Float.valueOf(0);
+        } else if (targetType == byte.class) {
+          result = Byte.valueOf((byte) 0);
+        } else if (targetType == short.class) {
+          result = Short.valueOf((short) 0);
+        } else if (targetType == char.class) {
+          result = '\0';
+        }
+      }
+      return (T) result;
     }
     try {
       return convertValue(value, targetType);
