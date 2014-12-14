@@ -1,0 +1,128 @@
+<project name="app-template" default="main" basedir=".">
+  <description>Pre-process sources and resources of oasp4j-sample to remove project specific parts.</description>
+  
+  <property name="xml.end.pattern"  value="&lt;!-- END ARCHETYPE SKIP"/>
+  <property name="xml.begin.pattern"  value="BEGIN ARCHETYPE SKIP --&gt;"/>
+  <property name="java.end.pattern"  value="// BEGIN ARCHETYPE SKIP "/>
+  <property name="java.begin.pattern"  value="// END ARCHETYPE SKIP "/>
+  <!-- the prefix necessary for archetype replacement -->
+  <property name="prefix"  value="#set( $symbol_pound = '#' )${line.separator}#set( $symbol_dollar = '$' )${line.separator}#set( $symbol_escape = '\\\\' )${line.separator}"/>
+
+  <target name="main">
+    <!-- **** root project **** -->
+    <copy file="${sample.input}/pom.xml" todir="${sample.output}">
+      <filterchain>
+        <tokenfilter>
+          <replaceregex pattern="[&lt;]parent(.+)/parent[>]" replace="" flags="gms" byline="false"/> <!-- Ant multiline replacement is actually broken -->
+          <linetokenizer/>
+          <replaceregex pattern="io.oasp.java" replace="${groupId}" flags="g"/>
+          <replaceregex pattern="[$][{]project.groupId[}]" replace="${project.groupId}" flags="g"/>
+          <replaceregex pattern="[$][{]oasp4j.version[}]" replace="${oasp4j.version}" flags="g"/>
+          <replaceregex pattern="oasp4j-samples" replace="${artifactId}" flags="g"/>
+          <replaceregex pattern="oasp4j-sample-core" replace="${rootArtifactId}-core" flags="g"/>
+          <replaceregex pattern="oasp4j-sample-server" replace="${rootArtifactId}-server" flags="g"/>
+          <replaceregex pattern="oasp4j-sample-server-integration" replace="${rootArtifactId}-integration" flags="g"/>
+        </tokenfilter>
+      </filterchain>
+    </copy>
+    
+    <!-- **** core project **** -->
+    <copy file="${sample.core.input}/pom.xml" todir="${sample.core.output}">
+      <filterchain>
+        <tokenfilter>
+          <linetokenizer/>
+          <replaceregex pattern="io.oasp.java" replace="${groupId}" flags="g"/>
+          <replaceregex pattern="oasp4j-sample-core" replace="${artifactId}" flags="g"/>
+          <replaceregex pattern="oasp4j-samples" replace="${rootArtifactId}" flags="g"/>
+        </tokenfilter>
+      </filterchain>
+    </copy>
+
+    <copy todir="${sample.core.sources.output}">
+      <fileset dir="${sample.core.sources.input}"/>
+      
+      <filterchain>
+        <tokenfilter>
+          <linetokenizer/>
+          <!-- Replace packages -->
+          <replaceregex pattern="package ${sample.package}" replace="${prefix}package ${package}" flags="g"/>
+          <!-- Replace packages in imports -->
+          <replaceregex pattern="import ${sample.package}" replace="import ${package}" flags="g"/>
+          <!-- comment out application specific logic -->      
+          <replaceregex pattern="${java.begin.pattern}" replace="" flags="g"/>
+          <replaceregex pattern="${java.end.pattern}" replace="" flags="g"/>
+          <!-- remove lines with references to 'offermanagement' (e.g. imports) -->
+          <replaceregex pattern=".*offermanagement.*" replace="" flags="g"/>
+        </tokenfilter>
+      </filterchain>
+    </copy>
+  
+    <copy todir="${sample.core.resources.output}">
+      <fileset dir="${sample.core.resources.input}"/>
+      <filterchain>
+        <tokenfilter>
+          <linetokenizer/>
+          <!-- remove application specific logic -->      
+          <replaceregex pattern="${xml.begin.pattern}" replace="" flags="g"/>
+          <replaceregex pattern="${xml.end.pattern}" replace="" flags="g"/>
+          <!-- comment out application specific logic -->
+          <replaceregex pattern="&lt;\?xml " replace="${prefix}&lt;?xml " flags="g"/>
+          <replaceregex pattern="${sample.package}" replace="${package}" flags="g"/>
+        </tokenfilter>
+      </filterchain>
+    </copy>
+  
+    <!-- **** server project **** -->
+    <copy file="${sample.server.input}/pom.xml" todir="${sample.server.output}">
+      <filterchain>
+        <tokenfilter>
+          <linetokenizer/>
+          <replaceregex pattern="io.oasp.java" replace="${groupId}" flags="g"/>
+          <replaceregex pattern="oasp4j-sample-server" replace="${artifactId}" flags="g"/>
+          <replaceregex pattern="oasp4j-sample-core" replace="${rootArtifactId}-core" flags="g"/>
+          <replaceregex pattern="oasp4j-samples" replace="${rootArtifactId}" flags="g"/>
+        </tokenfilter>
+      </filterchain>
+    </copy>
+    
+    <copy todir="${sample.server.webresources.output}">
+      <fileset dir="${sample.server.webresources.input}">
+        <exclude name="**/jsclient/**/*"/>
+      </fileset>
+      <filterchain>
+        <tokenfilter>
+          <!-- comment out application specific logic -->
+          <replaceregex pattern="&lt;\?xml " replace="${prefix}&lt;?xml " flags="g"/>
+          <replaceregex pattern="Restaurant" replace="${rootArtifactId}" flags="g"/>
+          <!--<replaceregex pattern="oasp-example-application" replace="${rootArtifactId}" flags="g"/>-->
+        </tokenfilter>
+      </filterchain>
+    </copy>
+  
+    <!-- **** integration project **** -->
+    <copy file="${sample.integration.input}/pom.xml" todir="${sample.integration.output}">
+      <filterchain>
+        <tokenfilter>
+          <linetokenizer/>
+          <replaceregex pattern="io.oasp.java" replace="${groupId}" flags="g"/>
+          <replaceregex pattern="oasp4j-sample-server-integration" replace="${artifactId}" flags="g"/>
+          <replaceregex pattern="oasp4j-sample-server" replace="${rootArtifactId}-server" flags="g"/>
+          <replaceregex pattern="oasp4j-sample-core" replace="${rootArtifactId}-core" flags="g"/>
+          <replaceregex pattern="oasp4j-samples" replace="${rootArtifactId}" flags="g"/>
+        </tokenfilter>
+      </filterchain>
+    </copy>
+    <copy todir="${sample.integration.sources.output}">
+      <fileset dir="${sample.integration.sources.input}"/>
+      <filterchain>
+        <tokenfilter>
+          <linetokenizer/>
+          <!-- Replace packages -->
+          <replaceregex pattern="package ${sample.package}" replace="${prefix}package ${package}" flags="g"/>
+          <!-- Replace packages in imports -->
+          <replaceregex pattern="import ${sample.package}" replace="import ${package}" flags="g"/>
+        </tokenfilter>
+      </filterchain>
+    </copy>
+  </target>
+</project>

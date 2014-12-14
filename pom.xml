@@ -2,247 +2,502 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-dependencies</artifactId>
-    <version>1.1.9.RELEASE</version>
-  </parent>
   <groupId>io.oasp.java</groupId>
-  <artifactId>oasp4j-dependencies</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <artifactId>oasp4j</artifactId>
+  <version>dev-SNAPSHOT</version> <!-- This POM will never be released -->
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
-  <description>Dependencies of the Open Application Standard Platform for Java (OASP4J) based on spring boot.</description>
-  <url>http://oasp.io/oasp4j/</url>
+  <description>Open Application Standard Platform for Java (OASP4J).</description>
+  <url>http://oasp.io/oasp4j/maven/oasp4j</url>
   <inceptionYear>2014</inceptionYear>
+
+  <modules>
+    <module>oasp4j-bom</module>
+    <module>oasp4j-modules</module>
+    <module>oasp4j-samples</module>
+    <module>oasp4j-templates</module>
+  </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    
-    <java.version>1.7</java.version>
-    <cxf.version>3.0.2</cxf.version>
     <oasp4j.version>1.0.0-SNAPSHOT</oasp4j.version>
   </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <encoding>${project.build.sourceEncoding}</encoding>
+          <includeEmptyDirs>true</includeEmptyDirs>
+        </configuration>
+      </plugin>
+
+      <!-- http://mojo.codehaus.org/flatten-maven-plugin/ -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
+        <version>1.0.0-beta-3</version>
+        <configuration>
+          <flattenMode>oss</flattenMode>
+        </configuration>
+        <executions>
+          <execution>
+            <id>flatten</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>flatten</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>flatten.clean</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- configure java compiler -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <encoding>${project.build.sourceEncoding}</encoding>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+
+      <!-- advanced manifests -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+
+      <!-- also generate source JARs -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- avoid version in local war files, exclude sources JARs from WARs -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <packagingExcludes>WEB-INF/lib/*-sources.jar</packagingExcludes>
+          <warName>${project.artifactId}</warName>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <!-- Surefire changed the default to the project.build.directory causing trouble with file paths to test resources -->
+          <workingDirectory>${basedir}</workingDirectory>
+        </configuration>
+      </plugin>
+
+      <!-- site generation settings -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+      </plugin>
+    </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.7</version>
+        </plugin>
+        <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-compiler-plugin</artifactId>
+           <version>3.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.5.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>2.6</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.5</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>2.9.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+          <version>2.7</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jxr-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.9.1</version>
+          <configuration>
+            <!-- http://jira.codehaus.org/browse/MJAVADOC-308 -->
+            <!--<maxmemory>5048m</maxmemory>-->
+            <notree>true</notree>
+            <show>private</show>
+            <encoding>${project.reporting.outputEncoding}</encoding>
+            <charset>${project.build.sourceEncoding}</charset>
+            <docfilessubdirs>true</docfilessubdirs>
+            <!--<additionalparam>-Xdoclint:none</additionalparam>-->
+            <links>
+              <link>http://docs.oracle.com/javase/7/docs/api/</link>
+              <link>http://m-m-m.sourceforge.net/apidocs/</link>
+            </links>
+            <doctitle>JavaDocs for ${project.name}</doctitle>
+            <windowtitle>JavaDocs for ${project.name}</windowtitle>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.17</version>
+          <configuration>
+            <!-- Surefire changed the default to the project.build.directory causing trouble with file paths to test resources -->
+            <workingDirectory>${basedir}</workingDirectory>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-report-plugin</artifactId>
+          <version>2.9</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-pmd-plugin</artifactId>
+          <version>3.2</version>
+          <configuration>
+            <targetJdk>${java.version}</targetJdk>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>2.5</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <version>1.5</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-help-plugin</artifactId>
+          <version>2.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>cobertura-maven-plugin</artifactId>
+          <version>2.6</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>findbugs-maven-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>taglist-maven-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+            <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>flatten-maven-plugin</artifactId>
+                    <versionRange>[0.0,)</versionRange>
+                    <goals>
+                      <goal>flatten</goal>
+                      <goal>clean</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore/>
+                  </action>
+                </pluginExecution>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.codehaus.cargo</groupId>
+                    <artifactId>cargo-maven2-plugin</artifactId>
+                    <versionRange>[0.0,)</versionRange>
+                    <goals>
+                      <goal>start</goal>
+                      <goal>stop</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore/>
+                  </action>
+                </pluginExecution>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <versionRange>[0.0,)</versionRange>
+                    <goals>
+                      <goal>jar</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore/>
+                  </action>
+                </pluginExecution>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <versionRange>[0.0,)</versionRange>
+                    <goals>
+                      <goal>jar</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore/>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <configuration>
+          <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+        </configuration>        
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <!--<notree>true</notree>-->
+          <show>private</show>
+          <encoding>${project.reporting.outputEncoding}</encoding>
+          <charset>${project.build.sourceEncoding}</charset>
+          <docfilessubdirs>true</docfilessubdirs>
+          <stylesheetfile>${user.dir}/src/main/javadoc/stylesheet.css</stylesheetfile>
+          <!--<additionalparam>-Xdoclint:none -source ${java.version}</additionalparam>-->
+          <links>
+            <link>http://docs.oracle.com/javase/7/docs/api/</link>
+            <link>http://oasp.github.io/oasp4j/maven/apidocs/</link>
+          </links>
+          <doctitle>JavaDocs for ${project.name}</doctitle>
+          <windowtitle>JavaDocs for ${project.name}</windowtitle>
+        </configuration>
+        <reportSets>
+          <reportSet>
+            <id>oasp.javadoc</id>
+            <reports>
+              <report>javadoc</report>
+            </reports>
+          </reportSet>
+          <reportSet>
+            <id>oasp.javadoc.aggregate</id>
+            <reports>
+              <report>aggregate</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>taglist-maven-plugin</artifactId>
+        <configuration>
+          <tags>
+            <tag>TODO</tag>
+            <tag>@todo</tag>
+            <tag>FIXME</tag>
+            <tag>@deprecated</tag>
+            <tag>REVIEW</tag>
+          </tags>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+
+  <profiles>
+    <profile>
+      <id>deploy</id>
+      <!-- exclude sample from release / deployment -->
+      <modules>
+        <module>oasp4j-bom</module>
+        <module>oasp4j-module</module>
+        <module>oasp4j-template</module>
+      </modules>
+      <build>
+        <plugins>
+          <!-- also generate javadoc JARs -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <!-- Sign artifacts with PGP -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <configuration>
+              <!--<keyname>todo</keyname> -->
+            </configuration>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <!-- separate eclipse build from command-line... -->
+      <id>eclipse</id>
+      <activation>
+        <property>
+          <name>eclipse.application</name>
+        </property>
+      </activation>
+      <build>
+        <directory>eclipse-target</directory>
+      </build>
+    </profile>
+  </profiles>
   
-  <modules>
-    <module>oasp4j-parent</module>
-  </modules>
-
-  <dependencyManagement>
-    <dependencies>
-      <!-- *** EXTERNAL DEPENDENCIES *** -->
-      <!-- spring-context is missing in spring-boot -->
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-context</artifactId>
-        <version>${spring.version}</version>
-      </dependency>
-      <!-- JSR 250 for component/bean lifecycle management -->
-      <dependency>
-        <groupId>javax.annotation</groupId>
-        <artifactId>jsr250-api</artifactId>
-        <version>1.0</version>
-      </dependency>
-      <!-- JSR 330 for dependency injection -->
-      <dependency>
-        <groupId>javax.inject</groupId>
-        <artifactId>javax.inject</artifactId>
-        <version>1</version>
-      </dependency>
-      <!-- JSR 250 for common annotations (component-bean lifecycle, security, etc.) -->
-      <dependency>
-        <groupId>javax.annotation</groupId>
-        <artifactId>javax.annotation-api</artifactId>
-        <version>1.2</version>
-      </dependency>
-      <!-- Library with general utilities -->
-      <dependency>
-        <groupId>com.google.guava</groupId>
-        <artifactId>guava</artifactId>
-        <version>17.0</version>
-      </dependency>
-      <!-- Library with general utilities as well as I18N and exception support -->
-      <dependency>
-        <groupId>net.sf.m-m-m</groupId>
-        <artifactId>mmm-util-core</artifactId>
-        <version>6.0.0</version>
-      </dependency>
-      <!-- Library with advanced collection support -->
-      <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-collections4</artifactId>
-        <version>4.0</version>
-      </dependency>
-      <!-- Support for money datatype including operations/calculations -->
-      <dependency>
-        <groupId>org.javamoney</groupId>
-        <artifactId>moneta</artifactId>
-        <version>0.8</version>
-      </dependency>
-      <!-- Java Persistence API (2.x not available in groupId javax.persistence) -->
-      <dependency>
-        <groupId>org.hibernate.javax.persistence</groupId>
-        <artifactId>hibernate-jpa-2.1-api</artifactId>
-        <version>1.0.0.Final</version>
-      </dependency>
-      <dependency>
-        <groupId>cglib</groupId>
-        <artifactId>cglib</artifactId>
-        <version>3.1</version>
-      </dependency>
-      <!-- Support for dynamic and type-safe JPA queries -->
-      <dependency>
-        <groupId>com.mysema.querydsl</groupId>
-        <artifactId>querydsl-jpa</artifactId>
-        <version>3.4.3</version>
-      </dependency>
-      <!-- DataBase Connection Pooling -->
-      <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-dbcp2</artifactId>
-        <version>2.0.1</version>
-      </dependency>
-      <!-- Logging API -->
-      <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-api</artifactId>
-        <version>1.7.7</version>
-      </dependency>
-      <!-- Servlet API -->
-      <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>javax.servlet-api</artifactId>
-        <version>3.1.0</version>
-        <!-- <scope>provided</scope> -->
-      </dependency>
-      <!-- Servlet Taglib -->
-      <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>jstl</artifactId>
-        <version>1.2</version>
-      </dependency>
-      <!-- JAX-RS API for REST services-->
-      <dependency>
-        <groupId>javax.ws.rs</groupId>
-        <artifactId>javax.ws.rs-api</artifactId>
-        <version>2.0</version>
-      </dependency>
-      <!-- CXF for REST and Webservices -->
-      <dependency>
-        <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-rt-frontend-jaxws</artifactId>
-        <version>${cxf.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-        <version>${cxf.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-rt-transports-http</artifactId>
-        <version>${cxf.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-rt-transports-local</artifactId>
-        <version>${cxf.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-rt-rs-client</artifactId>
-        <version>${cxf.version}</version>
-      </dependency>
-      <!-- Jackson for JSON mapping -->
-      <dependency>
-        <groupId>com.fasterxml.jackson.jaxrs</groupId>
-        <artifactId>jackson-jaxrs-json-provider</artifactId>
-        <version>2.4.2</version>
-      </dependency>
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.3.3</version>
-      </dependency>
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-core</artifactId>
-        <version>2.3.3</version>
-      </dependency>
-      <!-- Dozer for bean-mapping/conversion -->
-      <dependency>
-        <groupId>net.sf.dozer</groupId>
-        <artifactId>dozer</artifactId>
-        <version>5.5.1</version>
-      </dependency>
-      <!-- JSR303 API for annotation based validation -->
-      <dependency>
-        <groupId>javax.validation</groupId>
-        <artifactId>validation-api</artifactId>
-        <version>1.1.0.Final</version>
-      </dependency>
-      <!-- Mocking framework for mocks in unit tests -->
-      <dependency>
-        <groupId>org.mockito</groupId>
-        <artifactId>mockito-core</artifactId>
-        <version>1.9.5</version>
-      </dependency>
-      
-      <!-- *** INTERNAL DEPENDENCIES *** -->
-      <dependency>
-        <groupId>io.oasp.java</groupId>
-        <artifactId>oasp4j-logging</artifactId>
-        <version>${oasp4j.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java</groupId>
-        <artifactId>oasp4j-beanmapping</artifactId>
-        <version>${oasp4j.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java</groupId>
-        <artifactId>oasp4j-configuration</artifactId>
-        <version>${oasp4j.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java</groupId>
-        <artifactId>oasp4j-security</artifactId>
-        <version>${oasp4j.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java</groupId>
-        <artifactId>oasp4j-rest</artifactId>
-        <version>${oasp4j.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java</groupId>
-        <artifactId>oasp4j-jpa</artifactId>
-        <version>${oasp4j.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java</groupId>
-        <artifactId>oasp4j-web</artifactId>
-        <version>${oasp4j.version}</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
-  <distributionManagement>
-    <repository>
-      <id>oasp.releases</id>
-      <name>OASP Releases</name>
-      <url>http://oasp-ci.cloudapp.net/nexus/content/repositories/releases/</url>
-    </repository>
-    <snapshotRepository>
-      <id>oasp.snapshots</id>
-      <name>OASP Snapshots</name>
-      <url>http://oasp-ci.cloudapp.net/nexus/content/repositories/snapshots/</url>
-    </snapshotRepository>
-    <site>
-      <id>oasp-site</id>
-      <url>file://${user.dir}/target/oasp4j/maven</url>
-    </site>
-  </distributionManagement>
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/oasp/oasp4j/issues</url>
+  </issueManagement>
+  
+  <scm>
+    <url>https://github.com/oasp/oasp4j/tree/master/develop/src</url>
+  </scm>
+  
+  <!--
+    <mailingLists>
+    <mailingList>
+    <name>oasp-devel</name>
+    <subscribe>TODO</subscribe>
+    <unsubscribe>TODO</unsubscribe>
+    <post>TODO</post>
+    <archive>TODO</archive>
+    </mailingList>
+    </mailingLists>
+  -->
+  <organization>
+    <name>OASP-Team</name>
+    <url>http://oasp.io/oasp4j/maven/team-list.html</url>
+  </organization>
+  
+  <developers>
+    <developer>
+      <id>hohwille</id>
+      <name>J&#246;rg Hohwiller</name>
+      <email>hohwille@users.sourceforge.net</email>
+      <organization></organization>
+      <organizationUrl/>
+      <roles>
+        <role>admin</role>
+        <role>designer</role>
+        <role>developer</role>
+      </roles>
+      <timezone>+1</timezone>
+      <properties/>
+    </developer>
+  </developers>
+  
+  <licenses>
+    <license>
+      <name>Apache Software Licenese</name>
+      <url>http://oasp.github.io/terms-of-use.html</url>
+      <distribution>repo</distribution>
+      <comments/>
+    </license>
+  </licenses>
   
 </project>

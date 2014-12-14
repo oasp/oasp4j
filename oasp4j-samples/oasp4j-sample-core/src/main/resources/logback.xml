@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Configuration file for logback -->
+
+<configuration scan="true" scanPeriod="60 seconds">
+
+  <property name="logPattern" value="[D: %d{ISO8601}] [P: %-5p] [C: %X{correlationId}] [T: %t] [L: %c] - [M: %m]  %n"/>
+
+  <property name="rollingPattern" value="%d{yyyy-MM-dd_HH}"></property>
+
+  <property name="filePath" value="${java.io.tmpdir}${file.separator}"></property>
+
+  <property name="errorLogFile" value="error_log_devseu_rmgt"></property>
+
+  <property name="infoLogFile" value="info_log_devseu_rmgt"></property>
+
+  <property name="debugLogFile" value="debug_log_devseu_rmgt"></property>
+
+  <!-- Automatic removal of old log archives maxHistory=... needed? -->
+  <!-- RollingFileAppender: Automatic compression of archived log files -->
+  <!-- Prudent mode needed? (multiple FileAppender instances running on multiple JVMs can safely write to the same log file) -->
+  <!-- Logback-beagle: eclipse plug-in for viewing logs -->
+
+  <appender name="ERROR_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <File>${filePath}${errorLogFile}</File>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>WARN</level>
+    </filter>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${filePath}${errorLogFile}_${rollingPattern}00.log</fileNamePattern>
+    </rollingPolicy>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>${logPattern}</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="INFO_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <File>${filePath}${infoLogFile}</File>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>INFO</level>
+    </filter>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${filePath}${infoLogFile}_${rollingPattern}00.log</fileNamePattern>
+    </rollingPolicy>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>${logPattern}</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="DEBUG_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <File>${filePath}${debugLogFile}</File>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>ALL</level>
+    </filter>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${filePath}${debugLogFile}_${rollingPattern}00.log</fileNamePattern>
+    </rollingPolicy>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>${logPattern}</pattern>
+    </encoder>
+  </appender>
+
+  <!-- TODO: Console appender should only be active in development environment -->
+  <appender name="CONSOLE_APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>${logPattern}</pattern>
+    </encoder>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>DEBUG</level>
+    </filter>
+  </appender>
+
+  <root level="DEBUG">
+    <appender-ref ref="ERROR_APPENDER"/>
+    <appender-ref ref="INFO_APPENDER"/>
+    <appender-ref ref="DEBUG_APPENDER"/>
+    <appender-ref ref="CONSOLE_APPENDER"/>
+  </root>
+
+  <logger name="org.springframework" level="DEBUG">
+    <appender-ref ref="ERROR_APPENDER"/>
+    <appender-ref ref="INFO_APPENDER"/>
+    <appender-ref ref="DEBUG_APPENDER"/>
+    <!-- <appender-ref ref="CONSOLE_APPENDER"/>-->
+  </logger>
+
+  <logger name="org.dozer" level="INFO">
+    <appender-ref ref="ERROR_APPENDER"/>
+    <appender-ref ref="INFO_APPENDER"/>
+    <appender-ref ref="DEBUG_APPENDER"/>
+  </logger>
+
+</configuration>

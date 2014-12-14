@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+  xsi:schemaLocation="
+           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+           http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+
+  <import resource="../logic/beans-logic.xml"/>
+  <import resource="beans-monitoring.xml"/>
+  <import resource="../security/beans-security.xml"/>
+
+
+  <context:component-scan base-package="io.oasp.gastronomy.restaurant.*.service"/>
+  <import resource="classpath:META-INF/cxf/cxf.xml"/>
+  <!-- <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" /> -->
+  <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+
+  <!-- By convention web-services should be located in the path folder "ws" -->
+  <!-- BEGIN ARCHETYPE SKIP -->
+  <jaxws:endpoint id="tableManagement" implementor="#TablemanagementWebService" address="/ws/Tablemanagement/v1_0"/>
+  <!-- END ARCHETYPE SKIP -->
+
+  <!-- By convention REST services should be located in the path folder "rest" -->
+  <!-- BEGIN ARCHETYPE SKIP -->
+  <bean id="RestServiceExceptionFacade" class="io.oasp.module.rest.service.impl.RestServiceExceptionFacade">
+    <property name="exposeInternalErrorDetails" value="${security.expose.error.details}"/>
+  </bean>
+  <!-- END ARCHETYPE SKIP -->
+
+  <jaxrs:server id="CxfRestServices" address="/rest">
+    <jaxrs:providers>
+      <bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider">
+      <property name="mapper">
+        <ref bean="JacksonObjectMapper"/>
+      </property>
+      </bean>
+      <ref bean="RestServiceExceptionFacade"/>
+    </jaxrs:providers>
+    <jaxrs:serviceBeans>
+      <!-- place your service beans here -->
+      <!-- BEGIN ARCHETYPE SKIP -->
+      <ref bean="TablemanagementRestService"/>
+      <ref bean="SalesmanagementRestService"/>
+      <ref bean="OffermanagementRestService"/>
+      <ref bean="StaffmanagementRestService"/>
+      <ref bean="SecurityRestService"/>
+      <!-- END ARCHETYPE SKIP -->
+    </jaxrs:serviceBeans>
+  </jaxrs:server>
+
+  <!-- JSON mapping config -->
+  <bean id="JacksonObjectMapper" factory-bean="ApplicationObjectMapperFactory" factory-method="createInstance"/>
+</beans>

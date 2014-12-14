@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="1.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+
+  <named-query name="get.free.tables">
+    <query><![CDATA[SELECT t FROM Table t WHERE t.state = io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState.FREE]]></query>
+  </named-query>
+
+  <named-query name="get.staff.member.by.login">
+    <query><![CDATA[SELECT s FROM StaffMember s WHERE login = ?]]></query>
+  </named-query>
+
+  <named-query name="get.open.order.positions.for.order">
+    <query><![CDATA[SELECT op FROM OrderPosition op where op.order.id = ? AND op.state NOT IN (io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState.PAYED, io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState.CANCELLED)]]></query>
+  </named-query>
+  <named-query name="get.all.order.positions">
+    <query><![CDATA[SELECT op FROM OrderPosition op]]></query>
+  </named-query>
+  <named-query name="get.all.open.order.positions">
+    <query><![CDATA[SELECT op FROM OrderPosition op where op.state NOT IN (io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState.PAYED, io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState.CANCELLED)]]></query>
+  </named-query>
+  <named-query name="get.open.order.for.table">
+    <query><![CDATA[SELECT o FROM Order o WHERE o.state = io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState.OPEN and o.tableId=?]]></query>
+  </named-query>
+
+</entity-mappings>

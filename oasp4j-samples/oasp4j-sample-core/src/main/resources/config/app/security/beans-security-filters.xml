@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- - Sample namespace-based configuration - -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:security="http://www.springframework.org/schema/security"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                      http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+                      http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+  <!--Common filters -->
+
+  <bean id="SecurityContextPersistenceFilter" class="org.springframework.security.web.context.SecurityContextPersistenceFilter"/>
+
+  <bean id="SecurityContextHolderAwareRequestFilter" class="org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter"/>
+
+  <bean id="AnonymousAuthenticationFilter" class="org.springframework.security.web.authentication.AnonymousAuthenticationFilter">
+    <constructor-arg value="BF93JFJ091N00Q7HF"/>
+  </bean>
+
+  <bean id="RequestCacheAwareFilter" class="org.springframework.security.web.savedrequest.RequestCacheAwareFilter"/>
+
+  <bean id="SessionManagementFilter" class="org.springframework.security.web.session.SessionManagementFilter">
+    <constructor-arg>
+      <bean class="org.springframework.security.web.context.HttpSessionSecurityContextRepository"/>
+    </constructor-arg>
+  </bean>
+
+  <!-- RestLogoutFilter -->
+  <bean id="RestLogoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+    <constructor-arg>
+      <bean class="io.oasp.module.security.common.impl.rest.LogoutSuccessHandlerReturningOkHttpStatusCode"/>
+    </constructor-arg>
+    <constructor-arg>
+      <array>
+        <bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+      </array>
+    </constructor-arg>
+    <property name="logoutRequestMatcher">
+      <bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
+        <constructor-arg value="/services/rest/logout"/>
+      </bean>
+    </property>
+  </bean>
+
+  <!-- LogoutFilter -->
+  <bean id="LogoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+    <!-- logout success URL -->
+    <constructor-arg value="/security/login?logout=1"/>
+    <constructor-arg>
+      <array>
+        <bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+      </array>
+    </constructor-arg>
+    <property name="filterProcessesUrl" value="/j_spring_security_logout"/>
+  </bean>
+
+  <!-- REST/JSON filter -->
+  <bean id="JsonUsernamePasswordAuthenticationFilter" class="io.oasp.module.security.common.impl.rest.JsonUsernamePasswordAuthenticationFilter">
+    <constructor-arg>
+      <bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
+        <constructor-arg value="/services/rest/login"/>
+      </bean>
+    </constructor-arg>
+    <property name="authenticationManager" ref="AuthenticationManager"/>
+    <property name="authenticationSuccessHandler">
+      <bean class="io.oasp.module.security.common.impl.rest.AuthenticationSuccessHandlerSendingOkHttpStatusCode"/>
+    </property>
+    <property name="authenticationFailureHandler">
+      <bean class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler"/>
+    </property>
+  </bean>
+
+  <!-- FORM based login filter -->
+  <bean id="UsernamePasswordAuthenticationFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+    <property name="authenticationManager" ref="AuthenticationManager"/>
+    <property name="requiresAuthenticationRequestMatcher">
+      <bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
+        <constructor-arg value="/j_spring_security_login"/>
+      </bean>
+    </property>
+    <property name="authenticationSuccessHandler">
+      <bean class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+        <property name="defaultTargetUrl">
+          <util:constant static-field="io.oasp.gastronomy.restaurant.general.gui.api.LoginController.defaultTargetUrl"/>
+        </property>
+      </bean>
+    </property>
+    <property name="authenticationFailureHandler">
+      <bean class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+        <property name="defaultFailureUrl" value="/security/login?authentication_failed=1"/>
+      </bean>
+    </property>
+  </bean>
+
+  <!-- ExceptionTranslationFilter -->
+  <bean id="ExceptionTranslationFilter" class="org.springframework.security.web.access.ExceptionTranslationFilter">
+    <constructor-arg>
+      <bean class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+        <constructor-arg value="/security/login"/>
+      </bean>
+    </constructor-arg>
+    <property name="accessDeniedHandler">
+      <bean class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+        <property name="errorPage" value="/security/login?access_denied=1"/>
+      </bean>
+    </property>
+  </bean>
+
+  <!-- RestExceptionTranslationFilter -->
+  <bean id="RestExceptionTranslationFilter" class="org.springframework.security.web.access.ExceptionTranslationFilter">
+    <constructor-arg>
+      <bean class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"/>
+    </constructor-arg>
+    <property name="accessDeniedHandler">
+      <bean class="org.springframework.security.web.access.AccessDeniedHandlerImpl"/>
+    </property>
+  </bean>
+
+  <!-- Necessary for authentication over the Servlet API (ServletAuthenticationProvider uses it) -->
+  <bean id="RequestContextFilter" class="org.springframework.web.filter.RequestContextFilter"/>
+
+  <!-- Necessary for anchor-aware redirecting after login -->
+  <bean id="RetainAnchorFilter" class="io.oasp.module.security.common.impl.web.RetainAnchorFilter">
+    <!-- first [^/]+ part describes host name and possibly port, second [^/]+ is the application name -->
+    <property name="storeUrlPattern" value="http://[^/]+/[^/]+/security/login.*"/>
+    <property name="restoreUrlPattern" value="http://[^/]+/[^/]+/.*"/>
+    <property name="cookieName" value="TARGETANCHOR"/>
+  </bean>
+
+  <!-- Cross Site Request Forgery (CSRF) -->
+  <bean id="HttpSessionCsrfTokenRepository" class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository"/>
+  <bean id="CsrfFilterWrapper" class="io.oasp.module.web.common.base.ToggleFilterWrapper">
+    <property name="delegateFilter" ref="CsrfFilter"/>
+    <property name="disabledString" value="#{systemProperties['CsrfDisabled']}"/>
+  </bean>
+  <bean id="CsrfFilter" class="org.springframework.security.web.csrf.CsrfFilter">
+    <constructor-arg>
+      <ref bean="HttpSessionCsrfTokenRepository"/>
+    </constructor-arg>
+    <property name="accessDeniedHandler" ref="ApplicationAccessDeniedHandler"/>
+  </bean>
+
+
+</beans>

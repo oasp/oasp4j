@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<access-control-schema>
+  <group id="ReadMasterData" type="group">
+    <permissions>
+      <!-- offermanagement -->
+      <permission id="FindOffer"/>
+      <permission id="FindProduct"/>
+      <!-- tablemanagement -->
+      <permission id="FindTable"/>
+      <!-- staffmanagement -->
+      <permission id="FindStaffMember"/>
+    </permissions>
+  </group>
+
+  <group id="Waiter" type="role">
+    <inherits>
+      <group-ref>Barkeeper</group-ref>
+    </inherits>
+    <permissions>
+      <!-- tablemanagement -->
+      <permission id="SaveTable"/>
+    </permissions>
+  </group>
+  <group id="Barkeeper" type="role">
+    <inherits>
+      <group-ref>Cook</group-ref>
+    </inherits>
+    <permissions>
+      <!-- salesmanagement -->
+      <permission id="SaveBill"/>
+      <permission id="FindBill"/>
+      <permission id="DeleteBill"/>
+      <permission id="DeleteOrder"/>
+    </permissions>
+  </group>
+  <group id="Cook" type="role">
+    <inherits>
+      <group-ref>ReadMasterData</group-ref>
+    </inherits>
+    <permissions>
+      <!-- salesmanagement -->
+      <permission id="SaveOrder"/>
+      <permission id="FindOrder"/>
+      <permission id="SaveOrderPosition"/>
+      <permission id="FindOrderPosition"/>
+    </permissions>
+  </group>
+  <group id="Chief" type="role">
+    <inherits>
+      <group-ref>Waiter</group-ref>
+    </inherits>
+    <permissions>
+      <!-- offermanagement -->
+      <permission id="SaveOffer"/>
+      <permission id="DeleteOffer"/>
+      <permission id="SaveProduct"/>
+      <permission id="DeleteProduct"/>
+      <!-- staffmanagement -->
+      <permission id="SaveStaffMember"/>
+      <permission id="DeleteStaffMember"/>
+      <permission id="DeleteOrderPosition"/>
+      <!-- tablemanagement -->
+      <permission id="DeleteTable"/>
+    </permissions>
+  </group>
+</access-control-schema>

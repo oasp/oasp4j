@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- - Sample namespace-based configuration - -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:security="http://www.springframework.org/schema/security"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                      http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+  <import resource="beans-security-filters.xml"/>
+
+  <context:component-scan base-package="io.oasp.gastronomy.restaurant.general.common.*.security"/>
+
+  <security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled"
+    jsr250-annotations="enabled" access-decision-manager-ref="MethodAccessDecisionManager">
+    <!-- AspectJ pointcut expression that locates our "post" method and applies
+      security that way <protect-pointcut expression="execution(* bigbank.*Service.post*(..))"
+      access="ROLE_TELLER"/> -->
+  </security:global-method-security>
+
+  <bean id="SecurityFilterChain" class="org.springframework.security.web.FilterChainProxy">
+    <constructor-arg>
+      <list>
+        <!--JS Client is publicly available -->
+        <security:filter-chain pattern="/jsclient/**" filters="none"/>
+
+        <!--REST login without CSRF filter -->
+        <security:filter-chain pattern="/services/rest/login"
+            filters="RequestContextFilter,
+                   SecurityContextPersistenceFilter,
+                   RestLogoutFilter,
+                   JsonUsernamePasswordAuthenticationFilter,
+                   RequestCacheAwareFilter,
+                   SecurityContextHolderAwareRequestFilter,
+                   AnonymousAuthenticationFilter,
+                   SessionManagementFilter,
+                   RestExceptionTranslationFilter,
+                   FilterSecurityInterceptor"/>
+        <!-- REST Services intended for JS Client are secured based on a session cookies and have REST login/logout API -->
+        <security:filter-chain pattern="/services/rest/**"
+          filters="RequestContextFilter,
+                   SecurityContextPersistenceFilter,
+                   CsrfFilterWrapper,
+                   RestLogoutFilter,
+                   JsonUsernamePasswordAuthenticationFilter,
+                   RequestCacheAwareFilter,
+                   SecurityContextHolderAwareRequestFilter,
+                   AnonymousAuthenticationFilter,
+                   SessionManagementFilter,
+                   RestExceptionTranslationFilter,
+                   FilterSecurityInterceptor"/>
+        <!-- Defaults to form based strategy -->
+        <security:filter-chain pattern="/**"
+          filters="RequestContextFilter,
+                   SecurityContextPersistenceFilter,
+                   LogoutFilter,
+                   UsernamePasswordAuthenticationFilter,
+                   RequestCacheAwareFilter,
+                   SecurityContextHolderAwareRequestFilter,
+                   AnonymousAuthenticationFilter,
+                   SessionManagementFilter,
+                   ExceptionTranslationFilter,
+                   FilterSecurityInterceptor"/>
+      </list>
+    </constructor-arg>
+  </bean>
+
+  <bean id="FilterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+    <property name="authenticationManager" ref="AuthenticationManager"/>
+    <property name="accessDecisionManager" ref="FilterAccessDecisionManager"/>
+    <property name="securityMetadataSource">
+      <security:filter-security-metadata-source use-expressions="true">
+        <security:intercept-url pattern="/" access="isAnonymous()"/>
+        <security:intercept-url pattern="/index.jsp" access="isAnonymous()"/>
+        <security:intercept-url pattern="/security/login*" access="isAnonymous()"/>
+        <security:intercept-url pattern="/j_spring_security_login*" access="isAnonymous()"/>
+        <security:intercept-url pattern="/j_spring_security_logout*" access="isAnonymous()"/>
+        <security:intercept-url pattern="/services/rest/security/currentuser/" access="isAnonymous() or isAuthenticated()"/>
+        <security:intercept-url pattern="/**" access="isAuthenticated()"/>
+      </security:filter-security-metadata-source>
+    </property>
+  </bean>
+
+  <bean id="AuthenticationManager" class="org.springframework.security.authentication.ProviderManager">
+    <constructor-arg>
+      <list>
+        <ref bean="ApplicationAuthenticationProvider"/>
+      </list>
+    </constructor-arg>
+    <!--<property name="eraseCredentialsAfterAuthentication" value="false" /> -->
+  </bean>
+
+  <!-- Authorization based on defaults as Authentication already provides the expanded list of authorities (access controls) -->
+  <bean id="FilterAccessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
+    <constructor-arg>
+      <list>
+        <bean class="org.springframework.security.web.access.expression.WebExpressionVoter"/>
+      </list>
+    </constructor-arg>
+  </bean>
+  <bean id="MethodAccessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
+    <constructor-arg>
+      <list>
+        <bean class="org.springframework.security.access.annotation.Jsr250Voter"/>
+      </list>
+    </constructor-arg>
+  </bean>
+
+  <bean id="AccessControlProvider" class="io.oasp.module.security.common.impl.accesscontrol.AccessControlProviderImpl"/>
+  <bean id="AccessControlSchemaProvider" class="io.oasp.module.security.common.impl.accesscontrol.AccessControlSchemaProviderImpl"/>
+
+</beans>

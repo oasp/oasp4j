@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+  profile="!integrationTest" >
+
+  <bean id="appDataSource" class="org.h2.jdbcx.JdbcDataSource" depends-on="dbServer">
+      <property name="URL" value="${database.url}"/>
+      <property name="user" value="${database.user.login}"/>
+      <property name="password" value="${database.user.password}"/>
+  </bean>
+
+  <bean name="dbServer" class="org.h2.tools.Server" lazy-init="false" factory-method="createTcpServer" init-method="start"
+    destroy-method="stop">
+    <constructor-arg>
+      <array>
+        <value>-tcp</value>
+        <value>-tcpAllowOthers</value>
+        <value>-tcpPort</value>
+        <value>${database.h2.server.port}</value>
+      </array>
+    </constructor-arg>
+  </bean>
+
+</beans>
