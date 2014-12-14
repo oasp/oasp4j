@@ -16,7 +16,7 @@
   <context-param>
     <param-name>webAppRootKey</param-name>
     <!-- <param-value>restaurant</param-value> -->
-    <param-value>oasp-example-application</param-value>
+    <param-value>oasp-sample-server</param-value>
   </context-param>
 
   <!-- Bootstrap Listener to start the Spring Main-WebApplicationContexts of Spring. Delegates to the ContextLoader.
