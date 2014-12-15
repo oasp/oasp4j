@@ -289,7 +289,7 @@
                     <artifactId>maven-antrun-plugin</artifactId>
                     <versionRange>[0.0,)</versionRange>
                     <goals>
-                      <goal>jar</goal>
+                      <goal>run</goal>
                     </goals>
                   </pluginExecutionFilter>
                   <action>
