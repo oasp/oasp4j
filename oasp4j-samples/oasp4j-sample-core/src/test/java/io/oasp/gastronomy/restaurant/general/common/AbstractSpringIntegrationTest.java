@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 @TestExecutionListeners({ TransactionalTestExecutionListener.class, DependencyInjectionTestExecutionListener.class })
 @Transactional
 @DirtiesContext(classMode = ClassMode.AFTER_CLASS)
+@ActiveProfiles("db-plain")
 public abstract class AbstractSpringIntegrationTest extends Assert {
 
   @Inject
