@@ -500,4 +500,22 @@
     </license>
   </licenses>
   
+  
+  <distributionManagement>
+    <repository>
+      <id>oasp.releases</id>
+      <name>OASP Releases</name>
+      <url>http://oasp-ci.cloudapp.net/nexus/content/repositories/releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>oasp.snapshots</id>
+      <name>OASP Snapshots</name>
+      <url>http://oasp-ci.cloudapp.net/nexus/content/repositories/snapshots/</url>
+    </snapshotRepository>
+    <site>
+      <id>oasp-site</id>
+      <url>file://${user.dir}/target/oasp4j/maven</url>
+    </site>
+  </distributionManagement>
+  
 </project>
