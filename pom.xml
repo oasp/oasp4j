@@ -500,7 +500,6 @@
     </license>
   </licenses>
   
-  
   <distributionManagement>
     <repository>
       <id>oasp.releases</id>

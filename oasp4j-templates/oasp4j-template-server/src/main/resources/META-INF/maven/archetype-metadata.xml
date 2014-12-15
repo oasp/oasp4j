@@ -33,22 +33,41 @@
     <module id="${rootArtifactId}-core" dir="__rootArtifactId__-core" name="${rootArtifactId}-core">
       <fileSets>
         <fileSet filtered="true" packaged="true" encoding="UTF-8">
-          <directory>src</directory>
-          <includes>
-            <include>**/*</include>
-          </includes>
+          <directory>src/main/java</directory>
+        </fileSet>
+        <fileSet filtered="true" packaged="false" encoding="UTF-8">
+          <directory>src/main/resources</directory>
+        </fileSet>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+          <directory>src/test/java</directory>
+        </fileSet>
+        <fileSet filtered="true" packaged="false" encoding="UTF-8">
+          <directory>src/test/resources</directory>
         </fileSet>
       </fileSets>
     </module>
     <module id="${rootArtifactId}-server" dir="__rootArtifactId__-server" name="${rootArtifactId}-server">
       <fileSets>
         <fileSet filtered="true" packaged="true" encoding="UTF-8">
-          <directory>src</directory>
+          <directory>src/main/java</directory>
+        </fileSet>
+        <fileSet filtered="true" packaged="false" encoding="UTF-8">
+          <directory>src/main/resources</directory>
+        </fileSet>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+          <directory>src/test/java</directory>
+        </fileSet>
+        <fileSet filtered="true" packaged="false" encoding="UTF-8">
+          <directory>src/test/resources</directory>
+        </fileSet>
+        <fileSet filtered="false" packaged="false" encoding="UTF-8">
+          <directory>src/main/webapp</directory>
           <includes>
+            <include>**/*.jsp</include>
             <include>**/*.xml</include>
           </includes>
         </fileSet>
-        <fileSet filtered="true" encoding="UTF-8">
+        <fileSet filtered="true" packaged="false" encoding="UTF-8">
           <directory></directory>
           <includes>
             <include>build.xml</include>
@@ -56,15 +75,23 @@
         </fileSet>
       </fileSets>
     </module>
+    <!--
     <module id="${rootArtifactId}-server-integration" dir="__rootArtifactId__-server-integration" name="${rootArtifactId}-server-integration">
       <fileSets>
         <fileSet filtered="true" packaged="true" encoding="UTF-8">
-          <directory>src</directory>
-          <includes>
-            <include>**/*</include>
-          </includes>
+          <directory>src/main/java</directory>
+        </fileSet>
+        <fileSet filtered="true" packaged="false" encoding="UTF-8">
+          <directory>src/main/resources</directory>
+        </fileSet>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+          <directory>src/test/java</directory>
+        </fileSet>
+        <fileSet filtered="true" packaged="false" encoding="UTF-8">
+          <directory>src/test/resources</directory>
         </fileSet>
       </fileSets>
     </module>
+    -->
   </modules>
 </archetype-descriptor>

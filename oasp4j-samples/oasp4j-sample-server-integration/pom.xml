@@ -3,12 +3,11 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>io.oasp.java</groupId>
+    <groupId>io.oasp.java.samples</groupId>
     <artifactId>oasp4j-samples</artifactId>
     <version>dev-SNAPSHOT</version>
   </parent>
   <artifactId>oasp4j-sample-server-integration</artifactId>
-  <version>dev-snapshot</version>
   <name>${project.artifactId}</name>
   <description>Integration tests for OASP4J sample app.</description>
 
