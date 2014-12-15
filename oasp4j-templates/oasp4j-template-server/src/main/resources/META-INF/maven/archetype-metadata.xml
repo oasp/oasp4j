@@ -64,6 +64,11 @@
           <directory>src/main/webapp</directory>
           <includes>
             <include>**/*.jsp</include>
+          </includes>
+        </fileSet>
+        <fileSet filtered="true" packaged="false" encoding="UTF-8">
+          <directory>src/main/webapp</directory>
+          <includes>
             <include>**/*.xml</include>
           </includes>
         </fileSet>

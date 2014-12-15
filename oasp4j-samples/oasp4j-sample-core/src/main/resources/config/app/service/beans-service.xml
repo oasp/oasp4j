@@ -25,11 +25,9 @@
   <!-- END ARCHETYPE SKIP -->
 
   <!-- By convention REST services should be located in the path folder "rest" -->
-  <!-- BEGIN ARCHETYPE SKIP -->
   <bean id="RestServiceExceptionFacade" class="io.oasp.module.rest.service.impl.RestServiceExceptionFacade">
     <property name="exposeInternalErrorDetails" value="${security.expose.error.details}"/>
   </bean>
-  <!-- END ARCHETYPE SKIP -->
 
   <jaxrs:server id="CxfRestServices" address="/rest">
     <jaxrs:providers>
@@ -47,8 +45,8 @@
       <ref bean="SalesmanagementRestService"/>
       <ref bean="OffermanagementRestService"/>
       <ref bean="StaffmanagementRestService"/>
-      <ref bean="SecurityRestService"/>
       <!-- END ARCHETYPE SKIP -->
+      <ref bean="SecurityRestService"/>
     </jaxrs:serviceBeans>
   </jaxrs:server>
 

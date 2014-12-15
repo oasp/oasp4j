@@ -64,7 +64,10 @@
     </copy>
   
     <copy todir="${sample.core.resources.output}">
-      <fileset dir="${sample.core.resources.input}"/>
+      <fileset dir="${sample.core.resources.input}">
+        <exclude name="**/NamedQueries.xml"/>
+        <exclude name="db/**/*"/>
+      </fileset>
       <filterchain>
         <tokenfilter>
           <linetokenizer/>
@@ -99,8 +102,9 @@
       <filterchain>
         <tokenfilter>
           <!-- comment out application specific logic -->
-          <replaceregex pattern="&lt;\?xml " replace="${prefix}&lt;?xml " flags="g"/>
+          <!--<replaceregex pattern="&lt;\?xml " replace="${prefix}&lt;?xml " flags="g"/>-->
           <replaceregex pattern="Restaurant" replace="${rootArtifactId}" flags="g"/>
+          <replaceregex pattern="oasp-sample-server" replace="${rootArtifactId}" flags="g"/>
           <!--<replaceregex pattern="oasp-example-application" replace="${rootArtifactId}" flags="g"/>-->
         </tokenfilter>
       </filterchain>

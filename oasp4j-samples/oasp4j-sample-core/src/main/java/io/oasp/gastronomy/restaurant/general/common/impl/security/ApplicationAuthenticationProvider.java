@@ -57,7 +57,7 @@ public class ApplicationAuthenticationProvider extends
   protected UserProfile retrievePrincipal(String username, UsernamePasswordAuthenticationToken authentication) {
 
     try {
-      return this.usermanagement.findStaffMemberByLogin(username);
+      return this.usermanagement.findUserProfileByLogin(username);
     } catch (RuntimeException e) {
       UsernameNotFoundException exception = new UsernameNotFoundException("Authentication failed.", e);
       LOG.warn("Failed to get user {}.", username, exception);
