@@ -35,31 +35,6 @@
         </configuration>
       </plugin>
 
-      <!-- http://mojo.codehaus.org/flatten-maven-plugin/ -->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>flatten-maven-plugin</artifactId>
-        <version>1.0.0-beta-3</version>
-        <configuration>
-          <flattenMode>oss</flattenMode>
-        </configuration>
-        <executions>
-          <execution>
-            <id>flatten</id>
-            <phase>process-test-resources</phase>
-            <goals>
-              <goal>flatten</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>flatten.clean</id>
-            <phase>clean</phase>
-            <goals>
-              <goal>clean</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
       <!-- configure java compiler -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -402,6 +377,31 @@
       </modules>
       <build>
         <plugins>
+          <!-- http://mojo.codehaus.org/flatten-maven-plugin/ -->
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>flatten-maven-plugin</artifactId>
+            <version>1.0.0-beta-3</version>
+            <configuration>
+              <flattenMode>oss</flattenMode>
+            </configuration>
+            <executions>
+              <execution>
+                <id>flatten</id>
+                <phase>process-test-resources</phase>
+                <goals>
+                  <goal>flatten</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>flatten.clean</id>
+                <phase>clean</phase>
+                <goals>
+                  <goal>clean</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
           <!-- also generate javadoc JARs -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
