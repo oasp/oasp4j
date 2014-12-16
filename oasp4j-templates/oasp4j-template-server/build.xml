@@ -1,6 +1,6 @@
 <project name="app-template" default="main" basedir=".">
   <description>Pre-process sources and resources of oasp4j-sample to remove project specific parts.</description>
-  
+
   <property name="xml.end.pattern"  value="&lt;!-- END ARCHETYPE SKIP"/>
   <property name="xml.begin.pattern"  value="BEGIN ARCHETYPE SKIP --&gt;"/>
   <property name="java.end.pattern"  value="// BEGIN ARCHETYPE SKIP "/>
@@ -27,7 +27,18 @@
       </filterchain>
     </copy>
     -->
-    
+
+  	<!-- **** root project **** -->
+  	<copy file="${template.input}/pom.xml" todir="${sample.output}">
+      <filterchain>
+        <tokenfilter>
+          <linetokenizer/>
+            <!-- insert current oasp4j version -->
+            <replaceregex pattern="\$\{oasp4j.version\}" replace="${oasp4j.version}" flags="g"/>
+        </tokenfilter>
+      </filterchain>
+    </copy>
+
     <!-- **** core project **** -->
     <copy file="${sample.core.input}/pom.xml" todir="${sample.core.output}">
       <filterchain>
@@ -54,7 +65,7 @@
           <replaceregex pattern="package ${sample.package}" replace="${prefix}package ${package}" flags="g"/>
           <!-- Replace packages in imports -->
           <replaceregex pattern="import ${sample.package}" replace="import ${package}" flags="g"/>
-          <!-- comment out application specific logic -->      
+          <!-- comment out application specific logic -->
           <replaceregex pattern="${java.begin.pattern}" replace="" flags="g"/>
           <replaceregex pattern="${java.end.pattern}" replace="" flags="g"/>
           <!-- remove lines with references to 'offermanagement' (e.g. imports) -->
@@ -62,7 +73,7 @@
         </tokenfilter>
       </filterchain>
     </copy>
-  
+
     <copy todir="${sample.core.resources.output}">
       <fileset dir="${sample.core.resources.input}">
         <exclude name="**/NamedQueries.xml"/>
@@ -71,7 +82,7 @@
       <filterchain>
         <tokenfilter>
           <linetokenizer/>
-          <!-- remove application specific logic -->      
+          <!-- remove application specific logic -->
           <replaceregex pattern="${xml.begin.pattern}" replace="" flags="g"/>
           <replaceregex pattern="${xml.end.pattern}" replace="" flags="g"/>
           <!-- comment out application specific logic -->
@@ -80,7 +91,7 @@
         </tokenfilter>
       </filterchain>
     </copy>
-  
+
     <!-- **** server project **** -->
     <copy file="${sample.server.input}/pom.xml" todir="${sample.server.output}">
       <filterchain>
@@ -94,10 +105,11 @@
         </tokenfilter>
       </filterchain>
     </copy>
-    
+
     <copy todir="${sample.server.webresources.output}">
       <fileset dir="${sample.server.webresources.input}">
-        <exclude name="**/jsclient/**/*"/>
+      	<exclude name="**/jsclient/**/*"/>
+      	<exclude name="**/index.jsp"/>
       </fileset>
       <filterchain>
         <tokenfilter>
@@ -109,7 +121,7 @@
         </tokenfilter>
       </filterchain>
     </copy>
-  
+
     <!-- **** integration project **** -->
     <!--
     <copy file="${sample.integration.input}/pom.xml" todir="${sample.integration.output}">
