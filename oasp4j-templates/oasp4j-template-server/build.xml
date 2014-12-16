@@ -123,7 +123,6 @@
     </copy>
 
     <!-- **** integration project **** -->
-    <!--
     <copy file="${sample.integration.input}/pom.xml" todir="${sample.integration.output}">
       <filterchain>
         <tokenfilter>
@@ -138,7 +137,24 @@
       </filterchain>
     </copy>
     <copy todir="${sample.integration.sources.output}">
-      <fileset dir="${sample.integration.sources.input}"/>
+      <fileset dir="${sample.integration.sources.input}">
+    	<exclude name="**/config/**"/>
+      </fileset>
+      <filterchain>
+        <tokenfilter>
+          <linetokenizer/>
+          <replaceregex pattern="package ${sample.package}" replace="${prefix}package ${package}" flags="g"/>
+          <replaceregex pattern="import ${sample.package}" replace="import ${package}" flags="g"/>
+          <replaceregex pattern="oasp4j-sample-server" replace="${rootArtifactId}-server" flags="g"/>
+        </tokenfilter>
+      </filterchain>
+    </copy>
+  	<copy todir="${sample.integration.tests.output}">
+      <fileset dir="${sample.integration.tests.input}">
+        <include name="**/general/**"/>
+        <exclude name="**/P.java"/>
+        <exclude name="**/AbstractRestServiceTest.java"/>
+      </fileset>
       <filterchain>
         <tokenfilter>
           <linetokenizer/>
@@ -147,6 +163,15 @@
         </tokenfilter>
       </filterchain>
     </copy>
-    -->
+  	<copy todir="${sample.integration.resources.output}">
+      <fileset dir="${sample.integration.resources.input}"/>
+      <filterchain>
+        <tokenfilter>
+          <linetokenizer/>
+          <replaceregex pattern="&lt;\?xml " replace="${prefix}&lt;?xml " flags="g"/>
+          <replaceregex pattern="restaurant" replace="${rootArtifactId}" flags="g"/>
+        </tokenfilter>
+      </filterchain>
+    </copy>
   </target>
 </project>

@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.general.common;
 
 import io.oasp.gastronomy.restaurant.general.common.api.to.UserDetailsClientTo;
+import io.oasp.gastronomy.restaurant.test.general.AppProperties;
 import io.oasp.gastronomy.restaurant.test.general.webclient.ResponseData;
 import io.oasp.gastronomy.restaurant.test.general.webclient.WebClientWrapper;
 
@@ -24,8 +25,7 @@ public class SecurityRestServiceTest {
     WebClientWrapper user = new WebClientWrapper(login);
 
     ResponseData<UserDetailsClientTo> response =
-        user.get("http://localhost:8081/oasp4j-sample-server/services/rest/security/currentuser/",
-            UserDetailsClientTo.class);
+        user.get(AppProperties.hostUrl + "/services/rest/security/currentuser/", UserDetailsClientTo.class);
 
     Assert.assertEquals(login, response.getResponseObject().getName());
   }

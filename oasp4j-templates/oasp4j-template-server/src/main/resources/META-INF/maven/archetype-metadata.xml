@@ -80,7 +80,6 @@
         </fileSet>
       </fileSets>
     </module>
-    <!--
     <module id="${rootArtifactId}-server-integration" dir="__rootArtifactId__-server-integration" name="${rootArtifactId}-server-integration">
       <fileSets>
         <fileSet filtered="true" packaged="true" encoding="UTF-8">
@@ -97,6 +96,5 @@
         </fileSet>
       </fileSets>
     </module>
-    -->
   </modules>
 </archetype-descriptor>
