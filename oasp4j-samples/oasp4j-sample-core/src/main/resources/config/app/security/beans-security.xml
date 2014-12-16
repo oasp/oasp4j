@@ -22,6 +22,7 @@
       <list>
         <!--JS Client is publicly available -->
         <security:filter-chain pattern="/jsclient/**" filters="none"/>
+        <security:filter-chain pattern="/websocket/**" filters="none"/>
 
         <!--REST login without CSRF filter -->
         <security:filter-chain pattern="/services/rest/login"

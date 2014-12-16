@@ -183,6 +183,18 @@
       <artifactId>moneta</artifactId>
       </dependency>
     -->
+
+    <!-- Web Sockets -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-websocket</artifactId>
+      <version>4.0.8.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-messaging</artifactId>
+      <version>4.0.8.RELEASE</version>
+    </dependency>
   </dependencies>
 
   <build>
