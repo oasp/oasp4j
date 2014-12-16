@@ -1,7 +1,5 @@
 package io.oasp.gastronomy.restaurant.test.general;
 
-import io.oasp.gastronomy.restaurant.test.config.TestData;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,9 +9,6 @@ import java.util.Map;
  * @author hahmad, arklos
  */
 public class AppProperties {
-  static {
-    TestData.init();
-  }
 
   /**
    *
