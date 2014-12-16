@@ -7,6 +7,7 @@
     <artifactId>oasp4j</artifactId>
     <version>dev-SNAPSHOT</version>
   </parent>
+  <groupId>io.oasp.java.samples</groupId>
   <artifactId>oasp4j-samples</artifactId>
   <version>dev-SNAPSHOT</version> <!-- This POM will never be released -->
   <packaging>pom</packaging>
@@ -33,7 +34,7 @@
     <dependencies>
       <!-- BOM of OASP4J -->
       <dependency>
-        <groupId>${project.groupId}</groupId>
+        <groupId>io.oasp.java</groupId>
         <artifactId>oasp4j-bom</artifactId>
         <version>${oasp4j.version}</version>
         <type>pom</type>

@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.staffmanagement.logic.impl;
 
+import io.oasp.gastronomy.restaurant.general.common.api.UserProfile;
 import io.oasp.gastronomy.restaurant.general.common.api.Usermanagement;
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSupport;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.Staffmanagement;
@@ -56,6 +57,15 @@ public class StaffmanagementImpl extends AbstractBeanMapperSupport implements St
   public StaffMemberEto findStaffMemberByLogin(String login) {
 
     return this.ucFindStaffMember.findStaffMemberByLogin(login);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public UserProfile findUserProfileByLogin(String login) {
+
+    return findStaffMemberByLogin(login);
   }
 
   /**

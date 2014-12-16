@@ -1,4 +1,4 @@
-oasp-java
+The Open Application Standard Platform for Java
 =========
 
-The Open Application Standard Platform for Java
+

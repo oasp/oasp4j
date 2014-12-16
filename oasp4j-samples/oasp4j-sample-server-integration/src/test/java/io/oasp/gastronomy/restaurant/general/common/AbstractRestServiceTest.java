@@ -26,14 +26,14 @@ import org.springframework.transaction.support.TransactionTemplate;
 /**
  * Contains reusable test features for rest service tests. Before each test execution the database will be wiped and 4
  * users / {@link StaffMember}s will be inserted. See <code>src/test/resources/initializeTests.sql</code>
- * 
+ *
  * @author mbrunnli
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestExecutionListeners({ TransactionalTestExecutionListener.class, DependencyInjectionTestExecutionListener.class })
 @ContextConfiguration({ ApplicationConfigurationConstants.BEANS_DATA_ACCESS,
 "classpath:/config/app/dataaccess/beans-db-connector.xml" })
-@ActiveProfiles("integrationTest")
+@ActiveProfiles({ "integrationTest", "db-plain" })
 public abstract class AbstractRestServiceTest {
 
   protected WebClientWrapper waiter = new WebClientWrapper(LoginCredentials.waiterUsername,

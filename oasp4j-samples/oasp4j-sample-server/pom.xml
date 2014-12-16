@@ -3,7 +3,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>io.oasp.java</groupId>
+    <groupId>io.oasp.java.samples</groupId>
     <artifactId>oasp4j-samples</artifactId>
     <version>dev-SNAPSHOT</version>
   </parent>
@@ -14,7 +14,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>io.oasp.java</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>oasp4j-sample-core</artifactId>
       <version>${project.version}</version>
     </dependency>
@@ -58,20 +58,5 @@
       </build>
     </profile>
   </profiles>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>flatten-maven-plugin</artifactId>
-        <version>1.0.0-beta-3</version>
-        <configuration>
-          <flattenMode>oss</flattenMode>
-        </configuration>
-        <executions>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 
 </project>

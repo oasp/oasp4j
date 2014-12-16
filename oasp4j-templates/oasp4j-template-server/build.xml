@@ -10,10 +10,11 @@
 
   <target name="main">
     <!-- **** root project **** -->
+    <!--
     <copy file="${sample.input}/pom.xml" todir="${sample.output}">
       <filterchain>
         <tokenfilter>
-          <replaceregex pattern="[&lt;]parent(.+)/parent[>]" replace="" flags="gms" byline="false"/> <!-- Ant multiline replacement is actually broken -->
+          <replaceregex pattern="[&lt;]parent(.+)/parent[>]" replace="" flags="gms" byline="false"/>
           <linetokenizer/>
           <replaceregex pattern="io.oasp.java" replace="${groupId}" flags="g"/>
           <replaceregex pattern="[$][{]project.groupId[}]" replace="${project.groupId}" flags="g"/>
@@ -25,13 +26,15 @@
         </tokenfilter>
       </filterchain>
     </copy>
+    -->
     
     <!-- **** core project **** -->
     <copy file="${sample.core.input}/pom.xml" todir="${sample.core.output}">
       <filterchain>
         <tokenfilter>
           <linetokenizer/>
-          <replaceregex pattern="io.oasp.java" replace="${groupId}" flags="g"/>
+          <replaceregex pattern="dev-SNAPSHOT" replace="${version}" flags="g"/>
+          <replaceregex pattern="io.oasp.java.samples" replace="${groupId}" flags="g"/>
           <replaceregex pattern="oasp4j-sample-core" replace="${artifactId}" flags="g"/>
           <replaceregex pattern="oasp4j-samples" replace="${rootArtifactId}" flags="g"/>
         </tokenfilter>
@@ -39,8 +42,11 @@
     </copy>
 
     <copy todir="${sample.core.sources.output}">
-      <fileset dir="${sample.core.sources.input}"/>
-      
+      <fileset dir="${sample.core.sources.input}">
+        <exclude name="*management"/>
+        <exclude name="*management/*"/>
+        <exclude name="*management/**/*"/>
+      </fileset>
       <filterchain>
         <tokenfilter>
           <linetokenizer/>
@@ -58,7 +64,10 @@
     </copy>
   
     <copy todir="${sample.core.resources.output}">
-      <fileset dir="${sample.core.resources.input}"/>
+      <fileset dir="${sample.core.resources.input}">
+        <exclude name="**/NamedQueries.xml"/>
+        <exclude name="db/**/*"/>
+      </fileset>
       <filterchain>
         <tokenfilter>
           <linetokenizer/>
@@ -77,7 +86,8 @@
       <filterchain>
         <tokenfilter>
           <linetokenizer/>
-          <replaceregex pattern="io.oasp.java" replace="${groupId}" flags="g"/>
+          <replaceregex pattern="dev-SNAPSHOT" replace="${version}" flags="g"/>
+          <replaceregex pattern="io.oasp.java.samples" replace="${groupId}" flags="g"/>
           <replaceregex pattern="oasp4j-sample-server" replace="${artifactId}" flags="g"/>
           <replaceregex pattern="oasp4j-sample-core" replace="${rootArtifactId}-core" flags="g"/>
           <replaceregex pattern="oasp4j-samples" replace="${rootArtifactId}" flags="g"/>
@@ -92,19 +102,22 @@
       <filterchain>
         <tokenfilter>
           <!-- comment out application specific logic -->
-          <replaceregex pattern="&lt;\?xml " replace="${prefix}&lt;?xml " flags="g"/>
+          <!--<replaceregex pattern="&lt;\?xml " replace="${prefix}&lt;?xml " flags="g"/>-->
           <replaceregex pattern="Restaurant" replace="${rootArtifactId}" flags="g"/>
+          <replaceregex pattern="oasp-sample-server" replace="${rootArtifactId}" flags="g"/>
           <!--<replaceregex pattern="oasp-example-application" replace="${rootArtifactId}" flags="g"/>-->
         </tokenfilter>
       </filterchain>
     </copy>
   
     <!-- **** integration project **** -->
+    <!--
     <copy file="${sample.integration.input}/pom.xml" todir="${sample.integration.output}">
       <filterchain>
         <tokenfilter>
           <linetokenizer/>
-          <replaceregex pattern="io.oasp.java" replace="${groupId}" flags="g"/>
+          <replaceregex pattern="dev-SNAPSHOT" replace="${version}" flags="g"/>
+          <replaceregex pattern="io.oasp.java.samples" replace="${groupId}" flags="g"/>
           <replaceregex pattern="oasp4j-sample-server-integration" replace="${artifactId}" flags="g"/>
           <replaceregex pattern="oasp4j-sample-server" replace="${rootArtifactId}-server" flags="g"/>
           <replaceregex pattern="oasp4j-sample-core" replace="${rootArtifactId}-core" flags="g"/>
@@ -117,12 +130,11 @@
       <filterchain>
         <tokenfilter>
           <linetokenizer/>
-          <!-- Replace packages -->
           <replaceregex pattern="package ${sample.package}" replace="${prefix}package ${package}" flags="g"/>
-          <!-- Replace packages in imports -->
           <replaceregex pattern="import ${sample.package}" replace="import ${package}" flags="g"/>
         </tokenfilter>
       </filterchain>
     </copy>
+    -->
   </target>
 </project>
