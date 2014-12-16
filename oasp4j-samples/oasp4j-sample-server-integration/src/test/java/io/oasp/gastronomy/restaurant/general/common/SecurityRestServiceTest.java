@@ -25,7 +25,7 @@ public class SecurityRestServiceTest {
     WebClientWrapper user = new WebClientWrapper(login);
 
     ResponseData<UserDetailsClientTo> response =
-        user.get(AppProperties.hostUrl + "/services/rest/security/currentuser/", UserDetailsClientTo.class);
+        user.get(AppProperties.SERVER_URL + "/services/rest/security/currentuser/", UserDetailsClientTo.class);
 
     Assert.assertEquals(login, response.getResponseObject().getName());
   }

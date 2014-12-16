@@ -36,11 +36,11 @@ import org.springframework.transaction.support.TransactionTemplate;
 @ActiveProfiles({ "integrationTest", "db-plain" })
 public abstract class AbstractRestServiceTest {
 
-  protected WebClientWrapper waiter = new WebClientWrapper(LoginCredentials.waiterUsername,
-      LoginCredentials.waiterPassword);
+  protected WebClientWrapper waiter = new WebClientWrapper(LoginCredentials.WAITER_USERNAME,
+      LoginCredentials.WAITER_PASSWORD);
 
-  protected WebClientWrapper chief = new WebClientWrapper(LoginCredentials.chiefUsername,
-      LoginCredentials.chiefPassword);
+  protected WebClientWrapper chief = new WebClientWrapper(LoginCredentials.CHIEF_USERNAME,
+      LoginCredentials.CHIEF_PASSWORD);
 
   @Autowired
   public EntityManager em;

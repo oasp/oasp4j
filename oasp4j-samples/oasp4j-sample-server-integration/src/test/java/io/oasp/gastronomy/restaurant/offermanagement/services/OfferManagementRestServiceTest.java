@@ -32,11 +32,11 @@ import org.junit.Test;
 @Ignore
 public class OfferManagementRestServiceTest extends AbstractDBRollbackTest {
 
-  private WebClientWrapper waiter = new WebClientWrapper(LoginCredentials.waiterUsername,
-      LoginCredentials.waiterPassword);
+  private WebClientWrapper waiter = new WebClientWrapper(LoginCredentials.WAITER_USERNAME,
+      LoginCredentials.WAITER_PASSWORD);
 
-  private WebClientWrapper chief = new WebClientWrapper(AppProperties.LoginCredentials.chiefUsername,
-      LoginCredentials.chiefPassword);
+  private WebClientWrapper chief = new WebClientWrapper(AppProperties.LoginCredentials.CHIEF_USERNAME,
+      LoginCredentials.CHIEF_PASSWORD);
 
   /**
    * Test get offer

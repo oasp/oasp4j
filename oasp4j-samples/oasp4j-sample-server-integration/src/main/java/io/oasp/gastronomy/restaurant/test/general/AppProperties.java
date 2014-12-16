@@ -11,16 +11,16 @@ import java.util.Map;
 public class AppProperties {
 
   /** The host of the server to test. */
-  public static final String host = "127.0.0.1";
+  public static final String SERVER_HOST = "127.0.0.1";
 
   /** The port of the server to test. */
-  public static final int port = 8081;
+  public static final int SERVER_PORT = 8081;
 
   /** The URL of the server to test. */
-  public static final String hostUrl = "http://" + host + ":" + port + "/oasp4j-sample-server";
+  public static final String SERVER_URL = "http://" + SERVER_HOST + ":" + SERVER_PORT + "/oasp4j-sample-server";
 
   /** The URL for the login. */
-  public static final String loginUrl = hostUrl + "/j_spring_security_login";
+  public static final String SERVER_URL_LOGIN = SERVER_URL + "/j_spring_security_login";
 
   /**
    * Login credentials
@@ -30,37 +30,37 @@ public class AppProperties {
   public static class LoginCredentials {
 
     /** Login of the default waiter. */
-    public static final String waiterUsername = "waiter";
+    public static final String WAITER_USERNAME = "waiter";
 
     /** Password of the default waiter. */
-    public static final String waiterPassword = "waiter";
+    public static final String WAITER_PASSWORD = "waiter";
 
     /** Login of the default chief. */
-    public static final String chiefUsername = "chief";
+    public static final String CHIEF_USERNAME = "chief";
 
     /** Password of the default chief. */
-    public static final String chiefPassword = "chief";
+    public static final String CHIEF_PASSWORD = "chief";
 
     /** Login of the default barkeeper. */
-    public static final String barkeeperUsername = "barkeeper";
+    public static final String BARKEEPER_USERNAME = "barkeeper";
 
     /** Password of the default barkeeper. */
-    public static final String barkeeperPassword = "barkeeper";
+    public static final String BARKEEPER_PASSWORD = "barkeeper";
 
     /** Login of the default cook. */
-    public static final String cookUsername = "cook";
+    public static final String COOK_USERNAME = "cook";
 
     /** Password of the default cook. */
-    public static final String cookPassword = "cook";
+    public static final String COOK_PASSWORD = "cook";
 
     /** {@link Map} from login to password. */
-    public static final Map<String, String> usernamePasswordMapping;
+    public static final Map<String, String> USERNAME2PASSWORD_MAP;
     static {
-      usernamePasswordMapping = new HashMap<>();
-      usernamePasswordMapping.put(waiterUsername, waiterPassword);
-      usernamePasswordMapping.put(chiefUsername, chiefPassword);
-      usernamePasswordMapping.put(barkeeperUsername, barkeeperPassword);
-      usernamePasswordMapping.put(cookUsername, cookPassword);
+      USERNAME2PASSWORD_MAP = new HashMap<>();
+      USERNAME2PASSWORD_MAP.put(WAITER_USERNAME, WAITER_PASSWORD);
+      USERNAME2PASSWORD_MAP.put(CHIEF_USERNAME, CHIEF_PASSWORD);
+      USERNAME2PASSWORD_MAP.put(BARKEEPER_USERNAME, BARKEEPER_PASSWORD);
+      USERNAME2PASSWORD_MAP.put(COOK_USERNAME, COOK_PASSWORD);
     }
 
   }

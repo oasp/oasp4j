@@ -54,7 +54,7 @@ public class WebClientWrapper {
   public WebClientWrapper(String username) {
 
     this.username = username;
-    this.password = LoginCredentials.usernamePasswordMapping.get(username);
+    this.password = LoginCredentials.USERNAME2PASSWORD_MAP.get(username);
     initWebClient();
     setCsrfHeader();
   }
@@ -75,7 +75,7 @@ public class WebClientWrapper {
     j.setMapper(new ApplicationObjectMapperFactory().createInstance());
     providers.add(j);
 
-    WebClient client = WebClient.create(AppProperties.hostUrl, providers);
+    WebClient client = WebClient.create(AppProperties.SERVER_URL, providers);
 
     WebClient.getConfig(client).getRequestContext().put(org.apache.cxf.message.Message.MAINTAIN_SESSION, Boolean.TRUE);
 

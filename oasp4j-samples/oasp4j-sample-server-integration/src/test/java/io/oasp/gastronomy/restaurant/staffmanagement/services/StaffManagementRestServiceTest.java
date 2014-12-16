@@ -23,10 +23,10 @@ import org.junit.Test;
  */
 public class StaffManagementRestServiceTest extends AbstractDBRollbackTest {
 
-  private WebClientWrapper waiter = new WebClientWrapper(LoginCredentials.waiterUsername,
-      LoginCredentials.waiterPassword);
+  private WebClientWrapper waiter = new WebClientWrapper(LoginCredentials.WAITER_USERNAME,
+      LoginCredentials.WAITER_PASSWORD);
 
-  private WebClientWrapper chief = new WebClientWrapper(LoginCredentials.chiefUsername, LoginCredentials.chiefPassword);
+  private WebClientWrapper chief = new WebClientWrapper(LoginCredentials.CHIEF_USERNAME, LoginCredentials.CHIEF_PASSWORD);
 
   /**
    * Tests get staff member
