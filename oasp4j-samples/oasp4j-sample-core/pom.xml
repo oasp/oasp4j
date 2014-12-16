@@ -162,28 +162,6 @@
       <artifactId>jackson-jaxrs-json-provider</artifactId>
     </dependency>
 
-
-    <!-- local transport for fast testing -->
-    <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-rt-transports-local</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-rt-rs-client</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <!-- Moneta - Reference Implementation of JSR 354 -->
-    <!--
-      <dependency>
-      <groupId>org.javamoney</groupId>
-      <artifactId>moneta</artifactId>
-      </dependency>
-    -->
-
     <!-- Web Sockets -->
     <dependency>
       <groupId>org.springframework</groupId>
@@ -208,5 +186,5 @@
       </plugin>
     </plugins>
   </build>
-  
+
 </project>
