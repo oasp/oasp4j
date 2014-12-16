@@ -1,6 +1,6 @@
 package io.oasp;
 
-import io.oasp.gastronomy.restaurant.test.general.TestData;
+import io.oasp.gastronomy.restaurant.test.config.TestData;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

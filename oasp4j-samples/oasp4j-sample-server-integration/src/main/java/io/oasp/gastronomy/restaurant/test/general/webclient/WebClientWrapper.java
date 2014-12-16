@@ -2,6 +2,7 @@ package io.oasp.gastronomy.restaurant.test.general.webclient;
 
 import io.oasp.gastronomy.restaurant.general.service.impl.rest.ApplicationObjectMapperFactory;
 import io.oasp.gastronomy.restaurant.test.general.AppProperties;
+import io.oasp.gastronomy.restaurant.test.general.AppProperties.LoginCredentials;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,6 +44,19 @@ public class WebClientWrapper {
     initWebClient();
     setCsrfHeader();
 
+  }
+
+  /**
+   * The constructor.
+   * 
+   * @param username The username that is used for a login
+   */
+  public WebClientWrapper(String username) {
+
+    this.username = username;
+    this.password = LoginCredentials.usernamePasswordMapping.get(username);
+    initWebClient();
+    setCsrfHeader();
   }
 
   /**

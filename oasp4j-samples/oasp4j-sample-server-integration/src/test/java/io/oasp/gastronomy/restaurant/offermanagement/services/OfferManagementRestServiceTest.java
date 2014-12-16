@@ -10,12 +10,12 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSortBy;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SideDishEto;
+import io.oasp.gastronomy.restaurant.test.config.RestUrls;
+import io.oasp.gastronomy.restaurant.test.config.TestData;
+import io.oasp.gastronomy.restaurant.test.config.TestData.Additional;
+import io.oasp.gastronomy.restaurant.test.config.TestData.DB;
 import io.oasp.gastronomy.restaurant.test.general.AppProperties;
 import io.oasp.gastronomy.restaurant.test.general.AppProperties.LoginCredentials;
-import io.oasp.gastronomy.restaurant.test.general.AppProperties.RestUrls;
-import io.oasp.gastronomy.restaurant.test.general.TestData;
-import io.oasp.gastronomy.restaurant.test.general.TestData.Additional;
-import io.oasp.gastronomy.restaurant.test.general.TestData.DB;
 import io.oasp.gastronomy.restaurant.test.general.webclient.ResponseData;
 import io.oasp.gastronomy.restaurant.test.general.webclient.WebClientWrapper;
 
@@ -26,7 +26,7 @@ import org.junit.Test;
 
 /**
  * OfferManagement rest service test
- * 
+ *
  * @author arklos
  */
 @Ignore

@@ -13,10 +13,10 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.PaymentData;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
+import io.oasp.gastronomy.restaurant.test.config.RestUrls;
+import io.oasp.gastronomy.restaurant.test.config.TestData.Additional;
+import io.oasp.gastronomy.restaurant.test.config.TestData.DB;
 import io.oasp.gastronomy.restaurant.test.general.AppProperties.LoginCredentials;
-import io.oasp.gastronomy.restaurant.test.general.AppProperties.RestUrls;
-import io.oasp.gastronomy.restaurant.test.general.TestData.Additional;
-import io.oasp.gastronomy.restaurant.test.general.TestData.DB;
 import io.oasp.gastronomy.restaurant.test.general.webclient.ResponseData;
 import io.oasp.gastronomy.restaurant.test.general.webclient.WebClientWrapper;
 

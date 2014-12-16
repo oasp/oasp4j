@@ -8,8 +8,8 @@ import io.oasp.gastronomy.restaurant.tablemanagement.common.builders.TableEntity
 import io.oasp.gastronomy.restaurant.tablemanagement.common.builders.TableEtoBuilder;
 import io.oasp.gastronomy.restaurant.tablemanagement.dataaccess.api.TableEntity;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
-import io.oasp.gastronomy.restaurant.test.general.AppProperties.RestUrls;
-import io.oasp.gastronomy.restaurant.test.general.TestData;
+import io.oasp.gastronomy.restaurant.test.config.RestUrls;
+import io.oasp.gastronomy.restaurant.test.config.TestData;
 import io.oasp.gastronomy.restaurant.test.general.webclient.ResponseData;
 
 import java.util.ArrayList;

@@ -4,10 +4,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import io.oasp.AbstractDBRollbackTest;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto;
+import io.oasp.gastronomy.restaurant.test.config.RestUrls;
+import io.oasp.gastronomy.restaurant.test.config.TestData.Additional;
+import io.oasp.gastronomy.restaurant.test.config.TestData.DB;
 import io.oasp.gastronomy.restaurant.test.general.AppProperties.LoginCredentials;
-import io.oasp.gastronomy.restaurant.test.general.AppProperties.RestUrls;
-import io.oasp.gastronomy.restaurant.test.general.TestData.Additional;
-import io.oasp.gastronomy.restaurant.test.general.TestData.DB;
 import io.oasp.gastronomy.restaurant.test.general.webclient.ResponseData;
 import io.oasp.gastronomy.restaurant.test.general.webclient.WebClientWrapper;
 

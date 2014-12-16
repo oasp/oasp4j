@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.test.general;
+package io.oasp.gastronomy.restaurant.test.config;
 
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Role;
