@@ -33,10 +33,12 @@
     <sample.integration.output>${sample.output}/__rootArtifactId__-server-integration</sample.integration.output>
     <sample.integration.sources.input>${sample.integration.input}/src/main/java/${sample.package.path}/test</sample.integration.sources.input>
     <sample.integration.sources.output>${sample.integration.output}/src/main/java/test</sample.integration.sources.output>
+    <sample.integration.resources.input>${sample.integration.input}/src/main/resources</sample.integration.resources.input>
+    <sample.integration.resources.output>${sample.integration.output}/src/main/resources</sample.integration.resources.output>
     <sample.integration.tests.input>${sample.integration.input}/src/test/java/${sample.package.path}</sample.integration.tests.input>
     <sample.integration.tests.output>${sample.integration.output}/src/test/java</sample.integration.tests.output>
-    <sample.integration.resources.input>${sample.integration.input}/src/test/resources</sample.integration.resources.input>
-    <sample.integration.resources.output>${sample.integration.output}/src/test/resources</sample.integration.resources.output>
+    <sample.integration.test.resources.input>${sample.integration.input}/src/test/resources</sample.integration.test.resources.input>
+    <sample.integration.test.resources.output>${sample.integration.output}/src/test/resources</sample.integration.test.resources.output>
   </properties>
 
   <build>

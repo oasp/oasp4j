@@ -1,7 +1,10 @@
 package io.oasp.gastronomy.restaurant.test.general;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * Application properties
@@ -10,17 +13,33 @@ import java.util.Map;
  */
 public class AppProperties {
 
+  private static Properties prop;
+
+  static {
+    prop = new Properties();
+    String propFileName = "config.properties";
+    InputStream inputStream = AppProperties.class.getClassLoader().getResourceAsStream(propFileName);
+    try {
+      prop.load(inputStream);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
   /** The host of the server to test. */
-  public static final String SERVER_HOST = "127.0.0.1";
+  public static final String SERVER_HOST = prop.getProperty("server.host");
 
   /** The port of the server to test. */
-  public static final int SERVER_PORT = 8081;
+  public static final int SERVER_PORT = Integer.parseInt(prop.getProperty("server.port"));
 
   /** The URL of the server to test. */
   public static final String SERVER_URL = "http://" + SERVER_HOST + ":" + SERVER_PORT + "/oasp4j-sample-server";
 
   /** The URL for the login. */
   public static final String SERVER_URL_LOGIN = SERVER_URL + "/j_spring_security_login";
+
+  /** The port of the database. */
+  public static final int DATABASE_PORT = Integer.parseInt(prop.getProperty("database.port"));
 
   /**
    * Login credentials
