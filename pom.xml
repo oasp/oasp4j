@@ -420,6 +420,16 @@
           </plugin>
         </plugins>
       </build>
+      <distributionManagement>
+        <snapshotRepository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+      </distributionManagement>
     </profile>
     <profile>
       <!-- separate eclipse build from command-line... -->
@@ -441,7 +451,7 @@
   </issueManagement>
   
   <scm>
-    <url>https://github.com/oasp/oasp4j/tree/master/develop/src</url>
+    <url>https://github.com/oasp/oasp4j/tree/master</url>
   </scm>
   
   <!--
