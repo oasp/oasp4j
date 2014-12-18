@@ -3,10 +3,11 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>io.oasp.java.samples</groupId>
+    <groupId>io.oasp.java.dev</groupId>
     <artifactId>oasp4j-samples</artifactId>
     <version>dev-SNAPSHOT</version>
   </parent>
+  <groupId>io.oasp.java.samples</groupId>
   <artifactId>oasp4j-sample-server</artifactId>
   <packaging>war</packaging>
   <name>${project.artifactId}</name>

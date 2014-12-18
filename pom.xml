@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.oasp.java</groupId>
+  <groupId>io.oasp.java.dev</groupId>
   <artifactId>oasp4j</artifactId>
   <version>dev-SNAPSHOT</version> <!-- This POM will never be released -->
   <packaging>pom</packaging>
@@ -22,6 +22,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <oasp4j.version>1.0.0-SNAPSHOT</oasp4j.version>
+    <oasp.gpg.keyname>joerg.hohwiller@capgemini.com</oasp.gpg.keyname>
   </properties>
 
   <build>
@@ -358,8 +359,8 @@
       <!-- exclude sample from release / deployment -->
       <modules>
         <module>oasp4j-bom</module>
-        <module>oasp4j-module</module>
-        <module>oasp4j-template</module>
+        <module>oasp4j-modules</module>
+        <module>oasp4j-templates</module>
       </modules>
       <build>
         <plugins>
@@ -406,7 +407,7 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
             <configuration>
-              <!--<keyname>todo</keyname> -->
+            	<keyname>${oasp.gpg.keyname}</keyname>
             </configuration>
             <executions>
               <execution>

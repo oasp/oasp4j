@@ -3,10 +3,11 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>io.oasp.java.samples</groupId>
+    <groupId>io.oasp.java.dev</groupId>
     <artifactId>oasp4j-samples</artifactId>
     <version>dev-SNAPSHOT</version>
   </parent>
+  <groupId>io.oasp.java.samples</groupId>
   <artifactId>oasp4j-sample-core</artifactId>
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
@@ -15,37 +16,37 @@
 
   <dependencies>
     <dependency>
-      <groupId>io.oasp.java</groupId>
+      <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-logging</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>io.oasp.java</groupId>
+      <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-beanmapping</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>io.oasp.java</groupId>
+      <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-configuration</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>io.oasp.java</groupId>
+      <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-security</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>io.oasp.java</groupId>
+      <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-rest</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>io.oasp.java</groupId>
+      <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-jpa</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>io.oasp.java</groupId>
+      <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-web</artifactId>
     </dependency>
 

@@ -45,6 +45,7 @@
         <tokenfilter>
           <linetokenizer/>
           <replaceregex pattern="dev-SNAPSHOT" replace="${version}" flags="g"/>
+          <replaceregex pattern="io.oasp.java.dev" replace="${groupId}" flags="g"/>
           <replaceregex pattern="io.oasp.java.samples" replace="${groupId}" flags="g"/>
           <replaceregex pattern="oasp4j-sample-core" replace="${artifactId}" flags="g"/>
           <replaceregex pattern="oasp4j-samples" replace="${rootArtifactId}" flags="g"/>
@@ -99,6 +100,7 @@
           <linetokenizer/>
           <replaceregex pattern="dev-SNAPSHOT" replace="${version}" flags="g"/>
           <replaceregex pattern="io.oasp.java.samples" replace="${groupId}" flags="g"/>
+          <replaceregex pattern="io.oasp.java.dev" replace="${groupId}" flags="g"/>
           <replaceregex pattern="oasp4j-sample-server" replace="${artifactId}" flags="g"/>
           <replaceregex pattern="oasp4j-sample-core" replace="${rootArtifactId}-core" flags="g"/>
           <replaceregex pattern="oasp4j-samples" replace="${rootArtifactId}" flags="g"/>
@@ -128,6 +130,7 @@
         <tokenfilter>
           <linetokenizer/>
           <replaceregex pattern="dev-SNAPSHOT" replace="${version}" flags="g"/>
+          <replaceregex pattern="io.oasp.java.dev" replace="${groupId}" flags="g"/>
           <replaceregex pattern="io.oasp.java.samples" replace="${groupId}" flags="g"/>
           <replaceregex pattern="oasp4j-sample-server-integration" replace="${artifactId}" flags="g"/>
           <replaceregex pattern="oasp4j-sample-server" replace="${rootArtifactId}-server" flags="g"/>
