@@ -22,6 +22,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <oasp4j.version>1.0.0-SNAPSHOT</oasp4j.version>
+    <port.range>81</port.range>
     <oasp.gpg.keyname>joerg.hohwiller@capgemini.com</oasp.gpg.keyname>
   </properties>
 
@@ -312,7 +313,7 @@
         <artifactId>maven-project-info-reports-plugin</artifactId>
         <configuration>
           <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
-        </configuration>        
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -445,16 +446,16 @@
       </build>
     </profile>
   </profiles>
-  
+
   <issueManagement>
     <system>GitHub</system>
     <url>https://github.com/oasp/oasp4j/issues</url>
   </issueManagement>
-  
+
   <scm>
     <url>https://github.com/oasp/oasp4j/tree/master</url>
   </scm>
-  
+
   <!--
     <mailingLists>
     <mailingList>
@@ -470,7 +471,7 @@
     <name>OASP-Team</name>
     <url>http://oasp.io/oasp4j/maven/team-list.html</url>
   </organization>
-  
+
   <developers>
     <developer>
       <id>hohwille</id>
@@ -487,7 +488,7 @@
       <properties/>
     </developer>
   </developers>
-  
+
   <licenses>
     <license>
       <name>Apache Software Licenese</name>
@@ -496,7 +497,7 @@
       <comments/>
     </license>
   </licenses>
-  
+
   <distributionManagement>
     <repository>
       <id>oasp.releases</id>
@@ -513,5 +514,5 @@
       <url>file://${user.dir}/target/oasp4j/maven</url>
     </site>
   </distributionManagement>
-  
+
 </project>

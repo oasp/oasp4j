@@ -152,6 +152,9 @@
         </tokenfilter>
       </filterchain>
     </copy>
+  	<copy todir="${sample.integration.resources.output}">
+      <fileset dir="${sample.integration.resources.input}"/>
+    </copy>
   	<copy todir="${sample.integration.tests.output}">
       <fileset dir="${sample.integration.tests.input}">
         <include name="**/general/**"/>
@@ -166,8 +169,8 @@
         </tokenfilter>
       </filterchain>
     </copy>
-  	<copy todir="${sample.integration.resources.output}">
-      <fileset dir="${sample.integration.resources.input}"/>
+  	<copy todir="${sample.integration.test.resources.output}">
+      <fileset dir="${sample.integration.test.resources.input}"/>
       <filterchain>
         <tokenfilter>
           <linetokenizer/>

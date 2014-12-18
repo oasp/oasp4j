@@ -1,6 +1,7 @@
 package io.oasp;
 
 import io.oasp.gastronomy.restaurant.test.config.TestData;
+import io.oasp.gastronomy.restaurant.test.general.AppProperties;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -41,8 +42,8 @@ public class AbstractDBRollbackTest {
     Class.forName("org.h2.Driver");
     Class.forName(TestData.class.getName());
     conn =
-        DriverManager.getConnection(
-            "jdbc:h2:tcp://localhost:8043/restaurant-db;INIT=create schema if not exists public", "sa", "");
+        DriverManager.getConnection("jdbc:h2:tcp://localhost:" + AppProperties.DATABASE_PORT
+            + "/restaurant-db;INIT=create schema if not exists public", "sa", "");
   }
 
   @SuppressWarnings("javadoc")

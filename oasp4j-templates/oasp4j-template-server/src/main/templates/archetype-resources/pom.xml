@@ -14,6 +14,10 @@
     <!--<module>${artifactId}-server-integration</module>-->
   </modules>
 
+  <properties>
+    <port.range>82</port.range>
+  </properties>
+
   <dependencyManagement>
     <dependencies>
       <!-- BOM of OASP4J -->
