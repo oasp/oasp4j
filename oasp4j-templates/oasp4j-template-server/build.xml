@@ -64,8 +64,8 @@
           <linetokenizer/>
           <!-- Replace packages -->
           <replaceregex pattern="package ${sample.package}" replace="${prefix}package ${package}" flags="g"/>
-          <!-- Replace packages in imports -->
-          <replaceregex pattern="import ${sample.package}" replace="import ${package}" flags="g"/>
+          <!-- Replace base package -->
+          <replaceregex pattern="${sample.package}" replace="${package}" flags="g"/>
           <!-- comment out application specific logic -->
           <replaceregex pattern="${java.begin.pattern}" replace="" flags="g"/>
           <replaceregex pattern="${java.end.pattern}" replace="" flags="g"/>
