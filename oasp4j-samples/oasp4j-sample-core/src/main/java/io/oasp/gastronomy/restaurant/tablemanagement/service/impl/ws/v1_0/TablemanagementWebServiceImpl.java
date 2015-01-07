@@ -35,7 +35,6 @@ public class TablemanagementWebServiceImpl implements TablemanagmentWebService {
   /**
    * {@inheritDoc}
    */
-  @SuppressWarnings("javadoc")
   @Override
   public TableEto getTable(String id) {
 

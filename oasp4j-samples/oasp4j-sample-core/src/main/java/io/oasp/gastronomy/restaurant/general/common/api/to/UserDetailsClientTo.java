@@ -31,12 +31,16 @@ public class UserDetailsClientTo extends AbstractTo implements UserProfile {
     super();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Long getId() {
-      return id;
+
+    return this.id;
   }
 
-    /**
+  /**
    * {@inheritDoc}
    */
   @Override
@@ -78,10 +82,11 @@ public class UserDetailsClientTo extends AbstractTo implements UserProfile {
    * @param id the ID to set
    */
   public void setId(Long id) {
-     this.id = id;
+
+    this.id = id;
   }
 
-    /**
+  /**
    * @param name the name to set
    */
   public void setName(String name) {

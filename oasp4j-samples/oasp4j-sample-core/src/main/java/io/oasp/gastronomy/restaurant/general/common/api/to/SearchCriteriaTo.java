@@ -1,7 +1,6 @@
 package io.oasp.gastronomy.restaurant.general.common.api.to;
 
 import net.sf.mmm.util.search.base.AbstractSearchCriteria;
-import net.sf.mmm.util.transferobject.api.TransferObject;
 
 /**
  * This is the interface for a {@link net.sf.mmm.util.transferobject.api.TransferObject transfer-object } with the
@@ -14,7 +13,7 @@ import net.sf.mmm.util.transferobject.api.TransferObject;
  *
  * @author hohwille
  */
-public abstract class SearchCriteriaTo extends AbstractSearchCriteria implements TransferObject {
+public abstract class SearchCriteriaTo extends AbstractSearchCriteria {
 
   /** UID for serialization. */
   private static final long serialVersionUID = 1L;
@@ -34,6 +33,7 @@ public abstract class SearchCriteriaTo extends AbstractSearchCriteria implements
    *
    * @param limit is the maximum allowed value for {@link #getMaximumHitCount() maximum hit count}.
    */
+  @Override
   public void limitMaximumHitCount(int limit) {
 
     Integer max = getMaximumHitCount();
