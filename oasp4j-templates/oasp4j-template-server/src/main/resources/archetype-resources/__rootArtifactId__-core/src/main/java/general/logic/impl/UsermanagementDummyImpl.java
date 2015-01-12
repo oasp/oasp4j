@@ -6,9 +6,6 @@ import ${package}.general.common.api.datatype.Role;
 import ${package}.general.common.api.to.UserDetailsClientTo;
 import ${package}.general.common.base.AbstractBeanMapperSupport;
 
-import java.util.List;
-
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.stereotype.Component;
