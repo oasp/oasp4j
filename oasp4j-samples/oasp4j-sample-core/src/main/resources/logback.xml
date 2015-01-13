@@ -8,7 +8,7 @@
 
   <property name="rollingPattern" value="%d{yyyy-MM-dd_HH}"></property>
 
-  <property name="filePath" value="${java.io.tmpdir}${file.separator}"></property>
+  <property name="filePath" value="${java.io.tmpdir}"></property>
 
   <property name="errorLogFile" value="error_log_devseu_rmgt"></property>
 
@@ -29,8 +29,10 @@
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
       <fileNamePattern>${filePath}${errorLogFile}_${rollingPattern}00.log</fileNamePattern>
     </rollingPolicy>
-    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-      <pattern>${logPattern}</pattern>
+    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+      <layout class="io.oasp.module.logging.common.impl.SingleLinePatternLayout">
+        <pattern>${logPattern}</pattern>
+      </layout>
     </encoder>
   </appender>
 
@@ -42,8 +44,10 @@
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
       <fileNamePattern>${filePath}${infoLogFile}_${rollingPattern}00.log</fileNamePattern>
     </rollingPolicy>
-    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-      <pattern>${logPattern}</pattern>
+    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+      <layout class="io.oasp.module.logging.common.impl.SingleLinePatternLayout">
+        <pattern>${logPattern}</pattern>
+      </layout>
     </encoder>
   </appender>
 
@@ -55,12 +59,15 @@
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
       <fileNamePattern>${filePath}${debugLogFile}_${rollingPattern}00.log</fileNamePattern>
     </rollingPolicy>
-    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-      <pattern>${logPattern}</pattern>
+    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+      <layout class="io.oasp.module.logging.common.impl.SingleLinePatternLayout">
+        <pattern>${logPattern}</pattern>
+      </layout>
     </encoder>
   </appender>
 
-  <!-- TODO: Console appender should only be active in development environment -->
+  <!-- TODO Console appender should only be active in development environment -->
+
   <appender name="CONSOLE_APPENDER" class="ch.qos.logback.core.ConsoleAppender">
     <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
       <pattern>${logPattern}</pattern>
@@ -81,7 +88,7 @@
     <appender-ref ref="ERROR_APPENDER"/>
     <appender-ref ref="INFO_APPENDER"/>
     <appender-ref ref="DEBUG_APPENDER"/>
-    <!-- <appender-ref ref="CONSOLE_APPENDER"/>-->
+    <!-- <appender-ref ref="CONSOLE_APPENDER"/> -->
   </logger>
 
   <logger name="org.dozer" level="INFO">
