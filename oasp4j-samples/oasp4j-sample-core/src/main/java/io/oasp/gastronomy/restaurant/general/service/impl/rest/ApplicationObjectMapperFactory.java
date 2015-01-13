@@ -31,10 +31,13 @@ public class ApplicationObjectMapperFactory extends ObjectMapperFactory {
     setBaseClasses(ProductEto.class);
     // END ARCHETYPE SKIP */
 
+    NamedType[] subtypes;
     // register mapping for polymorphic sub-classes
     // BEGIN ARCHETYPE SKIP /*
-    setSubtypes(new NamedType(MealEto.class, "Meal"), new NamedType(DrinkEto.class, "Drink"), new NamedType(
-        SideDishEto.class, "SideDish"));
+    subtypes =
+        new NamedType[] { new NamedType(MealEto.class, "Meal"), new NamedType(DrinkEto.class, "Drink"),
+        new NamedType(SideDishEto.class, "SideDish") };
+    setSubtypes(subtypes);
     // END ARCHETYPE SKIP */
 
     // register (de)serializers for custom datatypes
@@ -42,5 +45,4 @@ public class ApplicationObjectMapperFactory extends ObjectMapperFactory {
     module.addDeserializer(Money.class, new MoneyJsonDeserializer());
     module.addSerializer(Money.class, new MoneyJsonSerializer());
   }
-
 }
