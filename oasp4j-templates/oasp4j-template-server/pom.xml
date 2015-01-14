@@ -26,6 +26,12 @@
     <sample.core.sources.output>${sample.core.output}/src/main/java</sample.core.sources.output>
     <sample.core.resources.input>${sample.core.input}/src/main/resources</sample.core.resources.input>
     <sample.core.resources.output>${sample.core.output}/src/main/resources</sample.core.resources.output>
+
+    <sample.core.test.sources.input>${sample.core.input}/src/test/java/${sample.package.path}</sample.core.test.sources.input>
+    <sample.core.test.sources.output>${sample.core.output}/src/test/java</sample.core.test.sources.output>
+    <sample.core.test.resources.input>${sample.core.input}/src/test/resources</sample.core.test.resources.input>
+    <sample.core.test.resources.output>${sample.core.output}/src/test/resources</sample.core.test.resources.output>
+
     <sample.server.input>${sample.input}/oasp4j-sample-server</sample.server.input>
     <sample.server.output>${sample.output}/__rootArtifactId__-server</sample.server.output>
     <sample.server.webresources.input>${sample.server.input}/src/main/webapp</sample.server.webresources.input>

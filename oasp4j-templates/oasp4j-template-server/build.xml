@@ -93,6 +93,46 @@
       </filterchain>
     </copy>
 
+  	<copy todir="${sample.core.test.sources.output}">
+  	      <fileset dir="${sample.core.test.sources.input}">
+  	        <exclude name="*management"/>
+  	        <exclude name="*management/*"/>
+  	        <exclude name="*management/**/*"/>
+  	      </fileset>
+  	      <filterchain>
+  	        <tokenfilter>
+  	          <linetokenizer/>
+  	          <!-- Replace packages -->
+  	          <replaceregex pattern="package ${sample.package}" replace="${prefix}package ${package}" flags="g"/>
+  	          <!-- Replace base package -->
+  	          <replaceregex pattern="${sample.package}" replace="${package}" flags="g"/>
+  	          <!-- comment out application specific logic -->
+  	          <replaceregex pattern="${java.begin.pattern}" replace="" flags="g"/>
+  	          <replaceregex pattern="${java.end.pattern}" replace="" flags="g"/>
+  	          <!-- remove lines with references to 'offermanagement' (e.g. imports) -->
+  	          <replaceregex pattern=".*offermanagement.*" replace="" flags="g"/>
+  	        </tokenfilter>
+  	      </filterchain>
+  	    </copy>
+
+  	    <copy todir="${sample.core.test.resources.output}">
+  	      <fileset dir="${sample.core.test.resources.input}">
+  	        <exclude name="**/NamedQueries.xml"/>
+  	        <exclude name="db/**/*"/>
+  	      </fileset>
+  	      <filterchain>
+  	        <tokenfilter>
+  	          <linetokenizer/>
+  	          <!-- remove application specific logic -->
+  	          <replaceregex pattern="${xml.begin.pattern}" replace="" flags="g"/>
+  	          <replaceregex pattern="${xml.end.pattern}" replace="" flags="g"/>
+  	          <!-- comment out application specific logic -->
+  	          <replaceregex pattern="&lt;\?xml " replace="${prefix}&lt;?xml " flags="g"/>
+  	          <replaceregex pattern="${sample.package}" replace="${package}" flags="g"/>
+  	        </tokenfilter>
+  	      </filterchain>
+  	    </copy>
+
     <!-- **** server project **** -->
     <copy file="${sample.server.input}/pom.xml" todir="${sample.server.output}">
       <filterchain>
@@ -158,26 +198,18 @@
   	<copy todir="${sample.integration.tests.output}">
       <fileset dir="${sample.integration.tests.input}">
         <include name="**/general/**"/>
-        <exclude name="**/P.java"/>
-        <exclude name="**/AbstractRestServiceTest.java"/>
       </fileset>
       <filterchain>
         <tokenfilter>
           <linetokenizer/>
           <replaceregex pattern="package ${sample.package}" replace="${prefix}package ${package}" flags="g"/>
           <replaceregex pattern="import ${sample.package}" replace="import ${package}" flags="g"/>
+          <replaceregex pattern="${sample.package}" replace="${package}" flags="g"/>
         </tokenfilter>
       </filterchain>
     </copy>
   	<copy todir="${sample.integration.test.resources.output}">
       <fileset dir="${sample.integration.test.resources.input}"/>
-      <filterchain>
-        <tokenfilter>
-          <linetokenizer/>
-          <replaceregex pattern="&lt;\?xml " replace="${prefix}&lt;?xml " flags="g"/>
-          <replaceregex pattern="restaurant" replace="${rootArtifactId}" flags="g"/>
-        </tokenfilter>
-      </filterchain>
     </copy>
   </target>
 </project>
