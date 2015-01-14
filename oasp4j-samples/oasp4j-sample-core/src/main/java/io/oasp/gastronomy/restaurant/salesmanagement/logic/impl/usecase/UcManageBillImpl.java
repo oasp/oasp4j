@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 
+import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -47,6 +49,7 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.SAVE_BILL)
   // REVIEW <who> (hohwille) we can never trust the client hence all we need here is a list of OrderPosition Ids as Long
   public BillEto createBill(List<OrderPositionEto> orderPositions, Money tip) {
 
@@ -143,6 +146,7 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.DELETE_BILL)
   public void deleteBill(Long billId) {
 
     getBillDao().delete(billId);
@@ -152,6 +156,7 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.SAVE_BILL)
   public PaymentStatus doPayment(BillEto bill) {
 
     LOG.debug("The bill with id '" + bill.getId() + "' will be marked as payed.");
@@ -166,6 +171,7 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.SAVE_BILL)
   public PaymentStatus doPayment(BillEto bill, PaymentData paymentDataDebitor) {
 
     // REVIEW <who> (hohwille) Remove this hack or replace with something reasonable.

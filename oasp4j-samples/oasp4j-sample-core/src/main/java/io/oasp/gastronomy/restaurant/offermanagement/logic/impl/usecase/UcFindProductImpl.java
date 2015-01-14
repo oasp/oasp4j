@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.offermanagement.logic.impl.usecase;
 
+import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.logic.api.to.BinaryObjectEto;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.ProductEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.DrinkDao;
@@ -17,6 +18,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.base.usecase.Abstract
 import java.sql.Blob;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -83,6 +85,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public ProductEto findProduct(Long id) {
 
     LOG.debug("Get Product with id '" + id + "' from database.");
@@ -140,6 +143,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public List<ProductEto> findAllProducts() {
 
     LOG.debug("Get all products from database.");
@@ -150,6 +154,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public List<MealEto> findAllMeals() {
 
     LOG.debug("Get all meals with from database.");
@@ -160,6 +165,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public List<DrinkEto> findAllDrinks() {
 
     LOG.debug("Get all drinks with from database.");
@@ -170,6 +176,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public List<SideDishEto> findAllSideDishes() {
 
     LOG.debug("Get all sidedishes with from database.");
@@ -180,6 +187,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_OFFER)
   public List<ProductEto> findProductsFiltered(ProductFilter productFilterBo, ProductSortBy sortBy) {
 
     LOG.debug("Fetch filtered offers.");
@@ -199,6 +207,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public Blob findProductPictureBlob(Long productId) {
 
     return getUcManageBinaryObject().getBinaryObjectBlob(findProductPicture(productId).getId());

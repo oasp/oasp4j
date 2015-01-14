@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 
+import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException;
 import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalPropertyChangeException;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer;
@@ -19,6 +20,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.base.usecase.Abstract
 import java.util.List;
 import java.util.Objects;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -54,6 +56,7 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.SAVE_ORDER_POSITION)
   public OrderPositionEto createOrderPosition(OfferEto offer, OrderEto order, String comment) {
 
     Objects.requireNonNull(offer, "offer");
@@ -85,6 +88,7 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.SAVE_ORDER_POSITION)
   public OrderPositionEto saveOrderPosition(OrderPositionEto orderPosition) {
 
     Objects.requireNonNull(orderPosition, "orderPosition");
@@ -161,6 +165,7 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.SAVE_ORDER_POSITION)
   public void markOrderPositionAs(OrderPositionEto orderPosition, OrderPositionState newState) {
 
     Objects.requireNonNull(orderPosition, "orderPosition");

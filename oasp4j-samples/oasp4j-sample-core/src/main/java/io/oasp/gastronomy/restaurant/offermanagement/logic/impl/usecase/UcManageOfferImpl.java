@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.offermanagement.logic.impl.usecase;
 
+import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.exception.OfferEmptyException;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
@@ -8,7 +9,11 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.base.usecase.Abstract
 
 import java.util.Objects;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Named;
+import javax.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
 
 /**
  * Implementation of {@link UcManageOffer}.
@@ -16,12 +21,14 @@ import javax.inject.Named;
  * @author loverbec
  */
 @Named
+@Validated
 public class UcManageOfferImpl extends AbstractOfferUc implements UcManageOffer {
 
   /**
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.DELETE_OFFER)
   public void deleteOffer(Long offerId) {
 
     getOfferDao().delete(offerId);
@@ -31,7 +38,8 @@ public class UcManageOfferImpl extends AbstractOfferUc implements UcManageOffer 
    * {@inheritDoc}
    */
   @Override
-  public OfferEto saveOffer(OfferEto offer) {
+  @RolesAllowed(PermissionConstants.SAVE_OFFER)
+  public OfferEto saveOffer(@Valid OfferEto offer) {
 
     Objects.requireNonNull(offer, "offer");
 

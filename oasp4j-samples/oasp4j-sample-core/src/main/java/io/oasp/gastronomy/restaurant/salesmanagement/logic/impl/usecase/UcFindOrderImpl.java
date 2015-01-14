@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 
+import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
@@ -12,6 +13,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.base.usecase.Abstract
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -34,6 +36,7 @@ public class UcFindOrderImpl extends AbstractOrderUc implements UcFindOrder {
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_ORDER)
   public OrderEto findOrder(Long orderId) {
 
     LOG.debug("Get order.");
@@ -55,6 +58,7 @@ public class UcFindOrderImpl extends AbstractOrderUc implements UcFindOrder {
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_ORDER)
   public List<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria) {
 
     List<OrderEto> orderEtos = findOrderEtos(criteria);

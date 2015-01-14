@@ -1,13 +1,11 @@
 package io.oasp.gastronomy.restaurant.staffmanagement.service.impl.rest;
 
-import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.Staffmanagement;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.usecase.UcManageStaffMember;
 
 import java.util.List;
 
-import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.Consumes;
@@ -52,7 +50,6 @@ public class StaffmanagementRestServiceImpl {
    */
   @GET
   @Path("/")
-  @RolesAllowed(PermissionConstants.FIND_STAFF_MEMBER)
   public List<StaffMemberEto> getAllStaffMember() {
 
     return this.staffManagement.findAllStaffMembers();
@@ -64,7 +61,6 @@ public class StaffmanagementRestServiceImpl {
    */
   @GET
   @Path("/{login}")
-  @RolesAllowed(PermissionConstants.FIND_STAFF_MEMBER)
   public StaffMemberEto getStaffMember(@PathParam("login") String login) {
 
     return this.staffManagement.findStaffMemberByLogin(login);
@@ -78,7 +74,6 @@ public class StaffmanagementRestServiceImpl {
    */
   @PUT
   @Path("/{login}")
-  @RolesAllowed(PermissionConstants.SAVE_STAFF_MEMBER)
   @Deprecated
   public void updateStaffMember(StaffMemberEto staffMemberBo) {
 
@@ -93,7 +88,6 @@ public class StaffmanagementRestServiceImpl {
    */
   @POST
   @Path("/")
-  @RolesAllowed(PermissionConstants.SAVE_STAFF_MEMBER)
   public StaffMemberEto saveStaffMember(StaffMemberEto staffMemberEto) {
 
     return this.staffManagement.saveStaffMember(staffMemberEto);
@@ -104,7 +98,6 @@ public class StaffmanagementRestServiceImpl {
    */
   @DELETE
   @Path("/{login}")
-  @RolesAllowed(PermissionConstants.DELETE_STAFF_MEMBER)
   public void deleteStaffMember(@PathParam("login") String login) {
 
     this.staffManagement.deleteStaffMemberByLogin(login);

@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 
+import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
@@ -16,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -89,6 +91,7 @@ public class UcManageOrderImpl extends AbstractOrderUc implements UcManageOrder 
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.SAVE_ORDER)
   public OrderCto saveOrder(OrderCto order) {
 
     Objects.requireNonNull(order, "order");

@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.offermanagement.logic.impl.usecase;
 
+import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.ProductType;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -57,6 +59,7 @@ public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_OFFER)
   public OfferEto findOffer(Long id) {
 
     LOG.debug("Get OfferEto with id '{}' from database.", id);
@@ -99,6 +102,7 @@ public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_OFFER)
   public List<OfferEto> findAllOffers() {
 
     LOG.debug("Get all offers from database.");
@@ -109,6 +113,7 @@ public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed({ PermissionConstants.FIND_OFFER, PermissionConstants.FIND_PRODUCT })
   public boolean isProductInUseByOffer(ProductEto product) {
 
     LOG.debug("Get all offers from database for the given product with id '" + product.getId() + "'.");
@@ -179,6 +184,7 @@ public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_OFFER)
   public List<OfferEto> findOffersFiltered(OfferFilter offerFilterBo, OfferSortBy sortBy) {
 
     List<OfferEntity> offers = getOfferDao().findOffersFiltered(offerFilterBo, sortBy);

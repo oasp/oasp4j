@@ -1,6 +1,5 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest;
 
-import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
@@ -25,7 +24,6 @@ import io.oasp.module.rest.service.api.RequestParameters;
 import java.util.List;
 import java.util.Objects;
 
-import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.BadRequestException;
@@ -74,7 +72,6 @@ public class SalesmanagementRestServiceImpl {
    */
   @Path("/order/{orderId}")
   @GET
-  @RolesAllowed(PermissionConstants.FIND_ORDER)
   public OrderEto findOrder(@PathParam("orderId") Long orderId) {
 
     return this.salesManagement.findOrder(orderId);
@@ -88,7 +85,6 @@ public class SalesmanagementRestServiceImpl {
    */
   @Path("/order")
   @GET
-  @RolesAllowed(PermissionConstants.FIND_ORDER)
   public List<OrderCto> findOrders(@Context UriInfo info) {
 
     RequestParameters parameters = RequestParameters.fromQuery(info);
@@ -106,7 +102,6 @@ public class SalesmanagementRestServiceImpl {
    */
   @Path("/orderposition")
   @GET
-  @RolesAllowed(PermissionConstants.FIND_ORDER_POSITION)
   public List<OrderPositionEto> findOrderPositions(@Context UriInfo info) {
 
     RequestParameters parameters = RequestParameters.fromQuery(info);
@@ -127,7 +122,6 @@ public class SalesmanagementRestServiceImpl {
    */
   @Path("/order/{orderId}")
   @PUT
-  @RolesAllowed(PermissionConstants.SAVE_ORDER)
   @Deprecated
   public OrderCto updateOrder(OrderCto order, @PathParam("orderId") Long orderId) {
 
@@ -151,7 +145,6 @@ public class SalesmanagementRestServiceImpl {
    */
   @Path("/order/")
   @POST
-  @RolesAllowed(PermissionConstants.SAVE_ORDER)
   public OrderCto saveOrder(OrderCto order) {
 
     return this.salesManagement.saveOrder(order);
@@ -165,7 +158,6 @@ public class SalesmanagementRestServiceImpl {
    */
   @Path("/orderposition/{orderPositionId}")
   @GET
-  @RolesAllowed(PermissionConstants.FIND_ORDER_POSITION)
   public OrderPositionEto findOrderPosition(@PathParam("orderPositionId") Long orderPositionId) {
 
     return this.salesManagement.findOrderPosition(orderPositionId);
@@ -183,7 +175,6 @@ public class SalesmanagementRestServiceImpl {
    */
   @Path("/order/{orderId}/position/{comment}")
   @POST
-  @RolesAllowed(PermissionConstants.SAVE_ORDER_POSITION)
   @Deprecated
   public OrderPositionEto createOrderPosition(OfferEto offer, @PathParam("orderId") Long orderId,
       @PathParam("comment") String comment) {
@@ -199,7 +190,6 @@ public class SalesmanagementRestServiceImpl {
    */
   @POST
   @Path("/orderposition/")
-  @RolesAllowed(PermissionConstants.SAVE_ORDER_POSITION)
   public OrderPositionEto saveOrderPosition(OrderPositionEto orderPosition) {
 
     return this.salesManagement.saveOrderPosition(orderPosition);
@@ -214,7 +204,6 @@ public class SalesmanagementRestServiceImpl {
    */
   @PUT
   @Path("/order/{orderId}/position/{orderPositionId}/{newstate}")
-  @RolesAllowed(PermissionConstants.SAVE_ORDER_POSITION)
   public void markOrderPositionAs(OrderPositionEto orderPosition, @PathParam("newState") OrderPositionState newState) {
 
     this.salesManagement.markOrderPositionAs(orderPosition, newState);
@@ -228,7 +217,6 @@ public class SalesmanagementRestServiceImpl {
    */
   @GET
   @Path("/bill/{billId}")
-  @RolesAllowed(PermissionConstants.FIND_BILL)
   public BillEto getBill(@PathParam("billId") Long billId) {
 
     return this.salesManagement.findBill(billId);
@@ -242,7 +230,6 @@ public class SalesmanagementRestServiceImpl {
    */
   @POST
   @Path("/bill/{billId}/payment")
-  @RolesAllowed(PermissionConstants.SAVE_BILL)
   public PaymentStatus doPayment(@PathParam("billId") Long billId) {
 
     return this.salesManagement.doPayment(getBill(billId));
@@ -257,7 +244,6 @@ public class SalesmanagementRestServiceImpl {
    */
   @Path("/bill/{billId}/payment")
   @POST
-  @RolesAllowed(PermissionConstants.SAVE_BILL)
   public PaymentStatus doPayment(@PathParam("billId") Long billId, PaymentData paymentData) {
 
     return this.salesManagement.doPayment(getBill(billId), paymentData);
@@ -272,7 +258,6 @@ public class SalesmanagementRestServiceImpl {
    */
   @POST
   @Path("/bill/{tip}")
-  @RolesAllowed(PermissionConstants.SAVE_BILL)
   public BillEto createBill(List<OrderPositionEto> orderPositions, @PathParam("tip") Money tip) {
 
     return this.salesManagement.createBill(orderPositions, tip);
@@ -285,7 +270,6 @@ public class SalesmanagementRestServiceImpl {
    */
   @Path("/bill/{billId}")
   @DELETE
-  @RolesAllowed(PermissionConstants.DELETE_BILL)
   public void deleteBill(@PathParam("billId") Long billId) {
 
     this.salesManagement.deleteBill(billId);

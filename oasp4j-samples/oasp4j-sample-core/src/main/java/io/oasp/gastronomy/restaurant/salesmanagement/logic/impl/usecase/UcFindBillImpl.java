@@ -1,9 +1,11 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 
+import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BillEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcFindBill;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.base.usecase.AbstractBillUc;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Named;
 
 import org.slf4j.Logger;
@@ -24,6 +26,7 @@ public class UcFindBillImpl extends AbstractBillUc implements UcFindBill {
    *
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_BILL)
   public BillEto findBill(Long id) {
 
     LOG.debug("Get Bill with id '" + id + "' from database.");

@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.staffmanagement.logic.impl.usecase;
 
+import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api.StaffMemberEntity;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.usecase.UcManageStaffMember;
@@ -7,6 +8,7 @@ import io.oasp.gastronomy.restaurant.staffmanagement.logic.base.usecase.Abstract
 
 import java.util.Objects;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Named;
 
 import org.slf4j.Logger;
@@ -27,6 +29,7 @@ public class UcManageStaffMemberImpl extends AbstractStaffMemberUc implements Uc
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.DELETE_STAFF_MEMBER)
   public void deleteStaffMemberByLogin(String login) {
 
     getStaffMemberDao().delete(getStaffMemberDao().findByLogin(login));
@@ -45,6 +48,7 @@ public class UcManageStaffMemberImpl extends AbstractStaffMemberUc implements Uc
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.SAVE_STAFF_MEMBER)
   public StaffMemberEto saveStaffMember(StaffMemberEto staffMember) {
 
     Objects.requireNonNull(staffMember, "staffMemaber");

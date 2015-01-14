@@ -1,6 +1,5 @@
 package io.oasp.gastronomy.restaurant.offermanagement.service.impl.rest;
 
-import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.logic.api.to.BinaryObjectEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
@@ -25,12 +24,10 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
-import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -46,7 +43,6 @@ import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 
 /**
  * This class contains methods for REST calls. Some URI structures may seem depricated, but in fact are not. See the
@@ -59,7 +55,6 @@ import org.springframework.validation.annotation.Validated;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Transactional
-@Validated
 public class OffermanagementRestServiceImpl {
 
   private Offermanagement offerManagement;
@@ -81,7 +76,6 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/offer/{id}")
-  @RolesAllowed(PermissionConstants.FIND_OFFER)
   public OfferEto getOffer(@PathParam("id") Long id) {
 
     return this.offerManagement.findOffer(id);
@@ -96,8 +90,7 @@ public class OffermanagementRestServiceImpl {
    */
   @POST
   @Path("/offer/")
-  @RolesAllowed(PermissionConstants.SAVE_OFFER)
-  public OfferEto saveOffer(@Valid OfferEto offer) {
+  public OfferEto saveOffer(OfferEto offer) {
 
     return this.offerManagement.saveOffer(offer);
   }
@@ -113,7 +106,6 @@ public class OffermanagementRestServiceImpl {
    */
   @PUT
   @Path("/offer/{id}")
-  @RolesAllowed(PermissionConstants.SAVE_OFFER)
   @Deprecated
   public OfferEto updateOffer(OfferEto offer) {
 
@@ -127,7 +119,6 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/offer/")
-  @RolesAllowed(PermissionConstants.FIND_OFFER)
   public List<OfferEto> getAllOffers() {
 
     return this.offerManagement.findAllOffers();
@@ -140,7 +131,6 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/product/")
-  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public List<ProductEto> getAllProducts() {
 
     return this.offerManagement.findAllProducts();
@@ -154,7 +144,6 @@ public class OffermanagementRestServiceImpl {
    */
   @POST
   @Path("/product/")
-  @RolesAllowed(PermissionConstants.SAVE_PRODUCT)
   public ProductEto saveProduct(ProductEto product) {
 
     return this.offerManagement.saveProduct(product);
@@ -167,7 +156,6 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/product/meal/")
-  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public List<MealEto> getAllMeals() {
 
     return this.offerManagement.findAllMeals();
@@ -180,7 +168,6 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/product/drink/")
-  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public List<DrinkEto> getAllDrinks() {
 
     return this.offerManagement.findAllDrinks();
@@ -193,7 +180,6 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/product/side/")
-  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public List<SideDishEto> getAllSideDishes() {
 
     return this.offerManagement.findAllSideDishes();
@@ -206,7 +192,6 @@ public class OffermanagementRestServiceImpl {
    */
   @DELETE
   @Path("/offer/{id}")
-  @RolesAllowed(PermissionConstants.DELETE_OFFER)
   public void deleteOffer(@PathParam("id") Long id) {
 
     this.offerManagement.deleteOffer(id);
@@ -220,7 +205,6 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/product/{id}")
-  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public ProductEto findProduct(@PathParam("id") Long id) {
 
     return this.offerManagement.findProduct(id);
@@ -236,7 +220,6 @@ public class OffermanagementRestServiceImpl {
    */
   @PUT
   @Path("/product/{id}")
-  @RolesAllowed(PermissionConstants.SAVE_PRODUCT)
   @Deprecated
   public void updateProduct(ProductEto product) {
 
@@ -251,7 +234,6 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/product/{id}/inuse")
-  @RolesAllowed({ PermissionConstants.FIND_OFFER, PermissionConstants.FIND_OFFER })
   public boolean isProductInUseByOffer(@PathParam("id") Long id) {
 
     return this.offerManagement.isProductInUseByOffer(findProduct(id));
@@ -264,7 +246,6 @@ public class OffermanagementRestServiceImpl {
    */
   @DELETE
   @Path("/product/{id}")
-  @RolesAllowed(PermissionConstants.DELETE_PRODUCT)
   public void deleteProduct(@PathParam("id") Long id) {
 
     this.offerManagement.deleteProduct(id);
@@ -279,7 +260,6 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/sortby/{sortBy}")
-  @RolesAllowed(PermissionConstants.FIND_OFFER)
   public List<OfferEto> getFilteredOffers(OfferFilter offerFilter, @PathParam("sortBy") OfferSortBy sortBy) {
 
     return this.offerManagement.findOffersFiltered(offerFilter, sortBy);
@@ -294,7 +274,6 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/product/sortby/{sortBy}")
-  @RolesAllowed(PermissionConstants.FIND_OFFER)
   public List<ProductEto> getFilteredProducts(ProductFilter productFilter, @PathParam("sortBy") ProductSortBy sortBy) {
 
     return this.offerManagement.findProductsFiltered(productFilter, sortBy);
@@ -304,7 +283,6 @@ public class OffermanagementRestServiceImpl {
   @Consumes("multipart/mixed")
   @POST
   @Path("/product/{id}/picture")
-  @RolesAllowed(PermissionConstants.SAVE_PRODUCT)
   public void updateProductPicture(@PathParam("id") Long productId,
       @Multipart(value = "binaryObjectEto", type = MediaType.APPLICATION_JSON) BinaryObjectEto binaryObjectEto,
       @Multipart(value = "blob", type = MediaType.APPLICATION_OCTET_STREAM) InputStream picture)
@@ -319,7 +297,6 @@ public class OffermanagementRestServiceImpl {
   @Produces("multipart/mixed")
   @GET
   @Path("/product/{id}/picture")
-  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public MultipartBody getProductPicture(@PathParam("id") long productId) throws SQLException, IOException {
 
     Blob blob = this.offerManagement.findProductPictureBlob(productId);
@@ -338,8 +315,6 @@ public class OffermanagementRestServiceImpl {
   @SuppressWarnings("javadoc")
   @DELETE
   @Path("/product/{id}/picture")
-  // REVIEW arturk88 (hohwille) wrong permission, we need to create SAVE_PRODUCT_PICTURE and DELETE_PRODUCT_PICTURE
-  @RolesAllowed(PermissionConstants.SAVE_PRODUCT)
   public void deleteProductPicture(long productId) {
 
     this.offerManagement.deleteProductPicture(productId);

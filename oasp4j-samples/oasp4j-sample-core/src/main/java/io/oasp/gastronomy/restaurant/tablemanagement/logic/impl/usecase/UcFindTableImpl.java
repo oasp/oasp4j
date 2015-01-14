@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.tablemanagement.logic.impl.usecase;
 
+import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.tablemanagement.dataaccess.api.TableEntity;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.usecase.UcFindTable;
@@ -7,6 +8,7 @@ import io.oasp.gastronomy.restaurant.tablemanagement.logic.base.usecase.Abstract
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Named;
 
 import org.slf4j.Logger;
@@ -27,6 +29,7 @@ public class UcFindTableImpl extends AbstractTableUc implements UcFindTable {
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_TABLE)
   public TableEto findTable(Long id) {
 
     LOG.debug("Get table with id '" + id + "' from database.");
@@ -37,6 +40,7 @@ public class UcFindTableImpl extends AbstractTableUc implements UcFindTable {
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_TABLE)
   public List<TableEto> findAllTables() {
 
     LOG.debug("Get all restaurant tables from database.");
@@ -48,6 +52,7 @@ public class UcFindTableImpl extends AbstractTableUc implements UcFindTable {
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_TABLE)
   public List<TableEto> findFreeTables() {
 
     LOG.debug("Get all free restaurant tables from database.");
