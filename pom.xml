@@ -24,6 +24,7 @@
     <oasp4j.version>1.0.0-SNAPSHOT</oasp4j.version>
     <port.range>81</port.range>
     <oasp.gpg.keyname>joerg.hohwiller@capgemini.com</oasp.gpg.keyname>
+    <oasp.flatten.mode>oss</oasp.flatten.mode>
   </properties>
 
   <build>
@@ -238,9 +239,14 @@
           <version>2.4</version>
         </plugin>
         <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>flatten-maven-plugin</artifactId>
+          <version>1.0.0-beta-3</version>
+        </plugin>
+        <plugin>
           <groupId>org.eclipse.m2e</groupId>
           <artifactId>lifecycle-mapping</artifactId>
-            <version>1.0.0</version>
+          <version>1.0.0</version>
           <configuration>
             <lifecycleMappingMetadata>
               <pluginExecutions>
@@ -372,9 +378,8 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>flatten-maven-plugin</artifactId>
-            <version>1.0.0-beta-3</version>
             <configuration>
-              <flattenMode>oss</flattenMode>
+              <flattenMode>${oasp.flatten.mode}</flattenMode>
             </configuration>
             <executions>
               <execution>
@@ -456,7 +461,7 @@
   </issueManagement>
 
   <scm>
-    <url>https://github.com/oasp/oasp4j/tree/master</url>
+    <url>https://github.com/oasp/oasp4j/tree/develop</url>
   </scm>
 
   <!--
@@ -475,6 +480,7 @@
     <url>http://oasp.io/oasp4j/maven/team-list.html</url>
   </organization>
 
+  <!--
   <developers>
     <developer>
       <id>hohwille</id>
@@ -491,7 +497,8 @@
       <properties/>
     </developer>
   </developers>
-
+  -->
+  
   <licenses>
     <license>
       <name>Apache Software Licenese</name>
