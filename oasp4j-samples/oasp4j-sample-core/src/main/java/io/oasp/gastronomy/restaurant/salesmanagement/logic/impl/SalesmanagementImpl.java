@@ -20,7 +20,6 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcFindOrd
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageBill;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrder;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrderPosition;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase.UcFindOrderPositionImpl;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 
 import java.util.List;
@@ -62,7 +61,7 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * @param ucFindOrderPosition the {@link UcFindOrderPosition} to {@link Inject}.
    */
   @Inject
-  public void setUcFindOrderPosition(UcFindOrderPositionImpl ucFindOrderPosition) {
+  public void setUcFindOrderPosition(UcFindOrderPosition ucFindOrderPosition) {
 
     this.ucFindOrderPosition = ucFindOrderPosition;
   }

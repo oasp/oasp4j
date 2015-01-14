@@ -8,6 +8,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPo
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.PaymentStatus;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.BillEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderPositionEntity;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BankPaymentData;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BillEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
@@ -39,9 +40,7 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
   /** Logger instance. */
   private static final Logger LOG = LoggerFactory.getLogger(UcManageBillImpl.class);
 
-  private UcManageOrderPositionImpl ucManageOrderPosition;
-
-  private UcFindOrderPositionImpl ucFindOrderPosition;
+  private Salesmanagement salesmanagement;
 
   private PaymentAdapter paymentAdapter;
 
@@ -58,7 +57,7 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
     Money total = Money.ZERO;
 
     for (OrderPositionEto position : orderPositions) {
-      OrderPositionEto orderPosition = this.ucFindOrderPosition.findOrderPosition(position.getId());
+      OrderPositionEto orderPosition = this.salesmanagement.findOrderPosition(position.getId());
       verifyNotClosed(orderPosition);
       total = total.add(orderPosition.getPrice());
     }
@@ -121,7 +120,7 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
       // Bill does not yet exist. -> new Bill
       List<OrderPositionEto> orderPositions = new ArrayList<>();
       for (Long id : orderPositionIds) {
-        OrderPositionEto position = this.ucFindOrderPosition.findOrderPosition(id);
+        OrderPositionEto position = this.salesmanagement.findOrderPosition(id);
         orderPositions.add(position);
       }
       return createBill(orderPositions, bill.getTip());
@@ -222,23 +221,12 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
     // Mark orders as payed
     for (Long orderPositionId : bill.getOrderPositionIds()) {
       // check for already closed orderPositions
-      OrderPositionEto orderPosition = this.ucFindOrderPosition.findOrderPosition(orderPositionId);
+      OrderPositionEto orderPosition = this.salesmanagement.findOrderPosition(orderPositionId);
       verifyNotClosed(orderPosition);
-      this.ucManageOrderPosition.markOrderPositionAs(orderPosition, OrderPositionState.PAYED);
+      this.salesmanagement.markOrderPositionAs(orderPosition, OrderPositionState.PAYED);
       LOG.debug("The OrderPosition with id '{}' containing in the bill with id '{}' is marked as payed.",
           orderPositionId, bill.getId());
     }
-  }
-
-  /**
-   * Sets the field 'ucManageOrderPosition'.
-   *
-   * @param ucManageOrderPosition New value for ucManageOrderPosition
-   */
-  @Inject
-  public void setUcManageOrderPosition(UcManageOrderPositionImpl ucManageOrderPosition) {
-
-    this.ucManageOrderPosition = ucManageOrderPosition;
   }
 
   /**
@@ -253,13 +241,11 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
   }
 
   /**
-   * Setzt das Feld 'ucFindOrderPosition'.
-   *
-   * @param ucFindOrderPosition Neuer Wert für ucFindOrderPosition
+   * @param salesmanagement the salesmanagement to set
    */
   @Inject
-  public void setUcFindOrderPosition(UcFindOrderPositionImpl ucFindOrderPosition) {
+  public void setSalesmanagement(Salesmanagement salesmanagement) {
 
-    this.ucFindOrderPosition = ucFindOrderPosition;
+    this.salesmanagement = salesmanagement;
   }
 }

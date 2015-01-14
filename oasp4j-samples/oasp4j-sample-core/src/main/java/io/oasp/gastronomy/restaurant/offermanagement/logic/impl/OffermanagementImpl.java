@@ -17,10 +17,6 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcFindOff
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcFindProduct;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcManageOffer;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcManageProduct;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.impl.usecase.UcFindOfferImpl;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.impl.usecase.UcFindProductImpl;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.impl.usecase.UcManageOfferImpl;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.impl.usecase.UcManageProductImpl;
 
 import java.sql.Blob;
 import java.util.List;
@@ -224,7 +220,7 @@ public class OffermanagementImpl extends AbstractBeanMapperSupport implements Of
    * @param ucFindOffer New value for ucFindOffer
    */
   @Inject
-  public void setUcFindOffer(UcFindOfferImpl ucFindOffer) {
+  public void setUcFindOffer(UcFindOffer ucFindOffer) {
 
     this.ucFindOffer = ucFindOffer;
   }
@@ -235,7 +231,7 @@ public class OffermanagementImpl extends AbstractBeanMapperSupport implements Of
    * @param ucManageOffer New value for ucManageOffer
    */
   @Inject
-  public void setUcManageOffer(UcManageOfferImpl ucManageOffer) {
+  public void setUcManageOffer(UcManageOffer ucManageOffer) {
 
     this.ucManageOffer = ucManageOffer;
   }
@@ -246,7 +242,7 @@ public class OffermanagementImpl extends AbstractBeanMapperSupport implements Of
    * @param ucFindProduct New value for ucFindProduct
    */
   @Inject
-  public void setUcFindProduct(UcFindProductImpl ucFindProduct) {
+  public void setUcFindProduct(UcFindProduct ucFindProduct) {
 
     this.ucFindProduct = ucFindProduct;
   }
@@ -257,7 +253,7 @@ public class OffermanagementImpl extends AbstractBeanMapperSupport implements Of
    * @param ucManageProduct New value for ucManageProduct
    */
   @Inject
-  public void setUcManageProduct(UcManageProductImpl ucManageProduct) {
+  public void setUcManageProduct(UcManageProduct ucManageProduct) {
 
     this.ucManageProduct = ucManageProduct;
   }

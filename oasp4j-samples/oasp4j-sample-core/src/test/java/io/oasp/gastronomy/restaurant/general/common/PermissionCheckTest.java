@@ -8,10 +8,6 @@ import java.util.Set;
 import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 
 import net.sf.mmm.util.filter.api.Filter;
 import net.sf.mmm.util.reflect.api.ReflectionUtil;
@@ -20,19 +16,19 @@ import net.sf.mmm.util.reflect.base.ReflectionUtilImpl;
 import org.junit.Test;
 
 /**
- * Tests the permission check for the REST services.
+ * Tests the permission check in logic layer.
  *
  * @author jmetzler
  */
-public class RestServicePermissionCheckTest {
+public class PermissionCheckTest {
 
   /**
-   * Check if all REST service methods have permission checks i.e. {@link RolesAllowed}, {@link DenyAll} or
-   * {@link PermitAll} annotation is applied. This is only checked for methods that also have one of the following
-   * annotations applied: {@link GET}, {@link PUT}, {@link POST}, {@link DELETE}.
+   * Check if all relevant methods in use case implementations have permission checks i.e. {@link RolesAllowed},
+   * {@link DenyAll} or {@link PermitAll} annotation is applied. This is only checked for methods that are declared in
+   * the corresponding interface and thus have the {@link Override} annotations applied.
    */
   @Test
-  public void rolesAllowedAnnotationPresent() {
+  public void permissionCheckAnnotationPresent() {
 
     String packageName = "io.oasp.gastronomy.restaurant";
     Filter<String> filter = new Filter<String>() {
@@ -40,7 +36,7 @@ public class RestServicePermissionCheckTest {
       @Override
       public boolean accept(String value) {
 
-        return value.endsWith("RestServiceImpl");
+        return value.contains(".logic.impl.usecase.Uc") && value.endsWith("Impl");
       }
 
     };
@@ -50,8 +46,7 @@ public class RestServicePermissionCheckTest {
     for (Class<?> clazz : classes) {
       Method[] methods = clazz.getDeclaredMethods();
       for (Method method : methods) {
-        if (method.getAnnotation(GET.class) != null || method.getAnnotation(POST.class) != null
-            || method.getAnnotation(PUT.class) != null || method.getAnnotation(DELETE.class) != null) {
+        if (method.getAnnotation(Override.class) != null) {
           assertTrue(
               "Method " + method.getName() + " in Class " + clazz.getSimpleName() + " is missing access control",
               method.getAnnotation(RolesAllowed.class) != null || method.getAnnotation(DenyAll.class) != null

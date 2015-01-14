@@ -4,6 +4,7 @@ import io.oasp.gastronomy.restaurant.general.common.api.exception.NoActiveUserEx
 import io.oasp.gastronomy.restaurant.general.common.api.security.UserData;
 import io.oasp.gastronomy.restaurant.general.common.api.to.UserDetailsClientTo;
 
+import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -49,6 +50,7 @@ public class SecurityRestServiceImpl {
   @Produces(MediaType.APPLICATION_JSON)
   @GET
   @Path("/csrftoken/")
+  @PermitAll
   public CsrfToken getCsrfToken(@Context HttpServletRequest request, @Context HttpServletResponse response) {
 
     // return (CsrfToken) request.getSession().getAttribute(
@@ -71,6 +73,7 @@ public class SecurityRestServiceImpl {
   @Produces(MediaType.APPLICATION_JSON)
   @GET
   @Path("/currentuser/")
+  @PermitAll
   public UserDetailsClientTo getCurrentUser(@Context HttpServletRequest request) {
 
     if (request.getRemoteUser() == null) {
