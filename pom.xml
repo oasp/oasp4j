@@ -363,6 +363,9 @@
         <module>oasp4j-modules</module>
         <module>oasp4j-templates</module>
       </modules>
+      <properties>
+        <log.console.disabled>true</log.console.disabled>
+      </properties>
       <build>
         <plugins>
           <!-- http://mojo.codehaus.org/flatten-maven-plugin/ -->

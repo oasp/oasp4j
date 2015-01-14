@@ -16,6 +16,8 @@
 
   <property name="debugLogFile" value="debug_log_devseu_rmgt"></property>
 
+  <property name="consoleDisabled" value="${log.console.disabled}"></property>
+
   <!-- Automatic removal of old log archives maxHistory=... needed? -->
   <!-- RollingFileAppender: Automatic compression of archived log files -->
   <!-- Prudent mode needed? (multiple FileAppender instances running on multiple JVMs can safely write to the same log file) -->
@@ -66,35 +68,30 @@
     </encoder>
   </appender>
 
-  <!-- TODO Console appender should only be active in development environment -->
-
-  <appender name="CONSOLE_APPENDER" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-      <pattern>${logPattern}</pattern>
-    </encoder>
-    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-      <level>DEBUG</level>
-    </filter>
-  </appender>
+  <if condition='!property("consoleDisabled").equalsIgnoreCase("true")'>
+    <then>
+      <appender name="CONSOLE_APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+          <pattern>${logPattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+          <level>DEBUG</level>
+        </filter>
+      </appender>
+      <root level="DEBUG">
+        <appender-ref ref="CONSOLE_APPENDER"/>
+      </root>
+    </then>
+  </if>
 
   <root level="DEBUG">
     <appender-ref ref="ERROR_APPENDER"/>
     <appender-ref ref="INFO_APPENDER"/>
     <appender-ref ref="DEBUG_APPENDER"/>
-    <appender-ref ref="CONSOLE_APPENDER"/>
   </root>
 
-  <logger name="org.springframework" level="DEBUG">
-    <appender-ref ref="ERROR_APPENDER"/>
-    <appender-ref ref="INFO_APPENDER"/>
-    <appender-ref ref="DEBUG_APPENDER"/>
-    <!-- <appender-ref ref="CONSOLE_APPENDER"/> -->
-  </logger>
+  <logger name="org.springframework" level="DEBUG"/>
 
-  <logger name="org.dozer" level="INFO">
-    <appender-ref ref="ERROR_APPENDER"/>
-    <appender-ref ref="INFO_APPENDER"/>
-    <appender-ref ref="DEBUG_APPENDER"/>
-  </logger>
+  <logger name="org.dozer" level="INFO"/>
 
 </configuration>

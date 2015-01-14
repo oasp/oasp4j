@@ -193,11 +193,16 @@
         <artifactId>mockito-core</artifactId>
         <version>1.9.5</version>
       </dependency>
-      
+
       <!-- *** INTERNAL DEPENDENCIES *** -->
       <dependency>
         <groupId>io.oasp.java.modules</groupId>
         <artifactId>oasp4j-logging</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.oasp.java.modules</groupId>
+        <artifactId>oasp4j-testconfig</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -232,7 +237,7 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-  
+
    <distributionManagement>
     <repository>
       <id>oasp.releases</id>
@@ -248,8 +253,8 @@
       <id>oasp-site</id>
       <url>file://${user.dir}/target/oasp4j/maven</url>
     </site>
-  </distributionManagement> 
-  
+  </distributionManagement>
+
   <profiles>
     <profile>
       <id>deploy</id>
@@ -324,5 +329,5 @@
       </distributionManagement>
     </profile>
   </profiles>
-  
+
 </project>

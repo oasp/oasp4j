@@ -12,9 +12,10 @@
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
   <description>Reusable modules of the Open Application Standard Platform for Java (OASP4J).</description>
-  
+
   <modules>
     <module>oasp4j-logging</module>
+    <module>oasp4j-testconfig</module>
     <module>oasp4j-configuration</module>
     <module>oasp4j-beanmapping</module>
     <module>oasp4j-rest</module>
@@ -85,5 +86,5 @@
       </plugin>
     </plugins>
   </reporting>
-  
+
 </project>
