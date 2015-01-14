@@ -59,6 +59,7 @@ public class ApplicationAuthenticationProvider extends
     try {
       return this.usermanagement.findUserProfileByLogin(username);
     } catch (RuntimeException e) {
+      e.printStackTrace();
       UsernameNotFoundException exception = new UsernameNotFoundException("Authentication failed.", e);
       LOG.warn("Failed to get user {}.", username, exception);
       throw exception;

@@ -22,7 +22,7 @@ import org.xml.sax.SAXException;
  *
  * @author jmetzler
  */
-public class XmlValidationTest {
+public class AccessControlSchemaXmlValidationTest {
 
   /**
    * Tests if the access-control-schema.xml is valid.

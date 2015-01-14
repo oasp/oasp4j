@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 
+import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.logic.base.AbstractUc;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcChangeTable;
@@ -7,6 +8,7 @@ import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableSt
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -24,6 +26,7 @@ public class UcChangeTableImpl extends AbstractUc implements UcChangeTable {
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.SAVE_TABLE)
   public void changeTable(OrderEto order, TableEto newTable) {
 
     // save old table data
@@ -32,6 +35,10 @@ public class UcChangeTableImpl extends AbstractUc implements UcChangeTable {
 
     // update order
     order.setTableId(newTable.getId());
+
+    // TODO
+    // Salesmanagement s;
+    // s.saveOrder(order);
 
     // change table status:
     // marks old table as free

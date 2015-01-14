@@ -42,6 +42,7 @@ public class UcFindOrderPositionImpl extends AbstractOrderPositionUc implements 
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_ORDER_POSITION)
   public List<OrderPositionEto> findOrderPositionsByOrderId(Long orderId) {
 
     List<OrderPositionEntity> positions = getOrderPositionDao().findOrderPositionsByOrder(orderId);
@@ -52,6 +53,7 @@ public class UcFindOrderPositionImpl extends AbstractOrderPositionUc implements 
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_ORDER_POSITION)
   public List<OrderPositionEto> findOpenOrderPositionsByOrderId(Long orderId) {
 
     LOG.debug("Get all open order positions for order id '" + orderId + "'.");

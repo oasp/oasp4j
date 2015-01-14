@@ -47,6 +47,7 @@ public class UcFindOrderImpl extends AbstractOrderUc implements UcFindOrder {
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_ORDER)
   public List<OrderEto> findOrderEtos(OrderSearchCriteriaTo criteria) {
 
     criteria.limitMaximumHitCount(MAXIMUM_HIT_LIMIT);
@@ -74,6 +75,7 @@ public class UcFindOrderImpl extends AbstractOrderUc implements UcFindOrder {
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_ORDER)
   public OrderCto findOrderCto(OrderEto order) {
 
     OrderCto result = new OrderCto();
@@ -87,6 +89,7 @@ public class UcFindOrderImpl extends AbstractOrderUc implements UcFindOrder {
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_ORDER)
   public OrderEto findOpenOrderForTable(Long tableId) {
 
     OrderEntity order = getOrderDao().findOpenOrderByTable(tableId);

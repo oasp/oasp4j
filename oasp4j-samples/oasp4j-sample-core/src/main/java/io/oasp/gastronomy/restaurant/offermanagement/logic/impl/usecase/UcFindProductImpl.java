@@ -101,6 +101,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public MealEto findMeal(Long id) {
 
     ProductEto product = findProduct(id);
@@ -115,6 +116,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public DrinkEto findDrink(Long id) {
 
     ProductEto product = findProduct(id);
@@ -129,6 +131,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public SideDishEto findSideDish(Long id) {
 
     ProductEto product = findProduct(id);
@@ -198,6 +201,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public BinaryObjectEto findProductPicture(Long productId) {
 
     return getUcManageBinaryObject().findBinaryObject(findProduct(productId).getPictureId());

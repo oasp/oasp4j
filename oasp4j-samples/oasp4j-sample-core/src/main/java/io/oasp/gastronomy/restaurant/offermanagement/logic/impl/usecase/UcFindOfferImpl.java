@@ -70,6 +70,7 @@ public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_OFFER)
   public OfferCto findOfferCto(Long id) {
 
     LOG.debug("Get OfferCTO with id '{}' from database.", id);

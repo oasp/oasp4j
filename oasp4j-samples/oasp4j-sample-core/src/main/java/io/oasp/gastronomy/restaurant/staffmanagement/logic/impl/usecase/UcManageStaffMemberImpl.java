@@ -39,6 +39,7 @@ public class UcManageStaffMemberImpl extends AbstractStaffMemberUc implements Uc
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.DELETE_STAFF_MEMBER)
   public void deleteStaffMember(Long staffMemberId) {
 
     getStaffMemberDao().delete(staffMemberId);

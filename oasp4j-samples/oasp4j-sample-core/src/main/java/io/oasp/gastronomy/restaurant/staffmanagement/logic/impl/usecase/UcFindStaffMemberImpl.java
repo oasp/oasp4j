@@ -1,5 +1,7 @@
 package io.oasp.gastronomy.restaurant.staffmanagement.logic.impl.usecase;
 
+import io.oasp.gastronomy.restaurant.general.common.api.UserProfile;
+import io.oasp.gastronomy.restaurant.general.common.api.Usermanagement;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api.StaffMemberEntity;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto;
@@ -18,7 +20,7 @@ import javax.inject.Named;
  * @author jozitz
  */
 @Named
-public class UcFindStaffMemberImpl extends AbstractStaffMemberUc implements UcFindStaffMember {
+public class UcFindStaffMemberImpl extends AbstractStaffMemberUc implements UcFindStaffMember, Usermanagement {
 
   /**
    * The constructor.
@@ -30,18 +32,21 @@ public class UcFindStaffMemberImpl extends AbstractStaffMemberUc implements UcFi
 
   /**
    * {@inheritDoc}
+   *
+   * Do not extract this method as a service, because of PermitAll. (only for login)
    */
   @Override
   @RolesAllowed(PermissionConstants.FIND_STAFF_MEMBER)
   public StaffMemberEto findStaffMemberByLogin(String login) {
 
-    return getBeanMapper().map(getStaffMemberDao().findByLogin(login), StaffMemberEto.class);
+    return privateFindStaffMemberByLogin(login);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_STAFF_MEMBER)
   public StaffMemberEto findStaffMember(Long id) {
 
     return getBeanMapper().map(getStaffMemberDao().find(id), StaffMemberEto.class);
@@ -62,6 +67,24 @@ public class UcFindStaffMemberImpl extends AbstractStaffMemberUc implements UcFi
     }
 
     return membersBo;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  // used during authentication so not authorization annotation (not even @PermitAll) can be used here
+  public UserProfile findUserProfileByLogin(String login) {
+
+    return privateFindStaffMemberByLogin(login);
+  }
+
+  /**
+   * Do not extract this method as a service, because of PermitAll. (only for login)
+   */
+  private StaffMemberEto privateFindStaffMemberByLogin(String login) {
+
+    return getBeanMapper().map(getStaffMemberDao().findByLogin(login), StaffMemberEto.class);
   }
 
 }

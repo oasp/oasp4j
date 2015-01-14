@@ -46,11 +46,17 @@ public class PermissionCheckTest {
     for (Class<?> clazz : classes) {
       Method[] methods = clazz.getDeclaredMethods();
       for (Method method : methods) {
-        if (method.getAnnotation(Override.class) != null) {
-          assertTrue(
-              "Method " + method.getName() + " in Class " + clazz.getSimpleName() + " is missing access control",
-              method.getAnnotation(RolesAllowed.class) != null || method.getAnnotation(DenyAll.class) != null
-                  || method.getAnnotation(PermitAll.class) != null);
+        Method parentMethod = ru.getParentMethod(method);
+        if (parentMethod != null) {
+          Class<?> declaringClass = parentMethod.getDeclaringClass();
+          if (declaringClass.isInterface() && declaringClass.getSimpleName().startsWith("Uc")) {
+            // ...
+            assertTrue(
+
+            "Method " + method.getName() + " in Class " + clazz.getSimpleName() + " is missing access control",
+                method.getAnnotation(RolesAllowed.class) != null || method.getAnnotation(DenyAll.class) != null
+                    || method.getAnnotation(PermitAll.class) != null);
+          }
         }
       }
     }

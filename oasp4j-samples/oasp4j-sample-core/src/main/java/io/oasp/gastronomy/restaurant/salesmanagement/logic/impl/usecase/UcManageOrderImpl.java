@@ -59,6 +59,7 @@ public class UcManageOrderImpl extends AbstractOrderUc implements UcManageOrder 
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.SAVE_ORDER)
   public OrderEto saveOrder(TableEto table) {
 
     Objects.requireNonNull(table, "table");
@@ -77,6 +78,7 @@ public class UcManageOrderImpl extends AbstractOrderUc implements UcManageOrder 
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.SAVE_ORDER)
   public OrderEto saveOrder(OrderEto order) {
 
     Objects.requireNonNull(order, "order");
@@ -182,6 +184,7 @@ public class UcManageOrderImpl extends AbstractOrderUc implements UcManageOrder 
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.DELETE_ORDER)
   public void deleteOrder(Long id) {
 
     getOrderDao().delete(id);
