@@ -6,8 +6,8 @@
     <version>dev-SNAPSHOT</version>
   </parent>
   <groupId>io.oasp.java.modules</groupId>
-  <artifactId>oasp4j-testconfig</artifactId>
+  <artifactId>oasp4j-test</artifactId>
   <version>${oasp4j.version}</version>
   <name>${project.artifactId}</name>
-  <description>Test Configuration Module of the Open Application Standard Platform for Java (OASP4J).</description>
+  <description>Module with code and configuration for tests of the Open Application Standard Platform for Java (OASP4J).</description>
 </project>

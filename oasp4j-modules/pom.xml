@@ -15,7 +15,7 @@
 
   <modules>
     <module>oasp4j-logging</module>
-    <module>oasp4j-testconfig</module>
+    <module>oasp4j-test</module>
     <module>oasp4j-configuration</module>
     <module>oasp4j-beanmapping</module>
     <module>oasp4j-rest</module>

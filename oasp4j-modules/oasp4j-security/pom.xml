@@ -67,7 +67,7 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>oasp4j-testconfig</artifactId>
+      <artifactId>oasp4j-test</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
