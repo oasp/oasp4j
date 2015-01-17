@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <!--
   <parent>
-    <groupId>io.oasp.java</groupId>
+    <groupId>io.oasp.java.dev</groupId>
     <artifactId>oasp4j</artifactId>
     <version>dev-SNAPSHOT</version>
   </parent>
