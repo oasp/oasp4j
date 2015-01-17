@@ -54,7 +54,7 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
 
     List<OrderEntity> resultList =
         getEntityManager().createNamedQuery(NamedQueries.GET_OPEN_ORDER_FOR_TABLE, OrderEntity.class)
-            .setParameter(1, tableId).getResultList();
+            .setParameter("tableId", tableId).getResultList();
     if (resultList.isEmpty()) {
       return null;
     } else {

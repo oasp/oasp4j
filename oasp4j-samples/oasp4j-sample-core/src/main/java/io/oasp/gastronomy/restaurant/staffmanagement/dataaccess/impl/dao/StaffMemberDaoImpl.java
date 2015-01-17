@@ -41,7 +41,7 @@ public class StaffMemberDaoImpl extends ApplicationMasterDataDaoImpl<StaffMember
 
     TypedQuery<StaffMemberEntity> query =
         getEntityManager().createNamedQuery(NamedQueries.GET_STAFF_MEMBER_BY_LOGIN, StaffMemberEntity.class);
-    query.setParameter(1, login);
+    query.setParameter("login", login);
     return query.getSingleResult();
   }
 }

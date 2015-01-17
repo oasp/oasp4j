@@ -56,7 +56,7 @@ public class OrderPositionDaoImpl extends ApplicationDaoImpl<OrderPositionEntity
 
     return getEntityManager()
         .createNamedQuery(NamedQueries.GET_OPEN_ORDER_POSITIONS_FOR_ORDER, OrderPositionEntity.class)
-        .setParameter(1, orderId).getResultList();
+        .setParameter("orderId", orderId).getResultList();
   }
 
   /**
