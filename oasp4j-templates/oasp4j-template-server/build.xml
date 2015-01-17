@@ -148,6 +148,17 @@
       </filterchain>
     </copy>
 
+    <copy todir="${sample.server.resources.output}">
+      <fileset dir="${sample.server.resources.input}">
+      </fileset>
+      <filterchain>
+        <tokenfilter>
+          <linetokenizer/>
+          <replaceregex pattern="${sample.package}" replace="${package}" flags="g"/>
+        </tokenfilter>
+      </filterchain>
+    </copy>
+    
     <copy todir="${sample.server.webresources.output}">
       <fileset dir="${sample.server.webresources.input}">
       	<exclude name="**/jsclient/**/*"/>

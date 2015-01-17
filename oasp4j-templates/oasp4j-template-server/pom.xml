@@ -34,6 +34,8 @@
 
     <sample.server.input>${sample.input}/oasp4j-sample-server</sample.server.input>
     <sample.server.output>${sample.output}/__rootArtifactId__-server</sample.server.output>
+    <sample.server.resources.input>${sample.server.input}/src/main/resources</sample.server.resources.input>
+    <sample.server.resources.output>${sample.server.output}/src/main/resources</sample.server.resources.output>
     <sample.server.webresources.input>${sample.server.input}/src/main/webapp</sample.server.webresources.input>
     <sample.server.webresources.output>${sample.server.output}/src/main/webapp</sample.server.webresources.output>
     <sample.integration.input>${sample.input}/oasp4j-sample-server-integration</sample.integration.input>
