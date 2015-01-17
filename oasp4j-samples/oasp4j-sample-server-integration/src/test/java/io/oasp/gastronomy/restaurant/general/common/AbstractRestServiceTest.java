@@ -1,6 +1,5 @@
 package io.oasp.gastronomy.restaurant.general.common;
 
-import io.oasp.gastronomy.restaurant.staffmanagement.common.api.StaffMember;
 import io.oasp.gastronomy.restaurant.test.general.AppProperties.LoginCredentials;
 import io.oasp.gastronomy.restaurant.test.general.webclient.WebClientWrapper;
 import io.oasp.module.configuration.common.api.ApplicationConfigurationConstants;
@@ -24,8 +23,8 @@ import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
 /**
- * Contains reusable test features for rest service tests. Before each test execution the database will be wiped and 4
- * users / {@link StaffMember}s will be inserted. See <code>src/test/resources/initializeTests.sql</code>
+ * Contains reusable test features for rest service tests. Before each test execution the database will be wiped and
+ * users will be inserted. See <code>src/test/resources/initializeTests.sql</code>
  *
  * @author mbrunnli
  */
