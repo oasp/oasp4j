@@ -15,7 +15,9 @@
   </modules>
 
   <properties>
-    <port.range>82</port.range>
+    <oasp.port.range>81</oasp.port.range>
+    <oasp.http.port>${oasp.port.range}81</oasp.http.port>
+    <oasp.db.port>${oasp.port.range}43</oasp.db.port>
   </properties>
 
   <dependencyManagement>

@@ -83,7 +83,7 @@
           <configuration>
             <type>standalone</type>
             <properties>
-              <cargo.servlet.port>${port.range}81</cargo.servlet.port>
+              <cargo.servlet.port>${oasp.http.port}</cargo.servlet.port>
             </properties>
             <configfiles>
               <configfile>

@@ -13,6 +13,12 @@
   <name>${project.artifactId}</name>
   <description>Sample application of the Open Application Standard Platform for Java (OASP4J).</description>
   
+  <properties>
+    <oasp.port.range>81</oasp.port.range>
+    <oasp.http.port>${oasp.port.range}81</oasp.http.port>
+    <oasp.db.port>${oasp.port.range}43</oasp.db.port>
+  </properties>
+  
   <modules>
     <module>oasp4j-sample-core</module>
     <module>oasp4j-sample-server</module>
