@@ -48,7 +48,7 @@ public class UcManageProductImpl extends AbstractProductUc implements UcManagePr
    * {@inheritDoc}
    */
   @Override
-  @RolesAllowed(PermissionConstants.SAVE_PRODUCT)
+  @RolesAllowed(PermissionConstants.SAVE_PRODUCT_PICTURE)
   public void updateProductPicture(Long productId, Blob blob, BinaryObjectEto binaryObjectEto) {
 
     ProductEntity product = getProductDao().findOne(productId);
@@ -62,8 +62,7 @@ public class UcManageProductImpl extends AbstractProductUc implements UcManagePr
    * {@inheritDoc}
    */
   @Override
-  // REVIEW arturk88 (hohwille) wrong permission, we need to create SAVE_PRODUCT_PICTURE and DELETE_PRODUCT_PICTURE
-  @RolesAllowed(PermissionConstants.SAVE_PRODUCT)
+  @RolesAllowed(PermissionConstants.DELETE_PRODUCT_PICTURE)
   public void deleteProductPicture(Long productId) {
 
     ProductEntity product = getProductDao().findOne(productId);

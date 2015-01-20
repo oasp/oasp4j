@@ -211,7 +211,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
    * {@inheritDoc}
    */
   @Override
-  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT_PICTURE)
   public Blob findProductPictureBlob(Long productId) {
 
     return getUcManageBinaryObject().getBinaryObjectBlob(findProductPicture(productId).getId());
