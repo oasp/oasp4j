@@ -21,7 +21,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <oasp4j.version>1.0.0</oasp4j.version>
+    <oasp4j.version>1.1.0-SNAPSHOT</oasp4j.version>
     <port.range>81</port.range>
     <oasp.gpg.keyname>joerg.hohwiller@capgemini.com</oasp.gpg.keyname>
     <oasp.flatten.mode>oss</oasp.flatten.mode>
@@ -480,7 +480,6 @@
     <url>http://oasp.io/oasp4j/maven/team-list.html</url>
   </organization>
 
-  <!--
   <developers>
     <developer>
       <id>hohwille</id>
@@ -497,7 +496,6 @@
       <properties/>
     </developer>
   </developers>
-  -->
   
   <licenses>
     <license>
