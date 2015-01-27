@@ -16,7 +16,6 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcFindPro
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcManageOffer;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcManageProduct;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
@@ -26,7 +25,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -38,10 +36,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
+import org.hibernate.Hibernate;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -279,21 +279,45 @@ public class OffermanagementRestServiceImpl {
     return this.offerManagement.findProductsFiltered(productFilter, sortBy);
   }
 
+  /**
+   *
+   * @param productId
+   * @param binaryObjectEto
+   * @param picture
+   * @throws SerialException
+   * @throws SQLException
+   * @throws IOException
+   */
   @SuppressWarnings("javadoc")
   @Consumes("multipart/mixed")
   @POST
   @Path("/product/{id}/picture")
-  public void updateProductPicture(@PathParam("id") Long productId,
+  public void saveProductPicture(@PathParam("id") Long productId,
       @Multipart(value = "binaryObjectEto", type = MediaType.APPLICATION_JSON) BinaryObjectEto binaryObjectEto,
       @Multipart(value = "blob", type = MediaType.APPLICATION_OCTET_STREAM) InputStream picture)
       throws SerialException, SQLException, IOException {
 
-    Blob blob = new SerialBlob(IOUtils.readBytesFromStream(picture));
+    // Hibernate.getLobCreator(entityManager.unwrap(org.hibernate.Session.class));
+    Configuration c = new Configuration();
+    c.configure();
+
+    Blob blob =
+        Hibernate
+            .getLobCreator(c.buildSessionFactory(new StandardServiceRegistryBuilder().build()).getCurrentSession())
+            .createBlob(picture, 100);
+
+    // Blob blob = new SerialBlob(IOUtils.readBytesFromStream(picture));
     this.offerManagement.updateProductPicture(productId, blob, binaryObjectEto);
 
   }
 
-  @SuppressWarnings("javadoc")
+  /**
+   *
+   * @param productId
+   * @return
+   * @throws SQLException
+   * @throws IOException
+   */
   @Produces("multipart/mixed")
   @GET
   @Path("/product/{id}/picture")
@@ -302,12 +326,14 @@ public class OffermanagementRestServiceImpl {
     Blob blob = this.offerManagement.findProductPictureBlob(productId);
     // REVIEW arturk88 (hohwille) we need to find another way to stream the blob without loading into heap.
     // https://github.com/oasp/oasp4j-sample/pull/45
-    byte[] data = IOUtils.readBytesFromStream(blob.getBinaryStream());
+    // byte[] data = IOUtils.readBytesFromStream(blob.getBinaryStream());
+    // byte[] data = blob.getBytes(0, (int) blob.length());
 
     List<Attachment> atts = new LinkedList<>();
     atts.add(new Attachment("binaryObjectEto", MediaType.APPLICATION_JSON, this.offerManagement
         .findProductPicture(productId)));
-    atts.add(new Attachment("blob", MediaType.APPLICATION_OCTET_STREAM, new ByteArrayInputStream(data)));
+    // atts.add(new Attachment("blob", MediaType.APPLICATION_OCTET_STREAM, new ByteArrayInputStream(data)));
+    atts.add(new Attachment("blob", MediaType.APPLICATION_OCTET_STREAM, blob.getBinaryStream()));
     return new MultipartBody(atts, true);
 
   }

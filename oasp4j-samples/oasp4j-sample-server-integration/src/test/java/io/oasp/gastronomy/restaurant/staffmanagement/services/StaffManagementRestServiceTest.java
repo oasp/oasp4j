@@ -2,14 +2,12 @@ package io.oasp.gastronomy.restaurant.staffmanagement.services;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import io.oasp.AbstractDBRollbackTest;
+import io.oasp.gastronomy.restaurant.general.common.AbstractRestServiceTest;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto;
 import io.oasp.gastronomy.restaurant.test.config.RestUrls;
 import io.oasp.gastronomy.restaurant.test.config.TestData.Additional;
 import io.oasp.gastronomy.restaurant.test.config.TestData.DB;
-import io.oasp.gastronomy.restaurant.test.general.AppProperties.LoginCredentials;
 import io.oasp.gastronomy.restaurant.test.general.webclient.ResponseData;
-import io.oasp.gastronomy.restaurant.test.general.webclient.WebClientWrapper;
 
 import java.util.List;
 
@@ -21,12 +19,7 @@ import org.junit.Test;
  *
  * @author arklos
  */
-public class StaffManagementRestServiceTest extends AbstractDBRollbackTest {
-
-  private WebClientWrapper waiter = new WebClientWrapper(LoginCredentials.WAITER_USERNAME,
-      LoginCredentials.WAITER_PASSWORD);
-
-  private WebClientWrapper chief = new WebClientWrapper(LoginCredentials.CHIEF_USERNAME, LoginCredentials.CHIEF_PASSWORD);
+public class StaffManagementRestServiceTest extends AbstractRestServiceTest {
 
   /**
    * Tests get staff member

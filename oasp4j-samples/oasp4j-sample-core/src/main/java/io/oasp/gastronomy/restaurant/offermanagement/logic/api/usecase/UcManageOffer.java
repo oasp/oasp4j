@@ -2,6 +2,8 @@ package io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase;
 
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 
+import javax.validation.Valid;
+
 /**
  * Interface for the usecsae to manage an {@link OfferEto offer}.
  *
@@ -23,6 +25,6 @@ public interface UcManageOffer {
    * @param offer the {@link OfferEto} to persist.
    * @return the generated/updated offer
    */
-  OfferEto saveOffer(OfferEto offer);
+  OfferEto saveOffer(@Valid OfferEto offer);
 
 }

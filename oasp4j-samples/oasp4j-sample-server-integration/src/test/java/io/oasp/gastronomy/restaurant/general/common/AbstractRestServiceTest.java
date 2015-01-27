@@ -1,14 +1,13 @@
 package io.oasp.gastronomy.restaurant.general.common;
 
+import io.oasp.gastronomy.restaurant.general.dataaccess.base.DatabaseMigrator;
 import io.oasp.gastronomy.restaurant.test.general.AppProperties.LoginCredentials;
 import io.oasp.gastronomy.restaurant.test.general.webclient.WebClientWrapper;
 import io.oasp.module.configuration.common.api.ApplicationConfigurationConstants;
 
-import java.io.IOException;
-
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import org.apache.cxf.helpers.IOUtils;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +17,14 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
 /**
  * Contains reusable test features for rest service tests. Before each test execution the database will be wiped and
- * users will be inserted. See <code>src/test/resources/initializeTests.sql</code>
+ * users will be inserted.
  *
  * @author mbrunnli
+ * @author jmetzler
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestExecutionListeners({ TransactionalTestExecutionListener.class, DependencyInjectionTestExecutionListener.class })
@@ -35,11 +33,28 @@ import org.springframework.transaction.support.TransactionTemplate;
 @ActiveProfiles({ "integrationTest", "db-plain" })
 public abstract class AbstractRestServiceTest {
 
+  /**
+   * WebClientWrapper with access rights of the role waiter.
+   */
   protected WebClientWrapper waiter = new WebClientWrapper(LoginCredentials.WAITER_USERNAME,
       LoginCredentials.WAITER_PASSWORD);
 
+  /**
+   * WebClientWrapper with access rights of the role chief.
+   */
   protected WebClientWrapper chief = new WebClientWrapper(LoginCredentials.CHIEF_USERNAME,
       LoginCredentials.CHIEF_PASSWORD);
+
+  @Inject
+  private DatabaseMigrator flyway;
+
+  /**
+   * @param flyway the DatabaseMigrator to set
+   */
+  public void setFlyway(DatabaseMigrator flyway) {
+
+    this.flyway = flyway;
+  }
 
   @Autowired
   public EntityManager em;
@@ -48,28 +63,12 @@ public abstract class AbstractRestServiceTest {
   public TransactionTemplate transactionTemplate;
 
   /**
-   * Reset DB
+   * Clear DB and migrate to the latest migration, including test data.
    */
   @Before
   public void setup() {
 
-    this.transactionTemplate.execute(new TransactionCallback<Object>() {
-      /**
-       * {@inheritDoc}
-       */
-      @Override
-      public Object doInTransaction(TransactionStatus status) {
-
-        try {
-          String initializeScript =
-              IOUtils.readStringFromStream(getClass().getResourceAsStream("/initializeTests.sql"));
-          AbstractRestServiceTest.this.em.createNativeQuery(initializeScript).executeUpdate();
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-        return null;
-      }
-    });
+    this.flyway.migrate();
 
   }
 }

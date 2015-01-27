@@ -2,7 +2,7 @@ package io.oasp.gastronomy.restaurant.salesmanagement.services;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import io.oasp.AbstractDBRollbackTest;
+import io.oasp.gastronomy.restaurant.general.common.AbstractRestServiceTest;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
@@ -16,9 +16,7 @@ import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableSt
 import io.oasp.gastronomy.restaurant.test.config.RestUrls;
 import io.oasp.gastronomy.restaurant.test.config.TestData.Additional;
 import io.oasp.gastronomy.restaurant.test.config.TestData.DB;
-import io.oasp.gastronomy.restaurant.test.general.AppProperties.LoginCredentials;
 import io.oasp.gastronomy.restaurant.test.general.webclient.ResponseData;
-import io.oasp.gastronomy.restaurant.test.general.webclient.WebClientWrapper;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -35,12 +33,7 @@ import org.junit.Test;
  *
  * @author arklos
  */
-public class SalesManagementRestServiceTest extends AbstractDBRollbackTest {
-
-  private WebClientWrapper waiter = new WebClientWrapper(LoginCredentials.WAITER_USERNAME,
-      LoginCredentials.WAITER_PASSWORD);
-
-  private WebClientWrapper chief = new WebClientWrapper(LoginCredentials.CHIEF_USERNAME, LoginCredentials.CHIEF_PASSWORD);
+public class SalesManagementRestServiceTest extends AbstractRestServiceTest {
 
   /**
    * Test get order service

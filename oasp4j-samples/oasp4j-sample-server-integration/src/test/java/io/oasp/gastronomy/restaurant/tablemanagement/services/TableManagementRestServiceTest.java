@@ -34,7 +34,6 @@ public class TableManagementRestServiceTest extends AbstractRestServiceTest {
   public void crudTableTest() throws Exception {
 
     // get all tables
-
     List<ResponseData<TableEto>> tables =
         this.waiter.getAll(RestUrls.TableManagement.getAllTablesUrl(), TableEto.class);
 
