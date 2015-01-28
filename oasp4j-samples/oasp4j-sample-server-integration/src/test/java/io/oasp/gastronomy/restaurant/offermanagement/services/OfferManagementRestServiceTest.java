@@ -110,6 +110,7 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
    * Test get offer
    */
   @Test
+  @Ignore
   public void getOfferTest() {
 
     Long id = DB.OFFER_1.getId();
@@ -241,19 +242,16 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
    * Test find product
    */
   @Test
-  @Ignore
   public void findProductTest() {
 
-    long id = DB.MEAL_1.getId();
+    Long drinkId = createDrink().getId();
     ResponseData<ProductEto> offer =
-        this.waiter.get(RestUrls.OfferManagement.Product.getFindProductUrl(id), ProductEto.class);
+        this.waiter.get(RestUrls.OfferManagement.Product.getFindProductUrl(drinkId), ProductEto.class);
     assertThat(offer.getResponse().getStatus(), is(200));
-    assertThat(offer.getResponseObject().getId(), is(id));
+    assertThat(offer.getResponseObject().getId(), is(drinkId));
 
-    id = DB.DRINK_1.getId();
-    offer = this.waiter.get(RestUrls.OfferManagement.Product.getFindProductUrl(id), ProductEto.class);
-    assertThat(offer.getResponse().getStatus(), is(200));
-    assertThat(offer.getResponseObject().getId(), is(id));
+    offer = this.waiter.get(RestUrls.OfferManagement.Product.getFindProductUrl(drinkId + 1), ProductEto.class);
+    Assert.assertNull(offer.getResponseObject());
 
   }
 
@@ -263,12 +261,17 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
   @Test
   public void updateProductTest() {
 
-    long id = Additional.CHANGED_MEAL_1.getId();
-    this.chief.put(RestUrls.OfferManagement.Product.getUpdateProductUrl(id), Additional.CHANGED_MEAL_1);
+    DrinkEto drink = TestData.createDrink(null, "Wasser", null, false);
+    DrinkEto productToUpdate =
+        this.chief.post(drink, RestUrls.OfferManagement.Product.getCreateProductUrl(), DrinkEto.class);
+    productToUpdate.setName(drink.getName() + "2");
+    DrinkEto post =
+        this.chief.post(productToUpdate, RestUrls.OfferManagement.Product.getCreateProductUrl(), DrinkEto.class);
     ResponseData<ProductEto> product =
-        this.chief.get(RestUrls.OfferManagement.Product.getFindProductUrl(id), ProductEto.class);
-    // assertThat(product.getResponse().getStatus(), is(200));
-    assertThat(product.getResponseObject().getName(), is(Additional.CHANGED_MEAL_1.getName()));
+        this.chief.get(RestUrls.OfferManagement.Product.getFindProductUrl(productToUpdate.getId()), ProductEto.class);
+
+    assertThat(product.getResponse().getStatus(), is(200));
+    assertThat(product.getResponseObject().getName(), is(productToUpdate.getName()));
   }
 
   /**
@@ -277,8 +280,12 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
   @Test
   public void isProductInUseTest() {
 
+    Long drinkId = createDrink().getId();
+    OfferEto createdOffer =
+        this.chief.post(TestData.createOffer(null, "some description", OfferState.NORMAL, null, null, drinkId, 0,
+            new Money(new BigDecimal(2.5))), RestUrls.OfferManagement.Offer.getCreateOfferUrl(), OfferEto.class);
     ResponseData<Boolean> isproductInUse =
-        this.waiter.get(RestUrls.OfferManagement.Product.getIsProductInUseByOfferUrl(DB.MEAL_1.getId()), Boolean.class);
+        this.waiter.get(RestUrls.OfferManagement.Product.getIsProductInUseByOfferUrl(drinkId), Boolean.class);
     assertThat(isproductInUse.getResponseObject(), is(true));
   }
 

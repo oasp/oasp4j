@@ -43,7 +43,7 @@ public class StaffManagementRestServiceTest extends AbstractRestServiceTest {
 
     List<ResponseData<StaffMemberEto>> members =
         this.waiter.getAll(RestUrls.StaffManagement.getGetAllStaffMembersUrl(), StaffMemberEto.class);
-    assertThat(members.size(), is(DB.ALL_STAFF_MEMBER.size()));
+    assertThat(4, is(members.size()));
   }
 
   /**

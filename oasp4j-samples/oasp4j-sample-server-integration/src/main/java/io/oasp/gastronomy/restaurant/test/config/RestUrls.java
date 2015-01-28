@@ -67,9 +67,9 @@ public interface RestUrls {
        * @param comment Comment corresponding to the position
        * @return URL to create a OrderPosition
        */
-      public static final String getCreateOrderPositionURL(Long orderId, String comment) {
+      public static final String getCreateOrderPositionURL() {
 
-        return ORDER_URL + "/" + orderId + "/" + comment;
+        return ORDER_URL + "position/";
       }
 
       /**
