@@ -1,11 +1,11 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl;
 
-import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSupport;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.PaymentStatus;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BillCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BillEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
@@ -251,16 +251,7 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * {@inheritDoc}
    */
   @Override
-  public BillEto createBill(List<OrderPositionEto> orderPositions, Money tip) {
-
-    return this.ucManageBill.createBill(orderPositions, tip);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public BillEto findBill(Long id) {
+  public BillCto findBill(Long id) {
 
     return this.ucFindBill.findBill(id);
 
@@ -318,6 +309,15 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
   public OrderPositionEto saveOrderPosition(OrderPositionEto orderPosition) {
 
     return this.ucManageOrderPosition.saveOrderPosition(orderPosition);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public BillEto createBill(BillEto bill) {
+
+    return this.ucManageBill.createBill(bill);
   }
 
 }

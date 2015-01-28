@@ -1,11 +1,11 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest;
 
-import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.PaymentStatus;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BillCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BillEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
@@ -217,7 +217,7 @@ public class SalesmanagementRestServiceImpl {
    */
   @GET
   @Path("/bill/{billId}")
-  public BillEto getBill(@PathParam("billId") Long billId) {
+  public BillCto findBill(@PathParam("billId") Long billId) {
 
     return this.salesManagement.findBill(billId);
   }
@@ -232,7 +232,7 @@ public class SalesmanagementRestServiceImpl {
   @Path("/bill/{billId}/payment")
   public PaymentStatus doPayment(@PathParam("billId") Long billId) {
 
-    return this.salesManagement.doPayment(getBill(billId));
+    return this.salesManagement.doPayment(findBill(billId).getBill());
   }
 
   /**
@@ -246,21 +246,20 @@ public class SalesmanagementRestServiceImpl {
   @POST
   public PaymentStatus doPayment(@PathParam("billId") Long billId, PaymentData paymentData) {
 
-    return this.salesManagement.doPayment(getBill(billId), paymentData);
+    return this.salesManagement.doPayment(findBill(billId).getBill(), paymentData);
   }
 
   /**
    * Delegates to {@link UcManageBill#createBill}.
    *
-   * @param orderPositions list of {@link OrderPositionEto}s to be contained in the bill
-   * @param tip the tip
+   * @param bill the bill to create
    * @return the created {@link BillEto}
    */
   @POST
-  @Path("/bill/{tip}")
-  public BillEto createBill(List<OrderPositionEto> orderPositions, @PathParam("tip") Money tip) {
+  @Path("/bill/")
+  public BillEto createBill(BillEto bill) {
 
-    return this.salesManagement.createBill(orderPositions, tip);
+    return this.salesManagement.createBill(bill);
   }
 
   /**

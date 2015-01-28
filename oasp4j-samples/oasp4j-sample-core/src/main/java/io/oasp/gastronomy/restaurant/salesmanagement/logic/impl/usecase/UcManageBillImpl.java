@@ -49,40 +49,38 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
    */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_BILL)
-  // REVIEW <who> (hohwille) we can never trust the client hence all we need here is a list of OrderPosition Ids as Long
-  public BillEto createBill(List<OrderPositionEto> orderPositions, Money tip) {
+  public BillEto createBill(BillEto bill) {
 
-    Objects.requireNonNull(orderPositions, "orderPositions");
+    List<Long> orderPositions = bill.getOrderPositionIds();
+    Objects.requireNonNull(bill, "bill must not be null");
 
     Money total = Money.ZERO;
+    List<OrderPositionEntity> myOrderPositions = new ArrayList<>();
 
-    for (OrderPositionEto position : orderPositions) {
-      OrderPositionEto orderPosition = this.salesmanagement.findOrderPosition(position.getId());
+    for (Long id : orderPositions) {
+      OrderPositionEto orderPosition = this.salesmanagement.findOrderPosition(id);
       verifyNotClosed(orderPosition);
       total = total.add(orderPosition.getPrice());
+
+      myOrderPositions.add(getBeanMapper().map(orderPosition, OrderPositionEntity.class));
     }
 
-    Money localTip = tip;
+    Money localTip = bill.getTip();
     if (localTip == null) {
       localTip = Money.ZERO;
     }
 
     // Declare the bill
-    BillEntity bill = new BillEntity();
-    List<OrderPositionEntity> myOrderPositions = new ArrayList<>();
+    BillEntity billEntity = new BillEntity();
 
-    for (OrderPositionEto position : orderPositions) {
-      myOrderPositions.add(getBeanMapper().map(position, OrderPositionEntity.class));
-    }
+    billEntity.setOrderPositions(myOrderPositions);
+    billEntity.setTip(localTip);
+    billEntity.setPayed(false);
+    billEntity.setTotal(total);
 
-    bill.setOrderPositions(myOrderPositions);
-    bill.setTip(localTip);
-    bill.setPayed(false);
-    bill.setTotal(total);
+    BillEntity savedBill = getBillDao().save(billEntity);
 
-    getBillDao().save(bill);
-
-    BillEto returnBill = getBeanMapper().map(bill, BillEto.class);
+    BillEto returnBill = getBeanMapper().map(savedBill, BillEto.class);
 
     LOG.debug("The bill with id '{}' has been created.", returnBill.getId());
 
@@ -123,7 +121,7 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
         OrderPositionEto position = this.salesmanagement.findOrderPosition(id);
         orderPositions.add(position);
       }
-      return createBill(orderPositions, bill.getTip());
+      return createBill(bill);
     } else {
       // Bill already exists. -> Update bill
       targetBill.setOrderPositionIds(orderPositionIds);
