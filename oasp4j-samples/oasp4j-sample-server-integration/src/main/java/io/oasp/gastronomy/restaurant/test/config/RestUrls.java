@@ -77,9 +77,9 @@ public interface RestUrls {
        * @param orderPositionId Id of the position
        * @return URL to get the OrderPosition
        */
-      public static final String getGetOrderPositionURL(Long orderId, Long orderPositionId) {
+      public static final String getGetOrderPositionURL(Long orderPositionId) {
 
-        return ORDER_URL + "/" + orderId + "/position/" + orderPositionId;
+        return ORDER_URL + "position/" + orderPositionId;
       }
 
       /**
@@ -98,7 +98,7 @@ public interface RestUrls {
        */
       public static final String getMarkOrderPositionAsURL(Long orderId, Long orderPositionId, OrderPositionState state) {
 
-        return getGetOrderPositionURL(orderId, orderPositionId) + "/" + state;
+        return ORDER_URL + orderId + "/position/" + orderPositionId + "/" + state;
       }
 
     }
@@ -138,7 +138,7 @@ public interface RestUrls {
        */
       public static final String getCreateBillURL(Money tip) {
 
-        return BILL_URL + "/" + tip.getValue();
+        return BILL_URL + "/";
       }
 
       /**
