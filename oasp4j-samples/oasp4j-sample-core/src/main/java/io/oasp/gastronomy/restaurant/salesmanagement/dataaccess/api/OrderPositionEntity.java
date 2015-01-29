@@ -208,6 +208,7 @@ public class OrderPositionEntity extends ApplicationPersistenceEntity implements
    * {@inheritDoc}
    */
   @Override
+  @Column(name = "drink_state")
   public DrinkState getDrinkState() {
 
     // TODO Auto-generated method stub
