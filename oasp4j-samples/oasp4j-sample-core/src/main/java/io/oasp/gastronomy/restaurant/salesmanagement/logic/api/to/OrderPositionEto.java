@@ -3,6 +3,7 @@ package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.common.api.to.AbstractEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.DrinkState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 
 import java.util.Objects;
@@ -25,6 +26,8 @@ public class OrderPositionEto extends AbstractEto implements OrderPosition {
   private String offerName;
 
   private OrderPositionState state;
+
+  private DrinkState drinkState;
 
   private Money price;
 
@@ -217,6 +220,26 @@ public class OrderPositionEto extends AbstractEto implements OrderPosition {
   public void setComment(String comment) {
 
     this.comment = comment;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public DrinkState getDrinkState() {
+
+    return this.drinkState;
+
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void setDrinkState(DrinkState drinkState) {
+
+    this.drinkState = drinkState;
+
   }
 
 }
