@@ -235,6 +235,7 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
    * {@inheritDoc}
    */
   @Override
+  @RolesAllowed(PermissionConstants.SAVE_ORDER_POSITION)
   public void markOrderPositionDrinkAs(OrderPositionEto orderPosition, ProductOrderState newDrinkState) {
 
     Objects.requireNonNull(orderPosition, "orderPosition");
