@@ -224,15 +224,6 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * {@inheritDoc}
    */
   @Override
-  public void markOrderPositionAs(OrderPositionEto orderPosition, OrderPositionState newState) {
-
-    this.ucManageOrderPosition.markOrderPositionAs(orderPosition, newState);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public PaymentStatus doPayment(BillEto bill) {
 
     return this.ucManageBill.doPayment(bill);
@@ -318,6 +309,16 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
   public BillEto createBill(BillEto bill) {
 
     return this.ucManageBill.createBill(bill);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void markOrderPositionAs(OrderPositionEto orderPosition, OrderPositionState newState) {
+
+    this.ucManageOrderPosition.markOrderPositionAs(orderPosition, newState);
+
   }
 
 }

@@ -9,6 +9,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderPositionEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
@@ -123,11 +124,13 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
     }
     OrderPositionState currentState = currentOrderPosition.getState();
     OrderPositionState newState = updateOrderPosition.getState();
-    verifyStateChange(updateOrderPosition, currentState, newState);
-
+    ProductOrderState currentDrinkState = currentOrderPosition.getDrinkState();
+    ProductOrderState newDrinkState = updateOrderPosition.getDrinkState();
+    verifyOrderPositionStateChange(updateOrderPosition, currentState, newState);
+    verifyDrinkStateChange(updateOrderPosition, currentState, currentDrinkState, newDrinkState);
   }
 
-  private void verifyStateChange(OrderPosition updateOrderPosition, OrderPositionState currentState,
+  private void verifyOrderPositionStateChange(OrderPosition updateOrderPosition, OrderPositionState currentState,
       OrderPositionState newState) {
 
     switch (currentState) {
@@ -161,6 +164,32 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
     }
   }
 
+  private void verifyDrinkStateChange(OrderPosition updateOrderPosition, OrderPositionState currentState,
+      ProductOrderState currentDrinkState, ProductOrderState newDrinkState) {
+
+    switch (currentDrinkState) {
+
+    case ORDERED:
+      if ((newDrinkState != ProductOrderState.ORDERED) && (newDrinkState != ProductOrderState.PREPARED)) {
+        throw new IllegalEntityStateException(updateOrderPosition, currentDrinkState, newDrinkState);
+      }
+      break;
+    case PREPARED:
+
+      break;
+    case DELIVERED:
+      if ((newDrinkState == ProductOrderState.PREPARED) || (newDrinkState == ProductOrderState.ORDERED)) {
+        throw new IllegalEntityStateException(updateOrderPosition, currentDrinkState, newDrinkState);
+      }
+      break;
+    default:
+      LOG.error("Illegal state {}", currentDrinkState);
+      break;
+
+    }
+
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -178,12 +207,17 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
     }
 
     OrderPositionState currentState = targetOrderPosition.getState();
+
     if ((newState == OrderPositionState.PREPARED) && (currentState == OrderPositionState.ORDERED)
-        || (newState == OrderPositionState.DELIVERED) && (currentState == OrderPositionState.PREPARED)
-        || (newState == OrderPositionState.PAYED) && (currentState == OrderPositionState.DELIVERED)
-        || (newState == OrderPositionState.CANCELLED) && (currentState != OrderPositionState.PAYED)) {
+
+    || (newState == OrderPositionState.DELIVERED) && (currentState == OrderPositionState.PREPARED)
+
+    || (newState == OrderPositionState.PAYED) && (currentState == OrderPositionState.DELIVERED)
+
+    || (newState == OrderPositionState.CANCELLED) && (currentState != OrderPositionState.PAYED)) {
       targetOrderPosition.setState(newState);
     } else {
+
       throw new IllegalEntityStateException(targetOrderPosition, currentState, newState);
     }
 
@@ -215,4 +249,5 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
 
     this.offerManagement = offerManagement;
   }
+
 }

@@ -2,6 +2,7 @@ package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase;
 
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 
@@ -36,6 +37,7 @@ public interface UcManageOrderPosition {
    *
    * @param orderPosition {@link OrderPositionEto}.
    * @param newState new {@link OrderPositionState}.
+   * @param newDrinkState new {@link ProductOrderState}.
    */
   void markOrderPositionAs(OrderPositionEto orderPosition, OrderPositionState newState);
 

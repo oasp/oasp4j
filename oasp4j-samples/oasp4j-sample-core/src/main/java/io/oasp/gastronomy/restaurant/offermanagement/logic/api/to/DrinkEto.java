@@ -19,6 +19,7 @@ public class DrinkEto extends ProductEto implements Drink {
   public DrinkEto() {
 
     super();
+
   }
 
   /**

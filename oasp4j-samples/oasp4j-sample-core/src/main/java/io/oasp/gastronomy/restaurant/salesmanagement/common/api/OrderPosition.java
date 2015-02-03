@@ -2,7 +2,7 @@ package io.oasp.gastronomy.restaurant.salesmanagement.common.api;
 
 import io.oasp.gastronomy.restaurant.general.common.api.ApplicationEntity;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
-import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.DrinkState;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 
 /**
@@ -66,9 +66,9 @@ public interface OrderPosition extends ApplicationEntity {
   OrderPositionState getState();
 
   /**
-   * @return the current {@link DrinkState state}.
+   * @return the current {@link ProductOrderState state}.
    */
-  DrinkState getDrinkState();
+  ProductOrderState getDrinkState();
 
   /**
    * @param state the new {@link #getState() state}.
@@ -78,7 +78,7 @@ public interface OrderPosition extends ApplicationEntity {
   /**
    * @param drinkState the new {@link #getDrinkState() state}.
    */
-  void setDrinkState(DrinkState drinkState);
+  void setDrinkState(ProductOrderState drinkState);
 
   /**
    * @return the price of the {@link #getOfferId() associated}
