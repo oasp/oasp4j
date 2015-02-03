@@ -41,11 +41,13 @@ public interface UcManageOrderPosition {
   void markOrderPositionAs(OrderPositionEto orderPosition, OrderPositionState newState);
 
   /**
-   * Marks the given {@link OrderPositionEto} as 'chosen' {@link OrderPositionState}.
+   * Marks the given {@link OrderPositionEto} as 'chosen' {@link OrderPositionState} based on the
+   * {@link ProductOrderState}.
    *
    * @param orderPosition {@link OrderPositionEto}.
+   * @param newState new {@link OrderPositionState}.
    * @param newDrinkState new {@link ProductOrderState}.
    */
-  void markOrderPositionDrinkAs(OrderPositionEto orderPosition, ProductOrderState newDrinkState);
-
+  void markOrderPositionDrinkAs(OrderPositionEto orderPosition, OrderPositionState newState,
+      ProductOrderState newDrinkState);
 }

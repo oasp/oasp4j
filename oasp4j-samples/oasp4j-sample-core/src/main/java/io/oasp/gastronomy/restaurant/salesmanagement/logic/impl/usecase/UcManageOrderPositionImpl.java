@@ -194,6 +194,53 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
    */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_ORDER_POSITION)
+  public void markOrderPositionDrinkAs(OrderPositionEto orderPosition, OrderPositionState newState,
+      ProductOrderState newDrinkState) {
+
+    Objects.requireNonNull(orderPosition, "orderPosition");
+
+    long orderPositionId = orderPosition.getId();
+    OrderPositionEntity targetOrderPosition = getOrderPositionDao().findOne(orderPositionId);
+
+    if (targetOrderPosition == null) {
+      throw new ObjectNotFoundUserException(OrderPosition.class, orderPositionId);
+    }
+
+    OrderPositionState currentState = targetOrderPosition.getState();
+
+    if ((newState == OrderPositionState.PREPARED) && (newDrinkState == ProductOrderState.ORDERED)
+        && (currentState == OrderPositionState.ORDERED)
+
+        || (newState == OrderPositionState.DELIVERED) && (newDrinkState == ProductOrderState.DELIVERED)
+        && (currentState == OrderPositionState.PREPARED)
+
+        || (newState == OrderPositionState.PAYED) && (newDrinkState == ProductOrderState.DELIVERED)
+        && (currentState == OrderPositionState.DELIVERED)
+
+        || (newState == OrderPositionState.CANCELLED) && (newDrinkState == ProductOrderState.DELIVERED)
+        && (currentState != OrderPositionState.PAYED)) {
+      targetOrderPosition.setState(newState);
+      targetOrderPosition.setDrinkState(newDrinkState);
+    } else {
+      throw new IllegalEntityStateException(targetOrderPosition, currentState, newDrinkState);
+    }
+
+    // Marks related order as closed
+    if (newState == OrderPositionState.CANCELLED || newState == OrderPositionState.PAYED) {
+      List<OrderPositionEto> orderpositions =
+          this.salesManagement.findOpenOrderPositionsByOrderId(orderPosition.getOrderId());
+      if (orderpositions == null || orderpositions.isEmpty()) {
+        targetOrderPosition.getOrder().setState(OrderState.CLOSED);
+      }
+    }
+    getOrderPositionDao().save(targetOrderPosition);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  @RolesAllowed(PermissionConstants.SAVE_ORDER_POSITION)
   public void markOrderPositionAs(OrderPositionEto orderPosition, OrderPositionState newState) {
 
     Objects.requireNonNull(orderPosition, "orderPosition");
@@ -216,7 +263,6 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
     || (newState == OrderPositionState.CANCELLED) && (currentState != OrderPositionState.PAYED)) {
       targetOrderPosition.setState(newState);
     } else {
-
       throw new IllegalEntityStateException(targetOrderPosition, currentState, newState);
     }
 
@@ -229,35 +275,6 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
       }
     }
     getOrderPositionDao().save(targetOrderPosition);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  @RolesAllowed(PermissionConstants.SAVE_ORDER_POSITION)
-  public void markOrderPositionDrinkAs(OrderPositionEto orderPosition, ProductOrderState newDrinkState) {
-
-    Objects.requireNonNull(orderPosition, "orderPosition");
-
-    long orderPositionId = orderPosition.getId();
-    OrderPositionEntity targetOrderPosition = getOrderPositionDao().findOne(orderPositionId);
-
-    if (targetOrderPosition == null) {
-      throw new ObjectNotFoundUserException(OrderPosition.class, orderPositionId);
-    }
-
-    OrderPositionState currentState = targetOrderPosition.getState();
-
-    if ((newDrinkState == ProductOrderState.PREPARED) && (currentState == OrderPositionState.ORDERED)
-
-    || (newDrinkState == ProductOrderState.DELIVERED) && (currentState == OrderPositionState.PREPARED)) {
-      targetOrderPosition.setDrinkState(newDrinkState);
-    } else {
-
-      throw new IllegalEntityStateException(targetOrderPosition, currentState, newDrinkState);
-    }
-
   }
 
   /**

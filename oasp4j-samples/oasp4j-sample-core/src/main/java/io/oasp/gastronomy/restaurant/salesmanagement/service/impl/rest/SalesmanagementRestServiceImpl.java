@@ -4,6 +4,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.PaymentStatus;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BillCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BillEto;
@@ -207,6 +208,22 @@ public class SalesmanagementRestServiceImpl {
   public void markOrderPositionAs(OrderPositionEto orderPosition, @PathParam("newState") OrderPositionState newState) {
 
     this.salesManagement.markOrderPositionAs(orderPosition, newState);
+  }
+
+  // again orderId is not explicitly needed here
+  /**
+   * Delegates to {@link UcManageOrderPosition#markOrderPositionDrinkAs}.
+   *
+   * @param orderPosition the {@link OrderPositionEto} to change
+   * @param newState the new {@link OrderPositionState}
+   * @param newDrinkState the new {@link ProductOrderState}
+   */
+  @PUT
+  @Path("/order/{orderId}/position/{orderPositionId}/{newstate}/{newDrinkState}")
+  public void markOrderPositionDrinkAs(OrderPositionEto orderPosition,
+      @PathParam("newState") OrderPositionState newState, @PathParam("newDrinkState") ProductOrderState newDrinkState) {
+
+    this.salesManagement.markOrderPositionDrinkAs(orderPosition, newState, newDrinkState);
   }
 
   /**

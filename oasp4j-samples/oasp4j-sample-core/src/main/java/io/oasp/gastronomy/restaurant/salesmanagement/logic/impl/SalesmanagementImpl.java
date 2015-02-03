@@ -326,9 +326,10 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * {@inheritDoc}
    */
   @Override
-  public void markOrderPositionDrinkAs(OrderPositionEto orderPosition, ProductOrderState newDrinkState) {
+  public void markOrderPositionDrinkAs(OrderPositionEto orderPosition, OrderPositionState newState,
+      ProductOrderState newDrinkState) {
 
-    this.ucManageOrderPosition.markOrderPositionDrinkAs(orderPosition, newDrinkState);
+    this.ucManageOrderPosition.markOrderPositionDrinkAs(orderPosition, newState, newDrinkState);
 
   }
 
