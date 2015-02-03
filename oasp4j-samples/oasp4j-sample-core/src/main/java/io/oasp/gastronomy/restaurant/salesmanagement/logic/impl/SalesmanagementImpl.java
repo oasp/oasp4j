@@ -4,6 +4,7 @@ import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSuppo
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.PaymentStatus;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BillCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BillEto;
@@ -318,6 +319,16 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
   public void markOrderPositionAs(OrderPositionEto orderPosition, OrderPositionState newState) {
 
     this.ucManageOrderPosition.markOrderPositionAs(orderPosition, newState);
+
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void markOrderPositionDrinkAs(OrderPositionEto orderPosition, ProductOrderState newDrinkState) {
+
+    this.ucManageOrderPosition.markOrderPositionDrinkAs(orderPosition, newDrinkState);
 
   }
 

@@ -187,7 +187,6 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
       break;
 
     }
-
   }
 
   /**
@@ -230,6 +229,34 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
       }
     }
     getOrderPositionDao().save(targetOrderPosition);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void markOrderPositionDrinkAs(OrderPositionEto orderPosition, ProductOrderState newDrinkState) {
+
+    Objects.requireNonNull(orderPosition, "orderPosition");
+
+    long orderPositionId = orderPosition.getId();
+    OrderPositionEntity targetOrderPosition = getOrderPositionDao().findOne(orderPositionId);
+
+    if (targetOrderPosition == null) {
+      throw new ObjectNotFoundUserException(OrderPosition.class, orderPositionId);
+    }
+
+    OrderPositionState currentState = targetOrderPosition.getState();
+
+    if ((newDrinkState == ProductOrderState.PREPARED) && (currentState == OrderPositionState.ORDERED)
+
+    || (newDrinkState == ProductOrderState.DELIVERED) && (currentState == OrderPositionState.PREPARED)) {
+      targetOrderPosition.setDrinkState(newDrinkState);
+    } else {
+
+      throw new IllegalEntityStateException(targetOrderPosition, currentState, newDrinkState);
+    }
+
   }
 
   /**
