@@ -25,6 +25,9 @@ public class DatabaseMigrator {
   /** Property is true if test data should be included in migration. */
   private boolean testdata;
 
+  /** Property is true if database should be cleaned before migration. */
+  private boolean clean;
+
   /**
    * Migrate the database to the latest available migration.
    */
@@ -38,7 +41,9 @@ public class DatabaseMigrator {
       } else {
         flyway.setLocations(masterDataPath);
       }
-      flyway.clean();
+      if (this.clean) {
+        flyway.clean();
+      }
       flyway.migrate();
     }
   }
@@ -81,6 +86,14 @@ public class DatabaseMigrator {
   public void setTestdata(boolean testdata) {
 
     this.testdata = testdata;
+  }
+
+  /**
+   * @param clean the clean to set
+   */
+  public void setClean(boolean clean) {
+
+    this.clean = clean;
   }
 
 }
