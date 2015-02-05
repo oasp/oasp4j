@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.salesmanagement.persistence.impl.dao;
+package io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.impl.dao;
 
 import io.oasp.gastronomy.restaurant.general.common.AbstractSpringIntegrationTest;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;

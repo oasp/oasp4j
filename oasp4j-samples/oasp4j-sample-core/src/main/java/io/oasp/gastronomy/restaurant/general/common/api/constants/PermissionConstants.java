@@ -26,6 +26,15 @@ public abstract class PermissionConstants {
   /** {@link io.oasp.module.security.common.api.accesscontrol.AccessControlPermission} to remove product. */
   public static final String DELETE_PRODUCT = "DeleteProduct";
 
+  /** {@link io.oasp.module.security.common.api.accesscontrol.AccessControlPermission} to retrieve product picture. */
+  public static final String FIND_PRODUCT_PICTURE = "FindProductPicture";
+
+  /** {@link io.oasp.module.security.common.api.accesscontrol.AccessControlPermission} to save product picture. */
+  public static final String SAVE_PRODUCT_PICTURE = "SaveProductPicture";
+
+  /** {@link io.oasp.module.security.common.api.accesscontrol.AccessControlPermission} to remove product picture. */
+  public static final String DELETE_PRODUCT_PICTURE = "DeleteProductPicture";
+
   /** {@link io.oasp.module.security.common.api.accesscontrol.AccessControlPermission} to retrieve order. */
   public static final String FIND_ORDER = "FindOrder";
 

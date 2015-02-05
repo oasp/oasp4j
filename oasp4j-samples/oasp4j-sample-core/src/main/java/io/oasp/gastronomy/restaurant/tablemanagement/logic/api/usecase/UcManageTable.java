@@ -3,6 +3,8 @@ package io.oasp.gastronomy.restaurant.tablemanagement.logic.api.usecase;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 
+import javax.validation.Valid;
+
 /**
  * Interface of UcManageTable to centralize documentation and signatures of methods.
  *
@@ -22,7 +24,7 @@ public interface UcManageTable {
    * @param table the {@link TableEto} to create.
    * @return the new {@link TableEto} that has been saved with ID and version.
    */
-  TableEto saveTable(TableEto table);
+  TableEto saveTable(@Valid TableEto table);
 
   /**
    * Evaluate if this table could marked as free.
@@ -31,7 +33,7 @@ public interface UcManageTable {
    * @return <code>true</code> if the table could be released<br>
    *         <code>false</code> , otherwise
    */
-  boolean isTableReleasable(TableEto table);
+  boolean isTableReleasable(@Valid TableEto table);
 
   /**
    * Marks a restaurant table as {@link TableState}.
@@ -39,5 +41,5 @@ public interface UcManageTable {
    * @param table Table the restaurant table to mark as occupied
    * @param newState new table {@link TableState}
    */
-  void markTableAs(TableEto table, TableState newState);
+  void markTableAs(@Valid TableEto table, TableState newState);
 }

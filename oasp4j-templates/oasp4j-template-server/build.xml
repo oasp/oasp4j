@@ -159,7 +159,7 @@
         </tokenfilter>
       </filterchain>
     </copy>
-    
+
     <copy todir="${sample.server.webresources.output}">
       <fileset dir="${sample.server.webresources.input}">
       	<exclude name="**/jsclient/**/*"/>
@@ -176,7 +176,7 @@
       </filterchain>
     </copy>
 
-    <!-- **** integration project **** -->
+    <!-- **** integration project **** ->
     <copy file="${sample.integration.input}/pom.xml" todir="${sample.integration.output}">
       <filterchain>
         <tokenfilter>
@@ -222,6 +222,6 @@
     </copy>
   	<copy todir="${sample.integration.test.resources.output}">
       <fileset dir="${sample.integration.test.resources.input}"/>
-    </copy>
+    </copy-->
   </target>
 </project>

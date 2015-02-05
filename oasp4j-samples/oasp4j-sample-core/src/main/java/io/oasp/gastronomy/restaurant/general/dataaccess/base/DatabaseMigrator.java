@@ -10,9 +10,23 @@ import org.h2.jdbcx.JdbcDataSource;
  */
 public class DatabaseMigrator {
 
+  /** Path of test data location. */
+  private static final String testDataPath = "classpath:db/test-data";
+
+  /** Path of master data location. */
+  private static final String masterDataPath = "classpath:db/migration";
+
+  /** Property is true if database migration is enabled. */
   private boolean enabled;
 
+  /** The JDBC data source. */
   private JdbcDataSource dataSource;
+
+  /** Property is true if test data should be included in migration. */
+  private boolean testdata;
+
+  /** Property is true if database should be cleaned before migration. */
+  private boolean clean;
 
   /**
    * Migrate the database to the latest available migration.
@@ -22,7 +36,14 @@ public class DatabaseMigrator {
     if (this.enabled) {
       final Flyway flyway = new Flyway();
       flyway.setDataSource(this.dataSource);
-      flyway.clean();
+      if (this.testdata) {
+        flyway.setLocations(masterDataPath, testDataPath);
+      } else {
+        flyway.setLocations(masterDataPath);
+      }
+      if (this.clean) {
+        flyway.clean();
+      }
       flyway.migrate();
     }
   }
@@ -57,6 +78,22 @@ public class DatabaseMigrator {
   public void setDataSource(JdbcDataSource datasource) {
 
     this.dataSource = datasource;
+  }
+
+  /**
+   * @param testdata the testdata to set
+   */
+  public void setTestdata(boolean testdata) {
+
+    this.testdata = testdata;
+  }
+
+  /**
+   * @param clean the clean to set
+   */
+  public void setClean(boolean clean) {
+
+    this.clean = clean;
   }
 
 }

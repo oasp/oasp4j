@@ -1,0 +1,14 @@
+de.bastiankrol.startexplorer.auto_detect_desktop_environment=false
+de.bastiankrol.startexplorer.copy_resource_path_separator_custom_string=, 
+de.bastiankrol.startexplorer.copy_resource_path_separator_standard=\n
+de.bastiankrol.startexplorer.custom_desktop_environment_command_start_file_manager=explorer.exe /e,${resource_path}
+de.bastiankrol.startexplorer.custom_desktop_environment_command_start_file_manager_and_select_file=explorer.exe /select,${resource_path}
+de.bastiankrol.startexplorer.custom_desktop_environment_command_start_shell=cmd /c start cmd /s "/k pushd ${resource_path} & IDEenv"
+de.bastiankrol.startexplorer.custom_desktop_environment_command_start_system_application=cmd.exe /c ${resource_path}
+de.bastiankrol.startexplorer.custom_desktop_environment_working_directory_mode_custom_commands=NONE
+de.bastiankrol.startexplorer.custom_desktop_environment_working_directory_mode_start_file_manager=NONE
+de.bastiankrol.startexplorer.custom_desktop_environment_working_directory_mode_start_shell=NONE
+de.bastiankrol.startexplorer.custom_desktop_environment_working_directory_mode_start_system_application=NONE
+de.bastiankrol.startexplorer.selected_desktop_environment=WINDOWS
+de.bastiankrol.startexplorer.use_custom_desktop_environment=true
+eclipse.preferences.version=1

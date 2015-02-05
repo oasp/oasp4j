@@ -1,5 +1,6 @@
 package io.oasp.module.security.common.api.accesscontrol;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -18,7 +19,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * @author hohwille
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-public abstract class AccessControl {
+public abstract class AccessControl implements Serializable {
+
+  /** UID for serialization. */
+  private static final long serialVersionUID = 1L;
 
   /** @see #getName() */
   @XmlID
