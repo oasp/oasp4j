@@ -19,11 +19,14 @@ import javax.xml.bind.annotation.XmlSchemaType;
  * strategic function. Therefore not every {@link AccessControlGroup group} is a role. Often a user can only have one
  * role or can only act under one role at a time. Unfortunately these terms are often mixed up what is causing
  * confusion.
- * 
+ *
  * @author hohwille
  */
 @XmlRootElement(name = "group")
 public class AccessControlGroup extends AccessControl { // implements java.security.acl.Group {
+
+  /** UID for serialization. */
+  private static final long serialVersionUID = 1L;
 
   /** @see #getInherits() */
   @XmlIDREF
@@ -51,7 +54,7 @@ public class AccessControlGroup extends AccessControl { // implements java.secur
 
   /**
    * The constructor.
-   * 
+   *
    * @param id the {@link #getId() ID}.
    */
   public AccessControlGroup(String id) {
