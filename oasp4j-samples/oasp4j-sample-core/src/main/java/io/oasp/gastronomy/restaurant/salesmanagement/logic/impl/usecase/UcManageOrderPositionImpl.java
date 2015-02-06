@@ -190,14 +190,14 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
     switch (currentState) {
     case CANCELLED:
       if ((newState != OrderPositionState.CANCELLED) && (newState != OrderPositionState.ORDERED)) {
-        throw new IllegalEntityStateException(updateOrderPosition, currentState, newState);
+        throw new IllegalEntityStateException(updateOrderPosition, currentState, newDrinkState);
       }
       break;
     case ORDERED:
       if ((newState != OrderPositionState.ORDERED) && (newState != OrderPositionState.CANCELLED)
           && (newState != OrderPositionState.PREPARED) && (newDrinkState != ProductOrderState.ORDERED)
           && (newDrinkState != ProductOrderState.PREPARED)) {
-        throw new IllegalEntityStateException(updateOrderPosition, currentState, newState);
+        throw new IllegalEntityStateException(updateOrderPosition, currentState, newDrinkState);
       }
       break;
     case PREPARED:
@@ -206,12 +206,12 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
     case DELIVERED:
       if ((newState == OrderPositionState.PREPARED) || (newState == OrderPositionState.ORDERED)
           || (newDrinkState == ProductOrderState.PREPARED) || (newDrinkState == ProductOrderState.ORDERED)) {
-        throw new IllegalEntityStateException(updateOrderPosition, currentState, newState);
+        throw new IllegalEntityStateException(updateOrderPosition, currentState, newDrinkState);
       }
       break;
     case PAYED:
       if (newState != OrderPositionState.PAYED) {
-        throw new IllegalEntityStateException(updateOrderPosition, currentState, newState);
+        throw new IllegalEntityStateException(updateOrderPosition, currentState, newDrinkState);
       }
       break;
     default:
