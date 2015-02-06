@@ -124,12 +124,22 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
     }
     OrderPositionState currentState = currentOrderPosition.getState();
     OrderPositionState newState = updateOrderPosition.getState();
-    ProductOrderState currentDrinkState = currentOrderPosition.getDrinkState();
     ProductOrderState newDrinkState = updateOrderPosition.getDrinkState();
+
     verifyOrderPositionStateChange(updateOrderPosition, currentState, newState);
-    verifyDrinkStateChange(updateOrderPosition, currentState, currentDrinkState, newDrinkState);
+
+    // TODO add verification methods of other sub-states of OrderPosition (i.e. Meal and SideDish)
+    verifyDrinkStateChange(updateOrderPosition, currentState, newState, newDrinkState);
+
   }
 
+  /**
+   * Verifies if an update of the {@link OrderPositionState} is legal.
+   *
+   * @param updateOrderPosition the new {@link OrderPosition} to update to.
+   * @param currentState the old/current {@link OrderPositionState} of the {@link OrderPosition}.
+   * @param newState new {@link OrderPositionState} of the {@link OrderPosition} to be updated to.
+   */
   private void verifyOrderPositionStateChange(OrderPosition updateOrderPosition, OrderPositionState currentState,
       OrderPositionState newState) {
 
@@ -162,31 +172,53 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
       LOG.error("Illegal state {}", currentState);
       break;
     }
+
   }
 
+  /**
+   * Verifies if an update of the {@link DrinkState} is legal. This verification is based on both the states of
+   * {@link DrinkState} and {@link OrderPositionState}.
+   *
+   * @param updateOrderPosition the new {@link OrderPosition} to update to.
+   * @param currentState the old/current {@link OrderPositionState} of the {@link OrderPosition}.
+   * @param newState new {@link OrderPositionState} of the {@link OrderPosition} to be updated to.
+   * @param newDrinkState new {@link ProductOrderState} of the drink of the {@link OrderPosition} to be updated to.
+   */
   private void verifyDrinkStateChange(OrderPosition updateOrderPosition, OrderPositionState currentState,
-      ProductOrderState currentDrinkState, ProductOrderState newDrinkState) {
+      OrderPositionState newState, ProductOrderState newDrinkState) {
 
-    switch (currentDrinkState) {
-
+    switch (currentState) {
+    case CANCELLED:
+      if ((newState != OrderPositionState.CANCELLED) && (newState != OrderPositionState.ORDERED)) {
+        throw new IllegalEntityStateException(updateOrderPosition, currentState, newState);
+      }
+      break;
     case ORDERED:
-      if ((newDrinkState != ProductOrderState.ORDERED) && (newDrinkState != ProductOrderState.PREPARED)) {
-        throw new IllegalEntityStateException(updateOrderPosition, currentDrinkState, newDrinkState);
+      if ((newState != OrderPositionState.ORDERED) && (newState != OrderPositionState.CANCELLED)
+          && (newState != OrderPositionState.PREPARED) && (newDrinkState != ProductOrderState.ORDERED)
+          && (newDrinkState != ProductOrderState.PREPARED)) {
+        throw new IllegalEntityStateException(updateOrderPosition, currentState, newState);
       }
       break;
     case PREPARED:
-
+      // from here we can go to any other state (back to ORDERED in case that the kitchen has to rework)
       break;
     case DELIVERED:
-      if ((newDrinkState == ProductOrderState.PREPARED) || (newDrinkState == ProductOrderState.ORDERED)) {
-        throw new IllegalEntityStateException(updateOrderPosition, currentDrinkState, newDrinkState);
+      if ((newState == OrderPositionState.PREPARED) || (newState == OrderPositionState.ORDERED)
+          || (newDrinkState == ProductOrderState.PREPARED) || (newDrinkState == ProductOrderState.ORDERED)) {
+        throw new IllegalEntityStateException(updateOrderPosition, currentState, newState);
+      }
+      break;
+    case PAYED:
+      if (newState != OrderPositionState.PAYED) {
+        throw new IllegalEntityStateException(updateOrderPosition, currentState, newState);
       }
       break;
     default:
-      LOG.error("Illegal state {}", currentDrinkState);
+      LOG.error("Illegal state {}", currentState);
       break;
-
     }
+
   }
 
   /**
