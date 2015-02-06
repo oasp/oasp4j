@@ -80,6 +80,7 @@ public class OrderPositionDaoImpl extends ApplicationDaoImpl<OrderPositionEntity
     if (state != null) {
       query.where(Alias.$(orderPosition.getState()).eq(state));
     }
+
     if (criteria.isMealOrSideDish()) {
       OfferEntity offer = Alias.alias(OfferEntity.class);
       EntityPathBase<OfferEntity> offerAlias = Alias.$(offer);

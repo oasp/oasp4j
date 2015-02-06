@@ -32,7 +32,7 @@ CREATE CACHED TABLE PUBLIC.ORDERPOSITION(
     offerName VARCHAR(255),
     price DECIMAL(19, 2),
     state INTEGER,
-    drink_state INTEGER,
+    drinkState INTEGER,
     order_id BIGINT
 );
 CREATE CACHED TABLE PUBLIC.PRODUCT(

@@ -3,8 +3,8 @@ package io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
-import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -208,7 +208,6 @@ public class OrderPositionEntity extends ApplicationPersistenceEntity implements
    * {@inheritDoc}
    */
   @Override
-  @Column(name = "drink_state")
   public ProductOrderState getDrinkState() {
 
     // TODO Auto-generated method stub

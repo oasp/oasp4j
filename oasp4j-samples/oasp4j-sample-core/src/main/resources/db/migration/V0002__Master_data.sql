@@ -27,11 +27,11 @@ INSERT INTO OFFER (id, modificationCounter, description, state, meal_id, sidedis
 
 INSERT INTO RESTAURANTORDER (id, modificationCounter, table_id, state) VALUES (1, 1, 1, 1);
 
-INSERT INTO ORDERPOSITION (id, modificationCounter, offer_id, offername, comment, state, drink_state, order_id, price) VALUES (1, 1, 1, 'Schnitzel-Menü', 'mit Ketschup', 2, 2, 1, 6.99);
-INSERT INTO ORDERPOSITION (id, modificationCounter, offer_id, offername, comment, state, drink_state, order_id, price) VALUES (2, 1, 2, 'Goulasch-Menü', '', 2, 2, 1, 7.99);
-INSERT INTO ORDERPOSITION (id, modificationCounter, offer_id, offername, comment, state, drink_state, order_id, price) VALUES (3, 1, 3, 'Pfifferlinge-Menü','', 2, 2,  1, 8.99);
-INSERT INTO ORDERPOSITION (id, modificationCounter, offer_id, offername, comment, state, drink_state, order_id, price) VALUES (4, 1, 4, 'Salat-Menü', '', 2, 2, 1, 5.99);
-INSERT INTO ORDERPOSITION (id, modificationCounter, offer_id, offername, comment, state, drink_state, order_id, price) VALUES (5, 1, 5, 'Cola', '', 2, 2, 1, 5.99);
+INSERT INTO ORDERPOSITION (id, modificationCounter, offer_id, offername, comment, state, drinkState, order_id, price) VALUES (1, 1, 1, 'Schnitzel-Menü', 'mit Ketschup', 2, 2, 1, 6.99);
+INSERT INTO ORDERPOSITION (id, modificationCounter, offer_id, offername, comment, state, drinkState, order_id, price) VALUES (2, 1, 2, 'Goulasch-Menü', '', 2, 2, 1, 7.99);
+INSERT INTO ORDERPOSITION (id, modificationCounter, offer_id, offername, comment, state, drinkState, order_id, price) VALUES (3, 1, 3, 'Pfifferlinge-Menü','', 2, 2,  1, 8.99);
+INSERT INTO ORDERPOSITION (id, modificationCounter, offer_id, offername, comment, state, drinkState, order_id, price) VALUES (4, 1, 4, 'Salat-Menü', '', 2, 2, 1, 5.99);
+INSERT INTO ORDERPOSITION (id, modificationCounter, offer_id, offername, comment, state, drinkState, order_id, price) VALUES (5, 1, 5, 'Cola', '', 2, 2, 1, 5.99);
 
 INSERT INTO BILL (id, modificationCounter, payed, total, tip) VALUES (1, 1, true, 14.98, 1.3);
 INSERT INTO BILL_ORDERPOSITION (bill_id, orderpositions_id) VALUES (1,1);
