@@ -240,17 +240,15 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
 
     OrderPositionState currentState = targetOrderPosition.getState();
 
-    if ((newState == OrderPositionState.PREPARED) && (newDrinkState == ProductOrderState.ORDERED)
+    if ((newState == OrderPositionState.PREPARED) && (newDrinkState == ProductOrderState.PREPARED)
         && (currentState == OrderPositionState.ORDERED)
 
         || (newState == OrderPositionState.DELIVERED) && (newDrinkState == ProductOrderState.DELIVERED)
         && (currentState == OrderPositionState.PREPARED)
 
-        || (newState == OrderPositionState.PAYED) && (newDrinkState == ProductOrderState.DELIVERED)
-        && (currentState == OrderPositionState.DELIVERED)
+        || (newState == OrderPositionState.PAYED) && (currentState == OrderPositionState.DELIVERED)
 
-        || (newState == OrderPositionState.CANCELLED) && (newDrinkState == ProductOrderState.DELIVERED)
-        && (currentState != OrderPositionState.PAYED)) {
+        || (newState == OrderPositionState.CANCELLED) && (currentState != OrderPositionState.PAYED)) {
       targetOrderPosition.setState(newState);
       targetOrderPosition.setDrinkState(newDrinkState);
     } else {
