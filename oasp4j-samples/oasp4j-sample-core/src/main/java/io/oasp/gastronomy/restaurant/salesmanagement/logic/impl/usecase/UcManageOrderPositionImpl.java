@@ -18,7 +18,6 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionE
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrderPosition;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.base.usecase.AbstractOrderPositionUc;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.security.RolesAllowed;
@@ -219,92 +218,6 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
       break;
     }
 
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  @RolesAllowed(PermissionConstants.SAVE_ORDER_POSITION)
-  public void markOrderPositionDrinkAs(OrderPositionEto orderPosition, OrderPositionState newState,
-      ProductOrderState newDrinkState) {
-
-    Objects.requireNonNull(orderPosition, "orderPosition");
-
-    long orderPositionId = orderPosition.getId();
-    OrderPositionEntity targetOrderPosition = getOrderPositionDao().findOne(orderPositionId);
-
-    if (targetOrderPosition == null) {
-      throw new ObjectNotFoundUserException(OrderPosition.class, orderPositionId);
-    }
-
-    OrderPositionState currentState = targetOrderPosition.getState();
-
-    if ((newState == OrderPositionState.PREPARED) && (newDrinkState == ProductOrderState.PREPARED)
-        && (currentState == OrderPositionState.ORDERED)
-
-        || (newState == OrderPositionState.DELIVERED) && (newDrinkState == ProductOrderState.DELIVERED)
-        && (currentState == OrderPositionState.PREPARED)
-
-        || (newState == OrderPositionState.PAYED) && (currentState == OrderPositionState.DELIVERED)
-
-        || (newState == OrderPositionState.CANCELLED) && (currentState != OrderPositionState.PAYED)) {
-      targetOrderPosition.setState(newState);
-      targetOrderPosition.setDrinkState(newDrinkState);
-    } else {
-      throw new IllegalEntityStateException(targetOrderPosition, currentState, newDrinkState);
-    }
-
-    // Marks related order as closed
-    if (newState == OrderPositionState.CANCELLED || newState == OrderPositionState.PAYED) {
-      List<OrderPositionEto> orderpositions =
-          this.salesManagement.findOpenOrderPositionsByOrderId(orderPosition.getOrderId());
-      if (orderpositions == null || orderpositions.isEmpty()) {
-        targetOrderPosition.getOrder().setState(OrderState.CLOSED);
-      }
-    }
-    getOrderPositionDao().save(targetOrderPosition);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  @RolesAllowed(PermissionConstants.SAVE_ORDER_POSITION)
-  public void markOrderPositionAs(OrderPositionEto orderPosition, OrderPositionState newState) {
-
-    Objects.requireNonNull(orderPosition, "orderPosition");
-
-    long orderPositionId = orderPosition.getId();
-    OrderPositionEntity targetOrderPosition = getOrderPositionDao().findOne(orderPositionId);
-
-    if (targetOrderPosition == null) {
-      throw new ObjectNotFoundUserException(OrderPosition.class, orderPositionId);
-    }
-
-    OrderPositionState currentState = targetOrderPosition.getState();
-
-    if ((newState == OrderPositionState.PREPARED) && (currentState == OrderPositionState.ORDERED)
-
-    || (newState == OrderPositionState.DELIVERED) && (currentState == OrderPositionState.PREPARED)
-
-    || (newState == OrderPositionState.PAYED) && (currentState == OrderPositionState.DELIVERED)
-
-    || (newState == OrderPositionState.CANCELLED) && (currentState != OrderPositionState.PAYED)) {
-      targetOrderPosition.setState(newState);
-    } else {
-      throw new IllegalEntityStateException(targetOrderPosition, currentState, newState);
-    }
-
-    // Marks related order as closed
-    if (newState == OrderPositionState.CANCELLED || newState == OrderPositionState.PAYED) {
-      List<OrderPositionEto> orderpositions =
-          this.salesManagement.findOpenOrderPositionsByOrderId(orderPosition.getOrderId());
-      if (orderpositions == null || orderpositions.isEmpty()) {
-        targetOrderPosition.getOrder().setState(OrderState.CLOSED);
-      }
-    }
-    getOrderPositionDao().save(targetOrderPosition);
   }
 
   /**
