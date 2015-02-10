@@ -48,6 +48,7 @@ public class SalesManagementTest extends AbstractSpringIntegrationTest {
   /**
    * Tests if the {@link OrderPositionState} is persisted correctly. The test modifies the {@link OrderPositionState}
    * through modifying the drinkState {@link ProductOrderState} which is a sub-state of the {@link OrderPosition}
+   *
    */
   @Test
   public void testOrderPositionStateChange() {
