@@ -4,17 +4,19 @@
 
 <configuration scan="true" scanPeriod="60 seconds">
 
+  <property name="appname" value="restaurant"></property>
+
   <property name="logPattern" value="[D: %d{ISO8601}] [P: %-5p] [C: %X{correlationId}] [T: %t] [L: %c] - [M: %m]  %n"/>
 
   <property name="rollingPattern" value="%d{yyyy-MM-dd_HH}"></property>
 
   <property name="filePath" value="${java.io.tmpdir}"></property>
 
-  <property name="errorLogFile" value="error_log_devseu_rmgt"></property>
+  <property name="errorLogFile" value="error_log_${HOSTNAME}_${appname}"></property>
 
-  <property name="infoLogFile" value="info_log_devseu_rmgt"></property>
+  <property name="infoLogFile" value="info_log_${HOSTNAME}_${appname}"></property>
 
-  <property name="debugLogFile" value="debug_log_devseu_rmgt"></property>
+  <property name="debugLogFile" value="debug_log_${HOSTNAME}_${appname}"></property>
 
   <property name="consoleDisabled" value="${log.console.disabled}"></property>
 
@@ -24,7 +26,7 @@
   <!-- Logback-beagle: eclipse plug-in for viewing logs -->
 
   <appender name="ERROR_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <File>${filePath}${errorLogFile}</File>
+    <File>${filePath}${errorLogFile}.log</File>
     <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
       <level>WARN</level>
     </filter>
@@ -39,7 +41,7 @@
   </appender>
 
   <appender name="INFO_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <File>${filePath}${infoLogFile}</File>
+    <File>${filePath}${infoLogFile}.log</File>
     <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
       <level>INFO</level>
     </filter>
@@ -54,7 +56,7 @@
   </appender>
 
   <appender name="DEBUG_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <File>${filePath}${debugLogFile}</File>
+    <File>${filePath}${debugLogFile}.log</File>
     <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
       <level>ALL</level>
     </filter>
