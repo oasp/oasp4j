@@ -7,7 +7,30 @@ package io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype;
  */
 public enum OfferSortByHitEntry {
 
-  ID("id"), DESCRIPTION("description"), PRICE("price"), MEAL("meal"), SIDEDISH("sideDish"), DRINK("drink");
+  /**
+   * Sort by id.
+   */
+  ID("id"),
+  /**
+   * Sort by description.
+   */
+  DESCRIPTION("description"),
+  /**
+   * Sort by price.
+   */
+  PRICE("price"),
+  /**
+   * Sort by meal.
+   */
+  MEAL("meal"),
+  /**
+   * Sort by side dish.
+   */
+  SIDEDISH("sideDish"),
+  /**
+   * Sort by drink.
+   */
+  DRINK("drink");
 
   private final String sortByAttributeName;
 

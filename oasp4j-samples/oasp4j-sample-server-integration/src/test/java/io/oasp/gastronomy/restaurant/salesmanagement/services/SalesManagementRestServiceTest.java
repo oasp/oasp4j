@@ -125,7 +125,7 @@ public class SalesManagementRestServiceTest extends AbstractRestServiceTest {
   @Ignore
   public void getOrderPosition() {
 
-    Long orderId = DB.ORDER_POSITION_1.getOrderId();
+    DB.ORDER_POSITION_1.getOrderId();
     Long orderPositionId = DB.ORDER_POSITION_1.getId();
     ResponseData<OrderPositionEto> position =
         this.waiter.get(RestUrls.SalesManagement.Order.getGetOrderPositionURL(orderPositionId), OrderPositionEto.class);

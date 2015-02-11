@@ -32,7 +32,7 @@ public class TableManagementRestServiceTest extends AbstractRestServiceTest {
    * Simple crud test for tablemanagement.
    */
   @Test
-  public void crudTableTest() throws Exception {
+  public void crudTableTest() {
 
     // get all tables
     List<ResponseData<TableEto>> tables =
@@ -96,7 +96,7 @@ public class TableManagementRestServiceTest extends AbstractRestServiceTest {
 
     TableEntity tableEntity =
         new TableEntityBuilder().number(10l).state(TableState.RESERVED)
-            .persist(this.transactionTemplate, TableManagementRestServiceTest.this.em);
+            .persist(this.transactionTemplate, TableManagementRestServiceTest.this.entityManager);
 
     ResponseData<TableEto> table =
         this.waiter.get(RestUrls.TableManagement.getGetTableUrl(tableEntity.getId()), TableEto.class);
@@ -115,7 +115,7 @@ public class TableManagementRestServiceTest extends AbstractRestServiceTest {
 
     List<TableEntity> tableEntities =
         new TableEntityBuilder().persistAndDuplicate(TableManagementRestServiceTest.this.transactionTemplate,
-            TableManagementRestServiceTest.this.em, 5);
+            TableManagementRestServiceTest.this.entityManager, 5);
 
     List<ResponseData<TableEto>> tableEtos =
         this.waiter.getAll(RestUrls.TableManagement.getAllTablesUrl(), TableEto.class);
@@ -131,17 +131,17 @@ public class TableManagementRestServiceTest extends AbstractRestServiceTest {
   public void getFreeTablesTest() {
 
     new TableEntityBuilder().state(TableState.OCCUPIED).persistAndDuplicate(
-        TableManagementRestServiceTest.this.transactionTemplate, TableManagementRestServiceTest.this.em, 5);
+        TableManagementRestServiceTest.this.transactionTemplate, TableManagementRestServiceTest.this.entityManager, 5);
     new TableEntityBuilder()
         .number(100l)
         .state(TableState.FREE)
         .persistAndDuplicate(TableManagementRestServiceTest.this.transactionTemplate,
-            TableManagementRestServiceTest.this.em, 2);
+            TableManagementRestServiceTest.this.entityManager, 2);
     new TableEntityBuilder()
         .number(200l)
         .state(TableState.RESERVED)
         .persistAndDuplicate(TableManagementRestServiceTest.this.transactionTemplate,
-            TableManagementRestServiceTest.this.em, 2);
+            TableManagementRestServiceTest.this.entityManager, 2);
 
     List<ResponseData<TableEto>> tableEtos =
         this.waiter.getAll(RestUrls.TableManagement.getFreeTablesUrl(), TableEto.class);
@@ -160,7 +160,7 @@ public class TableManagementRestServiceTest extends AbstractRestServiceTest {
   public void markTableAsTest() {
 
     TableEntity tableEntity =
-        new TableEntityBuilder().state(TableState.RESERVED).persist(this.transactionTemplate, this.em);
+        new TableEntityBuilder().state(TableState.RESERVED).persist(this.transactionTemplate, this.entityManager);
 
     this.waiter.post(RestUrls.TableManagement.markTableAsUrl(tableEntity.getId(), TableState.OCCUPIED));
     ResponseData<TableEto> table =
@@ -201,7 +201,7 @@ public class TableManagementRestServiceTest extends AbstractRestServiceTest {
   public void deleteTableTest() {
 
     TableEntity tableToBeDeleted =
-        new TableEntityBuilder().state(TableState.FREE).persist(this.transactionTemplate, this.em);
+        new TableEntityBuilder().state(TableState.FREE).persist(this.transactionTemplate, this.entityManager);
     this.chief.delete(RestUrls.TableManagement.getDeleteTableUrl(tableToBeDeleted.getId()));
 
     List<ResponseData<TableEto>> tableEtos =
@@ -218,7 +218,7 @@ public class TableManagementRestServiceTest extends AbstractRestServiceTest {
   public void isTableReleaseable() {
 
     TableEntity tableTarget =
-        new TableEntityBuilder().state(TableState.OCCUPIED).persist(this.transactionTemplate, this.em);
+        new TableEntityBuilder().state(TableState.OCCUPIED).persist(this.transactionTemplate, this.entityManager);
 
     ResponseData<Boolean> response =
         this.waiter.get(RestUrls.TableManagement.isTableReleasableUrl(tableTarget.getId()), Boolean.class);

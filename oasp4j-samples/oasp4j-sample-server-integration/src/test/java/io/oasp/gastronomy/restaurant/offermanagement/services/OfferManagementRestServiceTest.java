@@ -265,8 +265,7 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
     DrinkEto productToUpdate =
         this.chief.post(drink, RestUrls.OfferManagement.Product.getCreateProductUrl(), DrinkEto.class);
     productToUpdate.setName(drink.getName() + "2");
-    DrinkEto post =
-        this.chief.post(productToUpdate, RestUrls.OfferManagement.Product.getCreateProductUrl(), DrinkEto.class);
+    this.chief.post(productToUpdate, RestUrls.OfferManagement.Product.getCreateProductUrl(), DrinkEto.class);
     ResponseData<ProductEto> product =
         this.chief.get(RestUrls.OfferManagement.Product.getFindProductUrl(productToUpdate.getId()), ProductEto.class);
 
@@ -281,9 +280,8 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
   public void isProductInUseTest() {
 
     Long drinkId = createDrink().getId();
-    OfferEto createdOffer =
-        this.chief.post(TestData.createOffer(null, "some description", OfferState.NORMAL, null, null, drinkId, 0,
-            new Money(new BigDecimal(2.5))), RestUrls.OfferManagement.Offer.getCreateOfferUrl(), OfferEto.class);
+    this.chief.post(TestData.createOffer(null, "some description", OfferState.NORMAL, null, null, drinkId, 0,
+        new Money(new BigDecimal(2.5))), RestUrls.OfferManagement.Offer.getCreateOfferUrl(), OfferEto.class);
     ResponseData<Boolean> isproductInUse =
         this.waiter.get(RestUrls.OfferManagement.Product.getIsProductInUseByOfferUrl(drinkId), Boolean.class);
     assertThat(isproductInUse.getResponseObject(), is(true));

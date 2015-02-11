@@ -27,14 +27,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * contained in the static fields {@link UsernamePasswordAuthenticationFilter#SPRING_SECURITY_FORM_USERNAME_KEY} and
  * {@link UsernamePasswordAuthenticationFilter#SPRING_SECURITY_FORM_PASSWORD_KEY}. The JSON object properties' names can
  * also be changed by setting the {@code usernameParameter} and {@code passwordParameter} properties. Assuming the
- * default properties' names were not changed, if the credentials <code>user</code>/<code>pass</code> are to be sent, the
- * following JSON object is expected:
- * <pre><code>
+ * default properties' names were not changed, if the credentials <code>user</code>/<code>pass</code> are to be sent,
+ * the following JSON object is expected:
+ *
+ * <pre>
+ * <code>
  *     {
  *        "j_username": "user",
  *        "j_password": "pass",
  *    }
- * </code></pre>
+ * </code>
+ * </pre>
  * <p/>
  * <p>
  * The URL this filter responds to is passed as a constructor parameter.
@@ -43,10 +46,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * This authentication filter is intended for One Page Applications which handle a login page/dialog/pop-up on their
  * own. This filter combined with:
  * <ul>
- *     <li>{@link AuthenticationSuccessHandlerSendingOkHttpStatusCode}</li>
- *     <li>{@link org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler} created using
- *     the default constructor (thus leaving the {@code defaultFailureUrl} unset)</li>
- *     <li>{@link LogoutSuccessHandlerReturningOkHttpStatusCode}</li>
+ * <li>{@link AuthenticationSuccessHandlerSendingOkHttpStatusCode}</li>
+ * <li>{@link org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler} created using the
+ * default constructor (thus leaving the {@code defaultFailureUrl} unset)</li>
+ * <li>{@link LogoutSuccessHandlerReturningOkHttpStatusCode}</li>
  * </ul>
  * makes the login/logout API fully RESTful.
  * </p>
@@ -64,11 +67,20 @@ public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthentica
   // inject that instance here.
   private ObjectMapper objectMapper = new ObjectMapper();
 
+  /**
+   * The constructor.
+   *
+   * @param requiresAuthenticationRequestMatcher the {@link RequestMatcher} used to determine if authentication is
+   *        required. Cannot be null.
+   */
   public JsonUsernamePasswordAuthenticationFilter(RequestMatcher requiresAuthenticationRequestMatcher) {
 
     super(requiresAuthenticationRequestMatcher);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
       throws AuthenticationException, IOException, ServletException {
@@ -86,31 +98,49 @@ public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthentica
     return getAuthenticationManager().authenticate(authRequest);
   }
 
+  /**
+   * @return Value of usernameParameter
+   */
   public String getUsernameParameter() {
 
     return this.usernameParameter;
   }
 
+  /**
+   * @param usernameParameter new value for usernameParameter
+   */
   public void setUsernameParameter(String usernameParameter) {
 
     this.usernameParameter = usernameParameter;
   }
 
+  /**
+   * @return Value of passwordParameter
+   */
   public String getPasswordParameter() {
 
     return this.passwordParameter;
   }
 
+  /**
+   * @param passwordParameter new value for passwordParameter
+   */
   public void setPasswordParameter(String passwordParameter) {
 
     this.passwordParameter = passwordParameter;
   }
 
+  /**
+   * @return value of postOnly
+   */
   public boolean isPostOnly() {
 
     return this.postOnly;
   }
 
+  /**
+   * @param postOnly new value for postOnly
+   */
   public void setPostOnly(boolean postOnly) {
 
     this.postOnly = postOnly;

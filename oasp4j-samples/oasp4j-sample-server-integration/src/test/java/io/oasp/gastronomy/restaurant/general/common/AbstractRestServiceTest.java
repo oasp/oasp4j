@@ -56,9 +56,15 @@ public abstract class AbstractRestServiceTest {
     this.flyway = flyway;
   }
 
+  /**
+   * The {@link EntityManager}.
+   */
   @Autowired
-  public EntityManager em;
+  public EntityManager entityManager;
 
+  /**
+   * The {@link TransactionTemplate}.
+   */
   @Autowired
   public TransactionTemplate transactionTemplate;
 

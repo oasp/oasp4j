@@ -40,10 +40,10 @@ public enum ProductSortByHitEntry {
   }
 
   /**
-   * This method returns an {@link OfferSortByHitEntry} for a given {@link #getSortByAttributeName() attribute name}.
+   * This method returns an {@link ProductSortByHitEntry} for a given {@link #getSortByAttributeName() attribute name}.
    *
    * @param sortByAttributeName the name.
-   * @return an {@link OfferSortByHitEntry}
+   * @return an {@link ProductSortByHitEntry}
    */
   public static ProductSortByHitEntry getEntryForAttributeName(String sortByAttributeName) {
 

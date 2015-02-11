@@ -63,8 +63,6 @@ public interface RestUrls {
       }
 
       /**
-       * @param orderId Order to add the position
-       * @param comment Comment corresponding to the position
        * @return URL to create a OrderPosition
        */
       public static final String getCreateOrderPositionURL() {
@@ -73,7 +71,6 @@ public interface RestUrls {
       }
 
       /**
-       * @param orderId Order of the position
        * @param orderPositionId Id of the position
        * @return URL to get the OrderPosition
        */
