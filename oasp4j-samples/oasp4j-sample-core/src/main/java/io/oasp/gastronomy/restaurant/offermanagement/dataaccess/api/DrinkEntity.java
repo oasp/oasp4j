@@ -5,6 +5,8 @@ import io.oasp.gastronomy.restaurant.offermanagement.common.api.Drink;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import org.hibernate.envers.Audited;
+
 /**
  * The {@link io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity persistent entity} for
  * {@link Drink}.
@@ -13,6 +15,7 @@ import javax.persistence.Entity;
  */
 @Entity(name = "Drink")
 @DiscriminatorValue("Drink")
+@Audited
 public class DrinkEntity extends ProductEntity implements Drink {
 
   private static final long serialVersionUID = 1L;

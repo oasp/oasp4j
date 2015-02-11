@@ -15,7 +15,12 @@
   </bean>
 
   <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" depends-on="flyway">
-    <property name="packagesToScan" value="io.oasp.gastronomy.restaurant.*.dataaccess"/>
+    <property name="packagesToScan">
+      <list>
+        <value>io.oasp.gastronomy.restaurant.*.dataaccess</value>
+        <value>io.oasp.module.jpa.dataaccess.api</value>
+      </list>
+    </property>
     <property name="dataSource" ref="appDataSource"/>
     <property name="mappingResources" value="config/app/dataaccess/NamedQueries.xml"/>
     <property name="jpaVendorAdapter">
