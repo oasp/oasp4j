@@ -2,7 +2,6 @@ package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl;
 
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSupport;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
-import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.PaymentStatus;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BillCto;
@@ -218,15 +217,6 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
   public List<OrderPositionEto> findOpenOrderPositionsByOrderId(Long orderId) {
 
     return this.ucFindOrderPosition.findOpenOrderPositionsByOrderId(orderId);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void markOrderPositionAs(OrderPositionEto orderPosition, OrderPositionState newState) {
-
-    this.ucManageOrderPosition.markOrderPositionAs(orderPosition, newState);
   }
 
   /**

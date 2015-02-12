@@ -88,45 +88,6 @@ public class UcManageTableImpl extends AbstractTableUc implements UcManageTable 
    * {@inheritDoc}
    */
   @Override
-  @RolesAllowed(PermissionConstants.SAVE_TABLE)
-  public void markTableAs(@Valid TableEto table, TableState newState) {
-
-    Objects.requireNonNull(table, "table");
-
-    long tableId = table.getId();
-    TableEntity targetTable = getTableDao().find(tableId);
-    if (targetTable.getState() == newState) {
-      return;
-    }
-
-    switch (newState) {
-    case FREE:
-      // we need the ensure that there is no open order associated with the table...
-      OrderEto openOrder = this.salesManagement.findOpenOrderForTable(tableId);
-      if (openOrder != null) {
-        throw new IllegalEntityStateException(table, table.getState(), newState);
-      }
-      break;
-    case RESERVED:
-      if (table.getState() != TableState.FREE) {
-        // table has to be free before going to reserved state...
-        throw new IllegalEntityStateException(table, table.getState(), newState);
-      }
-      break;
-    default:
-      // nothing to do...
-      break;
-    }
-    targetTable.setState(newState);
-    getTableDao().save(targetTable);
-    LOG.debug("The table with id '{}' is marked as {}.", tableId, newState);
-
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   @RolesAllowed(PermissionConstants.FIND_TABLE)
   public boolean isTableReleasable(TableEto table) {
 

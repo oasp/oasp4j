@@ -1,7 +1,6 @@
 package io.oasp.gastronomy.restaurant.tablemanagement.service.impl.rest;
 
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.Table;
-import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.usecase.UcFindTable;
@@ -137,24 +136,6 @@ public class TablemanagementRestServiceImpl {
   public List<TableEto> getFreeTables() {
 
     return this.tableManagement.findFreeTables();
-  }
-
-  /**
-   * Delegates to {@link UcManageTable#markTableAs}.
-   *
-   * @param id ID of the {@link TableEto}
-   * @param newState the new {@link TableState}
-   */
-  @Path("/table/{id}/marktableas/{newState}")
-  @POST
-  public void markTableAs(@PathParam("id") Long id, @PathParam("newState") TableState newState) {
-
-    TableEto table = this.tableManagement.findTable(id);
-    if (table == null) {
-      throw new ObjectNotFoundUserException(Table.class, id);
-    } else {
-      this.tableManagement.markTableAs(table, newState);
-    }
   }
 
   /**
