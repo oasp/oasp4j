@@ -10,7 +10,7 @@
 
   <property name="rollingPattern" value="%d{yyyy-MM-dd_HH}"></property>
 
-  <property name="filePath" value="${java.io.tmpdir}"></property>
+  <property name="filePath" value="${java.io.tmpdir}${file.separator}"></property>
 
   <property name="errorLogFile" value="error_log_${HOSTNAME}_${appname}"></property>
 
