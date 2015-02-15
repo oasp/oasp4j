@@ -2,6 +2,7 @@ package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to;
 
 import io.oasp.gastronomy.restaurant.general.common.api.to.SearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 
 /**
  * This is the {@link SearchCriteriaTo search criteria} {@link net.sf.mmm.util.transferobject.api.TransferObject TO}
@@ -15,6 +16,8 @@ public class OrderPositionSearchCriteriaTo extends SearchCriteriaTo {
   private static final long serialVersionUID = 1L;
 
   private OrderPositionState state;
+
+  private ProductOrderState drinkState;
 
   private Long orderId;
 
@@ -44,6 +47,22 @@ public class OrderPositionSearchCriteriaTo extends SearchCriteriaTo {
   public void setState(OrderPositionState orderPositionState) {
 
     this.state = orderPositionState;
+  }
+
+  /**
+   * @return drinkState of the {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition }
+   */
+  public ProductOrderState getDrinkState() {
+
+    return this.drinkState;
+  }
+
+  /**
+   * @param drinkState the drinkState to set
+   */
+  public void setDrinkState(ProductOrderState drinkState) {
+
+    this.drinkState = drinkState;
   }
 
   /**

@@ -9,6 +9,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderPositionEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
@@ -17,7 +18,6 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionE
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrderPosition;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.base.usecase.AbstractOrderPositionUc;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.security.RolesAllowed;
@@ -123,11 +123,23 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
     }
     OrderPositionState currentState = currentOrderPosition.getState();
     OrderPositionState newState = updateOrderPosition.getState();
-    verifyStateChange(updateOrderPosition, currentState, newState);
+    ProductOrderState newDrinkState = updateOrderPosition.getDrinkState();
+
+    verifyOrderPositionStateChange(updateOrderPosition, currentState, newState);
+
+    // TODO add verification methods of other sub-states of OrderPosition (i.e. Meal and SideDish)
+    verifyDrinkStateChange(updateOrderPosition, currentState, newState, newDrinkState);
 
   }
 
-  private void verifyStateChange(OrderPosition updateOrderPosition, OrderPositionState currentState,
+  /**
+   * Verifies if an update of the {@link OrderPositionState} is legal.
+   *
+   * @param updateOrderPosition the new {@link OrderPosition} to update to.
+   * @param currentState the old/current {@link OrderPositionState} of the {@link OrderPosition}.
+   * @param newState new {@link OrderPositionState} of the {@link OrderPosition} to be updated to.
+   */
+  private void verifyOrderPositionStateChange(OrderPosition updateOrderPosition, OrderPositionState currentState,
       OrderPositionState newState) {
 
     switch (currentState) {
@@ -159,43 +171,53 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
       LOG.error("Illegal state {}", currentState);
       break;
     }
+
   }
 
   /**
-   * {@inheritDoc}
+   * Verifies if an update of the {@link DrinkState} is legal. This verification is based on both the states of
+   * {@link DrinkState} and {@link OrderPositionState}.
+   *
+   * @param updateOrderPosition the new {@link OrderPosition} to update to.
+   * @param currentState the old/current {@link OrderPositionState} of the {@link OrderPosition}.
+   * @param newState new {@link OrderPositionState} of the {@link OrderPosition} to be updated to.
+   * @param newDrinkState new {@link ProductOrderState} of the drink of the {@link OrderPosition} to be updated to.
    */
-  @Override
-  @RolesAllowed(PermissionConstants.SAVE_ORDER_POSITION)
-  public void markOrderPositionAs(OrderPositionEto orderPosition, OrderPositionState newState) {
+  private void verifyDrinkStateChange(OrderPosition updateOrderPosition, OrderPositionState currentState,
+      OrderPositionState newState, ProductOrderState newDrinkState) {
 
-    Objects.requireNonNull(orderPosition, "orderPosition");
-
-    long orderPositionId = orderPosition.getId();
-    OrderPositionEntity targetOrderPosition = getOrderPositionDao().findOne(orderPositionId);
-
-    if (targetOrderPosition == null) {
-      throw new ObjectNotFoundUserException(OrderPosition.class, orderPositionId);
-    }
-
-    OrderPositionState currentState = targetOrderPosition.getState();
-    if ((newState == OrderPositionState.PREPARED) && (currentState == OrderPositionState.ORDERED)
-        || (newState == OrderPositionState.DELIVERED) && (currentState == OrderPositionState.PREPARED)
-        || (newState == OrderPositionState.PAYED) && (currentState == OrderPositionState.DELIVERED)
-        || (newState == OrderPositionState.CANCELLED) && (currentState != OrderPositionState.PAYED)) {
-      targetOrderPosition.setState(newState);
-    } else {
-      throw new IllegalEntityStateException(targetOrderPosition, currentState, newState);
-    }
-
-    // Marks related order as closed
-    if (newState == OrderPositionState.CANCELLED || newState == OrderPositionState.PAYED) {
-      List<OrderPositionEto> orderpositions =
-          this.salesManagement.findOpenOrderPositionsByOrderId(orderPosition.getOrderId());
-      if (orderpositions == null || orderpositions.isEmpty()) {
-        targetOrderPosition.getOrder().setState(OrderState.CLOSED);
+    switch (currentState) {
+    case CANCELLED:
+      if ((newState != OrderPositionState.CANCELLED) && (newState != OrderPositionState.ORDERED)) {
+        throw new IllegalEntityStateException(updateOrderPosition, currentState, newDrinkState);
       }
+      break;
+    case ORDERED:
+      if ((newState != OrderPositionState.ORDERED) && (newState != OrderPositionState.CANCELLED)
+          && (newState != OrderPositionState.PREPARED) && (newDrinkState != ProductOrderState.ORDERED)
+          && (newDrinkState != ProductOrderState.PREPARED)) {
+        throw new IllegalEntityStateException(updateOrderPosition, currentState, newDrinkState);
+      }
+      break;
+    case PREPARED:
+      // from here we can go to any other state (back to ORDERED in case that the kitchen has to rework)
+      break;
+    case DELIVERED:
+      if ((newState == OrderPositionState.PREPARED) || (newState == OrderPositionState.ORDERED)
+          || (newDrinkState == ProductOrderState.PREPARED) || (newDrinkState == ProductOrderState.ORDERED)) {
+        throw new IllegalEntityStateException(updateOrderPosition, currentState, newDrinkState);
+      }
+      break;
+    case PAYED:
+      if (newState != OrderPositionState.PAYED) {
+        throw new IllegalEntityStateException(updateOrderPosition, currentState, newDrinkState);
+      }
+      break;
+    default:
+      LOG.error("Illegal state {}", currentState);
+      break;
     }
-    getOrderPositionDao().save(targetOrderPosition);
+
   }
 
   /**
@@ -215,4 +237,5 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
 
     this.offerManagement = offerManagement;
   }
+
 }

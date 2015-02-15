@@ -195,20 +195,6 @@ public class SalesmanagementRestServiceImpl {
     return this.salesManagement.saveOrderPosition(orderPosition);
   }
 
-  // again orderId is not explicitly needed here
-  /**
-   * Delegates to {@link UcManageOrderPosition#markOrderPositionAs}.
-   *
-   * @param orderPosition the {@link OrderPositionEto} to change
-   * @param newState the new {@link OrderPositionState}
-   */
-  @PUT
-  @Path("/order/{orderId}/position/{orderPositionId}/{newstate}")
-  public void markOrderPositionAs(OrderPositionEto orderPosition, @PathParam("newState") OrderPositionState newState) {
-
-    this.salesManagement.markOrderPositionAs(orderPosition, newState);
-  }
-
   /**
    * Delegates to {@link UcFindBill#findBill}
    *

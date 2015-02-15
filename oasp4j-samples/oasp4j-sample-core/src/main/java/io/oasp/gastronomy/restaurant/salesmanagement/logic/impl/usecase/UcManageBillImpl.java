@@ -157,7 +157,7 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
   public PaymentStatus doPayment(BillEto bill) {
 
     LOG.debug("The bill with id '" + bill.getId() + "' will be marked as payed.");
-    markBillAndOrderPositionsAsPayed(bill);
+    // markBillAndOrderPositionsAsPayed(bill);
 
     // Return a PaymentStatus
     LOG.debug("The bill with id '" + bill.getId() + "' is succesfuly payed.");
@@ -193,38 +193,20 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
     // Step3: Call the function markBillAndOrderPositionsAsPayed (Mark
     // orderPositions and the current bill
     // as payed and eventually free table) if Step2 was successful
+
+    // REVIEW <who> (hohwille) Please take care of this. I am not sure this is the most appropriate solution.
+    // However, all mark*As methods should be removed.
     if (PaymentStatus.SUCCESS == status) {
-      markBillAndOrderPositionsAsPayed(bill);
+      bill.setPayed(true);
+      for (Long orderPositionId : bill.getOrderPositionIds()) {
+        this.salesmanagement.findOrderPosition(orderPositionId).setState(OrderPositionState.PAYED);
+      }
+      // markBillAndOrderPositionsAsPayed(bill);
     }
 
     // Step4: Return a PaymentStatus
     LOG.debug("The payment of bill with id '" + bill.getId() + "' has given that status '" + status + "' back.");
     return status;
-  }
-
-  /**
-   * Marks the {@link BillEntity} and its contained {@link OrderPositionEntity}s as payed.
-   *
-   * @param bill {@link BillEntity} to be payed
-   */
-  private void markBillAndOrderPositionsAsPayed(BillEto bill) {
-
-    // Mark bill as payed
-    bill.setPayed(true);
-    LOG.debug("The bill with id '" + bill.getId() + "' is marked as payed.");
-
-    // Updates bill
-    update(bill);
-
-    // Mark orders as payed
-    for (Long orderPositionId : bill.getOrderPositionIds()) {
-      // check for already closed orderPositions
-      OrderPositionEto orderPosition = this.salesmanagement.findOrderPosition(orderPositionId);
-      verifyNotClosed(orderPosition);
-      this.salesmanagement.markOrderPositionAs(orderPosition, OrderPositionState.PAYED);
-      LOG.debug("The OrderPosition with id '{}' containing in the bill with id '{}' is marked as payed.",
-          orderPositionId, bill.getId());
-    }
   }
 
   /**

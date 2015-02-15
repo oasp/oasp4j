@@ -4,6 +4,7 @@ import io.oasp.gastronomy.restaurant.general.common.api.constants.NamedQueries;
 import io.oasp.gastronomy.restaurant.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderPositionEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.OrderPositionDao;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionSearchCriteriaTo;
@@ -79,6 +80,10 @@ public class OrderPositionDaoImpl extends ApplicationDaoImpl<OrderPositionEntity
     OrderPositionState state = criteria.getState();
     if (state != null) {
       query.where(Alias.$(orderPosition.getState()).eq(state));
+    }
+    ProductOrderState drinkState = criteria.getDrinkState();
+    if (drinkState != null) {
+      query.where(Alias.$(orderPosition.getDrinkState()).eq(drinkState));
     }
     if (criteria.isMealOrSideDish()) {
       OfferEntity offer = Alias.alias(OfferEntity.class);
