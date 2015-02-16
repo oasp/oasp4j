@@ -43,7 +43,7 @@
   <mapping type="one-way">
     <class-a>io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity</class-a>
     <class-b>net.sf.mmm.util.transferobject.api.EntityTo</class-b>
-    <field custom-converter="io.oasp.module.beanmapping.common.impl.IdentityConverter">
+    <field custom-converter="io.oasp.module.beanmapping.common.impl.dozer.IdentityConverter">
       <a>this</a>
       <b is-accessible="true">persistentEntity</b>
     </field>
