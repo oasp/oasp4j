@@ -4,6 +4,7 @@ import io.oasp.module.beanmapping.common.base.AbstractBeanMapper;
 
 import javax.inject.Inject;
 
+import ma.glasnost.orika.Mapper;
 import ma.glasnost.orika.MapperFacade;
 
 /**
@@ -17,6 +18,8 @@ public class OrikaBeanMapper extends AbstractBeanMapper {
   /** The orika instance to use. */
   private MapperFacade orika;
 
+  private Mapper mapper;
+
   /**
    * The constructor.
    */
@@ -27,7 +30,7 @@ public class OrikaBeanMapper extends AbstractBeanMapper {
   }
 
   /**
-   * @param orika is the {@link ma.glasnost.orika.Mapper} to {@link Inject}.
+   * @param orika is the {@link ma.glasnost.orika.MapperFacade} to {@link Inject}.
    */
   @Inject
   public void setOrika(MapperFacade orika) {
@@ -39,12 +42,12 @@ public class OrikaBeanMapper extends AbstractBeanMapper {
    * {@inheritDoc}
    */
   @Override
-  public <T> T map(Object source, Class<T> targetType) {
+  public <T> T map(Object source, Class<T> targetClass) {
 
     if (source == null) {
       return null;
     }
 
-    return this.orika.map(source, targetType);
+    return this.orika.map(source, targetClass);
   }
 }
