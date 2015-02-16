@@ -181,6 +181,15 @@
         <artifactId>dozer</artifactId>
         <version>5.5.1</version>
       </dependency>
+
+      <!-- Orika for bean-mapping/conversion -->
+      <dependency>
+        <groupId>ma.glasnost.orika</groupId>
+        <artifactId>orika-core</artifactId>
+        <version>1.4.5</version>
+      </dependency>
+
+
       <!-- JSR303 API for annotation based validation -->
       <dependency>
         <groupId>javax.validation</groupId>

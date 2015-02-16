@@ -22,7 +22,12 @@
     <dependency>
       <groupId>javax.inject</groupId>
       <artifactId>javax.inject</artifactId>
-    </dependency>    
+    </dependency>
+     <dependency>
+      <groupId>ma.glasnost.orika</groupId>
+      <artifactId>orika-core</artifactId>
+     </dependency>
+
   </dependencies>
 
 </project>

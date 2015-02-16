@@ -1,4 +1,4 @@
-package io.oasp.module.beanmapping.common.impl;
+package io.oasp.module.beanmapping.common.impl.dozer;
 
 import org.dozer.CustomConverter;
 
