@@ -4,4 +4,5 @@ eclipse.m2.downloadSources=true
 eclipse.m2.offline=false
 eclipse.m2.updateIndexes=false
 eclipse.m2.userSettingsFile=${client.env.home}/conf/.m2/settings.xml
+eclipse.m2.WorkspacelifecycleMappingsLocation=${client.env.home}/${SETTINGS_PATH}/eclipse/lifecycle-mapping-metadata.xml
 eclipse.preferences.version=1
