@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
 import io.oasp.gastronomy.restaurant.tablemanagement.dataaccess.api.TableEntity;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
-import io.oasp.module.beanmapping.common.impl.DozerBeanMapper;
+import io.oasp.module.beanmapping.common.impl.dozer.DozerBeanMapper;
 import io.oasp.module.beanmapping.common.impl.orika.OrikaBeanMapper;
 
 import java.util.ArrayList;
