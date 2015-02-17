@@ -31,45 +31,50 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class OrikaDozerParametrizedTest {
 
+  private TableEto source;
+
   private OrikaBeanMapper orika;
 
   private DozerBeanMapper dozer;
 
-  private TableState orikaTableStateTarget;
-
-  private TableState dozerTableStateTarget;
+  private TableState sourceTableState;
 
   /**
-   * Initializing both {@link OrikaBeanMapper} and {@link DozerBeanMapper} with the concrete source Object and target
-   * Class
+   * Initializing both {@link OrikaBeanMapper} and {@link DozerBeanMapper} and instantiating the mapping source
+   * {@link TableEto}
    */
+
   @Before
   public void initialize() {
 
+    this.source = new TableEto();
+    this.source.setState(this.sourceTableState);
+
+    // initializing Orika bean mapper
     this.orika = new OrikaBeanMapper();
-    this.dozer = new DozerBeanMapper();
     MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
     mapperFactory.classMap(TableEto.class, TableEntity.class).byDefault().register();
     this.orika.setOrika(mapperFactory.getMapperFacade());
 
+    // initializing Dozer bean mapper
+    this.dozer = new DozerBeanMapper();
     List<String> myMappingFiles = new ArrayList<>();
     myMappingFiles.add("./config/app/common/dozer-mapping.xml");
     org.dozer.DozerBeanMapper mapper = new org.dozer.DozerBeanMapper();
     mapper.setMappingFiles(myMappingFiles);
     this.dozer.setDozer(mapper);
-
   }
 
   /**
    * The constructor.
    *
-   * @param source the {@link TableState} of the source {@link TableEto}
-   * @param target the {@link TableState} of the target {@link TableEto}
+   * @param sourceTableState the {@link TableState} of the source {@link TableEto}
+   *
    */
-  public OrikaDozerParametrizedTest(TableState source, TableState target) {
+  public OrikaDozerParametrizedTest(TableState sourceTableState) {
 
-    this.orikaTableStateTarget = source;
-    this.dozerTableStateTarget = target;
+    this.sourceTableState = sourceTableState;
+
   }
 
   /**
@@ -78,23 +83,27 @@ public class OrikaDozerParametrizedTest {
   @Parameters
   public static Collection<Object[]> parameters() {
 
-    return Arrays.asList(new Object[][] { { TableState.RESERVED, TableState.RESERVED } });
+    return Arrays
+        .asList(new Object[][] { new Object[] { TableState.RESERVED }, new Object[] { TableState.OCCUPIED }, });
+  }
+
+  /**
+   * A special test case that verifies the correct mapping of source and target using {@link OrikaBeanMapper}
+   */
+  @Test
+  public void testOrika() {
+
+    assertEquals(this.sourceTableState, this.orika.map(this.source, TableEntity.class).getState());
 
   }
 
   /**
-   * A special test case that verifies the correct mapping of source and target
+   * A special test case that verifies the correct mapping of source and target using {@link DozerBeanMapper}
    */
   @Test
-  public void testOrikaAndDozer() {
+  public void testDozer() {
 
-    TableEto source = new TableEto();
-    source.setState(TableState.RESERVED);
-
-    this.orikaTableStateTarget = this.orika.map(source, TableEntity.class).getState();
-    this.dozerTableStateTarget = this.dozer.map(source, TableEntity.class).getState();
-
-    assertEquals(this.orikaTableStateTarget, this.dozerTableStateTarget);
+    assertEquals(this.sourceTableState, this.orika.map(this.source, TableEntity.class).getState());
 
   }
 }
