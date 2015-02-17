@@ -27,7 +27,10 @@
       <groupId>ma.glasnost.orika</groupId>
       <artifactId>orika-core</artifactId>
      </dependency>
-
+     <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-beans</artifactId>
+     </dependency>
   </dependencies>
 
 </project>

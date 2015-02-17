@@ -12,10 +12,11 @@ import org.dozer.Mapper;
  *
  * @author hohwille
  */
-@Named
+@Named("dozer_updated")
 public class DozerBeanMapper extends AbstractBeanMapper {
 
   /** The dozer instance to use. */
+
   private Mapper dozer;
 
   /**
