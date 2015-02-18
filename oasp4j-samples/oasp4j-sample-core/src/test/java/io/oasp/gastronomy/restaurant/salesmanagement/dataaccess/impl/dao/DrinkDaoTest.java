@@ -17,6 +17,7 @@ import org.hibernate.envers.AuditReaderFactory;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -31,6 +32,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class })
 @ContextConfiguration({ ApplicationConfigurationConstants.BEANS_DATA_ACCESS,
 "classpath:/config/app/service/beans-test-service-rest.xml" })
+@ActiveProfiles("db-plain")
 public class DrinkDaoTest extends Assert {
 
   @Inject
