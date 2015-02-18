@@ -6,6 +6,8 @@ import io.oasp.gastronomy.restaurant.offermanagement.common.api.MenuItem;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
+import org.hibernate.envers.Audited;
+
 /**
  * The {@link io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity persistent entity} for
  * {@link MenuItem}.
@@ -13,6 +15,7 @@ import javax.persistence.MappedSuperclass;
  * @author loverbec
  */
 @MappedSuperclass
+@Audited
 public abstract class MenuItemEntity extends ApplicationPersistenceEntity implements MenuItem {
 
   private static final long serialVersionUID = 1L;

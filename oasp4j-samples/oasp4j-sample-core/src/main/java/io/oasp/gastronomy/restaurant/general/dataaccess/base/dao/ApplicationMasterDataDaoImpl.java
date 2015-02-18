@@ -1,20 +1,19 @@
 package io.oasp.gastronomy.restaurant.general.dataaccess.base.dao;
 
-import io.oasp.module.jpa.dataaccess.api.MasterDataDao;
+import io.oasp.module.jpa.dataaccess.api.RevisionedMasterDataDao;
+import io.oasp.module.jpa.dataaccess.api.RevisionedPersistenceEntity;
 
 import java.util.List;
 
-import net.sf.mmm.util.entity.api.PersistenceEntity;
-
 /**
- * This is the abstract base implemetation of {@link MasterDataDao} based on {@link ApplicationDaoImpl}.
+ * This is the abstract base implemetation of {@link RevisionedMasterDataDao} based on {@link ApplicationDaoImpl}.
  *
  * @param <ENTITY> is the {@link #getEntityClass() type} of the managed entity.
  *
  * @author hohwille
  */
-public abstract class ApplicationMasterDataDaoImpl<ENTITY extends PersistenceEntity<Long>> extends
-    ApplicationDaoImpl<ENTITY> implements MasterDataDao<ENTITY> {
+public abstract class ApplicationMasterDataDaoImpl<ENTITY extends RevisionedPersistenceEntity<Long>> extends
+    ApplicationDaoImpl<ENTITY> implements RevisionedMasterDataDao<ENTITY> {
 
   /**
    * The constructor.

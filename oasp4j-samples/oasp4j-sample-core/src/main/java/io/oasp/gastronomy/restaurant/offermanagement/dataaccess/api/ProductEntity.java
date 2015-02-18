@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import org.hibernate.envers.Audited;
+
 /**
  * The {@link io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity persistent entity} for
  * {@link Product}.
@@ -17,6 +19,7 @@ import javax.persistence.InheritanceType;
 @Entity(name = "Product")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
+@Audited
 public abstract class ProductEntity extends MenuItemEntity implements Product {
 
   private static final long serialVersionUID = 1L;
