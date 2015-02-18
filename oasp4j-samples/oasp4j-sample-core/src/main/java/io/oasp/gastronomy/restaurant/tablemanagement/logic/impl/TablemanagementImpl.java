@@ -1,7 +1,6 @@
 package io.oasp.gastronomy.restaurant.tablemanagement.logic.impl;
 
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSupport;
-import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.usecase.UcFindTable;
@@ -99,16 +98,6 @@ public class TablemanagementImpl extends AbstractBeanMapperSupport implements Ta
   public List<TableEto> findFreeTables() {
 
     return this.ucFindTable.findFreeTables();
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   */
-  @Override
-  public void markTableAs(TableEto table, TableState newState) {
-
-    this.ucManageTable.markTableAs(table, newState);
   }
 
   /**

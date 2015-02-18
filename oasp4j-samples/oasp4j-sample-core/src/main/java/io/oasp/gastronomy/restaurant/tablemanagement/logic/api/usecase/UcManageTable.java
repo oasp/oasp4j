@@ -1,6 +1,5 @@
 package io.oasp.gastronomy.restaurant.tablemanagement.logic.api.usecase;
 
-import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 
 import javax.validation.Valid;
@@ -35,11 +34,4 @@ public interface UcManageTable {
    */
   boolean isTableReleasable(@Valid TableEto table);
 
-  /**
-   * Marks a restaurant table as {@link TableState}.
-   *
-   * @param table Table the restaurant table to mark as occupied
-   * @param newState new table {@link TableState}
-   */
-  void markTableAs(@Valid TableEto table, TableState newState);
 }
