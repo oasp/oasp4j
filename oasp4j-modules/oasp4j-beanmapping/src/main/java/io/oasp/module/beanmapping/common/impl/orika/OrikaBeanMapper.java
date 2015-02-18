@@ -4,7 +4,6 @@ import io.oasp.module.beanmapping.common.base.AbstractBeanMapper;
 
 import javax.inject.Inject;
 
-import ma.glasnost.orika.Mapper;
 import ma.glasnost.orika.MapperFacade;
 
 /**
@@ -17,8 +16,6 @@ public class OrikaBeanMapper extends AbstractBeanMapper {
 
   /** The orika instance to use. */
   private MapperFacade orika;
-
-  private Mapper mapper;
 
   /**
    * The constructor.

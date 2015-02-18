@@ -9,10 +9,12 @@ import java.util.Set;
 
 /**
  * The abstract base implementation of {@link BeanMapper}.
- * 
+ *
  * @author hohwille
  */
 public abstract class AbstractBeanMapper implements BeanMapper {
+
+  private BeanMapper beanMapper;
 
   /**
    * The constructor.
@@ -20,6 +22,22 @@ public abstract class AbstractBeanMapper implements BeanMapper {
   public AbstractBeanMapper() {
 
     super();
+  }
+
+  /**
+   * @return beanMapper
+   */
+  public BeanMapper getBeanMapper() {
+
+    return this.beanMapper;
+  }
+
+  /**
+   * @param beanMapper the beanMapper to set
+   */
+  public void setBeanMapper(BeanMapper beanMapper) {
+
+    this.beanMapper = beanMapper;
   }
 
   /**
