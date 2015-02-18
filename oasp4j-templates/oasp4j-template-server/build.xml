@@ -3,8 +3,8 @@
 
   <property name="xml.end.pattern"  value="&lt;!-- END ARCHETYPE SKIP"/>
   <property name="xml.begin.pattern"  value="BEGIN ARCHETYPE SKIP --&gt;"/>
-  <property name="java.end.pattern"  value="// BEGIN ARCHETYPE SKIP "/>
-  <property name="java.begin.pattern"  value="// END ARCHETYPE SKIP "/>
+  <property name="java.begin.pattern"  value="// BEGIN ARCHETYPE SKIP"/>
+  <property name="java.end.pattern"  value="// END ARCHETYPE SKIP"/>
   <!-- the prefix necessary for archetype replacement -->
   <property name="prefix"  value="#set( $symbol_pound = '#' )${line.separator}#set( $symbol_dollar = '$' )${line.separator}#set( $symbol_escape = '\\\\' )${line.separator}"/>
 
@@ -69,11 +69,25 @@
           <replaceregex pattern="package ${sample.package}" replace="${prefix}package ${package}" flags="g"/>
           <!-- Replace base package -->
           <replaceregex pattern="${sample.package}" replace="${package}" flags="g"/>
-          <!-- comment out application specific logic -->
-          <replaceregex pattern="${java.begin.pattern}" replace="" flags="g"/>
-          <replaceregex pattern="${java.end.pattern}" replace="" flags="g"/>
           <!-- remove lines with references to 'offermanagement' (e.g. imports) -->
           <replaceregex pattern=".*offermanagement.*" replace="" flags="g"/>
+          <!-- remove application specific logic (remove everything between begin-pattern and end-pattern) -->
+          <replaceregex pattern="/\*" replace="#*" flags="g"/> <!-- transform real multi line java commands start -->
+          <replaceregex pattern="\*/" replace="*#" flags="g"/> <!-- transform real multi line java commands end -->
+          <!-- replace begin pattern with java command start -->
+          <replaceregex pattern="${java.begin.pattern}" replace="/*" flags="g"/>
+          <!-- replace end pattern with java command end -->
+          <replaceregex pattern="${java.end.pattern}" replace="*/" flags="g"/>
+          <replaceregex pattern="//" replace="##"/> <!-- transform real single line java commands -->
+        </tokenfilter>
+      	<!-- java.begin/end.pattern has been replaced with java multi line command and will be removed now -->
+      	<stripjavacomments/>
+        <!-- real java commands are now transformed back into java commands -->
+        <tokenfilter>
+          <linetokenizer/>
+        	<replaceregex pattern="#\*" replace="/*" flags="g"/>
+        	<replaceregex pattern="\*#" replace="*/" flags="g"/>
+          <replaceregex pattern="##" replace="//"/>
         </tokenfilter>
       </filterchain>
     </copy>
@@ -111,11 +125,6 @@
           <replaceregex pattern="package ${sample.package}" replace="${prefix}package ${package}" flags="g"/>
           <!-- Replace base package -->
           <replaceregex pattern="${sample.package}" replace="${package}" flags="g"/>
-          <!-- comment out application specific logic -->
-          <replaceregex pattern="${java.begin.pattern}" replace="" flags="g"/>
-          <replaceregex pattern="${java.end.pattern}" replace="" flags="g"/>
-          <!-- remove lines with references to 'offermanagement' (e.g. imports) -->
-          <replaceregex pattern=".*offermanagement.*" replace="" flags="g"/>
         </tokenfilter>
       </filterchain>
     </copy>

@@ -7,6 +7,8 @@ package io.oasp.gastronomy.restaurant.general.common.api.constants;
  */
 public abstract class NamedQueries {
 
+  // put your query names from NamedQueries.xml as constants here (or generate with cobigen)
+  // BEGIN ARCHETYPE SKIP
   /** @see io.oasp.gastronomy.restaurant.tablemanagement.dataaccess.impl.dao.TableDaoImpl#getFreeTables() */
   public static final String GET_FREE_TABLES = "get.free.tables";
 
@@ -24,5 +26,5 @@ public abstract class NamedQueries {
 
   /** @see io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.impl.dao.OrderDaoImpl */
   public static final String GET_OPEN_ORDER_FOR_TABLE = "get.open.order.for.table";
-
+  // END ARCHETYPE SKIP
 }

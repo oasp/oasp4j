@@ -1,12 +1,12 @@
 package io.oasp.gastronomy.restaurant.general.service.impl.rest;
 
-// BEGIN ARCHETYPE SKIP /*
+// BEGIN ARCHETYPE SKIP
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
-// END ARCHETYPE SKIP */
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SideDishEto;
+// END ARCHETYPE SKIP
 import io.oasp.module.rest.service.impl.json.ObjectMapperFactory;
 
 import javax.inject.Named;
@@ -29,13 +29,13 @@ public class ApplicationObjectMapperFactory extends ObjectMapperFactory {
 
     super();
     // register polymorphic base classes
-    // BEGIN ARCHETYPE SKIP /*
+    // BEGIN ARCHETYPE SKIP
     setBaseClasses(ProductEto.class);
-    // END ARCHETYPE SKIP */
+    // END ARCHETYPE SKIP
 
     NamedType[] subtypes;
     // register mapping for polymorphic sub-classes
-    // BEGIN ARCHETYPE SKIP /*
+    // BEGIN ARCHETYPE SKIP
     subtypes =
         new NamedType[] { new NamedType(MealEto.class, "Meal"), new NamedType(DrinkEto.class, "Drink"),
         new NamedType(SideDishEto.class, "SideDish") };
@@ -45,6 +45,6 @@ public class ApplicationObjectMapperFactory extends ObjectMapperFactory {
     SimpleModule module = getExtensionModule();
     module.addDeserializer(Money.class, new MoneyJsonDeserializer());
     module.addSerializer(Money.class, new MoneyJsonSerializer());
-    // END ARCHETYPE SKIP */
+    // END ARCHETYPE SKIP
   }
 }

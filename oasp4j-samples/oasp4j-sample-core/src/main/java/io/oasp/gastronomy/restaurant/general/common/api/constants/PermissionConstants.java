@@ -8,6 +8,8 @@ package io.oasp.gastronomy.restaurant.general.common.api.constants;
  */
 public abstract class PermissionConstants {
 
+  // put your permission names from access-control-schema.xml as constants here (or generate with cobigen)
+  // BEGIN ARCHETYPE SKIP
   /** {@link io.oasp.module.security.common.api.accesscontrol.AccessControlPermission} to retrieve offer. */
   public static final String FIND_OFFER = "FindOffer";
 
@@ -79,5 +81,5 @@ public abstract class PermissionConstants {
 
   /** {@link io.oasp.module.security.common.api.accesscontrol.AccessControlPermission} to remove table. */
   public static final String DELETE_TABLE = "DeleteTable";
-
+  // END ARCHETYPE SKIP
 }

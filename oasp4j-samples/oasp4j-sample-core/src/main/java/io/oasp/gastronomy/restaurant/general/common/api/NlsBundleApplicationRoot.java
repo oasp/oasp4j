@@ -45,6 +45,7 @@ public interface NlsBundleApplicationRoot extends NlsBundle {
   @NlsBundleMessage("The property {property} of object {object} can not be changed!")
   NlsMessage errorIllegalPropertyChange(@Named("object") Object object, @Named("property") Object property);
 
+  // BEGIN ARCHETYPE SKIP
   /**
    * @see io.oasp.gastronomy.restaurant.offermanagement.common.api.exception.OfferEmptyException
    *
@@ -53,6 +54,7 @@ public interface NlsBundleApplicationRoot extends NlsBundle {
   @NlsBundleMessage("The offer is empty - it must contain a drink, meal, or side-dish!")
   NlsMessage errorOfferEmpty();
 
+  // END ARCHETYPE SKIP
   /**
    * @see io.oasp.gastronomy.restaurant.general.common.api.exception.NoActiveUserException
    *
