@@ -12,6 +12,7 @@ import ma.glasnost.orika.MapperFacade;
  *
  * @author oelsabba
  */
+
 public class OrikaBeanMapper extends AbstractBeanMapper {
 
   /** The orika instance to use. */
@@ -20,6 +21,7 @@ public class OrikaBeanMapper extends AbstractBeanMapper {
   /**
    * The constructor.
    */
+
   public OrikaBeanMapper() {
 
     super();

@@ -30,6 +30,7 @@ public class IdentityConverter extends io.oasp.module.beanmapping.common.impl.do
   /**
    * {@inheritDoc}
    */
+
   @Override
   public Object convert(Object destination, Object source, Class<?> destinationClass, Class<?> sourceClass) {
 
