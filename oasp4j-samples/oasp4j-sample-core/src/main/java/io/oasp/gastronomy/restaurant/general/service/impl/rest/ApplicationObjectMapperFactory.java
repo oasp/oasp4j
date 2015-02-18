@@ -1,6 +1,8 @@
 package io.oasp.gastronomy.restaurant.general.service.impl.rest;
 
+// BEGIN ARCHETYPE SKIP /*
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
+// END ARCHETYPE SKIP */
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
@@ -38,11 +40,11 @@ public class ApplicationObjectMapperFactory extends ObjectMapperFactory {
         new NamedType[] { new NamedType(MealEto.class, "Meal"), new NamedType(DrinkEto.class, "Drink"),
         new NamedType(SideDishEto.class, "SideDish") };
     setSubtypes(subtypes);
-    // END ARCHETYPE SKIP */
 
     // register (de)serializers for custom datatypes
     SimpleModule module = getExtensionModule();
     module.addDeserializer(Money.class, new MoneyJsonDeserializer());
     module.addSerializer(Money.class, new MoneyJsonSerializer());
+    // END ARCHETYPE SKIP */
   }
 }
