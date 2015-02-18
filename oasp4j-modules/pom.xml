@@ -21,6 +21,7 @@
     <module>oasp4j-rest</module>
     <module>oasp4j-security</module>
     <module>oasp4j-jpa</module>
+    <module>oasp4j-jpa-envers</module>
     <module>oasp4j-web</module>
   </modules>
 
