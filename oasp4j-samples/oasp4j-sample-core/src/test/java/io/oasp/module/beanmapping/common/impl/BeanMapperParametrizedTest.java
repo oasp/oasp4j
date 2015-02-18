@@ -29,7 +29,7 @@ import org.junit.runners.Parameterized.Parameters;
  */
 
 @RunWith(Parameterized.class)
-public class OrikaDozerParametrizedTest {
+public class BeanMapperParametrizedTest {
 
   private AbstractBeanMapper beanMapper;
 
@@ -39,7 +39,7 @@ public class OrikaDozerParametrizedTest {
    * @param beanMapper the abstract instance of the bean mapper
    *
    */
-  public OrikaDozerParametrizedTest(AbstractBeanMapper beanMapper) {
+  public BeanMapperParametrizedTest(AbstractBeanMapper beanMapper) {
 
     this.beanMapper = beanMapper;
 
