@@ -42,9 +42,12 @@ public class UcChangeTableImpl extends AbstractUc implements UcChangeTable {
 
     // change table status:
     // marks old table as free
-    this.tableManagement.markTableAs(this.tableManagement.findTable(oldTableId), TableState.FREE);
+
+    this.tableManagement.findTable(oldTableId).setState(TableState.FREE);
+    this.tableManagement.saveTable(this.tableManagement.findTable(oldTableId));
     // marks new table with copied status
-    this.tableManagement.markTableAs(newTable, oldTableState);
+    newTable.setState(oldTableState);
+    this.tableManagement.saveTable(newTable);
 
   }
 
