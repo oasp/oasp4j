@@ -30,4 +30,7 @@
 
   <logger name="org.dozer" level="INFO"/>
 
+   <logger name="org.flywaydb.core.internal.dbsupport.SqlScript" level="INFO"/>
+
+
 </configuration>
