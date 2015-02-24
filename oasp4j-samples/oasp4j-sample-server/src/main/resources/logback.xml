@@ -77,20 +77,22 @@
           <pattern>${logPattern}</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-          <level>INFO</level>
+          <level>DEBUG</level>
         </filter>
       </appender>
-      <root level="INFO">
+      <root level="DEBUG">
         <appender-ref ref="CONSOLE_APPENDER"/>
       </root>
     </then>
   </if>
 
-  <root level="INFO">
-
+  <root level="DEBUG">
+    <appender-ref ref="ERROR_APPENDER"/>
+    <appender-ref ref="INFO_APPENDER"/>
+    <appender-ref ref="DEBUG_APPENDER"/>
   </root>
 
-  <logger name="org.springframework" level="INFO"/>
+  <logger name="org.springframework" level="DEBUG"/>
 
   <logger name="org.dozer" level="INFO"/>
 
