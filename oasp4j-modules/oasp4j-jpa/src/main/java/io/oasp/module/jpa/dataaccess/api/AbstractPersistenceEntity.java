@@ -10,18 +10,18 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import net.sf.mmm.util.entity.api.MutableGenericEntity;
-import net.sf.mmm.util.entity.api.PersistenceEntity;
 
 /**
- * Abstract base implementation of {@link PersistenceEntity} with a {@link GeneratedValue generated} {@link #getId()
- * primary key}. In case you need a different type of key add it as extra column and make it
+ * Abstract base implementation of {@link RevisionedPersistenceEntity} with a {@link GeneratedValue generated}
+ * {@link #getId() primary key}. In case you need a different type of key add it as extra column and make it
  * {@link javax.persistence.Column#unique() unique}.
  *
  * @author hohwille
  * @author rjoeris
  */
 @MappedSuperclass
-public abstract class AbstractPersistenceEntity implements PersistenceEntity<Long>, MutableGenericEntity<Long> {
+public abstract class AbstractPersistenceEntity implements RevisionedPersistenceEntity<Long>,
+    MutableGenericEntity<Long> {
 
   private static final long serialVersionUID = 1L;
 
@@ -30,6 +30,9 @@ public abstract class AbstractPersistenceEntity implements PersistenceEntity<Lon
 
   /** @see #getModificationCounter() */
   private int modificationCounter;
+
+  /** @see #getRevision() */
+  private Number revision;
 
   /**
    * The constructor.
@@ -84,7 +87,15 @@ public abstract class AbstractPersistenceEntity implements PersistenceEntity<Lon
   @Transient
   public Number getRevision() {
 
-    return null;
+    return this.revision;
+  }
+
+  /**
+   * @param revision the revision to set
+   */
+  public void setRevision(Number revision) {
+
+    this.revision = revision;
   }
 
   /**
