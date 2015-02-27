@@ -72,11 +72,24 @@ public class TableManagementRestServiceTest extends AbstractRestServiceTest {
     TableEto updatedTable =
         this.waiter.post(createdTable, RestUrls.TableManagement.getCreateTableUrl(), TableEto.class);
 
-    // Assert.assertEquals(newState, updatedTable.getState());
+    Assert.assertEquals(newState, updatedTable.getState());
     Assert.assertEquals(newNumber, updatedTable.getNumber());
 
-    // delete created table
+    // delete the table -- fails due to the OCCUPIED state
     Response deleteResponse = this.chief.delete(RestUrls.TableManagement.getDeleteTableUrl(createdTable.getId()));
+    Assert.assertEquals(deleteResponse.getStatus(), 400);
+
+    updatedTable = this.waiter.get(RestUrls.TableManagement.getGetTableUrl(createdTable.getId()), TableEto.class).getResponseObject();
+
+    newState = TableState.FREE;
+    updatedTable.setState(newState);
+    updatedTable =
+        this.waiter.post(updatedTable, RestUrls.TableManagement.getCreateTableUrl(), TableEto.class);
+
+    Assert.assertEquals(newState, updatedTable.getState());
+
+    // delete the table table
+    deleteResponse = this.chief.delete(RestUrls.TableManagement.getDeleteTableUrl(createdTable.getId()));
     Assert.assertEquals(deleteResponse.getStatus(), 204);
 
     // check if table is deleted
@@ -162,13 +175,17 @@ public class TableManagementRestServiceTest extends AbstractRestServiceTest {
     TableEntity tableEntity =
         new TableEntityBuilder().state(TableState.RESERVED).persist(this.transactionTemplate, this.entityManager);
 
-    this.waiter.post(RestUrls.TableManagement.markTableAsUrl(tableEntity.getId(), TableState.OCCUPIED));
     ResponseData<TableEto> table =
         this.waiter.get(RestUrls.TableManagement.getGetTableUrl(tableEntity.getId()), TableEto.class);
+    table.getResponseObject().setState(TableState.OCCUPIED);
+    this.waiter.post(table.getResponseObject(), RestUrls.TableManagement.getCreateTableUrl(), TableEto.class);
+
+    table = this.waiter.get(RestUrls.TableManagement.getGetTableUrl(tableEntity.getId()), TableEto.class);
     assertThat(table.getResponse().getStatus(), is(200));
     assertThat(table.getResponseObject().getState(), is(TableState.OCCUPIED));
 
-    this.waiter.post(RestUrls.TableManagement.markTableAsUrl(tableEntity.getId(), TableState.FREE));
+    table.getResponseObject().setState(TableState.FREE);
+    this.waiter.post(table.getResponseObject(), RestUrls.TableManagement.getCreateTableUrl(), TableEto.class);
     table = this.waiter.get(RestUrls.TableManagement.getGetTableUrl(tableEntity.getId()), TableEto.class);
     assertThat(table.getResponse().getStatus(), is(200));
     assertThat(table.getResponseObject().getState(), is(TableState.FREE));

@@ -69,7 +69,9 @@ public class UcManageTableImpl extends AbstractTableUc implements UcManageTable 
 
     TableEntity tableEntity = getBeanMapper().map(table, TableEntity.class);
     // initialize
-    tableEntity.setState(TableState.FREE);
+    if (tableEntity.getState() == null) {
+      tableEntity.setState(TableState.FREE);
+    }
     Long waiterId = tableEntity.getWaiterId();
     if (waiterId != null) {
       StaffMemberEto staffMember = this.staffmanagement.findStaffMember(waiterId);
