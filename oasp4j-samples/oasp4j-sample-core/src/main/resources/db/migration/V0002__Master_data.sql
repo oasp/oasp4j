@@ -41,7 +41,7 @@ INSERT INTO BILL (id, modificationCounter, payed, total,tip) VALUES (2, 1, true,
 INSERT INTO BILL_ORDERPOSITION (bill_id, orderpositions_id) VALUES (2,3);
 INSERT INTO BILL_ORDERPOSITION (bill_id, orderpositions_id) VALUES (2,4);
 
-INSERT INTO STAFFMEMBER (id, login, role, firstname, lastname, modificationCounter) VALUES (0, 'chief', 0, 'Charly', 'Chief', 0);
-INSERT INTO STAFFMEMBER (id, login, role, firstname, lastname, modificationCounter) VALUES (1, 'cook', 1, 'Carl', 'Cook', 0);
-INSERT INTO STAFFMEMBER (id, login, role, firstname, lastname, modificationCounter) VALUES (2, 'waiter', 2, 'Willy', 'Waiter', 0);
-INSERT INTO STAFFMEMBER (id, login, role, firstname, lastname, modificationCounter) VALUES (3, 'barkeeper', 3, 'Bianca', 'Barkeeper', 0);
+INSERT INTO STAFFMEMBER (id, login, role, firstname, lastname, modificationCounter) VALUES (0, 'chief', 3, 'Charly', 'Chief', 0);
+INSERT INTO STAFFMEMBER (id, login, role, firstname, lastname, modificationCounter) VALUES (1, 'cook', 0, 'Carl', 'Cook', 0);
+INSERT INTO STAFFMEMBER (id, login, role, firstname, lastname, modificationCounter) VALUES (2, 'waiter', 1, 'Willy', 'Waiter', 0);
+INSERT INTO STAFFMEMBER (id, login, role, firstname, lastname, modificationCounter) VALUES (3, 'barkeeper', 2, 'Bianca', 'Barkeeper', 0);
