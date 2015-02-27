@@ -508,6 +508,20 @@
       <timezone>+1</timezone>
       <properties/>
     </developer>
+    <developer>
+      <id>ksobkowiak</id>
+      <name>Krzysztof Sobkowiak</name>
+      <email>sobkowiak@onet.eu</email>
+      <organization></organization>
+      <organizationUrl/>
+      <roles>
+        <role>admin</role>
+        <role>designer</role>
+        <role>developer</role>
+      </roles>
+      <timezone>+1</timezone>
+      <properties/>
+    </developer>
   </developers>
   
   <licenses>
