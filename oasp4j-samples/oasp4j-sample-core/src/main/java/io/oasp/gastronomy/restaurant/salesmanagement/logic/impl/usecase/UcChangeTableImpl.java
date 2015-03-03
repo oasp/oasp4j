@@ -2,6 +2,7 @@ package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.logic.base.AbstractUc;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcChangeTable;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
@@ -22,32 +23,37 @@ public class UcChangeTableImpl extends AbstractUc implements UcChangeTable {
 
   private Tablemanagement tableManagement;
 
+  private Salesmanagement salesManagement;
+
   /**
    * {@inheritDoc}
    */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_TABLE)
-  public void changeTable(OrderEto order, TableEto newTable) {
+  public void changeTable(long orderId, long newTableId) {
 
+    OrderEto order = this.salesManagement.findOrder(orderId);
     // save old table data
     long oldTableId = order.getTableId();
     TableState oldTableState = this.tableManagement.findTable(oldTableId).getState();
 
     // update order
-    order.setTableId(newTable.getId());
+    order.setTableId(newTableId);
 
-    // TODO
-    // Salesmanagement s;
-    // s.saveOrder(order);
+    // marks new table with copied status
+    TableEto newTable = this.tableManagement.findTable(newTableId);
+    newTable.setState(oldTableState);
+
+    this.tableManagement.saveTable(newTable);
+
+    // saves Order for the new table
+    this.salesManagement.saveOrder(order);
 
     // change table status:
     // marks old table as free
-
-    this.tableManagement.findTable(oldTableId).setState(TableState.FREE);
-    this.tableManagement.saveTable(this.tableManagement.findTable(oldTableId));
-    // marks new table with copied status
-    newTable.setState(oldTableState);
-    this.tableManagement.saveTable(newTable);
+    TableEto oldTable = this.tableManagement.findTable(oldTableId);
+    oldTable.setState(TableState.FREE);
+    this.tableManagement.saveTable(oldTable);
 
   }
 
@@ -58,6 +64,15 @@ public class UcChangeTableImpl extends AbstractUc implements UcChangeTable {
   public void setTableManagement(Tablemanagement tableManagement) {
 
     this.tableManagement = tableManagement;
+  }
+
+  /**
+   * @param salesManagement the {@link Salesmanagement} to {@link Inject}.
+   */
+  @Inject
+  public void setSalesManagement(Salesmanagement salesManagement) {
+
+    this.salesManagement = salesManagement;
   }
 
 }

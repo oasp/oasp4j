@@ -20,6 +20,6 @@ public interface UcChangeTable {
    * @param order the {@link OrderEto order}
    * @param newTable the new {@link TableEto table} to switch to.
    */
-  void changeTable(OrderEto order, TableEto newTable);
+  void changeTable(long orderId, long newTableId);
 
 }

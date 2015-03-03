@@ -168,9 +168,9 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * {@inheritDoc}
    */
   @Override
-  public void changeTable(OrderEto order, TableEto table) {
+  public void changeTable(long orderId, long tableId) {
 
-    this.ucChangeTable.changeTable(order, table);
+    this.ucChangeTable.changeTable(orderId, tableId);
 
   }
 
