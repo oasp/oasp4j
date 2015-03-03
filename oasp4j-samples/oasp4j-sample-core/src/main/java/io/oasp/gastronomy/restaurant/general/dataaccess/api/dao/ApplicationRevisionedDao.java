@@ -1,6 +1,5 @@
 package io.oasp.gastronomy.restaurant.general.dataaccess.api.dao;
 
-import io.oasp.module.jpa.dataaccess.api.Dao;
 import io.oasp.module.jpa.dataaccess.api.RevisionedDao;
 import io.oasp.module.jpa.dataaccess.api.RevisionedPersistenceEntity;
 
@@ -11,6 +10,7 @@ import io.oasp.module.jpa.dataaccess.api.RevisionedPersistenceEntity;
  *
  * @param <ENTITY> is the type of the managed entity.
  */
-public interface ApplicationDao<ENTITY extends RevisionedPersistenceEntity<Long>> extends Dao<ENTITY> {
+public interface ApplicationRevisionedDao<ENTITY extends RevisionedPersistenceEntity<Long>> extends
+    ApplicationDao<ENTITY>, RevisionedDao<Long, ENTITY> {
 
 }
