@@ -3,7 +3,6 @@
 package io.oasp.module.jpa.dataaccess.impl;
 
 import io.oasp.module.jpa.dataaccess.api.AdvancedRevisionEntity;
-import io.oasp.module.jpa.dataaccess.api.PersistenceManager;
 import io.oasp.module.jpa.dataaccess.api.RevisionMetadata;
 
 import java.util.Date;
@@ -18,7 +17,7 @@ import javax.persistence.EntityManager;
  */
 public class LazyRevisionMetadata implements RevisionMetadata {
 
-  /** The {@link PersistenceManager} used to read the metadata. */
+  /** The {@link EntityManager} used to read the metadata. */
   private final EntityManager entityManager;
 
   /** @see #getRevision() */
@@ -30,7 +29,7 @@ public class LazyRevisionMetadata implements RevisionMetadata {
   /**
    * The constructor.
    *
-   * @param persistenceManager is the {@link PersistenceManager} used to fetch metadata.
+   * @param entityManager is the {@link EntityManager} used to fetch metadata.
    * @param revision is the {@link #getRevision() revision}.
    */
   public LazyRevisionMetadata(EntityManager entityManager, Long revision) {

@@ -11,12 +11,12 @@ import net.sf.mmm.util.exception.api.ObjectNotFoundException;
 
 /**
  * This is the interface for a {@link GenericDao} with the ability of revision-control. It organizes a revision-history
- * (journal) of the {@link #getEntityClass() managed entities}.
+ * (journal) of the managed entities.
  *
  * @see RevisionedEntity
  *
  * @param <ID> is the type of the {@link RevisionedEntity#getId() primary key}.
- * @param <ENTITY> is the {@link #getEntityClass() type} of the managed entity.
+ * @param <ENTITY> is the type of the managed entity.
  *
  * @author Joerg Hohwiller (hohwille at users.sourceforge.net)
  */
@@ -36,7 +36,7 @@ public interface RevisionedDao<ID, ENTITY extends RevisionedPersistenceEntity<ID
 
   /**
    * This method will get the {@link List} of {@link RevisionMetadata} from the {@link RevisionedEntity#getRevision()
-   * revision}-history of the {@link #getEntityClass() entity} with the given <code>id</code>.
+   * revision}-history of the entity with the given <code>id</code>.
    *
    * @param id is the {@link RevisionedEntity#getId() primary key} of the entity for which the history-metadata is
    *        requested.
@@ -51,8 +51,8 @@ public interface RevisionedDao<ID, ENTITY extends RevisionedPersistenceEntity<ID
    * latest revision will be loaded}. <br>
    * <b>ATTENTION:</b><br>
    * You should not make assumptions about the <code>revision</code> numbering of the underlying implementation. Please
-   * use {@link #getRevisionHistory(RevisionedEntity)} or {@link #getRevisionHistoryMetadata(Object)} to find revision
-   * numbers.
+   * use {@link #getRevisionHistory(RevisionedPersistenceEntity)} or {@link #getRevisionHistoryMetadata(Object)} to find
+   * revision numbers.
    *
    * @param id is the {@link RevisionedEntity#getId() primary key} of the requested {@link RevisionedEntity entity}.
    * @param revision is the {@link RevisionedEntity#getRevision() revision} of the requested entity or
