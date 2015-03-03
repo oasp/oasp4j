@@ -12,6 +12,7 @@ import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.BadRequestException;
 
 /**
  * UseCase: The guests can change a table to get a better table.
@@ -36,6 +37,15 @@ public class UcChangeTableImpl extends AbstractUc implements UcChangeTable {
     // save old table data
     long oldTableId = order.getTableId();
     TableState oldTableState = this.tableManagement.findTable(oldTableId).getState();
+
+    // throw exception if the old table and the new table have the same Id
+    if (oldTableId == newTableId) {
+      throw new BadRequestException("newTableId and oldTableId are not allowed to match!");
+    }
+    // throw exception if the newTableState is occupied
+    if (this.tableManagement.findTable(newTableId).getState() == oldTableState) {
+      throw new BadRequestException("It is not allowed to change to an occupied table!");
+    }
 
     // update order
     order.setTableId(newTableId);
