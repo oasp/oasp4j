@@ -259,4 +259,16 @@ public class SalesmanagementRestServiceImpl {
 
     this.salesManagement.deleteBill(billId);
   }
+
+  /**
+   *
+   * @param orderId
+   * @param newTableId
+   */
+  @Path("/order/{orderId}")
+  @POST
+  public void changeTable(@PathParam("orderId") Long orderId, long newTableId) {
+
+    this.salesManagement.changeTable(orderId, newTableId);
+  }
 }
