@@ -1,8 +1,8 @@
 <project name="app-template" default="main" basedir=".">
   <description>Pre-process sources and resources of oasp4j-sample to remove project specific parts.</description>
 
-  <property name="xml.end.pattern"  value="&lt;!-- END ARCHETYPE SKIP"/>
-  <property name="xml.begin.pattern"  value="BEGIN ARCHETYPE SKIP --&gt;"/>
+  <property name="xml.end.pattern"  value="END ARCHETYPE SKIP --&gt;"/>
+  <property name="xml.begin.pattern"  value="&lt;!-- BEGIN ARCHETYPE SKIP"/>
   <property name="java.begin.pattern"  value="// BEGIN ARCHETYPE SKIP"/>
   <property name="java.end.pattern"  value="// END ARCHETYPE SKIP"/>
   <!-- the prefix necessary for archetype replacement -->
@@ -49,6 +49,7 @@
           <replaceregex pattern="io.oasp.java.samples" replace="${groupId}" flags="g"/>
           <replaceregex pattern="oasp4j-sample-core" replace="${artifactId}" flags="g"/>
           <replaceregex pattern="oasp4j-samples" replace="${rootArtifactId}" flags="g"/>
+        	<replaceregex pattern="restaurant" replace="${rootArtifactId}" flags="gi"/>
         </tokenfilter>
       </filterchain>
     </copy>
@@ -64,30 +65,15 @@
       </fileset>
       <filterchain>
         <tokenfilter>
-          <linetokenizer/>
+          <filetokenizer/>
           <!-- Replace packages -->
           <replaceregex pattern="package ${sample.package}" replace="${prefix}package ${package}" flags="g"/>
           <!-- Replace base package -->
           <replaceregex pattern="${sample.package}" replace="${package}" flags="g"/>
           <!-- remove lines with references to 'offermanagement' (e.g. imports) -->
           <replaceregex pattern=".*offermanagement.*" replace="" flags="g"/>
-          <!-- remove application specific logic (remove everything between begin-pattern and end-pattern) -->
-          <replaceregex pattern="/\*" replace="#*" flags="g"/> <!-- transform real multi line java commands start -->
-          <replaceregex pattern="\*/" replace="*#" flags="g"/> <!-- transform real multi line java commands end -->
-          <!-- replace begin pattern with java command start -->
-          <replaceregex pattern="${java.begin.pattern}" replace="/*" flags="g"/>
-          <!-- replace end pattern with java command end -->
-          <replaceregex pattern="${java.end.pattern}" replace="*/" flags="g"/>
-          <replaceregex pattern="//" replace="##"/> <!-- transform real single line java commands -->
-        </tokenfilter>
-      	<!-- java.begin/end.pattern has been replaced with java multi line command and will be removed now -->
-      	<stripjavacomments/>
-        <!-- real java commands are now transformed back into java commands -->
-        <tokenfilter>
-          <linetokenizer/>
-        	<replaceregex pattern="#\*" replace="/*" flags="g"/>
-        	<replaceregex pattern="\*#" replace="*/" flags="g"/>
-          <replaceregex pattern="##" replace="//"/>
+        	<replaceregex pattern="${java.begin.pattern}.*?${java.end.pattern}" replace="" flags="gs"/>
+        	<replaceregex pattern="restaurant" replace="${rootArtifactId}" flags="gi"/>
         </tokenfilter>
       </filterchain>
     </copy>
@@ -95,14 +81,15 @@
     <copy todir="${sample.core.resources.output}">
       <fileset dir="${sample.core.resources.input}">
         <exclude name="**/NamedQueries.xml"/>
-        <exclude name="db/**/*"/>
+      	<exclude name="db/**/*"/>
+      	<exclude name="**/error_de.properties"/>
+      	<exclude name="**/error_en.properties"/>
       </fileset>
       <filterchain>
         <tokenfilter>
-          <linetokenizer/>
+          <filetokenizer/>
           <!-- remove application specific logic -->
-          <replaceregex pattern="${xml.begin.pattern}" replace="" flags="g"/>
-          <replaceregex pattern="${xml.end.pattern}" replace="" flags="g"/>
+        	<replaceregex pattern="${xml.begin.pattern}.*${xml.end.pattern}" replace="" flags="gs"/>
           <!-- comment out application specific logic -->
           <replaceregex pattern="&lt;\?xml " replace="${prefix}&lt;?xml " flags="g"/>
           <replaceregex pattern="${sample.package}" replace="${package}" flags="g"/>
@@ -132,14 +119,14 @@
     <copy todir="${sample.core.test.resources.output}">
       <fileset dir="${sample.core.test.resources.input}">
         <exclude name="**/NamedQueries.xml"/>
-        <exclude name="db/**/*"/>
+      	<exclude name="db/**/*"/>
+      	<exclude name="**/beans-test-service-rest.xml"/>
       </fileset>
       <filterchain>
         <tokenfilter>
-          <linetokenizer/>
+          <filetokenizer/>
           <!-- remove application specific logic -->
-          <replaceregex pattern="${xml.begin.pattern}" replace="" flags="g"/>
-          <replaceregex pattern="${xml.end.pattern}" replace="" flags="g"/>
+        	<replaceregex pattern="${xml.begin.pattern}.*${xml.end.pattern}" replace="" flags="gs"/>
           <!-- comment out application specific logic -->
           <replaceregex pattern="&lt;\?xml " replace="${prefix}&lt;?xml " flags="g"/>
           <replaceregex pattern="${sample.package}" replace="${package}" flags="g"/>
@@ -158,6 +145,7 @@
           <replaceregex pattern="oasp4j-sample-server" replace="${artifactId}" flags="g"/>
           <replaceregex pattern="oasp4j-sample-core" replace="${rootArtifactId}-core" flags="g"/>
           <replaceregex pattern="oasp4j-samples" replace="${rootArtifactId}" flags="g"/>
+        	<replaceregex pattern="restaurant" replace="${rootArtifactId}" flags="gi"/>
         </tokenfilter>
       </filterchain>
     </copy>
@@ -168,7 +156,8 @@
       <filterchain>
         <tokenfilter>
           <linetokenizer/>
-          <replaceregex pattern="${sample.package}" replace="${package}" flags="g"/>
+        	<replaceregex pattern="${sample.package}" replace="${package}" flags="g"/>
+        	<replaceregex pattern="restaurant" replace="${rootArtifactId}" flags="gi"/>
         </tokenfilter>
       </filterchain>
     </copy>
@@ -182,7 +171,7 @@
         <tokenfilter>
           <!-- comment out application specific logic -->
           <!--<replaceregex pattern="&lt;\?xml " replace="${prefix}&lt;?xml " flags="g"/>-->
-          <replaceregex pattern="Restaurant" replace="${rootArtifactId}" flags="g"/>
+        	<replaceregex pattern="restaurant" replace="${rootArtifactId}" flags="gi"/>
           <replaceregex pattern="oasp-sample-server" replace="${rootArtifactId}" flags="g"/>
           <!--<replaceregex pattern="oasp-example-application" replace="${rootArtifactId}" flags="g"/>-->
         </tokenfilter>
