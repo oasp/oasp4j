@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <access-control-schema>
+  <!-- BEGIN ARCHETYPE SKIP -->
   <group id="ReadMasterData" type="group">
     <permissions>
       <!-- offermanagement -->
@@ -66,4 +67,5 @@
       <permission id="DeleteTable"/>
     </permissions>
   </group>
+  <!-- END ARCHETYPE SKIP -->
 </access-control-schema>

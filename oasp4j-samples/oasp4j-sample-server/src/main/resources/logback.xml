@@ -10,6 +10,7 @@
 
   <property name="rollingPattern" value="%d{yyyy-MM-dd_HH}"></property>
 
+  <!-- filePath is set relatively to the 'logs' directory of Tomcat -->
   <property name="filePath" value="../logs/"></property>
 
   <property name="errorLogFile" value="error_log_${HOSTNAME}_${appname}"></property>
