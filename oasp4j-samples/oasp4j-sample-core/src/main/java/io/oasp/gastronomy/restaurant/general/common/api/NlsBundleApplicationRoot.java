@@ -63,4 +63,24 @@ public interface NlsBundleApplicationRoot extends NlsBundle {
   @NlsBundleMessage("There is currently no user logged in")
   NlsMessage errorNoActiveUser();
 
+  /**
+   * @see io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException
+   *
+   * @param state that's relevant for the error
+   * @return the {@link NlsMessage}.
+   */
+  @NlsBundleMessage("The table is already occupied")
+  NlsMessage errorIllegalEntityStateCombination(@Named("state") Object state);
+
+  /**
+   * @see io.oasp.gastronomy.restaurant.salesmanagement.common.api.exception.ChangeTableIllegalStateCombinationException
+   *
+   * @param orderId The id of the order which is going to be transfered to the targetTable
+   * @param tableNumber of the targetTable which is causing the problem
+   * @return the {@link NlsMessage}.
+   */
+  @NlsBundleMessage("The order with the Id {orderId} can''t be transfered to the table with the Number {tableNumber} because this table is already occupied.")
+  NlsMessage errorChangeTableIllegalStateCombination(@Named("orderId") Long orderId,
+      @Named("tableNumber") Long tableNumber);
+
 }

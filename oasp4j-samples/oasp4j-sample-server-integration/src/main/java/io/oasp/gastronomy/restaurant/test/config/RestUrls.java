@@ -98,6 +98,11 @@ public interface RestUrls {
         return ORDER_URL + orderId + "/position/" + orderPositionId + "/" + state;
       }
 
+      public static final String getChangeTableURL(Long orderId) {
+
+        return ORDER_URL + "/" + orderId + "/";
+      }
+
     }
 
     /**
@@ -227,7 +232,7 @@ public interface RestUrls {
      */
     public final static String getGetTableUrl(Long id) {
 
-      return TABLE_URL + "/" + id;
+      return TABLE_URL + "/" + id + "/";
     }
 
     /**

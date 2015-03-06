@@ -2,6 +2,7 @@ package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.logic.base.AbstractUc;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.exception.ChangeTableIllegalStateCombinationException;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcChangeTable;
@@ -12,7 +13,6 @@ import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.ws.rs.BadRequestException;
 
 /**
  * UseCase: The guests can change a table to get a better table.
@@ -36,22 +36,22 @@ public class UcChangeTableImpl extends AbstractUc implements UcChangeTable {
     OrderEto order = this.salesManagement.findOrder(orderId);
     // save old table data
     long oldTableId = order.getTableId();
-    TableState oldTableState = this.tableManagement.findTable(oldTableId).getState();
-
-    // throw exception if the old table and the new table have the same Id
     if (oldTableId == newTableId) {
-      throw new BadRequestException("newTableId and oldTableId are not allowed to match!");
+      return; // nothing to do...
     }
+    TableEto oldTable = this.tableManagement.findTable(oldTableId);
+    TableState oldTableState = oldTable.getState();
+
     // throw exception if the newTableState is occupied
-    if (this.tableManagement.findTable(newTableId).getState() == oldTableState) {
-      throw new BadRequestException("It is not allowed to change to an occupied table!");
+    TableEto newTable = this.tableManagement.findTable(newTableId);
+    if (newTable.getState().isOccupied()) {
+      throw new ChangeTableIllegalStateCombinationException(order, newTable);
     }
 
     // update order
     order.setTableId(newTableId);
 
     // marks new table with copied status
-    TableEto newTable = this.tableManagement.findTable(newTableId);
     newTable.setState(oldTableState);
 
     this.tableManagement.saveTable(newTable);
@@ -61,7 +61,6 @@ public class UcChangeTableImpl extends AbstractUc implements UcChangeTable {
 
     // change table status:
     // marks old table as free
-    TableEto oldTable = this.tableManagement.findTable(oldTableId);
     oldTable.setState(TableState.FREE);
     this.tableManagement.saveTable(oldTable);
 

@@ -190,6 +190,57 @@ public class SalesManagementRestServiceTest extends AbstractRestServiceTest {
   }
 
   /**
+   * Test change Table
+   */
+  @Test
+  public void changeTableTest() {
+
+    // create table
+    TableEto table = TestData.createTable(null, 1L, null, TableState.OCCUPIED);
+    TableEto createdTable = this.chief.post(table, RestUrls.TableManagement.getCreateTableUrl(), TableEto.class);
+    TableEto tableTwo = TestData.createTable(null, 2L, null, TableState.FREE);
+    TableEto createdTableTwo = this.chief.post(tableTwo, RestUrls.TableManagement.getCreateTableUrl(), TableEto.class);
+    TableEto tableThree = TestData.createTable(null, 3L, null, TableState.OCCUPIED);
+    TableEto createdTableThree =
+        this.chief.post(tableThree, RestUrls.TableManagement.getCreateTableUrl(), TableEto.class);
+    // create order
+    OrderCto order = TestData.createOrderCto(null, createdTable.getId(), null, OrderState.OPEN);
+    OrderCto createdOrder = this.waiter.post(order, RestUrls.SalesManagement.Order.getCreateOrderURL(), OrderCto.class);
+    // change table
+    Response postStatusCode =
+        this.waiter.post(RestUrls.SalesManagement.Order.getChangeTableURL(createdOrder.getOrder().getId()),
+            createdTableTwo.getId());
+    int CurrentPostStatus = postStatusCode.getStatus();
+    assertThat(CurrentPostStatus, is(204));
+
+    ResponseData<TableEto> tableTwoStatus =
+        this.waiter.get(RestUrls.TableManagement.getGetTableUrl(createdTableTwo.getId()), TableEto.class);
+    assertThat(tableTwoStatus.getResponseObject().getState(), is(TableState.OCCUPIED));
+
+    ResponseData<TableEto> tableStatus =
+        this.waiter.get(RestUrls.TableManagement.getGetTableUrl(createdTable.getId()), TableEto.class);
+    assertThat(tableStatus.getResponseObject().getState(), is(TableState.FREE));
+
+    // Tests if you try to change the table to the current table
+    Response currentTableResp =
+        this.waiter.post(RestUrls.SalesManagement.Order.getChangeTableURL(createdOrder.getOrder().getId()),
+            createdOrder.getOrder().getTableId());
+    int statusCodeCurrentTable = currentTableResp.getStatus();
+
+    assertThat(statusCodeCurrentTable, is(204));
+
+    // Tests if the exception gets thrown if you try to change the table to an occupied table
+    Response occupiedTableResp =
+        this.waiter.post(RestUrls.SalesManagement.Order.getChangeTableURL(createdOrder.getOrder().getId()),
+            createdTableThree.getId());
+
+    int statusCodeOccupiedTable = occupiedTableResp.getStatus();
+
+    assertThat(statusCodeOccupiedTable, is(400));
+
+  }
+
+  /**
    * Tests the get bill rest service
    */
   @Test

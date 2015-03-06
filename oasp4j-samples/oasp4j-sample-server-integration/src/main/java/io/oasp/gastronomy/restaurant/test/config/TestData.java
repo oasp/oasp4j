@@ -471,9 +471,14 @@ public class TestData {
   public static final TableEto createTable(Long id, Long number, Integer modificationCounter, TableState state) {
 
     TableEto table = new TableEto();
-    if (id != null)
+    if (id != null) {
       table.setId(id);
-    table.setNumber(number);
+    }
+    if (number == null) {
+      table.setNumber(id);
+    } else {
+      table.setNumber(number);
+    }
     if (modificationCounter != null)
       table.setModificationCounter(modificationCounter);
     table.setState(state);
