@@ -45,16 +45,6 @@ public interface NlsBundleApplicationRoot extends NlsBundle {
   @NlsBundleMessage("The property {property} of object {object} can not be changed!")
   NlsMessage errorIllegalPropertyChange(@Named("object") Object object, @Named("property") Object property);
 
-  // BEGIN ARCHETYPE SKIP
-  /**
-   * @see io.oasp.gastronomy.restaurant.offermanagement.common.api.exception.OfferEmptyException
-   *
-   * @return the {@link NlsMessage}.
-   */
-  @NlsBundleMessage("The offer is empty - it must contain a drink, meal, or side-dish!")
-  NlsMessage errorOfferEmpty();
-
-  // END ARCHETYPE SKIP
   /**
    * @see io.oasp.gastronomy.restaurant.general.common.api.exception.NoActiveUserException
    *
@@ -63,14 +53,14 @@ public interface NlsBundleApplicationRoot extends NlsBundle {
   @NlsBundleMessage("There is currently no user logged in")
   NlsMessage errorNoActiveUser();
 
+  // BEGIN ARCHETYPE SKIP
   /**
-   * @see io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException
+   * @see io.oasp.gastronomy.restaurant.offermanagement.common.api.exception.OfferEmptyException
    *
-   * @param state that's relevant for the error
    * @return the {@link NlsMessage}.
    */
-  @NlsBundleMessage("The table is already occupied")
-  NlsMessage errorIllegalEntityStateCombination(@Named("state") Object state);
+  @NlsBundleMessage("The offer is empty - it must contain a drink, meal, or side-dish!")
+  NlsMessage errorOfferEmpty();
 
   /**
    * @see io.oasp.gastronomy.restaurant.salesmanagement.common.api.exception.ChangeTableIllegalStateCombinationException
@@ -82,5 +72,6 @@ public interface NlsBundleApplicationRoot extends NlsBundle {
   @NlsBundleMessage("The order with the Id {orderId} can''t be transfered to the table with the Number {tableNumber} because this table is already occupied.")
   NlsMessage errorChangeTableIllegalStateCombination(@Named("orderId") Long orderId,
       @Named("tableNumber") Long tableNumber);
+  // END ARCHETYPE SKIP
 
 }
