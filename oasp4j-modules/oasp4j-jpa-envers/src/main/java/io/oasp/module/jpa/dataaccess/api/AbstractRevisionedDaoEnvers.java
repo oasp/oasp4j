@@ -17,8 +17,7 @@ import org.hibernate.envers.AuditReaderFactory;
  * This is the abstract base-implementation of a {@link AbstractGenericDao} using {@link org.hibernate.envers
  * Hibernate-Envers} to manage the revision-control.
  *
- * @param <ID> is the type of the {@link net.sf.mmm.util.entity.api.GenericEntity#getId() primary key} of the managed
- *        {@link net.sf.mmm.util.entity.api.GenericEntity}.
+ * @param <ID> is the type of the primary key of the managed {@link io.oasp.module.jpa.dataaccess.api.GenericDao}.
  * @param <E> is the {@link #getEntityClass() type} of the managed entity.
  *
  * @author Joerg Hohwiller (hohwille at users.sourceforge.net)
@@ -43,7 +42,22 @@ public abstract class AbstractRevisionedDaoEnvers<ID, E extends RevisionedPersis
   }
 
   /**
-   * {@inheritDoc}
+   * This method loads a historic {@link RevisionedPersistenceEntity#getRevision() revision} of the
+   * {@link RevisionedPersistenceEntity} with the given <code>id</code> from the persistent store. <br>
+   * However if the given <code>revision</code> is {@link RevisionedPersistenceEntity#LATEST_REVISION} the
+   * {@link #find(Object) latest revision will be loaded}. <br>
+   * <b>ATTENTION:</b><br>
+   * You should not make assumptions about the <code>revision</code> numbering of the underlying implementation. Please
+   * use {@link #getRevisionHistory(RevisionedPersistenceEntity)} or {@link #getRevisionHistoryMetadata(Object)} to find
+   * revision numbers.
+   *
+   * @param id is the {@link RevisionedPersistenceEntity#getId() primary key} of the requested
+   *        {@link RevisionedPersistenceEntity entity}.
+   * @param revision is the {@link RevisionedPersistenceEntity#getRevision() revision} of the requested entity or
+   *        {@link RevisionedPersistenceEntity#LATEST_REVISION} to get the {@link #find(Object) latest} revision. A
+   *        specific revision has to be greater than <code>0</code>.
+   * @return the requested {@link RevisionedPersistenceEntity entity}.
+   * @throws ObjectNotFoundException if the requested {@link RevisionedPersistenceEntity entity} could NOT be found.
    */
   public E load(ID id, Number revision) throws ObjectNotFoundException {
 
@@ -76,7 +90,11 @@ public abstract class AbstractRevisionedDaoEnvers<ID, E extends RevisionedPersis
   }
 
   /**
-   * {@inheritDoc}
+   * This method creates a new {@link RevisionedPersistenceEntity#getRevision() revision} of the given entity. The given
+   * entity is saved and a copy is written to the revision-history
+   *
+   * @param entity is the entity to create a new revision of.
+   * @return the {@link RevisionedPersistenceEntity#getRevision() revision} of the created history-entry.
    */
   public Number createRevision(E entity) {
 
@@ -85,7 +103,14 @@ public abstract class AbstractRevisionedDaoEnvers<ID, E extends RevisionedPersis
   }
 
   /**
-   * {@inheritDoc}
+   * This method will get the {@link List} of historic {@link RevisionedPersistenceEntity#getRevision() revisions}
+   * before the given <code>entity</code>. If the given <code>entity</code> is the
+   * {@link RevisionedPersistenceEntity#LATEST_REVISION latest revision} ... <br>
+   * If the <code>entity</code> is NOT revision controlled, an {@link java.util.Collections#emptyList() empty list} is
+   * returned.
+   *
+   * @param entity is the according {@link RevisionedPersistenceEntity}.
+   * @return the {@link List} of historic {@link RevisionedPersistenceEntity#getRevision() revisions}.
    */
   public List<Number> getRevisionHistory(E entity) {
 
@@ -93,7 +118,13 @@ public abstract class AbstractRevisionedDaoEnvers<ID, E extends RevisionedPersis
   }
 
   /**
-   * {@inheritDoc}
+   * This method will get the {@link List} of {@link RevisionMetadata} from the
+   * {@link RevisionedPersistenceEntity#getRevision() revision}-history of the {@link #getEntityClass() entity} with the
+   * given <code>id</code>.
+   *
+   * @param id is the {@link RevisionedPersistenceEntity#getId() primary key} of the entity for which the
+   *        history-metadata is requested.
+   * @return the requested {@link List} of {@link RevisionMetadata}.
    */
   public List<RevisionMetadata> getRevisionHistoryMetadata(Object id) {
 
