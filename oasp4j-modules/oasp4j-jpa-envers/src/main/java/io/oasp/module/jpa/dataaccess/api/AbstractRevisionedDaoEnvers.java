@@ -14,12 +14,12 @@ import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 
 /**
- * This is the abstract base-implementation of a {@link net.sf.mmm.persistence.api.RevisionedDao} using
- * {@link org.hibernate.envers Hibernate-Envers} to manage the revision-control.
+ * This is the abstract base-implementation of a {@link AbstractGenericDao} using {@link org.hibernate.envers
+ * Hibernate-Envers} to manage the revision-control.
  *
  * @param <ID> is the type of the {@link net.sf.mmm.util.entity.api.GenericEntity#getId() primary key} of the managed
  *        {@link net.sf.mmm.util.entity.api.GenericEntity}.
- * @param <ENTITY> is the {@link #getEntityClass() type} of the managed entity.
+ * @param <E> is the {@link #getEntityClass() type} of the managed entity.
  *
  * @author Joerg Hohwiller (hohwille at users.sourceforge.net)
  */

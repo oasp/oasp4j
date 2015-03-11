@@ -488,6 +488,16 @@ public interface RestUrls {
         return PRODUCT_URL + "/sortby/" + sortBy;
       }
 
+      /**
+       * @param id
+       * @param revision
+       * @return
+       */
+      public static String getFindProductByRevisionUrl(Long id, Long revision) {
+
+        return PRODUCT_URL + "/" + id + "/" + revision;
+      }
+
     }
   }
 

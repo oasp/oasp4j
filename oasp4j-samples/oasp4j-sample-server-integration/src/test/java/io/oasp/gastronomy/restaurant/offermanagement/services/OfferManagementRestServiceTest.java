@@ -256,6 +256,29 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
   }
 
   /**
+   * Test find product
+   */
+  @Test
+  public void findProductByRevisionTest() {
+
+    // create drink
+    ProductEto drink = TestData.createDrink(null, "Wasser", null, false);
+    DrinkEto createdDrink =
+        this.chief.post(drink, RestUrls.OfferManagement.Product.getCreateProductUrl(), DrinkEto.class);
+    // change drink
+    createdDrink.setDescription("changed description");
+    this.chief.post(createdDrink, RestUrls.OfferManagement.Product.getCreateProductUrl(), DrinkEto.class);
+
+    Long revision = 1L;
+    ResponseData<DrinkEto> revisionedProductResponse =
+        this.waiter.get(RestUrls.OfferManagement.Product.getFindProductByRevisionUrl(createdDrink.getId(), revision),
+            DrinkEto.class);
+    DrinkEto revisionedProduct = revisionedProductResponse.getResponseObject();
+    Assert.assertEquals(revision.longValue(), revisionedProduct.getRevision().longValue());
+
+  }
+
+  /**
    * Test update product
    */
   @Test

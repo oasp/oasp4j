@@ -295,4 +295,13 @@ public class OffermanagementImpl extends AbstractBeanMapperSupport implements Of
 
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public ProductEto findProductByRevision(Long id, Number revision) {
+
+    return this.ucFindProduct.findProductByRevision(id, revision);
+  }
+
 }

@@ -28,6 +28,18 @@ public interface UcFindProduct {
   ProductEto findProduct(Long id);
 
   /**
+   * Gets a {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product} with a specific revision using its
+   * entity identifier and a revision.
+   *
+   * @param id is the {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product#getId() product ID}.
+   * @param revision is the revision of the {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product
+   *        Product}
+   * @return the requested {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product} or <code>null</code>
+   *         if no such {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product} exists.
+   */
+  ProductEto findProductByRevision(Long id, Number revision);
+
+  /**
    * Gets a {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Meal} using its entity identifier.
    *
    * @param id is the {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Meal#getId() product ID}.

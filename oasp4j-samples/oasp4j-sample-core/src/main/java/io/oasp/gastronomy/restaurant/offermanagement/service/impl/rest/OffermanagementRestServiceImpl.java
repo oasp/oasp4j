@@ -198,6 +198,24 @@ public class OffermanagementRestServiceImpl {
   }
 
   /**
+   * Delegates to {@link UcFindProduct#findProductByRevision}.
+   *
+   * @param id ID of the {@link ProductEto}
+   * @param revision revision of the {@link ProductEto}
+   * @return the {@link ProductEto}
+   */
+  @GET
+  @Path("/product/{id}/{revision}")
+  public ProductEto findProductByRevision(@PathParam("id") Long id, @PathParam("revision") Long revision) {
+
+    if (revision != null) {
+      return this.offerManagement.findProductByRevision(id, revision);
+    } else {
+      return this.offerManagement.findProduct(id);
+    }
+  }
+
+  /**
    * Delegates to {@link UcFindProduct#findProduct}.
    *
    * @param id ID of the {@link ProductEto}

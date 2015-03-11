@@ -216,4 +216,20 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
 
     return getUcManageBinaryObject().getBinaryObjectBlob(findProductPicture(productId).getId());
   }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT_PICTURE)
+  public ProductEto findProductByRevision(Long id, Number revision) {
+
+    LOG.debug("Get Product with id '" + id + "' and revision '" + revision + "' from database.");
+    ProductEntity product = getProductDao().load(id, revision);
+    if (product == null) {
+      return null;
+    } else {
+      return getBeanMapper().map(product, ProductEto.class);
+    }
+  }
 }
