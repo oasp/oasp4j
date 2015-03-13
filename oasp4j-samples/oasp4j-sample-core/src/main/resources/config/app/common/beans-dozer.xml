@@ -6,7 +6,7 @@
                       http://www.springframework.org/schema/context
                       http://www.springframework.org/schema/context/spring-context.xsd">
 
-  <context:component-scan base-package="io.oasp.module.beanmapping"/>
+ <context:component-scan base-package="io.oasp.module.beanmapping"/>
   <bean id="dozer" class="org.dozer.DozerBeanMapper" scope="singleton">
     <property name="mappingFiles">
       <list>
@@ -14,5 +14,22 @@
       </list>
     </property>
   </bean>
+
+
+
+
+
+
+
+  <context:component-scan base-package="io.oasp.module.beanmapping"/>
+  <bean id="dozer_updated" class="org.dozer.DozerBeanMapper" scope="singleton">
+    <property name="mappingFiles">
+      <list>
+        <value>config/app/common/dozer-mapping.xml</value>
+      </list>
+    </property>
+  </bean>
+
+
 
 </beans>

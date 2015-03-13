@@ -1,25 +1,22 @@
-package io.oasp.module.beanmapping.common.impl;
+package io.oasp.module.beanmapping.common.impl.dozer;
+
+import io.oasp.module.beanmapping.common.base.AbstractBeanMapper;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.dozer.Mapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This is the implementation of {@link io.oasp.module.beanmapping.common.api.BeanMapper} using dozer {@link Mapper}.
  *
  * @author hohwille
- * @deprecated As of release 1.0.0, removed to package io.oasp.module.beanmapping.common.impl.dozer
  */
-@Named
-@Deprecated
-public class DozerBeanMapper extends io.oasp.module.beanmapping.common.impl.dozer.DozerBeanMapper {
-
-  private static final Logger LOG = LoggerFactory.getLogger(DozerBeanMapper.class);
+@Named("dozer_updated")
+public class DozerBeanMapper extends AbstractBeanMapper {
 
   /** The dozer instance to use. */
+
   private Mapper dozer;
 
   /**
@@ -28,14 +25,11 @@ public class DozerBeanMapper extends io.oasp.module.beanmapping.common.impl.doze
   public DozerBeanMapper() {
 
     super();
-    LOG.warn("Deprecated as of release 1.0.0, removed to package {}",
-        io.oasp.module.beanmapping.common.impl.dozer.DozerBeanMapper.class.getPackage());
   }
 
   /**
    * @param dozer is the {@link Mapper} to {@link Inject}.
    */
-  @Override
   @Inject
   public void setDozer(Mapper dozer) {
 
