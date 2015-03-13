@@ -1,0 +1,6 @@
+[submodule "wiki"]
+	path = wiki
+	url = https://github.com/oasp/oasp4j.wiki.git
+[submodule "oasp4j-ide"]
+	path = oasp4j-ide
+	url = https://github.com/oasp/oasp4j-ide.git
