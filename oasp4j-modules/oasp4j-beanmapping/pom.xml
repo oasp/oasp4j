@@ -23,6 +23,12 @@
       <groupId>javax.inject</groupId>
       <artifactId>javax.inject</artifactId>
     </dependency>    
+
+    <dependency>
+      <groupId>io.oasp.java.modules</groupId>
+      <artifactId>oasp4j-test</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
 </project>

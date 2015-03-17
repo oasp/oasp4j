@@ -197,22 +197,42 @@
         <artifactId>validation-api</artifactId>
         <version>1.1.0.Final</version>
       </dependency>
+
+      <!-- *** optional TEST DEPENDENCIES *** -->
+      <!-- JUnit for Test-Case definition and execution -->
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.12</version>
+      </dependency>
+      <!-- AssertJ for smart assertions -->
+      <dependency>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-core</artifactId>
+        <version>2.0.0</version>
+      </dependency>
       <!-- Mocking framework for mocks in unit tests -->
       <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-core</artifactId>
         <version>1.9.5</version>
       </dependency>
+      <!-- Wiremock for mocking network communication -->
+      <dependency>
+        <groupId>com.github.tomakehurst</groupId>
+        <artifactId>wiremock</artifactId>
+        <version>1.54</version>
+      </dependency>
 
       <!-- *** INTERNAL DEPENDENCIES *** -->
       <dependency>
         <groupId>io.oasp.java.modules</groupId>
-        <artifactId>oasp4j-logging</artifactId>
+        <artifactId>oasp4j-test</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>io.oasp.java.modules</groupId>
-        <artifactId>oasp4j-test</artifactId>
+        <artifactId>oasp4j-logging</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

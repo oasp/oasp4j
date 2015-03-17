@@ -12,17 +12,11 @@
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
   <description>Core of the server for the restaurant application - a simple example using the Open Application Standard Platform for Java (OASP4J).</description>
-  <version>dev-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
       <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-logging</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.oasp.java.modules</groupId>
-      <artifactId>oasp4j-test</artifactId>
-      <scope>test</scope>
     </dependency>
 
     <dependency>
@@ -43,11 +37,6 @@
     <dependency>
       <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-rest</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>io.oasp.java.modules</groupId>
-      <artifactId>oasp4j-jpa</artifactId>
     </dependency>
 
     <dependency>
@@ -89,12 +78,6 @@
       <artifactId>spring-web</artifactId>
     </dependency>
 
-    <!-- for Object Relational Mapping (JPA/Hibernate) -->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-orm</artifactId>
-    </dependency>
-
     <!-- JSP -->
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -102,6 +85,7 @@
     </dependency>
 
     <!-- Spring Security -->
+    <!--
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-web</artifactId>
@@ -111,17 +95,18 @@
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-config</artifactId>
     </dependency>
+    -->
 
-    <!-- Hibernate-EntityManager für JPA -->
-    <!-- Hibernate core wird transitiv geladen. -->
+    <!-- for Object Relational Mapping (JPA/Hibernate) -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+    </dependency>
+
+    <!-- Hibernate EntityManager for JPA (implementation) -->
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-entitymanager</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>net.sf.m-m-m</groupId>
-      <artifactId>mmm-util-core</artifactId>
     </dependency>
 
     <!-- Database -->
@@ -185,6 +170,13 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-messaging</artifactId>
+    </dependency>
+
+    <!-- Tests -->
+    <dependency>
+      <groupId>io.oasp.java.modules</groupId>
+      <artifactId>oasp4j-test</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

@@ -15,6 +15,11 @@
   <description>Configuration Module of the Open Application Standard Platform for Java (OASP4J).</description>
 
   <dependencies>
+    <dependency>
+      <groupId>io.oasp.java.modules</groupId>
+      <artifactId>oasp4j-test</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
 </project>

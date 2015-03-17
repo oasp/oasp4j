@@ -1,5 +1,7 @@
 package io.oasp.module.rest.service.impl;
 
+import io.oasp.module.test.common.base.ModuleTest;
+
 import java.util.Map;
 
 import javax.validation.ValidationException;
@@ -16,7 +18,6 @@ import net.sf.mmm.util.lang.api.StringUtil;
 import net.sf.mmm.util.security.api.SecurityErrorUserException;
 import net.sf.mmm.util.validation.api.ValidationErrorUserException;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountExpiredException;
@@ -31,7 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  * @author hohwille
  */
-public class RestServiceExceptionFacadeTest extends Assert {
+public class RestServiceExceptionFacadeTest extends ModuleTest {
 
   /** Value of {@link TechnicalErrorUserException#getCode()}. */
   private static final String CODE_TECHNICAL_ERROR = "TechnicalError";
@@ -114,11 +115,11 @@ public class RestServiceExceptionFacadeTest extends Assert {
       String message, String uuid, String code) {
 
     Response response = exceptionFacade.toResponse(error);
-    assertNotNull(response);
-    assertEquals(statusCode, response.getStatus());
+    assertThat(response).isNotNull();
+    assertThat(response.getStatus()).isEqualTo(statusCode);
 
     Object entity = response.getEntity();
-    assertTrue(entity instanceof String);
+    assertThat(entity).isInstanceOf(String.class);
     String result = (String) entity;
 
     try {
@@ -127,18 +128,18 @@ public class RestServiceExceptionFacadeTest extends Assert {
       if (msg == null) {
         msg = error.getLocalizedMessage();
       }
-      assertEquals(msg, valueMap.get(RestServiceExceptionFacade.KEY_MESSAGE));
+      assertThat(valueMap.get(RestServiceExceptionFacade.KEY_MESSAGE)).isEqualTo(msg);
       if ((statusCode == 403) && (!exceptionFacade.isExposeInternalErrorDetails())) {
-        assertFalse(result.contains(error.getMessage()));
+        assertThat(result).doesNotContain(error.getMessage());
       }
-      assertEquals(code, valueMap.get(RestServiceExceptionFacade.KEY_CODE));
+      assertThat(valueMap.get(RestServiceExceptionFacade.KEY_CODE)).isEqualTo(code);
       String actualUuid = valueMap.get(RestServiceExceptionFacade.KEY_UUID);
       if (UUID_ANY.equals(uuid)) {
         if (actualUuid == null) {
           fail("UUID expected but not found in response: " + result);
         }
       } else {
-        assertEquals(uuid, actualUuid);
+        assertThat(actualUuid).isEqualTo(uuid);
       }
     } catch (Exception e) {
       throw new IllegalStateException(e.getMessage(), e);
