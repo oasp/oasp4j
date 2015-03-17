@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
  */
 public class MixInAnnotationsModule extends SimpleModule {
 
+  private static final long serialVersionUID = 1L;
+
   private final Class<?>[] polymorphicClasses;
 
   /**
