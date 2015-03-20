@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -118,6 +119,15 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
     for (E entity : entities) {
       save(entity);
     }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void forceIncrementModificationCounter(E entity) {
+
+    getEntityManager().lock(entity, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
   }
 
   /**

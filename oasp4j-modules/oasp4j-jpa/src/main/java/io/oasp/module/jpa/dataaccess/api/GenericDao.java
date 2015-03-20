@@ -114,4 +114,12 @@ public interface GenericDao<ID, E extends PersistenceEntity<ID>> {
    */
   void delete(Iterable<? extends E> entities);
 
+  /**
+   * Enforces to increment the {@link E#getModificationCounter() modificationCounter} e.g. to enforce that a parent
+   * object gets locked when its children are modified.
+   *
+   * @param entity that is getting checked.
+   */
+  public abstract void forceIncrementModificationCounter(E entity);
+
 }
