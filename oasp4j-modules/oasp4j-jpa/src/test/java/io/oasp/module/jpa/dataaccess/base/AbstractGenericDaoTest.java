@@ -26,7 +26,7 @@ public class AbstractGenericDaoTest extends ComponentTest {
   private GenericDaoForceIncrementModificationTestBean testBean;
 
   /**
-   * The Modification Counter should have changed +1 when doing two transactions to the database
+   * The Modification Counter should have changed +1 when doing two transactions to the database.
    *
    * @see GenericDao#forceIncrementModificationCounter(net.sf.mmm.util.entity.api.PersistenceEntity)
    */
@@ -58,7 +58,7 @@ public class AbstractGenericDaoTest extends ComponentTest {
     private TestDao genericDao;
 
     /**
-     * first transaction
+     * First transaction.
      *
      * @return entity
      */
@@ -71,7 +71,7 @@ public class AbstractGenericDaoTest extends ComponentTest {
     }
 
     /**
-     * second transaction
+     * Second transaction.
      *
      * @param id of the TestEntity we just created
      * @return entity

@@ -3,7 +3,7 @@ package io.oasp.module.jpa.dataaccess.base;
 import javax.inject.Named;
 
 /**
- * Implementation of {@link TestDao}
+ * Implementation of {@link TestDao}.
  *
  * @author fawinter
  */

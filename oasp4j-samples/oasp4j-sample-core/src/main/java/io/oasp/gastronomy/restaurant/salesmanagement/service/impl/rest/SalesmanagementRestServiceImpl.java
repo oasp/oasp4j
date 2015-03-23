@@ -13,6 +13,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionE
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.PaymentData;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcChangeTable;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcFindBill;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcFindOrder;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcFindOrderPosition;
@@ -196,7 +197,7 @@ public class SalesmanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcFindBill#findBill}
+   * Delegates to {@link UcFindBill#findBill}.
    *
    * @param billId id of the {@link BillEto}
    * @return the {@link BillEto}
@@ -209,7 +210,7 @@ public class SalesmanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcManageBill#doPayment}
+   * Delegates to {@link UcManageBill#doPayment}.
    *
    * @param billId id of the bill
    * @return the {@link PaymentStatus}
@@ -222,7 +223,7 @@ public class SalesmanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcManageBill#doPayment(BillEto bill, PaymentData paymentDataDebitor)}
+   * Delegates to {@link UcManageBill#doPayment(BillEto bill, PaymentData paymentDataDebitor)}.
    *
    * @param billId id of the {@link BillEto}
    * @param paymentData the {@link PaymentData}
@@ -261,9 +262,10 @@ public class SalesmanagementRestServiceImpl {
   }
 
   /**
+   * Delegates to {@link UcChangeTable#changeTable}.
    *
-   * @param orderId
-   * @param newTableId
+   * @param orderId the Id of the order
+   * @param newTableId the Id of the new table
    */
   @Path("/order/{orderId}")
   @POST

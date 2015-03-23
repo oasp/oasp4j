@@ -33,7 +33,7 @@ public interface GenericDao<ID, E extends PersistenceEntity<ID>> {
    * Saves a given entity. Use the returned instance for further operations as the save operation might have changed the
    * entity instance completely.
    *
-   * @param entity
+   * @param entity the {@link PersistenceEntity entity} to save
    * @return the saved entity
    */
   E save(E entity);
@@ -41,8 +41,7 @@ public interface GenericDao<ID, E extends PersistenceEntity<ID>> {
   /**
    * Saves all given entities.
    *
-   * @param entities
-   * @throws IllegalArgumentException in case the given entity is (@literal null}.
+   * @param entities the {@link PersistenceEntity entities} to save
    */
   void save(Iterable<? extends E> entities);
 
@@ -51,7 +50,6 @@ public interface GenericDao<ID, E extends PersistenceEntity<ID>> {
    *
    * @param id must not be {@literal null}.
    * @return the entity with the given id or {@literal null} if none found
-   * @throws IllegalArgumentException if {@code id} is {@literal null}.
    * @throws ObjectNotFoundUserException if the requested entity does not exists (use {@link #findOne(Object)} to
    *         prevent).
    */
@@ -62,16 +60,15 @@ public interface GenericDao<ID, E extends PersistenceEntity<ID>> {
    *
    * @param id must not be {@literal null}.
    * @return the entity with the given id or {@literal null} if none found
-   * @throws IllegalArgumentException if {@code id} is {@literal null}
+   * @throws IllegalArgumentException if {@code id} is {@code null}
    */
-  E findOne(ID id);
+  E findOne(ID id) throws IllegalArgumentException;
 
   /**
    * Returns whether an entity with the given id exists.
    *
    * @param id must not be {@literal null}.
    * @return true if an entity with the given id exists, {@literal false} otherwise
-   * @throws IllegalArgumentException if {@code id} is {@literal null}
    */
   boolean exists(ID id);
 
@@ -94,23 +91,21 @@ public interface GenericDao<ID, E extends PersistenceEntity<ID>> {
    * Deletes the entity with the given id.
    *
    * @param id must not be {@literal null}.
-   * @throws IllegalArgumentException in case the given {@code id} is {@literal null}
+   * @throws IllegalArgumentException in case the given {@code id} is {@code null}
    */
-  void delete(ID id);
+  void delete(ID id) throws IllegalArgumentException;
 
   /**
    * Deletes a given entity.
    *
-   * @param entity
-   * @throws IllegalArgumentException in case the given entity is (@literal null}.
+   * @param entity the {@link PersistenceEntity entity} to delete
    */
   void delete(E entity);
 
   /**
    * Deletes the given entities.
    *
-   * @param entities
-   * @throws IllegalArgumentException in case the given {@link Iterable} is (@literal null}.
+   * @param entities the {@link PersistenceEntity entities} to delete
    */
   void delete(Iterable<? extends E> entities);
 
@@ -120,6 +115,6 @@ public interface GenericDao<ID, E extends PersistenceEntity<ID>> {
    *
    * @param entity that is getting checked.
    */
-  public abstract void forceIncrementModificationCounter(E entity);
+  void forceIncrementModificationCounter(E entity);
 
 }

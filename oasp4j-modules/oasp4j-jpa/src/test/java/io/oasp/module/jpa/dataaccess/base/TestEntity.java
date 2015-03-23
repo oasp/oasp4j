@@ -5,7 +5,7 @@ import io.oasp.module.jpa.dataaccess.api.AbstractPersistenceEntity;
 import javax.persistence.Entity;
 
 /**
- * This is a test entity for {@link AbstractGenericDaoTest}
+ * This is a test entity for {@link AbstractGenericDaoTest}.
  *
  * @author fawinter
  */
