@@ -16,7 +16,7 @@
   </GlobalNamingResources>
 
   <Service name="Catalina">
-    <Connector connectionTimeout="20000" port="8081" protocol="HTTP/1.1" redirectPort="8443"/>
+    <Connector connectionTimeout="20000" port="8081" protocol="HTTP/1.1" redirectPort="8443" server="Server"/>
 
     <Engine defaultHost="localhost" name="Catalina">
 
