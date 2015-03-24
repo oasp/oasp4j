@@ -26,9 +26,8 @@ public class AbstractGenericDaoTest extends ComponentTest {
   private GenericDaoForceIncrementModificationTestBean testBean;
 
   /**
-   * The Modification Counter should have changed +1 when doing two transactions to the database.
-   *
-   * @see GenericDao#forceIncrementModificationCounter(net.sf.mmm.util.entity.api.PersistenceEntity)
+   * Test of {@link GenericDao#forceIncrementModificationCounter(net.sf.mmm.util.entity.api.PersistenceEntity)}. Ensures
+   * that the modification counter is updated after the call of that method when the transaction is closed.
    */
   @Test
   public void testForceIncrementModificationCounter() {
@@ -39,17 +38,17 @@ public class AbstractGenericDaoTest extends ComponentTest {
     assertThat(entity.getModificationCounter()).isEqualTo(0);
 
     // when
-    TestEntity updatedEntity = this.testBean.updateAndIncrementModificationCounter(entity.getId());
+    TestEntity updatedEntity = this.testBean.incrementModificationCounter(entity.getId());
 
     // then
     assertThat(updatedEntity.getModificationCounter()).isEqualTo(1);
   }
 
   /**
-   *
    * This type provides methods in a transactional environment for the containing test class. All methods, annotated
    * with the {@link Transactional} annotation, are executed in separate transaction, thus one test case can execute
-   * multiple transactions.
+   * multiple transactions. Unfortunately this does not work when the transactional methods are directly in the
+   * top-level class of the test-case itself.
    */
   @Named
   public static class GenericDaoForceIncrementModificationTestBean {
@@ -58,9 +57,9 @@ public class AbstractGenericDaoTest extends ComponentTest {
     private TestDao genericDao;
 
     /**
-     * First transaction.
+     * Creates a new {@link TestEntity}, persist it and surround everything with a transaction.
      *
-     * @return entity
+     * @return entity the new {@link TestEntity}.
      */
     @Transactional
     public TestEntity create() {
@@ -71,13 +70,15 @@ public class AbstractGenericDaoTest extends ComponentTest {
     }
 
     /**
-     * Second transaction.
+     * Loads the {@link TestEntity} with the given {@code id} and
+     * {@link GenericDao#forceIncrementModificationCounter(net.sf.mmm.util.entity.api.PersistenceEntity) increments the
+     * modification counter}.
      *
-     * @param id of the TestEntity we just created
-     * @return entity
+     * @param id of the {@link TestEntity} to load and increment.
+     * @return entity the updated {@link TestEntity}.
      */
     @Transactional
-    public TestEntity updateAndIncrementModificationCounter(long id) {
+    public TestEntity incrementModificationCounter(long id) {
 
       TestEntity entity = this.genericDao.find(id);
       this.genericDao.forceIncrementModificationCounter(entity);
