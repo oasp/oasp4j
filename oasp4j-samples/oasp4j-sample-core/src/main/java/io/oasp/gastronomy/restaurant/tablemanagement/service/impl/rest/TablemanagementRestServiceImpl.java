@@ -30,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author agreul
  */
-@Path("/tablemanagement")
+@Path("/tablemanagement/v1")
 @Named("TablemanagementRestService")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)

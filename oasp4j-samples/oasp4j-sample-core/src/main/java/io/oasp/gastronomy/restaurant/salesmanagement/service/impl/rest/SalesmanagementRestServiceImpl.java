@@ -47,7 +47,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author agreul
  */
-@Path("/salesmanagement")
+@Path("/salesmanagement/v1")
 @Named("SalesmanagementRestService")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
