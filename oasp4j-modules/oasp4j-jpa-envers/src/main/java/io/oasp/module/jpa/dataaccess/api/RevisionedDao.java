@@ -23,16 +23,16 @@ import net.sf.mmm.util.exception.api.ObjectNotFoundException;
 public interface RevisionedDao<ID, ENTITY extends RevisionedPersistenceEntity<ID>> extends GenericDao<ID, ENTITY> {
 
   /**
-   * This method will get the {@link List} of historic {@link RevisionedEntity#getRevision() revisions} before the given
-   * <code>entity</code>. If the given <code>entity</code> is the {@link RevisionedEntity#LATEST_REVISION latest
-   * revision} ... <br>
+   * This method will get the {@link List} of historic {@link RevisionedPersistenceEntity#getRevision() revisions} of
+   * the {@link RevisionedPersistenceEntity entity} with the given <code>id</code>.<br>
    * If the <code>entity</code> is NOT revision controlled, an {@link java.util.Collections#emptyList() empty list} is
    * returned.
    *
-   * @param entity is the according {@link RevisionedEntity}.
+   * @param id the {@link RevisionedPersistenceEntity#getId() primary key} of the {@link RevisionedPersistenceEntity
+   *        entity} to retrieve the history for.
    * @return the {@link List} of historic {@link RevisionedEntity#getRevision() revisions}.
    */
-  List<Number> getRevisionHistory(ENTITY entity);
+  List<Number> getRevisionHistory(ID id);
 
   /**
    * This method will get the {@link List} of {@link RevisionMetadata} from the {@link RevisionedEntity#getRevision()
@@ -51,8 +51,7 @@ public interface RevisionedDao<ID, ENTITY extends RevisionedPersistenceEntity<ID
    * latest revision will be loaded}. <br>
    * <b>ATTENTION:</b><br>
    * You should not make assumptions about the <code>revision</code> numbering of the underlying implementation. Please
-   * use {@link #getRevisionHistory(RevisionedPersistenceEntity)} or {@link #getRevisionHistoryMetadata(Object)} to find
-   * revision numbers.
+   * use {@link #getRevisionHistory(Object)} or {@link #getRevisionHistoryMetadata(Object)} to find revision numbers.
    *
    * @param id is the {@link RevisionedEntity#getId() primary key} of the requested {@link RevisionedEntity entity}.
    * @param revision is the {@link RevisionedEntity#getRevision() revision} of the requested entity or
@@ -63,14 +62,15 @@ public interface RevisionedDao<ID, ENTITY extends RevisionedPersistenceEntity<ID
    */
   ENTITY load(ID id, Number revision) throws ObjectNotFoundException;
 
-  /**
-   * This method creates a new {@link RevisionedEntity#getRevision() revision} of the given entity. The given entity is
-   * saved and a copy is written to the revision-history
-   *
-   * @param entity is the entity to create a new revision of.
-   * @return the {@link RevisionedEntity#getRevision() revision} of the created history-entry.
-   */
-  Number createRevision(ENTITY entity);
+  // /**
+  // * This method creates a new {@link RevisionedEntity#getRevision() revision} of the given entity. The given entity
+  // is
+  // * saved and a copy is written to the revision-history
+  // *
+  // * @param entity is the entity to create a new revision of.
+  // * @return the {@link RevisionedEntity#getRevision() revision} of the created history-entry.
+  // */
+  // Number createRevision(ENTITY entity);
 
   /**
    * {@inheritDoc}
