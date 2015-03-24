@@ -50,7 +50,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author agreul
  */
-@Path("/offermanagement")
+@Path("/offermanagement/v1")
 @Named("OffermanagementRestService")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
