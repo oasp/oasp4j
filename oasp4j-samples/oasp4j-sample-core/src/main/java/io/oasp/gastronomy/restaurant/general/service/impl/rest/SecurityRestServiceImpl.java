@@ -27,7 +27,7 @@ import org.springframework.security.web.csrf.CsrfTokenRepository;
  *
  * @author <a href="malte.brunnlieb@capgemini.com">Malte Brunnlieb</a>
  */
-@Path("/security")
+@Path("/security/v1")
 @Named("SecurityRestService")
 @Transactional
 public class SecurityRestServiceImpl {
