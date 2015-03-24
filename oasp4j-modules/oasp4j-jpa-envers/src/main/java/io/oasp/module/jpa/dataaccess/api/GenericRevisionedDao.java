@@ -20,15 +20,15 @@ import net.sf.mmm.util.exception.api.ObjectNotFoundException;
  *
  * @author Joerg Hohwiller (hohwille at users.sourceforge.net)
  */
-public interface GenericRevisionedDao<ID, ENTITY extends RevisionedPersistenceEntity<ID>> extends GenericDao<ID, ENTITY> {
+public interface GenericRevisionedDao<ID, ENTITY extends MutablePersistenceEntity<ID>> extends GenericDao<ID, ENTITY> {
 
   /**
-   * This method will get the {@link List} of historic {@link RevisionedPersistenceEntity#getRevision() revisions} of
-   * the {@link RevisionedPersistenceEntity entity} with the given <code>id</code>.<br>
+   * This method will get the {@link List} of historic {@link MutablePersistenceEntity#getRevision() revisions} of
+   * the {@link MutablePersistenceEntity entity} with the given <code>id</code>.<br>
    * If the <code>entity</code> is NOT revision controlled, an {@link java.util.Collections#emptyList() empty list} is
    * returned.
    *
-   * @param id the {@link RevisionedPersistenceEntity#getId() primary key} of the {@link RevisionedPersistenceEntity
+   * @param id the {@link MutablePersistenceEntity#getId() primary key} of the {@link MutablePersistenceEntity
    *        entity} to retrieve the history for.
    * @return the {@link List} of historic {@link RevisionedEntity#getRevision() revisions}.
    */

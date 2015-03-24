@@ -9,10 +9,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-import net.sf.mmm.util.entity.api.MutableGenericEntity;
-
 /**
- * Abstract base implementation of {@link RevisionedPersistenceEntity} with a {@link GeneratedValue generated}
+ * Abstract base implementation of {@link MutablePersistenceEntity} with a {@link GeneratedValue generated}
  * {@link #getId() primary key}. In case you need a different type of key add it as extra column and make it
  * {@link javax.persistence.Column#unique() unique}.
  *
@@ -20,8 +18,7 @@ import net.sf.mmm.util.entity.api.MutableGenericEntity;
  * @author rjoeris
  */
 @MappedSuperclass
-public abstract class AbstractPersistenceEntity implements RevisionedPersistenceEntity<Long>,
-    MutableGenericEntity<Long> {
+public abstract class AbstractPersistenceEntity implements MutablePersistenceEntity<Long> {
 
   private static final long serialVersionUID = 1L;
 

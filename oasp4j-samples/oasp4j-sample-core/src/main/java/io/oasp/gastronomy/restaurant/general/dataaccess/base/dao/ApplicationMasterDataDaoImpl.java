@@ -1,7 +1,7 @@
 package io.oasp.gastronomy.restaurant.general.dataaccess.base.dao;
 
 import io.oasp.module.jpa.dataaccess.api.RevisionedMasterDataDao;
-import io.oasp.module.jpa.dataaccess.api.RevisionedPersistenceEntity;
+import io.oasp.module.jpa.dataaccess.api.MutablePersistenceEntity;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author hohwille
  */
-public abstract class ApplicationMasterDataDaoImpl<ENTITY extends RevisionedPersistenceEntity<Long>> extends
+public abstract class ApplicationMasterDataDaoImpl<ENTITY extends MutablePersistenceEntity<Long>> extends
     ApplicationDaoImpl<ENTITY> implements RevisionedMasterDataDao<ENTITY> {
 
   /**

@@ -2,6 +2,7 @@
  * http://www.apache.org/licenses/LICENSE-2.0 */
 package io.oasp.module.jpa.dataaccess.api;
 
+import net.sf.mmm.util.entity.api.MutableGenericEntity;
 import net.sf.mmm.util.entity.api.PersistenceEntity;
 
 /**
@@ -13,7 +14,7 @@ import net.sf.mmm.util.entity.api.PersistenceEntity;
  *
  * @author hohwille
  */
-public interface RevisionedPersistenceEntity<ID> extends PersistenceEntity<ID> {
+public interface MutablePersistenceEntity<ID> extends PersistenceEntity<ID>, MutableGenericEntity<ID> {
 
   /**
    * This method sets the {@link #getRevision() revision} of this entity. <br>

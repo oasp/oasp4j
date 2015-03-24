@@ -4,7 +4,7 @@ package io.oasp.module.jpa.dataaccess.base;
 
 import io.oasp.module.jpa.dataaccess.api.GenericRevisionedDao;
 import io.oasp.module.jpa.dataaccess.api.RevisionMetadata;
-import io.oasp.module.jpa.dataaccess.api.RevisionedPersistenceEntity;
+import io.oasp.module.jpa.dataaccess.api.MutablePersistenceEntity;
 import io.oasp.module.jpa.dataaccess.impl.LazyRevisionMetadata;
 
 import java.util.ArrayList;
@@ -19,13 +19,13 @@ import org.hibernate.envers.AuditReaderFactory;
  * This is the abstract base-implementation of a {@link AbstractGenericDao} using {@link org.hibernate.envers
  * Hibernate-Envers} to manage the revision-control.
  *
- * @param <ID> is the type of the {@link RevisionedPersistenceEntity#getId() primary key} of the managed
- *        {@link RevisionedPersistenceEntity entity}.
+ * @param <ID> is the type of the {@link MutablePersistenceEntity#getId() primary key} of the managed
+ *        {@link MutablePersistenceEntity entity}.
  * @param <ENTITY> is the {@link #getEntityClass() type} of the managed entity.
  *
  * @author hohwille
  */
-public abstract class AbstractGenericRevisionedDao<ID, ENTITY extends RevisionedPersistenceEntity<ID>> extends
+public abstract class AbstractGenericRevisionedDao<ID, ENTITY extends MutablePersistenceEntity<ID>> extends
     AbstractGenericDao<ID, ENTITY> implements GenericRevisionedDao<ID, ENTITY> {
 
   /**
@@ -49,7 +49,7 @@ public abstract class AbstractGenericRevisionedDao<ID, ENTITY extends Revisioned
    */
   public ENTITY load(ID id, Number revision) throws ObjectNotFoundException {
 
-    if (revision == RevisionedPersistenceEntity.LATEST_REVISION) {
+    if (revision == MutablePersistenceEntity.LATEST_REVISION) {
       return find(id);
     } else {
       return loadRevision(id, revision);
@@ -62,7 +62,7 @@ public abstract class AbstractGenericRevisionedDao<ID, ENTITY extends Revisioned
    *
    * @param id is the {@link net.sf.mmm.util.entity.api.GenericEntity#getId() ID} of the requested
    *        {@link net.sf.mmm.util.entity.api.GenericEntity entity}.
-   * @param revision is the {@link RevisionedPersistenceEntity#getRevision() revision}
+   * @param revision is the {@link MutablePersistenceEntity#getRevision() revision}
    * @return the requested {@link net.sf.mmm.util.entity.api.GenericEntity entity}.
    */
   protected ENTITY loadRevision(Object id, Number revision) {
