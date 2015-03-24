@@ -80,13 +80,6 @@ public interface GenericDao<ID, E extends PersistenceEntity<ID>> {
    */
   List<E> findAll(Iterable<ID> ids);
 
-  // /**
-  // * Returns the number of entities available.
-  // *
-  // * @return the number of entities
-  // */
-  // long count();
-
   /**
    * Deletes the entity with the given id.
    *
@@ -110,8 +103,18 @@ public interface GenericDao<ID, E extends PersistenceEntity<ID>> {
   void delete(Iterable<? extends E> entities);
 
   /**
-   * Enforces to increment the {@link E#getModificationCounter() modificationCounter} e.g. to enforce that a parent
-   * object gets locked when its children are modified.
+   * Enforces to increment the {@link PersistenceEntity#getModificationCounter() modificationCounter} e.g. to enforce
+   * that a parent object gets locked when its children are modified.<br>
+   * As an example we assume that we have the two optimistic locked entities {@code Order} and its contained
+   * {@code OrderPosition}. By default the users can modify an {@code Order} and each of its {@code OrderPosition}s in
+   * parallel without getting a locking conflict. This can be desired. However, it can also be a demand that an
+   * {@code Order} gets approved and the user doing that is responsible for the total price as the sum of the prices of
+   * each {@code OrderPosition}. Now if another user is adding or changing an {@code OrderPostion} belonging to that
+   * {@code Order} in parallel the {@code Order} will get approved but the approved total price will differ from what
+   * the user has actually seen when he clicked on approve. To prevent this the use-case to modify an
+   * {@code OrderPosition} can use this method to trigger a locking on the associated {@code Order}. The implication is
+   * also that two users changing an {@code OrderPosition} associated with the same {@code Order} in parallel will get a
+   * conflict.
    *
    * @param entity that is getting checked.
    */
