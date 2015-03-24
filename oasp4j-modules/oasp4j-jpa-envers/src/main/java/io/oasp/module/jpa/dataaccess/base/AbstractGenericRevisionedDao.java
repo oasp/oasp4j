@@ -1,8 +1,10 @@
 /* Copyright (c) The m-m-m Team, Licensed under the Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0 */
-package io.oasp.module.jpa.dataaccess.api;
+package io.oasp.module.jpa.dataaccess.base;
 
-import io.oasp.module.jpa.dataaccess.base.AbstractGenericDao;
+import io.oasp.module.jpa.dataaccess.api.GenericRevisionedDao;
+import io.oasp.module.jpa.dataaccess.api.RevisionMetadata;
+import io.oasp.module.jpa.dataaccess.api.RevisionedPersistenceEntity;
 import io.oasp.module.jpa.dataaccess.impl.LazyRevisionMetadata;
 
 import java.util.ArrayList;
@@ -17,18 +19,19 @@ import org.hibernate.envers.AuditReaderFactory;
  * This is the abstract base-implementation of a {@link AbstractGenericDao} using {@link org.hibernate.envers
  * Hibernate-Envers} to manage the revision-control.
  *
- * @param <ID> is the type of the primary key of the managed {@link io.oasp.module.jpa.dataaccess.api.GenericDao}.
- * @param <E> is the {@link #getEntityClass() type} of the managed entity.
+ * @param <ID> is the type of the {@link RevisionedPersistenceEntity#getId() primary key} of the managed
+ *        {@link RevisionedPersistenceEntity entity}.
+ * @param <ENTITY> is the {@link #getEntityClass() type} of the managed entity.
  *
- * @author Joerg Hohwiller (hohwille at users.sourceforge.net)
+ * @author hohwille
  */
-public abstract class AbstractRevisionedDao<ID, E extends RevisionedPersistenceEntity<ID>> extends
-    AbstractGenericDao<ID, E> implements RevisionedDao<ID, E> {
+public abstract class AbstractGenericRevisionedDao<ID, ENTITY extends RevisionedPersistenceEntity<ID>> extends
+    AbstractGenericDao<ID, ENTITY> implements GenericRevisionedDao<ID, ENTITY> {
 
   /**
    * The constructor.
    */
-  public AbstractRevisionedDao() {
+  public AbstractGenericRevisionedDao() {
 
     super();
   }
@@ -44,7 +47,7 @@ public abstract class AbstractRevisionedDao<ID, E extends RevisionedPersistenceE
   /**
    * {@inheritDoc}
    */
-  public E load(ID id, Number revision) throws ObjectNotFoundException {
+  public ENTITY load(ID id, Number revision) throws ObjectNotFoundException {
 
     if (revision == RevisionedPersistenceEntity.LATEST_REVISION) {
       return find(id);
@@ -62,24 +65,15 @@ public abstract class AbstractRevisionedDao<ID, E extends RevisionedPersistenceE
    * @param revision is the {@link RevisionedPersistenceEntity#getRevision() revision}
    * @return the requested {@link net.sf.mmm.util.entity.api.GenericEntity entity}.
    */
-  protected E loadRevision(Object id, Number revision) {
+  protected ENTITY loadRevision(Object id, Number revision) {
 
-    Class<? extends E> entityClassImplementation = getEntityClass();
-    E entity = getAuditReader().find(entityClassImplementation, id, revision);
+    Class<? extends ENTITY> entityClassImplementation = getEntityClass();
+    ENTITY entity = getAuditReader().find(entityClassImplementation, id, revision);
     if (entity != null) {
       entity.setRevision(revision);
     }
     return entity;
   }
-
-  // /**
-  // * {@inheritDoc}
-  // */
-  // public Number createRevision(E entity) {
-  //
-  // // TODO:
-  // return null;
-  // }
 
   /**
    * {@inheritDoc}

@@ -1,8 +1,8 @@
 package io.oasp.gastronomy.restaurant.general.dataaccess.base.dao;
 
 import io.oasp.gastronomy.restaurant.general.dataaccess.api.dao.ApplicationDao;
-import io.oasp.module.jpa.dataaccess.api.AbstractRevisionedDao;
 import io.oasp.module.jpa.dataaccess.api.RevisionedPersistenceEntity;
+import io.oasp.module.jpa.dataaccess.base.AbstractRevisionedDao;
 
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public abstract class ApplicationDaoImpl<ENTITY extends RevisionedPersistenceEntity<Long>> extends
-    AbstractRevisionedDao<Long, ENTITY> implements ApplicationDao<ENTITY> {
+    AbstractRevisionedDao<ENTITY> implements ApplicationDao<ENTITY> {
 
   /**
    * The constructor.

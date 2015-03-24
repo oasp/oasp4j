@@ -7,11 +7,10 @@ import net.sf.mmm.util.session.api.UserSessionAccess;
 import org.hibernate.envers.RevisionListener;
 
 /**
- * This is the implementation of {@link RevisionListener} that enriches {@link AdvancedRevisionEntity} with
- * additional information.
+ * This is the implementation of {@link RevisionListener} that enriches {@link AdvancedRevisionEntity} with additional
+ * information.
  *
- * @author Joerg Hohwiller (hohwille at users.sourceforge.net)
- * @since 1.0.0
+ * @author hohwille
  */
 public class AdvancedRevisionListener implements RevisionListener {
 
