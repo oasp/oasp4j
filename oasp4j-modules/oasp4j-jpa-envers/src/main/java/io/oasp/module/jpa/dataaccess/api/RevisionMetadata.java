@@ -9,7 +9,7 @@ import java.util.Date;
  * {@link net.sf.mmm.util.entity.api.RevisionedEntity#getRevision() historic revision} of an
  * {@link net.sf.mmm.util.entity.api.RevisionedEntity entity}.
  *
- * @author Joerg Hohwiller (hohwille at users.sourceforge.net)
+ * @author hohwille
  */
 public interface RevisionMetadata {
 
@@ -28,13 +28,10 @@ public interface RevisionMetadata {
   Date getDate();
 
   /**
-   * This method gets the creator of this revision. This can be a string (such as the
-   * {@link java.security.Principal#getName() principal-name}) or an
-   * {@link net.sf.mmm.util.entity.api.RevisionedEntity entity} representing the according user.
+   * This method gets the identifier (login) of the author who created this revision.
    *
-   * @return the creator. May be <code>null</code> (if committed outside user scope or if NOT supported at
-   *         all).
+   * @return the author. May be <code>null</code> (if committed outside user scope).
    */
-  Object getCreator();
+  String getAuthor();
 
 }

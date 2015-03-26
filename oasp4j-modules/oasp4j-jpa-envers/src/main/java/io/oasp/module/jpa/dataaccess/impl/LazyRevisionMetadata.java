@@ -12,8 +12,7 @@ import javax.persistence.EntityManager;
 /**
  * This is a lazy implementation of the {@link RevisionMetadata} interface.
  *
- * @author Joerg Hohwiller (hohwille at users.sourceforge.net)
- * @since 1.0.0
+ * @author hohwille
  */
 public class LazyRevisionMetadata implements RevisionMetadata {
 
@@ -54,7 +53,7 @@ public class LazyRevisionMetadata implements RevisionMetadata {
   /**
    * {@inheritDoc}
    */
-  public Object getCreator() {
+  public String getAuthor() {
 
     return getRevisionEntity().getUser();
   }
