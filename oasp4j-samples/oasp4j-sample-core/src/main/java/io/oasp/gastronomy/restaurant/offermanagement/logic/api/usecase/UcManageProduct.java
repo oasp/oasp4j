@@ -29,7 +29,7 @@ public interface UcManageProduct {
   void deleteProduct(Long productId);
 
   /**
-   * Updates the picture of the product
+   * Updates the picture of the product.
    *
    * @param productId is the ID of the {@link ProductEto} to update the picture
    * @param blob is the binary representation of the picture
@@ -38,7 +38,7 @@ public interface UcManageProduct {
   void updateProductPicture(Long productId, Blob blob, BinaryObjectEto binaryObjectEto);
 
   /**
-   * Deletes the Picture of the {@link ProductEto}
+   * Deletes the Picture of the {@link ProductEto}.
    *
    * @param productId is the ID of the {@link ProductEto} to delte the picture
    */

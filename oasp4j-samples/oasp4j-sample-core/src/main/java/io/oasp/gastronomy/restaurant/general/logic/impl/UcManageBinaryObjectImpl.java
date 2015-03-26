@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
- * Implementation of the {@link UcManageBinaryObject} intreface
+ * Implementation of the {@link UcManageBinaryObject} intreface.
  *
  * @author sspielma
  */

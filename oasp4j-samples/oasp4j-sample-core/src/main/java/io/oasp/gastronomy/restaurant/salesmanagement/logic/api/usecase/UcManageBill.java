@@ -18,7 +18,7 @@ public interface UcManageBill {
    * with it. A bill also consists of the {@link Money total amount} as well as the {@link Money tip}, the waiter could
    * fill in. The tip is at default 0.0.
    *
-   * @param bill
+   * @param bill that gets created in the database.
    * @return the created {@link BillEto}
    */
   BillEto createBill(BillEto bill);

@@ -69,7 +69,8 @@ public interface NlsBundleApplicationRoot extends NlsBundle {
    * @param tableNumber of the targetTable which is causing the problem
    * @return the {@link NlsMessage}.
    */
-  @NlsBundleMessage("The order with the Id {orderId} can''t be transfered to the table with the Number {tableNumber} because this table is already occupied.")
+  @NlsBundleMessage("The order with the Id {orderId} can''t be transfered to the table with the Number {tableNumber}"
+      + " because this table is already occupied.")
   NlsMessage errorChangeTableIllegalStateCombination(@Named("orderId") Long orderId,
       @Named("tableNumber") Long tableNumber);
   // END ARCHETYPE SKIP

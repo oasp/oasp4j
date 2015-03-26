@@ -98,6 +98,10 @@ public interface RestUrls {
         return ORDER_URL + orderId + "/position/" + orderPositionId + "/" + state;
       }
 
+      /**
+       * @param orderId Id
+       * @return URL to get the ChangeTable
+       */
       public static final String getChangeTableURL(Long orderId) {
 
         return ORDER_URL + "/" + orderId + "/";
@@ -489,9 +493,9 @@ public interface RestUrls {
       }
 
       /**
-       * @param id
-       * @param revision
-       * @return
+       * @param id Product id
+       * @param revision number
+       * @return Url
        */
       public static String getFindProductByRevisionUrl(Long id, Long revision) {
 

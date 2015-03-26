@@ -10,20 +10,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Controller for Login-Page.
- * 
+ *
  * @author mbrunnli
  */
 @Controller
 public class LoginController {
 
   /**
-   * Default URL to redirect to after successfully login
+   * Default URL to redirect to after successfully login.
    */
   public final static String defaultTargetUrl = "/services";
 
   /**
    * Builds the model for the login page---mainly focusing on the error message handling.
-   * 
+   *
    * @param authentication_failed flag for authentication failed
    * @param invalid_session flag for invalid session
    * @param access_denied flag for access denied
