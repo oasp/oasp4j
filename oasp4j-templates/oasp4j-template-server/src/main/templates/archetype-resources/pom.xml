@@ -8,17 +8,18 @@
   <name>${project.artifactId}</name>
   <description>Application based on the Open Application Standard Platform for Java (OASP4J).</description>
 
-  <modules>
-    <module>${artifactId}-core</module>
-    <module>${artifactId}-server</module>
-    <!--<module>${artifactId}-server-integration</module>-->
-  </modules>
-
   <properties>
+    <java.version>1.7</java.version>
     <oasp.port.range>81</oasp.port.range>
     <oasp.http.port>${oasp.port.range}81</oasp.http.port>
     <oasp.db.port>${oasp.port.range}43</oasp.db.port>
+    <oasp.test.excluded.groups>io.oasp.module.test.common.api.category.CategorySubsystemTest,io.oasp.module.test.common.api.category.CategorySystemTest</oasp.test.excluded.groups>
   </properties>
+
+  <modules>
+    <module>${artifactId}-core</module>
+    <module>${artifactId}-server</module>
+  </modules>
 
   <dependencyManagement>
     <dependencies>
@@ -123,10 +124,32 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
           <encoding>${project.build.sourceEncoding}</encoding>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <excludedGroups>${oasp.test.excluded.groups}</excludedGroups>
         </configuration>
       </plugin>
     </plugins>
   </build>
+  
+  <profiles>
+    <profile>
+      <id>subsystemtest</id>
+      <properties>
+        <oasp.test.excluded.groups>io.oasp.module.test.common.api.category.CategorySystemTest</oasp.test.excluded.groups>
+      </properties>
+    </profile>
+    <profile>
+      <id>systemtest</id>
+      <properties>
+        <oasp.test.excluded.groups></oasp.test.excluded.groups>
+      </properties>
+    </profile>
+  </profiles>  
+  
 </project>

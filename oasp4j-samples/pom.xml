@@ -17,24 +17,14 @@
     <oasp.port.range>81</oasp.port.range>
     <oasp.http.port>${oasp.port.range}81</oasp.http.port>
     <oasp.db.port>${oasp.port.range}43</oasp.db.port>
+    <oasp.test.excluded.groups>io.oasp.module.test.common.api.category.CategorySubsystemTest,io.oasp.module.test.common.api.category.CategorySystemTest</oasp.test.excluded.groups>
   </properties>
   
   <modules>
     <module>oasp4j-sample-core</module>
     <module>oasp4j-sample-server</module>
   </modules>
-
-  <profiles>
-    <profile>
-      <id>integration-test</id>
-        <modules>
-          <module>oasp4j-sample-core</module>
-          <module>oasp4j-sample-server</module>
-          <module>oasp4j-sample-server-integration</module>
-        </modules>
-    </profile>
-  </profiles>
-
+  
   <dependencyManagement>
     <dependencies>
       <!-- BOM of OASP4J -->
@@ -59,5 +49,39 @@
       <artifactId>slf4j-api</artifactId>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <excludedGroups>${oasp.test.excluded.groups}</excludedGroups>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
   
+  <profiles>
+    <profile>
+      <id>integration-test</id>
+      <modules>
+        <module>oasp4j-sample-core</module>
+        <module>oasp4j-sample-server</module>
+        <module>oasp4j-sample-server-integration</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>subsystemtest</id>
+      <properties>
+        <oasp.test.excluded.groups>io.oasp.module.test.common.api.category.CategorySystemTest</oasp.test.excluded.groups>
+      </properties>
+    </profile>
+    <profile>
+      <id>systemtest</id>
+      <properties>
+        <oasp.test.excluded.groups></oasp.test.excluded.groups>
+      </properties>
+    </profile>
+  </profiles>
+
 </project>

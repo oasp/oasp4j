@@ -6,6 +6,6 @@ package io.oasp.module.test.common.api.category;
  *
  * @author hohwille
  */
-public interface CategoryIntegrationTest {
+public interface CategorySubsystemTest {
 
 }
