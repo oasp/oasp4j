@@ -89,7 +89,7 @@
         <tokenfilter>
           <filetokenizer/>
           <!-- remove application specific logic -->
-        	<replaceregex pattern="${xml.begin.pattern}.*${xml.end.pattern}" replace="" flags="gs"/>
+        	<replaceregex pattern="${xml.begin.pattern}.*?${xml.end.pattern}" replace="" flags="gs"/>
           <!-- comment out application specific logic -->
           <replaceregex pattern="&lt;\?xml " replace="${prefix}&lt;?xml " flags="g"/>
           <replaceregex pattern="${sample.package}" replace="${package}" flags="g"/>
@@ -126,7 +126,7 @@
         <tokenfilter>
           <filetokenizer/>
           <!-- remove application specific logic -->
-        	<replaceregex pattern="${xml.begin.pattern}.*${xml.end.pattern}" replace="" flags="gs"/>
+        	<replaceregex pattern="${xml.begin.pattern}.*?${xml.end.pattern}" replace="" flags="gs"/>
           <!-- comment out application specific logic -->
           <replaceregex pattern="&lt;\?xml " replace="${prefix}&lt;?xml " flags="g"/>
           <replaceregex pattern="${sample.package}" replace="${package}" flags="g"/>
