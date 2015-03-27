@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <access-control-schema>
-  <!-- BEGIN ARCHETYPE SKIP -->
   <group id="ReadMasterData" type="group">
     <permissions>
+      <!-- BEGIN ARCHETYPE SKIP -->
       <!-- offermanagement -->
       <permission id="FindOffer"/>
       <permission id="FindProduct"/>
@@ -11,9 +11,11 @@
       <permission id="FindTable"/>
       <!-- staffmanagement -->
       <permission id="FindStaffMember"/>
+      <!-- END ARCHETYPE SKIP -->
     </permissions>
   </group>
 
+  <!-- BEGIN ARCHETYPE SKIP -->
   <group id="Waiter" type="role">
     <inherits>
       <group-ref>Barkeeper</group-ref>
