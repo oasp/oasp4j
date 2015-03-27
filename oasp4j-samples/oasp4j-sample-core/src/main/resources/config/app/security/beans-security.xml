@@ -75,7 +75,7 @@
         <security:intercept-url pattern="/security/login*" access="isAnonymous()"/>
         <security:intercept-url pattern="/j_spring_security_login*" access="isAnonymous()"/>
         <security:intercept-url pattern="/j_spring_security_logout*" access="isAnonymous()"/>
-        <security:intercept-url pattern="/services/rest/security/currentuser/" access="isAnonymous() or isAuthenticated()"/>
+        <security:intercept-url pattern="/services/rest/security/v1/currentuser/" access="isAnonymous() or isAuthenticated()"/>
         <security:intercept-url pattern="/**" access="isAuthenticated()"/>
       </security:filter-security-metadata-source>
     </property>
