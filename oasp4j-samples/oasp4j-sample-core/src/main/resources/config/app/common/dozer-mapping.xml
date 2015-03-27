@@ -8,7 +8,9 @@
     <stop-on-errors>true</stop-on-errors>
 
     <copy-by-references>
+      <!-- BEGIN ARCHETYPE SKIP -->
       <copy-by-reference>io.oasp.gastronomy.restaurant.general.common.api.datatype.Money</copy-by-reference>
+      <!-- END ARCHETYPE SKIP -->
       <copy-by-reference>java.lang.Long</copy-by-reference>
       <copy-by-reference>java.lang.Integer</copy-by-reference>
       <copy-by-reference>java.lang.Number</copy-by-reference>
