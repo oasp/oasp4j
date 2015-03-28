@@ -14,14 +14,13 @@
   <modules>
     <module>oasp4j-bom</module>
     <module>oasp4j-modules</module>
-    <module>oasp4j-samples</module>
     <module>oasp4j-templates</module>
   </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <oasp4j.version>1.1.0-SNAPSHOT</oasp4j.version>
+    <oasp4j.version>1.1.0</oasp4j.version>
     <port.range>81</port.range>
     <oasp.gpg.keyname>joerg.hohwiller@capgemini.com</oasp.gpg.keyname>
     <oasp.flatten.mode>oss</oasp.flatten.mode>
@@ -241,7 +240,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>flatten-maven-plugin</artifactId>
-          <version>1.0.0-beta-3</version>
+          <version>1.0.0-beta-4</version>
         </plugin>
         <plugin>
           <groupId>org.eclipse.m2e</groupId>
@@ -375,13 +374,18 @@
 
   <profiles>
     <profile>
-      <id>deploy</id>
-      <!-- exclude sample from release / deployment -->
+      <id>all</id>
+      <activation>
+        <file>
+          <exists>pom.xml</exists>
+        </file>
+      </activation>
       <modules>
-        <module>oasp4j-bom</module>
-        <module>oasp4j-modules</module>
-        <module>oasp4j-templates</module>
+        <module>oasp4j-samples</module>
       </modules>
+    </profile>
+    <profile>
+      <id>deploy</id>
       <properties>
         <log.console.disabled>true</log.console.disabled>
       </properties>

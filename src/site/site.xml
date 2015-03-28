@@ -8,7 +8,7 @@
     <links>
       <item name="Github" href="https://github.com/oasp/oasp4j"/>
       <item name="Wiki" href="https://github.com/oasp/oasp4j/wiki"/>
-      <item name="Javadoc" href="http://oasp.github.io/oasp4j/maven/apidocs/index.html"/>
+      <item name="Javadoc" href="apidocs/index.html"/>
       <item name="Home" href="http://oasp.io/"/>
     </links>
 
