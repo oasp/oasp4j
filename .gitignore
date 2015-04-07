@@ -6,6 +6,7 @@
 target/
 eclipse-target/
 **/src/generated/
+oasp4j-samples/oasp4j-sample-server/src/main/webapp/jsclient/
 
 # Package Files #
 *.jar
