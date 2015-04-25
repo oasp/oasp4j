@@ -193,6 +193,25 @@ public class RequestParameters {
   }
 
   /**
+   * Gets the paging parameters from the request (if provided). There are two of them. The "page" points to a requested
+   * chunk of data (1-based index: obligatory if paging functionality is desired). The "count" allows client to specify
+   * the chunk size (optional: a default value 100 for page size will be used if omitted)
+   *
+   * @return the {@link PagingParameters} as provided or complemented with default or an empty one if NO paging was
+   *         requested
+   */
+  public PagingParameters getPaging() {
+
+    Integer page = get("page", Integer.class, false);
+    if (null != page) {
+      Integer count = get("count", Integer.class, false);
+      return new PagingParameters(page, count);
+    }
+
+    return PagingParameters.NO_PAGING;
+  }
+
+  /**
    * @param uriInfo is the {@link UriInfo}.
    * @return a new instance of {@link RequestParameters} for {@link UriInfo#getQueryParameters()}.
    */

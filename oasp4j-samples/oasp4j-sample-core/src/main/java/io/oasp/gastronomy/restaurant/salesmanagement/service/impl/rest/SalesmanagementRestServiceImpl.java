@@ -92,6 +92,7 @@ public class SalesmanagementRestServiceImpl {
     OrderSearchCriteriaTo criteria = new OrderSearchCriteriaTo();
     criteria.setTableId(parameters.get("tableId", Long.class, false));
     criteria.setState(parameters.get("state", OrderState.class, false));
+    parameters.getPaging().extendIfRequested(criteria);
     return this.salesManagement.findOrderCtos(criteria);
   }
 
@@ -111,6 +112,7 @@ public class SalesmanagementRestServiceImpl {
     criteria.setCookId(parameters.get("cookId", Long.class, false));
     criteria.setState(parameters.get("state", OrderPositionState.class, false));
     criteria.setMealOrSideDish(parameters.get("mealOrSideDish", boolean.class, false));
+    parameters.getPaging().extendIfRequested(criteria);
     return this.salesManagement.findOrderPositions(criteria);
   }
 
