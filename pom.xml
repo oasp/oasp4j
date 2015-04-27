@@ -351,7 +351,7 @@
           <!--<additionalparam>-Xdoclint:none -source ${java.version}</additionalparam>-->
           <links>
             <link>http://docs.oracle.com/javase/7/docs/api/</link>
-            <link>http://oasp.github.io/oasp4j/maven/apidocs/</link>
+            <!--<link>http://oasp.github.io/oasp4j/maven/apidocs/</link>-->
           </links>
           <doctitle>JavaDocs for ${project.name}</doctitle>
           <windowtitle>JavaDocs for ${project.name}</windowtitle>
