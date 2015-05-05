@@ -19,6 +19,9 @@ public final class ApplicationConfigurationConstants {
   /** Path to the spring XML configuration file for the data-acccess layer. */
   public static final String BEANS_DATA_ACCESS = "classpath:/config/app/dataaccess/beans-dataaccess.xml";
 
+  /** Path to the spring XML configuration file for the batch layer. */
+  public static final String BEANS_BATCH = "classpath:/config/app/batch/beans.xml";
+
   /**
    * Path to the spring XML configuration file for the common and cross-cutting code that is not assigned to any layer.
    */
