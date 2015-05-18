@@ -14,11 +14,11 @@
   <description>Core of the server for the restaurant application - a simple example using the Open Application Standard Platform for Java (OASP4J).</description>
 
   <dependencies>
- <!--    <dependency>
+    <dependency>
       <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-batch</artifactId>
     </dependency>
- -->
+
     <dependency>
       <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-logging</artifactId>
@@ -69,20 +69,6 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <scope>test</scope>
-    </dependency>
-
-    <!-- Spring Batch -->
-    <dependency>
-      <groupId>org.springframework.batch</groupId>
-      <artifactId>spring-batch-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.batch</groupId>
-      <artifactId>spring-batch-infrastructure</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.batch</groupId>
-      <artifactId>spring-batch-integration</artifactId>
     </dependency>
 
     <!-- for SpringDispatcher Servlet -->

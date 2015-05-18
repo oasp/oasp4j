@@ -1,7 +1,6 @@
-package io.oasp.gastronomy.restaurant.offermanagement.batch.impl.reader;
+package io.oasp.gastronomy.restaurant.offermanagement.batch.impl.productimport.reader;
 
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,36 +11,37 @@ import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.core.io.ClassPathResource;
 
 /**
- * Implementation of ItemReader. It reads data from csv file and creates OfferEto.
+ * Implementation of ItemReader. It reads data from csv file and creates DrinkEto.
  *
  * @author jczas
  */
-public class OfferFromCsvReader extends FlatFileItemReader<OfferEto> {
+public class DrinkReader extends FlatFileItemReader<DrinkEto> {
 
-  private static final Logger LOG = LoggerFactory.getLogger(OfferFromCsvReader.class);
+  private static final Logger LOG = LoggerFactory.getLogger(DrinkReader.class);
 
   /**
    * The constructor.
    */
-  public OfferFromCsvReader() {
+  public DrinkReader() {
 
     super();
 
     // setting resource
     // TODO set resource from parameters (???)
-    setResource(new ClassPathResource("offer.csv"));
+    setResource(new ClassPathResource("drinks.csv"));
 
     // setting line tokenizer and mapper
     DelimitedLineTokenizer delimitedLineTokenizer = new DelimitedLineTokenizer();
-    delimitedLineTokenizer.setNames(new String[] { "number" });
+    delimitedLineTokenizer.setNames(new String[] { "name", "description", "pictureId", "alcoholic" });
 
     BeanWrapperFieldSetMapper beanWrapperFieldSetMapper = new BeanWrapperFieldSetMapper<DrinkEto>();
-    beanWrapperFieldSetMapper.setTargetType(OfferEto.class);
+    beanWrapperFieldSetMapper.setTargetType(DrinkEto.class);
 
-    DefaultLineMapper defaultLineMapper = new DefaultLineMapper<OfferEto>();
+    DefaultLineMapper defaultLineMapper = new DefaultLineMapper<DrinkEto>();
     defaultLineMapper.setFieldSetMapper(beanWrapperFieldSetMapper);
     defaultLineMapper.setLineTokenizer(delimitedLineTokenizer);
 
     setLineMapper(defaultLineMapper);
   }
+
 }
