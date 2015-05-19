@@ -18,6 +18,9 @@
 
   <modules>
     <module>${artifactId}-core</module>
+#if($earProjectName != '.')
+    <module>${earProjectName}</module>
+#end
     <module>${artifactId}-server</module>
   </modules>
 
