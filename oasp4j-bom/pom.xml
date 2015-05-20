@@ -223,6 +223,20 @@
         <version>1.54</version>
       </dependency>
 
+      <!-- Dependencies for testing constraint validation excepcion -->
+      <dependency>
+        <groupId>javax.el</groupId>
+        <artifactId>javax.el-api</artifactId>
+        <version>2.2.4</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.web</groupId>
+        <artifactId>javax.el</artifactId>
+        <version>2.2.4</version>
+        <scope>test</scope>
+      </dependency>
+
       <!-- *** INTERNAL DEPENDENCIES *** -->
       <dependency>
         <groupId>io.oasp.java.modules</groupId>
