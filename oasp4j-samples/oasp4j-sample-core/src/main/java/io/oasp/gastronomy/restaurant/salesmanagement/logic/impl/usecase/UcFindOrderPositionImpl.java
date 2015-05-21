@@ -14,15 +14,13 @@ import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Primary;
 
 /**
  * Implementation of {@link UcFindOrderPosition}.
  *
  * @author jozitz
  */
-@Named
-@Primary
+@Named(UcFindOrderPosition.CDI_NAME)
 public class UcFindOrderPositionImpl extends AbstractOrderPositionUc implements UcFindOrderPosition {
 
   private static final Logger LOG = LoggerFactory.getLogger(UcFindOrderPositionImpl.class);

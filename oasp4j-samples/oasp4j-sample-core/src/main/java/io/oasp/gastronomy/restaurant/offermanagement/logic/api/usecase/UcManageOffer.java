@@ -11,6 +11,9 @@ import javax.validation.Valid;
  */
 public interface UcManageOffer {
 
+  /** @see net.sf.mmm.util.component.api.Cdi#CDI_NAME */
+  String CDI_NAME = "UcManageOffer";
+
   /**
    * Deletes an {@link OfferEto} by its {@link OfferEto#getId() id}.
    *

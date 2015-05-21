@@ -17,15 +17,13 @@ import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Primary;
 
 /**
  * Implementation of {@link UcFindBill}.
  *
  * @author jozitz
  */
-@Named
-@Primary
+@Named(UcFindBill.CDI_NAME)
 public class UcFindBillImpl extends AbstractBillUc implements UcFindBill {
 
   private static final Logger LOG = LoggerFactory.getLogger(UcFindBillImpl.class);

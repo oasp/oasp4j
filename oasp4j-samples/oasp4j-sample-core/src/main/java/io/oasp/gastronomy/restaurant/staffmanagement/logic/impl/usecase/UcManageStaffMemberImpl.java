@@ -13,15 +13,13 @@ import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Primary;
 
 /**
  * Implementation of {@link UcManageStaffMember}.
  *
  * @author jozitz
  */
-@Named
-@Primary
+@Named(UcManageStaffMember.CDI_NAME)
 public class UcManageStaffMemberImpl extends AbstractStaffMemberUc implements UcManageStaffMember {
 
   /** Logger instance. */

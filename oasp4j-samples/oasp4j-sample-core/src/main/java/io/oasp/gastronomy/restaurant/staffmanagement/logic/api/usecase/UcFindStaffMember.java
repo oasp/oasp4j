@@ -11,6 +11,9 @@ import java.util.List;
  */
 public interface UcFindStaffMember {
 
+  /** @see net.sf.mmm.util.component.api.Cdi#CDI_NAME */
+  String CDI_NAME = "UcFindStaffMember";
+
   /**
    * @param id the {@link StaffMemberEto#getId() ID} of the requested staff member.
    * @return The {@link StaffMemberEto} with the given <code>id</code> or <code>null</code> if no such object exists.

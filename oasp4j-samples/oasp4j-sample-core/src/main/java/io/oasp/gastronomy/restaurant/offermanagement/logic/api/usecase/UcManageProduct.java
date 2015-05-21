@@ -12,6 +12,9 @@ import java.sql.Blob;
  */
 public interface UcManageProduct {
 
+  /** @see net.sf.mmm.util.component.api.Cdi#CDI_NAME */
+  String CDI_NAME = "UcManageProduct";
+
   /**
    * If no ID is contained creates the {@link ProductEto} for the first time. Else it updates the {@link ProductEto}
    * with given ID. If no {@link ProductEto} with given ID is present, an exception will be thrown.
