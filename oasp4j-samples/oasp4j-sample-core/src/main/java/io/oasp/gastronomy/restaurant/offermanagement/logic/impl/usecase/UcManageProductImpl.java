@@ -13,12 +13,15 @@ import java.util.Objects;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Named;
 
+import org.springframework.context.annotation.Primary;
+
 /**
  * Implementation of {@link UcManageProduct}.
  *
  * @author loverbec
  */
 @Named
+@Primary
 public class UcManageProductImpl extends AbstractProductUc implements UcManageProduct {
 
   /**

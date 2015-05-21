@@ -19,6 +19,7 @@ import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Primary;
 
 /**
  * Use Case to find an order.
@@ -26,6 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author rjoeris
  */
 @Named
+@Primary
 public class UcFindOrderImpl extends AbstractOrderUc implements UcFindOrder {
 
   private static final Logger LOG = LoggerFactory.getLogger(UcFindOrderImpl.class);

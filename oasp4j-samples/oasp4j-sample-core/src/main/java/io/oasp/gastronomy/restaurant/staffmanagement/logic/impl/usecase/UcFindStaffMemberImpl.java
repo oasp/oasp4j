@@ -14,12 +14,15 @@ import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Named;
 
+import org.springframework.context.annotation.Primary;
+
 /**
  * Implementation of {@link UcFindStaffMember}.
  *
  * @author jozitz
  */
 @Named
+@Primary
 public class UcFindStaffMemberImpl extends AbstractStaffMemberUc implements UcFindStaffMember, Usermanagement {
 
   /**
