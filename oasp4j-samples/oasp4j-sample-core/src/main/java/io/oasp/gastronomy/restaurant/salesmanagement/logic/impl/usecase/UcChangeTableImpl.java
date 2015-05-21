@@ -14,15 +14,12 @@ import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.springframework.context.annotation.Primary;
-
 /**
  * UseCase: The guests can change a table to get a better table.
  *
  * @author rjoeris
  */
-@Named
-@Primary
+@Named(UcChangeTable.CDI_NAME)
 public class UcChangeTableImpl extends AbstractUc implements UcChangeTable {
 
   private Tablemanagement tableManagement;

@@ -49,6 +49,54 @@ public class OffermanagementImpl extends AbstractBeanMapperSupport implements Of
   }
 
   /**
+   * Sets the field 'ucFindOffer'.
+   *
+   * @param ucFindOffer New value for ucFindOffer
+   */
+  @Inject
+  @Named(UcFindOffer.CDI_NAME)
+  public void setUcFindOffer(UcFindOffer ucFindOffer) {
+
+    this.ucFindOffer = ucFindOffer;
+  }
+
+  /**
+   * Sets the field 'ucManageOffer'.
+   *
+   * @param ucManageOffer New value for ucManageOffer
+   */
+  @Inject
+  @Named(UcManageOffer.CDI_NAME)
+  public void setUcManageOffer(UcManageOffer ucManageOffer) {
+
+    this.ucManageOffer = ucManageOffer;
+  }
+
+  /**
+   * Sets the field 'ucFindProduct'.
+   *
+   * @param ucFindProduct New value for ucFindProduct
+   */
+  @Inject
+  @Named(UcFindProduct.CDI_NAME)
+  public void setUcFindProduct(UcFindProduct ucFindProduct) {
+
+    this.ucFindProduct = ucFindProduct;
+  }
+
+  /**
+   * Sets the field 'ucManageProduct'.
+   *
+   * @param ucManageProduct New value for ucManageProduct
+   */
+  @Inject
+  @Named(UcManageProduct.CDI_NAME)
+  public void setUcManageProduct(UcManageProduct ucManageProduct) {
+
+    this.ucManageProduct = ucManageProduct;
+  }
+
+  /**
    * {@inheritDoc}
    */
   @Override
@@ -212,50 +260,6 @@ public class OffermanagementImpl extends AbstractBeanMapperSupport implements Of
   public List<ProductEto> findProductsFiltered(ProductFilter productFilterBo, ProductSortBy sortBy) {
 
     return this.ucFindProduct.findProductsFiltered(productFilterBo, sortBy);
-  }
-
-  /**
-   * Sets the field 'ucFindOffer'.
-   *
-   * @param ucFindOffer New value for ucFindOffer
-   */
-  @Inject
-  public void setUcFindOffer(UcFindOffer ucFindOffer) {
-
-    this.ucFindOffer = ucFindOffer;
-  }
-
-  /**
-   * Sets the field 'ucManageOffer'.
-   *
-   * @param ucManageOffer New value for ucManageOffer
-   */
-  @Inject
-  public void setUcManageOffer(UcManageOffer ucManageOffer) {
-
-    this.ucManageOffer = ucManageOffer;
-  }
-
-  /**
-   * Sets the field 'ucFindProduct'.
-   *
-   * @param ucFindProduct New value for ucFindProduct
-   */
-  @Inject
-  public void setUcFindProduct(UcFindProduct ucFindProduct) {
-
-    this.ucFindProduct = ucFindProduct;
-  }
-
-  /**
-   * Sets the field 'ucManageProduct'.
-   *
-   * @param ucManageProduct New value for ucManageProduct
-   */
-  @Inject
-  public void setUcManageProduct(UcManageProduct ucManageProduct) {
-
-    this.ucManageProduct = ucManageProduct;
   }
 
   /**

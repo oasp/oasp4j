@@ -9,6 +9,9 @@ import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto
  */
 public interface UcManageStaffMember {
 
+  /** @see net.sf.mmm.util.component.api.Cdi#CDI_NAME */
+  String CDI_NAME = "UcManageStaffMember";
+
   /**
    * @param staffMemberId the {@link StaffMemberEto#getId() ID} of a {@link StaffMemberEto} to delete.
    */

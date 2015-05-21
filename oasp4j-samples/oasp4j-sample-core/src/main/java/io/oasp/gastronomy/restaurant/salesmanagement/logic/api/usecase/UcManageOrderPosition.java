@@ -11,6 +11,9 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionE
  */
 public interface UcManageOrderPosition {
 
+  /** @see net.sf.mmm.util.component.api.Cdi#CDI_NAME */
+  String CDI_NAME = "UcManageOrderPosition";
+
   /**
    * Creates an {@link OrderPositionEto} for the given {@link OfferEto} and a given {@link OrderEto}.
    *

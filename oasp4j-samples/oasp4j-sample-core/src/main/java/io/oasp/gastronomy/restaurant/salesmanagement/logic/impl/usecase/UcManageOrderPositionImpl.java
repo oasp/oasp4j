@@ -27,15 +27,13 @@ import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Primary;
 
 /**
  * Implementation of {@link UcManageOrderPosition}.
  *
  * @author jozitz
  */
-@Named
-@Primary
+@Named(UcManageOrderPosition.CDI_NAME)
 public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implements UcManageOrderPosition {
 
   /** Logger instance. */

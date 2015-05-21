@@ -32,6 +32,7 @@ public class StaffmanagementImpl extends AbstractBeanMapperSupport implements St
    * @param ucFindStaffMember New value for ucFindStaffMember
    */
   @Inject
+  @Named(UcFindStaffMember.CDI_NAME)
   public void setUcFindStaffMember(UcFindStaffMember ucFindStaffMember) {
 
     this.ucFindStaffMember = ucFindStaffMember;
@@ -43,6 +44,7 @@ public class StaffmanagementImpl extends AbstractBeanMapperSupport implements St
    * @param ucManageStaffMember New value for ucManageStaffMember
    */
   @Inject
+  @Named(UcManageStaffMember.CDI_NAME)
   public void setUcManageStaffMember(UcManageStaffMember ucManageStaffMember) {
 
     this.ucManageStaffMember = ucManageStaffMember;
