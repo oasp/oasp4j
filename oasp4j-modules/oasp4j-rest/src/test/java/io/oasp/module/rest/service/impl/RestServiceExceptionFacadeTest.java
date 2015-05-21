@@ -2,9 +2,16 @@ package io.oasp.module.rest.service.impl;
 
 import io.oasp.module.test.common.base.ModuleTest;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validation;
 import javax.validation.ValidationException;
+import javax.validation.Validator;
+import javax.validation.constraints.Min;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.NotFoundException;
@@ -51,6 +58,37 @@ public class RestServiceExceptionFacadeTest extends ModuleTest {
   }
 
   /**
+   * Tests {@link RestServiceExceptionFacade#toResponse(Throwable)} with constraint violations
+   */
+  @Test
+  public void testConstraintViolationExceptions() {
+
+    class CounterTest {
+
+      @Min(value = 10)
+      private Integer count;
+
+      public CounterTest(Integer count) {
+
+        this.count = count;
+      }
+
+    }
+
+    CounterTest counter = new CounterTest(new Integer(1));
+
+    Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+    Set<ConstraintViolation<CounterTest>> violations = validator.validate(counter);
+
+    RestServiceExceptionFacade exceptionFacade = getExceptionFacade();
+    String message = "{count=[must be greater than or equal to 10]}";
+    String errors = "{count=[must be greater than or equal to 10]}";
+    Throwable error = new ConstraintViolationException(violations);
+    checkFacade(exceptionFacade, error, 400, message, UUID_ANY, ValidationErrorUserException.CODE, errors);
+
+  }
+
+  /**
    * Tests {@link RestServiceExceptionFacade#toResponse(Throwable)} with forbidden security exception including
    * subclasses.
    */
@@ -67,11 +105,11 @@ public class RestServiceExceptionFacadeTest extends ModuleTest {
 
     checkFacade(exceptionFacade, new AccessDeniedException(secretMessage), statusCode, message, UUID_ANY, code);
     checkFacade(exceptionFacade, new AuthenticationCredentialsNotFoundException(secretMessage), statusCode, message,
-        UUID_ANY, code);
+        UUID_ANY, code, null);
     checkFacade(exceptionFacade, new BadCredentialsException(secretMessage), statusCode, message, UUID_ANY, code);
     checkFacade(exceptionFacade, new AccountExpiredException(secretMessage), statusCode, message, UUID_ANY, code);
     checkFacade(exceptionFacade, new InternalAuthenticationServiceException(secretMessage), statusCode, message,
-        UUID_ANY, code);
+        UUID_ANY, code, null);
     SecurityErrorUserException error = new SecurityErrorUserException();
     checkFacade(exceptionFacade, error, statusCode, message, error.getUuid().toString(), code);
   }
@@ -114,6 +152,28 @@ public class RestServiceExceptionFacadeTest extends ModuleTest {
   protected String checkFacade(RestServiceExceptionFacade exceptionFacade, Throwable error, int statusCode,
       String message, String uuid, String code) {
 
+    return checkFacade(exceptionFacade, error, statusCode, message, uuid, code, null);
+  }
+
+  /**
+   * Checks that the specified {@link RestServiceExceptionFacade} provides the expected results for the given
+   * {@link Throwable}.
+   *
+   * @param exceptionFacade is the {@link RestServiceExceptionFacade} to test.
+   * @param error is the {@link Throwable} to convert.
+   * @param statusCode is the expected {@link Response#getStatus() status} code.
+   * @param message is the expected {@link Throwable#getMessage() error message} from the JSON result.
+   * @param uuid is the expected {@link NlsRuntimeException#getUuid() UUID} from the JSON result. May be
+   *        <code>null</code>.
+   * @param code is the expected {@link NlsRuntimeException#getCode() error code} from the JSON result. May be
+   *        <code>null</code>.
+   * @param errors is the expected validation errors in a format key-value
+   * @return the JSON result for potential further asserts.
+   */
+  @SuppressWarnings("unchecked")
+  protected String checkFacade(RestServiceExceptionFacade exceptionFacade, Throwable error, int statusCode,
+      String message, String uuid, String code, String errors) {
+
     Response response = exceptionFacade.toResponse(error);
     assertThat(response).isNotNull();
     assertThat(response.getStatus()).isEqualTo(statusCode);
@@ -123,7 +183,7 @@ public class RestServiceExceptionFacadeTest extends ModuleTest {
     String result = (String) entity;
 
     try {
-      Map<String, String> valueMap = exceptionFacade.getMapper().readValue(result, Map.class);
+      Map<String, Object> valueMap = exceptionFacade.getMapper().readValue(result, Map.class);
       String msg = message;
       if (msg == null) {
         msg = error.getLocalizedMessage();
@@ -133,7 +193,7 @@ public class RestServiceExceptionFacadeTest extends ModuleTest {
         assertThat(result).doesNotContain(error.getMessage());
       }
       assertThat(valueMap.get(RestServiceExceptionFacade.KEY_CODE)).isEqualTo(code);
-      String actualUuid = valueMap.get(RestServiceExceptionFacade.KEY_UUID);
+      String actualUuid = (String) valueMap.get(RestServiceExceptionFacade.KEY_UUID);
       if (UUID_ANY.equals(uuid)) {
         if (actualUuid == null) {
           fail("UUID expected but not found in response: " + result);
@@ -141,6 +201,25 @@ public class RestServiceExceptionFacadeTest extends ModuleTest {
       } else {
         assertThat(actualUuid).isEqualTo(uuid);
       }
+
+      Map<String, List<String>> errorsMap =
+          (Map<String, List<String>>) valueMap.get(RestServiceExceptionFacade.KEY_ERRORS);
+
+      if (errors == null) {
+        if (errorsMap != null) {
+          fail("Errors do not expected but found in response: " + result);
+        } else {
+          assertThat(errorsMap).isEqualTo(errors);
+        }
+      } else {
+        if (errorsMap != null) {
+          assertThat(errorsMap.toString()).isEqualTo(errors);
+        } else {
+          fail("Errors expected but not found in response: " + result);
+        }
+
+      }
+
     } catch (Exception e) {
       throw new IllegalStateException(e.getMessage(), e);
     }
