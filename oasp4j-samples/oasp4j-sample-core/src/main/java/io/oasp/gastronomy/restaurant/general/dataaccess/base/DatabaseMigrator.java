@@ -1,7 +1,8 @@
 package io.oasp.gastronomy.restaurant.general.dataaccess.base;
 
+import javax.sql.DataSource;
+
 import org.flywaydb.core.Flyway;
-import org.h2.jdbcx.JdbcDataSource;
 
 /**
  * Type to migrate the database. Gets initialized before hibernate.
@@ -20,7 +21,7 @@ public class DatabaseMigrator {
   private boolean enabled;
 
   /** The JDBC data source. */
-  private JdbcDataSource dataSource;
+  private DataSource dataSource;
 
   /** Property is true if test data should be included in migration. */
   private boolean testdata;
@@ -67,7 +68,7 @@ public class DatabaseMigrator {
   /**
    * @return datasource
    */
-  public JdbcDataSource getDataSource() {
+  public DataSource getDataSource() {
 
     return this.dataSource;
   }
@@ -75,7 +76,7 @@ public class DatabaseMigrator {
   /**
    * @param datasource the datasource to set
    */
-  public void setDataSource(JdbcDataSource datasource) {
+  public void setDataSource(DataSource datasource) {
 
     this.dataSource = datasource;
   }
