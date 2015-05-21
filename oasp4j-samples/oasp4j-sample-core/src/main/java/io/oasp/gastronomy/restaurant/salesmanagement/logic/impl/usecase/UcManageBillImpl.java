@@ -28,15 +28,13 @@ import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Primary;
 
 /**
  * Implementation of {@link UcManageBill}.
  *
  * @author jozitz
  */
-@Named
-@Primary
+@Named(UcManageBill.CDI_NAME)
 public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
 
   /** Logger instance. */

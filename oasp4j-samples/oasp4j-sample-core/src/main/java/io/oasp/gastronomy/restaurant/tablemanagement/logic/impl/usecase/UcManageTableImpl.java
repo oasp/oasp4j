@@ -22,7 +22,6 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Primary;
 import org.springframework.validation.annotation.Validated;
 
 /**
@@ -30,9 +29,8 @@ import org.springframework.validation.annotation.Validated;
  *
  * @author jozitz
  */
-@Named
+@Named(UcManageTable.CDI_NAME)
 @Validated
-@Primary
 public class UcManageTableImpl extends AbstractTableUc implements UcManageTable {
 
   /** Logger instance. */

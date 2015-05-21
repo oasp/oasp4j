@@ -37,6 +37,7 @@ public class TablemanagementImpl extends AbstractBeanMapperSupport implements Ta
    * @param ucFindTable New value for ucFindTable
    */
   @Inject
+  @Named(UcFindTable.CDI_NAME)
   public void setUcFindTable(UcFindTable ucFindTable) {
 
     this.ucFindTable = ucFindTable;
@@ -48,6 +49,7 @@ public class TablemanagementImpl extends AbstractBeanMapperSupport implements Ta
    * @param ucManageTable New value for ucManageTable
    */
   @Inject
+  @Named(UcManageTable.CDI_NAME)
   public void setUcManageTable(UcManageTable ucManageTable) {
 
     this.ucManageTable = ucManageTable;

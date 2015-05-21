@@ -26,15 +26,13 @@ import net.sf.mmm.util.exception.api.ObjectMismatchException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Primary;
 
 /**
  * Implementation of {@link UcFindProduct}.
  *
  * @author jozitz
  */
-@Named
-@Primary
+@Named(UcFindProduct.CDI_NAME)
 public class UcFindProductImpl extends AbstractProductUc implements UcFindProduct {
 
   private static final Logger LOG = LoggerFactory.getLogger(UcFindProductImpl.class);

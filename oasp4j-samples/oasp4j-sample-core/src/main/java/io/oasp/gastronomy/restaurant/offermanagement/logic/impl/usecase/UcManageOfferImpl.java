@@ -13,7 +13,6 @@ import javax.annotation.security.RolesAllowed;
 import javax.inject.Named;
 import javax.validation.Valid;
 
-import org.springframework.context.annotation.Primary;
 import org.springframework.validation.annotation.Validated;
 
 /**
@@ -21,9 +20,8 @@ import org.springframework.validation.annotation.Validated;
  *
  * @author loverbec
  */
-@Named
+@Named(UcManageOffer.CDI_NAME)
 @Validated
-@Primary
 public class UcManageOfferImpl extends AbstractOfferUc implements UcManageOffer {
 
   /**

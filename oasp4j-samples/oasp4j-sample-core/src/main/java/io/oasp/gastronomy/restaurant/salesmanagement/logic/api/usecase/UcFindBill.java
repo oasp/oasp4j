@@ -11,6 +11,9 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BillEto;
  */
 public interface UcFindBill {
 
+  /** @see net.sf.mmm.util.component.api.Cdi#CDI_NAME */
+  String CDI_NAME = "UcFindBill";
+
   /**
    * This method will return a {@link BillCto bill} identified the given id.
    *

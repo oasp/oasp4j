@@ -15,6 +15,9 @@ import java.util.List;
  */
 public interface UcFindOffer {
 
+  /** @see net.sf.mmm.util.component.api.Cdi#CDI_NAME */
+  String CDI_NAME = "UcFindOffer";
+
   /**
    * Gets an {@link OfferEto} using its entity identifier.
    *

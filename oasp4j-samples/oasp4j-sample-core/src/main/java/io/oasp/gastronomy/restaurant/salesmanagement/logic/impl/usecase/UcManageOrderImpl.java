@@ -25,14 +25,13 @@ import net.sf.mmm.util.exception.api.ObjectMismatchException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Primary;
 
 /**
+ * Implementation of {@link UcManageOrder}.
  *
  * @author rjoeris
  */
-@Named
-@Primary
+@Named(UcManageOrder.CDI_NAME)
 public class UcManageOrderImpl extends AbstractOrderUc implements UcManageOrder {
 
   /** Logger instance. */

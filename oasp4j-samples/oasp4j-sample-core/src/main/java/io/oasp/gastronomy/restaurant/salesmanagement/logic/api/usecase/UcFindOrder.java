@@ -14,6 +14,9 @@ import java.util.List;
  */
 public interface UcFindOrder {
 
+  /** @see net.sf.mmm.util.component.api.Cdi#CDI_NAME */
+  String CDI_NAME = "UcFindOrder";
+
   /**
    * @param criteria the {@link OrderSearchCriteriaTo}.
    * @return the {@link List} of matching {@link OrderEto}s.
