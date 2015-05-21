@@ -13,9 +13,6 @@ import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
  */
 public interface UcChangeTable {
 
-  /** @see net.sf.mmm.util.component.api.Cdi#CDI_NAME */
-  String CDI_NAME = "UcChangeTable";
-
   /**
    * UseCase to change from one {@link TableEto table} to another. The people sitting at a table are identified by their
    * {@link OrderEto order} that has to be provided as argument.

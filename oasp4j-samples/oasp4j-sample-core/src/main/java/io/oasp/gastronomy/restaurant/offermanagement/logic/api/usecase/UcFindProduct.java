@@ -18,9 +18,6 @@ import java.util.List;
  */
 public interface UcFindProduct {
 
-  /** @see net.sf.mmm.util.component.api.Cdi#CDI_NAME */
-  String CDI_NAME = "UcFindProduct";
-
   /**
    * Gets a {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product} using its entity identifier.
    *

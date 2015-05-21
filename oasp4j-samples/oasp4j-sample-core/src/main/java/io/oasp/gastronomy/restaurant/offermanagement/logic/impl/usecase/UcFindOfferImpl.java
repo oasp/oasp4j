@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.offermanagement.logic.impl.usecase;
 
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.ProductType;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
@@ -31,7 +32,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author jozitz
  */
-@Named(UcFindOffer.CDI_NAME)
+@Named
+@UseCase
 public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
 
   private static final Logger LOG = LoggerFactory.getLogger(UcFindOfferImpl.class);

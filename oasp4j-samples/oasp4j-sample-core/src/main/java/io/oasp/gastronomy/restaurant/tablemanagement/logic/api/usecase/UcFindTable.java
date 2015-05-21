@@ -11,9 +11,6 @@ import java.util.List;
  */
 public interface UcFindTable {
 
-  /** @see net.sf.mmm.util.component.api.Cdi#CDI_NAME */
-  String CDI_NAME = "UcFindTable";
-
   /**
    * Returns a restaurant table by its id 'id'.
    *
