@@ -24,6 +24,7 @@
     <port.range>81</port.range>
     <oasp.gpg.keyname>joerg.hohwiller@capgemini.com</oasp.gpg.keyname>
     <oasp.flatten.mode>oss</oasp.flatten.mode>
+    <spring.boot.version>1.1.11.RELEASE</spring.boot.version>
   </properties>
 
   <build>
@@ -527,7 +528,7 @@
       <properties/>
     </developer>
   </developers>
-  
+
   <licenses>
     <license>
       <name>Apache Software Licenese</name>

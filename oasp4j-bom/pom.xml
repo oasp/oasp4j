@@ -27,14 +27,6 @@
 
   <dependencyManagement>
     <dependencies>
-      <!-- BOM of spring-boot -->
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <version>1.1.11.RELEASE</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
       <!-- *** EXTERNAL DEPENDENCIES *** -->
       <!-- spring-context is missing in spring-boot -->
       <dependency>
