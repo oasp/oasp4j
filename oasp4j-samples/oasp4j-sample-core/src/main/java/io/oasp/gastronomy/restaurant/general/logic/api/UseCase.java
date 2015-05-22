@@ -7,7 +7,9 @@ import java.lang.annotation.RetentionPolicy;
 import javax.inject.Qualifier;
 
 /**
- * TODO hohwille This type ...
+ * This is a {@link Qualifier} to mark all use-cases. In your use-case implementation add the annotations
+ * {@link javax.inject.Named} and {@link UseCase}. In your component facade implementation add the annotations
+ * {@link javax.inject.Inject} and {@link UseCase} to the setters in order to inject your use case implementations.
  *
  * @author hohwille
  */
