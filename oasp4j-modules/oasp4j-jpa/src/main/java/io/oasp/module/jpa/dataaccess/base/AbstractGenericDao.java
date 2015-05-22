@@ -251,7 +251,7 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
     }
     Long timeout = criteria.getSearchTimeout();
     if (timeout != null) {
-      query.setHint("javax.persistence.query.timeout", timeout);
+      query.setHint("javax.persistence.query.timeout", timeout.intValue());
     }
   }
 
@@ -273,7 +273,7 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
     }
     Long timeout = criteria.getSearchTimeout();
     if (timeout != null) {
-      query.setHint("javax.persistence.query.timeout", timeout);
+      query.setHint("javax.persistence.query.timeout", timeout.intValue());
     }
   }
 
