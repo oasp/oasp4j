@@ -6,6 +6,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderSt
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.OrderDao;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
+import io.oasp.module.jpa.common.api.to.PaginatedEntityListTo;
 
 import java.util.List;
 
@@ -70,7 +71,7 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
    * {@inheritDoc}
    */
   @Override
-  public List<OrderEntity> findOrders(OrderSearchCriteriaTo criteria) {
+  public PaginatedEntityListTo<OrderEntity> findOrders(OrderSearchCriteriaTo criteria) {
 
     OrderEntity order = Alias.alias(OrderEntity.class);
     EntityPathBase<OrderEntity> alias = Alias.$(order);
@@ -83,7 +84,7 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
     if (state != null) {
       query.where(Alias.$(order.getState()).eq(state));
     }
-    applyCriteria(criteria, query);
-    return query.list(alias);
+
+    return findPaginated(criteria.getPagination(), query, alias);
   }
 }

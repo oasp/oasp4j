@@ -1,5 +1,8 @@
 package io.oasp.module.jpa.dataaccess.base;
 
+import io.oasp.module.jpa.common.api.to.PaginatedEntityListTo;
+import io.oasp.module.jpa.common.api.to.PaginationResultTo;
+import io.oasp.module.jpa.common.api.to.PaginationTo;
 import io.oasp.module.jpa.dataaccess.api.GenericDao;
 
 import java.util.List;
@@ -22,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.mysema.query.jpa.impl.JPAQuery;
+import com.mysema.query.types.Expression;
 
 /**
  * This is the abstract base-implementation of the {@link GenericDao} interface.
@@ -230,6 +234,48 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
 
     for (E entity : entities) {
       delete(entity);
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public PaginatedEntityListTo<E> findPaginated(PaginationTo pagination, JPAQuery query, Expression<E> expr) {
+
+    Long total = null;
+    if (pagination.isTotal()) {
+      total = query.clone().count();
+    } else {
+      total = null;
+    }
+    PaginationResultTo paginationResult = new PaginationResultTo(pagination, total);
+
+    applyPagination(pagination, query);
+    List<E> paginatedList = query.list(expr);
+
+    return new PaginatedEntityListTo<>(paginatedList, paginationResult);
+  }
+
+  /**
+   * Applies the {@link PaginationTo pagination criteria} to the given {@link JPAQuery}.
+   *
+   * @param pagination is the {@link PaginationTo pagination criteria} to apply.
+   * @param query is the {@link JPAQuery} to apply to.
+   */
+  protected void applyPagination(PaginationTo pagination, JPAQuery query) {
+
+    if (pagination == PaginationTo.NO_PAGINATION) {
+      return;
+    }
+
+    Integer limit = pagination.getSize();
+    if (limit != null) {
+      query.limit(limit);
+
+      int page = pagination.getPage();
+      if (page > 0) {
+        query.offset((page - 1) * limit);
+      }
     }
   }
 

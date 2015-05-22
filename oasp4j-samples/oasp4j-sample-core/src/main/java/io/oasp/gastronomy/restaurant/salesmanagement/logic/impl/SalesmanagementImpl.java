@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl;
 
+import io.oasp.gastronomy.restaurant.general.common.api.to.PaginatedListTo;
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSupport;
 import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
@@ -140,7 +141,7 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * {@inheritDoc}
    */
   @Override
-  public List<OrderEto> findOrderEtos(OrderSearchCriteriaTo criteria) {
+  public PaginatedListTo<OrderEto> findOrderEtos(OrderSearchCriteriaTo criteria) {
 
     return this.ucFindOrder.findOrderEtos(criteria);
   }
@@ -149,7 +150,7 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * {@inheritDoc}
    */
   @Override
-  public List<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria) {
+  public PaginatedListTo<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria) {
 
     return this.ucFindOrder.findOrderCtos(criteria);
   }

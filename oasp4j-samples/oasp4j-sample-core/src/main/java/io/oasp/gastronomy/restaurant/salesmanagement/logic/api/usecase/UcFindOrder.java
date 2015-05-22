@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase;
 
+import io.oasp.gastronomy.restaurant.general.common.api.to.PaginatedListTo;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
@@ -18,13 +19,13 @@ public interface UcFindOrder {
    * @param criteria the {@link OrderSearchCriteriaTo}.
    * @return the {@link List} of matching {@link OrderEto}s.
    */
-  List<OrderEto> findOrderEtos(OrderSearchCriteriaTo criteria);
+  PaginatedListTo<OrderEto> findOrderEtos(OrderSearchCriteriaTo criteria);
 
   /**
    * @param criteria the {@link OrderSearchCriteriaTo}.
    * @return the {@link List} of matching {@link OrderCto}s.
    */
-  List<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria);
+  PaginatedListTo<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria);
 
   /**
    * @param order the {@link OrderEto}.

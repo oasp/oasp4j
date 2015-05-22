@@ -1,7 +1,7 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to;
 
-import io.oasp.gastronomy.restaurant.general.common.api.to.SearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
+import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
 
 /**
  * This is the {@link SearchCriteriaTo search criteria} {@link net.sf.mmm.util.transferobject.api.TransferObject TO}

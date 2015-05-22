@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest;
 
+import io.oasp.gastronomy.restaurant.general.common.api.to.PaginatedListTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
@@ -20,6 +21,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcFindOrd
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageBill;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrder;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrderPosition;
+import io.oasp.module.jpa.common.api.to.PaginationTo;
 import io.oasp.module.rest.service.api.RequestParameters;
 
 import java.util.List;
@@ -86,13 +88,35 @@ public class SalesmanagementRestServiceImpl {
    */
   @Path("/order")
   @GET
-  public List<OrderCto> findOrders(@Context UriInfo info) {
+  public PaginatedListTo<OrderCto> findOrders(@Context UriInfo info) {
 
     RequestParameters parameters = RequestParameters.fromQuery(info);
     OrderSearchCriteriaTo criteria = new OrderSearchCriteriaTo();
     criteria.setTableId(parameters.get("tableId", Long.class, false));
     criteria.setState(parameters.get("state", OrderState.class, false));
+
+    Integer page = parameters.get("pagination[page]", Integer.class, false);
+    if (page != null) {
+      PaginationTo pagination = new PaginationTo();
+      pagination.setPage(page);
+      pagination.setSize(parameters.get("pagination[size]", Integer.class, false));
+      criteria.setPagination(pagination);
+    }
+
     return this.salesManagement.findOrderCtos(criteria);
+  }
+
+  /**
+   * Delegates to {@link UcFindOrderPosition#findOrderPositions}.
+   *
+   * @param searchCriteriaTo the pagination and search criteria to be used for finding orders.
+   * @return the {@link PaginatedListTo list} of matching {@link OrderCto}s.
+   */
+  @Path("/order/search")
+  @POST
+  public PaginatedListTo<OrderCto> findOrdersByPost(OrderSearchCriteriaTo searchCriteriaTo) {
+
+    return this.salesManagement.findOrderCtos(searchCriteriaTo);
   }
 
   /**

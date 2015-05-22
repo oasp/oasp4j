@@ -1,9 +1,15 @@
 package io.oasp.module.jpa.dataaccess.api;
 
+import io.oasp.module.jpa.common.api.to.PaginatedEntityListTo;
+import io.oasp.module.jpa.common.api.to.PaginationTo;
+
 import java.util.List;
 
 import net.sf.mmm.util.entity.api.PersistenceEntity;
 import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
+
+import com.mysema.query.jpa.impl.JPAQuery;
+import com.mysema.query.types.Expression;
 
 /**
  * This is the interface for a <em>Data Access Object</em> (DAO). It acts as a manager responsible for the persistence
@@ -79,6 +85,22 @@ public interface GenericDao<ID, E extends PersistenceEntity<ID>> {
    * @return an {@link Iterable} with all {@link PersistenceEntity entites} for the given <code>ids</code>.
    */
   List<E> findAll(Iterable<ID> ids);
+
+  /**
+   * Returns a paginated list of entities according to the supplied pagination and query.
+   * <p>
+   * Applies {@code limit} and {@code offset} values to the supplied {@query} according to the supplied
+   * {@pagination} information.
+   * <p>
+   * If a {@link PaginationTo#isTotal() total count} of available entities is requested, will also execute a second
+   * query, without pagination parameters applied, to obtain said count.
+   *
+   * @param pagination contains information about the requested page.
+   * @param query is a query which is preconfigured with the desired conditions for the search.
+   * @param expr is used for the final mapping from the SQL result to the entities.
+   * @return a paginated list.
+   */
+  PaginatedEntityListTo<E> findPaginated(PaginationTo pagination, JPAQuery query, Expression<E> expr);
 
   /**
    * Deletes the entity with the given id.
