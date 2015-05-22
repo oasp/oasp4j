@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.tablemanagement.logic.impl;
 
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSupport;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.usecase.UcFindTable;
@@ -37,7 +38,7 @@ public class TablemanagementImpl extends AbstractBeanMapperSupport implements Ta
    * @param ucFindTable New value for ucFindTable
    */
   @Inject
-  @Named(UcFindTable.CDI_NAME)
+  @UseCase
   public void setUcFindTable(UcFindTable ucFindTable) {
 
     this.ucFindTable = ucFindTable;
@@ -49,7 +50,7 @@ public class TablemanagementImpl extends AbstractBeanMapperSupport implements Ta
    * @param ucManageTable New value for ucManageTable
    */
   @Inject
-  @Named(UcManageTable.CDI_NAME)
+  @UseCase
   public void setUcManageTable(UcManageTable ucManageTable) {
 
     this.ucManageTable = ucManageTable;

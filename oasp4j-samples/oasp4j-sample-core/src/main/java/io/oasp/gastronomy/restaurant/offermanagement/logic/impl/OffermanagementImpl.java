@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.offermanagement.logic.impl;
 
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSupport;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.general.logic.api.to.BinaryObjectEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
@@ -54,7 +55,7 @@ public class OffermanagementImpl extends AbstractBeanMapperSupport implements Of
    * @param ucFindOffer New value for ucFindOffer
    */
   @Inject
-  @Named(UcFindOffer.CDI_NAME)
+  @UseCase
   public void setUcFindOffer(UcFindOffer ucFindOffer) {
 
     this.ucFindOffer = ucFindOffer;
@@ -66,7 +67,7 @@ public class OffermanagementImpl extends AbstractBeanMapperSupport implements Of
    * @param ucManageOffer New value for ucManageOffer
    */
   @Inject
-  @Named(UcManageOffer.CDI_NAME)
+  @UseCase
   public void setUcManageOffer(UcManageOffer ucManageOffer) {
 
     this.ucManageOffer = ucManageOffer;
@@ -78,7 +79,7 @@ public class OffermanagementImpl extends AbstractBeanMapperSupport implements Of
    * @param ucFindProduct New value for ucFindProduct
    */
   @Inject
-  @Named(UcFindProduct.CDI_NAME)
+  @UseCase
   public void setUcFindProduct(UcFindProduct ucFindProduct) {
 
     this.ucFindProduct = ucFindProduct;
@@ -90,7 +91,7 @@ public class OffermanagementImpl extends AbstractBeanMapperSupport implements Of
    * @param ucManageProduct New value for ucManageProduct
    */
   @Inject
-  @Named(UcManageProduct.CDI_NAME)
+  @UseCase
   public void setUcManageProduct(UcManageProduct ucManageProduct) {
 
     this.ucManageProduct = ucManageProduct;

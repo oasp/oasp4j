@@ -11,7 +11,8 @@ import java.util.Map;
 import net.sf.mmm.util.entity.api.GenericEntity;
 
 /**
- * Abstract base class for any <em>use case</em> in this application.
+ * Abstract base class for any <em>use case</em> in this application. Actual implementations need to be annotated with
+ * {@link javax.inject.Named} and {@link io.oasp.gastronomy.restaurant.general.logic.api.UseCase}.
  *
  * @author jozitz
  */

@@ -3,6 +3,7 @@ package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException;
 import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalPropertyChangeException;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
@@ -33,7 +34,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author jozitz
  */
-@Named(UcManageOrderPosition.CDI_NAME)
+@Named
+@UseCase
 public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implements UcManageOrderPosition {
 
   /** Logger instance. */

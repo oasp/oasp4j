@@ -11,9 +11,6 @@ import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
  */
 public interface UcManageOrder {
 
-  /** @see net.sf.mmm.util.component.api.Cdi#CDI_NAME */
-  String CDI_NAME = "UcManageOrder";
-
   /**
    * If no ID is contained creates the {@link OrderCto} for the first time. Else it updates the {@link OrderCto} with
    * given ID. If no {@link OrderCto} with given ID is present, an exception will be thrown.

@@ -11,9 +11,6 @@ import javax.validation.Valid;
  */
 public interface UcManageTable {
 
-  /** @see net.sf.mmm.util.component.api.Cdi#CDI_NAME */
-  String CDI_NAME = "UcManageTable";
-
   /**
    * Deletes a restaurant table from the database by its id 'id'.
    *

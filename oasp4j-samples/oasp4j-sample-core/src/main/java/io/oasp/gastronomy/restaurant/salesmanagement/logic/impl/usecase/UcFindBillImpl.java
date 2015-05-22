@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BillCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BillEto;
@@ -23,7 +24,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author jozitz
  */
-@Named(UcFindBill.CDI_NAME)
+@Named
+@UseCase
 public class UcFindBillImpl extends AbstractBillUc implements UcFindBill {
 
   private static final Logger LOG = LoggerFactory.getLogger(UcFindBillImpl.class);

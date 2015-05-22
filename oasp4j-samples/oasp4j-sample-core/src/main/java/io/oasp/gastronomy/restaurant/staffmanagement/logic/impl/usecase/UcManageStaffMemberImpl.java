@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.staffmanagement.logic.impl.usecase;
 
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api.StaffMemberEntity;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.usecase.UcManageStaffMember;
@@ -19,7 +20,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author jozitz
  */
-@Named(UcManageStaffMember.CDI_NAME)
+@Named
+@UseCase
 public class UcManageStaffMemberImpl extends AbstractStaffMemberUc implements UcManageStaffMember {
 
   /** Logger instance. */

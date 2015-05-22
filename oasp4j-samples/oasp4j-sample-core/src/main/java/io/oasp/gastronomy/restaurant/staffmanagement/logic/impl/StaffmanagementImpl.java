@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.staffmanagement.logic.impl;
 
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSupport;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.Staffmanagement;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.usecase.UcFindStaffMember;
@@ -32,7 +33,7 @@ public class StaffmanagementImpl extends AbstractBeanMapperSupport implements St
    * @param ucFindStaffMember New value for ucFindStaffMember
    */
   @Inject
-  @Named(UcFindStaffMember.CDI_NAME)
+  @UseCase
   public void setUcFindStaffMember(UcFindStaffMember ucFindStaffMember) {
 
     this.ucFindStaffMember = ucFindStaffMember;
@@ -44,7 +45,7 @@ public class StaffmanagementImpl extends AbstractBeanMapperSupport implements St
    * @param ucManageStaffMember New value for ucManageStaffMember
    */
   @Inject
-  @Named(UcManageStaffMember.CDI_NAME)
+  @UseCase
   public void setUcManageStaffMember(UcManageStaffMember ucManageStaffMember) {
 
     this.ucManageStaffMember = ucManageStaffMember;
