@@ -13,9 +13,6 @@ import java.util.List;
  */
 public interface UcFindOrderPosition {
 
-  /** @see net.sf.mmm.util.component.api.Cdi#CDI_NAME */
-  String CDI_NAME = "UcFindOrderPosition";
-
   /**
    * @param orderPositionId is the {@link OrderPositionEto#getId() ID} of the requested {@link OrderPositionEto}.
    * @return the {@link OrderPositionEto} with the given ID. Will be <code>null</code> if the {@link OrderPositionEto}

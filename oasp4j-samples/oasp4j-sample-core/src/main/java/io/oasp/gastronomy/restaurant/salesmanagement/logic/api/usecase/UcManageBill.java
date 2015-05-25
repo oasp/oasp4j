@@ -13,9 +13,6 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.PaymentData;
  */
 public interface UcManageBill {
 
-  /** @see net.sf.mmm.util.component.api.Cdi#CDI_NAME */
-  String CDI_NAME = "UcManageBill";
-
   /**
    * Create a {@link BillEto} and save it in the database by linking the billed {@link OrderPositionEto order positions}
    * with it. A bill also consists of the {@link Money total amount} as well as the {@link Money tip}, the waiter could
