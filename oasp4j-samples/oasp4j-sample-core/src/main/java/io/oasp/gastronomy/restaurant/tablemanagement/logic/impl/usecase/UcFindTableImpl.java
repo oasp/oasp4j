@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.tablemanagement.logic.impl.usecase;
 
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.tablemanagement.dataaccess.api.TableEntity;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.usecase.UcFindTable;
@@ -20,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author jozitz
  */
 @Named
+@UseCase
 public class UcFindTableImpl extends AbstractTableUc implements UcFindTable {
 
   /** Logger instance. */

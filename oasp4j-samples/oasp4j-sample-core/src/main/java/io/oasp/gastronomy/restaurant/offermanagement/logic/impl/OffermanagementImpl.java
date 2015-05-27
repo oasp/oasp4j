@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.offermanagement.logic.impl;
 
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSupport;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.general.logic.api.to.BinaryObjectEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
@@ -46,6 +47,54 @@ public class OffermanagementImpl extends AbstractBeanMapperSupport implements Of
   public OffermanagementImpl() {
 
     super();
+  }
+
+  /**
+   * Sets the field 'ucFindOffer'.
+   *
+   * @param ucFindOffer New value for ucFindOffer
+   */
+  @Inject
+  @UseCase
+  public void setUcFindOffer(UcFindOffer ucFindOffer) {
+
+    this.ucFindOffer = ucFindOffer;
+  }
+
+  /**
+   * Sets the field 'ucManageOffer'.
+   *
+   * @param ucManageOffer New value for ucManageOffer
+   */
+  @Inject
+  @UseCase
+  public void setUcManageOffer(UcManageOffer ucManageOffer) {
+
+    this.ucManageOffer = ucManageOffer;
+  }
+
+  /**
+   * Sets the field 'ucFindProduct'.
+   *
+   * @param ucFindProduct New value for ucFindProduct
+   */
+  @Inject
+  @UseCase
+  public void setUcFindProduct(UcFindProduct ucFindProduct) {
+
+    this.ucFindProduct = ucFindProduct;
+  }
+
+  /**
+   * Sets the field 'ucManageProduct'.
+   *
+   * @param ucManageProduct New value for ucManageProduct
+   */
+  @Inject
+  @UseCase
+  public void setUcManageProduct(UcManageProduct ucManageProduct) {
+
+    this.ucManageProduct = ucManageProduct;
   }
 
   /**
@@ -212,50 +261,6 @@ public class OffermanagementImpl extends AbstractBeanMapperSupport implements Of
   public List<ProductEto> findProductsFiltered(ProductFilter productFilterBo, ProductSortBy sortBy) {
 
     return this.ucFindProduct.findProductsFiltered(productFilterBo, sortBy);
-  }
-
-  /**
-   * Sets the field 'ucFindOffer'.
-   *
-   * @param ucFindOffer New value for ucFindOffer
-   */
-  @Inject
-  public void setUcFindOffer(UcFindOffer ucFindOffer) {
-
-    this.ucFindOffer = ucFindOffer;
-  }
-
-  /**
-   * Sets the field 'ucManageOffer'.
-   *
-   * @param ucManageOffer New value for ucManageOffer
-   */
-  @Inject
-  public void setUcManageOffer(UcManageOffer ucManageOffer) {
-
-    this.ucManageOffer = ucManageOffer;
-  }
-
-  /**
-   * Sets the field 'ucFindProduct'.
-   *
-   * @param ucFindProduct New value for ucFindProduct
-   */
-  @Inject
-  public void setUcFindProduct(UcFindProduct ucFindProduct) {
-
-    this.ucFindProduct = ucFindProduct;
-  }
-
-  /**
-   * Sets the field 'ucManageProduct'.
-   *
-   * @param ucManageProduct New value for ucManageProduct
-   */
-  @Inject
-  public void setUcManageProduct(UcManageProduct ucManageProduct) {
-
-    this.ucManageProduct = ucManageProduct;
   }
 
   /**

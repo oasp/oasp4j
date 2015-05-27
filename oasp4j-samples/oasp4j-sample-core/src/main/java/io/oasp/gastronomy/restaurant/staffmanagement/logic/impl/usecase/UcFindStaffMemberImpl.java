@@ -3,6 +3,7 @@ package io.oasp.gastronomy.restaurant.staffmanagement.logic.impl.usecase;
 import io.oasp.gastronomy.restaurant.general.common.api.UserProfile;
 import io.oasp.gastronomy.restaurant.general.common.api.Usermanagement;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api.StaffMemberEntity;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.usecase.UcFindStaffMember;
@@ -20,6 +21,7 @@ import javax.inject.Named;
  * @author jozitz
  */
 @Named
+@UseCase
 public class UcFindStaffMemberImpl extends AbstractStaffMemberUc implements UcFindStaffMember, Usermanagement {
 
   /**

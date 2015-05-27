@@ -27,14 +27,6 @@
 
   <dependencyManagement>
     <dependencies>
-      <!-- BOM of spring-boot -->
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <version>1.1.11.RELEASE</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
       <!-- *** EXTERNAL DEPENDENCIES *** -->
       <!-- spring-context is missing in spring-boot -->
       <dependency>
@@ -221,6 +213,20 @@
         <groupId>com.github.tomakehurst</groupId>
         <artifactId>wiremock</artifactId>
         <version>1.54</version>
+      </dependency>
+
+      <!-- Dependencies for testing constraint validation excepcion -->
+      <dependency>
+        <groupId>javax.el</groupId>
+        <artifactId>javax.el-api</artifactId>
+        <version>2.2.4</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.web</groupId>
+        <artifactId>javax.el</artifactId>
+        <version>2.2.4</version>
+        <scope>test</scope>
       </dependency>
 
       <!-- *** INTERNAL DEPENDENCIES *** -->

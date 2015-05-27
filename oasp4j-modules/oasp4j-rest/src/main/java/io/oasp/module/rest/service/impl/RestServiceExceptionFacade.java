@@ -2,6 +2,7 @@ package io.oasp.module.rest.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -10,6 +11,7 @@ import java.util.UUID;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import javax.validation.Path.Node;
 import javax.validation.ValidationException;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.ServerErrorException;
@@ -50,6 +52,9 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
 
   /** JSON key for {@link NlsRuntimeException#getCode() error code}. */
   public static final String KEY_CODE = "code";
+
+  /** JSON key for {@link NlsRuntimeException#getCode() errors}. */
+  public static final String KEY_ERRORS = "errors";
 
   /** Logger instance. */
   private static final Logger LOG = LoggerFactory.getLogger(RestServiceExceptionFacade.class);
@@ -125,28 +130,38 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
       return createResponse((WebApplicationException) exception);
     } else if (exception instanceof ValidationException) {
       Throwable t = exception;
+      Map<String, List<String>> errorsMap = null;
       if (exception instanceof ConstraintViolationException) {
         ConstraintViolationException constraintViolationException = (ConstraintViolationException) exception;
         Set<ConstraintViolation<?>> violations = constraintViolationException.getConstraintViolations();
-        StringBuilder buffer = new StringBuilder();
-        boolean first = true;
+        errorsMap = new HashMap<>();
+
         for (ConstraintViolation<?> violation : violations) {
-          if (first) {
-            first = false;
-          } else {
-            buffer.append(StringUtil.LINE_SEPARATOR);
+          Iterator<Node> it = violation.getPropertyPath().iterator();
+          String fieldName = null;
+
+          // Getting fieldname from the exception
+          while (it.hasNext()) {
+            fieldName = it.next().toString();
           }
-          buffer.append(violation.getMessage());
-          buffer.append(" (");
-          buffer.append(violation.getPropertyPath());
-          buffer.append(")");
+
+          List<String> errorsList = errorsMap.get(fieldName);
+
+          if (errorsList == null) {
+            errorsList = new ArrayList<>();
+            errorsMap.put(fieldName, errorsList);
+          }
+
+          errorsList.add(violation.getMessage());
+
         }
-        t = new ValidationException(buffer.toString());
+
+        t = new ValidationException(errorsMap.toString());
       }
       ValidationErrorUserException error = new ValidationErrorUserException(t);
-      return createResponse(t, error);
+      return createResponse(t, error, errorsMap);
     } else if (exception instanceof ValidationErrorUserException) {
-      return createResponse(exception, (ValidationErrorUserException) exception);
+      return createResponse(exception, (ValidationErrorUserException) exception, null);
     } else {
       Class<?> exceptionClass = exception.getClass();
       for (Class<?> securityError : this.securityExceptions) {
@@ -163,15 +178,17 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
    *
    * @param exception is the original validation exception.
    * @param error is the wrapped exception or the same as <code>exception</code>.
+   * @param errorsMap is a map with all validation errors
    * @return the requested {@link Response}.
    */
-  protected Response createResponse(Throwable exception, ValidationErrorUserException error) {
+  protected Response createResponse(Throwable exception, ValidationErrorUserException error,
+      Map<String, List<String>> errorsMap) {
 
     LOG.warn("Service failed due to validation failure.", error);
     if (exception == error) {
-      return createResponse(Status.BAD_REQUEST, error);
+      return createResponse(Status.BAD_REQUEST, error, errorsMap);
     } else {
-      return createResponse(Status.BAD_REQUEST, error, exception.getMessage());
+      return createResponse(Status.BAD_REQUEST, error, exception.getMessage(), errorsMap);
     }
   }
 
@@ -217,7 +234,7 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     } else {
       message = "forbidden";
     }
-    return createResponse(Status.FORBIDDEN, message, code, error.getUuid());
+    return createResponse(Status.FORBIDDEN, message, code, error.getUuid(), null);
   }
 
   /**
@@ -254,7 +271,7 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     } else {
       status = Status.BAD_REQUEST;
     }
-    return createResponse(status, error);
+    return createResponse(status, error, null);
   }
 
   /**
@@ -262,9 +279,10 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
    *
    * @param status is the HTTP {@link Status}.
    * @param error is the catched or wrapped {@link NlsRuntimeException}.
+   * @param errorsMap is a map with all validation errors
    * @return the corresponding {@link Response}.
    */
-  protected Response createResponse(Status status, NlsRuntimeException error) {
+  protected Response createResponse(Status status, NlsRuntimeException error, Map<String, List<String>> errorsMap) {
 
     String message;
     if (this.exposeInternalErrorDetails) {
@@ -272,7 +290,7 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     } else {
       message = error.getLocalizedMessage();
     }
-    return createResponse(status, error, message);
+    return createResponse(status, error, message, errorsMap);
   }
 
   /**
@@ -281,11 +299,13 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
    * @param status is the HTTP {@link Status}.
    * @param error is the catched or wrapped {@link NlsRuntimeException}.
    * @param message is the JSON message attribute.
+   * @param errorsMap is a map with all validation errors
    * @return the corresponding {@link Response}.
    */
-  protected Response createResponse(Status status, NlsRuntimeException error, String message) {
+  protected Response createResponse(Status status, NlsRuntimeException error, String message,
+      Map<String, List<String>> errorsMap) {
 
-    return createResponse(status, error, message, error.getCode());
+    return createResponse(status, error, message, error.getCode(), errorsMap);
   }
 
   /**
@@ -295,11 +315,13 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
    * @param error is the catched or wrapped {@link NlsRuntimeException}.
    * @param message is the JSON message attribute.
    * @param code is the {@link NlsRuntimeException#getCode() error code}.
+   * @param errorsMap is a map with all validation errors
    * @return the corresponding {@link Response}.
    */
-  protected Response createResponse(Status status, NlsRuntimeException error, String message, String code) {
+  protected Response createResponse(Status status, NlsRuntimeException error, String message, String code,
+      Map<String, List<String>> errorsMap) {
 
-    return createResponse(status, message, code, error.getUuid());
+    return createResponse(status, message, code, error.getUuid(), errorsMap);
   }
 
   /**
@@ -309,11 +331,13 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
    * @param message is the JSON message attribute.
    * @param code is the {@link NlsRuntimeException#getCode() error code}.
    * @param uuid the {@link UUID} of the response message.
+   * @param errorsMap is a map with all validation errors
    * @return the corresponding {@link Response}.
    */
-  protected Response createResponse(Status status, String message, String code, UUID uuid) {
+  protected Response createResponse(Status status, String message, String code, UUID uuid,
+      Map<String, List<String>> errorsMap) {
 
-    String json = createJsonErrorResponseMessage(message, code, uuid);
+    String json = createJsonErrorResponseMessage(message, code, uuid, errorsMap);
     return Response.status(status).entity(json).build();
   }
 
@@ -323,11 +347,13 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
    * @param message the message of the response message
    * @param code the code of the response message
    * @param uuid the uuid of the response message
+   * @param errorsMap is a map with all validation errors
    * @return the response message as a JSON-String
    */
-  protected String createJsonErrorResponseMessage(String message, String code, UUID uuid) {
+  protected String createJsonErrorResponseMessage(String message, String code, UUID uuid,
+      Map<String, List<String>> errorsMap) {
 
-    Map<String, String> jsonMap = new HashMap<>();
+    Map<String, Object> jsonMap = new HashMap<>();
     if (message != null) {
       jsonMap.put(KEY_MESSAGE, message);
     }
@@ -338,6 +364,10 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
       jsonMap.put(KEY_UUID, uuid.toString());
     }
 
+    if (errorsMap != null) {
+      jsonMap.put(KEY_ERRORS, errorsMap);
+    }
+
     String responseMessage = "";
     try {
       responseMessage = this.mapper.writeValueAsString(jsonMap);
@@ -346,6 +376,7 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
       responseMessage = "{}";
     }
     return responseMessage;
+
   }
 
   /**
@@ -363,7 +394,7 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     if (exception instanceof ServerErrorException) {
       error = new TechnicalErrorUserException(exception);
       LOG.error("Service failed on server", error);
-      return createResponse(status, error);
+      return createResponse(status, error, null);
     } else {
       UUID uuid = UUID.randomUUID();
       if (exception instanceof ClientErrorException) {
@@ -371,7 +402,7 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
       } else {
         LOG.warn("Service caused redirect or other error. UUID: {}, reason: {}", uuid, exception.getMessage());
       }
-      return createResponse(status, exception.getMessage(), String.valueOf(statusCode), uuid);
+      return createResponse(status, exception.getMessage(), String.valueOf(statusCode), uuid, null);
     }
 
   }

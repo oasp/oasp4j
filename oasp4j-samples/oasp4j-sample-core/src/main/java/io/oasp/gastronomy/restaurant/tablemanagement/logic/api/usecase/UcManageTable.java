@@ -10,6 +10,7 @@ import javax.validation.Valid;
  * @author mvielsac
  */
 public interface UcManageTable {
+
   /**
    * Deletes a restaurant table from the database by its id 'id'.
    *

@@ -20,10 +20,11 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <oasp4j.version>1.1.0</oasp4j.version>
+    <oasp4j.version>1.2.0-SNAPSHOT</oasp4j.version>
     <port.range>81</port.range>
     <oasp.gpg.keyname>joerg.hohwiller@capgemini.com</oasp.gpg.keyname>
     <oasp.flatten.mode>oss</oasp.flatten.mode>
+    <spring.boot.version>1.1.11.RELEASE</spring.boot.version>
   </properties>
 
   <build>
@@ -240,7 +241,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>flatten-maven-plugin</artifactId>
-          <version>1.0.0-beta-4</version>
+          <version>1.0.0-beta-3</version>
         </plugin>
         <plugin>
           <groupId>org.eclipse.m2e</groupId>
@@ -527,7 +528,7 @@
       <properties/>
     </developer>
   </developers>
-  
+
   <licenses>
     <license>
       <name>Apache Software Licenese</name>

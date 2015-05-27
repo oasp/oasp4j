@@ -3,6 +3,7 @@ package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.PaymentStatus;
@@ -35,6 +36,7 @@ import org.slf4j.LoggerFactory;
  * @author jozitz
  */
 @Named
+@UseCase
 public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
 
   /** Logger instance. */

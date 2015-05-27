@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderPositionEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionSearchCriteriaTo;
@@ -21,6 +22,7 @@ import org.slf4j.LoggerFactory;
  * @author jozitz
  */
 @Named
+@UseCase
 public class UcFindOrderPositionImpl extends AbstractOrderPositionUc implements UcFindOrderPosition {
 
   private static final Logger LOG = LoggerFactory.getLogger(UcFindOrderPositionImpl.class);

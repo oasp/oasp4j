@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.offermanagement.logic.impl.usecase;
 
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.exception.OfferEmptyException;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
@@ -21,6 +22,7 @@ import org.springframework.validation.annotation.Validated;
  * @author loverbec
  */
 @Named
+@UseCase
 @Validated
 public class UcManageOfferImpl extends AbstractOfferUc implements UcManageOffer {
 

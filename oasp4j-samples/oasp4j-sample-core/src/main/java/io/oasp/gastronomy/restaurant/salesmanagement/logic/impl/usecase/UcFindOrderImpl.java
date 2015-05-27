@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
@@ -26,6 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author rjoeris
  */
 @Named
+@UseCase
 public class UcFindOrderImpl extends AbstractOrderUc implements UcFindOrder {
 
   private static final Logger LOG = LoggerFactory.getLogger(UcFindOrderImpl.class);

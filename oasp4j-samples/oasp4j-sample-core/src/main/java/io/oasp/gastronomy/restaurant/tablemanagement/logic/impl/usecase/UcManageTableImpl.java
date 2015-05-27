@@ -3,6 +3,7 @@ package io.oasp.gastronomy.restaurant.tablemanagement.logic.impl.usecase;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Role;
 import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.Staffmanagement;
@@ -30,6 +31,7 @@ import org.springframework.validation.annotation.Validated;
  * @author jozitz
  */
 @Named
+@UseCase
 @Validated
 public class UcManageTableImpl extends AbstractTableUc implements UcManageTable {
 

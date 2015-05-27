@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.offermanagement.logic.impl.usecase;
 
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.general.logic.api.to.BinaryObjectEto;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.ProductEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
@@ -19,6 +20,7 @@ import javax.inject.Named;
  * @author loverbec
  */
 @Named
+@UseCase
 public class UcManageProductImpl extends AbstractProductUc implements UcManageProduct {
 
   /**

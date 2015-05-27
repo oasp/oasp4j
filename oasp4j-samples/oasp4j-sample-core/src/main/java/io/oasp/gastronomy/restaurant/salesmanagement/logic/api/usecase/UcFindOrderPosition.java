@@ -12,6 +12,7 @@ import java.util.List;
  * @author mvielsac
  */
 public interface UcFindOrderPosition {
+
   /**
    * @param orderPositionId is the {@link OrderPositionEto#getId() ID} of the requested {@link OrderPositionEto}.
    * @return the {@link OrderPositionEto} with the given ID. Will be <code>null</code> if the {@link OrderPositionEto}

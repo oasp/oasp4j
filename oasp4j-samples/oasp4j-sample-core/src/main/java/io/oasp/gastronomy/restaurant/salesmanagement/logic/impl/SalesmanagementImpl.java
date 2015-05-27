@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl;
 
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSupport;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.PaymentStatus;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
@@ -60,6 +61,7 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * @param ucFindOrderPosition the {@link UcFindOrderPosition} to {@link Inject}.
    */
   @Inject
+  @UseCase
   public void setUcFindOrderPosition(UcFindOrderPosition ucFindOrderPosition) {
 
     this.ucFindOrderPosition = ucFindOrderPosition;
@@ -69,6 +71,7 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * @param ucManageOrderPosition the {@link UcManageOrderPosition} to {@link Inject}.
    */
   @Inject
+  @UseCase
   public void setUcManageOrderPosition(UcManageOrderPosition ucManageOrderPosition) {
 
     this.ucManageOrderPosition = ucManageOrderPosition;
@@ -78,6 +81,7 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * @param ucFindBill the {@link UcFindBill} to {@link Inject}.
    */
   @Inject
+  @UseCase
   public void setUcFindBill(UcFindBill ucFindBill) {
 
     this.ucFindBill = ucFindBill;
@@ -87,6 +91,7 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * @param ucFindOrder the {@link UcFindOrder} to {@link Inject}.
    */
   @Inject
+  @UseCase
   public void setUcFindOrder(UcFindOrder ucFindOrder) {
 
     this.ucFindOrder = ucFindOrder;
@@ -96,6 +101,7 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * @param ucManageOrder the {@link UcManageOrder} to {@link Inject}.
    */
   @Inject
+  @UseCase
   public void setUcManageOrder(UcManageOrder ucManageOrder) {
 
     this.ucManageOrder = ucManageOrder;
@@ -105,6 +111,7 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * @param ucManageBill the {@link UcManageBill} to {@link Inject}.
    */
   @Inject
+  @UseCase
   public void setUcManageBill(UcManageBill ucManageBill) {
 
     this.ucManageBill = ucManageBill;
@@ -114,6 +121,7 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * @param ucChangeTable the {@link UcChangeTable} to {@link Inject}.
    */
   @Inject
+  @UseCase
   public void setUcChangeTable(UcChangeTable ucChangeTable) {
 
     this.ucChangeTable = ucChangeTable;

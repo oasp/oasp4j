@@ -12,21 +12,29 @@
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
   <description>Sample application of the Open Application Standard Platform for Java (OASP4J).</description>
-  
+
   <properties>
     <oasp.port.range>81</oasp.port.range>
     <oasp.http.port>${oasp.port.range}81</oasp.http.port>
     <oasp.db.port>${oasp.port.range}43</oasp.db.port>
     <oasp.test.excluded.groups>io.oasp.module.test.common.api.category.CategorySubsystemTest,io.oasp.module.test.common.api.category.CategorySystemTest</oasp.test.excluded.groups>
   </properties>
-  
+
   <modules>
     <module>oasp4j-sample-core</module>
     <module>oasp4j-sample-server</module>
   </modules>
-  
+
   <dependencyManagement>
     <dependencies>
+      <!-- BOM of spring-boot -->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring.boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
       <!-- BOM of OASP4J -->
       <dependency>
         <groupId>io.oasp.java</groupId>
@@ -60,7 +68,7 @@
       </plugin>
     </plugins>
   </build>
-  
+
   <profiles>
     <profile>
       <id>integration-test</id>

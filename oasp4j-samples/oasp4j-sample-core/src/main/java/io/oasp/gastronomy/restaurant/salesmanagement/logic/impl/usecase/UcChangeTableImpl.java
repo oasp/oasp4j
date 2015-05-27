@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.general.logic.base.AbstractUc;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.exception.ChangeTableIllegalStateCombinationException;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
@@ -20,6 +21,7 @@ import javax.inject.Named;
  * @author rjoeris
  */
 @Named
+@UseCase
 public class UcChangeTableImpl extends AbstractUc implements UcChangeTable {
 
   private Tablemanagement tableManagement;

@@ -9,6 +9,7 @@
   <description>Application based on the Open Application Standard Platform for Java (OASP4J).</description>
 
   <properties>
+    <spring.boot.version>1.1.11.RELEASE</spring.boot.version>
     <java.version>1.7</java.version>
     <oasp.port.range>81</oasp.port.range>
     <oasp.http.port>${oasp.port.range}81</oasp.http.port>
@@ -18,11 +19,22 @@
 
   <modules>
     <module>${artifactId}-core</module>
+#if($earProjectName != '.')
+    <module>${earProjectName}</module>
+#end
     <module>${artifactId}-server</module>
   </modules>
 
   <dependencyManagement>
     <dependencies>
+      <!-- BOM of spring-boot -->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring.boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
       <!-- BOM of OASP4J -->
       <dependency>
         <groupId>io.oasp.java</groupId>
@@ -136,7 +148,7 @@
       </plugin>
     </plugins>
   </build>
-  
+
   <profiles>
     <profile>
       <id>subsystemtest</id>
@@ -150,6 +162,6 @@
         <oasp.test.excluded.groups></oasp.test.excluded.groups>
       </properties>
     </profile>
-  </profiles>  
-  
+  </profiles>
+
 </project>
