@@ -4,6 +4,8 @@ import io.oasp.gastronomy.restaurant.general.common.api.to.AbstractEto;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.Table;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
 
+import javax.validation.constraints.Max;
+
 /**
  * {@link AbstractEto ETO} for {@link Table}.
  *
@@ -15,6 +17,7 @@ public class TableEto extends AbstractEto implements Table {
 
   private Long waiterId;
 
+  @Max(value = 1000)
   private Long number;
 
   private TableState state;
