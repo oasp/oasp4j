@@ -304,8 +304,6 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
     Long total = null;
     if (pagination.isTotal()) {
       total = query.clone().count();
-    } else {
-      total = null;
     }
 
     return total;
