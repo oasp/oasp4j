@@ -94,7 +94,7 @@ public class OrderPositionDaoImpl extends ApplicationDaoImpl<OrderPositionEntity
       // query.innerJoin(offer.).on(Alias.$(orderPosition.getOfferId()).eq(Alias.$(offer.getId())))
       // .where(Alias.$(offer.getMealId()).isNotNull().or(Alias.$(offer.getSideDishId()).isNotNull()));
     }
-    applyCriteria(criteria, query);
+    applyPagination(criteria.getPagination(), query);
     return query.list(alias);
   }
 }
