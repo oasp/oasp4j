@@ -1,9 +1,9 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase;
 
-import io.oasp.gastronomy.restaurant.general.common.api.to.PaginatedListTo;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.List;
 

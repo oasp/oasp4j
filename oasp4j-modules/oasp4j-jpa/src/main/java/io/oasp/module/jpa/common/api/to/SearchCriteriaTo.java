@@ -20,6 +20,9 @@ public class SearchCriteriaTo extends AbstractTransferObject {
   /** @see #getPagination() */
   private PaginationTo pagination;
 
+  /** @see getSearchTimeout */
+  private Integer searchTimeout;
+
   /**
    * The constructor.
    */
@@ -65,5 +68,25 @@ public class SearchCriteriaTo extends AbstractTransferObject {
     if ((pageSize == null) || (pageSize.intValue() > limit)) {
       getPagination().setSize((Integer.valueOf(limit)));
     }
+  }
+
+  /**
+   * This method gets the maximum delay in milliseconds the search may last until it is canceled. <br>
+   * <b>Note:</b><br>
+   * This feature is the same as the query hint <code>"javax.persistence.query.timeout"</code> in JPA.
+   *
+   * @return the search timeout in milliseconds or <code>null</code> for NO timeout.
+   */
+  public Integer getSearchTimeout() {
+
+    return this.searchTimeout;
+  }
+
+  /**
+   * @param searchTimeout is the new value of {@link #getSearchTimeout()}.
+   */
+  public void setSearchTimeout(int searchTimeout) {
+
+    this.searchTimeout = searchTimeout;
   }
 }

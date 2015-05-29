@@ -2,7 +2,6 @@ package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
-import io.oasp.gastronomy.restaurant.general.common.api.to.PaginatedListTo;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
@@ -11,7 +10,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionE
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcFindOrder;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.base.usecase.AbstractOrderUc;
-import io.oasp.module.jpa.common.api.to.PaginatedEntityListTo;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +54,7 @@ public class UcFindOrderImpl extends AbstractOrderUc implements UcFindOrder {
   public PaginatedListTo<OrderEto> findOrderEtos(OrderSearchCriteriaTo criteria) {
 
     criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
-    PaginatedEntityListTo<OrderEntity> orders = getOrderDao().findOrders(criteria);
+    PaginatedListTo<OrderEntity> orders = getOrderDao().findOrders(criteria);
 
     return mapPaginatedEntityList(orders, OrderEto.class);
   }

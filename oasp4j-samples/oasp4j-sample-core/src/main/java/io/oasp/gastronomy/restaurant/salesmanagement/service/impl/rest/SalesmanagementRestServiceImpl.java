@@ -1,6 +1,5 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest;
 
-import io.oasp.gastronomy.restaurant.general.common.api.to.PaginatedListTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
@@ -21,6 +20,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcFindOrd
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageBill;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrder;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrderPosition;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 import io.oasp.module.jpa.common.api.to.PaginationTo;
 import io.oasp.module.rest.service.api.RequestParameters;
 

@@ -1,9 +1,7 @@
 package io.oasp.gastronomy.restaurant.general.logic.base;
 
-import io.oasp.gastronomy.restaurant.general.common.api.to.PaginatedListTo;
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSupport;
-import io.oasp.module.jpa.common.api.to.PaginatedEntityListTo;
-import io.oasp.module.jpa.dataaccess.api.AbstractPersistenceEntity;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,20 +37,20 @@ public abstract class AbstractUc extends AbstractBeanMapperSupport {
   }
 
   /**
-   * Maps a {@link PaginatedEntityListTo} to a {@link PaginatedListTo}, mapping the contained
-   * {@link AbstractPersistenceEntity} objects to the supplied {@link AbstractTransferObject} class.
+   * Maps a {@link PaginatedListTo paginated list} of persistent entities to a {@link PaginatedListTo paginated list} of
+   * transfer objects.
    *
    * @param <T> is the generic type of the {@link AbstractTransferObject transfer object}.
    * @param <E> is the generic type of the {@link PersistenceEntity entity}.
-   * @param paginatedEntityList is the paginated list to map from.
+   * @param paginatedList is the paginated list to map from.
    * @param klass is the target class to map the paginated entities to.
    * @return a {@link PaginatedListTo paginated list of entity transfer objects}.
    */
   protected <T extends TransferObject, E extends PersistenceEntity<?>> PaginatedListTo<T> mapPaginatedEntityList(
-      PaginatedEntityListTo<E> paginatedEntityList, Class<T> klass) {
+      PaginatedListTo<E> paginatedList, Class<T> klass) {
 
-    List<T> etoList = getBeanMapper().mapList(paginatedEntityList.getResult(), klass);
-    PaginatedListTo<T> result = new PaginatedListTo<>(etoList, paginatedEntityList.getPagination());
+    List<T> etoList = getBeanMapper().mapList(paginatedList.getResult(), klass);
+    PaginatedListTo<T> result = new PaginatedListTo<>(etoList, paginatedList.getPagination());
 
     return result;
   }

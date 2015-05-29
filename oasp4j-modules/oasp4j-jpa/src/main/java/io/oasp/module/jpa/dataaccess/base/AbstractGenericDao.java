@@ -1,8 +1,9 @@
 package io.oasp.module.jpa.dataaccess.base;
 
-import io.oasp.module.jpa.common.api.to.PaginatedEntityListTo;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 import io.oasp.module.jpa.common.api.to.PaginationResultTo;
 import io.oasp.module.jpa.common.api.to.PaginationTo;
+import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
 import io.oasp.module.jpa.dataaccess.api.GenericDao;
 
 import java.util.List;
@@ -237,10 +238,68 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
     }
   }
 
+  @SuppressWarnings("javadoc")
+  protected PaginatedListTo<E> findPaginated(SearchCriteriaTo criteria, Query query, Expression<E> expr) {
+
+    throw new UnsupportedOperationException("Pagination is not yet supported for generic JPA queries.");
+  }
+
   /**
-   * {@inheritDoc}
+   * Returns a paginated list of entities according to the supplied {@link SearchCriteriaTo criteria}.
+   * <p>
+   * Applies {@code limit} and {@code offset} values to the supplied {@query} according to the supplied
+   * {@link PaginationTo pagination} information inside {@code criteria}.
+   * <p>
+   * If a {@link PaginationTo#isTotal() total count} of available entities is requested, will also execute a second
+   * query, without pagination parameters applied, to obtain said count.
+   * <p>
+   * Will install a query timeout if {@link SearchCriteriaTo#getSearchTimeout()} is not null.
+   *
+   * @param criteria contains information about the requested page.
+   * @param query is a query which is preconfigured with the desired conditions for the search.
+   * @param expr is used for the final mapping from the SQL result to the entities.
+   * @return a paginated list.
    */
-  public PaginatedEntityListTo<E> findPaginated(PaginationTo pagination, JPAQuery query, Expression<E> expr) {
+  protected PaginatedListTo<E> findPaginated(SearchCriteriaTo criteria, JPAQuery query, Expression<E> expr) {
+
+    applyCriteria(criteria, query);
+
+    PaginationTo pagination = criteria.getPagination();
+
+    PaginationResultTo paginationResult = createPaginationResult(pagination, query);
+
+    applyPagination(pagination, query);
+    List<E> paginatedList = query.list(expr);
+
+    return new PaginatedListTo<>(paginatedList, paginationResult);
+  }
+
+  /**
+   * Creates a {@link PaginationResultTo pagination result} for the given {@code pagination} and {@code query}.
+   * <p>
+   * Needs to be called before pagination is applied to the {@code query}.
+   *
+   * @param pagination contains information about the requested page.
+   * @param query is a query preconfigured with the desired conditions for the search.
+   * @return information about the applied pagination.
+   */
+  protected PaginationResultTo createPaginationResult(PaginationTo pagination, JPAQuery query) {
+
+    Long total = calculateTotalBeforePagination(pagination, query);
+
+    return new PaginationResultTo(pagination, total);
+  }
+
+  /**
+   * Calculates the total number of entities the given {@link JPAQuery query} would return without pagination applied.
+   * <p>
+   * Needs to be called before pagination is applied to the {@code query}.
+   *
+   * @param pagination is the pagination information as requested by the client.
+   * @param query is the {@link JPAQuery query} for which to calculate the total.
+   * @return the total count, or {@literal null} if {@link PaginationTo#isTotal()} is {@literal false}.
+   */
+  protected Long calculateTotalBeforePagination(PaginationTo pagination, JPAQuery query) {
 
     Long total = null;
     if (pagination.isTotal()) {
@@ -248,12 +307,8 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
     } else {
       total = null;
     }
-    PaginationResultTo paginationResult = new PaginationResultTo(pagination, total);
 
-    applyPagination(pagination, query);
-    List<E> paginatedList = query.list(expr);
-
-    return new PaginatedEntityListTo<>(paginatedList, paginationResult);
+    return total;
   }
 
   /**
@@ -318,6 +373,20 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
       query.setFirstResult(offset);
     }
     Long timeout = criteria.getSearchTimeout();
+    if (timeout != null) {
+      query.setHint("javax.persistence.query.timeout", timeout.intValue());
+    }
+  }
+
+  /**
+   * Applies the meta-data of the given {@link SearchCriteriaTo search criteria} to the given {@link Query}.
+   *
+   * @param criteria is the {@link AbstractSearchCriteria search criteria} to apply.
+   * @param query is the {@link JPAQuery} to apply to.
+   */
+  protected void applyCriteria(SearchCriteriaTo criteria, JPAQuery query) {
+
+    Integer timeout = criteria.getSearchTimeout();
     if (timeout != null) {
       query.setHint("javax.persistence.query.timeout", timeout.intValue());
     }

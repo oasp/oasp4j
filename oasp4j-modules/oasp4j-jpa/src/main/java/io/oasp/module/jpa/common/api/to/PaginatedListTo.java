@@ -4,15 +4,17 @@ import java.util.List;
 
 import net.sf.mmm.util.entity.api.PersistenceEntity;
 import net.sf.mmm.util.transferobject.api.CompositeTo;
+import net.sf.mmm.util.transferobject.api.TransferObject;
 
 /**
- * A list of {@link PersistenceEntity entities} with additional pagination information.
+ * A paginated list of objects with additional pagination information.
  *
- * @param <I> is the generic type of the {@link PersistenceEntity entities}.
+ * @param <E> is the generic type of the objects. Will usually be a {@link PersistenceEntity persistent entity} when
+ *        used in the data layer, or a {@link TransferObject transfer object}.
  *
  * @author henning
  */
-public class PaginatedEntityListTo<I extends PersistenceEntity<?>> extends CompositeTo {
+public class PaginatedListTo<E> extends CompositeTo {
 
   /** UID for serialization. */
   private static final long serialVersionUID = 1L;
@@ -21,24 +23,24 @@ public class PaginatedEntityListTo<I extends PersistenceEntity<?>> extends Compo
   private PaginationResultTo pagination;
 
   /** @see #getResult() */
-  private List<I> result;
+  private List<E> result;
 
   /**
    * A convenience constructor which accepts a paginated list and {@link PaginationResultTo pagination information}.
    *
-   * @param result is the list of {@link PersistenceEntity entities}.
+   * @param result is the list of objects.
    * @param pagination is the {@link PaginationResultTo pagination information}.
    */
-  public PaginatedEntityListTo(List<I> result, PaginationResultTo pagination) {
+  public PaginatedListTo(List<E> result, PaginationResultTo pagination) {
 
     this.result = result;
     this.pagination = pagination;
   }
 
   /**
-   * @return the list of {@link PersistenceEntity entities}.
+   * @return the list of objects.
    */
-  public List<I> getResult() {
+  public List<E> getResult() {
 
     return this.result;
   }
