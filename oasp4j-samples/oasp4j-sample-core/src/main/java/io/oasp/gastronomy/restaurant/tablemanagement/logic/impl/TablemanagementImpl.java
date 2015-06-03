@@ -4,8 +4,10 @@ import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSuppo
 import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
+import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.usecase.UcFindTable;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.usecase.UcManageTable;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.List;
 
@@ -110,6 +112,15 @@ public class TablemanagementImpl extends AbstractBeanMapperSupport implements Ta
   public boolean isTableReleasable(TableEto table) {
 
     return this.ucManageTable.isTableReleasable(table);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public PaginatedListTo<TableEto> findTableEtos(TableSearchCriteriaTo criteria) {
+
+    return this.ucFindTable.findTableEtos(criteria);
   }
 
 }
