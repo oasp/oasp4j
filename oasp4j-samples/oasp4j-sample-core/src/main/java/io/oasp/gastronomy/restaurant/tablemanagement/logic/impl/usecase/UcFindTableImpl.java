@@ -4,8 +4,10 @@ import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionCons
 import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.tablemanagement.dataaccess.api.TableEntity;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
+import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.usecase.UcFindTable;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.base.usecase.AbstractTableUc;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.List;
 
@@ -61,6 +63,19 @@ public class UcFindTableImpl extends AbstractTableUc implements UcFindTable {
 
     List<TableEntity> tables = getTableDao().getFreeTables();
     return getBeanMapper().mapList(tables, TableEto.class);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  @RolesAllowed(PermissionConstants.FIND_TABLE)
+  public PaginatedListTo<TableEto> findTableEtos(TableSearchCriteriaTo criteria) {
+
+    criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
+    PaginatedListTo<TableEntity> tables = getTableDao().findTables(criteria);
+
+    return mapPaginatedEntityList(tables, TableEto.class);
   }
 
 }
