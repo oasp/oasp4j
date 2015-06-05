@@ -1,10 +1,14 @@
 package io.oasp.gastronomy.restaurant.tablemanagement.service.impl.rest;
 
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcFindOrderPosition;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.Table;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
+import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.usecase.UcFindTable;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.usecase.UcManageTable;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.List;
 
@@ -81,6 +85,7 @@ public class TablemanagementRestServiceImpl {
    */
   @GET
   @Path("/table/")
+  @Deprecated
   public List<TableEto> getAllTables() {
 
     List<TableEto> allTables = this.tableManagement.findAllTables();
@@ -133,6 +138,7 @@ public class TablemanagementRestServiceImpl {
    */
   @GET
   @Path("/freetables/")
+  @Deprecated
   public List<TableEto> getFreeTables() {
 
     return this.tableManagement.findFreeTables();
@@ -155,5 +161,18 @@ public class TablemanagementRestServiceImpl {
     } else {
       return this.tableManagement.isTableReleasable(table);
     }
+  }
+
+  /**
+   * Delegates to {@link UcFindOrderPosition#findOrderPositions}.
+   *
+   * @param searchCriteriaTo the pagination and search criteria to be used for finding orders.
+   * @return the {@link PaginatedListTo list} of matching {@link OrderCto}s.
+   */
+  @Path("/table/search")
+  @POST
+  public PaginatedListTo<TableEto> findTablesByPost(TableSearchCriteriaTo searchCriteriaTo) {
+
+    return this.tableManagement.findTableEtos(searchCriteriaTo);
   }
 }
