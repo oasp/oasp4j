@@ -1,6 +1,7 @@
 package io.oasp.module.beanmapping.common.impl;
 
 import io.oasp.module.beanmapping.common.api.BeanMapper;
+import io.oasp.module.beanmapping.common.impl.dozer.BeanMapperImplDozer;
 
 import java.util.Arrays;
 import java.util.List;

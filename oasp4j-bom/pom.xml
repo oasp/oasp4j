@@ -176,11 +176,17 @@
         <artifactId>jackson-core</artifactId>
         <version>2.3.3</version>
       </dependency>
-      <!-- Dozer for bean-mapping/conversion -->
+      <!-- Dozer for bean-mapping/conversion (Alternative to Orika) -->
       <dependency>
         <groupId>net.sf.dozer</groupId>
         <artifactId>dozer</artifactId>
         <version>5.5.1</version>
+      </dependency>
+      <!-- Orika for bean-mapping/conversion (Alternative to Dozer) -->
+      <dependency>
+        <groupId>ma.glasnost.orika</groupId>
+        <artifactId>orika-core</artifactId>
+        <version>1.4.6</version>
       </dependency>
       <!-- JSR303 API for annotation based validation -->
       <dependency>
