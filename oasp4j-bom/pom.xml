@@ -194,6 +194,12 @@
         <artifactId>validation-api</artifactId>
         <version>1.1.0.Final</version>
       </dependency>
+	  <!-- MapStruct bean mapping -->
+	  <dependency>
+		<groupId>org.mapstruct</groupId>
+		<artifactId>mapstruct</artifactId>
+		<version>1.0.0.CR1</version>
+	  </dependency>
 
       <!-- *** optional TEST DEPENDENCIES *** -->
       <!-- JUnit for Test-Case definition and execution -->

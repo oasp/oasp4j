@@ -20,4 +20,15 @@ public abstract class AbstractEto extends EntityTo<Long> {
     super();
   }
 
+  @Override
+  public void setId(Long id) {
+
+    super.setId(id);
+  }
+
+  @Override
+  public Long getId() {
+
+    return super.getId();
+  }
 }
