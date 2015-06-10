@@ -9,7 +9,7 @@ import java.util.Set;
 
 /**
  * The abstract base implementation of {@link BeanMapper}.
- * 
+ *
  * @author hohwille
  */
 public abstract class AbstractBeanMapper implements BeanMapper {
@@ -28,12 +28,23 @@ public abstract class AbstractBeanMapper implements BeanMapper {
   @Override
   public <T> List<T> mapList(List<?> source, Class<T> targetClass) {
 
+    return mapList(source, targetClass, false);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public <T> List<T> mapList(List<?> source, Class<T> targetClass, boolean suppressNullValues) {
+
     if ((source == null) || (source.isEmpty())) {
       return new ArrayList<>();
     }
     List<T> result = new ArrayList<>(source.size());
     for (Object sourceObject : source) {
-      result.add(map(sourceObject, targetClass));
+      if ((sourceObject != null) || !suppressNullValues) {
+        result.add(map(sourceObject, targetClass));
+      }
     }
     return result;
   }
@@ -44,12 +55,23 @@ public abstract class AbstractBeanMapper implements BeanMapper {
   @Override
   public <T> Set<T> mapSet(Set<?> source, Class<T> targetClass) {
 
+    return mapSet(source, targetClass, false);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public <T> Set<T> mapSet(Set<?> source, Class<T> targetClass, boolean suppressNullValues) {
+
     if ((source == null) || (source.isEmpty())) {
       return new HashSet<>();
     }
     Set<T> result = new HashSet<>(source.size());
     for (Object sourceObject : source) {
-      result.add(map(sourceObject, targetClass));
+      if ((sourceObject != null) || !suppressNullValues) {
+        result.add(map(sourceObject, targetClass));
+      }
     }
     return result;
   }
