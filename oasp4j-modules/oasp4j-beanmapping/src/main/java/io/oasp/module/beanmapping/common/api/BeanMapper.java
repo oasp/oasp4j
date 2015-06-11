@@ -22,8 +22,7 @@ public interface BeanMapper {
   <T> T map(Object source, Class<T> targetClass);
 
   /**
-   * A type-safe variant of {@link #map(Object, Class)} to prevent accidnetial abuse (e.g. mapping of apples to
-   * bananas).
+   * A type-safe variant of {@link #map(Object, Class)} to prevent accidental abuse (e.g. mapping of apples to bananas).
    *
    * @param <API> is a common super-type (interface) of <code>source</code> and <code>targetType</code>.
    * @param <S> is the generic type of <code>source</code>.
