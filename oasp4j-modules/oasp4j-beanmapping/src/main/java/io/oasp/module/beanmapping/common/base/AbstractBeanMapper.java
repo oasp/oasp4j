@@ -26,6 +26,15 @@ public abstract class AbstractBeanMapper implements BeanMapper {
    * {@inheritDoc}
    */
   @Override
+  public <API, S extends API, T extends API> T mapTypesafe(Class<API> apiClass, S source, Class<T> targetClass) {
+
+    return map(source, targetClass);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   public <T> List<T> mapList(List<?> source, Class<T> targetClass) {
 
     return mapList(source, targetClass, false);

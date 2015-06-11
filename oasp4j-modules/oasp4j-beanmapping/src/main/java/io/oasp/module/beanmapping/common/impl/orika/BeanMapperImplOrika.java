@@ -37,12 +37,12 @@ public class BeanMapperImplOrika extends AbstractBeanMapper {
    * {@inheritDoc}
    */
   @Override
-  public <T> T map(Object source, Class<T> targetType) {
+  public <T> T map(Object source, Class<T> targetClass) {
 
     if (source == null) {
       return null;
     }
-    return this.orika.map(source, targetType);
+    return this.orika.map(source, targetClass);
   }
 
 }

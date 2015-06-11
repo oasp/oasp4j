@@ -2,6 +2,7 @@ package io.oasp.module.beanmapping.common.impl;
 
 import io.oasp.module.beanmapping.common.api.BeanMapper;
 import io.oasp.module.beanmapping.common.impl.dozer.BeanMapperImplDozer;
+import io.oasp.module.beanmapping.common.impl.dozer.IdentityConverter;
 
 import java.util.Arrays;
 import java.util.List;

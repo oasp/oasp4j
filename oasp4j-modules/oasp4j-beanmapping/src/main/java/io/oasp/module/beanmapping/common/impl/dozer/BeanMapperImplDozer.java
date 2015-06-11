@@ -40,12 +40,12 @@ public class BeanMapperImplDozer extends AbstractBeanMapper {
    * {@inheritDoc}
    */
   @Override
-  public <T> T map(Object source, Class<T> targetType) {
+  public <T> T map(Object source, Class<T> targetClass) {
 
     if (source == null) {
       return null;
     }
-    return this.dozer.map(source, targetType);
+    return this.dozer.map(source, targetClass);
   }
 
 }
