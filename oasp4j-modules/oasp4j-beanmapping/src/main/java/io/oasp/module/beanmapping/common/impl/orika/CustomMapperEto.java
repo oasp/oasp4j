@@ -2,7 +2,6 @@ package io.oasp.module.beanmapping.common.impl.orika;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.MappingContext;
@@ -21,7 +20,7 @@ import net.sf.mmm.util.transferobject.api.EntityTo;
  *
  * @author hohwille
  */
-@Named
+// @Named
 @SuppressWarnings("rawtypes")
 public class CustomMapperEto extends CustomMapper<GenericEntity, EntityTo> {
 
