@@ -12,6 +12,9 @@
   <packaging>war</packaging>
   <name>${project.artifactId}</name>
   <description>Server for the restaurant application - a simple example using the Open Application Standard Platform for Java (OASP4J).</description>
+  <properties>
+    <client.src.dir>src/main/client</client.src.dir>
+  </properties>
 
   <dependencies>
     <dependency>
@@ -21,43 +24,77 @@
     </dependency>
   </dependencies>
 
-  <!-- Overlays for JavaScript client -->
-  <profiles>
-    <profile>
-      <id>jsclient</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <dependencies>
-        <dependency>
-          <groupId>io.oasp.js</groupId>
-          <artifactId>oasp4js-sample</artifactId>
-          <version>1.0.0-SNAPSHOT</version>
-          <type>zip</type>
-          <classifier>web</classifier>
-          <scope>runtime</scope>
-        </dependency>
-      </dependencies>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-war-plugin</artifactId>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <webResources>
+            <resource>
+              <directory>${client.src.dir}/dist</directory>
+              <targetPath>jsclient</targetPath>
+            </resource>
+          </webResources>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${client.src.dir}/dist</directory>
+            </fileset>
+            <fileset>
+              <directory>${client.src.dir}/.tmp</directory>
+            </fileset>
+            <fileset>
+              <directory>${client.src.dir}/app/bower_components</directory>
+            </fileset>
+            <!--
+            <fileset>
+              <directory>${client.src.dir}/node_modules</directory>
+            </fileset>
+            -->
+          </filesets>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.3.1</version>
+        <executions>
+          <execution>
+            <id>npm</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
             <configuration>
-              <overlays>
-                <overlay>
-                  <groupId>io.oasp.js</groupId>
-                  <artifactId>oasp4js-sample</artifactId>
-                  <type>zip</type>
-                  <classifier>web</classifier>
-                  <targetPath>jsclient</targetPath>
-                </overlay>
-              </overlays>
+              <executable>npm</executable>
+              <arguments>
+                <argument>install</argument>
+              </arguments>
+              <workingDirectory>${client.src.dir}</workingDirectory>
             </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
+          </execution>
+          <execution>
+            <id>gulp</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>gulp</executable>
+              <arguments>
+                <argument>build:dist</argument>
+              </arguments>
+              <workingDirectory>${client.src.dir}</workingDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
