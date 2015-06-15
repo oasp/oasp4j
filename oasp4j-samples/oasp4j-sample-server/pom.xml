@@ -21,15 +21,6 @@
     </dependency>
   </dependencies>
 
-  <build>
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <filtering>true</filtering>
-      </resource>
-    </resources>
-  </build>
-
   <!-- Overlays for JavaScript client -->
   <profiles>
     <profile>

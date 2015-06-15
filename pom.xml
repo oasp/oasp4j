@@ -387,9 +387,6 @@
     </profile>
     <profile>
       <id>deploy</id>
-      <properties>
-        <log.console.disabled>true</log.console.disabled>
-      </properties>
       <build>
         <plugins>
           <!-- http://mojo.codehaus.org/flatten-maven-plugin/ -->
