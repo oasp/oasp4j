@@ -1,11 +1,11 @@
-package io.oasp.gastronomy.restaurant.offermanagement.batch.impl;
+package io.oasp.gastronomy.restaurant.salesmanagement.batch.impl.billexport;
 
+import static org.junit.Assert.assertEquals;
 import io.oasp.gastronomy.restaurant.general.common.AbstractSpringBatchIntegrationTest;
 import io.oasp.module.configuration.common.api.ApplicationConfigurationConstants;
 
 import javax.inject.Inject;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.Job;
@@ -18,16 +18,16 @@ import org.springframework.test.context.ContextConfiguration;
  * @author jczas
  */
 @ContextConfiguration(locations = { ApplicationConfigurationConstants.BEANS_BATCH })
-public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
+public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
 
   @Inject
   private Job productImportJob;
 
   @Test
-  public void testEndToEnd() throws Exception {
+  public void shouldImportProducts() throws Exception {
 
     JobExecution jobExecution = getJobLauncherTestUtils(this.productImportJob).launchJob();
 
-    Assert.assertEquals(BatchStatus.COMPLETED, jobExecution.getStatus());
+    assertEquals(BatchStatus.COMPLETED, jobExecution.getStatus());
   }
 }

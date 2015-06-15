@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:batch="http://www.springframework.org/schema/batch"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd">
+
+  <batch:job id="billExportJob" incrementer="incrementer">
+    <batch:step id="billExportStep">
+      <batch:tasklet>
+        <batch:chunk reader="billReader" processor="billProcessor" writer="billWriter" commit-interval="50"/>
+      </batch:tasklet>
+    </batch:step>
+  </batch:job>
+
+  <bean id="billReader" class="org.springframework.batch.item.database.JdbcCursorItemReader">
+    <property name="dataSource" ref="appDataSource"/>
+    <property name="rowMapper">
+      <bean class="org.springframework.jdbc.core.SingleColumnRowMapper">
+        <property name="requiredType" value="java.lang.Long"/>
+      </bean>
+    </property>
+    <property name="sql">
+      <bean class="io.oasp.module.jpa.dataaccess.base.NamedQueryFactoryBean">
+        <property name="queryName" value="#{T(io.oasp.gastronomy.restaurant.general.common.api.constants.NamedQueries).GET_ALL_IDS_OF_PAYED_BILLS}"/>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="billProcessor" class="io.oasp.gastronomy.restaurant.salesmanagement.batch.impl.billexport.processor.BillProcessor"/>
+
+  <bean id="billWriter" class="io.oasp.gastronomy.restaurant.salesmanagement.batch.impl.billexport.writer.BillCompositeWriter">
+    <property name="billLineAggregator">
+      <bean class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+        <property name="fieldExtractor">
+          <bean class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+            <property name="names" value="id, payed, total, tip"/>
+          </bean>
+        </property>
+      </bean>
+    </property>
+    <property name="positionLineAggregator">
+      <bean class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+        <property name="fieldExtractor">
+          <bean class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+            <property name="names" value="id, orderId, cookId, offerId, offerName, state, price, comment"/>
+          </bean>
+        </property>
+      </bean>
+    </property>
+    <!-- TODO jczast File should be written to working directory and then copied to final directory -->
+    <property name="resource" value="file:/temp/bills.csv"/>
+    <property name="delegate">
+      <bean class="org.springframework.batch.item.file.FlatFileItemWriter">
+        <property name="lineAggregator">
+          <bean class="org.springframework.batch.item.file.transform.PassThroughLineAggregator"/>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+</beans>

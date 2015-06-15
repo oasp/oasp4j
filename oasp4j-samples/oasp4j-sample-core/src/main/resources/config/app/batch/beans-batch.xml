@@ -5,7 +5,47 @@
   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
   <import resource="../logic/beans-logic.xml"/>
+  <!-- TODO How to add our job xmls? -->
+  <import resource="beans-productimport.xml"/>
+  <import resource="beans-billexport.xml"/>
 
   <context:component-scan base-package="io.oasp.gastronomy.restaurant.*.batch"/>
+
+  <bean id="jobOperator"
+    class="org.springframework.batch.core.launch.support.SimpleJobOperator">
+    <property name="jobLauncher" ref="jobLauncher" />
+    <property name="jobExplorer" ref="jobExplorer" />
+    <property name="jobRepository" ref="jobRepository" />
+    <property name="jobRegistry" ref="jobRegistry" />
+  </bean>
+
+  <bean id="jobRepository"
+    class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
+    <property name="dataSource" ref="appDataSource" />
+    <property name="transactionManager" ref="transactionManager" />
+    <!-- TODO jczast see http://stackoverflow.com/questions/26581033/exception-hibernatejpadialect-does-not-support-custom-isolation-levels-due-to -->
+    <property name="isolationLevelForCreate" value="ISOLATION_DEFAULT"/>
+  </bean>
+
+  <bean id="jobLauncher"
+    class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+    <property name="jobRepository" ref="jobRepository" />
+  </bean>
+
+  <bean id="jobExplorer"
+    class="org.springframework.batch.core.explore.support.JobExplorerFactoryBean">
+    <property name="dataSource" ref="appDataSource" />
+  </bean>
+
+  <bean id="jobRegistryBeanPostProcessor"
+    class="org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor">
+    <property name="jobRegistry" ref="jobRegistry" />
+  </bean>
+
+  <bean id="jobRegistry"
+    class="org.springframework.batch.core.configuration.support.MapJobRegistry" />
+
+  <bean id="incrementer"
+    class="org.springframework.batch.core.launch.support.RunIdIncrementer" />
 
 </beans>
