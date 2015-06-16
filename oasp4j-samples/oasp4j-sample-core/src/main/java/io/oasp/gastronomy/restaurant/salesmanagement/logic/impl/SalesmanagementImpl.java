@@ -21,6 +21,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageB
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrder;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrderPosition;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.List;
 
@@ -140,7 +141,7 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * {@inheritDoc}
    */
   @Override
-  public List<OrderEto> findOrderEtos(OrderSearchCriteriaTo criteria) {
+  public PaginatedListTo<OrderEto> findOrderEtos(OrderSearchCriteriaTo criteria) {
 
     return this.ucFindOrder.findOrderEtos(criteria);
   }
@@ -149,7 +150,7 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * {@inheritDoc}
    */
   @Override
-  public List<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria) {
+  public PaginatedListTo<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria) {
 
     return this.ucFindOrder.findOrderCtos(criteria);
   }

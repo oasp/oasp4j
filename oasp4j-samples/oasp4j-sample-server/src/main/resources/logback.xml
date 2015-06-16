@@ -4,6 +4,8 @@
 
 <configuration scan="true" scanPeriod="60 seconds">
 
+  <property resource="config/app/application-default.properties" />
+  <property resource="config/env/application.properties" />
   <property name="appname" value="restaurant"></property>
 
   <property name="logPattern" value="[D: %d{ISO8601}] [P: %-5p] [C: %X{correlationId}] [T: %t] [L: %c] - [M: %m]  %n"/>
@@ -11,7 +13,7 @@
   <property name="rollingPattern" value="%d{yyyy-MM-dd_HH}"></property>
 
   <!-- filePath is set relatively to the 'logs' directory of Tomcat -->
-  <property name="filePath" value="../logs/"></property>
+  <property name="filePath" value="${log.dir}"></property>
 
   <property name="errorLogFile" value="error_log_${HOSTNAME}_${appname}"></property>
 

@@ -81,8 +81,8 @@ public class RestServiceExceptionFacadeTest extends ModuleTest {
     Set<ConstraintViolation<CounterTest>> violations = validator.validate(counter);
 
     RestServiceExceptionFacade exceptionFacade = getExceptionFacade();
-    String message = "{count=[must be greater than or equal to 10]}";
-    String errors = "{count=[must be greater than or equal to 10]}";
+    String message = "{count=[" + violations.iterator().next().getMessage() + "]}";
+    String errors = "{count=[" + violations.iterator().next().getMessage() + "]}";
     Throwable error = new ConstraintViolationException(violations);
     checkFacade(exceptionFacade, error, 400, message, UUID_ANY, ValidationErrorUserException.CODE, errors);
 
