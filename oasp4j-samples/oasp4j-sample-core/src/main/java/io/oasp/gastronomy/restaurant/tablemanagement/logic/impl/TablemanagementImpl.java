@@ -1,7 +1,7 @@
 package io.oasp.gastronomy.restaurant.tablemanagement.logic.impl;
 
-import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSupport;
 import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
+import io.oasp.gastronomy.restaurant.general.logic.base.AbstractComponentFacade;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableSearchCriteriaTo;
@@ -20,7 +20,7 @@ import javax.inject.Named;
  * @author etomety
  */
 @Named
-public class TablemanagementImpl extends AbstractBeanMapperSupport implements Tablemanagement {
+public class TablemanagementImpl extends AbstractComponentFacade implements Tablemanagement {
 
   private UcFindTable ucFindTable;
 
