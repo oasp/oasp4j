@@ -9,8 +9,9 @@
   <description>Application based on the Open Application Standard Platform for Java (OASP4J).</description>
 
   <properties>
-    <spring.boot.version>1.1.11.RELEASE</spring.boot.version>
-    <java.version>1.7</java.version>
+    <spring.boot.version>^spring.boot.version^</spring.boot.version>
+    <maven.compiler.source>^maven.compiler.source^</maven.compiler.source>
+    <maven.compiler.target>^maven.compiler.target^</maven.compiler.target>
     <oasp.port.range>81</oasp.port.range>
     <oasp.http.port>${oasp.port.range}81</oasp.http.port>
     <oasp.db.port>${oasp.port.range}43</oasp.db.port>
@@ -136,8 +137,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
           <encoding>${project.build.sourceEncoding}</encoding>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
         </configuration>
       </plugin>
       <plugin>
