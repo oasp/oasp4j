@@ -1,7 +1,7 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl;
 
-import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSupport;
 import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
+import io.oasp.gastronomy.restaurant.general.logic.base.AbstractComponentFacade;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.PaymentStatus;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
@@ -34,7 +34,7 @@ import javax.inject.Named;
  * @author hohwille
  */
 @Named
-public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Salesmanagement {
+public class SalesmanagementImpl extends AbstractComponentFacade implements Salesmanagement {
 
   private UcFindOrderPosition ucFindOrderPosition;
 
