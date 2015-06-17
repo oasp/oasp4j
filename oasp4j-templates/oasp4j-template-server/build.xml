@@ -29,7 +29,7 @@
     -->
 
   	<!-- **** root project **** -->
-  	<copy file="${template.input}/pom.xml" todir="${sample.output}">
+  	<copy file="${filtered.input}/pom.xml" todir="${sample.output}">
       <filterchain>
         <tokenfilter>
           <linetokenizer/>
