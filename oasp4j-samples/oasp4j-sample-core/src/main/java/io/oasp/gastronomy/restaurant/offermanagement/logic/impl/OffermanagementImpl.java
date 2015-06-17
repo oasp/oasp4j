@@ -1,8 +1,8 @@
 package io.oasp.gastronomy.restaurant.offermanagement.logic.impl;
 
-import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSupport;
 import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.general.logic.api.to.BinaryObjectEto;
+import io.oasp.gastronomy.restaurant.general.logic.base.AbstractComponentFacade;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto;
@@ -31,7 +31,7 @@ import javax.inject.Named;
  * @author loverbec
  */
 @Named
-public class OffermanagementImpl extends AbstractBeanMapperSupport implements Offermanagement {
+public class OffermanagementImpl extends AbstractComponentFacade implements Offermanagement {
 
   private UcFindOffer ucFindOffer;
 
