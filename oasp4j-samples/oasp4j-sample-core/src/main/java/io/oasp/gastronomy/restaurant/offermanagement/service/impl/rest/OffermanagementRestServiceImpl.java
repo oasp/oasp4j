@@ -6,6 +6,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferFilter;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSortBy;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
@@ -15,6 +16,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcFindOff
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcFindProduct;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcManageOffer;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcManageProduct;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -119,6 +121,7 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/offer/")
+  @Deprecated
   public List<OfferEto> getAllOffers() {
 
     return this.offerManagement.findAllOffers();
@@ -278,6 +281,7 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/sortby/{sortBy}")
+  @Deprecated
   public List<OfferEto> getFilteredOffers(OfferFilter offerFilter, @PathParam("sortBy") OfferSortBy sortBy) {
 
     return this.offerManagement.findOffersFiltered(offerFilter, sortBy);
@@ -336,5 +340,18 @@ public class OffermanagementRestServiceImpl {
   public void deleteProductPicture(long productId) {
 
     this.offerManagement.deleteProductPicture(productId);
+  }
+
+  /**
+   * Delegates to {@link UcFindOffer#findOfferEtos}.
+   *
+   * @param searchCriteriaTo the pagination and search criteria to be used for finding offers.
+   * @return the {@link PaginatedListTo list} of matching {@link OfferEto}s.
+   */
+  @Path("/offer/search")
+  @POST
+  public PaginatedListTo<OfferEto> findOfferEtosByPost(OfferSearchCriteriaTo searchCriteriaTo) {
+
+    return this.offerManagement.findOfferEtos(searchCriteriaTo);
   }
 }

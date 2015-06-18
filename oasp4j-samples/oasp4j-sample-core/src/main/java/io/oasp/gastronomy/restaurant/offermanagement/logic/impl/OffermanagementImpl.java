@@ -9,6 +9,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferCto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferFilter;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSortBy;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
@@ -18,6 +19,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcFindOff
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcFindProduct;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcManageOffer;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcManageProduct;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.sql.Blob;
 import java.util.List;
@@ -307,6 +309,15 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
   public ProductEto findProductByRevision(Long id, Number revision) {
 
     return this.ucFindProduct.findProductByRevision(id, revision);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public PaginatedListTo<OfferEto> findOfferEtos(OfferSearchCriteriaTo criteria) {
+
+    return this.ucFindOffer.findOfferEtos(criteria);
   }
 
 }

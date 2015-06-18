@@ -3,7 +3,9 @@ package io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao;
 import io.oasp.gastronomy.restaurant.general.dataaccess.api.dao.ApplicationDao;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferFilter;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSortBy;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 import io.oasp.module.jpa.dataaccess.api.MasterDataDao;
 
 import java.util.List;
@@ -25,5 +27,13 @@ public interface OfferDao extends ApplicationDao<OfferEntity>, MasterDataDao<Off
    * @return the {@link List} with all {@link OfferEntity}s that match the {@link OfferFilter offers filter criteria}.
    */
   List<OfferEntity> findOffersFiltered(OfferFilter offerFilterBo, OfferSortBy sortBy);
+
+  /**
+   * Finds the {@link OfferEntity} objects matching the given {@link OfferSearchCriteriaTo}.
+   *
+   * @param criteria is the {@link OfferSearchCriteriaTo}.
+   * @return the {@link List} with the matching {@link OfferEntity} objects.
+   */
+  PaginatedListTo<OfferEntity> findOffers(OfferSearchCriteriaTo criteria);
 
 }

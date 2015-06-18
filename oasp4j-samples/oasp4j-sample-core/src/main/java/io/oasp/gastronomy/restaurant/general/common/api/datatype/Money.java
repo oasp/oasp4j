@@ -13,7 +13,7 @@ import net.sf.mmm.util.lang.api.AbstractSimpleDatatype;
  *
  * @author hohwille
  */
-public class Money extends AbstractSimpleDatatype<BigDecimal> {
+public class Money extends AbstractSimpleDatatype<BigDecimal> implements Comparable {
 
   /** A {@link Money} instance where the {@link #getValue() amount} is <code>0</code>. */
   public static final Money ZERO = new Money(BigDecimal.ZERO);
@@ -41,6 +41,15 @@ public class Money extends AbstractSimpleDatatype<BigDecimal> {
 
     super(value);
     Objects.requireNonNull(value, "value");
+  }
+
+  /**
+   *
+   * The constructor.
+   */
+  public Money() {
+
+    super();
   }
 
   /**
@@ -77,6 +86,16 @@ public class Money extends AbstractSimpleDatatype<BigDecimal> {
   public String toString() {
 
     return getValue().toPlainString() + " " + getCurrency();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public int compareTo(Object o) {
+
+    Money other = (Money) o;
+    return getValue().compareTo(other.getValue());
   }
 
 }

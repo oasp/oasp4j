@@ -3,8 +3,10 @@ package io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferCto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferFilter;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSortBy;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.List;
 
@@ -54,5 +56,13 @@ public interface UcFindOffer {
    * @return the {@link List} with all {@link OfferEto}s that match the {@link OfferFilter} criteria.
    */
   List<OfferEto> findOffersFiltered(OfferFilter offerFilterBo, OfferSortBy sortBy);
+
+  /**
+   * Returns a list of offers matching the search criteria.
+   *
+   * @param criteria the {@link OfferSearchCriteriaTo}.
+   * @return the {@link List} of matching {@link OfferEto}s.
+   */
+  PaginatedListTo<OfferEto> findOfferEtos(OfferSearchCriteriaTo criteria);
 
 }
