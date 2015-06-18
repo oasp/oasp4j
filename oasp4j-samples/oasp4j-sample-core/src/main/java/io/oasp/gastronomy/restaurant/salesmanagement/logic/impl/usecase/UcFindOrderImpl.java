@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 @UseCase
 public class UcFindOrderImpl extends AbstractOrderUc implements UcFindOrder {
 
-  private static final Logger LOG = LoggerFactory.getLogger(UcFindOrderImpl.class);
+  private static final Logger log = LoggerFactory.getLogger(UcFindOrderImpl.class);
 
   private Salesmanagement salesManagement;
 
@@ -42,7 +42,7 @@ public class UcFindOrderImpl extends AbstractOrderUc implements UcFindOrder {
   @RolesAllowed(PermissionConstants.FIND_ORDER)
   public OrderEto findOrder(Long orderId) {
 
-    LOG.debug("Get order.");
+    log.debug("Get order.");
     return getBeanMapper().map(getOrderDao().findOne(orderId), OrderEto.class);
   }
 

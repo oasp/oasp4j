@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 public class ToggleFilterWrapper implements Filter {
 
   /** Logger instance. */
-  private static final Logger LOG = LoggerFactory.getLogger(ToggleFilterWrapper.class);
+  private static final Logger log = LoggerFactory.getLogger(ToggleFilterWrapper.class);
 
   /**
    * The delegated Filter.
@@ -63,7 +63,7 @@ public class ToggleFilterWrapper implements Filter {
       String message =
           "****** FILTER " + this.delegateFilter
               + " HAS BEEN DISABLED! THIS FEATURE SHOULD ONLY BE USED IN DEVELOPMENT MODE ******";
-      LOG.warn(message);
+      log.warn(message);
       // CHECKSTYLE:OFF (for development only)
       System.err.println(message);
       // CHECKSTYLE:ON

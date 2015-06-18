@@ -22,7 +22,7 @@ public class PropertiesWebApplicationContextInitializer implements
     ApplicationContextInitializer<ConfigurableWebApplicationContext> {
 
   /** Logger instance. */
-  private static final Logger LOG = LoggerFactory.getLogger(PropertiesWebApplicationContextInitializer.class);
+  private static final Logger log = LoggerFactory.getLogger(PropertiesWebApplicationContextInitializer.class);
 
   /**
    * List of application property resource names.
@@ -39,7 +39,7 @@ public class PropertiesWebApplicationContextInitializer implements
     CompositePropertySource compositePropertySource = new CompositePropertySource("application properties");
     for (String propertyName : Arrays.asList(this.applicationPropertyResources)) {
       try {
-        LOG.debug("Registering " + propertyName + " as property source.");
+        log.debug("Registering " + propertyName + " as property source.");
         compositePropertySource.addPropertySource(new ResourcePropertySource(propertyName));
         applicationContext.getEnvironment().getPropertySources().addFirst(compositePropertySource);
       } catch (IOException e) {

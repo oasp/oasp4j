@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractAccessControlProvider implements AccessControlProvider {
 
   /** Logger instance. */
-  private static final Logger LOG = LoggerFactory.getLogger(AbstractAccessControlProvider.class);
+  private static final Logger log = LoggerFactory.getLogger(AbstractAccessControlProvider.class);
 
   /** @see #getAccessControl(String) */
   private final Map<String, AccessControl> id2nodeMap;
@@ -46,7 +46,7 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
    */
   protected void initialize(AccessControlSchema config) {
 
-    LOG.debug("Initializing.");
+    log.debug("Initializing.");
     List<AccessControlGroup> groups = config.getGroups();
     if (groups.size() == 0) {
       throw new IllegalStateException("AccessControlSchema is empty - please configure at least one group!");
@@ -92,7 +92,7 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
     // }
     AccessControl old = this.id2nodeMap.put(group.getId(), group);
     if (old != null) {
-      LOG.debug("Already visited access control group {}", group);
+      log.debug("Already visited access control group {}", group);
       if (old != group) {
         throw new IllegalStateException("Invalid security configuration: duplicate groups with id " + group.getId()
             + "!");
@@ -100,16 +100,16 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
       // group has already been visited, stop recursion...
       return;
     } else {
-      LOG.debug("Registered access control group {}", group);
+      log.debug("Registered access control group {}", group);
     }
     for (AccessControlPermission permission : group.getPermissions()) {
       old = this.id2nodeMap.put(permission.getId(), permission);
       if (old != null) {
         // throw new IllegalStateException("Invalid security configuration: duplicate permission with id "
         // + permission.getId() + "!");
-        LOG.warn("Security configuration contains duplicate permission with id {}.", permission.getId());
+        log.warn("Security configuration contains duplicate permission with id {}.", permission.getId());
       } else {
-        LOG.debug("Registered access control permission {}", permission);
+        log.debug("Registered access control permission {}", permission);
       }
     }
     for (AccessControlGroup inheritedGroup : group.getInherits()) {

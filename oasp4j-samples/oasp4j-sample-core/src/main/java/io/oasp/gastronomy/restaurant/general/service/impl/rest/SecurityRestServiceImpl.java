@@ -33,7 +33,7 @@ import org.springframework.security.web.csrf.CsrfTokenRepository;
 public class SecurityRestServiceImpl {
 
   /** Logger instance. */
-  private static final Logger LOG = LoggerFactory.getLogger(SecurityRestServiceImpl.class);
+  private static final Logger log = LoggerFactory.getLogger(SecurityRestServiceImpl.class);
 
   /**
    * Use {@link CsrfTokenRepository} for CSRF protection.
@@ -57,7 +57,7 @@ public class SecurityRestServiceImpl {
     // HttpSessionCsrfTokenRepository.class.getName().concat(".CSRF_TOKEN"));
     CsrfToken token = this.csrfTokenRepository.loadToken(request);
     if (token == null) {
-      LOG.warn("No CsrfToken could be found - instanciating a new Token");
+      log.warn("No CsrfToken could be found - instanciating a new Token");
       token = this.csrfTokenRepository.generateToken(request);
       this.csrfTokenRepository.saveToken(token, request, response);
     }
