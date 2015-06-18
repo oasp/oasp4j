@@ -15,6 +15,7 @@
   <description>Application template for the server of the Open Application Standard Platform for Java (OASP4J).</description>
 
   <properties>
+    <template.java.version>${java.version}</template.java.version>
     <template.input>${basedir}/src/main/templates/archetype-resources</template.input>
     <filtered.input>${basedir}/target/archetype</filtered.input>
     <sample.package>io.oasp.gastronomy.restaurant</sample.package>

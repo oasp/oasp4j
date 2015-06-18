@@ -10,8 +10,7 @@
 
   <properties>
     <spring.boot.version>^spring.boot.version^</spring.boot.version>
-    <maven.compiler.source>^maven.compiler.source^</maven.compiler.source>
-    <maven.compiler.target>^maven.compiler.target^</maven.compiler.target>
+    <java.version>^template.java.version^</java.version>
     <oasp.port.range>81</oasp.port.range>
     <oasp.http.port>${oasp.port.range}81</oasp.http.port>
     <oasp.db.port>${oasp.port.range}43</oasp.db.port>
@@ -137,8 +136,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
           <encoding>${project.build.sourceEncoding}</encoding>
-          <source>${maven.compiler.source}</source>
-          <target>${maven.compiler.target}</target>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
         </configuration>
       </plugin>
       <plugin>
