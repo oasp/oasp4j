@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
 public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implements UcManageOrderPosition {
 
   /** Logger instance. */
-  private static final Logger LOG = LoggerFactory.getLogger(UcManageOrderPositionImpl.class);
+  private static final Logger log = LoggerFactory.getLogger(UcManageOrderPositionImpl.class);
 
   private Salesmanagement salesManagement;
 
@@ -79,7 +79,7 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
     // Save the order position and return it.
     getOrderPositionDao().save(orderPosition);
 
-    LOG.debug("The order position with id '" + orderPosition.getId()
+    log.debug("The order position with id '" + orderPosition.getId()
         + "' has been created. It's linked with order id '" + order.getId() + "' and offer id '" + offerId + "'.");
 
     return getBeanMapper().map(orderPosition, OrderPositionEto.class);
@@ -106,7 +106,7 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
 
     OrderPositionEntity orderPositionEntity = getBeanMapper().map(orderPosition, OrderPositionEntity.class);
     orderPositionEntity = getOrderPositionDao().save(orderPositionEntity);
-    LOG.debug("The order position with id {} has been {}.", orderPositionEntity.getId(), action);
+    log.debug("The order position with id {} has been {}.", orderPositionEntity.getId(), action);
     return getBeanMapper().map(orderPositionEntity, OrderPositionEto.class);
   }
 
@@ -157,7 +157,7 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
       }
       break;
     default:
-      LOG.error("Illegal state {}", currentState);
+      log.error("Illegal state {}", currentState);
       break;
     }
   }

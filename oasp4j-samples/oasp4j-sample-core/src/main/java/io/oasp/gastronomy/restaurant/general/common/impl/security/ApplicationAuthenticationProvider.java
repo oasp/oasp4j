@@ -29,7 +29,7 @@ public class ApplicationAuthenticationProvider extends
     AbstractAccessControlBasedAuthenticationProvider<UserData, UserProfile> {
 
   /** Logger instance. */
-  private static final Logger LOG = LoggerFactory.getLogger(ApplicationAuthenticationProvider.class);
+  private static final Logger log = LoggerFactory.getLogger(ApplicationAuthenticationProvider.class);
 
   private Usermanagement usermanagement;
 
@@ -61,7 +61,7 @@ public class ApplicationAuthenticationProvider extends
     } catch (RuntimeException e) {
       e.printStackTrace();
       UsernameNotFoundException exception = new UsernameNotFoundException("Authentication failed.", e);
-      LOG.warn("Failed to get user {}.", username, exception);
+      log.warn("Failed to get user {}.", username, exception);
       throw exception;
     }
   }

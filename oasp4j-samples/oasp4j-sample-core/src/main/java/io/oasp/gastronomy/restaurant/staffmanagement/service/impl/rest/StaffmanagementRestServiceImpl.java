@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author agreul
  */
-@Path("/staffmanagement/staff")
+@Path("/staffmanagement/v1/staff")
 @Named("StaffmanagementRestService")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)

@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 @UseCase
 public class UcFindProductImpl extends AbstractProductUc implements UcFindProduct {
 
-  private static final Logger LOG = LoggerFactory.getLogger(UcFindProductImpl.class);
+  private static final Logger log = LoggerFactory.getLogger(UcFindProductImpl.class);
 
   /** @see #setMealDao(MealDao) */
   private MealDao mealDao;
@@ -90,7 +90,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public ProductEto findProduct(Long id) {
 
-    LOG.debug("Get Product with id '" + id + "' from database.");
+    log.debug("Get Product with id '" + id + "' from database.");
     ProductEntity product = getProductDao().findOne(id);
     if (product == null) {
       return null;
@@ -151,7 +151,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public List<ProductEto> findAllProducts() {
 
-    LOG.debug("Get all products from database.");
+    log.debug("Get all products from database.");
     return getBeanMapper().mapList(getProductDao().findAll(), ProductEto.class);
   }
 
@@ -162,7 +162,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public List<MealEto> findAllMeals() {
 
-    LOG.debug("Get all meals with from database.");
+    log.debug("Get all meals with from database.");
     return getBeanMapper().mapList(this.mealDao.findAll(), MealEto.class);
   }
 
@@ -173,7 +173,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public List<DrinkEto> findAllDrinks() {
 
-    LOG.debug("Get all drinks with from database.");
+    log.debug("Get all drinks with from database.");
     return getBeanMapper().mapList(this.drinkDao.findAll(), DrinkEto.class);
   }
 
@@ -184,7 +184,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public List<SideDishEto> findAllSideDishes() {
 
-    LOG.debug("Get all sidedishes with from database.");
+    log.debug("Get all sidedishes with from database.");
     return getBeanMapper().mapList(this.sideDishDao.findAll(), SideDishEto.class);
   }
 
@@ -195,7 +195,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
   @RolesAllowed(PermissionConstants.FIND_OFFER)
   public List<ProductEto> findProductsFiltered(ProductFilter productFilterBo, ProductSortBy sortBy) {
 
-    LOG.debug("Fetch filtered offers.");
+    log.debug("Fetch filtered offers.");
     return getBeanMapper().mapList(getProductDao().findProductsFiltered(productFilterBo, sortBy), ProductEto.class);
   }
 
@@ -226,7 +226,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
   @RolesAllowed(PermissionConstants.FIND_PRODUCT_PICTURE)
   public ProductEto findProductByRevision(Long id, Number revision) {
 
-    LOG.debug("Get Product with id '" + id + "' and revision '" + revision + "' from database.");
+    log.debug("Get Product with id '" + id + "' and revision '" + revision + "' from database.");
     ProductEntity product = getProductDao().load(id, revision);
     if (product == null) {
       return null;

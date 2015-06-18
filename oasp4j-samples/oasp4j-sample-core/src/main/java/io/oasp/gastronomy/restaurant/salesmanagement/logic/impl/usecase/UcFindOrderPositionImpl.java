@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 @UseCase
 public class UcFindOrderPositionImpl extends AbstractOrderPositionUc implements UcFindOrderPosition {
 
-  private static final Logger LOG = LoggerFactory.getLogger(UcFindOrderPositionImpl.class);
+  private static final Logger log = LoggerFactory.getLogger(UcFindOrderPositionImpl.class);
 
   /**
    * {@inheritDoc}
@@ -34,7 +34,7 @@ public class UcFindOrderPositionImpl extends AbstractOrderPositionUc implements 
   @RolesAllowed(PermissionConstants.FIND_ORDER_POSITION)
   public OrderPositionEto findOrderPosition(Long orderPositionId) {
 
-    LOG.debug("Get order position.");
+    log.debug("Get order position.");
     OrderPositionEntity orderPositionEntities = getOrderPositionDao().findOne(orderPositionId);
     OrderPositionEto orderPositionBo = getBeanMapper().map(orderPositionEntities, OrderPositionEto.class);
     return orderPositionBo;
@@ -58,7 +58,7 @@ public class UcFindOrderPositionImpl extends AbstractOrderPositionUc implements 
   @RolesAllowed(PermissionConstants.FIND_ORDER_POSITION)
   public List<OrderPositionEto> findOpenOrderPositionsByOrderId(Long orderId) {
 
-    LOG.debug("Get all open order positions for order id '" + orderId + "'.");
+    log.debug("Get all open order positions for order id '" + orderId + "'.");
     return getBeanMapper()
         .mapList(getOrderPositionDao().findOpenOrderPositionsByOrder(orderId), OrderPositionEto.class);
   }
