@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 public class UcManageStaffMemberImpl extends AbstractStaffMemberUc implements UcManageStaffMember {
 
   /** Logger instance. */
-  private static final Logger LOG = LoggerFactory.getLogger(UcManageStaffMemberImpl.class);
+  private static final Logger log = LoggerFactory.getLogger(UcManageStaffMemberImpl.class);
 
   /**
    * {@inheritDoc}
@@ -64,12 +64,12 @@ public class UcManageStaffMemberImpl extends AbstractStaffMemberUc implements Uc
     }
     if (targetStaffMember == null) {
       // StaffMember is new: -> create
-      LOG.debug("Saving StaffMember with id '{}' to the database.", id);
+      log.debug("Saving StaffMember with id '{}' to the database.", id);
     } else {
       // StaffMember already exists: -> Update
-      LOG.debug("Updating StaffMember with id '{}' in the database.", id);
+      log.debug("Updating StaffMember with id '{}' in the database.", id);
       if (!Objects.equals(targetStaffMember.getName(), staffMember.getName())) {
-        LOG.debug("Chaning login of StaffMember with id '{}' from '{}' to '{}' in the database.", id,
+        log.debug("Chaning login of StaffMember with id '{}' from '{}' to '{}' in the database.", id,
             targetStaffMember.getName(), staffMember.getName());
       }
     }

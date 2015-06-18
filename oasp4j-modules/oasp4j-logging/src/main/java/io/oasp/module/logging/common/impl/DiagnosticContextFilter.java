@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 // @WebFilter("/services/*")
 public class DiagnosticContextFilter implements Filter {
 
-  private static final Logger LOG = LoggerFactory.getLogger(DiagnosticContextFilter.class);
+  private static final Logger log = LoggerFactory.getLogger(DiagnosticContextFilter.class);
 
   /**
    * The name of the {@link FilterConfig#getInitParameter(String) init parameter} for
@@ -101,10 +101,10 @@ public class DiagnosticContextFilter implements Filter {
     if (request instanceof HttpServletRequest && this.correlationIdHttpHeaderName != null) {
       correlationId = normalizeValue(((HttpServletRequest) request).getHeader(this.correlationIdHttpHeaderName));
       if (correlationId == null) {
-        LOG.debug("No correlation ID found for HTTP header {}.", this.correlationIdHttpHeaderName);
+        log.debug("No correlation ID found for HTTP header {}.", this.correlationIdHttpHeaderName);
       } else {
         this.diagnosticContextFacade.setCorrelationId(correlationId);
-        LOG.debug("Using correlation ID {} from HTTP header {}.", correlationId, this.correlationIdHttpHeaderName);
+        log.debug("Using correlation ID {} from HTTP header {}.", correlationId, this.correlationIdHttpHeaderName);
         return;
       }
     }
@@ -112,13 +112,13 @@ public class DiagnosticContextFilter implements Filter {
       // potential fallback if initialized before this filter...
       correlationId = normalizeValue(this.diagnosticContextFacade.getCorrelationId());
       if (correlationId != null) {
-        LOG.debug("Correlation ID was already set to {} before DiagnosticContextFilter has been invoked.",
+        log.debug("Correlation ID was already set to {} before DiagnosticContextFilter has been invoked.",
             correlationId);
       } else {
         // no correlation ID present, create a unique ID
         correlationId = UUID.randomUUID().toString();
         this.diagnosticContextFacade.setCorrelationId(correlationId);
-        LOG.debug("Created unique correlation ID {}.", correlationId);
+        log.debug("Created unique correlation ID {}.", correlationId);
       }
     }
   }
@@ -141,10 +141,10 @@ public class DiagnosticContextFilter implements Filter {
     String headerName = config.getInitParameter(CORRELATION_ID_HEADER_NAME_PARAM);
     if (headerName == null) {
       headerName = CORRELATION_ID_HEADER_NAME_DEFAULT;
-      LOG.info("Parameter {} not configured using default.", CORRELATION_ID_HEADER_NAME_PARAM);
+      log.info("Parameter {} not configured using default.", CORRELATION_ID_HEADER_NAME_PARAM);
     }
     this.correlationIdHttpHeaderName = headerName;
-    LOG.info("Correlation ID header initialized to: {}", this.correlationIdHttpHeaderName);
+    log.info("Correlation ID header initialized to: {}", this.correlationIdHttpHeaderName);
     if (this.diagnosticContextFacade == null) {
       try {
         // ATTENTION: We do not import these classes as we keep spring as an optional dependency.
@@ -156,7 +156,7 @@ public class DiagnosticContextFilter implements Filter {
             org.springframework.web.context.support.WebApplicationContextUtils.getWebApplicationContext(servletContext);
         this.diagnosticContextFacade = springContext.getBean(DiagnosticContextFacade.class);
       } catch (Throwable e) {
-        LOG.warn("DiagnosticContextFacade not defined in spring. Falling back to default", e);
+        log.warn("DiagnosticContextFacade not defined in spring. Falling back to default", e);
         this.diagnosticContextFacade = new DiagnosticContextFacadeImpl();
       }
     }
