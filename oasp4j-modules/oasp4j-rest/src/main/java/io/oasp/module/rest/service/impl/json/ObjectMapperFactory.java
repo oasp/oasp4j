@@ -1,5 +1,6 @@
 package io.oasp.module.rest.service.impl.json;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class ObjectMapperFactory {
 
   static final String ARTIFACT_ID = "oasp4j-rest";
 
-  private Class<?>[] baseClasses;
+  private List<Class<?>> baseClassList;
 
   private List<NamedType> subtypeList;
 
@@ -63,7 +64,20 @@ public class ObjectMapperFactory {
    */
   public void setBaseClasses(Class<?>... baseClasses) {
 
-    this.baseClasses = baseClasses;
+    this.baseClassList = Arrays.asList(baseClasses);
+  }
+
+  /**
+   * @see #setBaseClasses(Class...)
+   *
+   * @param baseClasses the base-classes to add to {@link #setBaseClasses(Class...) base classes list}.
+   */
+  public void addBaseClasses(Class<?>... baseClasses) {
+
+    if (this.baseClassList == null) {
+      this.baseClassList = new ArrayList<>();
+    }
+    this.baseClassList.addAll(Arrays.asList(baseClasses));
   }
 
   /**
@@ -74,6 +88,19 @@ public class ObjectMapperFactory {
   public void setSubtypeList(List<NamedType> subtypeList) {
 
     this.subtypeList = subtypeList;
+  }
+
+  /**
+   * @see #setSubtypes(NamedType...)
+   *
+   * @param subtypes the {@link NamedType}s to add to {@link #setSubtypeList(List) sub-type list} for registration.
+   */
+  public void addSubtypes(NamedType... subtypes) {
+
+    if (this.subtypeList == null) {
+      this.subtypeList = new ArrayList<>();
+    }
+    this.subtypeList.addAll(Arrays.asList(subtypes));
   }
 
   /**
@@ -92,8 +119,9 @@ public class ObjectMapperFactory {
 
     ObjectMapper mapper = new ObjectMapper();
 
-    if ((this.baseClasses != null) && (this.baseClasses.length > 0)) {
-      SimpleModule polymorphyModule = new MixInAnnotationsModule(this.baseClasses);
+    if ((this.baseClassList != null) && (!this.baseClassList.isEmpty())) {
+      Class<?>[] baseClasses = this.baseClassList.toArray(new Class<?>[this.baseClassList.size()]);
+      SimpleModule polymorphyModule = new MixInAnnotationsModule(baseClasses);
       mapper.registerModule(polymorphyModule);
     }
 
