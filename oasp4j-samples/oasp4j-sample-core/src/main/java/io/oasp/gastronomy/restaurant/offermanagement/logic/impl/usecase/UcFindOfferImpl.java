@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 @UseCase
 public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
 
-  private static final Logger log = LoggerFactory.getLogger(UcFindOfferImpl.class);
+  private static final Logger LOG = LoggerFactory.getLogger(UcFindOfferImpl.class);
 
   private Offermanagement offerManagement;
 
@@ -64,7 +64,7 @@ public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
   @RolesAllowed(PermissionConstants.FIND_OFFER)
   public OfferEto findOffer(Long id) {
 
-    log.debug("Get OfferEto with id '{}' from database.", id);
+    LOG.debug("Get OfferEto with id '{}' from database.", id);
     return getBeanMapper().map(getOfferDao().findOne(id), OfferEto.class);
   }
 
@@ -75,7 +75,7 @@ public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
   @RolesAllowed(PermissionConstants.FIND_OFFER)
   public OfferCto findOfferCto(Long id) {
 
-    log.debug("Get OfferCTO with id '{}' from database.", id);
+    LOG.debug("Get OfferCTO with id '{}' from database.", id);
     OfferCto result = new OfferCto();
     // offer
     OfferEto offerEto = findOffer(id);
@@ -108,7 +108,7 @@ public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
   @RolesAllowed(PermissionConstants.FIND_OFFER)
   public List<OfferEto> findAllOffers() {
 
-    log.debug("Get all offers from database.");
+    LOG.debug("Get all offers from database.");
     return getBeanMapper().mapList(getOfferDao().findAll(), OfferEto.class);
   }
 
@@ -119,7 +119,7 @@ public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
   @RolesAllowed({ PermissionConstants.FIND_OFFER, PermissionConstants.FIND_PRODUCT })
   public boolean isProductInUseByOffer(ProductEto product) {
 
-    log.debug("Get all offers from database for the given product with id '" + product.getId() + "'.");
+    LOG.debug("Get all offers from database for the given product with id '" + product.getId() + "'.");
 
     List<OfferEto> persistedOffers = findAllOffers();
 
@@ -130,21 +130,21 @@ public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
     ProductType productType = null;
 
     if (product instanceof DrinkEto) {
-      log.debug("The given product is an instance of Drink '" + product.getDescription() + "', id '" + product.getId()
+      LOG.debug("The given product is an instance of Drink '" + product.getDescription() + "', id '" + product.getId()
           + "'. Check all Offer-Drinks for that given occurrence.");
       productType = ProductType.DRINK;
     } else if (product instanceof MealEto) {
-      log.debug("The given product is an instance of Meal '" + product.getDescription() + "', id '" + product.getId()
+      LOG.debug("The given product is an instance of Meal '" + product.getDescription() + "', id '" + product.getId()
           + "'. Check all Offer-Meals for that given occurrence.");
       productType = ProductType.MEAL;
     } else if (product instanceof SideDishEto) {
-      log.debug("The given product is an instance of SideDish '" + product.getDescription() + "', id '"
+      LOG.debug("The given product is an instance of SideDish '" + product.getDescription() + "', id '"
           + product.getId() + "'. Check all Offer-SideDishes for that given occurrence.");
       productType = ProductType.SIDEDISH;
     }
 
     if (productType == null) {
-      log.debug("The given product not in use by an offer.");
+      LOG.debug("The given product not in use by an offer.");
       return false;
     }
 
@@ -152,7 +152,7 @@ public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
 
       if (productType.isDrink()) {
         if (Objects.equals(offer.getDrinkId(), product.getId())) {
-          log.debug("The given product is in use by offer with id '" + offer.getId() + "', description '"
+          LOG.debug("The given product is in use by offer with id '" + offer.getId() + "', description '"
               + offer.getDescription() + "'.");
           return true;
         }
@@ -162,7 +162,7 @@ public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
 
       if (productType.isMeal()) {
         if (Objects.equals(offer.getMealId(), product.getId())) {
-          log.debug("The given product is in use by offer with id '" + offer.getId() + "', description '"
+          LOG.debug("The given product is in use by offer with id '" + offer.getId() + "', description '"
               + offer.getDescription() + "'.");
           return true;
         }
@@ -171,7 +171,7 @@ public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
 
       if (productType.isSideDish()) {
         if (Objects.equals(offer.getSideDishId(), product.getId())) {
-          log.debug("The given product is in use by offer with id '" + offer.getId() + "', description '"
+          LOG.debug("The given product is in use by offer with id '" + offer.getId() + "', description '"
               + offer.getDescription() + "'.");
           return true;
         }
@@ -179,7 +179,7 @@ public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
       }
     }
 
-    log.debug("The given product not in use by an offer.");
+    LOG.debug("The given product not in use by an offer.");
     return false;
   }
 
@@ -191,7 +191,7 @@ public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
   public List<OfferEto> findOffersFiltered(OfferFilter offerFilterBo, OfferSortBy sortBy) {
 
     List<OfferEntity> offers = getOfferDao().findOffersFiltered(offerFilterBo, sortBy);
-    log.debug("'" + offers.size() + "' offers fetched.");
+    LOG.debug("'" + offers.size() + "' offers fetched.");
 
     List<OfferEto> offerBos = new ArrayList<>(offers.size());
     for (OfferEntity o : offers) {

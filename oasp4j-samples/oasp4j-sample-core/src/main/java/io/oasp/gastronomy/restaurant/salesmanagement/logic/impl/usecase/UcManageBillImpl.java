@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
 
   /** Logger instance. */
-  private static final Logger log = LoggerFactory.getLogger(UcManageBillImpl.class);
+  private static final Logger LOG = LoggerFactory.getLogger(UcManageBillImpl.class);
 
   private Salesmanagement salesmanagement;
 
@@ -84,7 +84,7 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
 
     BillEto returnBill = getBeanMapper().map(savedBill, BillEto.class);
 
-    log.debug("The bill with id '{}' has been created.", returnBill.getId());
+    LOG.debug("The bill with id '{}' has been created.", returnBill.getId());
 
     return returnBill;
   }
@@ -135,7 +135,7 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
        * Save updated bill
        */
       getBillDao().save(targetBill);
-      log.debug("The bill with id '{}' has been updated.", billId);
+      LOG.debug("The bill with id '{}' has been updated.", billId);
 
       return getBeanMapper().map(targetBill, BillEto.class);
     }
@@ -158,10 +158,10 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
   @RolesAllowed(PermissionConstants.SAVE_BILL)
   public PaymentStatus doPayment(BillEto bill) {
 
-    log.debug("The bill with id '" + bill.getId() + "' will be marked as payed.");
+    LOG.debug("The bill with id '" + bill.getId() + "' will be marked as payed.");
 
     // Return a PaymentStatus
-    log.debug("The bill with id '" + bill.getId() + "' is succesfuly payed.");
+    LOG.debug("The bill with id '" + bill.getId() + "' is succesfuly payed.");
     return PaymentStatus.SUCCESS;
   }
 
@@ -207,7 +207,7 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
     }
 
     // Step4: Return a PaymentStatus
-    log.debug("The payment of bill with id '" + bill.getId() + "' has given that status '" + status + "' back.");
+    LOG.debug("The payment of bill with id '" + bill.getId() + "' has given that status '" + status + "' back.");
     return status;
   }
 

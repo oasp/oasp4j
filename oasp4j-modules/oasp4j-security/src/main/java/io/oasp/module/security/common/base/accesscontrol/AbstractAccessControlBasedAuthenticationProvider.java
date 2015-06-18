@@ -39,7 +39,7 @@ public abstract class AbstractAccessControlBasedAuthenticationProvider<U extends
     extends AbstractUserDetailsAuthenticationProvider {
 
   /** The {@link Logger} instance. */
-  private static final Logger log = LoggerFactory.getLogger(AbstractAccessControlBasedAuthenticationProvider.class);
+  private static final Logger LOG = LoggerFactory.getLogger(AbstractAccessControlBasedAuthenticationProvider.class);
 
   private PrincipalAccessControlProvider<P> principalAccessControlProvider;
 
@@ -94,7 +94,7 @@ public abstract class AbstractAccessControlBasedAuthenticationProvider<U extends
     try {
       request.login(login, password);
     } catch (ServletException e) {
-      log.warn("Authentication failed: {}", e.toString());
+      LOG.warn("Authentication failed: {}", e.toString());
       throw new BadCredentialsException("Authentication failed.", e);
     }
     authentication.setDetails(userDetails);
@@ -134,7 +134,7 @@ public abstract class AbstractAccessControlBasedAuthenticationProvider<U extends
 
     P principal = retrievePrincipal(username, authentication);
     if (principal == null) {
-      log.warn("Failed to retrieve user for login {}.", username);
+      LOG.warn("Failed to retrieve user for login {}.", username);
       throw new UsernameNotFoundException(username);
     }
 
@@ -145,7 +145,7 @@ public abstract class AbstractAccessControlBasedAuthenticationProvider<U extends
     for (String id : accessControlIds) {
       boolean success = this.accessControlProvider.collectAccessControls(id, accessControlSet);
       if (!success) {
-        log.warn("Undefined access control {}.", id);
+        LOG.warn("Undefined access control {}.", id);
         // authorities.add(new SimpleGrantedAuthority(id));
       }
     }

@@ -57,7 +57,7 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
   public static final String KEY_ERRORS = "errors";
 
   /** Logger instance. */
-  private static final Logger log = LoggerFactory.getLogger(RestServiceExceptionFacade.class);
+  private static final Logger LOG = LoggerFactory.getLogger(RestServiceExceptionFacade.class);
 
   private final List<Class<? extends Throwable>> securityExceptions;
 
@@ -113,7 +113,7 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
       Class<? extends Throwable> securityException = (Class<? extends Throwable>) Class.forName(className);
       registerToplevelSecurityException(securityException);
     } catch (ClassNotFoundException e) {
-      log.info(
+      LOG.info(
           "Spring security was not found on classpath. Spring security exceptions will not be handled as such by {}",
           getClass().getSimpleName());
     }
@@ -184,7 +184,7 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
   protected Response createResponse(Throwable exception, ValidationErrorUserException error,
       Map<String, List<String>> errorsMap) {
 
-    log.warn("Service failed due to validation failure.", error);
+    LOG.warn("Service failed due to validation failure.", error);
     if (exception == error) {
       return createResponse(Status.BAD_REQUEST, error, errorsMap);
     } else {
@@ -202,9 +202,9 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
 
     NlsRuntimeException userError = TechnicalErrorUserException.getOrCreateUserException(exception);
     if (userError.isTechnical()) {
-      log.error("Service failed on server", exception);
+      LOG.error("Service failed on server", exception);
     } else {
-      log.warn("Service failed due to business error: {}", exception.getMessage());
+      LOG.warn("Service failed due to business error: {}", exception.getMessage());
     }
     return createResponse(userError);
   }
@@ -224,7 +224,7 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     } else {
       error = new SecurityErrorUserException(exception);
     }
-    log.error("Service failed due to security error", error);
+    LOG.error("Service failed due to security error", error);
     // NOTE: for security reasons we do not send any details about the error
     // to the client!
     String message;
@@ -372,7 +372,7 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     try {
       responseMessage = this.mapper.writeValueAsString(jsonMap);
     } catch (JsonProcessingException e) {
-      log.error("Exception facade failed to create JSON.", e);
+      LOG.error("Exception facade failed to create JSON.", e);
       responseMessage = "{}";
     }
     return responseMessage;
@@ -393,14 +393,14 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     NlsRuntimeException error;
     if (exception instanceof ServerErrorException) {
       error = new TechnicalErrorUserException(exception);
-      log.error("Service failed on server", error);
+      LOG.error("Service failed on server", error);
       return createResponse(status, error, null);
     } else {
       UUID uuid = UUID.randomUUID();
       if (exception instanceof ClientErrorException) {
-        log.warn("Service failed due to unexpected request. UUDI: {}, reason: {} ", uuid, exception.getMessage());
+        LOG.warn("Service failed due to unexpected request. UUDI: {}, reason: {} ", uuid, exception.getMessage());
       } else {
-        log.warn("Service caused redirect or other error. UUID: {}, reason: {}", uuid, exception.getMessage());
+        LOG.warn("Service caused redirect or other error. UUID: {}, reason: {}", uuid, exception.getMessage());
       }
       return createResponse(status, exception.getMessage(), String.valueOf(statusCode), uuid, null);
     }
@@ -436,7 +436,7 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     if (exposeInternalErrorDetails) {
       String message =
           "****** Exposing of internal error details is enabled! This violates OWASP A6 (Sensitive Data Exposure) and shall only be used for testing/debugging and never in production. ******";
-      log.warn(message);
+      LOG.warn(message);
       // CHECKSTYLE:OFF (for development only)
       System.err.println(message);
       // CHECKSTYLE:ON

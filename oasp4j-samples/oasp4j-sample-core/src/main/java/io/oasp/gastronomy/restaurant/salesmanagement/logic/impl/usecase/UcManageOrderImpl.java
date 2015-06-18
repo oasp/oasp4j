@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 public class UcManageOrderImpl extends AbstractOrderUc implements UcManageOrder {
 
   /** Logger instance. */
-  private static final Logger log = LoggerFactory.getLogger(UcManageOrderImpl.class);
+  private static final Logger LOG = LoggerFactory.getLogger(UcManageOrderImpl.class);
 
   private Salesmanagement salesmanagement;
 
@@ -71,7 +71,7 @@ public class UcManageOrderImpl extends AbstractOrderUc implements UcManageOrder 
     order.setTableId(table.getId());
     getOrderDao().save(order);
 
-    log.debug("The order with id '" + order.getId() + "' has been created. It's linked with table id '" + table.getId()
+    LOG.debug("The order with id '" + order.getId() + "' has been created. It's linked with table id '" + table.getId()
         + "'.");
 
     return getBeanMapper().map(order, OrderEto.class);
@@ -88,7 +88,7 @@ public class UcManageOrderImpl extends AbstractOrderUc implements UcManageOrder 
 
     OrderEntity orderEntity = getBeanMapper().map(order, OrderEntity.class);
     orderEntity = getOrderDao().save(orderEntity);
-    log.debug("Saved order with id {}.", orderEntity.getId());
+    LOG.debug("Saved order with id {}.", orderEntity.getId());
     return getBeanMapper().map(orderEntity, OrderEto.class);
   }
 
@@ -130,7 +130,7 @@ public class UcManageOrderImpl extends AbstractOrderUc implements UcManageOrder 
     List<OrderPositionEto> positions2DeleteList = getEntities2Delete(currentOrderPositionList, positionList);
     List<OrderPositionEto> savedPositionList = result.getPositions();
     if (positions2DeleteList.size() > 0) {
-      log.warn("Marking {} number of order position(s) as cancelled that are missing in update of order with id {}",
+      LOG.warn("Marking {} number of order position(s) as cancelled that are missing in update of order with id {}",
           positions2DeleteList.size(), orderId);
       for (OrderPositionEto position : positions2DeleteList) {
         // only logically delete, actually the client should still send the cancelled positions...

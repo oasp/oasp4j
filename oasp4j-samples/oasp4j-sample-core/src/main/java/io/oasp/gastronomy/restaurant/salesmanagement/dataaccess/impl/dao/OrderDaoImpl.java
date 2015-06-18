@@ -28,7 +28,7 @@ import com.mysema.query.types.path.EntityPathBase;
 public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements OrderDao {
 
   /** Logger instance. */
-  private static final Logger log = LoggerFactory.getLogger(OrderDaoImpl.class);
+  private static final Logger LOG = LoggerFactory.getLogger(OrderDaoImpl.class);
 
   /**
    * The constructor.
@@ -61,7 +61,7 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
     } else {
       if (resultList.size() > 1) {
         // In this case we can be robust and continue even though a data inconsistency has been detected.
-        log.error("Multiple open orders found for table {}: {}", Long.valueOf(tableId), resultList);
+        LOG.error("Multiple open orders found for table {}: {}", Long.valueOf(tableId), resultList);
       }
       return resultList.get(0);
     }

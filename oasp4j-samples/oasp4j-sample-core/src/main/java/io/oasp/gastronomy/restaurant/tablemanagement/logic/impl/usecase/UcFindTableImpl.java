@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 public class UcFindTableImpl extends AbstractTableUc implements UcFindTable {
 
   /** Logger instance. */
-  private static final Logger log = LoggerFactory.getLogger(UcFindTableImpl.class);
+  private static final Logger LOG = LoggerFactory.getLogger(UcFindTableImpl.class);
 
   /**
    * {@inheritDoc}
@@ -36,7 +36,7 @@ public class UcFindTableImpl extends AbstractTableUc implements UcFindTable {
   @RolesAllowed(PermissionConstants.FIND_TABLE)
   public TableEto findTable(Long id) {
 
-    log.debug("Get table with id '" + id + "' from database.");
+    LOG.debug("Get table with id '" + id + "' from database.");
     return getBeanMapper().map(getTableDao().findOne(id), TableEto.class);
   }
 
@@ -47,7 +47,7 @@ public class UcFindTableImpl extends AbstractTableUc implements UcFindTable {
   @RolesAllowed(PermissionConstants.FIND_TABLE)
   public List<TableEto> findAllTables() {
 
-    log.debug("Get all restaurant tables from database.");
+    LOG.debug("Get all restaurant tables from database.");
     List<TableEntity> tables = getTableDao().findAll();
     return getBeanMapper().mapList(tables, TableEto.class);
   }
@@ -59,7 +59,7 @@ public class UcFindTableImpl extends AbstractTableUc implements UcFindTable {
   @RolesAllowed(PermissionConstants.FIND_TABLE)
   public List<TableEto> findFreeTables() {
 
-    log.debug("Get all free restaurant tables from database.");
+    LOG.debug("Get all free restaurant tables from database.");
 
     List<TableEntity> tables = getTableDao().getFreeTables();
     return getBeanMapper().mapList(tables, TableEto.class);

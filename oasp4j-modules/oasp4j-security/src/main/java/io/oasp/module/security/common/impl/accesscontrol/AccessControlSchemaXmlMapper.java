@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 public class AccessControlSchemaXmlMapper implements AccessControlSchemaMapper {
 
   /** Logger instance. */
-  private static final Logger log = LoggerFactory.getLogger(AccessControlSchemaXmlMapper.class);
+  private static final Logger LOG = LoggerFactory.getLogger(AccessControlSchemaXmlMapper.class);
 
   private JAXBContext jaxbContext;
 
@@ -152,10 +152,10 @@ public class AccessControlSchemaXmlMapper implements AccessControlSchemaMapper {
         case ValidationEvent.FATAL_ERROR:
           throw new IllegalArgumentException(event.toString());
         case ValidationEvent.WARNING:
-          log.warn(event.toString());
+          LOG.warn(event.toString());
           break;
         default:
-          log.debug(event.toString());
+          LOG.debug(event.toString());
         }
       }
       return true;

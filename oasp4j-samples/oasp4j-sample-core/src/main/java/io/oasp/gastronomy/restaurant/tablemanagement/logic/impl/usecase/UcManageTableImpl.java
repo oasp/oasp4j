@@ -36,7 +36,7 @@ import org.springframework.validation.annotation.Validated;
 public class UcManageTableImpl extends AbstractTableUc implements UcManageTable {
 
   /** Logger instance. */
-  private static final Logger log = LoggerFactory.getLogger(UcManageTableImpl.class);
+  private static final Logger LOG = LoggerFactory.getLogger(UcManageTableImpl.class);
 
   private Salesmanagement salesManagement;
 
@@ -84,7 +84,7 @@ public class UcManageTableImpl extends AbstractTableUc implements UcManageTable 
     }
 
     getTableDao().save(tableEntity);
-    log.debug("Table with id '{}' has been created.", tableEntity.getId());
+    LOG.debug("Table with id '{}' has been created.", tableEntity.getId());
     return getBeanMapper().map(tableEntity, TableEto.class);
   }
 

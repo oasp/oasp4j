@@ -40,7 +40,7 @@ import com.mysema.query.types.Expression;
 public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> implements GenericDao<ID, E> {
 
   /** Logger instance. */
-  private static final Logger log = LoggerFactory.getLogger(AbstractGenericDao.class);
+  private static final Logger LOG = LoggerFactory.getLogger(AbstractGenericDao.class);
 
   private EntityManager entityManager;
 
@@ -90,12 +90,12 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
 
     if (isNew(entity)) {
       this.entityManager.persist(entity);
-      log.debug("Saved new {} with id {}.", getEntityName(), entity.getId());
+      LOG.debug("Saved new {} with id {}.", getEntityName(), entity.getId());
       return entity;
     } else {
       if (this.entityManager.find(entity.getClass(), entity.getId()) != null) {
         E update = this.entityManager.merge(entity);
-        log.debug("Updated {} with id {}.", getEntityName(), entity.getId());
+        LOG.debug("Updated {} with id {}.", getEntityName(), entity.getId());
         return update;
       } else {
         throw new EntityNotFoundException("Entity not found");
@@ -179,7 +179,7 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
     query.select(root);
     TypedQuery<E> typedQuery = this.entityManager.createQuery(query);
     List<E> resultList = typedQuery.getResultList();
-    log.debug("Query for all {} objects returned {} hit(s).", getEntityName(), resultList.size());
+    LOG.debug("Query for all {} objects returned {} hit(s).", getEntityName(), resultList.size());
     return resultList;
   }
 
@@ -196,7 +196,7 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
     query.where(root.get("id").in(ids));
     TypedQuery<E> typedQuery = this.entityManager.createQuery(query);
     List<E> resultList = typedQuery.getResultList();
-    log.debug("Query for selection of {} objects returned {} hit(s).", getEntityName(), resultList.size());
+    LOG.debug("Query for selection of {} objects returned {} hit(s).", getEntityName(), resultList.size());
     return resultList;
   }
 
@@ -208,7 +208,7 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
 
     E entity = this.entityManager.getReference(getEntityClass(), id);
     this.entityManager.remove(entity);
-    log.debug("Deleted {} with ID {}.", getEntityName(), id);
+    LOG.debug("Deleted {} with ID {}.", getEntityName(), id);
   }
 
   /**
@@ -220,7 +220,7 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
     // entity might be detached and could cause trouble in entityManager on remove
     if (this.entityManager.contains(entity)) {
       this.entityManager.remove(entity);
-      log.debug("Deleted {} with ID {}.", getEntityName(), entity.getId());
+      LOG.debug("Deleted {} with ID {}.", getEntityName(), entity.getId());
     } else {
       delete(entity.getId());
     }

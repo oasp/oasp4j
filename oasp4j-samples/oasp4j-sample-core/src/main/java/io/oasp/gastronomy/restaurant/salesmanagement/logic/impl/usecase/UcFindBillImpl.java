@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 @UseCase
 public class UcFindBillImpl extends AbstractBillUc implements UcFindBill {
 
-  private static final Logger log = LoggerFactory.getLogger(UcFindBillImpl.class);
+  private static final Logger LOG = LoggerFactory.getLogger(UcFindBillImpl.class);
 
   private Salesmanagement salesmanagement;
 
@@ -40,7 +40,7 @@ public class UcFindBillImpl extends AbstractBillUc implements UcFindBill {
   @RolesAllowed(PermissionConstants.FIND_BILL)
   public BillCto findBill(Long id) {
 
-    log.debug("Get Bill with id '" + id + "' from database.");
+    LOG.debug("Get Bill with id '" + id + "' from database.");
     BillCto billCto = new BillCto();
     BillEto bill = getBeanMapper().map(getBillDao().findOne(id), BillEto.class);
     if (bill == null) {

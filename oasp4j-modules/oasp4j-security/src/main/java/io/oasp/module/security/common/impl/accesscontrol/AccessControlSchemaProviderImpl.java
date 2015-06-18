@@ -21,7 +21,7 @@ import org.springframework.core.io.Resource;
 public class AccessControlSchemaProviderImpl implements AccessControlSchemaProvider {
 
   /** Logger instance. */
-  private static final Logger log = LoggerFactory.getLogger(AccessControlSchemaProviderImpl.class);
+  private static final Logger LOG = LoggerFactory.getLogger(AccessControlSchemaProviderImpl.class);
 
   private Resource accessControlSchema;
 
@@ -47,7 +47,7 @@ public class AccessControlSchemaProviderImpl implements AccessControlSchemaProvi
     if (this.initialized) {
       return;
     }
-    log.debug("Initializing.");
+    LOG.debug("Initializing.");
     if (this.accessControlSchemaMapper == null) {
       this.accessControlSchemaMapper = new AccessControlSchemaXmlMapper();
     }
@@ -66,10 +66,10 @@ public class AccessControlSchemaProviderImpl implements AccessControlSchemaProvi
   public AccessControlSchema loadSchema() {
 
     initialize();
-    log.debug("Reading access control schema from {}", this.accessControlSchema);
+    LOG.debug("Reading access control schema from {}", this.accessControlSchema);
     try (InputStream inputStream = this.accessControlSchema.getInputStream()) {
       AccessControlSchema schema = this.accessControlSchemaMapper.read(inputStream);
-      log.debug("Reading access control schema completed successfully.");
+      LOG.debug("Reading access control schema completed successfully.");
       return schema;
     } catch (Exception e) {
       throw new IllegalStateException("Failed to load access control schema from " + this.accessControlSchema, e);
