@@ -38,6 +38,7 @@ public interface UcFindOffer {
   /**
    * @return the {@link List} with all available {@link OfferEto}s.
    */
+  @Deprecated
   List<OfferEto> findAllOffers();
 
   /**
@@ -55,6 +56,7 @@ public interface UcFindOffer {
    *
    * @return the {@link List} with all {@link OfferEto}s that match the {@link OfferFilter} criteria.
    */
+  @Deprecated
   List<OfferEto> findOffersFiltered(OfferFilter offerFilterBo, OfferSortBy sortBy);
 
   /**

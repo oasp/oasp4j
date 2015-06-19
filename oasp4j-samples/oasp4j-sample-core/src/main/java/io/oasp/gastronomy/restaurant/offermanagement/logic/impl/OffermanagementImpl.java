@@ -13,6 +13,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSearchCri
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSortBy;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SideDishEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcFindOffer;
@@ -121,6 +122,7 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
    * {@inheritDoc}
    */
   @Override
+  @Deprecated
   public List<OfferEto> findAllOffers() {
 
     return this.ucFindOffer.findAllOffers();
@@ -130,6 +132,7 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
    * {@inheritDoc}
    */
   @Override
+  @Deprecated
   public List<ProductEto> findAllProducts() {
 
     return this.ucFindProduct.findAllProducts();
@@ -139,6 +142,7 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
    * {@inheritDoc}
    */
   @Override
+  @Deprecated
   public List<MealEto> findAllMeals() {
 
     return this.ucFindProduct.findAllMeals();
@@ -148,6 +152,7 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
    * {@inheritDoc}
    */
   @Override
+  @Deprecated
   public List<DrinkEto> findAllDrinks() {
 
     return this.ucFindProduct.findAllDrinks();
@@ -177,6 +182,7 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
    * {@inheritDoc}
    */
   @Override
+  @Deprecated
   public List<SideDishEto> findAllSideDishes() {
 
     return this.ucFindProduct.findAllSideDishes();
@@ -251,6 +257,7 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
    * {@inheritDoc}
    */
   @Override
+  @Deprecated
   public List<OfferEto> findOffersFiltered(OfferFilter offerFilterBo, OfferSortBy sortBy) {
 
     return this.ucFindOffer.findOffersFiltered(offerFilterBo, sortBy);
@@ -260,6 +267,7 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
    * {@inheritDoc}
    */
   @Override
+  @Deprecated
   public List<ProductEto> findProductsFiltered(ProductFilter productFilterBo, ProductSortBy sortBy) {
 
     return this.ucFindProduct.findProductsFiltered(productFilterBo, sortBy);
@@ -318,6 +326,15 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
   public PaginatedListTo<OfferEto> findOfferEtos(OfferSearchCriteriaTo criteria) {
 
     return this.ucFindOffer.findOfferEtos(criteria);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public PaginatedListTo<ProductEto> findProductEtos(ProductSearchCriteriaTo criteria) {
+
+    return this.ucFindProduct.findProductEtos(criteria);
   }
 
 }

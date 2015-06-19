@@ -10,6 +10,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSearchCri
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSortBy;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SideDishEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcFindOffer;
@@ -134,6 +135,7 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/product/")
+  @Deprecated
   public List<ProductEto> getAllProducts() {
 
     return this.offerManagement.findAllProducts();
@@ -155,10 +157,13 @@ public class OffermanagementRestServiceImpl {
   /**
    * Delegates to {@link UcFindProduct#findAllMeals}.
    *
+   * @deprecated use {@link OffermanagementRestServiceImpl#findProductEtosByPost(ProductSearchCriteriaTo)} with
+   *             fetchMeals=true
    * @return all {@link MealEto}s as list
    */
   @GET
   @Path("/product/meal/")
+  @Deprecated
   public List<MealEto> getAllMeals() {
 
     return this.offerManagement.findAllMeals();
@@ -167,10 +172,13 @@ public class OffermanagementRestServiceImpl {
   /**
    * Delegates to {@link UcFindProduct#findAllDrinks}.
    *
+   * @deprecated use {@link OffermanagementRestServiceImpl#findProductEtosByPost(ProductSearchCriteriaTo)} with
+   *             fetchDrinks=true
    * @return all {@link DrinkEto}s as list
    */
   @GET
   @Path("/product/drink/")
+  @Deprecated
   public List<DrinkEto> getAllDrinks() {
 
     return this.offerManagement.findAllDrinks();
@@ -179,10 +187,13 @@ public class OffermanagementRestServiceImpl {
   /**
    * Delegates to {@link UcFindProduct#findAllSideDishes}.
    *
+   * @deprecated use {@link OffermanagementRestServiceImpl#findProductEtosByPost(ProductSearchCriteriaTo)} with
+   *             fetchSideDishes=true
    * @return all {@link SideDishEto}s as list
    */
   @GET
   @Path("/product/side/")
+  @Deprecated
   public List<SideDishEto> getAllSideDishes() {
 
     return this.offerManagement.findAllSideDishes();
@@ -296,6 +307,7 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/product/sortby/{sortBy}")
+  @Deprecated
   public List<ProductEto> getFilteredProducts(ProductFilter productFilter, @PathParam("sortBy") ProductSortBy sortBy) {
 
     return this.offerManagement.findProductsFiltered(productFilter, sortBy);
@@ -354,4 +366,18 @@ public class OffermanagementRestServiceImpl {
 
     return this.offerManagement.findOfferEtos(searchCriteriaTo);
   }
+
+  /**
+   * Delegates to {@link UcFindProduct#findProductEtos}.
+   *
+   * @param searchCriteriaTo the pagination and search criteria to be used for finding products.
+   * @return the {@link PaginatedListTo list} of matching {@link ProductEto}s.
+   */
+  @Path("/product/search")
+  @POST
+  public PaginatedListTo<ProductEto> findProductEtosByPost(ProductSearchCriteriaTo searchCriteriaTo) {
+
+    return this.offerManagement.findProductEtos(searchCriteriaTo);
+  }
+
 }

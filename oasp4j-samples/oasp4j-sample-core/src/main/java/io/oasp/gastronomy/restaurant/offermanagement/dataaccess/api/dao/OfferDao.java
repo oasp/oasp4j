@@ -26,6 +26,7 @@ public interface OfferDao extends ApplicationDao<OfferEntity>, MasterDataDao<Off
    *
    * @return the {@link List} with all {@link OfferEntity}s that match the {@link OfferFilter offers filter criteria}.
    */
+  @Deprecated
   List<OfferEntity> findOffersFiltered(OfferFilter offerFilterBo, OfferSortBy sortBy);
 
   /**
