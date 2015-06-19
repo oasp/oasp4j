@@ -11,6 +11,8 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.jpa.common.api.to.PaginationResultTo;
+import io.oasp.module.jpa.common.api.to.PaginationTo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -175,7 +177,20 @@ public class ProductDaoImpl extends ApplicationMasterDataDaoImpl<ProductEntity> 
       query.where(Alias.$(product.getDescription()).eq(description));
     }
 
+    System.out.println("criteria: " + criteria.toStrink());
+
     // include filter for entity type
+
+    if (!(criteria.isFetchDrinks() || criteria.isFetchMeals() || criteria.isFetchSideDishes())) {
+      // no product type was selected, return empty result
+      PaginationTo pagination = criteria.getPagination();
+
+      PaginationResultTo paginationResult = new PaginationResultTo(pagination, 0L);
+      List<ProductEntity> paginatedList = new ArrayList<>();
+
+      return new PaginatedListTo<>(paginatedList, paginationResult);
+    }
+
     BooleanBuilder builder = new BooleanBuilder();
     if (criteria.isFetchSideDishes()) {
       builder.or(Alias.$(product).instanceOf(SideDishEntity.class));

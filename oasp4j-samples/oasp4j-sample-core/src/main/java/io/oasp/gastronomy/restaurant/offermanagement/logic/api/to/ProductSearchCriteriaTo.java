@@ -6,6 +6,9 @@ import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
  * This is the {@link SearchCriteriaTo search criteria} {@link net.sf.mmm.util.transferobject.api.TransferObject TO}
  * used to find {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.Product}s.
  *
+ * If no boolean is set to true, no {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.Product}s will be
+ * found.
+ *
  * @author lgoerlac
  */
 public class ProductSearchCriteriaTo extends SearchCriteriaTo {
@@ -31,8 +34,9 @@ public class ProductSearchCriteriaTo extends SearchCriteriaTo {
     super();
 
     this.fetchDrinks = true;
-    this.fetchMeals = false;
+    this.fetchMeals = true;
     this.fetchSideDishes = true;
+
   }
 
   /**
@@ -113,6 +117,13 @@ public class ProductSearchCriteriaTo extends SearchCriteriaTo {
   public void setDescription(String description) {
 
     this.description = description;
+  }
+
+  public String toStrink() {
+
+    return "ProductSearchCriteriaTo [fetchDrinks=" + this.fetchDrinks + ", fetchMeals=" + this.fetchMeals
+        + ", fetchSideDishes=" + this.fetchSideDishes + ", name=" + this.name + ", description=" + this.description
+        + "]";
   }
 
 }
