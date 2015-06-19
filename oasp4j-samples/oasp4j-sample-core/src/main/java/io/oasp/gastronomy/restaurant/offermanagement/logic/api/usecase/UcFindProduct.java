@@ -5,8 +5,10 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SideDishEto;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.sql.Blob;
 import java.util.List;
@@ -70,22 +72,26 @@ public interface UcFindProduct {
   /**
    * @return the {@link List} with all {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product}s.
    */
+  @Deprecated
   List<ProductEto> findAllProducts();
 
   /**
    * @return the {@link List} with all {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Meal meals}.
    */
+  @Deprecated
   List<MealEto> findAllMeals();
 
   /**
    * @return the {@link List} with all {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Drink drinks}.
    */
+  @Deprecated
   List<DrinkEto> findAllDrinks();
 
   /**
    * @return the {@link List} with all {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.SideDish side
    *         dishes}.
    */
+  @Deprecated
   List<SideDishEto> findAllSideDishes();
 
   /**
@@ -95,7 +101,16 @@ public interface UcFindProduct {
    * @param sortBy sorting specification
    * @return a {@link List} of filtered products
    */
+  @Deprecated
   List<ProductEto> findProductsFiltered(ProductFilter productFilterBo, ProductSortBy sortBy);
+
+  /**
+   * Returns a list of products matching the search criteria.
+   *
+   * @param criteria the {@link ProductSearchCriteriaTo}.
+   * @return the {@link List} of matching {@link ProductEto}s.
+   */
+  PaginatedListTo<ProductEto> findProductEtos(ProductSearchCriteriaTo criteria);
 
   /**
    * @param productId the ID of the {@link ProductEto} to get the picture

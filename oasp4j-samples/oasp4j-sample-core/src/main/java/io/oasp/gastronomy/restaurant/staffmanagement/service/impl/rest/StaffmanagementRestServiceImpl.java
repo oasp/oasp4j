@@ -2,7 +2,10 @@ package io.oasp.gastronomy.restaurant.staffmanagement.service.impl.rest;
 
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.Staffmanagement;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto;
+import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberSearchCriteriaTo;
+import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.usecase.UcFindStaffMember;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.usecase.UcManageStaffMember;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.List;
 
@@ -50,6 +53,7 @@ public class StaffmanagementRestServiceImpl {
    */
   @GET
   @Path("/")
+  @Deprecated
   public List<StaffMemberEto> getAllStaffMember() {
 
     return this.staffManagement.findAllStaffMembers();
@@ -101,5 +105,18 @@ public class StaffmanagementRestServiceImpl {
   public void deleteStaffMember(@PathParam("login") String login) {
 
     this.staffManagement.deleteStaffMemberByLogin(login);
+  }
+
+  /**
+   * Delegates to {@link UcFindStaffMember#findStaffMemberEtos}.
+   *
+   * @param searchCriteriaTo the pagination and search criteria to be used for finding staffmembers.
+   * @return the {@link PaginatedListTo list} of matching {@link StaffMemberEto}s.
+   */
+  @Path("/search")
+  @POST
+  public PaginatedListTo<StaffMemberEto> findStaffMembersByPost(StaffMemberSearchCriteriaTo searchCriteriaTo) {
+
+    return this.staffManagement.findStaffMemberEtos(searchCriteriaTo);
   }
 }

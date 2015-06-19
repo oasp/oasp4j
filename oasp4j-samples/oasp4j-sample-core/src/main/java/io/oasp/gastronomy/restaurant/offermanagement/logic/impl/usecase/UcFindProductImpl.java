@@ -11,10 +11,12 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SideDishEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcFindProduct;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.base.usecase.AbstractProductUc;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.sql.Blob;
 import java.util.List;
@@ -149,6 +151,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
    */
   @Override
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
+  @Deprecated
   public List<ProductEto> findAllProducts() {
 
     LOG.debug("Get all products from database.");
@@ -160,6 +163,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
    */
   @Override
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
+  @Deprecated
   public List<MealEto> findAllMeals() {
 
     LOG.debug("Get all meals with from database.");
@@ -171,6 +175,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
    */
   @Override
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
+  @Deprecated
   public List<DrinkEto> findAllDrinks() {
 
     LOG.debug("Get all drinks with from database.");
@@ -182,6 +187,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
    */
   @Override
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
+  @Deprecated
   public List<SideDishEto> findAllSideDishes() {
 
     LOG.debug("Get all sidedishes with from database.");
@@ -193,6 +199,7 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
    */
   @Override
   @RolesAllowed(PermissionConstants.FIND_OFFER)
+  @Deprecated
   public List<ProductEto> findProductsFiltered(ProductFilter productFilterBo, ProductSortBy sortBy) {
 
     LOG.debug("Fetch filtered offers.");
@@ -233,5 +240,14 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
     } else {
       return getBeanMapper().map(product, ProductEto.class);
     }
+  }
+
+  @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
+  public PaginatedListTo<ProductEto> findProductEtos(ProductSearchCriteriaTo criteria) {
+
+    criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
+    PaginatedListTo<ProductEntity> products = getProductDao().findProducts(criteria);
+    return mapPaginatedEntityList(products, ProductEto.class);
   }
 }
