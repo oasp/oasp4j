@@ -56,7 +56,7 @@
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>17.0</version>
+        <version>18.0</version>
       </dependency>
       <!-- Library with general utilities as well as I18N and exception support -->
       <dependency>
@@ -213,6 +213,26 @@
         <groupId>com.github.tomakehurst</groupId>
         <artifactId>wiremock</artifactId>
         <version>1.54</version>
+      </dependency>
+      <dependency>
+        <groupId>net.serenity-bdd</groupId>
+        <artifactId>core</artifactId>
+        <version>1.0.47</version>
+      </dependency>
+      <dependency>
+        <groupId>net.serenity-bdd</groupId>
+        <artifactId>serenity-junit</artifactId>
+        <version>1.0.47</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-simple</artifactId>
+        <version>1.6.1</version>
+      </dependency>
+      <dependency>
+        <groupId>xml-apis</groupId>
+        <artifactId>xml-apis</artifactId>
+        <version>1.4.01</version>
       </dependency>
 
       <!-- Dependencies for testing constraint validation excepcion -->
