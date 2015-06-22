@@ -6,8 +6,10 @@ import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionCons
 import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api.StaffMemberEntity;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto;
+import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.usecase.UcFindStaffMember;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.base.usecase.AbstractStaffMemberUc;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +61,7 @@ public class UcFindStaffMemberImpl extends AbstractStaffMemberUc implements UcFi
    */
   @Override
   @RolesAllowed(PermissionConstants.FIND_STAFF_MEMBER)
+  @Deprecated
   public List<StaffMemberEto> findAllStaffMembers() {
 
     List<StaffMemberEntity> members = getStaffMemberDao().findAll();
@@ -87,6 +90,20 @@ public class UcFindStaffMemberImpl extends AbstractStaffMemberUc implements UcFi
   private StaffMemberEto privateFindStaffMemberByLogin(String login) {
 
     return getBeanMapper().map(getStaffMemberDao().findByLogin(login), StaffMemberEto.class);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  @RolesAllowed(PermissionConstants.FIND_STAFF_MEMBER)
+  public PaginatedListTo<StaffMemberEto> findStaffMemberEtos(StaffMemberSearchCriteriaTo criteria) {
+
+    // Uncomment next line in order to limit the maximum page size for the staff member search
+    // criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
+
+    PaginatedListTo<StaffMemberEntity> offers = getStaffMemberDao().findStaffMembers(criteria);
+    return mapPaginatedEntityList(offers, StaffMemberEto.class);
   }
 
 }

@@ -10,11 +10,13 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferCto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferFilter;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSortBy;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SideDishEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcFindOffer;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.base.usecase.AbstractOfferUc;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -200,4 +202,15 @@ public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
     return offerBos;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  @RolesAllowed(PermissionConstants.FIND_OFFER)
+  public PaginatedListTo<OfferEto> findOfferEtos(OfferSearchCriteriaTo criteria) {
+
+    criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
+    PaginatedListTo<OfferEntity> offers = getOfferDao().findOffers(criteria);
+    return mapPaginatedEntityList(offers, OfferEto.class);
+  }
 }

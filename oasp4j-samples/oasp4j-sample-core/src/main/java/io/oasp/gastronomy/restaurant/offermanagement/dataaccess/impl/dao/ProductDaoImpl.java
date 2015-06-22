@@ -8,7 +8,11 @@ import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.ProductEntit
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.SideDishEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.ProductDao;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.jpa.common.api.to.PaginationResultTo;
+import io.oasp.module.jpa.common.api.to.PaginationTo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +24,11 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
+
+import com.mysema.query.BooleanBuilder;
+import com.mysema.query.alias.Alias;
+import com.mysema.query.jpa.impl.JPAQuery;
+import com.mysema.query.types.path.EntityPathBase;
 
 /**
  * Implementation of {@link ProductDao}.
@@ -50,6 +59,7 @@ public class ProductDaoImpl extends ApplicationMasterDataDaoImpl<ProductEntity> 
    * {@inheritDoc}
    */
   @Override
+  @Deprecated
   public List<ProductEntity> findProductsFiltered(ProductFilter productFilterBo, ProductSortBy sortBy) {
 
     /*
@@ -148,5 +158,51 @@ public class ProductDaoImpl extends ApplicationMasterDataDaoImpl<ProductEntity> 
     List<ProductEntity> result = getEntityManager().createQuery(criteriaQuery).getResultList();
 
     return result;
+  }
+
+  @Override
+  public PaginatedListTo<ProductEntity> findProducts(ProductSearchCriteriaTo criteria) {
+
+    ProductEntity product = Alias.alias(ProductEntity.class);
+    EntityPathBase<ProductEntity> alias = Alias.$(product);
+    JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
+
+    String name = criteria.getName();
+    if (name != null) {
+      query.where(Alias.$(product.getName()).eq(name));
+    }
+
+    String description = criteria.getDescription();
+    if (description != null) {
+      query.where(Alias.$(product.getDescription()).eq(description));
+    }
+
+    System.out.println("criteria: " + criteria.toStrink());
+
+    // include filter for entity type
+
+    if (!(criteria.isFetchDrinks() || criteria.isFetchMeals() || criteria.isFetchSideDishes())) {
+      // no product type was selected, return empty result
+      PaginationTo pagination = criteria.getPagination();
+
+      PaginationResultTo paginationResult = new PaginationResultTo(pagination, 0L);
+      List<ProductEntity> paginatedList = new ArrayList<>();
+
+      return new PaginatedListTo<>(paginatedList, paginationResult);
+    }
+
+    BooleanBuilder builder = new BooleanBuilder();
+    if (criteria.isFetchSideDishes()) {
+      builder.or(Alias.$(product).instanceOf(SideDishEntity.class));
+    }
+    if (criteria.isFetchMeals()) {
+      builder.or(Alias.$(product).instanceOf(MealEntity.class));
+    }
+    if (criteria.isFetchDrinks()) {
+      builder.or(Alias.$(product).instanceOf(DrinkEntity.class));
+    }
+    query.where(builder);
+
+    return findPaginated(criteria, query, alias);
   }
 }

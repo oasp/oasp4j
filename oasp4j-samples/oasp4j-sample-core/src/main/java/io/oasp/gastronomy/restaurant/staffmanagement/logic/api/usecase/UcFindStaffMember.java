@@ -1,6 +1,8 @@
 package io.oasp.gastronomy.restaurant.staffmanagement.logic.api.usecase;
 
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto;
+import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberSearchCriteriaTo;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.List;
 
@@ -26,5 +28,14 @@ public interface UcFindStaffMember {
   /**
    * @return {@link List} of all existing {@link StaffMemberEto staff members}.
    */
+  @Deprecated
   List<StaffMemberEto> findAllStaffMembers();
+
+  /**
+   * Returns a list of staff memberss matching the search criteria.
+   *
+   * @param criteria the {@link StaffMemberSearchCriteriaTo}.
+   * @return the {@link List} of matching {@link StaffMemberEto}s.
+   */
+  PaginatedListTo<StaffMemberEto> findStaffMemberEtos(StaffMemberSearchCriteriaTo criteria);
 }

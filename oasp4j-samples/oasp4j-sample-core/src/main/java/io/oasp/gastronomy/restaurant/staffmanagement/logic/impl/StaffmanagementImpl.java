@@ -4,8 +4,10 @@ import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.general.logic.base.AbstractComponentFacade;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.Staffmanagement;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto;
+import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.usecase.UcFindStaffMember;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.usecase.UcManageStaffMember;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.List;
 
@@ -73,6 +75,7 @@ public class StaffmanagementImpl extends AbstractComponentFacade implements Staf
    * {@inheritDoc}
    */
   @Override
+  @Deprecated
   public List<StaffMemberEto> findAllStaffMembers() {
 
     return this.ucFindStaffMember.findAllStaffMembers();
@@ -103,5 +106,11 @@ public class StaffmanagementImpl extends AbstractComponentFacade implements Staf
   public void deleteStaffMember(Long staffMemberId) {
 
     this.ucManageStaffMember.deleteStaffMember(staffMemberId);
+  }
+
+  @Override
+  public PaginatedListTo<StaffMemberEto> findStaffMemberEtos(StaffMemberSearchCriteriaTo criteria) {
+
+    return this.ucFindStaffMember.findStaffMemberEtos(criteria);
   }
 }

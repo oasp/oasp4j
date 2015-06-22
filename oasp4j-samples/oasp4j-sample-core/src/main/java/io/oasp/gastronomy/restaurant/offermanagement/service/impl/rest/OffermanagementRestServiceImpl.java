@@ -6,15 +6,18 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferFilter;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSortBy;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SideDishEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcFindOffer;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcFindProduct;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcManageOffer;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcManageProduct;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -119,6 +122,7 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/offer/")
+  @Deprecated
   public List<OfferEto> getAllOffers() {
 
     return this.offerManagement.findAllOffers();
@@ -131,6 +135,7 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/product/")
+  @Deprecated
   public List<ProductEto> getAllProducts() {
 
     return this.offerManagement.findAllProducts();
@@ -152,10 +157,13 @@ public class OffermanagementRestServiceImpl {
   /**
    * Delegates to {@link UcFindProduct#findAllMeals}.
    *
+   * @deprecated use {@link OffermanagementRestServiceImpl#findProductEtosByPost(ProductSearchCriteriaTo)} with
+   *             fetchMeals=true
    * @return all {@link MealEto}s as list
    */
   @GET
   @Path("/product/meal/")
+  @Deprecated
   public List<MealEto> getAllMeals() {
 
     return this.offerManagement.findAllMeals();
@@ -164,10 +172,13 @@ public class OffermanagementRestServiceImpl {
   /**
    * Delegates to {@link UcFindProduct#findAllDrinks}.
    *
+   * @deprecated use {@link OffermanagementRestServiceImpl#findProductEtosByPost(ProductSearchCriteriaTo)} with
+   *             fetchDrinks=true
    * @return all {@link DrinkEto}s as list
    */
   @GET
   @Path("/product/drink/")
+  @Deprecated
   public List<DrinkEto> getAllDrinks() {
 
     return this.offerManagement.findAllDrinks();
@@ -176,10 +187,13 @@ public class OffermanagementRestServiceImpl {
   /**
    * Delegates to {@link UcFindProduct#findAllSideDishes}.
    *
+   * @deprecated use {@link OffermanagementRestServiceImpl#findProductEtosByPost(ProductSearchCriteriaTo)} with
+   *             fetchSideDishes=true
    * @return all {@link SideDishEto}s as list
    */
   @GET
   @Path("/product/side/")
+  @Deprecated
   public List<SideDishEto> getAllSideDishes() {
 
     return this.offerManagement.findAllSideDishes();
@@ -278,6 +292,7 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/sortby/{sortBy}")
+  @Deprecated
   public List<OfferEto> getFilteredOffers(OfferFilter offerFilter, @PathParam("sortBy") OfferSortBy sortBy) {
 
     return this.offerManagement.findOffersFiltered(offerFilter, sortBy);
@@ -292,6 +307,7 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/product/sortby/{sortBy}")
+  @Deprecated
   public List<ProductEto> getFilteredProducts(ProductFilter productFilter, @PathParam("sortBy") ProductSortBy sortBy) {
 
     return this.offerManagement.findProductsFiltered(productFilter, sortBy);
@@ -337,4 +353,31 @@ public class OffermanagementRestServiceImpl {
 
     this.offerManagement.deleteProductPicture(productId);
   }
+
+  /**
+   * Delegates to {@link UcFindOffer#findOfferEtos}.
+   *
+   * @param searchCriteriaTo the pagination and search criteria to be used for finding offers.
+   * @return the {@link PaginatedListTo list} of matching {@link OfferEto}s.
+   */
+  @Path("/offer/search")
+  @POST
+  public PaginatedListTo<OfferEto> findOfferEtosByPost(OfferSearchCriteriaTo searchCriteriaTo) {
+
+    return this.offerManagement.findOfferEtos(searchCriteriaTo);
+  }
+
+  /**
+   * Delegates to {@link UcFindProduct#findProductEtos}.
+   *
+   * @param searchCriteriaTo the pagination and search criteria to be used for finding products.
+   * @return the {@link PaginatedListTo list} of matching {@link ProductEto}s.
+   */
+  @Path("/product/search")
+  @POST
+  public PaginatedListTo<ProductEto> findProductEtosByPost(ProductSearchCriteriaTo searchCriteriaTo) {
+
+    return this.offerManagement.findProductEtos(searchCriteriaTo);
+  }
+
 }

@@ -1,7 +1,5 @@
 package io.oasp.gastronomy.restaurant.tablemanagement.service.impl.rest;
 
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcFindOrderPosition;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.Table;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
@@ -164,10 +162,10 @@ public class TablemanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcFindOrderPosition#findOrderPositions}.
+   * Delegates to {@link UcFindTable#findTableEtos}.
    *
-   * @param searchCriteriaTo the pagination and search criteria to be used for finding orders.
-   * @return the {@link PaginatedListTo list} of matching {@link OrderCto}s.
+   * @param searchCriteriaTo the pagination and search criteria to be used for finding tables.
+   * @return the {@link PaginatedListTo list} of matching {@link TableEto}s.
    */
   @Path("/table/search")
   @POST
