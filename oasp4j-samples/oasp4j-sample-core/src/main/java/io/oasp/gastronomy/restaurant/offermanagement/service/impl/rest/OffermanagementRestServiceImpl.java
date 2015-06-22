@@ -13,10 +13,6 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SideDishEto;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcFindOffer;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcFindProduct;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcManageOffer;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcManageProduct;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.io.ByteArrayInputStream;
@@ -72,7 +68,7 @@ public class OffermanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcFindOffer#findOffer}.
+   * Delegates to {@link Offermanagement#findOffer}.
    *
    * @param id the ID of the {@link OfferEto}
    * @return the {@link OfferEto}
@@ -85,7 +81,7 @@ public class OffermanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcManageOffer#saveOffer}.
+   * Delegates to {@link Offermanagement#saveOffer}.
    *
    * @param offer the {@link OfferEto} to save
    *
@@ -101,7 +97,7 @@ public class OffermanagementRestServiceImpl {
   // although id in path is redundant, this structure is intentionally chosen
   // for further reasons behind this decision see one of the other ***ManagementRestServiceImpl
   /**
-   * Delegates to {@link UcManageOffer#saveOffer}.
+   * Delegates to {@link Offermanagement#saveOffer}.
    *
    * @param offer the {@link OfferEto} to be updated
    *
@@ -116,7 +112,7 @@ public class OffermanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcFindOffer#findAllOffers}.
+   * Delegates to {@link Offermanagement#findAllOffers}.
    *
    * @return all {@link OfferEto}s as list
    */
@@ -129,7 +125,7 @@ public class OffermanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcFindProduct#findAllProducts}.
+   * Delegates to {@link Offermanagement#findAllProducts}.
    *
    * @return all {@link ProductEto}s as list
    */
@@ -142,7 +138,7 @@ public class OffermanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcManageProduct#saveProduct}.
+   * Delegates to {@link Offermanagement#saveProduct}.
    *
    * @param product the product to save
    * @return the saved product
@@ -155,7 +151,7 @@ public class OffermanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcFindProduct#findAllMeals}.
+   * Delegates to {@link Offermanagement#findAllMeals}.
    *
    * @deprecated use {@link OffermanagementRestServiceImpl#findProductEtosByPost(ProductSearchCriteriaTo)} with
    *             fetchMeals=true
@@ -170,7 +166,7 @@ public class OffermanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcFindProduct#findAllDrinks}.
+   * Delegates to {@link Offermanagement#findAllDrinks}.
    *
    * @deprecated use {@link OffermanagementRestServiceImpl#findProductEtosByPost(ProductSearchCriteriaTo)} with
    *             fetchDrinks=true
@@ -185,7 +181,7 @@ public class OffermanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcFindProduct#findAllSideDishes}.
+   * Delegates to {@link Offermanagement#findAllSideDishes}.
    *
    * @deprecated use {@link OffermanagementRestServiceImpl#findProductEtosByPost(ProductSearchCriteriaTo)} with
    *             fetchSideDishes=true
@@ -200,7 +196,7 @@ public class OffermanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcManageOffer#deleteOffer}.
+   * Delegates to {@link Offermanagement#deleteOffer}.
    *
    * @param id ID of the {@link OfferEto} to delete
    */
@@ -212,7 +208,7 @@ public class OffermanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcFindProduct#findProductByRevision}.
+   * Delegates to {@link Offermanagement#findProductByRevision}.
    *
    * @param id ID of the {@link ProductEto}
    * @param revision revision of the {@link ProductEto}
@@ -230,7 +226,7 @@ public class OffermanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcFindProduct#findProduct}.
+   * Delegates to {@link Offermanagement#findProduct}.
    *
    * @param id ID of the {@link ProductEto}
    * @return the {@link ProductEto}
@@ -246,7 +242,7 @@ public class OffermanagementRestServiceImpl {
   // for further reasons behind this decision see one of the other
   // *ManagementRestServiceImpl
   /**
-   * Delegates to {@link UcManageProduct#saveProduct}.
+   * Delegates to {@link Offermanagement#saveProduct}.
    *
    * @param product the {@link ProductEto} to be updated
    */
@@ -259,7 +255,7 @@ public class OffermanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcFindOffer#isProductInUseByOffer}.
+   * Delegates to {@link Offermanagement#isProductInUseByOffer}.
    *
    * @param id ID of the {@link ProductEto}
    * @return true, if there are no offers, that use the given ProductEto. false otherwise.
@@ -272,7 +268,7 @@ public class OffermanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcManageProduct#deleteProduct}.
+   * Delegates to {@link Offermanagement#deleteProduct}.
    *
    * @param id ID of the ProductEto to delete
    */
@@ -284,7 +280,7 @@ public class OffermanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcFindOffer#findOffersFiltered}.
+   * Delegates to {@link Offermanagement#findOffersFiltered}.
    *
    * @param offerFilter the offers filter criteria
    * @param sortBy sorting specification
@@ -299,7 +295,7 @@ public class OffermanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcFindProduct#findProductsFiltered}.
+   * Delegates to {@link Offermanagement#findProductsFiltered}.
    *
    * @param productFilter filter specification
    * @param sortBy sorting specification
