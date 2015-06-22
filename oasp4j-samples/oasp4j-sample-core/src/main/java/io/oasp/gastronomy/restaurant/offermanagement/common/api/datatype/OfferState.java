@@ -18,7 +18,7 @@ public enum OfferState {
   SOLDOUT;
 
   /**
-   * @return <code>true</code> if the
+   * @return {@code true} if the
    *         {@link io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity} is normal.
    */
   public boolean isNormal() {
@@ -27,7 +27,7 @@ public enum OfferState {
   }
 
   /**
-   * @return <code>true</code> if the
+   * @return {@code true} if the
    *         {@link io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity} is special.
    */
   public boolean isSpecial() {
@@ -36,7 +36,7 @@ public enum OfferState {
   }
 
   /**
-   * @return <code>true</code> if the
+   * @return {@code true} if the
    *         {@link io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity} is sold out.
    */
   public boolean isSoldout() {

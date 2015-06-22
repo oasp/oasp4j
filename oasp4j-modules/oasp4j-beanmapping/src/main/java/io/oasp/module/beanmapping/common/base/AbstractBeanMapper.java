@@ -22,27 +22,18 @@ public abstract class AbstractBeanMapper implements BeanMapper {
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public <API, S extends API, T extends API> T mapTypesafe(Class<API> apiClass, S source, Class<T> targetClass) {
 
     return map(source, targetClass);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public <T> List<T> mapList(List<?> source, Class<T> targetClass) {
 
     return mapList(source, targetClass, false);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public <T> List<T> mapList(List<?> source, Class<T> targetClass, boolean suppressNullValues) {
 
@@ -58,18 +49,12 @@ public abstract class AbstractBeanMapper implements BeanMapper {
     return result;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public <T> Set<T> mapSet(Set<?> source, Class<T> targetClass) {
 
     return mapSet(source, targetClass, false);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public <T> Set<T> mapSet(Set<?> source, Class<T> targetClass, boolean suppressNullValues) {
 

@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * This class represents the security configuration for the mapping of {@link AccessControlGroup}s to
  * {@link AccessControlPermission}s. Everything is properly annotated for JAXB (de)serialization from/to XML.
- * 
+ *
  * @author hohwille
  */
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -50,9 +50,6 @@ public class AccessControlSchema {
     this.groups = groups;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public int hashCode() {
 
@@ -62,9 +59,6 @@ public class AccessControlSchema {
     return result;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean equals(Object obj) {
 

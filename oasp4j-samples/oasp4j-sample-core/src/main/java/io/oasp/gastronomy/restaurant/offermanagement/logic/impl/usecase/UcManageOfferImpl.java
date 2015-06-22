@@ -26,9 +26,6 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class UcManageOfferImpl extends AbstractOfferUc implements UcManageOffer {
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.DELETE_OFFER)
   public void deleteOffer(Long offerId) {
@@ -36,9 +33,6 @@ public class UcManageOfferImpl extends AbstractOfferUc implements UcManageOffer 
     getOfferDao().delete(offerId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_OFFER)
   public OfferEto saveOffer(@Valid OfferEto offer) {

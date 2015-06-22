@@ -24,7 +24,7 @@ public enum ProductType {
   SIDEDISH;
 
   /**
-   * @return <code>true</code>, if this value equals {@link ProductType#DRINK} . <code>false</code> otherwise.
+   * @return {@code true}, if this value equals {@link ProductType#DRINK} . {@code false} otherwise.
    */
   public boolean isDrink() {
 
@@ -32,7 +32,7 @@ public enum ProductType {
   }
 
   /**
-   * @return <code>true</code>, if this value equals {@link ProductType#MEAL}. <code>false</code> otherwise.
+   * @return {@code true}, if this value equals {@link ProductType#MEAL}. {@code false} otherwise.
    */
   public boolean isMeal() {
 
@@ -40,7 +40,7 @@ public enum ProductType {
   }
 
   /**
-   * @return <code>true</code>, if this value equals {@link ProductType#SIDEDISH}. <code>false</code> otherwise.
+   * @return {@code true}, if this value equals {@link ProductType#SIDEDISH}. {@code false} otherwise.
    */
   public boolean isSideDish() {
 

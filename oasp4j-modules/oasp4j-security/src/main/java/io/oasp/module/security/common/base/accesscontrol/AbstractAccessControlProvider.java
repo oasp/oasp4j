@@ -117,18 +117,12 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public AccessControl getAccessControl(String nodeId) {
 
     return this.id2nodeMap.get(nodeId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean collectAccessControlIds(String groupId, Set<String> permissions) {
 
@@ -163,9 +157,6 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean collectAccessControls(String groupId, Set<AccessControl> permissions) {
 

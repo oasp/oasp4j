@@ -24,12 +24,12 @@ public interface OrderPosition extends ApplicationEntity {
   /**
    * @return the {@link io.oasp.gastronomy.restaurant.staffmanagement.common.api.StaffMember#getId() ID} of the
    *         {@link io.oasp.gastronomy.restaurant.staffmanagement.common.api.StaffMember Cook} assigned to this
-   *         {@link OrderPosition} or <code>null</code> if it is unassigned.
+   *         {@link OrderPosition} or {@code null} if it is unassigned.
    */
   Long getCookId();
 
   /**
-   * @param cookId the new {@link #getCookId() cook ID} or <code>null</code> to remove the assignment.
+   * @param cookId the new {@link #getCookId() cook ID} or {@code null} to remove the assignment.
    */
   void setCookId(Long cookId);
 

@@ -23,14 +23,14 @@ public interface RevisionMetadata {
   /**
    * This method gets the date when this revision was created (closed).
    *
-   * @return the date of completion or <code>null</code> if the according entity is the latest revision.
+   * @return the date of completion or {@code null} if the according entity is the latest revision.
    */
   Date getDate();
 
   /**
    * This method gets the identifier (login) of the author who created this revision.
    *
-   * @return the author. May be <code>null</code> (if committed outside user scope).
+   * @return the author. May be {@code null} (if committed outside user scope).
    */
   String getAuthor();
 

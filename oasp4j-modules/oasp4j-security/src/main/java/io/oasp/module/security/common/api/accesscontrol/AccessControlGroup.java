@@ -120,9 +120,6 @@ public class AccessControlGroup extends AccessControl { // implements java.secur
     this.permissions = permissions;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public int hashCode() {
 
@@ -135,9 +132,6 @@ public class AccessControlGroup extends AccessControl { // implements java.secur
     return result;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean equals(Object obj) {
 

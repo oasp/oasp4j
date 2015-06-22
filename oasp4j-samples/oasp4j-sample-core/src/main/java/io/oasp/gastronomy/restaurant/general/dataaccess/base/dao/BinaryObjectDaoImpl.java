@@ -13,9 +13,6 @@ import javax.inject.Named;
 @Named
 public class BinaryObjectDaoImpl extends ApplicationDaoImpl<BinaryObjectEntity> implements BinaryObjectDao {
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Class<BinaryObjectEntity> getEntityClass() {
 

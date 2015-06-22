@@ -146,8 +146,8 @@ public class TablemanagementRestServiceImpl {
    * Delegates to {@link UcManageTable#isTableReleasable}.
    *
    * @param id ID of the {@link TableEto}
-   * @return <code>true</code> if the table could be released<br>
-   *         <code>false</code>, otherwise
+   * @return {@code true} if the table could be released<br>
+   *         {@code false}, otherwise
    */
   @GET
   @Path("/table/{id}/istablereleasable/")

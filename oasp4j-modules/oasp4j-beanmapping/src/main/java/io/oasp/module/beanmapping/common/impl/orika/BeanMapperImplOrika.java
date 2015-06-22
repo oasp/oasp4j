@@ -33,9 +33,6 @@ public class BeanMapperImplOrika extends AbstractBeanMapper {
     this.orika = orika;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public <T> T map(Object source, Class<T> targetClass) {
 

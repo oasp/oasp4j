@@ -21,9 +21,6 @@ public class IdentityConverter implements CustomConverter {
         + io.oasp.module.beanmapping.common.impl.dozer.IdentityConverter.class.getName());
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Object convert(Object destination, Object source, Class<?> destinationClass, Class<?> sourceClass) {
 

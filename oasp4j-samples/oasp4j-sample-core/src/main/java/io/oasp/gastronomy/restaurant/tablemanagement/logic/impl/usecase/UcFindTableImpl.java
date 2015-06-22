@@ -29,9 +29,6 @@ public class UcFindTableImpl extends AbstractTableUc implements UcFindTable {
   /** Logger instance. */
   private static final Logger LOG = LoggerFactory.getLogger(UcFindTableImpl.class);
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_TABLE)
   public TableEto findTable(Long id) {
@@ -40,9 +37,6 @@ public class UcFindTableImpl extends AbstractTableUc implements UcFindTable {
     return getBeanMapper().map(getTableDao().findOne(id), TableEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_TABLE)
   public List<TableEto> findAllTables() {
@@ -52,9 +46,6 @@ public class UcFindTableImpl extends AbstractTableUc implements UcFindTable {
     return getBeanMapper().mapList(tables, TableEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_TABLE)
   public List<TableEto> findFreeTables() {
@@ -65,9 +56,6 @@ public class UcFindTableImpl extends AbstractTableUc implements UcFindTable {
     return getBeanMapper().mapList(tables, TableEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_TABLE)
   public PaginatedListTo<TableEto> findTableEtos(TableSearchCriteriaTo criteria) {

@@ -44,9 +44,7 @@ public abstract class AbstractGenericRevisionedDao<ID, ENTITY extends MutablePer
     return AuditReaderFactory.get(getEntityManager());
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  @Override
   public ENTITY load(ID id, Number revision) throws ObjectNotFoundException {
 
     if (revision == MutablePersistenceEntity.LATEST_REVISION) {
@@ -75,17 +73,13 @@ public abstract class AbstractGenericRevisionedDao<ID, ENTITY extends MutablePer
     return entity;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  @Override
   public List<Number> getRevisionHistory(ID id) {
 
     return getAuditReader().getRevisions(getEntityClass(), id);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  @Override
   public List<RevisionMetadata> getRevisionHistoryMetadata(Object id) {
 
     AuditReader auditReader = getAuditReader();

@@ -21,7 +21,7 @@ public interface UcFindOffer {
    * Gets an {@link OfferEto} using its entity identifier.
    *
    * @param id is the {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer#getId() offer ID}.
-   * @return the requested {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer} or <code>null</code>
+   * @return the requested {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer} or {@code null}
    *         if no such {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer} exists.
    */
   OfferEto findOffer(Long id);
@@ -30,7 +30,7 @@ public interface UcFindOffer {
    * Gets an {@link OfferCto} using its entity identifier.
    *
    * @param id is the {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer#getId() offer ID}.
-   * @return the requested {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer} or <code>null</code>
+   * @return the requested {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer} or {@code null}
    *         if no such {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer} exists.
    */
   OfferCto findOfferCto(Long id);
@@ -45,8 +45,8 @@ public interface UcFindOffer {
    * Checks, whether a given {@link ProductEto} is in use by at least one {@link OfferEto}.
    *
    * @param product product to check if it is in use
-   * @return <code>true</code>, if there are no {@link OfferEto offers}, that use the given {@link ProductEto}.
-   *         <code>false</code> otherwise.
+   * @return {@code true}, if there are no {@link OfferEto offers}, that use the given {@link ProductEto}.
+   *         {@code false} otherwise.
    */
   boolean isProductInUseByOffer(ProductEto product);
 

@@ -28,9 +28,6 @@ public abstract class ApplicationBusinessException extends ApplicationException 
     super(cause, message);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean isTechnical() {
 

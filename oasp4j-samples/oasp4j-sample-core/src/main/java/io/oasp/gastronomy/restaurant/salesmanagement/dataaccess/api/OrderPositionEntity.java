@@ -64,9 +64,6 @@ public class OrderPositionEntity extends ApplicationPersistenceEntity implements
     this.order = order;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @Transient
   public Long getOrderId() {
@@ -77,9 +74,6 @@ public class OrderPositionEntity extends ApplicationPersistenceEntity implements
     return this.order.getId();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setOrderId(Long orderId) {
 
@@ -91,9 +85,6 @@ public class OrderPositionEntity extends ApplicationPersistenceEntity implements
     this.order = orderEntity;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @Column(name = "cook_id")
   public Long getCookId() {
@@ -101,18 +92,12 @@ public class OrderPositionEntity extends ApplicationPersistenceEntity implements
     return this.cookId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setCookId(Long cookId) {
 
     this.cookId = cookId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @Column(name = "offer_id")
   public Long getOfferId() {
@@ -120,81 +105,54 @@ public class OrderPositionEntity extends ApplicationPersistenceEntity implements
     return this.offerId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setOfferId(Long offerId) {
 
     this.offerId = offerId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String getOfferName() {
 
     return this.offerName;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setOfferName(String offerName) {
 
     this.offerName = offerName;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderPositionState getState() {
 
     return this.state;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setState(OrderPositionState state) {
 
     this.state = state;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Money getPrice() {
 
     return this.price;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setPrice(Money price) {
 
     this.price = price;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String getComment() {
 
     return this.comment;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setComment(String comment) {
 

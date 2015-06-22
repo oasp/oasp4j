@@ -38,115 +38,78 @@ public class OrderPositionEto extends AbstractEto implements OrderPosition {
     this.state = OrderPositionState.ORDERED;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Long getOrderId() {
 
     return this.orderId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setOrderId(Long orderId) {
 
     this.orderId = orderId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  @Override
   public Long getCookId() {
 
     return this.cookId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  @Override
   public void setCookId(Long cookId) {
 
     this.cookId = cookId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Long getOfferId() {
 
     return this.offerId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setOfferId(Long offerId) {
 
     this.offerId = offerId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String getOfferName() {
 
     return this.offerName;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setOfferName(String offerName) {
 
     this.offerName = offerName;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderPositionState getState() {
 
     return this.state;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setState(OrderPositionState state) {
 
     this.state = state;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Money getPrice() {
 
     return this.price;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setPrice(Money price) {
 
     this.price = price;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public int hashCode() {
 
@@ -162,9 +125,6 @@ public class OrderPositionEto extends AbstractEto implements OrderPosition {
     return result;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean equals(Object obj) {
 

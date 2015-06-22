@@ -24,9 +24,6 @@ public class BinaryObjectEto extends AbstractEto implements BinaryObject {
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setMimeType(String mimeType) {
 
@@ -34,27 +31,18 @@ public class BinaryObjectEto extends AbstractEto implements BinaryObject {
 
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String getMimeType() {
 
     return this.mimeType;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public long getSize() {
 
     return this.size;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setSize(long size) {
 

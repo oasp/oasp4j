@@ -31,18 +31,12 @@ public class StaffMemberDaoImpl extends ApplicationMasterDataDaoImpl<StaffMember
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Class<StaffMemberEntity> getEntityClass() {
 
     return StaffMemberEntity.class;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public StaffMemberEntity findByLogin(String login) {
 

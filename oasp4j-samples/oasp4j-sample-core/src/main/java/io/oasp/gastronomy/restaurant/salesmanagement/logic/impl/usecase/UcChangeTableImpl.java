@@ -28,9 +28,6 @@ public class UcChangeTableImpl extends AbstractUc implements UcChangeTable {
 
   private Salesmanagement salesManagement;
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_TABLE)
   public void changeTable(long orderId, long newTableId) {

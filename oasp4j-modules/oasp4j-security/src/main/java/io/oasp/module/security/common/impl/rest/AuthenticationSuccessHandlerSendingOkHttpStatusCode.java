@@ -18,9 +18,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
  * @author Marek Matczak
  */
 public class AuthenticationSuccessHandlerSendingOkHttpStatusCode implements AuthenticationSuccessHandler {
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
       Authentication authentication) throws IOException, ServletException {

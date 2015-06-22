@@ -22,18 +22,12 @@ public abstract class ProductEto extends MenuItemEto implements Product {
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setPictureId(Long binaryObjectId) {
 
     this.pictureId = binaryObjectId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Long getPictureId() {
 

@@ -35,8 +35,6 @@ public class UcFindStaffMemberImpl extends AbstractStaffMemberUc implements UcFi
   }
 
   /**
-   * {@inheritDoc}
-   *
    * Do not extract this method as a service, because of PermitAll. (only for login)
    */
   @Override
@@ -46,9 +44,6 @@ public class UcFindStaffMemberImpl extends AbstractStaffMemberUc implements UcFi
     return privateFindStaffMemberByLogin(login);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_STAFF_MEMBER)
   public StaffMemberEto findStaffMember(Long id) {
@@ -56,9 +51,6 @@ public class UcFindStaffMemberImpl extends AbstractStaffMemberUc implements UcFi
     return getBeanMapper().map(getStaffMemberDao().find(id), StaffMemberEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_STAFF_MEMBER)
   @Deprecated
@@ -74,9 +66,6 @@ public class UcFindStaffMemberImpl extends AbstractStaffMemberUc implements UcFi
     return membersBo;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   // used during authentication so not authorization annotation (not even @PermitAll) can be used here
   public UserProfile findUserProfileByLogin(String login) {

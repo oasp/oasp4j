@@ -53,27 +53,18 @@ public class StaffmanagementImpl extends AbstractComponentFacade implements Staf
     this.ucManageStaffMember = ucManageStaffMember;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public StaffMemberEto findStaffMemberByLogin(String login) {
 
     return this.ucFindStaffMember.findStaffMemberByLogin(login);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public StaffMemberEto findStaffMember(Long id) {
 
     return this.ucFindStaffMember.findStaffMember(id);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @Deprecated
   public List<StaffMemberEto> findAllStaffMembers() {
@@ -81,27 +72,18 @@ public class StaffmanagementImpl extends AbstractComponentFacade implements Staf
     return this.ucFindStaffMember.findAllStaffMembers();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public StaffMemberEto saveStaffMember(StaffMemberEto staffMember) {
 
     return this.ucManageStaffMember.saveStaffMember(staffMember);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void deleteStaffMemberByLogin(String login) {
 
     this.ucManageStaffMember.deleteStaffMemberByLogin(login);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void deleteStaffMember(Long staffMemberId) {
 

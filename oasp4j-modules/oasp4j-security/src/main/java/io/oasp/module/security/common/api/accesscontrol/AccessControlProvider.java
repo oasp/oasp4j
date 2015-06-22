@@ -20,7 +20,7 @@ public interface AccessControlProvider {
 
   /**
    * @param id is the {@link AccessControl#getId() ID} of the requested {@link AccessControl}.
-   * @return the requested {@link AccessControl} or <code>null</code> if not found.
+   * @return the requested {@link AccessControl} or {@code null} if not found.
    */
   AccessControl getAccessControl(String id);
 
@@ -35,7 +35,7 @@ public interface AccessControlProvider {
    *        {@link AccessControlGroup}) to collect.
    * @param permissions is the {@link Set} where to {@link Set#add(Object) add} the collected
    *        {@link AccessControl#getId() IDs}. This will include the given <code>groupId</code>.
-   * @return <code>true</code> if the given <code>groupId</code> has been found, <code>false</code> otherwise.
+   * @return {@code true} if the given <code>groupId</code> has been found, {@code false} otherwise.
    */
   boolean collectAccessControlIds(String id, Set<String> permissions);
 
@@ -48,7 +48,7 @@ public interface AccessControlProvider {
    * @param permissions is the {@link Set} where to {@link Set#add(Object) add} the collected {@link AccessControl}s.
    *        This will include the {@link AccessControl} {@link AccessControl#getId() identified} by the given
    *        <code>groupId</code>.
-   * @return <code>true</code> if the given <code>groupId</code> has been found, <code>false</code> otherwise.
+   * @return {@code true} if the given <code>groupId</code> has been found, {@code false} otherwise.
    */
   boolean collectAccessControls(String id, Set<AccessControl> permissions);
 

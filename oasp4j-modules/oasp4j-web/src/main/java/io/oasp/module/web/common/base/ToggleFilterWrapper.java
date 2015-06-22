@@ -45,17 +45,11 @@ public class ToggleFilterWrapper implements Filter {
    */
   private Boolean disabled;
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
 
   }
 
-  /**
-   *
-   */
   @PostConstruct
   public void initialize() {
 
@@ -70,9 +64,6 @@ public class ToggleFilterWrapper implements Filter {
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
       ServletException {
@@ -84,9 +75,6 @@ public class ToggleFilterWrapper implements Filter {
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void destroy() {
 

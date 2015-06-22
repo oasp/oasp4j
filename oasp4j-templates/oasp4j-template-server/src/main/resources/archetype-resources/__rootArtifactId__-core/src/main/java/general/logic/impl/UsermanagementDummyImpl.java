@@ -17,9 +17,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class UsermanagementDummyImpl extends AbstractBeanMapperSupport implements Usermanagement {
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public UserProfile findUserProfileByLogin(String login) {
     // this is only a dummy - please replace with a real implementation

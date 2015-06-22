@@ -10,9 +10,6 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 @EnableWebSocketMessageBroker
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void configureMessageBroker(MessageBrokerRegistry config) {
 
@@ -20,9 +17,6 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     config.setApplicationDestinationPrefixes("/sample");
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void registerStompEndpoints(StompEndpointRegistry registry) {
 

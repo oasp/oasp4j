@@ -89,9 +89,7 @@ public class TableEntityBuilder {
   public TableEntity persist(TransactionTemplate txt, final EntityManager em) {
 
     TableEntity tableentity = txt.execute(new TransactionCallback<TableEntity>() {
-      /**
-       * {@inheritDoc}
-       */
+
       @Override
       public TableEntity doInTransaction(TransactionStatus status) {
 
@@ -106,9 +104,7 @@ public class TableEntityBuilder {
   public List<TableEntity> persistAndDuplicate(TransactionTemplate txt, final EntityManager em, final int quantity) {
 
     List<TableEntity> tableentityList = txt.execute(new TransactionCallback<List<TableEntity>>() {
-      /**
-       * {@inheritDoc}
-       */
+
       @Override
       public List<TableEntity> doInTransaction(TransactionStatus status) {
 

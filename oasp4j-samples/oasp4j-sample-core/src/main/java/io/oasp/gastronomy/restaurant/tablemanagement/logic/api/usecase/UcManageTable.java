@@ -30,8 +30,8 @@ public interface UcManageTable {
    * Evaluate if this table could marked as free.
    *
    * @param table {@link TableEto} to be evaluate
-   * @return <code>true</code> if the table could be released<br>
-   *         <code>false</code> , otherwise
+   * @return {@code true} if the table could be released<br>
+   *         {@code false} , otherwise
    */
   boolean isTableReleasable(@Valid TableEto table);
 

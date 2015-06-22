@@ -32,10 +32,6 @@ public class UcFindBillImpl extends AbstractBillUc implements UcFindBill {
 
   private Salesmanagement salesmanagement;
 
-  /**
-   * {@inheritDoc}
-   *
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_BILL)
   public BillCto findBill(Long id) {

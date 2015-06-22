@@ -22,9 +22,6 @@ public class AdvancedRevisionListener implements RevisionListener {
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void newRevision(Object revisionEntity) {
 

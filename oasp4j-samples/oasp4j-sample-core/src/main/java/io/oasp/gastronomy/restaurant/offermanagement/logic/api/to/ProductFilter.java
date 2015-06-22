@@ -21,7 +21,7 @@ public class ProductFilter extends AbstractTransferObject {
   /**
    * Constructor.
    *
-   * Initializes the private fields fetchDrinks, fetchMeals and fetchSideDishes with <code>false</code>. So nothing is
+   * Initializes the private fields fetchDrinks, fetchMeals and fetchSideDishes with {@code false}. So nothing is
    * fetched by default.
    */
   public ProductFilter() {
@@ -34,10 +34,10 @@ public class ProductFilter extends AbstractTransferObject {
   /**
    * Constructor.
    *
-   * @param fetchDrinks is the flag for getting {@link DrinkEto drinks} from db (set this to <code>true</code>)
-   * @param fetchMeals is the flag for getting {@link MealEto meals} from db (set this to <code>true</code>)
+   * @param fetchDrinks is the flag for getting {@link DrinkEto drinks} from db (set this to {@code true})
+   * @param fetchMeals is the flag for getting {@link MealEto meals} from db (set this to {@code true})
    * @param fetchSideDishes is the flag for getting {@link SideDishEto side dishes} from db (set this to
-   *        <code>true</code>)
+   *        {@code true})
    */
   public ProductFilter(boolean fetchDrinks, boolean fetchMeals, boolean fetchSideDishes) {
 
@@ -106,9 +106,6 @@ public class ProductFilter extends AbstractTransferObject {
     this.fetchDrinks = fetchDrinks;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public int hashCode() {
 
@@ -120,9 +117,6 @@ public class ProductFilter extends AbstractTransferObject {
     return result;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean equals(Object obj) {
 
