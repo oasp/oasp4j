@@ -70,9 +70,6 @@ public class Money extends AbstractSimpleDatatype<BigDecimal> {
     return new Money(getValue().add(money.getValue()));
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String toString() {
 

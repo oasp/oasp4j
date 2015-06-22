@@ -57,9 +57,6 @@ public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
     this.offerManagement = offerManagement;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_OFFER)
   public OfferEto findOffer(Long id) {
@@ -68,9 +65,6 @@ public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
     return getBeanMapper().map(getOfferDao().findOne(id), OfferEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_OFFER)
   public OfferCto findOfferCto(Long id) {
@@ -101,9 +95,6 @@ public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
     return result;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_OFFER)
   public List<OfferEto> findAllOffers() {
@@ -112,9 +103,6 @@ public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
     return getBeanMapper().mapList(getOfferDao().findAll(), OfferEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed({ PermissionConstants.FIND_OFFER, PermissionConstants.FIND_PRODUCT })
   public boolean isProductInUseByOffer(ProductEto product) {
@@ -183,9 +171,6 @@ public class UcFindOfferImpl extends AbstractOfferUc implements UcFindOffer {
     return false;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_OFFER)
   public List<OfferEto> findOffersFiltered(OfferFilter offerFilterBo, OfferSortBy sortBy) {

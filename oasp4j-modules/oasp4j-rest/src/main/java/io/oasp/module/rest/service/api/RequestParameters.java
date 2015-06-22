@@ -44,10 +44,10 @@ public class RequestParameters {
    * @param key is the {@link java.util.Map#get(Object) key} of the parameter to get.
    * @param targetType is the {@link Class} reflecting the type to convert the value to. Supports common Java standard
    *        types such as {@link String}, {@link Long}, {@link Double}, {@link BigDecimal}, etc.
-   * @param required - <code>true</code> if the value is required and a {@link BadRequestException} is thrown if it is
-   *        not present, <code>false</code> otherwise (if optional).
+   * @param required - {@code true} if the value is required and a {@link BadRequestException} is thrown if it is
+   *        not present, {@code false} otherwise (if optional).
    * @return the value for the given <code>key</code> converted to the given <code>targetType</code>. May be
-   *         <code>null</code> if <code>required</code> is <code>false</code> .
+   *         {@code null} if <code>required</code> is {@code false} .
    * @throws WebApplicationException if an error occurred. E.g. {@link BadRequestException} if a required parameter is
    *         missing or {@link InternalServerErrorException} if the given <code>targetType</code> is not supported.
    */
@@ -147,7 +147,7 @@ public class RequestParameters {
    * Gets the parameter as single value with the given <code>key</code> as {@link String}.
    *
    * @param key is the {@link java.util.Map#get(Object) key} of the parameter to get.
-   * @return the requested parameter. Will be <code>null</code> if the parameter is not present.
+   * @return the requested parameter. Will be {@code null} if the parameter is not present.
    * @throws BadRequestException if the parameter is defined multiple times (see {@link #getList(String)}).
    */
   public String get(String key) throws BadRequestException {
@@ -167,7 +167,7 @@ public class RequestParameters {
    * not throw an exception if the parameter is multi-valued but just return the first value.
    *
    * @param key is the {@link java.util.Map#get(Object) key} of the parameter to get.
-   * @return the first value of the requested parameter. Will be <code>null</code> if the parameter is not present.
+   * @return the first value of the requested parameter. Will be {@code null} if the parameter is not present.
    */
   public String getFirst(String key) {
 

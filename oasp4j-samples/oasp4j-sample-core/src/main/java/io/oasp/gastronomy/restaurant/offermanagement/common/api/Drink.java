@@ -8,7 +8,7 @@ package io.oasp.gastronomy.restaurant.offermanagement.common.api;
 public interface Drink extends Product {
 
   /**
-   * @return <code>true</code> if this drink is containing alcohol, <code>false</code> otherwise.
+   * @return {@code true} if this drink is containing alcohol, {@code false} otherwise.
    */
   boolean isAlcoholic();
 

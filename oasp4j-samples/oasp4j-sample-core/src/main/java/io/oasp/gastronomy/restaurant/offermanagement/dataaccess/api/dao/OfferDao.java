@@ -19,7 +19,7 @@ public interface OfferDao extends ApplicationDao<OfferEntity>, MasterDataDao<Off
    * Returns a {@link List} of filtered {@link OfferEntity}s.
    *
    * @param offerFilterBo is the {@link OfferFilter offers filter criteria}. Any value, that should be applied as a
-   *        filter, have to be different to <code>null</code>.
+   *        filter, have to be different to {@code null}.
    * @param sortBy is the {@link OfferSortBy} attribute, which defines the sorting.
    *
    * @return the {@link List} with all {@link OfferEntity}s that match the {@link OfferFilter offers filter criteria}.

@@ -44,9 +44,6 @@ public class OfferEntity extends MenuItemEntity implements Offer {
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Column(name = "number", unique = true)
   @Override
   public Long getNumber() {
@@ -54,18 +51,12 @@ public class OfferEntity extends MenuItemEntity implements Offer {
     return this.number;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setNumber(Long number) {
 
     this.number = number;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Money getPrice() {
 
@@ -104,9 +95,6 @@ public class OfferEntity extends MenuItemEntity implements Offer {
     this.meal = meal;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @Transient
   public Long getMealId() {
@@ -117,9 +105,6 @@ public class OfferEntity extends MenuItemEntity implements Offer {
     return this.meal.getId();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setMealId(Long mealId) {
 
@@ -151,9 +136,6 @@ public class OfferEntity extends MenuItemEntity implements Offer {
     this.drink = drink;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @Transient
   public Long getDrinkId() {
@@ -164,9 +146,6 @@ public class OfferEntity extends MenuItemEntity implements Offer {
     return this.drink.getId();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setDrinkId(Long drinkId) {
 
@@ -200,9 +179,6 @@ public class OfferEntity extends MenuItemEntity implements Offer {
     this.sideDish = sideDish;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @Transient
   public Long getSideDishId() {
@@ -213,9 +189,6 @@ public class OfferEntity extends MenuItemEntity implements Offer {
     return this.sideDish.getId();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setSideDishId(Long sideDishId) {
 

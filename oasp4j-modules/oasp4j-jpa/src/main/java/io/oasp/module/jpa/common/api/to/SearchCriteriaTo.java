@@ -75,7 +75,7 @@ public class SearchCriteriaTo extends AbstractTransferObject {
    * <b>Note:</b><br>
    * This feature is the same as the query hint <code>"javax.persistence.query.timeout"</code> in JPA.
    *
-   * @return the search timeout in milliseconds or <code>null</code> for NO timeout.
+   * @return the search timeout in milliseconds or {@code null} for NO timeout.
    */
   public Integer getSearchTimeout() {
 

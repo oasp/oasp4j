@@ -50,9 +50,6 @@ public class ApplicationAuthenticationProvider extends
     this.usermanagement = usermanagement;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   protected UserProfile retrievePrincipal(String username, UsernamePasswordAuthenticationToken authentication) {
 
@@ -66,9 +63,6 @@ public class ApplicationAuthenticationProvider extends
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   protected UserData createUser(String username, String password, UserProfile principal,
       Set<GrantedAuthority> authorities) {

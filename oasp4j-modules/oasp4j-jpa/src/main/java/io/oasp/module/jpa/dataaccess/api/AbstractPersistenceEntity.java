@@ -39,9 +39,6 @@ public abstract class AbstractPersistenceEntity implements MutablePersistenceEnt
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -50,17 +47,11 @@ public abstract class AbstractPersistenceEntity implements MutablePersistenceEnt
     return this.id;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   public void setId(Long id) {
 
     this.id = id;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @Version
   public int getModificationCounter() {
@@ -68,18 +59,12 @@ public abstract class AbstractPersistenceEntity implements MutablePersistenceEnt
     return this.modificationCounter;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setModificationCounter(int version) {
 
     this.modificationCounter = version;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @Transient
   public Number getRevision() {
@@ -95,9 +80,6 @@ public abstract class AbstractPersistenceEntity implements MutablePersistenceEnt
     this.revision = revision;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public int hashCode() {
 
@@ -108,9 +90,6 @@ public abstract class AbstractPersistenceEntity implements MutablePersistenceEnt
     return result;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean equals(Object obj) {
 
@@ -133,9 +112,6 @@ public abstract class AbstractPersistenceEntity implements MutablePersistenceEnt
     return true;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String toString() {
 

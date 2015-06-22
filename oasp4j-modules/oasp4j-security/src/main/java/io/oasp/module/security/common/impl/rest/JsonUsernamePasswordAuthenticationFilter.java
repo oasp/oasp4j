@@ -78,9 +78,6 @@ public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthentica
     super(requiresAuthenticationRequestMatcher);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
       throws AuthenticationException, IOException, ServletException {

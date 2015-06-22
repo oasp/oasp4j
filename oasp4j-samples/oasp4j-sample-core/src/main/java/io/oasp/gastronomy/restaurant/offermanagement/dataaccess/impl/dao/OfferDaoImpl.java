@@ -40,18 +40,12 @@ public class OfferDaoImpl extends ApplicationMasterDataDaoImpl<OfferEntity> impl
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Class<OfferEntity> getEntityClass() {
 
     return OfferEntity.class;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public List<OfferEntity> findOffersFiltered(OfferFilter offerFilterBo, OfferSortBy sortBy) {
 

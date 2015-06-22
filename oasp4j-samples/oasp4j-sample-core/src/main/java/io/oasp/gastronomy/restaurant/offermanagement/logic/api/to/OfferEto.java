@@ -37,117 +37,78 @@ public class OfferEto extends MenuItemEto implements Offer {
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Long getNumber() {
 
     return this.number;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setNumber(Long number) {
 
     this.number = number;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Money getPrice() {
 
     return this.currentPrice;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setPrice(Money currentPrice) {
 
     this.currentPrice = currentPrice;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Long getMealId() {
 
     return this.mealId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setMealId(Long mealId) {
 
     this.mealId = mealId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Long getDrinkId() {
 
     return this.drinkId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setDrinkId(Long drinkId) {
 
     this.drinkId = drinkId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Long getSideDishId() {
 
     return this.sideDishId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setSideDishId(Long sideDishId) {
 
     this.sideDishId = sideDishId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OfferState getState() {
 
     return this.state;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setState(OfferState state) {
 
     this.state = state;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public int hashCode() {
 
@@ -162,9 +123,6 @@ public class OfferEto extends MenuItemEto implements Offer {
     return result;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean equals(Object obj) {
 

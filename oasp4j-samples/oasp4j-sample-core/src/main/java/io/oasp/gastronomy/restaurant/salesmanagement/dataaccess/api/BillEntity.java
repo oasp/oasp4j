@@ -48,9 +48,6 @@ public class BillEntity extends ApplicationPersistenceEntity implements Bill {
     return this.orderPositions;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @Transient
   public List<Long> getOrderPositionIds() {
@@ -65,9 +62,6 @@ public class BillEntity extends ApplicationPersistenceEntity implements Bill {
     return result;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setOrderPositionIds(List<Long> ids) {
 
@@ -94,54 +88,36 @@ public class BillEntity extends ApplicationPersistenceEntity implements Bill {
     this.orderPositions = orderPositions;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Money getTotal() {
 
     return this.total;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setTotal(Money total) {
 
     this.total = total;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Money getTip() {
 
     return this.tip;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setTip(Money tip) {
 
     this.tip = tip;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean isPayed() {
 
     return this.payed;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setPayed(boolean payed) {
 

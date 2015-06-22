@@ -58,7 +58,7 @@ public abstract class AbstractUc extends AbstractBeanMapperSupport {
   /**
    * Creates a {@link Map} with all {@link GenericEntity entities} from the given {@link Collection} using their
    * {@link GenericEntity#getId() ID} as key. All {@link GenericEntity entities} without an
-   * {@link GenericEntity#getId() ID} (<code>null</code>) will be ignored.
+   * {@link GenericEntity#getId() ID} ({@code null}) will be ignored.
    *
    * @param <ID> is the generic type of the {@link GenericEntity#getId() ID}.
    * @param <E> is the generic type of the {@link GenericEntity entity}.
@@ -86,7 +86,7 @@ public abstract class AbstractUc extends AbstractBeanMapperSupport {
    * @param <E> is the generic type of the {@link GenericEntity entity}.
    * @param currentEntities is the {@link Collection} of the {@link GenericEntity entities} currently persisted. We
    *        assume that all objects in this list have an {@link GenericEntity#getId() ID} value (that is not
-   *        <code>null</code>).
+   *        {@code null}).
    * @param entitiesToSave is the {@link Collection} that contains the {@link GenericEntity entities} that shall be
    *        saved. It may contain {@link GenericEntity entities} that have no {@link GenericEntity#getId() ID} that
    *        shall be newly created.

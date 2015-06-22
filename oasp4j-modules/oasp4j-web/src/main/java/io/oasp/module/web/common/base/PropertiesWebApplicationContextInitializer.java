@@ -30,9 +30,6 @@ public class PropertiesWebApplicationContextInitializer implements
   private String[] applicationPropertyResources = { "classpath:/config/app/application-default.properties",
   "classpath:/config/env/application.properties" };
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void initialize(ConfigurableWebApplicationContext applicationContext) {
 

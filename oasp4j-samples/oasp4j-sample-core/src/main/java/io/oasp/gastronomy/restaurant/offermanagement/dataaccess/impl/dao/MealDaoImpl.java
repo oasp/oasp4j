@@ -22,9 +22,6 @@ public class MealDaoImpl extends ApplicationMasterDataDaoImpl<MealEntity> implem
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   protected Class<MealEntity> getEntityClass() {
 

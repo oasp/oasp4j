@@ -22,7 +22,7 @@ public interface UcFindProduct {
    * Gets a {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product} using its entity identifier.
    *
    * @param id is the {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product#getId() product ID}.
-   * @return the requested {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product} or <code>null</code>
+   * @return the requested {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product} or {@code null}
    *         if no such {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product} exists.
    */
   ProductEto findProduct(Long id);
@@ -34,7 +34,7 @@ public interface UcFindProduct {
    * @param id is the {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product#getId() product ID}.
    * @param revision is the revision of the {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product
    *        Product}
-   * @return the requested {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product} or <code>null</code>
+   * @return the requested {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product} or {@code null}
    *         if no such {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product} exists.
    */
   ProductEto findProductByRevision(Long id, Number revision);
@@ -43,7 +43,7 @@ public interface UcFindProduct {
    * Gets a {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Meal} using its entity identifier.
    *
    * @param id is the {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Meal#getId() product ID}.
-   * @return the requested {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Meal} or <code>null</code> if
+   * @return the requested {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Meal} or {@code null} if
    *         no such {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Meal} exists.
    */
   MealEto findMeal(Long id);
@@ -52,7 +52,7 @@ public interface UcFindProduct {
    * Gets a {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Drink} using its entity identifier.
    *
    * @param id is the {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Drink#getId() product ID}.
-   * @return the requested {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Drink} or <code>null</code>
+   * @return the requested {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Drink} or {@code null}
    *         if no such {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Drink} exists.
    */
   DrinkEto findDrink(Long id);
@@ -62,7 +62,7 @@ public interface UcFindProduct {
    *
    * @param id is the {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.SideDish#getId() product ID}.
    * @return the requested {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.SideDish} or
-   *         <code>null</code> if no such {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.SideDish}
+   *         {@code null} if no such {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.SideDish}
    *         exists.
    */
   SideDishEto findSideDish(Long id);

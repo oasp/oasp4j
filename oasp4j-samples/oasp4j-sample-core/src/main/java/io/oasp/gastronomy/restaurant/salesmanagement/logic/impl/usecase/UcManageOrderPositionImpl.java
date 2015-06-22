@@ -53,9 +53,6 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_ORDER_POSITION)
   public OrderPositionEto createOrderPosition(OfferEto offer, OrderEto order, String comment) {
@@ -85,9 +82,6 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
     return getBeanMapper().map(orderPosition, OrderPositionEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_ORDER_POSITION)
   public OrderPositionEto saveOrderPosition(OrderPositionEto orderPosition) {

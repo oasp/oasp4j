@@ -17,7 +17,7 @@ public enum TableState {
   OCCUPIED;
 
   /**
-   * @return <code>true</code> if {@link #FREE}, <code>false</code> otherwise.
+   * @return {@code true} if {@link #FREE}, {@code false} otherwise.
    */
   public boolean isFree() {
 
@@ -25,7 +25,7 @@ public enum TableState {
   }
 
   /**
-   * @return <code>true</code> if {@link #RESERVED}, <code>false</code> otherwise.
+   * @return {@code true} if {@link #RESERVED}, {@code false} otherwise.
    */
   public boolean isReserved() {
 
@@ -33,7 +33,7 @@ public enum TableState {
   }
 
   /**
-   * @return <code>true</code> if {@link #OCCUPIED}, <code>false</code> otherwise.
+   * @return {@code true} if {@link #OCCUPIED}, {@code false} otherwise.
    */
   public boolean isOccupied() {
 
@@ -41,7 +41,7 @@ public enum TableState {
   }
 
   // /**
-  // * @return <code>true</code> if the
+  // * @return {@code true} if the
   // * {@link io.oasp.gastronomy.restaurant.tablemanagement.persistence.api.entity.Table} has opened orders.
   // */
   // public boolean isOrdersopen() {

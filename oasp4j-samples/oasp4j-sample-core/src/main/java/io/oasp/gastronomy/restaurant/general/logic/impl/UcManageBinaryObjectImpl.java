@@ -39,9 +39,6 @@ public class UcManageBinaryObjectImpl extends AbstractUc implements UcManageBina
     this.binaryObjectDao = binaryObjectDao;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public BinaryObjectEto saveBinaryObject(Blob data, BinaryObjectEto binaryObjectEto) {
 
@@ -51,9 +48,6 @@ public class UcManageBinaryObjectImpl extends AbstractUc implements UcManageBina
     return getBeanMapper().map(binaryObjectEntity, BinaryObjectEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void deleteBinaryObject(Long binaryObjectId) {
 
@@ -61,18 +55,12 @@ public class UcManageBinaryObjectImpl extends AbstractUc implements UcManageBina
 
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public BinaryObjectEto findBinaryObject(Long binaryObjectId) {
 
     return getBeanMapper().map(this.binaryObjectDao.findOne(binaryObjectId), BinaryObjectEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Blob getBinaryObjectBlob(Long binaryObjectId) {
 

@@ -21,9 +21,6 @@ import org.junit.Ignore;
 @Ignore
 public class BeanMapperImplOrikaTest extends AbstractBeanMapperTest {
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   protected BeanMapper getBeanMapper() {
 

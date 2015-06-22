@@ -28,9 +28,6 @@ public class TableEntity extends ApplicationPersistenceEntity implements Table {
 
   private TableState state;
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @Column(unique = true)
   public Long getNumber() {
@@ -38,18 +35,12 @@ public class TableEntity extends ApplicationPersistenceEntity implements Table {
     return this.number;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setNumber(Long number) {
 
     this.number = number;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @Column(name = "waiter_id")
   public Long getWaiterId() {
@@ -57,27 +48,18 @@ public class TableEntity extends ApplicationPersistenceEntity implements Table {
     return this.waiterId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setWaiterId(Long waiterId) {
 
     this.waiterId = waiterId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public TableState getState() {
 
     return this.state;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setState(TableState state) {
 

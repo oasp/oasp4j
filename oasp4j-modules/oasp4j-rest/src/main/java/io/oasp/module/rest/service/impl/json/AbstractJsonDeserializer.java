@@ -58,9 +58,6 @@ public abstract class AbstractJsonDeserializer<T> extends JsonDeserializer<T> {
         + fieldName + "!");
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public T deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
 

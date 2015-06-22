@@ -83,18 +83,12 @@ public abstract class AbstractBeanMapperTest extends ModuleTest {
 
     private String property;
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getProperty() {
 
       return this.property;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setProperty(String property) {
 
@@ -112,18 +106,12 @@ public abstract class AbstractBeanMapperTest extends ModuleTest {
 
     private String property;
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getProperty() {
 
       return this.property;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setProperty(String property) {
 

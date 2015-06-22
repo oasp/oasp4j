@@ -42,9 +42,6 @@ public class UcManageTableImpl extends AbstractTableUc implements UcManageTable 
 
   private Staffmanagement staffmanagement;
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.DELETE_TABLE)
   public void deleteTable(Long tableId) {
@@ -58,9 +55,6 @@ public class UcManageTableImpl extends AbstractTableUc implements UcManageTable 
     getTableDao().delete(table);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_TABLE)
   public TableEto saveTable(@Valid TableEto table) {
@@ -88,9 +82,6 @@ public class UcManageTableImpl extends AbstractTableUc implements UcManageTable 
     return getBeanMapper().map(tableEntity, TableEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_TABLE)
   public boolean isTableReleasable(TableEto table) {

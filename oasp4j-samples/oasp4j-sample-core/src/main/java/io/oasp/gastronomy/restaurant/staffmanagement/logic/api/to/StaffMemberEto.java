@@ -35,72 +35,48 @@ public class StaffMemberEto extends AbstractEto implements StaffMember {
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String getName() {
 
     return this.name;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setName(String name) {
 
     this.name = name;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String getFirstName() {
 
     return this.firstName;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setFirstName(String firstName) {
 
     this.firstName = firstName;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String getLastName() {
 
     return this.lastName;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setLastName(String lastName) {
 
     this.lastName = lastName;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Role getRole() {
 
     return this.role;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setRole(Role role) {
 

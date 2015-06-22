@@ -38,9 +38,6 @@ public class CustomMapperEto extends CustomMapper<GenericEntity, EntityTo> {
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void mapAtoB(GenericEntity source, EntityTo target, MappingContext context) {
 

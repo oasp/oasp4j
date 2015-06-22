@@ -33,18 +33,12 @@ public class TableDaoImpl extends ApplicationMasterDataDaoImpl<TableEntity> impl
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Class<TableEntity> getEntityClass() {
 
     return TableEntity.class;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public List<TableEntity> getFreeTables() {
 
@@ -52,9 +46,6 @@ public class TableDaoImpl extends ApplicationMasterDataDaoImpl<TableEntity> impl
     return query.getResultList();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public PaginatedListTo<TableEntity> findTables(TableSearchCriteriaTo criteria) {
 

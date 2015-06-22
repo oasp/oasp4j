@@ -17,9 +17,6 @@ public class IdentityConverter implements CustomConverter {
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Object convert(Object destination, Object source, Class<?> destinationClass, Class<?> sourceClass) {
 

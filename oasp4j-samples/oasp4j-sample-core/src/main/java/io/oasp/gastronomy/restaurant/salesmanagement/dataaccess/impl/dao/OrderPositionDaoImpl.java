@@ -26,18 +26,12 @@ import com.mysema.query.types.query.ListSubQuery;
 @Named
 public class OrderPositionDaoImpl extends ApplicationDaoImpl<OrderPositionEntity> implements OrderPositionDao {
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Class<OrderPositionEntity> getEntityClass() {
 
     return OrderPositionEntity.class;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public List<OrderPositionEntity> findOrderPositionsByOrder(Long orderId) {
 
@@ -48,9 +42,6 @@ public class OrderPositionDaoImpl extends ApplicationDaoImpl<OrderPositionEntity
     return query.list(alias);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public List<OrderPositionEntity> findOpenOrderPositionsByOrder(Long orderId) {
 
@@ -59,9 +50,6 @@ public class OrderPositionDaoImpl extends ApplicationDaoImpl<OrderPositionEntity
         .setParameter("orderId", orderId).getResultList();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public List<OrderPositionEntity> findOrderPositions(OrderPositionSearchCriteriaTo criteria) {
 

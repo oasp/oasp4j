@@ -38,18 +38,12 @@ public class AccessControlGrantedAuthority implements GrantedAuthority {
     return this.accessControl;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String getAuthority() {
 
     return this.accessControl.getId();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String toString() {
 
