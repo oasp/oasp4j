@@ -1,8 +1,18 @@
 package io.oasp.gastronomy.restaurant.offermanagement.logic.impl;
 
-import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
+import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.logic.api.to.BinaryObjectEto;
 import io.oasp.gastronomy.restaurant.general.logic.base.AbstractComponentFacade;
+import io.oasp.gastronomy.restaurant.general.logic.base.UcManageBinaryObject;
+import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.ProductType;
+import io.oasp.gastronomy.restaurant.offermanagement.common.api.exception.OfferEmptyException;
+import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity;
+import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.ProductEntity;
+import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.DrinkDao;
+import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.MealDao;
+import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.OfferDao;
+import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.ProductDao;
+import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.SideDishDao;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto;
@@ -16,17 +26,22 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SideDishEto;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcFindOffer;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcFindProduct;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcManageOffer;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcManageProduct;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.Valid;
+
+import net.sf.mmm.util.exception.api.ObjectMismatchException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implementation class for {@link Offermanagement}.
@@ -36,13 +51,25 @@ import javax.inject.Named;
 @Named
 public class OffermanagementImpl extends AbstractComponentFacade implements Offermanagement {
 
-  private UcFindOffer ucFindOffer;
+  private static final Logger LOG = LoggerFactory.getLogger(OffermanagementImpl.class);
 
-  private UcManageOffer ucManageOffer;
+  /** @see #getOfferDao() */
+  private OfferDao offerDao;
 
-  private UcFindProduct ucFindProduct;
+  /** @see #setProductDao(ProductDao) */
+  private ProductDao productDao;
 
-  private UcManageProduct ucManageProduct;
+  /** @see #setMealDao(MealDao) */
+  private MealDao mealDao;
+
+  /** @see #setDrinkDao(DrinkDao) */
+  private DrinkDao drinkDao;
+
+  /** @see #setSideDishDao(SideDishDao) */
+  private SideDishDao sideDishDao;
+
+  /** **/
+  private UcManageBinaryObject ucManageBinaryObject;
 
   /**
    * The constructor.
@@ -52,217 +79,406 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
     super();
   }
 
-  /**
-   * Sets the field 'ucFindOffer'.
-   *
-   * @param ucFindOffer New value for ucFindOffer
-   */
-  @Inject
-  @UseCase
-  public void setUcFindOffer(UcFindOffer ucFindOffer) {
-
-    this.ucFindOffer = ucFindOffer;
-  }
-
-  /**
-   * Sets the field 'ucManageOffer'.
-   *
-   * @param ucManageOffer New value for ucManageOffer
-   */
-  @Inject
-  @UseCase
-  public void setUcManageOffer(UcManageOffer ucManageOffer) {
-
-    this.ucManageOffer = ucManageOffer;
-  }
-
-  /**
-   * Sets the field 'ucFindProduct'.
-   *
-   * @param ucFindProduct New value for ucFindProduct
-   */
-  @Inject
-  @UseCase
-  public void setUcFindProduct(UcFindProduct ucFindProduct) {
-
-    this.ucFindProduct = ucFindProduct;
-  }
-
-  /**
-   * Sets the field 'ucManageProduct'.
-   *
-   * @param ucManageProduct New value for ucManageProduct
-   */
-  @Inject
-  @UseCase
-  public void setUcManageProduct(UcManageProduct ucManageProduct) {
-
-    this.ucManageProduct = ucManageProduct;
-  }
-
   @Override
+  @RolesAllowed(PermissionConstants.FIND_OFFER)
   public OfferEto findOffer(Long id) {
 
-    return this.ucFindOffer.findOffer(id);
+    LOG.debug("Get OfferEto with id '{}' from database.", id);
+    return getBeanMapper().map(getOfferDao().findOne(id), OfferEto.class);
   }
 
   @Override
+  @RolesAllowed(PermissionConstants.FIND_OFFER)
   public OfferCto findOfferCto(Long id) {
 
-    return this.ucFindOffer.findOfferCto(id);
+    LOG.debug("Get OfferCTO with id '{}' from database.", id);
+    OfferCto result = new OfferCto();
+    // offer
+    OfferEto offerEto = findOffer(id);
+    if (offerEto == null) {
+      return null;
+    }
+    result.setOffer(offerEto);
+    // meal
+    Long mealId = offerEto.getMealId();
+    if (mealId != null) {
+      result.setMeal(findMeal(mealId));
+    }
+    // drink
+    Long drinkId = offerEto.getDrinkId();
+    if (drinkId != null) {
+      result.setDrink(findDrink(drinkId));
+    }
+    // sideDish
+    Long sideDishId = offerEto.getSideDishId();
+    if (sideDishId != null) {
+      result.setSideDish(findSideDish(sideDishId));
+    }
+    return result;
   }
 
   @Override
-  @Deprecated
+  @RolesAllowed(PermissionConstants.FIND_OFFER)
   public List<OfferEto> findAllOffers() {
 
-    return this.ucFindOffer.findAllOffers();
+    LOG.debug("Get all offers from database.");
+    return getBeanMapper().mapList(getOfferDao().findAll(), OfferEto.class);
   }
 
   @Override
-  @Deprecated
-  public List<ProductEto> findAllProducts() {
-
-    return this.ucFindProduct.findAllProducts();
-  }
-
-  @Override
-  @Deprecated
-  public List<MealEto> findAllMeals() {
-
-    return this.ucFindProduct.findAllMeals();
-  }
-
-  @Override
-  @Deprecated
-  public List<DrinkEto> findAllDrinks() {
-
-    return this.ucFindProduct.findAllDrinks();
-  }
-
-  @Override
-  public OfferEto saveOffer(OfferEto offer) {
-
-    return this.ucManageOffer.saveOffer(offer);
-
-  }
-
-  @Override
-  public void deleteOffer(Long offerId) {
-
-    this.ucManageOffer.deleteOffer(offerId);
-  }
-
-  @Override
-  @Deprecated
-  public List<SideDishEto> findAllSideDishes() {
-
-    return this.ucFindProduct.findAllSideDishes();
-  }
-
-  @Override
-  public ProductEto findProduct(Long id) {
-
-    return this.ucFindProduct.findProduct(id);
-  }
-
-  @Override
-  public MealEto findMeal(Long id) {
-
-    return this.ucFindProduct.findMeal(id);
-  }
-
-  @Override
-  public DrinkEto findDrink(Long id) {
-
-    return this.ucFindProduct.findDrink(id);
-  }
-
-  @Override
-  public SideDishEto findSideDish(Long id) {
-
-    return this.ucFindProduct.findSideDish(id);
-  }
-
-  @Override
-  public ProductEto saveProduct(ProductEto product) {
-
-    return this.ucManageProduct.saveProduct(product);
-  }
-
-  @Override
+  @RolesAllowed({ PermissionConstants.FIND_OFFER, PermissionConstants.FIND_PRODUCT })
   public boolean isProductInUseByOffer(ProductEto product) {
 
-    return this.ucFindOffer.isProductInUseByOffer(product);
+    LOG.debug("Get all offers from database for the given product with id '" + product.getId() + "'.");
+
+    List<OfferEto> persistedOffers = findAllOffers();
+
+    /*
+     * Check the occurrence of a product within all offers. Therefore, only check for a instance of a product type
+     * product type.
+     */
+    ProductType productType = null;
+
+    if (product instanceof DrinkEto) {
+      LOG.debug("The given product is an instance of Drink '" + product.getDescription() + "', id '" + product.getId()
+          + "'. Check all Offer-Drinks for that given occurrence.");
+      productType = ProductType.DRINK;
+    } else if (product instanceof MealEto) {
+      LOG.debug("The given product is an instance of Meal '" + product.getDescription() + "', id '" + product.getId()
+          + "'. Check all Offer-Meals for that given occurrence.");
+      productType = ProductType.MEAL;
+    } else if (product instanceof SideDishEto) {
+      LOG.debug("The given product is an instance of SideDish '" + product.getDescription() + "', id '"
+          + product.getId() + "'. Check all Offer-SideDishes for that given occurrence.");
+      productType = ProductType.SIDEDISH;
+    }
+
+    if (productType == null) {
+      LOG.debug("The given product not in use by an offer.");
+      return false;
+    }
+
+    for (OfferEto offer : persistedOffers) {
+
+      if (productType.isDrink()) {
+        if (Objects.equals(offer.getDrinkId(), product.getId())) {
+          LOG.debug("The given product is in use by offer with id '" + offer.getId() + "', description '"
+              + offer.getDescription() + "'.");
+          return true;
+        }
+        continue;
+
+      }
+
+      if (productType.isMeal()) {
+        if (Objects.equals(offer.getMealId(), product.getId())) {
+          LOG.debug("The given product is in use by offer with id '" + offer.getId() + "', description '"
+              + offer.getDescription() + "'.");
+          return true;
+        }
+        continue;
+      }
+
+      if (productType.isSideDish()) {
+        if (Objects.equals(offer.getSideDishId(), product.getId())) {
+          LOG.debug("The given product is in use by offer with id '" + offer.getId() + "', description '"
+              + offer.getDescription() + "'.");
+          return true;
+        }
+        continue;
+      }
+    }
+
+    LOG.debug("The given product not in use by an offer.");
+    return false;
   }
 
   @Override
-  public void deleteProduct(Long productId) {
-
-    this.ucManageProduct.deleteProduct(productId);
-  }
-
-  @Override
-  @Deprecated
+  @RolesAllowed(PermissionConstants.FIND_OFFER)
   public List<OfferEto> findOffersFiltered(OfferFilter offerFilterBo, OfferSortBy sortBy) {
 
-    return this.ucFindOffer.findOffersFiltered(offerFilterBo, sortBy);
+    List<OfferEntity> offers = getOfferDao().findOffersFiltered(offerFilterBo, sortBy);
+    LOG.debug("'" + offers.size() + "' offers fetched.");
+
+    List<OfferEto> offerBos = new ArrayList<>(offers.size());
+    for (OfferEntity o : offers) {
+      offerBos.add(getBeanMapper().map(o, OfferEto.class));
+    }
+    return offerBos;
   }
 
   @Override
-  @Deprecated
+  @RolesAllowed(PermissionConstants.DELETE_OFFER)
+  public void deleteOffer(Long offerId) {
+
+    getOfferDao().delete(offerId);
+  }
+
+  @Override
+  @RolesAllowed(PermissionConstants.SAVE_OFFER)
+  public OfferEto saveOffer(@Valid OfferEto offer) {
+
+    Objects.requireNonNull(offer, "offer");
+
+    if ((offer.getMealId() == null) && (offer.getDrinkId() == null) && (offer.getSideDishId() == null)) {
+      throw new OfferEmptyException(offer);
+    } else {
+      OfferEntity persistedOffer = getOfferDao().save(getBeanMapper().map(offer, OfferEntity.class));
+      return getBeanMapper().map(persistedOffer, OfferEto.class);
+    }
+  }
+
+  @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
+  public ProductEto findProduct(Long id) {
+
+    LOG.debug("Get Product with id '" + id + "' from database.");
+    ProductEntity product = getProductDao().findOne(id);
+    if (product == null) {
+      return null;
+    } else {
+      return getBeanMapper().map(product, ProductEto.class);
+    }
+  }
+
+  @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
+  public MealEto findMeal(Long id) {
+
+    ProductEto product = findProduct(id);
+    try {
+      return (MealEto) product;
+    } catch (ClassCastException e) {
+      throw new ObjectMismatchException(product, MealEto.class, e);
+    }
+  }
+
+  @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
+  public DrinkEto findDrink(Long id) {
+
+    ProductEto product = findProduct(id);
+    try {
+      return (DrinkEto) product;
+    } catch (ClassCastException e) {
+      throw new ObjectMismatchException(product, DrinkEto.class, e);
+    }
+  }
+
+  @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
+  public SideDishEto findSideDish(Long id) {
+
+    ProductEto product = findProduct(id);
+    try {
+      return (SideDishEto) product;
+    } catch (ClassCastException e) {
+      throw new ObjectMismatchException(product, SideDishEto.class, e);
+    }
+  }
+
+  @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
+  public List<ProductEto> findAllProducts() {
+
+    LOG.debug("Get all products from database.");
+    return getBeanMapper().mapList(getProductDao().findAll(), ProductEto.class);
+  }
+
+  @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
+  public List<MealEto> findAllMeals() {
+
+    LOG.debug("Get all meals with from database.");
+    return getBeanMapper().mapList(this.mealDao.findAll(), MealEto.class);
+  }
+
+  @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
+  public List<DrinkEto> findAllDrinks() {
+
+    LOG.debug("Get all drinks with from database.");
+    return getBeanMapper().mapList(this.drinkDao.findAll(), DrinkEto.class);
+  }
+
+  @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
+  public List<SideDishEto> findAllSideDishes() {
+
+    LOG.debug("Get all sidedishes with from database.");
+    return getBeanMapper().mapList(this.sideDishDao.findAll(), SideDishEto.class);
+  }
+
+  @Override
+  @RolesAllowed(PermissionConstants.FIND_OFFER)
   public List<ProductEto> findProductsFiltered(ProductFilter productFilterBo, ProductSortBy sortBy) {
 
-    return this.ucFindProduct.findProductsFiltered(productFilterBo, sortBy);
+    LOG.debug("Fetch filtered offers.");
+    return getBeanMapper().mapList(getProductDao().findProductsFiltered(productFilterBo, sortBy), ProductEto.class);
   }
 
   @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public BinaryObjectEto findProductPicture(Long productId) {
 
-    return this.ucFindProduct.findProductPicture(productId);
+    return getUcManageBinaryObject().findBinaryObject(findProduct(productId).getPictureId());
   }
 
   @Override
-  public Blob findProductPictureBlob(Long pictureId) {
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT_PICTURE)
+  public Blob findProductPictureBlob(Long productId) {
 
-    return this.ucFindProduct.findProductPictureBlob(pictureId);
+    return getUcManageBinaryObject().getBinaryObjectBlob(findProductPicture(productId).getId());
   }
 
   @Override
-  public void updateProductPicture(Long productId, Blob blob, BinaryObjectEto binaryObjectEto) {
-
-    this.ucManageProduct.updateProductPicture(productId, blob, binaryObjectEto);
-  }
-
-  @Override
-  public void deleteProductPicture(Long productId) {
-
-    this.ucManageProduct.deleteProductPicture(productId);
-
-  }
-
-  @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT_PICTURE)
   public ProductEto findProductByRevision(Long id, Number revision) {
 
-    return this.ucFindProduct.findProductByRevision(id, revision);
+    LOG.debug("Get Product with id '" + id + "' and revision '" + revision + "' from database.");
+    ProductEntity product = getProductDao().load(id, revision);
+    if (product == null) {
+      return null;
+    } else {
+      return getBeanMapper().map(product, ProductEto.class);
+    }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
+  @RolesAllowed(PermissionConstants.SAVE_PRODUCT)
+  public ProductEto saveProduct(ProductEto product) {
+
+    Objects.requireNonNull(product, "product");
+
+    ProductEntity persistedProduct = getProductDao().save(getBeanMapper().map(product, ProductEntity.class));
+    return getBeanMapper().map(persistedProduct, ProductEto.class);
+  }
+
+  @Override
+  @RolesAllowed(PermissionConstants.DELETE_PRODUCT)
+  public void deleteProduct(Long productId) {
+
+    getProductDao().delete(productId);
+  }
+
+  @Override
+  @RolesAllowed(PermissionConstants.SAVE_PRODUCT_PICTURE)
+  public void updateProductPicture(Long productId, Blob blob, BinaryObjectEto binaryObjectEto) {
+
+    ProductEntity product = getProductDao().findOne(productId);
+    binaryObjectEto = getUcManageBinaryObject().saveBinaryObject(blob, binaryObjectEto);
+    product.setPictureId(binaryObjectEto.getId());
+    getProductDao().save(product);
+
+  }
+
+  @Override
+  @RolesAllowed(PermissionConstants.DELETE_PRODUCT_PICTURE)
+  public void deleteProductPicture(Long productId) {
+
+    ProductEntity product = getProductDao().findOne(productId);
+    getUcManageBinaryObject().deleteBinaryObject(product.getPictureId());
+
+  }
+
+  @Override
+  @RolesAllowed(PermissionConstants.FIND_OFFER)
   public PaginatedListTo<OfferEto> findOfferEtos(OfferSearchCriteriaTo criteria) {
 
-    return this.ucFindOffer.findOfferEtos(criteria);
+    criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
+    PaginatedListTo<OfferEntity> offers = getOfferDao().findOffers(criteria);
+    return mapPaginatedEntityList(offers, OfferEto.class);
+  }
+
+  @Override
+  @RolesAllowed(PermissionConstants.FIND_PRODUCT)
+  public PaginatedListTo<ProductEto> findProductEtos(ProductSearchCriteriaTo criteria) {
+
+    criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
+    PaginatedListTo<ProductEntity> products = getProductDao().findProducts(criteria);
+    return mapPaginatedEntityList(products, ProductEto.class);
   }
 
   /**
-   * {@inheritDoc}
+   * @return {@link OfferDao} instance.
    */
-  @Override
-  public PaginatedListTo<ProductEto> findProductEtos(ProductSearchCriteriaTo criteria) {
+  public OfferDao getOfferDao() {
 
-    return this.ucFindProduct.findProductEtos(criteria);
+    return this.offerDao;
+  }
+
+  /**
+   * Sets the field 'offerDao'.
+   *
+   * @param offerDao New value for offerDao
+   */
+  @Inject
+  public void setOfferDao(OfferDao offerDao) {
+
+    this.offerDao = offerDao;
+  }
+
+  /**
+   * @param ucManageBinaryObject the ucManageBinaryObject to set
+   */
+  @Inject
+  public void setUcManageBinaryObject(UcManageBinaryObject ucManageBinaryObject) {
+
+    this.ucManageBinaryObject = ucManageBinaryObject;
+  }
+
+  /**
+   * @return ucManageBinaryObject
+   */
+  public UcManageBinaryObject getUcManageBinaryObject() {
+
+    return this.ucManageBinaryObject;
+  }
+
+  /**
+   * @return productDao
+   */
+  public ProductDao getProductDao() {
+
+    return this.productDao;
+  }
+
+  /**
+   * Sets the field 'productDao'.
+   *
+   * @param productDao New value for productDao
+   */
+  @Inject
+  public void setProductDao(ProductDao productDao) {
+
+    this.productDao = productDao;
+  }
+
+  /**
+   * @param mealDao the {@link MealDao} to {@link Inject}.
+   */
+  @Inject
+  public void setMealDao(MealDao mealDao) {
+
+    this.mealDao = mealDao;
+  }
+
+  /**
+   * @param drinkDao the {@link DrinkDao} to {@link Inject}.
+   */
+  @Inject
+  public void setDrinkDao(DrinkDao drinkDao) {
+
+    this.drinkDao = drinkDao;
+  }
+
+  /**
+   * @param sideDishDao the {@link SideDishDao} to {@link Inject}.
+   */
+  @Inject
+  public void setSideDishDao(SideDishDao sideDishDao) {
+
+    this.sideDishDao = sideDishDao;
   }
 
 }

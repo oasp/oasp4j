@@ -4,8 +4,6 @@ import io.oasp.gastronomy.restaurant.tablemanagement.common.api.Table;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableSearchCriteriaTo;
-import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.usecase.UcFindTable;
-import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.usecase.UcManageTable;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.List;
@@ -53,7 +51,7 @@ public class TablemanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcFindTable#findTable}.
+   * Delegates to {@link Tablemanagement#findTable}.
    *
    * @param id the ID of the {@link TableEto}
    * @return the {@link TableEto}
@@ -77,7 +75,7 @@ public class TablemanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcFindTable#findAllTables}.
+   * Delegates to {@link Tablemanagement#findAllTables}.
    *
    * @return list of all existing restaurant {@link TableEto}s
    */
@@ -91,7 +89,7 @@ public class TablemanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcManageTable#saveTable}.
+   * Delegates to {@link Tablemanagement#saveTable}.
    *
    * @param table the {@link TableEto} to be created
    * @return the recently created {@link TableEto}
@@ -105,7 +103,7 @@ public class TablemanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcManageTable#saveTable}.
+   * Delegates to {@link Tablemanagement#saveTable}.
    *
    * @param table the {@link TableEto} to be created
    * @return the recently created {@link TableEto}
@@ -118,7 +116,7 @@ public class TablemanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcManageTable#deleteTable}.
+   * Delegates to {@link Tablemanagement#deleteTable}.
    *
    * @param id ID of the {@link TableEto} to be deleted
    */
@@ -130,7 +128,7 @@ public class TablemanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcFindTable#findFreeTables}.
+   * Delegates to {@link Tablemanagement#findFreeTables}.
    *
    * @return list of all existing free {@link TableEto}s
    */
@@ -143,7 +141,7 @@ public class TablemanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcManageTable#isTableReleasable}.
+   * Delegates to {@link Tablemanagement#isTableReleasable}.
    *
    * @param id ID of the {@link TableEto}
    * @return {@code true} if the table could be released<br>
