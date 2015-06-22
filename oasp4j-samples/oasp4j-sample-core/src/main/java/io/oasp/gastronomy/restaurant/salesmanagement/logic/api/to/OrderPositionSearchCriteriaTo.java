@@ -49,7 +49,7 @@ public class OrderPositionSearchCriteriaTo extends SearchCriteriaTo {
   /**
    * @return the {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition#getOrderId() order ID} of
    *         the {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition}s to find or
-   *         <code>null</code> if no such criteria shall be added.
+   *         {@code null} if no such criteria shall be added.
    */
   public Long getOrderId() {
 
@@ -67,7 +67,7 @@ public class OrderPositionSearchCriteriaTo extends SearchCriteriaTo {
   /**
    * @return the {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition#getCookId() cook ID} of
    *         the {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition}s to find or
-   *         <code>null</code> if no such criteria shall be added.
+   *         {@code null} if no such criteria shall be added.
    */
   public Long getCookId() {
 
@@ -83,9 +83,9 @@ public class OrderPositionSearchCriteriaTo extends SearchCriteriaTo {
   }
 
   /**
-   * @return <code>true</code> if only {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition}s
+   * @return {@code true} if only {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition}s
    *         shall be found that have a meal or a side-dish associated (exclude drink only positions),
-   *         <code>false</code> if no such criteria shall be added.
+   *         {@code false} if no such criteria shall be added.
    */
   public boolean isMealOrSideDish() {
 

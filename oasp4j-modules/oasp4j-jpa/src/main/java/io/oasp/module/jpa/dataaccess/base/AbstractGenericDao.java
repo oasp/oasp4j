@@ -82,9 +82,6 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
     return getEntityClass().getSimpleName();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public E save(E entity) {
 
@@ -107,7 +104,7 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
    * Determines if the given {@link PersistenceEntity} is {@link PersistenceEntity#STATE_NEW new}.
    *
    * @param entity is the {@link PersistenceEntity} to check.
-   * @return <code>true</code> if {@link PersistenceEntity#STATE_NEW new}, <code>false</code> otherwise (e.g.
+   * @return {@code true} if {@link PersistenceEntity#STATE_NEW new}, {@code false} otherwise (e.g.
    *         {@link PersistenceEntity#STATE_DETACHED detached} or {@link PersistenceEntity#STATE_MANAGED managed}.
    */
   protected boolean isNew(E entity) {
@@ -115,9 +112,6 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
     return entity.getId() == null;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void save(Iterable<? extends E> entities) {
 
@@ -126,18 +120,12 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void forceIncrementModificationCounter(E entity) {
 
     getEntityManager().lock(entity, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public E findOne(ID id) {
 
@@ -145,9 +133,6 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
     return entity;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public E find(ID id) throws ObjectNotFoundUserException {
 
@@ -158,9 +143,6 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
     return entity;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean exists(ID id) {
 
@@ -183,9 +165,6 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
     return resultList;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public List<E> findAll(Iterable<ID> ids) {
 
@@ -200,9 +179,6 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
     return resultList;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void delete(ID id) {
 
@@ -211,9 +187,6 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
     LOG.debug("Deleted {} with ID {}.", getEntityName(), id);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void delete(E entity) {
 
@@ -227,9 +200,6 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
 
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void delete(Iterable<? extends E> entities) {
 

@@ -23,9 +23,6 @@ public class ApplicationAccessDeniedHandler implements AccessDeniedHandler {
 
   private RestServiceExceptionFacade exceptionFacade;
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void handle(HttpServletRequest request, HttpServletResponse response,
       AccessDeniedException accessDeniedException) throws IOException, ServletException {

@@ -23,9 +23,6 @@ import javax.inject.Named;
 @UseCase
 public class UcManageProductImpl extends AbstractProductUc implements UcManageProduct {
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_PRODUCT)
   public ProductEto saveProduct(ProductEto product) {
@@ -36,9 +33,6 @@ public class UcManageProductImpl extends AbstractProductUc implements UcManagePr
     return getBeanMapper().map(persistedProduct, ProductEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.DELETE_PRODUCT)
   public void deleteProduct(Long productId) {
@@ -46,9 +40,6 @@ public class UcManageProductImpl extends AbstractProductUc implements UcManagePr
     getProductDao().delete(productId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_PRODUCT_PICTURE)
   public void updateProductPicture(Long productId, Blob blob, BinaryObjectEto binaryObjectEto) {
@@ -60,9 +51,6 @@ public class UcManageProductImpl extends AbstractProductUc implements UcManagePr
 
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.DELETE_PRODUCT_PICTURE)
   public void deleteProductPicture(Long productId) {

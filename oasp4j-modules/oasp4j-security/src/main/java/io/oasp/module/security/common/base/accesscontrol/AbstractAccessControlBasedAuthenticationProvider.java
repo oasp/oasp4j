@@ -74,7 +74,6 @@ public abstract class AbstractAccessControlBasedAuthenticationProvider<U extends
    * Here the actual authentication has to be implemented.<br/>
    * <br/>
    *
-   * {@inheritDoc}
    */
   @Override
   protected void additionalAuthenticationChecks(UserDetails userDetails,
@@ -125,9 +124,6 @@ public abstract class AbstractAccessControlBasedAuthenticationProvider<U extends
    */
   protected abstract P retrievePrincipal(String username, UsernamePasswordAuthenticationToken authentication);
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication)
       throws AuthenticationException {

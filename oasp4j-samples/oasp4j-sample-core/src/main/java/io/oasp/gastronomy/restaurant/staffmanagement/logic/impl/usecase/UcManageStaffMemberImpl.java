@@ -27,9 +27,6 @@ public class UcManageStaffMemberImpl extends AbstractStaffMemberUc implements Uc
   /** Logger instance. */
   private static final Logger LOG = LoggerFactory.getLogger(UcManageStaffMemberImpl.class);
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.DELETE_STAFF_MEMBER)
   public void deleteStaffMemberByLogin(String login) {
@@ -37,9 +34,6 @@ public class UcManageStaffMemberImpl extends AbstractStaffMemberUc implements Uc
     getStaffMemberDao().delete(getStaffMemberDao().findByLogin(login));
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.DELETE_STAFF_MEMBER)
   public void deleteStaffMember(Long staffMemberId) {
@@ -47,9 +41,6 @@ public class UcManageStaffMemberImpl extends AbstractStaffMemberUc implements Uc
     getStaffMemberDao().delete(staffMemberId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_STAFF_MEMBER)
   public StaffMemberEto saveStaffMember(StaffMemberEto staffMember) {

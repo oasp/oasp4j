@@ -15,13 +15,13 @@ public interface UcFindStaffMember {
 
   /**
    * @param id the {@link StaffMemberEto#getId() ID} of the requested staff member.
-   * @return The {@link StaffMemberEto} with the given <code>id</code> or <code>null</code> if no such object exists.
+   * @return The {@link StaffMemberEto} with the given <code>id</code> or {@code null} if no such object exists.
    */
   StaffMemberEto findStaffMember(Long id);
 
   /**
    * @param login The {@link StaffMemberEto#getName() login} of the requested staff member.
-   * @return The {@link StaffMemberEto} with the given <code>login</code> or <code>null</code> if no such object exists.
+   * @return The {@link StaffMemberEto} with the given <code>login</code> or {@code null} if no such object exists.
    */
   StaffMemberEto findStaffMemberByLogin(String login);
 

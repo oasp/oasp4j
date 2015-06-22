@@ -22,9 +22,6 @@ public class SideDishDaoImpl extends ApplicationMasterDataDaoImpl<SideDishEntity
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   protected Class<SideDishEntity> getEntityClass() {
 

@@ -32,9 +32,6 @@ public abstract class MenuItemEntity extends ApplicationPersistenceEntity implem
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Column(name = "name", unique = true)
   @Override
   public String getName() {
@@ -42,18 +39,12 @@ public abstract class MenuItemEntity extends ApplicationPersistenceEntity implem
     return this.name;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setName(String name) {
 
     this.name = name;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Column(name = "description")
   @Override
   public String getDescription() {
@@ -61,9 +52,6 @@ public abstract class MenuItemEntity extends ApplicationPersistenceEntity implem
     return this.description;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setDescription(String description) {
 

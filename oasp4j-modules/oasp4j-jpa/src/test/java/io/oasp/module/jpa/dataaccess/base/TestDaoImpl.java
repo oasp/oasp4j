@@ -10,9 +10,6 @@ import javax.inject.Named;
 @Named
 public class TestDaoImpl extends AbstractDao<TestEntity> implements TestDao {
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   protected Class<TestEntity> getEntityClass() {
 

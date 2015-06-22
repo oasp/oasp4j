@@ -119,9 +119,6 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Response toResponse(Throwable exception) {
 
@@ -425,8 +422,8 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
   }
 
   /**
-   * @param exposeInternalErrorDetails - <code>true</code> if internal exception details shall be exposed to clients
-   *        (useful for debugging and testing), <code>false</code> if such details are hidden to prevent <a
+   * @param exposeInternalErrorDetails - {@code true} if internal exception details shall be exposed to clients
+   *        (useful for debugging and testing), {@code false} if such details are hidden to prevent <a
    *        href="https://www.owasp.org/index.php/Top_10_2013-A6-Sensitive_Data_Exposure">Sensitive Data Exposure</a>
    *        (default, has to be used in production environment).
    */

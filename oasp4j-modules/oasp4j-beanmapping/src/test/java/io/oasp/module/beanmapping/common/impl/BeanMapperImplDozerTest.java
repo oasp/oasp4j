@@ -21,9 +21,6 @@ import org.dozer.loader.api.FieldsMappingOptions;
  */
 public class BeanMapperImplDozerTest extends AbstractBeanMapperTest {
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   protected BeanMapper getBeanMapper() {
 

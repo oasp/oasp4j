@@ -85,9 +85,6 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
     this.sideDishDao = sideDishDao;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public ProductEto findProduct(Long id) {
@@ -101,9 +98,6 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public MealEto findMeal(Long id) {
@@ -116,9 +110,6 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public DrinkEto findDrink(Long id) {
@@ -131,9 +122,6 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public SideDishEto findSideDish(Long id) {
@@ -146,9 +134,6 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   @Deprecated
@@ -158,9 +143,6 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
     return getBeanMapper().mapList(getProductDao().findAll(), ProductEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   @Deprecated
@@ -170,9 +152,6 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
     return getBeanMapper().mapList(this.mealDao.findAll(), MealEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   @Deprecated
@@ -182,9 +161,6 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
     return getBeanMapper().mapList(this.drinkDao.findAll(), DrinkEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   @Deprecated
@@ -194,9 +170,6 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
     return getBeanMapper().mapList(this.sideDishDao.findAll(), SideDishEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_OFFER)
   @Deprecated
@@ -206,9 +179,6 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
     return getBeanMapper().mapList(getProductDao().findProductsFiltered(productFilterBo, sortBy), ProductEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public BinaryObjectEto findProductPicture(Long productId) {
@@ -216,9 +186,6 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
     return getUcManageBinaryObject().findBinaryObject(findProduct(productId).getPictureId());
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_PRODUCT_PICTURE)
   public Blob findProductPictureBlob(Long productId) {
@@ -226,9 +193,6 @@ public class UcFindProductImpl extends AbstractProductUc implements UcFindProduc
     return getUcManageBinaryObject().getBinaryObjectBlob(findProductPicture(productId).getId());
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_PRODUCT_PICTURE)
   public ProductEto findProductByRevision(Long id, Number revision) {

@@ -46,18 +46,12 @@ public class ProductDaoImpl extends ApplicationMasterDataDaoImpl<ProductEntity> 
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Class<ProductEntity> getEntityClass() {
 
     return ProductEntity.class;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @Deprecated
   public List<ProductEntity> findProductsFiltered(ProductFilter productFilterBo, ProductSortBy sortBy) {

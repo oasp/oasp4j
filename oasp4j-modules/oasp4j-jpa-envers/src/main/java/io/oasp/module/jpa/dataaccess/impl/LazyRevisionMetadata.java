@@ -50,25 +50,19 @@ public class LazyRevisionMetadata implements RevisionMetadata {
     return this.revisionEntity;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  @Override
   public String getAuthor() {
 
     return getRevisionEntity().getUser();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  @Override
   public Date getDate() {
 
     return getRevisionEntity().getDate();
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  @Override
   public Number getRevision() {
 
     return this.revision;

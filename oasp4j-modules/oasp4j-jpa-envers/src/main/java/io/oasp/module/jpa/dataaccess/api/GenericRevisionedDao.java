@@ -63,8 +63,6 @@ public interface GenericRevisionedDao<ID, ENTITY extends MutablePersistenceEntit
   ENTITY load(ID id, Number revision) throws ObjectNotFoundException;
 
   /**
-   * {@inheritDoc}
-   *
    * The behavior of this method depends on the revision-control strategy of the implementation. <br>
    * <ul>
    * <li>In case of an <em>audit-proof revision-history</em> the deletion of the

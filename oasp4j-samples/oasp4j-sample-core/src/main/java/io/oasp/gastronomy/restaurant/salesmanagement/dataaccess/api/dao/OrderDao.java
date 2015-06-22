@@ -21,7 +21,7 @@ public interface OrderDao extends ApplicationDao<OrderEntity> {
    * @return the {@link OrderEntity} with the given {@link OrderEntity#getTableId() table ID} in
    *         {@link OrderEntity#getState() state}
    *         {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState#OPEN} or
-   *         <code>null</code> if no such entity exists.
+   *         {@code null} if no such entity exists.
    */
   OrderEntity findOpenOrderByTable(long tableId);
 

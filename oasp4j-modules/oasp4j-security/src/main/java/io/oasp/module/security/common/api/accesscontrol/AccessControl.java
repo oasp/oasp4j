@@ -67,9 +67,6 @@ public abstract class AccessControl implements Serializable {
     this.id = id;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public int hashCode() {
 
@@ -79,9 +76,6 @@ public abstract class AccessControl implements Serializable {
     return result;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean equals(Object obj) {
 
@@ -101,9 +95,6 @@ public abstract class AccessControl implements Serializable {
     return true;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String toString() {
 

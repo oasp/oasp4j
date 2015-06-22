@@ -14,7 +14,7 @@ public enum OrderBy {
   DESC;
 
   /**
-   * @return <code>true</code>, if {@link OrderBy#ASC} is set. <code>false</code> otherwise.
+   * @return {@code true}, if {@link OrderBy#ASC} is set. {@code false} otherwise.
    */
   public boolean isAsc() {
 
@@ -22,7 +22,7 @@ public enum OrderBy {
   }
 
   /**
-   * @return <code>true</code>, if {@link OrderBy#DESC} is set. <code>false</code> otherwise.
+   * @return {@code true}, if {@link OrderBy#DESC} is set. {@code false} otherwise.
    */
   public boolean isDesc() {
 

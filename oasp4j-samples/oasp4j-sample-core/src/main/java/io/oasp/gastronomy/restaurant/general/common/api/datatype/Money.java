@@ -79,9 +79,6 @@ public class Money extends AbstractSimpleDatatype<BigDecimal> implements Compara
     return new Money(getValue().add(money.getValue()));
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String toString() {
 

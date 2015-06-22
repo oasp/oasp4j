@@ -29,9 +29,6 @@ public class PrincipalAccessControlProviderImpl implements PrincipalAccessContro
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Collection<String> getAccessControlIds(UserProfile principal) {
 

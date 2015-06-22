@@ -51,9 +51,6 @@ public class UserData extends User implements Principal {
     super(username, password, authorities);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String getName() {
 
@@ -75,9 +72,6 @@ public class UserData extends User implements Principal {
     return clientTo;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String toString() {
 

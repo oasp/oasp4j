@@ -46,9 +46,6 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
 
   private PaymentAdapter paymentAdapter;
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_BILL)
   public BillEto createBill(BillEto bill) {
@@ -141,9 +138,6 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.DELETE_BILL)
   public void deleteBill(Long billId) {
@@ -151,9 +145,6 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
     getBillDao().delete(billId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_BILL)
   public PaymentStatus doPayment(BillEto bill) {
@@ -165,9 +156,6 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
     return PaymentStatus.SUCCESS;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_BILL)
   public PaymentStatus doPayment(BillEto bill, PaymentData paymentDataDebitor) {

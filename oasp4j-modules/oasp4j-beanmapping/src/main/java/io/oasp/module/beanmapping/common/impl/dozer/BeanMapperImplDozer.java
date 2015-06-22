@@ -36,9 +36,6 @@ public class BeanMapperImplDozer extends AbstractBeanMapper {
     this.dozer = dozer;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public <T> T map(Object source, Class<T> targetClass) {
 

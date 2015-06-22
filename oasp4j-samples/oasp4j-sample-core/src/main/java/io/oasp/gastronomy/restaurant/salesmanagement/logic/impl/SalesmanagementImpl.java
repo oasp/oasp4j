@@ -128,54 +128,36 @@ public class SalesmanagementImpl extends AbstractComponentFacade implements Sale
     this.ucChangeTable = ucChangeTable;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderEto findOrder(Long id) {
 
     return this.ucFindOrder.findOrder(id);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public PaginatedListTo<OrderEto> findOrderEtos(OrderSearchCriteriaTo criteria) {
 
     return this.ucFindOrder.findOrderEtos(criteria);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public PaginatedListTo<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria) {
 
     return this.ucFindOrder.findOrderCtos(criteria);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderCto findOrderCto(OrderEto order) {
 
     return this.ucFindOrder.findOrderCto(order);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderEto findOpenOrderForTable(Long tableId) {
 
     return this.ucFindOrder.findOpenOrderForTable(tableId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void changeTable(long orderId, long tableId) {
 
@@ -183,72 +165,48 @@ public class SalesmanagementImpl extends AbstractComponentFacade implements Sale
 
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderPositionEto createOrderPosition(OfferEto offer, OrderEto order, String comment) {
 
     return this.ucManageOrderPosition.createOrderPosition(offer, order, comment);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderPositionEto findOrderPosition(Long orderPositionId) {
 
     return this.ucFindOrderPosition.findOrderPosition(orderPositionId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public List<OrderPositionEto> findOrderPositions(OrderPositionSearchCriteriaTo criteria) {
 
     return this.ucFindOrderPosition.findOrderPositions(criteria);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public List<OrderPositionEto> findOrderPositionsByOrderId(Long orderId) {
 
     return this.ucFindOrderPosition.findOrderPositionsByOrderId(orderId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public List<OrderPositionEto> findOpenOrderPositionsByOrderId(Long orderId) {
 
     return this.ucFindOrderPosition.findOpenOrderPositionsByOrderId(orderId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public PaymentStatus doPayment(BillEto bill) {
 
     return this.ucManageBill.doPayment(bill);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public PaymentStatus doPayment(BillEto bill, PaymentData paymentData) {
 
     return this.ucManageBill.doPayment(bill, paymentData);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public BillCto findBill(Long id) {
 
@@ -256,63 +214,42 @@ public class SalesmanagementImpl extends AbstractComponentFacade implements Sale
 
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void deleteBill(Long billId) {
 
     this.ucManageBill.deleteBill(billId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void deleteOrder(Long id) {
 
     this.ucManageOrder.deleteOrder(id);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderCto saveOrder(OrderCto order) {
 
     return this.ucManageOrder.saveOrder(order);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderEto saveOrder(OrderEto order) {
 
     return this.ucManageOrder.saveOrder(order);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderEto saveOrder(TableEto table) {
 
     return this.ucManageOrder.saveOrder(table);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderPositionEto saveOrderPosition(OrderPositionEto orderPosition) {
 
     return this.ucManageOrderPosition.saveOrderPosition(orderPosition);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public BillEto createBill(BillEto bill) {
 

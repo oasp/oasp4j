@@ -14,17 +14,11 @@ import javax.validation.ConstraintValidatorContext;
  */
 public class NotNegativeMoneyValidator implements ConstraintValidator<NotNegativeMoney, Money> {
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void initialize(NotNegativeMoney constraintAnnotation) {
 
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean isValid(Money value, ConstraintValidatorContext context) {
 

@@ -58,65 +58,42 @@ public class TablemanagementImpl extends AbstractComponentFacade implements Tabl
     this.ucManageTable = ucManageTable;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public TableEto findTable(Long id) {
 
     return this.ucFindTable.findTable(id);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public List<TableEto> findAllTables() {
 
     return this.ucFindTable.findAllTables();
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   */
   @Override
   public TableEto saveTable(TableEto table) {
 
     return this.ucManageTable.saveTable(table);
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   */
   @Override
   public void deleteTable(Long id) {
 
     this.ucManageTable.deleteTable(id);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public List<TableEto> findFreeTables() {
 
     return this.ucFindTable.findFreeTables();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean isTableReleasable(TableEto table) {
 
     return this.ucManageTable.isTableReleasable(table);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public PaginatedListTo<TableEto> findTableEtos(TableSearchCriteriaTo criteria) {
 

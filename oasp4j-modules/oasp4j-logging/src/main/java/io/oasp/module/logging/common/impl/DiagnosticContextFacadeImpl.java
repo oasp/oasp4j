@@ -20,27 +20,18 @@ public class DiagnosticContextFacadeImpl implements DiagnosticContextFacade {
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String getCorrelationId() {
 
     return MDC.get(LoggingConstants.CORRELATION_ID);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setCorrelationId(String correlationId) {
 
     MDC.put(LoggingConstants.CORRELATION_ID, correlationId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void removeCorrelationId() {
 

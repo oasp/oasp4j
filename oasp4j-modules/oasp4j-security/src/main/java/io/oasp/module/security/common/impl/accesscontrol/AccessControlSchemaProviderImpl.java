@@ -59,9 +59,6 @@ public class AccessControlSchemaProviderImpl implements AccessControlSchemaProvi
     this.initialized = true;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public AccessControlSchema loadSchema() {
 

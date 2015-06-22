@@ -12,7 +12,7 @@ package io.oasp.module.logging.common.api;
 public interface DiagnosticContextFacade {
 
   /**
-   * @return the current {@link LoggingConstants#CORRELATION_ID correlation ID} or <code>null</code> if not
+   * @return the current {@link LoggingConstants#CORRELATION_ID correlation ID} or {@code null} if not
    *         {@link #setCorrelationId(String) set}.
    */
   String getCorrelationId();

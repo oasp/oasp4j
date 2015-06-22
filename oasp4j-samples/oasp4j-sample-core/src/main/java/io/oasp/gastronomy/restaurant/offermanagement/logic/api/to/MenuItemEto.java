@@ -26,45 +26,30 @@ public abstract class MenuItemEto extends AbstractEto implements MenuItem {
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String getName() {
 
     return this.name;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setName(String name) {
 
     this.name = name;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String getDescription() {
 
     return this.description;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setDescription(String description) {
 
     this.description = description;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public int hashCode() {
 
@@ -75,9 +60,6 @@ public abstract class MenuItemEto extends AbstractEto implements MenuItem {
     return result;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean equals(Object obj) {
 

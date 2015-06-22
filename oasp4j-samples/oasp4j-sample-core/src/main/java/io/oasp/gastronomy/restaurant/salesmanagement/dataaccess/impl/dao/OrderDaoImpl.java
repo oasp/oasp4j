@@ -38,18 +38,12 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Class<OrderEntity> getEntityClass() {
 
     return OrderEntity.class;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderEntity findOpenOrderByTable(long tableId) {
 
@@ -67,9 +61,6 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public PaginatedListTo<OrderEntity> findOrders(OrderSearchCriteriaTo criteria) {
 

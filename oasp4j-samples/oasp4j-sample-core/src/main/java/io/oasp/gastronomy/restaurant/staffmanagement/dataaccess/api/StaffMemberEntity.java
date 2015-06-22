@@ -34,9 +34,6 @@ public class StaffMemberEntity extends ApplicationPersistenceEntity implements S
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Column(name = "login", unique = true)
   @Override
   public String getName() {
@@ -44,63 +41,42 @@ public class StaffMemberEntity extends ApplicationPersistenceEntity implements S
     return this.name;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setName(String login) {
 
     this.name = login;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String getFirstName() {
 
     return this.firstName;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setFirstName(String firstName) {
 
     this.firstName = firstName;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String getLastName() {
 
     return this.lastName;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setLastName(String lastName) {
 
     this.lastName = lastName;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Role getRole() {
 
     return this.role;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setRole(Role role) {
 

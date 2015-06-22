@@ -31,9 +31,6 @@ public class BinaryObjectEntity extends ApplicationPersistenceEntity implements 
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setMimeType(String mimeType) {
 
@@ -41,9 +38,6 @@ public class BinaryObjectEntity extends ApplicationPersistenceEntity implements 
 
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String getMimeType() {
 
@@ -67,18 +61,12 @@ public class BinaryObjectEntity extends ApplicationPersistenceEntity implements 
     this.data = data;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public long getSize() {
 
     return this.size;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setSize(long size) {
 

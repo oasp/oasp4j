@@ -47,9 +47,7 @@ public enum Role implements Principal {
     this.name = name;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  @Override
   public String getName() {
 
     return this.name;

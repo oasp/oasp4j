@@ -12,7 +12,7 @@ import io.oasp.module.security.common.api.accesscontrol.AccessControlSchema;
 public interface AccessControlSchemaProvider {
 
   /**
-   * @return the loaded {@link AccessControlSchema}. May not be <code>null</code>.
+   * @return the loaded {@link AccessControlSchema}. May not be {@code null}.
    */
   AccessControlSchema loadSchema();
 

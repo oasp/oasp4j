@@ -35,9 +35,6 @@ public class UcFindOrderImpl extends AbstractOrderUc implements UcFindOrder {
 
   private Salesmanagement salesManagement;
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_ORDER)
   public OrderEto findOrder(Long orderId) {
@@ -46,9 +43,6 @@ public class UcFindOrderImpl extends AbstractOrderUc implements UcFindOrder {
     return getBeanMapper().map(getOrderDao().findOne(orderId), OrderEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_ORDER)
   public PaginatedListTo<OrderEto> findOrderEtos(OrderSearchCriteriaTo criteria) {
@@ -59,9 +53,6 @@ public class UcFindOrderImpl extends AbstractOrderUc implements UcFindOrder {
     return mapPaginatedEntityList(orders, OrderEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_ORDER)
   public PaginatedListTo<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria) {
@@ -78,9 +69,6 @@ public class UcFindOrderImpl extends AbstractOrderUc implements UcFindOrder {
     return result;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_ORDER)
   public OrderCto findOrderCto(OrderEto order) {
@@ -92,9 +80,6 @@ public class UcFindOrderImpl extends AbstractOrderUc implements UcFindOrder {
     return result;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_ORDER)
   public OrderEto findOpenOrderForTable(Long tableId) {

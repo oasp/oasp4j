@@ -15,9 +15,6 @@ import javax.inject.Named;
 @Named
 public class PaymentAdapterImpl extends AbstractBeanMapperSupport implements PaymentAdapter {
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public PaymentStatus pay(PaymentTransactionData paymentTransactionData) {
 
