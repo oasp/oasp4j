@@ -29,27 +29,15 @@
     <property name="exposeInternalErrorDetails" value="${security.expose.error.details}"/>
   </bean>
 
-  <jaxrs:server id="CxfRestServices" address="/rest">
-    <jaxrs:providers>
-      <bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider">
+<bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider">
       <property name="mapper">
         <ref bean="JacksonObjectMapper"/>
       </property>
       </bean>
-      <ref bean="RestServiceExceptionFacade"/>
-    </jaxrs:providers>
-    <jaxrs:serviceBeans>
-      <!-- place your service beans here -->
-      <!-- BEGIN ARCHETYPE SKIP -->
-      <ref bean="TablemanagementRestService"/>
-      <ref bean="SalesmanagementRestService"/>
-      <ref bean="OffermanagementRestService"/>
-      <ref bean="StaffmanagementRestService"/>
-      <!-- END ARCHETYPE SKIP -->
-      <ref bean="SecurityRestService"/>
-    </jaxrs:serviceBeans>
-  </jaxrs:server>
 
+
+  <jaxrs:server id="CxfRestServices" address="/rest"/>
+    
   <!-- JSON mapping config -->
   <bean id="JacksonObjectMapper" factory-bean="ApplicationObjectMapperFactory" factory-method="createInstance"/>
 </beans>
