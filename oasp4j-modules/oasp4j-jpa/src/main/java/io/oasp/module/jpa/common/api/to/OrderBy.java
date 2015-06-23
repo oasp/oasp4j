@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.general.common.api.datatype;
+package io.oasp.module.jpa.common.api.to;
 
 /**
  * {@link Enum} for sort order.
