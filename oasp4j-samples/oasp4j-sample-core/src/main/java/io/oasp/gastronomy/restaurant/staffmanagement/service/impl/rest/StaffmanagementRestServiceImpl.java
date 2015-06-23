@@ -3,8 +3,6 @@ package io.oasp.gastronomy.restaurant.staffmanagement.service.impl.rest;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.Staffmanagement;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberSearchCriteriaTo;
-import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.usecase.UcFindStaffMember;
-import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.usecase.UcManageStaffMember;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.List;
@@ -85,7 +83,7 @@ public class StaffmanagementRestServiceImpl {
   }
 
   /**
-   * Calls {@link UcManageStaffMember#saveStaffMember}.
+   * Calls {@link Staffmanagement#saveStaffMember}.
    *
    * @param staffMemberEto the staffMember to be created or updated
    * @return the saved {@link StaffMemberEto}
