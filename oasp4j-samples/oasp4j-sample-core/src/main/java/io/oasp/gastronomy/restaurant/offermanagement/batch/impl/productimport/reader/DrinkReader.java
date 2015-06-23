@@ -8,7 +8,6 @@ import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
-import org.springframework.core.io.ClassPathResource;
 
 /**
  * Implementation of ItemReader. It reads data from csv file and creates DrinkEto.
@@ -25,11 +24,6 @@ public class DrinkReader extends FlatFileItemReader<DrinkEto> {
   public DrinkReader() {
 
     super();
-
-    // setting resource
-    // TODO set resource from parameters (???)
-    setResource(new ClassPathResource("drinks.csv"));
-
     // setting line tokenizer and mapper
     DelimitedLineTokenizer delimitedLineTokenizer = new DelimitedLineTokenizer();
     delimitedLineTokenizer.setNames(new String[] { "name", "description", "pictureId", "alcoholic" });

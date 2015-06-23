@@ -17,9 +17,12 @@
   </batch:job>
 
   <!-- TODO jczast Do you really want to configure a reader like that? -->
-  <bean id="drinkReader" class="io.oasp.gastronomy.restaurant.offermanagement.batch.impl.productimport.reader.DrinkReader"/>
+  <bean id="drinkReader" class="io.oasp.gastronomy.restaurant.offermanagement.batch.impl.productimport.reader.DrinkReader" scope="step">
+  <!-- Pass values to the confguration when launching a job. -->
+  <property name="resource" value="#{jobParameters['drinks.file']}"/>
+  </bean>
 
-  <bean id="mealReader" class="org.springframework.batch.item.file.FlatFileItemReader">
+  <bean id="mealReader" class="org.springframework.batch.item.file.FlatFileItemReader" scope="step">
     <property name="lineMapper">
       <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
         <property name="fieldSetMapper">
@@ -34,7 +37,8 @@
         </property>
       </bean>
     </property>
-    <property name="resource" value="meals.csv"/>
+    <!-- Pass values to the confguration when launching a job. -->
+    <property name="resource" value="#{jobParameters['meals.file']}"/>
   </bean>
 
   <bean id="productWriter" class="io.oasp.gastronomy.restaurant.offermanagement.batch.impl.productimport.writer.ProductWriter"/>

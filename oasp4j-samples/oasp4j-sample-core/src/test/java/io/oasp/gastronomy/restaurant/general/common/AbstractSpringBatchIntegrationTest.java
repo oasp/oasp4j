@@ -38,6 +38,7 @@ public abstract class AbstractSpringBatchIntegrationTest {
     jobLauncherTestUtils.setJob(job);
     jobLauncherTestUtils.setJobLauncher(this.jobLauncher);
     jobLauncherTestUtils.setJobRepository(this.jobRepository);
+
     return jobLauncherTestUtils;
   }
 
