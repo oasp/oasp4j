@@ -23,13 +23,13 @@ import net.sf.mmm.util.exception.api.ObjectNotFoundException;
 public interface GenericRevisionedDao<ID, ENTITY extends MutablePersistenceEntity<ID>> extends GenericDao<ID, ENTITY> {
 
   /**
-   * This method will get the {@link List} of historic {@link MutablePersistenceEntity#getRevision() revisions} of
-   * the {@link MutablePersistenceEntity entity} with the given <code>id</code>.<br>
+   * This method will get the {@link List} of historic {@link MutablePersistenceEntity#getRevision() revisions} of the
+   * {@link MutablePersistenceEntity entity} with the given <code>id</code>.<br>
    * If the <code>entity</code> is NOT revision controlled, an {@link java.util.Collections#emptyList() empty list} is
    * returned.
    *
-   * @param id the {@link MutablePersistenceEntity#getId() primary key} of the {@link MutablePersistenceEntity
-   *        entity} to retrieve the history for.
+   * @param id the {@link MutablePersistenceEntity#getId() primary key} of the {@link MutablePersistenceEntity entity}
+   *        to retrieve the history for.
    * @return the {@link List} of historic {@link RevisionedEntity#getRevision() revisions}.
    */
   List<Number> getRevisionHistory(ID id);
@@ -63,6 +63,8 @@ public interface GenericRevisionedDao<ID, ENTITY extends MutablePersistenceEntit
   ENTITY load(ID id, Number revision) throws ObjectNotFoundException;
 
   /**
+   * {@inheritDoc}
+   *
    * The behavior of this method depends on the revision-control strategy of the implementation. <br>
    * <ul>
    * <li>In case of an <em>audit-proof revision-history</em> the deletion of the
