@@ -1,5 +1,7 @@
 package io.oasp.module.jpa.common.api.to;
 
+import java.util.List;
+
 import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
 
 /**
@@ -22,6 +24,9 @@ public class SearchCriteriaTo extends AbstractTransferObject {
 
   /** @see getSearchTimeout */
   private Integer searchTimeout;
+
+  /** @see #getSort() */
+  private List<OrderByTo> sort;
 
   /**
    * The constructor.
@@ -89,4 +94,21 @@ public class SearchCriteriaTo extends AbstractTransferObject {
 
     this.searchTimeout = searchTimeout;
   }
+
+  /**
+   * @return sort Sort criterias list
+   */
+  public List<OrderByTo> getSort() {
+
+    return this.sort;
+  }
+
+  /**
+   * @param sort Set the sort criterias list
+   */
+  public void setSort(List<OrderByTo> sort) {
+
+    this.sort = sort;
+  }
+
 }
