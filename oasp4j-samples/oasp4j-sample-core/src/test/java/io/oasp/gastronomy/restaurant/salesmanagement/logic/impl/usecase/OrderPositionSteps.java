@@ -9,15 +9,15 @@ import io.oasp.module.beanmapping.common.api.BeanMapper;
 
 import net.thucydides.core.annotations.Step;
 
-import org.junit.Assert;
+import org.assertj.core.api.Assertions;
 import org.mockito.Mockito;
 
 /**
- * TODO mgoebel This type ...
+ * Steps for testing the order position lifecycle
  *
  * @author mgoebel
  */
-public class OrderPositionSteps extends Assert {
+public class OrderPositionSteps extends Assertions {
 
   private final static String OK = "OK";
 
@@ -75,7 +75,7 @@ public class OrderPositionSteps extends Assert {
   @Step("Then the validation result should be {0}")
   public void theValidationResultShouldBe(String expResult) {
 
-    assertEquals(this.actualResult, expResult);
+    assertThat(this.actualResult).isEqualTo(expResult);
   }
 
 }

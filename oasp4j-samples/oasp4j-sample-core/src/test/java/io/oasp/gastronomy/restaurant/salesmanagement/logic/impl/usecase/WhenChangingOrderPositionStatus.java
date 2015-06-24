@@ -1,6 +1,6 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 
-import io.oasp.module.test.common.api.category.CategoryModuleTest;
+import io.oasp.module.test.common.base.ModuleTest;
 
 import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
 import net.thucydides.core.annotations.Steps;
@@ -16,7 +16,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(SerenityParameterizedRunner.class)
 @UseTestDataFrom(value = "/testdata/WhenChangingOrderPositionStatus.csv")
-public class WhenChangingOrderPositionStatus implements CategoryModuleTest {
+public class WhenChangingOrderPositionStatus extends ModuleTest {
 
   @Steps
   OrderPositionSteps orderPositionSteps;
@@ -30,8 +30,13 @@ public class WhenChangingOrderPositionStatus implements CategoryModuleTest {
   @Test
   public void shouldValidateStatusTransition() {
 
+    // Given
     this.orderPositionSteps.anOrderPositionThatIsInState(this.oldStatus);
+
+    // When
     this.orderPositionSteps.theUserTriesToChangeStateTo(this.newStatus);
+
+    // Then
     this.orderPositionSteps.theValidationResultShouldBe(this.expectedResult);
   }
 
