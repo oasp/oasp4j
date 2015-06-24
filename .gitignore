@@ -14,3 +14,4 @@ eclipse-target/
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+oasp4j-samples/oasp4j-sample-server/src/main/webapp/jsclient/
