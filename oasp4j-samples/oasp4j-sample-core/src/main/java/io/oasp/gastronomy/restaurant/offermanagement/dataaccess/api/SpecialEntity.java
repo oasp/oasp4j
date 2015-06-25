@@ -1,24 +1,18 @@
 package io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api;
 
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
+import io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity;
 
 /**
- * The {@link io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity persistent entity} for
- * {@link Special}.
+ * The {@link ApplicationPersistenceEntity persistent entity} for a special.
  *
- * @author fkreis
+ * @author mbrunnli
  */
 public class SpecialEntity {
 
   private OfferEntity offer;
 
-  private int startingWeekDay;
-
-  private int startingHour;
-
-  private int endingWeekDay;
-
-  private int endingHour;
+  private WeeklySchedulePeriod activePeriod;
 
   private Money specialPrice;
 
@@ -39,67 +33,19 @@ public class SpecialEntity {
   }
 
   /**
-   * @return startingWeekDay
+   * @return activePeriod
    */
-  public int getStartingWeekDay() {
+  public WeeklySchedulePeriod getActivePeriod() {
 
-    return this.startingWeekDay;
+    return this.activePeriod;
   }
 
   /**
-   * @param startingWeekDay new value of {@link #getStartingWeekDay}.
+   * @param activePeriod new value of {@link #getActivePeriod}.
    */
-  public void setStartingWeekDay(int startingWeekDay) {
+  public void setActivePeriod(WeeklySchedulePeriod activePeriod) {
 
-    this.startingWeekDay = startingWeekDay;
-  }
-
-  /**
-   * @return startingHour
-   */
-  public int getStartingHour() {
-
-    return this.startingHour;
-  }
-
-  /**
-   * @param startingHour new value of {@link #getStartingHour}.
-   */
-  public void setStartingHour(int startingHour) {
-
-    this.startingHour = startingHour;
-  }
-
-  /**
-   * @return endingWeekDay
-   */
-  public int getEndingWeekDay() {
-
-    return this.endingWeekDay;
-  }
-
-  /**
-   * @param endingWeekDay new value of {@link #getEndingWeekDay}.
-   */
-  public void setEndingWeekDay(int endingWeekDay) {
-
-    this.endingWeekDay = endingWeekDay;
-  }
-
-  /**
-   * @return endingHour
-   */
-  public int getEndingHour() {
-
-    return this.endingHour;
-  }
-
-  /**
-   * @param endingHour new value of {@link #getEndingHour}.
-   */
-  public void setEndingHour(int endingHour) {
-
-    this.endingHour = endingHour;
+    this.activePeriod = activePeriod;
   }
 
   /**
