@@ -11,7 +11,7 @@ import javax.validation.constraints.Min;
  *
  * @author mbrunnli
  */
-public class WeeklySchedulePeriod {
+public class WeeklyPeriodEntity {
 
   private DayOfWeek startingDay;
 

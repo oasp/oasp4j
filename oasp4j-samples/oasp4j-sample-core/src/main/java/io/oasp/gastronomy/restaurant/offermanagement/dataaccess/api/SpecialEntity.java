@@ -12,7 +12,7 @@ public class SpecialEntity {
 
   private OfferEntity offer;
 
-  private WeeklySchedulePeriod activePeriod;
+  private WeeklyPeriodEntity activePeriod;
 
   private Money specialPrice;
 
@@ -35,7 +35,7 @@ public class SpecialEntity {
   /**
    * @return activePeriod
    */
-  public WeeklySchedulePeriod getActivePeriod() {
+  public WeeklyPeriodEntity getActivePeriod() {
 
     return this.activePeriod;
   }
@@ -43,7 +43,7 @@ public class SpecialEntity {
   /**
    * @param activePeriod new value of {@link #getActivePeriod}.
    */
-  public void setActivePeriod(WeeklySchedulePeriod activePeriod) {
+  public void setActivePeriod(WeeklyPeriodEntity activePeriod) {
 
     this.activePeriod = activePeriod;
   }
