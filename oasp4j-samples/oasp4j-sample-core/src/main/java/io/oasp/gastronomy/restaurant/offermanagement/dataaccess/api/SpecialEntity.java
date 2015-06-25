@@ -1,10 +1,6 @@
 package io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api;
 
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
-import io.oasp.gastronomy.restaurant.offermanagement.common.api.Special;
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
 
 /**
  * The {@link io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity persistent entity} for
@@ -12,11 +8,7 @@ import javax.persistence.Table;
  *
  * @author fkreis
  */
-@Entity(name = "Special")
-@Table()
-public class SpecialEntity extends MenuItemEntity {
-
-  private static final long serialVersionUID = 1L;
+public class SpecialEntity {
 
   private OfferEntity offer;
 
@@ -24,7 +16,11 @@ public class SpecialEntity extends MenuItemEntity {
 
   private int startingHour;
 
-  private int endgingWeekDay;
+  private int endingWeekDay;
+
+  private int endingHour;
+
+  private Money specialPrice;
 
   /**
    * @return offer
@@ -75,19 +71,19 @@ public class SpecialEntity extends MenuItemEntity {
   }
 
   /**
-   * @return endgingWeekDay
+   * @return endingWeekDay
    */
-  public int getEndgingWeekDay() {
+  public int getEndingWeekDay() {
 
-    return this.endgingWeekDay;
+    return this.endingWeekDay;
   }
 
   /**
-   * @param endgingWeekDay new value of {@link #getEndgingWeekDay}.
+   * @param endingWeekDay new value of {@link #getEndingWeekDay}.
    */
-  public void setEndgingWeekDay(int endgingWeekDay) {
+  public void setEndingWeekDay(int endingWeekDay) {
 
-    this.endgingWeekDay = endgingWeekDay;
+    this.endingWeekDay = endingWeekDay;
   }
 
   /**
@@ -121,9 +117,5 @@ public class SpecialEntity extends MenuItemEntity {
 
     this.specialPrice = specialPrice;
   }
-
-  private int endingHour;
-
-  private Money specialPrice;
 
 }
