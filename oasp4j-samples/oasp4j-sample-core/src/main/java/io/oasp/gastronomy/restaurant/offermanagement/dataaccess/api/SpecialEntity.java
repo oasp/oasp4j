@@ -4,11 +4,19 @@ import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import org.hibernate.envers.Audited;
+
 /**
  * The {@link ApplicationPersistenceEntity persistent entity} for a special.
  *
  * @author mbrunnli
  */
+@Entity(name = "Special")
+@Table(name = "Special")
+@Audited
 public class SpecialEntity {
 
   private OfferEntity offer;
@@ -59,7 +67,7 @@ public class SpecialEntity {
 
   /**
    * Returns the new {@link Money special price} for the {@link Offer}.
-   * 
+   *
    * @return specialPrice the new {@link Money special price} for the {@link Offer}.
    */
   public Money getSpecialPrice() {
@@ -69,7 +77,7 @@ public class SpecialEntity {
 
   /**
    * Sets the new {@link Money special price} for the {@link Offer}.
-   * 
+   *
    * @param specialPrice the new {@link Money special price} for the {@link Offer}.
    */
   public void setSpecialPrice(Money specialPrice) {

@@ -2,8 +2,12 @@ package io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api;
 
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.DayOfWeek;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+
+import org.hibernate.envers.Audited;
 
 /**
  * Weekly period describing a starting and an ending point. Each is defined as a fixed hour (24h-format) at a specific
@@ -11,6 +15,9 @@ import javax.validation.constraints.Min;
  *
  * @author mbrunnli
  */
+@Entity(name = "WeeklyPeriod")
+@Table(name = "WeeklyPeriod")
+@Audited
 public class WeeklyPeriodEntity {
 
   private DayOfWeek startingDay;
