@@ -22,7 +22,9 @@ public class WeeklyPeriodEntity {
   private int endingHour;
 
   /**
-   * @return startingDay
+   * Returns the {@link DayOfWeek} the period starts.
+   *
+   * @return startingDay the {@link DayOfWeek} the period starts.
    */
   public DayOfWeek getStartingDay() {
 
@@ -30,7 +32,9 @@ public class WeeklyPeriodEntity {
   }
 
   /**
-   * @param startingDay new value of {@link #getStartingDay}.
+   * Sets the {@link DayOfWeek} the period starts.
+   *
+   * @param startingDay the {@link DayOfWeek} the period starts.
    */
   public void setStartingDay(DayOfWeek startingDay) {
 
@@ -38,7 +42,9 @@ public class WeeklyPeriodEntity {
   }
 
   /**
-   * @return startingHour
+   * Returns the hour (in 24h-format) the period starts.
+   *
+   * @return startingHour the hour (in 24h-format) the period starts.
    */
   @Max(24)
   @Min(0)
@@ -48,7 +54,9 @@ public class WeeklyPeriodEntity {
   }
 
   /**
-   * @param startingHour new value of {@link #getStartingHour}.
+   * Sets the hour (in 24h-format) the period starts.
+   *
+   * @param startingHour the hour (in 24h-format) the period starts.
    */
   public void setStartingHour(int startingHour) {
 
@@ -56,7 +64,9 @@ public class WeeklyPeriodEntity {
   }
 
   /**
-   * @return endingDay
+   * Returns the {@link DayOfWeek} the period ends.
+   *
+   * @return endingDay the {@link DayOfWeek} the period ends.
    */
   public DayOfWeek getEndingDay() {
 
@@ -64,7 +74,9 @@ public class WeeklyPeriodEntity {
   }
 
   /**
-   * @param endingDay new value of {@link #getEndingDay}.
+   * Sets the {@link DayOfWeek} the period ends.
+   *
+   * @param endingDay the {@link DayOfWeek} the period ends.
    */
   public void setEndingDay(DayOfWeek endingDay) {
 
@@ -72,7 +84,9 @@ public class WeeklyPeriodEntity {
   }
 
   /**
-   * @return endingHour
+   * Returns the hour (in 24h-format) the period ends.
+   *
+   * @return endingHour the hour (in 24h-format) the period ends.
    */
   @Max(24)
   @Min(0)
@@ -82,7 +96,9 @@ public class WeeklyPeriodEntity {
   }
 
   /**
-   * @param endingHour new value of {@link #getEndingHour}.
+   * Returns the hour (in 24h-format) the period ends.
+   *
+   * @param endingHour the hour (in 24h-format) the period ends.
    */
   public void setEndingHour(int endingHour) {
 

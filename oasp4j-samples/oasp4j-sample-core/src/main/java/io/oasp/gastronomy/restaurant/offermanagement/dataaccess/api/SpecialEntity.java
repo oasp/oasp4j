@@ -2,6 +2,7 @@ package io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api;
 
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity;
+import io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer;
 
 /**
  * The {@link ApplicationPersistenceEntity persistent entity} for a special.
@@ -17,7 +18,9 @@ public class SpecialEntity {
   private Money specialPrice;
 
   /**
-   * @return offer
+   * Returns the {@link Offer} this special applies for.
+   *
+   * @return offer {@link Offer} this special applies for.
    */
   public OfferEntity getOffer() {
 
@@ -25,7 +28,9 @@ public class SpecialEntity {
   }
 
   /**
-   * @param offer new value of {@link #getOffer}.
+   * Sets the {@link Offer} this special applies for.
+   *
+   * @param offer the {@link Offer} this special applies for.
    */
   public void setOffer(OfferEntity offer) {
 
@@ -33,7 +38,9 @@ public class SpecialEntity {
   }
 
   /**
-   * @return activePeriod
+   * Returns the {@link WeeklyPeriodEntity active period} this special applies for.
+   *
+   * @return activePeriod the {@link WeeklyPeriodEntity active period} this special applies for.
    */
   public WeeklyPeriodEntity getActivePeriod() {
 
@@ -41,7 +48,9 @@ public class SpecialEntity {
   }
 
   /**
-   * @param activePeriod new value of {@link #getActivePeriod}.
+   * Sets the {@link WeeklyPeriodEntity active period} this special applies for.
+   *
+   * @param activePeriod the {@link WeeklyPeriodEntity active period} this special applies for.
    */
   public void setActivePeriod(WeeklyPeriodEntity activePeriod) {
 
@@ -49,7 +58,9 @@ public class SpecialEntity {
   }
 
   /**
-   * @return specialPrice
+   * Returns the new {@link Money special price} for the {@link Offer}.
+   * 
+   * @return specialPrice the new {@link Money special price} for the {@link Offer}.
    */
   public Money getSpecialPrice() {
 
@@ -57,7 +68,9 @@ public class SpecialEntity {
   }
 
   /**
-   * @param specialPrice new value of {@link #getSpecialPrice}.
+   * Sets the new {@link Money special price} for the {@link Offer}.
+   * 
+   * @param specialPrice the new {@link Money special price} for the {@link Offer}.
    */
   public void setSpecialPrice(Money specialPrice) {
 
