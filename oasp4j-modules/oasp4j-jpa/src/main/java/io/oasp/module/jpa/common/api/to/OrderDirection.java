@@ -5,7 +5,7 @@ package io.oasp.module.jpa.common.api.to;
  *
  * @author jozitz
  */
-public enum OrderBy {
+public enum OrderDirection {
 
   /** Sort in ascending order. */
   ASC,
@@ -14,7 +14,7 @@ public enum OrderBy {
   DESC;
 
   /**
-   * @return {@code true}, if {@link OrderBy#ASC} is set. {@code false} otherwise.
+   * @return {@code true}, if {@link OrderDirection#ASC} is set. {@code false} otherwise.
    */
   public boolean isAsc() {
 
@@ -22,7 +22,7 @@ public enum OrderBy {
   }
 
   /**
-   * @return {@code true}, if {@link OrderBy#DESC} is set. {@code false} otherwise.
+   * @return {@code true}, if {@link OrderDirection#DESC} is set. {@code false} otherwise.
    */
   public boolean isDesc() {
 
