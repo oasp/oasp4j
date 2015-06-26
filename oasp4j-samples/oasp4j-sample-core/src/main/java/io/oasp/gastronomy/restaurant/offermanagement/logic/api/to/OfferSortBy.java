@@ -1,7 +1,7 @@
 package io.oasp.gastronomy.restaurant.offermanagement.logic.api.to;
 
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferSortByHitEntry;
-import io.oasp.module.jpa.common.api.to.OrderBy;
+import io.oasp.module.jpa.common.api.to.OrderDirection;
 
 /**
  *
@@ -11,7 +11,7 @@ public class OfferSortBy {
 
   private OfferSortByHitEntry sortByEntry;
 
-  private OrderBy orderBy;
+  private OrderDirection orderBy;
 
   /**
    * The constructor.
@@ -19,7 +19,7 @@ public class OfferSortBy {
   public OfferSortBy() {
 
     this.sortByEntry = OfferSortByHitEntry.ID;
-    this.orderBy = OrderBy.ASC;
+    this.orderBy = OrderDirection.ASC;
   }
 
   /**
@@ -47,7 +47,7 @@ public class OfferSortBy {
    *
    * @return Value of orderBy
    */
-  public OrderBy getOrderBy() {
+  public OrderDirection getOrderBy() {
 
     return this.orderBy;
   }
@@ -57,7 +57,7 @@ public class OfferSortBy {
    *
    * @param orderBy New value for orderBy
    */
-  public void setOrderBy(OrderBy orderBy) {
+  public void setOrderBy(OrderDirection orderBy) {
 
     this.orderBy = orderBy;
   }
