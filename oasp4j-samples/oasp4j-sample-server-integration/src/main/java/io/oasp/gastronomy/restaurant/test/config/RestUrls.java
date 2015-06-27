@@ -299,7 +299,7 @@ public interface RestUrls {
    *
    * @author arklos
    */
-  public static class OfferManagement {
+  public static class Offermanagement {
     /**
      *
      */

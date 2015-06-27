@@ -29,11 +29,11 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * OfferManagement rest service test
+ * Offermanagement rest service test
  *
  * @author arklos
  */
-public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
+public class OffermanagementRestServiceTest extends AbstractRestServiceTest {
 
   /**
    * Test CRUD functionality of offer.
@@ -43,7 +43,7 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
 
     // get all offers
     List<ResponseData<OfferEto>> offers =
-        this.waiter.getAll(RestUrls.OfferManagement.Offer.getGetAllOffersUrl(), OfferEto.class);
+        this.waiter.getAll(RestUrls.Offermanagement.Offer.getGetAllOffersUrl(), OfferEto.class);
 
     // get unused offer description
     List<String> offerDescriptions = new ArrayList<>();
@@ -65,10 +65,10 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
     // create a new offer
     OfferEto createdOffer =
         this.chief.post(TestData.createOffer(null, myDescription, OfferState.NORMAL, mealId, sidedishId, drinkId, 0,
-            new Money(new BigDecimal(2.5))), RestUrls.OfferManagement.Offer.getCreateOfferUrl(), OfferEto.class);
+            new Money(new BigDecimal(2.5))), RestUrls.Offermanagement.Offer.getCreateOfferUrl(), OfferEto.class);
     // get the created offer
     ResponseData<OfferEto> offer =
-        this.waiter.get(RestUrls.OfferManagement.Offer.getGetOfferUrl(createdOffer.getId()), OfferEto.class);
+        this.waiter.get(RestUrls.Offermanagement.Offer.getGetOfferUrl(createdOffer.getId()), OfferEto.class);
 
     Assert.assertNotNull(offer.getResponseObject());
     Assert.assertEquals(createdOffer.getDescription(), offer.getResponseObject().getDescription());
@@ -78,17 +78,17 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
     OfferState newState = OfferState.SOLDOUT;
     createdOffer.setState(newState);
     OfferEto updatedOffer =
-        this.chief.post(createdOffer, RestUrls.OfferManagement.Offer.getCreateOfferUrl(), OfferEto.class);
+        this.chief.post(createdOffer, RestUrls.Offermanagement.Offer.getCreateOfferUrl(), OfferEto.class);
 
     Assert.assertEquals(newState, updatedOffer.getState());
 
     // delete created offer
-    Response deleteResponse = this.chief.delete(RestUrls.OfferManagement.Offer.getDeleteOfferUrl(createdOffer.getId()));
+    Response deleteResponse = this.chief.delete(RestUrls.Offermanagement.Offer.getDeleteOfferUrl(createdOffer.getId()));
     Assert.assertEquals(deleteResponse.getStatus(), 204);
 
     // check if offer is deleted
     ResponseData<OfferEto> getDeletedOfferResponse =
-        this.waiter.get(RestUrls.OfferManagement.Offer.getGetOfferUrl(createdOffer.getId()), OfferEto.class);
+        this.waiter.get(RestUrls.Offermanagement.Offer.getGetOfferUrl(createdOffer.getId()), OfferEto.class);
     Assert.assertNull(getDeletedOfferResponse.getResponseObject());
 
   }
@@ -101,7 +101,7 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
   public DrinkEto createDrink() {
 
     ProductEto drink = TestData.createDrink(null, "Wasser", null, false);
-    DrinkEto response = this.chief.post(drink, RestUrls.OfferManagement.Product.getCreateProductUrl(), DrinkEto.class);
+    DrinkEto response = this.chief.post(drink, RestUrls.Offermanagement.Product.getCreateProductUrl(), DrinkEto.class);
     return response;
 
   }
@@ -114,12 +114,12 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
   public void getOfferTest() {
 
     Long id = DB.OFFER_1.getId();
-    ResponseData<OfferEto> offer = this.waiter.get(RestUrls.OfferManagement.Offer.getGetOfferUrl(id), OfferEto.class);
+    ResponseData<OfferEto> offer = this.waiter.get(RestUrls.Offermanagement.Offer.getGetOfferUrl(id), OfferEto.class);
     // assertThat(offer.getResponse().getStatus(), is(200));
     assertThat(offer.getResponseObject().getId(), is(id));
 
     id = TestData.DB.OFFER_2.getId();
-    offer = this.waiter.get(RestUrls.OfferManagement.Offer.getGetOfferUrl(id), OfferEto.class);
+    offer = this.waiter.get(RestUrls.Offermanagement.Offer.getGetOfferUrl(id), OfferEto.class);
     // assertThat(offer.getResponse().getStatus(), is(200));
     assertThat(offer.getResponseObject().getId(), is(id));
 
@@ -133,8 +133,8 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
   public void updateOfferTest() {
 
     Long id = Additional.CHANGED_OFFER_1.getId();
-    this.chief.put(RestUrls.OfferManagement.Offer.getUpdateOfferUrl(id), Additional.CHANGED_OFFER_1);
-    ResponseData<OfferEto> offer = this.chief.get(RestUrls.OfferManagement.Offer.getGetOfferUrl(id), OfferEto.class);
+    this.chief.put(RestUrls.Offermanagement.Offer.getUpdateOfferUrl(id), Additional.CHANGED_OFFER_1);
+    ResponseData<OfferEto> offer = this.chief.get(RestUrls.Offermanagement.Offer.getGetOfferUrl(id), OfferEto.class);
     assertThat(offer.getResponse().getStatus(), is(200));
     assertThat(offer.getResponseObject().getName(), is(Additional.CHANGED_OFFER_1.getName()));
   }
@@ -146,7 +146,7 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
   public void getAllOffersTest() {
 
     List<ResponseData<OfferEto>> offer =
-        this.waiter.getAll(RestUrls.OfferManagement.Offer.getGetAllOffersUrl(), OfferEto.class);
+        this.waiter.getAll(RestUrls.Offermanagement.Offer.getGetAllOffersUrl(), OfferEto.class);
     // assertThat(offer.size(), is(TestData.DB.ALL_OFFERS.size()));
     for (ResponseData<OfferEto> responseData : offer) {
       assertThat(responseData.getResponse().getStatus(), is(200));
@@ -160,9 +160,9 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
   @Ignore
   public void createProduct() {
 
-    this.chief.post(RestUrls.OfferManagement.Product.getCreateProductUrl(), TestData.Additional.MEAL);
+    this.chief.post(RestUrls.Offermanagement.Product.getCreateProductUrl(), TestData.Additional.MEAL);
     List<ResponseData<ProductEto>> offer =
-        this.waiter.getAll(RestUrls.OfferManagement.Product.getGetAllProductsUrl(), ProductEto.class);
+        this.waiter.getAll(RestUrls.Offermanagement.Product.getGetAllProductsUrl(), ProductEto.class);
     assertThat(offer.size(), is(DB.ALL_PRODUCTS.size() + 1));
   }
 
@@ -173,7 +173,7 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
   public void getAllProductsTest() {
 
     List<ResponseData<ProductEto>> offer =
-        this.waiter.getAll(RestUrls.OfferManagement.Product.getGetAllProductsUrl(), ProductEto.class);
+        this.waiter.getAll(RestUrls.Offermanagement.Product.getGetAllProductsUrl(), ProductEto.class);
     // assertThat(offer.size(), is(DB.ALL_PRODUCTS.size()));
     for (ResponseData<ProductEto> responseData : offer) {
       assertThat(responseData.getResponse().getStatus(), is(200));
@@ -188,7 +188,7 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
   public void getAllMealsTest() {
 
     List<ResponseData<MealEto>> offer =
-        this.waiter.getAll(RestUrls.OfferManagement.Product.getGetAllMealsUrl(), MealEto.class);
+        this.waiter.getAll(RestUrls.Offermanagement.Product.getGetAllMealsUrl(), MealEto.class);
     // assertThat(offer.size(), is(DB.ALL_MEALS.size()));
     for (ResponseData<MealEto> responseData : offer) {
       assertThat(responseData.getResponse().getStatus(), is(200));
@@ -202,7 +202,7 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
   public void getAllDrinksTest() {
 
     List<ResponseData<DrinkEto>> offer =
-        this.waiter.getAll(RestUrls.OfferManagement.Product.getGetAllDrinksUrl(), DrinkEto.class);
+        this.waiter.getAll(RestUrls.Offermanagement.Product.getGetAllDrinksUrl(), DrinkEto.class);
     // assertThat(offer.size(), is(DB.ALL_DRINKS.size()));
     for (ResponseData<DrinkEto> responseData : offer) {
       assertThat(responseData.getResponse().getStatus(), is(200));
@@ -216,7 +216,7 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
   public void getAllSideDishesTest() {
 
     List<ResponseData<SideDishEto>> offer =
-        this.waiter.getAll(RestUrls.OfferManagement.Product.getGetAllSideDishesUrl(), SideDishEto.class);
+        this.waiter.getAll(RestUrls.Offermanagement.Product.getGetAllSideDishesUrl(), SideDishEto.class);
     // assertThat(offer.size(), is(DB.ALL_SIDE_DISHES.size()));
     for (ResponseData<SideDishEto> responseData : offer) {
       assertThat(responseData.getResponse().getStatus(), is(200));
@@ -231,10 +231,10 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
   public void deleteOfferTest() {
 
     List<ResponseData<OfferEto>> offers =
-        this.chief.getAll(RestUrls.OfferManagement.Offer.getGetAllOffersUrl(), OfferEto.class);
+        this.chief.getAll(RestUrls.Offermanagement.Offer.getGetAllOffersUrl(), OfferEto.class);
 
-    this.chief.delete(RestUrls.OfferManagement.Offer.getDeleteOfferUrl(DB.OFFER_1.getId()));
-    offers = this.chief.getAll(RestUrls.OfferManagement.Offer.getGetAllOffersUrl(), OfferEto.class);
+    this.chief.delete(RestUrls.Offermanagement.Offer.getDeleteOfferUrl(DB.OFFER_1.getId()));
+    offers = this.chief.getAll(RestUrls.Offermanagement.Offer.getGetAllOffersUrl(), OfferEto.class);
     assertThat(offers.size(), is(DB.ALL_OFFERS.size() - 1));
   }
 
@@ -246,11 +246,11 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
 
     Long drinkId = createDrink().getId();
     ResponseData<ProductEto> offer =
-        this.waiter.get(RestUrls.OfferManagement.Product.getFindProductUrl(drinkId), ProductEto.class);
+        this.waiter.get(RestUrls.Offermanagement.Product.getFindProductUrl(drinkId), ProductEto.class);
     assertThat(offer.getResponse().getStatus(), is(200));
     assertThat(offer.getResponseObject().getId(), is(drinkId));
 
-    offer = this.waiter.get(RestUrls.OfferManagement.Product.getFindProductUrl(drinkId + 1), ProductEto.class);
+    offer = this.waiter.get(RestUrls.Offermanagement.Product.getFindProductUrl(drinkId + 1), ProductEto.class);
     Assert.assertNull(offer.getResponseObject());
 
   }
@@ -264,14 +264,14 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
     // create drink
     ProductEto drink = TestData.createDrink(null, "Wasser", null, false);
     DrinkEto createdDrink =
-        this.chief.post(drink, RestUrls.OfferManagement.Product.getCreateProductUrl(), DrinkEto.class);
+        this.chief.post(drink, RestUrls.Offermanagement.Product.getCreateProductUrl(), DrinkEto.class);
     // change drink
     createdDrink.setDescription("changed description");
-    this.chief.post(createdDrink, RestUrls.OfferManagement.Product.getCreateProductUrl(), DrinkEto.class);
+    this.chief.post(createdDrink, RestUrls.Offermanagement.Product.getCreateProductUrl(), DrinkEto.class);
 
     Long revision = 1L;
     ResponseData<DrinkEto> revisionedProductResponse =
-        this.waiter.get(RestUrls.OfferManagement.Product.getFindProductByRevisionUrl(createdDrink.getId(), revision),
+        this.waiter.get(RestUrls.Offermanagement.Product.getFindProductByRevisionUrl(createdDrink.getId(), revision),
             DrinkEto.class);
     DrinkEto revisionedProduct = revisionedProductResponse.getResponseObject();
     Assert.assertEquals(revision.longValue(), revisionedProduct.getRevision().longValue());
@@ -286,11 +286,11 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
 
     DrinkEto drink = TestData.createDrink(null, "Wasser", null, false);
     DrinkEto productToUpdate =
-        this.chief.post(drink, RestUrls.OfferManagement.Product.getCreateProductUrl(), DrinkEto.class);
+        this.chief.post(drink, RestUrls.Offermanagement.Product.getCreateProductUrl(), DrinkEto.class);
     productToUpdate.setName(drink.getName() + "2");
-    this.chief.post(productToUpdate, RestUrls.OfferManagement.Product.getCreateProductUrl(), DrinkEto.class);
+    this.chief.post(productToUpdate, RestUrls.Offermanagement.Product.getCreateProductUrl(), DrinkEto.class);
     ResponseData<ProductEto> product =
-        this.chief.get(RestUrls.OfferManagement.Product.getFindProductUrl(productToUpdate.getId()), ProductEto.class);
+        this.chief.get(RestUrls.Offermanagement.Product.getFindProductUrl(productToUpdate.getId()), ProductEto.class);
 
     assertThat(product.getResponse().getStatus(), is(200));
     assertThat(product.getResponseObject().getName(), is(productToUpdate.getName()));
@@ -304,9 +304,9 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
 
     Long drinkId = createDrink().getId();
     this.chief.post(TestData.createOffer(null, "some description", OfferState.NORMAL, null, null, drinkId, 0,
-        new Money(new BigDecimal(2.5))), RestUrls.OfferManagement.Offer.getCreateOfferUrl(), OfferEto.class);
+        new Money(new BigDecimal(2.5))), RestUrls.Offermanagement.Offer.getCreateOfferUrl(), OfferEto.class);
     ResponseData<Boolean> isproductInUse =
-        this.waiter.get(RestUrls.OfferManagement.Product.getIsProductInUseByOfferUrl(drinkId), Boolean.class);
+        this.waiter.get(RestUrls.Offermanagement.Product.getIsProductInUseByOfferUrl(drinkId), Boolean.class);
     assertThat(isproductInUse.getResponseObject(), is(true));
   }
 
@@ -320,7 +320,7 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
     OfferSortBy sortBy = new OfferSortBy();
 
     List<ResponseData<OfferEto>> offer =
-        this.waiter.getAll(RestUrls.OfferManagement.Offer.getFilteredOffers(sortBy), OfferEto.class);
+        this.waiter.getAll(RestUrls.Offermanagement.Offer.getFilteredOffers(sortBy), OfferEto.class);
     assertThat(offer.size(), is(DB.ALL_OFFERS.size()));
   }
 
@@ -334,7 +334,7 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
     ProductSortBy sortBy = new ProductSortBy();
 
     List<ResponseData<ProductEto>> offer =
-        this.waiter.getAll(RestUrls.OfferManagement.Product.getFilteredProducts(sortBy), ProductEto.class);
+        this.waiter.getAll(RestUrls.Offermanagement.Product.getFilteredProducts(sortBy), ProductEto.class);
     assertThat(offer.size(), is(DB.ALL_PRODUCTS.size()));
   }
 }

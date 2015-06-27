@@ -21,7 +21,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 /**
- * Interface for OfferManagement.
+ * Interface for Offermanagement.
  *
  * @author loverbec
  */
