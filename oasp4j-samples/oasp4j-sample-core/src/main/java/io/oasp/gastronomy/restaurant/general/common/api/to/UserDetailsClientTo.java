@@ -31,45 +31,30 @@ public class UserDetailsClientTo extends AbstractTo implements UserProfile {
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Long getId() {
 
     return this.id;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String getName() {
 
     return this.name;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String getFirstName() {
 
     return this.firstName;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public String getLastName() {
 
     return this.lastName;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Role getRole() {
 

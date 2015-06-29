@@ -1,7 +1,7 @@
 package io.oasp.gastronomy.restaurant.general.dataaccess.base.dao;
 
-import io.oasp.module.jpa.dataaccess.api.RevisionedMasterDataDao;
 import io.oasp.module.jpa.dataaccess.api.MutablePersistenceEntity;
+import io.oasp.module.jpa.dataaccess.api.RevisionedMasterDataDao;
 
 import java.util.List;
 
@@ -23,9 +23,6 @@ public abstract class ApplicationMasterDataDaoImpl<ENTITY extends MutablePersist
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public List<ENTITY> findAll() {
 

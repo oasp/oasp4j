@@ -23,9 +23,6 @@ public class SimpleAccessControlBasedAuthenticationProvider extends
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   protected User createUser(String username, String password, Principal principal, Set<GrantedAuthority> authorities) {
 
@@ -33,9 +30,6 @@ public class SimpleAccessControlBasedAuthenticationProvider extends
     return user;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   protected Principal retrievePrincipal(String username, UsernamePasswordAuthenticationToken authentication) {
 

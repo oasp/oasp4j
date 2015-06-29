@@ -22,8 +22,8 @@ public enum PaymentStatus {
     TIME_OUT_ERROR;
 
     /**
-     * @return <code>true</code>, if the {@link PaymentStatus} equals {@link PaymentStatus#SUCCESS}.
-     *         <code>false</code> otherwise.
+     * @return {@code true}, if the {@link PaymentStatus} equals {@link PaymentStatus#SUCCESS}.
+     *         {@code false} otherwise.
      */
     public boolean isSuccessful() {
         return this == SUCCESS;
@@ -31,8 +31,8 @@ public enum PaymentStatus {
 
     /**
      * 
-     * @return <code>true</code>, if the {@link PaymentStatus} equals {@link PaymentStatus#INPUT_DATA_ERROR}
-     *         or {@link PaymentStatus#TIME_OUT_ERROR}. <code>false</code> otherwise.
+     * @return {@code true}, if the {@link PaymentStatus} equals {@link PaymentStatus#INPUT_DATA_ERROR}
+     *         or {@link PaymentStatus#TIME_OUT_ERROR}. {@code false} otherwise.
      */
     public boolean isUnsuccessful() {
         return (this == INPUT_DATA_ERROR || this == TIME_OUT_ERROR);

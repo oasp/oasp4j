@@ -81,8 +81,8 @@ public class RestServiceExceptionFacadeTest extends ModuleTest {
     Set<ConstraintViolation<CounterTest>> violations = validator.validate(counter);
 
     RestServiceExceptionFacade exceptionFacade = getExceptionFacade();
-    String message = "{count=[must be greater than or equal to 10]}";
-    String errors = "{count=[must be greater than or equal to 10]}";
+    String message = "{count=[" + violations.iterator().next().getMessage() + "]}";
+    String errors = "{count=[" + violations.iterator().next().getMessage() + "]}";
     Throwable error = new ConstraintViolationException(violations);
     checkFacade(exceptionFacade, error, 400, message, UUID_ANY, ValidationErrorUserException.CODE, errors);
 
@@ -144,9 +144,9 @@ public class RestServiceExceptionFacadeTest extends ModuleTest {
    * @param statusCode is the expected {@link Response#getStatus() status} code.
    * @param message is the expected {@link Throwable#getMessage() error message} from the JSON result.
    * @param uuid is the expected {@link NlsRuntimeException#getUuid() UUID} from the JSON result. May be
-   *        <code>null</code>.
+   *        {@code null}.
    * @param code is the expected {@link NlsRuntimeException#getCode() error code} from the JSON result. May be
-   *        <code>null</code>.
+   *        {@code null}.
    * @return the JSON result for potential further asserts.
    */
   protected String checkFacade(RestServiceExceptionFacade exceptionFacade, Throwable error, int statusCode,
@@ -164,9 +164,9 @@ public class RestServiceExceptionFacadeTest extends ModuleTest {
    * @param statusCode is the expected {@link Response#getStatus() status} code.
    * @param message is the expected {@link Throwable#getMessage() error message} from the JSON result.
    * @param uuid is the expected {@link NlsRuntimeException#getUuid() UUID} from the JSON result. May be
-   *        <code>null</code>.
+   *        {@code null}.
    * @param code is the expected {@link NlsRuntimeException#getCode() error code} from the JSON result. May be
-   *        <code>null</code>.
+   *        {@code null}.
    * @param errors is the expected validation errors in a format key-value
    * @return the JSON result for potential further asserts.
    */

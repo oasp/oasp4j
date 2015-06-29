@@ -34,18 +34,12 @@ public abstract class ProductEntity extends MenuItemEntity implements Product {
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Long getPictureId() {
 
     return this.pictureId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setPictureId(Long binaryObjectId) {
 

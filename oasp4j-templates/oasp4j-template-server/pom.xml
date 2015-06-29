@@ -15,7 +15,9 @@
   <description>Application template for the server of the Open Application Standard Platform for Java (OASP4J).</description>
 
   <properties>
+    <template.java.version>${java.version}</template.java.version>
     <template.input>${basedir}/src/main/templates/archetype-resources</template.input>
+    <filtered.input>${basedir}/target/archetype</filtered.input>
     <sample.package>io.oasp.gastronomy.restaurant</sample.package>
     <sample.package.path>io/oasp/gastronomy/restaurant</sample.package.path>
     <sample.input>../../oasp4j-samples</sample.input>
@@ -51,6 +53,12 @@
   </properties>
 
   <build>
+    <resources>
+      <resource>
+        <directory>${basedir}/src/main/resources/</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
     <outputDirectory>target/archetype</outputDirectory>
     <extensions>
       <extension>
@@ -61,10 +69,20 @@
     </extensions>
 
 		<plugins>
-			<plugin>
-				<artifactId>maven-archetype-plugin</artifactId>
-				<version>2.2</version>
-			</plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <delimiters>
+            <delimiter>^*^</delimiter>
+          </delimiters>
+          <useDefaultDelimiters>false</useDefaultDelimiters>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-archetype-plugin</artifactId>
+        <version>2.2</version>
+      </plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

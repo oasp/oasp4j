@@ -38,7 +38,7 @@ public enum OrderPositionState {
   CANCELLED;
 
   /**
-   * @return <code>true</code> if the
+   * @return {@code true} if the
    *         {@link io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderPositionEntity} is ordered
    */
   public boolean isOrdered() {
@@ -47,7 +47,7 @@ public enum OrderPositionState {
   }
 
   /**
-   * @return <code>true</code> if the
+   * @return {@code true} if the
    *         {@link io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderPositionEntity} is closed (has
    *         reached its final state).
    */
@@ -57,7 +57,7 @@ public enum OrderPositionState {
   }
 
   /**
-   * @return <code>true</code> if the
+   * @return {@code true} if the
    *         {@link io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderPositionEntity} is delivered.
    */
   public boolean isDelivered() {
@@ -66,7 +66,7 @@ public enum OrderPositionState {
   }
 
   /**
-   * @return <code>true</code> if the
+   * @return {@code true} if the
    *         {@link io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderPositionEntity} is prepared
    */
   public boolean isPrepared() {
@@ -75,7 +75,7 @@ public enum OrderPositionState {
   }
 
   /**
-   * @return <code>true</code> if the
+   * @return {@code true} if the
    *         {@link io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderPositionEntity} is payed
    */
   public boolean isPayed() {

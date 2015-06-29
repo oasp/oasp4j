@@ -3,6 +3,7 @@ package io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao;
 import io.oasp.gastronomy.restaurant.general.dataaccess.api.dao.ApplicationDao;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface OrderDao extends ApplicationDao<OrderEntity> {
    * @return the {@link OrderEntity} with the given {@link OrderEntity#getTableId() table ID} in
    *         {@link OrderEntity#getState() state}
    *         {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState#OPEN} or
-   *         <code>null</code> if no such entity exists.
+   *         {@code null} if no such entity exists.
    */
   OrderEntity findOpenOrderByTable(long tableId);
 
@@ -30,6 +31,6 @@ public interface OrderDao extends ApplicationDao<OrderEntity> {
    * @param criteria is the {@link OrderSearchCriteriaTo}.
    * @return the {@link List} with the matching {@link OrderEntity} objects.
    */
-  List<OrderEntity> findOrders(OrderSearchCriteriaTo criteria);
+  PaginatedListTo<OrderEntity> findOrders(OrderSearchCriteriaTo criteria);
 
 }

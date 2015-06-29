@@ -27,9 +27,6 @@ public class MixInAnnotationsModule extends SimpleModule {
     this.polymorphicClasses = polymorphicClasses;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setupModule(SetupContext context) {
 

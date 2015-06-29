@@ -25,9 +25,6 @@ public abstract class AbstractMasterDataDao<E extends PersistenceEntity<Long>> e
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public List<E> findAll() {
 

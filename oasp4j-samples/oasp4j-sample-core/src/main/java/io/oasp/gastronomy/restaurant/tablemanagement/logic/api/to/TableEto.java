@@ -4,6 +4,8 @@ import io.oasp.gastronomy.restaurant.general.common.api.to.AbstractEto;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.Table;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
 
+import javax.validation.constraints.Max;
+
 /**
  * {@link AbstractEto ETO} for {@link Table}.
  *
@@ -15,6 +17,7 @@ public class TableEto extends AbstractEto implements Table {
 
   private Long waiterId;
 
+  @Max(value = 1000)
   private Long number;
 
   private TableState state;
@@ -27,59 +30,42 @@ public class TableEto extends AbstractEto implements Table {
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Long getNumber() {
 
     return this.number;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setNumber(Long number) {
 
     this.number = number;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  @Override
   public Long getWaiterId() {
 
     return this.waiterId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  @Override
   public void setWaiterId(Long waiterId) {
 
     this.waiterId = waiterId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  @Override
   public TableState getState() {
 
     return this.state;
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  @Override
   public void setState(TableState state) {
 
     this.state = state;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public int hashCode() {
 
@@ -90,9 +76,6 @@ public class TableEto extends AbstractEto implements Table {
     return result;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean equals(Object obj) {
 

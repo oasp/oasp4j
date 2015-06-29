@@ -54,9 +54,6 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Long getId() {
 
@@ -114,18 +111,12 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
     this.user = user;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public int getModificationCounter() {
 
     return 0;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Number getRevision() {
 

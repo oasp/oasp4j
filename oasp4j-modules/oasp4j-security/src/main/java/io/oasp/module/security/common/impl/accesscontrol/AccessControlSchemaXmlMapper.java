@@ -48,9 +48,6 @@ public class AccessControlSchemaXmlMapper implements AccessControlSchemaMapper {
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void write(AccessControlSchema conf, OutputStream out) {
 
@@ -62,9 +59,6 @@ public class AccessControlSchemaXmlMapper implements AccessControlSchemaMapper {
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public AccessControlSchema read(InputStream in) {
 
@@ -108,9 +102,6 @@ public class AccessControlSchemaXmlMapper implements AccessControlSchemaMapper {
 
     SchemaOutputResolver sor = new SchemaOutputResolver() {
 
-      /**
-       * {@inheritDoc}
-       */
       @Override
       public Result createOutput(String namespaceUri, String suggestedFileName) throws IOException {
 
@@ -140,9 +131,6 @@ public class AccessControlSchemaXmlMapper implements AccessControlSchemaMapper {
       super();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean handleEvent(ValidationEvent event) {
 

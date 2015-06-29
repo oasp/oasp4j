@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.general.logic.base;
 
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSupport;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 import net.sf.mmm.util.entity.api.GenericEntity;
+import net.sf.mmm.util.entity.api.PersistenceEntity;
+import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
+import net.sf.mmm.util.transferobject.api.TransferObject;
 
 /**
  * Abstract base class for any <em>use case</em> in this application. Actual implementations need to be annotated with
@@ -33,9 +37,28 @@ public abstract class AbstractUc extends AbstractBeanMapperSupport {
   }
 
   /**
+   * Maps a {@link PaginatedListTo paginated list} of persistent entities to a {@link PaginatedListTo paginated list} of
+   * transfer objects.
+   *
+   * @param <T> is the generic type of the {@link AbstractTransferObject transfer object}.
+   * @param <E> is the generic type of the {@link PersistenceEntity entity}.
+   * @param paginatedList is the paginated list to map from.
+   * @param klass is the target class to map the paginated entities to.
+   * @return a {@link PaginatedListTo paginated list of entity transfer objects}.
+   */
+  protected <T extends TransferObject, E extends PersistenceEntity<?>> PaginatedListTo<T> mapPaginatedEntityList(
+      PaginatedListTo<E> paginatedList, Class<T> klass) {
+
+    List<T> etoList = getBeanMapper().mapList(paginatedList.getResult(), klass);
+    PaginatedListTo<T> result = new PaginatedListTo<>(etoList, paginatedList.getPagination());
+
+    return result;
+  }
+
+  /**
    * Creates a {@link Map} with all {@link GenericEntity entities} from the given {@link Collection} using their
    * {@link GenericEntity#getId() ID} as key. All {@link GenericEntity entities} without an
-   * {@link GenericEntity#getId() ID} (<code>null</code>) will be ignored.
+   * {@link GenericEntity#getId() ID} ({@code null}) will be ignored.
    *
    * @param <ID> is the generic type of the {@link GenericEntity#getId() ID}.
    * @param <E> is the generic type of the {@link GenericEntity entity}.
@@ -63,7 +86,7 @@ public abstract class AbstractUc extends AbstractBeanMapperSupport {
    * @param <E> is the generic type of the {@link GenericEntity entity}.
    * @param currentEntities is the {@link Collection} of the {@link GenericEntity entities} currently persisted. We
    *        assume that all objects in this list have an {@link GenericEntity#getId() ID} value (that is not
-   *        <code>null</code>).
+   *        {@code null}).
    * @param entitiesToSave is the {@link Collection} that contains the {@link GenericEntity entities} that shall be
    *        saved. It may contain {@link GenericEntity entities} that have no {@link GenericEntity#getId() ID} that
    *        shall be newly created.

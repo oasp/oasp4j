@@ -22,7 +22,7 @@ public interface RestUrls {
     /**
     *
     */
-    public final static String SALES_MANAGEMENT_URL = "/services/rest/salesmanagement";
+    public final static String SALES_MANAGEMENT_URL = "/services/rest/salesmanagement/v1";
 
     /**
      * Order Urls
@@ -167,7 +167,7 @@ public interface RestUrls {
     /**
      *
      */
-    public final static String STAFF_MANAGEMENT_URL = "/services/rest/staffmanagement/staff";
+    public final static String STAFF_MANAGEMENT_URL = "/services/rest/staffmanagement/v1/staff";
 
     /**
      * @return Url
@@ -223,7 +223,7 @@ public interface RestUrls {
     /**
      *
      */
-    public final static String TABLE_MANAGEMENT_URL = "/services/rest/tablemanagement";
+    public final static String TABLE_MANAGEMENT_URL = "/services/rest/tablemanagement/v1";
 
     /**
      *
@@ -303,7 +303,7 @@ public interface RestUrls {
     /**
      *
      */
-    public static final String OFFER_MANAGEMENT_URL = "/services/rest/offermanagement";
+    public static final String OFFER_MANAGEMENT_URL = "/services/rest/offermanagement/v1";
 
     /**
      * Offer Urls

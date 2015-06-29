@@ -26,9 +26,6 @@ public class PrincipalGroupProviderGroupImpl implements PrincipalAccessControlPr
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Collection<String> getAccessControlIds(Group principal) {
 

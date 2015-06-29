@@ -15,9 +15,6 @@ import com.fasterxml.jackson.databind.SerializerProvider;
  */
 public final class MoneyJsonSerializer extends JsonSerializer<Money> {
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void serialize(Money value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
 

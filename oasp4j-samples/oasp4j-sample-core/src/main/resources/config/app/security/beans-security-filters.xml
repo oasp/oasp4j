@@ -141,6 +141,5 @@
     <property name="accessDeniedHandler" ref="ApplicationAccessDeniedHandler"/>
   </bean>
 
-  <bean id="CORSFilter" class="io.oasp.module.web.common.base.CORSFilter" />
 
 </beans>

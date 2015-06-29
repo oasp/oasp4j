@@ -9,7 +9,7 @@ public interface Usermanagement {
 
   /**
    * @param login The login of the requested user.
-   * @return The {@link UserProfile} with the given <code>login</code> or <code>null</code> if no such object exists.
+   * @return The {@link UserProfile} with the given <code>login</code> or {@code null} if no such object exists.
    */
   UserProfile findUserProfileByLogin(String login);
 

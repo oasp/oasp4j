@@ -16,9 +16,6 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
  */
 public final class MoneyJsonDeserializer extends JsonDeserializer<Money> {
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Money deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
 
