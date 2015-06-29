@@ -4,10 +4,9 @@ import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
-import org.hibernate.envers.Audited;
 
 /**
  * The {@link ApplicationPersistenceEntity persistent entity} for a special.
@@ -16,12 +15,12 @@ import org.hibernate.envers.Audited;
  */
 @Entity(name = "Special")
 @Table(name = "Special")
-@Audited
 public class SpecialEntity {
 
   private OfferEntity offer;
 
-  private WeeklyPeriodEntity activePeriod;
+  @Embedded
+  private WeeklyPeriodEmbeddable activePeriod;
 
   private Money specialPrice;
 
@@ -46,21 +45,21 @@ public class SpecialEntity {
   }
 
   /**
-   * Returns the {@link WeeklyPeriodEntity active period} this special applies for.
+   * Returns the {@link WeeklyPeriodEmbeddable active period} this special applies for.
    *
-   * @return activePeriod the {@link WeeklyPeriodEntity active period} this special applies for.
+   * @return activePeriod the {@link WeeklyPeriodEmbeddable active period} this special applies for.
    */
-  public WeeklyPeriodEntity getActivePeriod() {
+  public WeeklyPeriodEmbeddable getActivePeriod() {
 
     return this.activePeriod;
   }
 
   /**
-   * Sets the {@link WeeklyPeriodEntity active period} this special applies for.
+   * Sets the {@link WeeklyPeriodEmbeddable active period} this special applies for.
    *
-   * @param activePeriod the {@link WeeklyPeriodEntity active period} this special applies for.
+   * @param activePeriod the {@link WeeklyPeriodEmbeddable active period} this special applies for.
    */
-  public void setActivePeriod(WeeklyPeriodEntity activePeriod) {
+  public void setActivePeriod(WeeklyPeriodEmbeddable activePeriod) {
 
     this.activePeriod = activePeriod;
   }
