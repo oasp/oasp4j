@@ -4,6 +4,7 @@ import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer;
 
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -17,12 +18,35 @@ import javax.persistence.Table;
 @Table(name = "Special")
 public class SpecialEntity {
 
+  private String name;
+
   private OfferEntity offer;
 
   @Embedded
   private WeeklyPeriodEmbeddable activePeriod;
 
   private Money specialPrice;
+
+  /**
+   * Returns the name of this special.
+   *
+   * @return name the name of this special.
+   */
+  @Column(unique = true)
+  public String getName() {
+
+    return this.name;
+  }
+
+  /**
+   * Sets the name of this special.
+   *
+   * @param name the name of this special.
+   */
+  public void setName(String name) {
+
+    this.name = name;
+  }
 
   /**
    * Returns the {@link Offer} this special applies for.
