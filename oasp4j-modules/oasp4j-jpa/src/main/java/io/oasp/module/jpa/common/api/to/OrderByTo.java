@@ -11,7 +11,7 @@ public class OrderByTo extends AbstractTransferObject {
 
   private String name;
 
-  private OrderBy direction;
+  private OrderDirection direction;
 
   /**
    * The constructor.
@@ -46,7 +46,7 @@ public class OrderByTo extends AbstractTransferObject {
    *
    * @return Value of direction
    */
-  public OrderBy getDirection() {
+  public OrderDirection getDirection() {
 
     return this.direction;
   }
@@ -56,7 +56,7 @@ public class OrderByTo extends AbstractTransferObject {
    *
    * @param direction New value for direction
    */
-  public void setDirection(OrderBy direction) {
+  public void setDirection(OrderDirection direction) {
 
     this.direction = direction;
   }
