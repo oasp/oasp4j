@@ -21,7 +21,7 @@
     <java.version>1.7</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <oasp4j.version>1.3.0-SNAPSHOT</oasp4j.version>
+    <oasp4j.version>1.3.0</oasp4j.version>
     <port.range>81</port.range>
     <oasp.gpg.keyname>joerg.hohwiller@capgemini.com</oasp.gpg.keyname>
     <oasp.flatten.mode>oss</oasp.flatten.mode>
