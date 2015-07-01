@@ -3,6 +3,7 @@ package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException;
 import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalPropertyChangeException;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
@@ -34,6 +35,7 @@ import org.slf4j.LoggerFactory;
  * @author jozitz
  */
 @Named
+@UseCase
 public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implements UcManageOrderPosition {
 
   /** Logger instance. */
@@ -51,9 +53,6 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_ORDER_POSITION)
   public OrderPositionEto createOrderPosition(OfferEto offer, OrderEto order, String comment) {
@@ -83,9 +82,6 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
     return getBeanMapper().map(orderPosition, OrderPositionEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_ORDER_POSITION)
   public OrderPositionEto saveOrderPosition(OrderPositionEto orderPosition) {

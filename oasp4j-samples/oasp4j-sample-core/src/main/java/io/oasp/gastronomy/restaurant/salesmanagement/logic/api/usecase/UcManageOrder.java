@@ -31,7 +31,7 @@ public interface UcManageOrder {
 
   /**
    * Persists new {@link OrderEto} with table ID set to ID of the given {@link TableEto}.
-   * 
+   *
    * @param table
    * @return The persisted {@link OrderEto}.
    */

@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderPositionEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionSearchCriteriaTo;
@@ -21,13 +22,11 @@ import org.slf4j.LoggerFactory;
  * @author jozitz
  */
 @Named
+@UseCase
 public class UcFindOrderPositionImpl extends AbstractOrderPositionUc implements UcFindOrderPosition {
 
   private static final Logger LOG = LoggerFactory.getLogger(UcFindOrderPositionImpl.class);
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_ORDER_POSITION)
   public OrderPositionEto findOrderPosition(Long orderPositionId) {
@@ -38,9 +37,6 @@ public class UcFindOrderPositionImpl extends AbstractOrderPositionUc implements 
     return orderPositionBo;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_ORDER_POSITION)
   public List<OrderPositionEto> findOrderPositionsByOrderId(Long orderId) {
@@ -49,9 +45,6 @@ public class UcFindOrderPositionImpl extends AbstractOrderPositionUc implements 
     return getBeanMapper().mapList(positions, OrderPositionEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_ORDER_POSITION)
   public List<OrderPositionEto> findOpenOrderPositionsByOrderId(Long orderId) {
@@ -61,9 +54,6 @@ public class UcFindOrderPositionImpl extends AbstractOrderPositionUc implements 
         .mapList(getOrderPositionDao().findOpenOrderPositionsByOrder(orderId), OrderPositionEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.FIND_ORDER_POSITION)
   public List<OrderPositionEto> findOrderPositions(OrderPositionSearchCriteriaTo criteria) {

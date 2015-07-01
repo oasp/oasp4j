@@ -1,16 +1,26 @@
 package io.oasp.gastronomy.restaurant.staffmanagement.logic.impl;
 
-import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSupport;
+import io.oasp.gastronomy.restaurant.general.common.api.UserProfile;
+import io.oasp.gastronomy.restaurant.general.common.api.Usermanagement;
+import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
+import io.oasp.gastronomy.restaurant.general.logic.base.AbstractComponentFacade;
+import io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api.StaffMemberEntity;
+import io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api.dao.StaffMemberDao;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.Staffmanagement;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto;
-import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.usecase.UcFindStaffMember;
-import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.usecase.UcManageStaffMember;
+import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberSearchCriteriaTo;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,85 +30,130 @@ import org.springframework.stereotype.Component;
  */
 @Named
 @Component
-public class StaffmanagementImpl extends AbstractBeanMapperSupport implements Staffmanagement {
+public class StaffmanagementImpl extends AbstractComponentFacade implements Staffmanagement, Usermanagement {
 
-  private UcFindStaffMember ucFindStaffMember;
+  /** Logger instance. */
+  private static final Logger LOG = LoggerFactory.getLogger(StaffmanagementImpl.class);
 
-  private UcManageStaffMember ucManageStaffMember;
-
-  /**
-   * Sets the field 'ucFindStaffMember'.
-   *
-   * @param ucFindStaffMember New value for ucFindStaffMember
-   */
-  @Inject
-  public void setUcFindStaffMember(UcFindStaffMember ucFindStaffMember) {
-
-    this.ucFindStaffMember = ucFindStaffMember;
-  }
+  /** @see #getStaffMemberDao() */
+  private StaffMemberDao staffMemberDao;
 
   /**
-   * Sets the field 'ucManageStaffMember'.
-   *
-   * @param ucManageStaffMember New value for ucManageStaffMember
-   */
-  @Inject
-  public void setUcManageStaffMember(UcManageStaffMember ucManageStaffMember) {
-
-    this.ucManageStaffMember = ucManageStaffMember;
-  }
-
-  /**
-   * {@inheritDoc}
+   * Do not extract this method as a service, because of PermitAll. (only for login)
    */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_STAFF_MEMBER)
   public StaffMemberEto findStaffMemberByLogin(String login) {
 
-    return this.ucFindStaffMember.findStaffMemberByLogin(login);
+    return privateFindStaffMemberByLogin(login);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_STAFF_MEMBER)
   public StaffMemberEto findStaffMember(Long id) {
 
-    return this.ucFindStaffMember.findStaffMember(id);
+    return getBeanMapper().map(getStaffMemberDao().find(id), StaffMemberEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
+  @RolesAllowed(PermissionConstants.FIND_STAFF_MEMBER)
   public List<StaffMemberEto> findAllStaffMembers() {
 
-    return this.ucFindStaffMember.findAllStaffMembers();
+    List<StaffMemberEntity> members = getStaffMemberDao().findAll();
+    List<StaffMemberEto> membersBo = new ArrayList<>();
+
+    for (StaffMemberEntity member : members) {
+      membersBo.add(getBeanMapper().map(member, StaffMemberEto.class));
+    }
+
+    return membersBo;
+  }
+
+  @Override
+  @RolesAllowed(PermissionConstants.FIND_STAFF_MEMBER)
+  public PaginatedListTo<StaffMemberEto> findStaffMemberEtos(StaffMemberSearchCriteriaTo criteria) {
+
+    // Uncomment next line in order to limit the maximum page size for the staff member search
+    // criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
+
+    PaginatedListTo<StaffMemberEntity> offers = getStaffMemberDao().findStaffMembers(criteria);
+    return mapPaginatedEntityList(offers, StaffMemberEto.class);
+  }
+
+  @Override
+  // used during authentication so not authorization annotation (not even @PermitAll) can be used here
+  public UserProfile findUserProfileByLogin(String login) {
+
+    return privateFindStaffMemberByLogin(login);
   }
 
   /**
-   * {@inheritDoc}
+   * Do not extract this method as a service, because of PermitAll. (only for login)
    */
-  @Override
-  public StaffMemberEto saveStaffMember(StaffMemberEto staffMember) {
+  private StaffMemberEto privateFindStaffMemberByLogin(String login) {
 
-    return this.ucManageStaffMember.saveStaffMember(staffMember);
+    return getBeanMapper().map(getStaffMemberDao().findByLogin(login), StaffMemberEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
+  @RolesAllowed(PermissionConstants.DELETE_STAFF_MEMBER)
   public void deleteStaffMemberByLogin(String login) {
 
-    this.ucManageStaffMember.deleteStaffMemberByLogin(login);
+    getStaffMemberDao().delete(getStaffMemberDao().findByLogin(login));
+  }
+
+  @Override
+  @RolesAllowed(PermissionConstants.DELETE_STAFF_MEMBER)
+  public void deleteStaffMember(Long staffMemberId) {
+
+    getStaffMemberDao().delete(staffMemberId);
+  }
+
+  @Override
+  @RolesAllowed(PermissionConstants.SAVE_STAFF_MEMBER)
+  public StaffMemberEto saveStaffMember(StaffMemberEto staffMember) {
+
+    Objects.requireNonNull(staffMember, "staffMemaber");
+
+    Long id = staffMember.getId();
+    StaffMemberEntity targetStaffMember = null;
+
+    if (id != null) {
+      targetStaffMember = getStaffMemberDao().find(id);
+    }
+    if (targetStaffMember == null) {
+      // StaffMember is new: -> create
+      LOG.debug("Saving StaffMember with id '{}' to the database.", id);
+    } else {
+      // StaffMember already exists: -> Update
+      LOG.debug("Updating StaffMember with id '{}' in the database.", id);
+      if (!Objects.equals(targetStaffMember.getName(), staffMember.getName())) {
+        LOG.debug("Chaning login of StaffMember with id '{}' from '{}' to '{}' in the database.", id,
+            targetStaffMember.getName(), staffMember.getName());
+      }
+    }
+    StaffMemberEntity persistedStaffMember =
+        getStaffMemberDao().save(getBeanMapper().map(staffMember, StaffMemberEntity.class));
+    return getBeanMapper().map(persistedStaffMember, StaffMemberEto.class);
   }
 
   /**
-   * {@inheritDoc}
+   * @return the {@link StaffMemberDao} instance.
    */
-  @Override
-  public void deleteStaffMember(Long staffMemberId) {
+  public StaffMemberDao getStaffMemberDao() {
 
-    this.ucManageStaffMember.deleteStaffMember(staffMemberId);
+    return this.staffMemberDao;
   }
+
+  /**
+   * Sets the field 'staffMemberDao'.
+   *
+   * @param staffMemberDao New value for staffMemberDao
+   */
+  @Inject
+  public void setStaffMemberDao(StaffMemberDao staffMemberDao) {
+
+    this.staffMemberDao = staffMemberDao;
+  }
+
 }

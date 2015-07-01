@@ -37,9 +37,6 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
     this.state = OrderState.OPEN;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @Column(name = "table_id")
   public long getTableId() {
@@ -47,27 +44,18 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
     return this.tableId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setTableId(long tableId) {
 
     this.tableId = tableId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderState getState() {
 
     return this.state;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setState(OrderState state) {
 

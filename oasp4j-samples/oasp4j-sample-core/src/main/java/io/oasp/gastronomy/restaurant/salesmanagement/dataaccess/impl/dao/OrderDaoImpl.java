@@ -6,6 +6,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderSt
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.OrderDao;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.List;
 
@@ -37,18 +38,12 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Class<OrderEntity> getEntityClass() {
 
     return OrderEntity.class;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderEntity findOpenOrderByTable(long tableId) {
 
@@ -66,15 +61,13 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public List<OrderEntity> findOrders(OrderSearchCriteriaTo criteria) {
+  public PaginatedListTo<OrderEntity> findOrders(OrderSearchCriteriaTo criteria) {
 
     OrderEntity order = Alias.alias(OrderEntity.class);
     EntityPathBase<OrderEntity> alias = Alias.$(order);
     JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
+
     Long tableId = criteria.getTableId();
     if (tableId != null) {
       query.where(Alias.$(order.getTableId()).eq(tableId));
@@ -83,7 +76,7 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
     if (state != null) {
       query.where(Alias.$(order.getState()).eq(state));
     }
-    applyCriteria(criteria, query);
-    return query.list(alias);
+
+    return findPaginated(criteria, query, alias);
   }
 }

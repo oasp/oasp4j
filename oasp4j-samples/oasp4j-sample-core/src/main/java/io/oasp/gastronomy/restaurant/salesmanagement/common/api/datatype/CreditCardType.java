@@ -17,7 +17,7 @@ public enum CreditCardType {
   MASTERCARD;
 
   /**
-   * @return <code>true</code>, if the {@link CreditCardType} equals {@link CreditCardType#VISA}. <code>false</code>
+   * @return {@code true}, if the {@link CreditCardType} equals {@link CreditCardType#VISA}. {@code false}
    *         otherwise.
    */
   public boolean isVisa() {
@@ -26,7 +26,7 @@ public enum CreditCardType {
   }
 
   /**
-   * @return <code>true</code>, if the {@link CreditCardType} equals {@link CreditCardType#AMEX}. <code>false</code>
+   * @return {@code true}, if the {@link CreditCardType} equals {@link CreditCardType#AMEX}. {@code false}
    *         otherwise.
    */
   public boolean isAmex() {
@@ -35,8 +35,8 @@ public enum CreditCardType {
   }
 
   /**
-   * @return <code>true</code>, if the {@link CreditCardType} equals {@link CreditCardType#MASTERCARD}.
-   *         <code>false</code> otherwise.
+   * @return {@code true}, if the {@link CreditCardType} equals {@link CreditCardType#MASTERCARD}.
+   *         {@code false} otherwise.
    */
   public boolean isMastercard() {
 

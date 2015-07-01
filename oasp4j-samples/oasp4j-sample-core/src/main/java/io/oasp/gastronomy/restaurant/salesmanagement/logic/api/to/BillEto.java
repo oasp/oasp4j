@@ -32,81 +32,54 @@ public class BillEto extends AbstractEto implements Bill {
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public List<Long> getOrderPositionIds() {
 
     return this.orderPositionIds;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setOrderPositionIds(List<Long> orderPositions) {
 
     this.orderPositionIds = orderPositions;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Money getTotal() {
 
     return this.total;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setTotal(Money total) {
 
     this.total = total;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Money getTip() {
 
     return this.tip;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setTip(Money tip) {
 
     this.tip = tip;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean isPayed() {
 
     return this.payed;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setPayed(boolean payed) {
 
     this.payed = payed;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public int hashCode() {
 
@@ -119,9 +92,6 @@ public class BillEto extends AbstractEto implements Bill {
     return result;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean equals(Object obj) {
 

@@ -33,7 +33,7 @@ public interface Bill extends ApplicationEntity {
   void setTip(Money tip);
 
   /**
-   * @return <code>true</code> if this {@link Bill} has been payed, <code>false</code> otherwise.
+   * @return {@code true} if this {@link Bill} has been payed, {@code false} otherwise.
    */
   boolean isPayed();
 

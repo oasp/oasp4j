@@ -107,7 +107,7 @@ public class WebClientWrapper {
   public void setCsrfHeader() {
 
     String myToken;
-    this.webClient = this.webClient.replacePath("/services/rest/security/csrftoken/");
+    this.webClient = this.webClient.replacePath("/services/rest/security/v1/csrftoken/");
 
     // Response response = this.webClient.get();
 

@@ -20,7 +20,7 @@ public enum OrderState {
   CLOSED;
 
   /**
-   * @return <code>true</code> if the {@link io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderEntity}
+   * @return {@code true} if the {@link io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderEntity}
    *         is ordered
    */
   public boolean isOpen() {
@@ -29,7 +29,7 @@ public enum OrderState {
   }
 
   /**
-   * @return <code>true</code> if the {@link io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderEntity}
+   * @return {@code true} if the {@link io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderEntity}
    *         is closed (has reached its final state).
    */
   public boolean isClosed() {

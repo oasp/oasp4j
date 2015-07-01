@@ -24,9 +24,6 @@ public class MoneyAttributeConverter implements AttributeConverter<Money, BigDec
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public BigDecimal convertToDatabaseColumn(Money attribute) {
 
@@ -36,9 +33,6 @@ public class MoneyAttributeConverter implements AttributeConverter<Money, BigDec
     return attribute.getValue();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Money convertToEntityAttribute(BigDecimal dbData) {
 

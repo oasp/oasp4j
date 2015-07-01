@@ -41,9 +41,6 @@ public class DrinkEto extends ProductEto implements Drink {
     this.alcoholic = alcoholic;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public int hashCode() {
 
@@ -53,9 +50,6 @@ public class DrinkEto extends ProductEto implements Drink {
     return result;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean equals(Object obj) {
 

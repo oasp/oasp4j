@@ -61,9 +61,6 @@ public class DiagnosticContextFilter implements Filter {
     this.correlationIdHttpHeaderName = correlationIdHttpHeaderName;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void destroy() {
 
@@ -80,9 +77,6 @@ public class DiagnosticContextFilter implements Filter {
     return null;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
       ServletException {
@@ -132,9 +126,6 @@ public class DiagnosticContextFilter implements Filter {
     this.diagnosticContextFacade = diagnosticContextFacade;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void init(FilterConfig config) throws ServletException {
 

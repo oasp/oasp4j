@@ -3,6 +3,7 @@ package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.PaymentStatus;
@@ -35,6 +36,7 @@ import org.slf4j.LoggerFactory;
  * @author jozitz
  */
 @Named
+@UseCase
 public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
 
   /** Logger instance. */
@@ -44,9 +46,6 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
 
   private PaymentAdapter paymentAdapter;
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_BILL)
   public BillEto createBill(BillEto bill) {
@@ -139,9 +138,6 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.DELETE_BILL)
   public void deleteBill(Long billId) {
@@ -149,9 +145,6 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
     getBillDao().delete(billId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_BILL)
   public PaymentStatus doPayment(BillEto bill) {
@@ -163,9 +156,6 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
     return PaymentStatus.SUCCESS;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_BILL)
   public PaymentStatus doPayment(BillEto bill, PaymentData paymentDataDebitor) {

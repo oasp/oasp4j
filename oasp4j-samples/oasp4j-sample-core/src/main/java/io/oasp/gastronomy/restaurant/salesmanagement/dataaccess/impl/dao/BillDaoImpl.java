@@ -14,9 +14,6 @@ import javax.inject.Named;
 @Named
 public class BillDaoImpl extends ApplicationDaoImpl<BillEntity> implements BillDao {
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Class<BillEntity> getEntityClass() {
 

@@ -22,9 +22,6 @@ public class DrinkDaoImpl extends ApplicationMasterDataDaoImpl<DrinkEntity> impl
     super();
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   protected Class<DrinkEntity> getEntityClass() {
 

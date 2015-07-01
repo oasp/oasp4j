@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl;
 
-import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSupport;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
+import io.oasp.gastronomy.restaurant.general.logic.base.AbstractComponentFacade;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.PaymentStatus;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
@@ -20,6 +21,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageB
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrder;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrderPosition;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.List;
 
@@ -32,7 +34,7 @@ import javax.inject.Named;
  * @author hohwille
  */
 @Named
-public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Salesmanagement {
+public class SalesmanagementImpl extends AbstractComponentFacade implements Salesmanagement {
 
   private UcFindOrderPosition ucFindOrderPosition;
 
@@ -60,6 +62,7 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * @param ucFindOrderPosition the {@link UcFindOrderPosition} to {@link Inject}.
    */
   @Inject
+  @UseCase
   public void setUcFindOrderPosition(UcFindOrderPosition ucFindOrderPosition) {
 
     this.ucFindOrderPosition = ucFindOrderPosition;
@@ -69,6 +72,7 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * @param ucManageOrderPosition the {@link UcManageOrderPosition} to {@link Inject}.
    */
   @Inject
+  @UseCase
   public void setUcManageOrderPosition(UcManageOrderPosition ucManageOrderPosition) {
 
     this.ucManageOrderPosition = ucManageOrderPosition;
@@ -78,6 +82,7 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * @param ucFindBill the {@link UcFindBill} to {@link Inject}.
    */
   @Inject
+  @UseCase
   public void setUcFindBill(UcFindBill ucFindBill) {
 
     this.ucFindBill = ucFindBill;
@@ -87,6 +92,7 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * @param ucFindOrder the {@link UcFindOrder} to {@link Inject}.
    */
   @Inject
+  @UseCase
   public void setUcFindOrder(UcFindOrder ucFindOrder) {
 
     this.ucFindOrder = ucFindOrder;
@@ -96,6 +102,7 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * @param ucManageOrder the {@link UcManageOrder} to {@link Inject}.
    */
   @Inject
+  @UseCase
   public void setUcManageOrder(UcManageOrder ucManageOrder) {
 
     this.ucManageOrder = ucManageOrder;
@@ -105,6 +112,7 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * @param ucManageBill the {@link UcManageBill} to {@link Inject}.
    */
   @Inject
+  @UseCase
   public void setUcManageBill(UcManageBill ucManageBill) {
 
     this.ucManageBill = ucManageBill;
@@ -114,59 +122,42 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
    * @param ucChangeTable the {@link UcChangeTable} to {@link Inject}.
    */
   @Inject
+  @UseCase
   public void setUcChangeTable(UcChangeTable ucChangeTable) {
 
     this.ucChangeTable = ucChangeTable;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderEto findOrder(Long id) {
 
     return this.ucFindOrder.findOrder(id);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public List<OrderEto> findOrderEtos(OrderSearchCriteriaTo criteria) {
+  public PaginatedListTo<OrderEto> findOrderEtos(OrderSearchCriteriaTo criteria) {
 
     return this.ucFindOrder.findOrderEtos(criteria);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public List<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria) {
+  public PaginatedListTo<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria) {
 
     return this.ucFindOrder.findOrderCtos(criteria);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderCto findOrderCto(OrderEto order) {
 
     return this.ucFindOrder.findOrderCto(order);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderEto findOpenOrderForTable(Long tableId) {
 
     return this.ucFindOrder.findOpenOrderForTable(tableId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void changeTable(long orderId, long tableId) {
 
@@ -174,72 +165,48 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
 
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderPositionEto createOrderPosition(OfferEto offer, OrderEto order, String comment) {
 
     return this.ucManageOrderPosition.createOrderPosition(offer, order, comment);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderPositionEto findOrderPosition(Long orderPositionId) {
 
     return this.ucFindOrderPosition.findOrderPosition(orderPositionId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public List<OrderPositionEto> findOrderPositions(OrderPositionSearchCriteriaTo criteria) {
 
     return this.ucFindOrderPosition.findOrderPositions(criteria);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public List<OrderPositionEto> findOrderPositionsByOrderId(Long orderId) {
 
     return this.ucFindOrderPosition.findOrderPositionsByOrderId(orderId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public List<OrderPositionEto> findOpenOrderPositionsByOrderId(Long orderId) {
 
     return this.ucFindOrderPosition.findOpenOrderPositionsByOrderId(orderId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public PaymentStatus doPayment(BillEto bill) {
 
     return this.ucManageBill.doPayment(bill);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public PaymentStatus doPayment(BillEto bill, PaymentData paymentData) {
 
     return this.ucManageBill.doPayment(bill, paymentData);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public BillCto findBill(Long id) {
 
@@ -247,63 +214,42 @@ public class SalesmanagementImpl extends AbstractBeanMapperSupport implements Sa
 
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void deleteBill(Long billId) {
 
     this.ucManageBill.deleteBill(billId);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void deleteOrder(Long id) {
 
     this.ucManageOrder.deleteOrder(id);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderCto saveOrder(OrderCto order) {
 
     return this.ucManageOrder.saveOrder(order);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderEto saveOrder(OrderEto order) {
 
     return this.ucManageOrder.saveOrder(order);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderEto saveOrder(TableEto table) {
 
     return this.ucManageOrder.saveOrder(table);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderPositionEto saveOrderPosition(OrderPositionEto orderPosition) {
 
     return this.ucManageOrderPosition.saveOrderPosition(orderPosition);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public BillEto createBill(BillEto bill) {
 

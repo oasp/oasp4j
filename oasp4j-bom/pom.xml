@@ -19,7 +19,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <cxf.version>3.0.4</cxf.version>
+    <cxf.version>3.0.5</cxf.version>
     <spring.version>4.0.9.RELEASE</spring.version>
     <oasp.gpg.keyname>joerg.hohwiller@capgemini.com</oasp.gpg.keyname>
     <oasp.flatten.mode>bom</oasp.flatten.mode>
@@ -27,14 +27,6 @@
 
   <dependencyManagement>
     <dependencies>
-      <!-- BOM of spring-boot -->
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <version>1.1.11.RELEASE</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
       <!-- *** EXTERNAL DEPENDENCIES *** -->
       <!-- spring-context is missing in spring-boot -->
       <dependency>
@@ -184,11 +176,17 @@
         <artifactId>jackson-core</artifactId>
         <version>2.3.3</version>
       </dependency>
-      <!-- Dozer for bean-mapping/conversion -->
+      <!-- Dozer for bean-mapping/conversion (Alternative to Orika) -->
       <dependency>
         <groupId>net.sf.dozer</groupId>
         <artifactId>dozer</artifactId>
         <version>5.5.1</version>
+      </dependency>
+      <!-- Orika for bean-mapping/conversion (Alternative to Dozer) -->
+      <dependency>
+        <groupId>ma.glasnost.orika</groupId>
+        <artifactId>orika-core</artifactId>
+        <version>1.4.6</version>
       </dependency>
       <!-- JSR303 API for annotation based validation -->
       <dependency>
@@ -221,6 +219,20 @@
         <groupId>com.github.tomakehurst</groupId>
         <artifactId>wiremock</artifactId>
         <version>1.54</version>
+      </dependency>
+
+      <!-- Dependencies for testing constraint validation excepcion -->
+      <dependency>
+        <groupId>javax.el</groupId>
+        <artifactId>javax.el-api</artifactId>
+        <version>2.2.4</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.web</groupId>
+        <artifactId>javax.el</artifactId>
+        <version>2.2.4</version>
+        <scope>test</scope>
       </dependency>
 
       <!-- *** INTERNAL DEPENDENCIES *** -->

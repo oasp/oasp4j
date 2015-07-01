@@ -6,7 +6,9 @@ import org.dozer.CustomConverter;
  * Dozer {@link CustomConverter} that returns the original source object reference (identity conversion).
  *
  * @author hohwille
+ * @deprecated - use {@link io.oasp.module.beanmapping.common.impl.dozer.IdentityConverter}
  */
+@Deprecated
 public class IdentityConverter implements CustomConverter {
 
   /**
@@ -15,11 +17,10 @@ public class IdentityConverter implements CustomConverter {
   public IdentityConverter() {
 
     super();
+    System.err.println("This class is deprecated. Please use "
+        + io.oasp.module.beanmapping.common.impl.dozer.IdentityConverter.class.getName());
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Object convert(Object destination, Object source, Class<?> destinationClass, Class<?> sourceClass) {
 

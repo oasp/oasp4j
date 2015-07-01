@@ -28,45 +28,30 @@ public class OrderEto extends AbstractEto implements Order {
     this.state = OrderState.OPEN;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public long getTableId() {
 
     return this.tableId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setTableId(long tableId) {
 
     this.tableId = tableId;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public OrderState getState() {
 
     return this.state;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setState(OrderState state) {
 
     this.state = state;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public int hashCode() {
 
@@ -77,9 +62,6 @@ public class OrderEto extends AbstractEto implements Order {
     return result;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean equals(Object obj) {
 

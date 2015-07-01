@@ -63,9 +63,6 @@ public class OrderCto extends AbstractCto {
     this.positions = positions;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public int hashCode() {
 
@@ -76,9 +73,6 @@ public class OrderCto extends AbstractCto {
     return result;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean equals(Object obj) {
 

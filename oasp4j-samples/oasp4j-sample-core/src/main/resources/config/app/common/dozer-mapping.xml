@@ -22,10 +22,7 @@
   </configuration>
 
   <!-- BEGIN ARCHETYPE SKIP -->
-  <mapping>
-    <class-a>io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto</class-a>
-    <class-b>io.oasp.gastronomy.restaurant.tablemanagement.dataaccess.api.TableEntity</class-b>
-  </mapping>
+  <!-- Should actually happen via JavaCode instead of XML but we are going to replace dozer anyway... -->
   <mapping>
     <class-a>io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto</class-a>
     <class-b>io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.DrinkEntity</class-b>

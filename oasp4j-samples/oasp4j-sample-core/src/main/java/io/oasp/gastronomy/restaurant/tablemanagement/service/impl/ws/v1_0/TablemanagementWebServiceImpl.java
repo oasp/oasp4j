@@ -32,9 +32,6 @@ public class TablemanagementWebServiceImpl implements TablemanagmentWebService {
     this.tableManagement = tableManagement;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public TableEto getTable(String id) {
 

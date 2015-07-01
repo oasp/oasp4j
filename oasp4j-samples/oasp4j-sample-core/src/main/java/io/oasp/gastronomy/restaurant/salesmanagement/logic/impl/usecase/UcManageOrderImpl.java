@@ -2,6 +2,7 @@ package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderEntity;
@@ -27,10 +28,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Implementation of {@link UcManageOrder}.
  *
  * @author rjoeris
  */
 @Named
+@UseCase
 public class UcManageOrderImpl extends AbstractOrderUc implements UcManageOrder {
 
   /** Logger instance. */
@@ -55,9 +58,6 @@ public class UcManageOrderImpl extends AbstractOrderUc implements UcManageOrder 
     this.salesmanagement = salesmanagement;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_ORDER)
   public OrderEto saveOrder(TableEto table) {
@@ -74,9 +74,6 @@ public class UcManageOrderImpl extends AbstractOrderUc implements UcManageOrder 
     return getBeanMapper().map(order, OrderEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_ORDER)
   public OrderEto saveOrder(OrderEto order) {
@@ -89,9 +86,6 @@ public class UcManageOrderImpl extends AbstractOrderUc implements UcManageOrder 
     return getBeanMapper().map(orderEntity, OrderEto.class);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.SAVE_ORDER)
   public OrderCto saveOrder(OrderCto order) {
@@ -151,7 +145,7 @@ public class UcManageOrderImpl extends AbstractOrderUc implements UcManageOrder 
 
   /**
    * @param order is the {@link OrderCto} to save or update.
-   * @param targetOrder is the existing {@link OrderEntity} or <code>null</code> in case of a new {@link OrderCto} to
+   * @param targetOrder is the existing {@link OrderEntity} or {@code null} in case of a new {@link OrderCto} to
    *        save.
    */
   private void validateOrderState(OrderCto order, OrderEntity targetOrder) {
@@ -180,9 +174,6 @@ public class UcManageOrderImpl extends AbstractOrderUc implements UcManageOrder 
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   @RolesAllowed(PermissionConstants.DELETE_ORDER)
   public void deleteOrder(Long id) {
