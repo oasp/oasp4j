@@ -13,6 +13,8 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SideDishEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcFindOffer;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.usecase.UcFindProduct;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.io.ByteArrayInputStream;

@@ -35,8 +35,8 @@ public interface Offer extends MenuItem {
   void setPrice(Money price);
 
   /**
-   * @return is the {@link Meal#getId() ID} of the {@link Meal} or {@code null} if no {@link Meal} is contained in
-   *         this {@link Offer}.
+   * @return is the {@link Meal#getId() ID} of the {@link Meal} or {@code null} if no {@link Meal} is contained in this
+   *         {@link Offer}.
    */
   Long getMealId();
 
@@ -46,8 +46,8 @@ public interface Offer extends MenuItem {
   void setMealId(Long mealId);
 
   /**
-   * @return is the {@link Drink#getId() ID} of the {@link Drink} or {@code null} if no {@link Drink} is contained
-   *         in this {@link Offer}.
+   * @return is the {@link Drink#getId() ID} of the {@link Drink} or {@code null} if no {@link Drink} is contained in
+   *         this {@link Offer}.
    */
   Long getDrinkId();
 
