@@ -6,6 +6,7 @@
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+  <import resource="common/beans-common.xml"/>
   <import resource="service/beans-service.xml"/>
 
 </beans>
