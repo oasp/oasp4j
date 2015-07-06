@@ -6,7 +6,6 @@
            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-  <import resource="../common/beans-common.xml"/>
   <import resource="beans-db-plain.xml"/>
   <import resource="beans-db-server.xml"/>
   <import resource="beans-jpa.xml"/>

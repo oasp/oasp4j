@@ -17,7 +17,9 @@ import org.springframework.test.context.ContextConfiguration;
  *
  * @author hohwille
  */
-@ContextConfiguration({ ApplicationConfigurationConstants.BEANS_LOGIC })
+@ContextConfiguration({ 
+  ApplicationConfigurationConstants.BEANS_COMMON,
+  ApplicationConfigurationConstants.BEANS_LOGIC })
 public class SalesManagementTest extends AbstractSpringIntegrationTest {
 
   @Inject

@@ -30,7 +30,10 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class })
-@ContextConfiguration({ ApplicationConfigurationConstants.BEANS_DATA_ACCESS,
+@ContextConfiguration({ 
+  ApplicationConfigurationConstants.BEANS_COMMON,
+  ApplicationConfigurationConstants.BEANS_LOGIC,
+  ApplicationConfigurationConstants.BEANS_DATA_ACCESS,
 "classpath:/config/app/service/beans-test-service-rest.xml" })
 @ActiveProfiles("db-plain")
 public class DrinkDaoTest extends Assert {
