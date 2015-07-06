@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>io.oasp.java.dev</groupId>
@@ -23,6 +22,7 @@
   <modules>
     <module>oasp4j-sample-core</module>
     <module>oasp4j-sample-server</module>
+    <module>oasp4j-sample-batch-server</module>
   </modules>
 
   <dependencyManagement>
@@ -87,7 +87,7 @@
     <profile>
       <id>systemtest</id>
       <properties>
-        <oasp.test.excluded.groups></oasp.test.excluded.groups>
+        <oasp.test.excluded.groups/>
       </properties>
     </profile>
   </profiles>

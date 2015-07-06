@@ -15,6 +15,7 @@
     <module>oasp4j-bom</module>
     <module>oasp4j-modules</module>
     <module>oasp4j-templates</module>
+    <module>oasp4j-sample-batch-server</module>
   </modules>
 
   <properties>
