@@ -27,6 +27,7 @@
         <!--REST login without CSRF filter -->
         <security:filter-chain pattern="/services/rest/login"
             filters="RequestContextFilter,
+                   CORSFilter,
                    SecurityContextPersistenceFilter,
                    RestLogoutFilter,
                    JsonUsernamePasswordAuthenticationFilter,
@@ -39,6 +40,7 @@
         <!-- REST Services intended for JS Client are secured based on a session cookies and have REST login/logout API -->
         <security:filter-chain pattern="/services/rest/**"
           filters="RequestContextFilter,
+                   CORSFilter,
                    SecurityContextPersistenceFilter,
                    CsrfFilterWrapper,
                    RestLogoutFilter,
@@ -52,6 +54,7 @@
         <!-- Defaults to form based strategy -->
         <security:filter-chain pattern="/**"
           filters="RequestContextFilter,
+                   CORSFilter,
                    SecurityContextPersistenceFilter,
                    LogoutFilter,
                    UsernamePasswordAuthenticationFilter,

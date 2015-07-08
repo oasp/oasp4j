@@ -132,7 +132,7 @@
   <bean id="HttpSessionCsrfTokenRepository" class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository"/>
   <bean id="CsrfFilterWrapper" class="io.oasp.module.web.common.base.ToggleFilterWrapper">
     <property name="delegateFilter" ref="CsrfFilter"/>
-    <property name="disabledString" value="#{systemProperties['CsrfDisabled']}"/>
+    <property name="enabled" value="${oasp.filter.csrf}"/>
   </bean>
   <bean id="CsrfFilter" class="org.springframework.security.web.csrf.CsrfFilter">
     <constructor-arg>
@@ -141,5 +141,8 @@
     <property name="accessDeniedHandler" ref="ApplicationAccessDeniedHandler"/>
   </bean>
 
+  <bean id="CORSFilter" class="io.oasp.gastronomy.restaurant.general.security.CORSFilter">
+    <property name="enabled" value="${oasp.filter.cors}"/>
+  </bean>
 
 </beans>
