@@ -6,8 +6,8 @@ import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableSt
 import io.oasp.gastronomy.restaurant.tablemanagement.dataaccess.api.TableEntity;
 import io.oasp.gastronomy.restaurant.tablemanagement.dataaccess.api.dao.TableDao;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableSearchCriteriaTo;
-import io.oasp.module.jpa.common.api.to.OrderBy;
 import io.oasp.module.jpa.common.api.to.OrderByTo;
+import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.List;
@@ -80,7 +80,7 @@ public class TableDaoImpl extends ApplicationMasterDataDaoImpl<TableEntity> impl
       for (OrderByTo orderEntry : sort) {
         if ("number".equals(orderEntry.getName())) {
 
-          if (OrderBy.ASC.equals(orderEntry.getDirection())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
             query.orderBy(Alias.$(table.getNumber()).asc());
           } else {
             query.orderBy(Alias.$(table.getNumber()).desc());
@@ -88,7 +88,7 @@ public class TableDaoImpl extends ApplicationMasterDataDaoImpl<TableEntity> impl
 
         } else if ("waiterId".equals(orderEntry.getName())) {
 
-          if (OrderBy.ASC.equals(orderEntry.getDirection())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
             query.orderBy(Alias.$(table.getWaiterId()).asc());
           } else {
             query.orderBy(Alias.$(table.getWaiterId()).desc());
@@ -96,7 +96,7 @@ public class TableDaoImpl extends ApplicationMasterDataDaoImpl<TableEntity> impl
 
         } else if ("state".equals(orderEntry.getName())) {
 
-          if (OrderBy.ASC.equals(orderEntry.getDirection())) {
+          if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
             query.orderBy(Alias.$(table.getState()).asc());
           } else {
             query.orderBy(Alias.$(table.getState()).desc());
