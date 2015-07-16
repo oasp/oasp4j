@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to;
 
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
 
 /**
@@ -15,6 +16,8 @@ public class OrderPositionSearchCriteriaTo extends SearchCriteriaTo {
   private static final long serialVersionUID = 1L;
 
   private OrderPositionState state;
+
+  private ProductOrderState drinkState;
 
   private Long orderId;
 
@@ -47,9 +50,25 @@ public class OrderPositionSearchCriteriaTo extends SearchCriteriaTo {
   }
 
   /**
+   * @return drinkState of the {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition }
+   */
+  public ProductOrderState getDrinkState() {
+
+    return this.drinkState;
+  }
+
+  /**
+   * @param drinkState the drinkState to set
+   */
+  public void setDrinkState(ProductOrderState drinkState) {
+
+    this.drinkState = drinkState;
+  }
+
+  /**
    * @return the {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition#getOrderId() order ID} of
-   *         the {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition}s to find or
-   *         {@code null} if no such criteria shall be added.
+   *         the {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition}s to find or {@code null}
+   *         if no such criteria shall be added.
    */
   public Long getOrderId() {
 
@@ -66,8 +85,8 @@ public class OrderPositionSearchCriteriaTo extends SearchCriteriaTo {
 
   /**
    * @return the {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition#getCookId() cook ID} of
-   *         the {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition}s to find or
-   *         {@code null} if no such criteria shall be added.
+   *         the {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition}s to find or {@code null}
+   *         if no such criteria shall be added.
    */
   public Long getCookId() {
 
@@ -83,9 +102,9 @@ public class OrderPositionSearchCriteriaTo extends SearchCriteriaTo {
   }
 
   /**
-   * @return {@code true} if only {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition}s
-   *         shall be found that have a meal or a side-dish associated (exclude drink only positions),
-   *         {@code false} if no such criteria shall be added.
+   * @return {@code true} if only {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition}s shall
+   *         be found that have a meal or a side-dish associated (exclude drink only positions), {@code false} if no
+   *         such criteria shall be added.
    */
   public boolean isMealOrSideDish() {
 
