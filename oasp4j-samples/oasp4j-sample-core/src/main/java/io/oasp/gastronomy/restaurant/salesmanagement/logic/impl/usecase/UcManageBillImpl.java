@@ -185,13 +185,9 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
     if (PaymentStatus.SUCCESS == status) {
 
       bill.setPayed(true);
-
       for (Long orderPositionId : bill.getOrderPositionIds()) {
-
         this.salesmanagement.findOrderPosition(orderPositionId).setState(OrderPositionState.PAYED);
-
       }
-
     }
 
     // Step4: Return a PaymentStatus
