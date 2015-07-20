@@ -41,9 +41,9 @@ public class ToggleFilterWrapper implements Filter {
   private Filter delegateFilter;
 
   /**
-   * Is set if this filter is disabled.
+   * Is set if this filter is enabled.
    */
-  private Boolean disabled;
+  private Boolean enabled = Boolean.FALSE;
 
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
@@ -53,7 +53,7 @@ public class ToggleFilterWrapper implements Filter {
   @PostConstruct
   public void initialize() {
 
-    if (this.disabled) {
+    if (!this.enabled) {
       String message =
           "****** FILTER " + this.delegateFilter
               + " HAS BEEN DISABLED! THIS FEATURE SHOULD ONLY BE USED IN DEVELOPMENT MODE ******";
@@ -68,7 +68,7 @@ public class ToggleFilterWrapper implements Filter {
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
       ServletException {
 
-    if (!this.disabled) {
+    if (this.enabled) {
       this.delegateFilter.doFilter(request, response, chain);
     } else {
       chain.doFilter(request, response);
@@ -89,26 +89,18 @@ public class ToggleFilterWrapper implements Filter {
   }
 
   /**
-   * @param disabled indicates if this filter is disabled
+   * @param enabled the enabled flag
    */
-  public void setDisabled(Boolean disabled) {
+  public void setEnabled(Boolean enabled) {
 
-    this.disabled = disabled;
-  }
-
-  /**
-   * @param disabledString the String to be parsed to a boolean
-   */
-  public void setDisabledString(String disabledString) {
-
-    setDisabled(Boolean.parseBoolean(disabledString));
+    this.enabled = enabled;
   }
 
   /**
    * @return disabled
    */
-  public Boolean isDisabled() {
+  public Boolean isEnabled() {
 
-    return this.disabled;
+    return this.enabled;
   }
 }

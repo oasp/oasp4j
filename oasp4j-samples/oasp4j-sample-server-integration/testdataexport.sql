@@ -39,10 +39,10 @@ INSERT INTO OFFER (id, description, state, meal_id, sidedish_id, drink_id, modif
 
 INSERT INTO TABLEORDER (id, tableid,  modificationCounter, state) VALUES ( 1 , 1 , 1 , 1  );
 
-INSERT INTO ORDERPOSITION (id, offername, comment, state, order_Id, modificationCounter, price) VALUES ( 1 , 'Schnitzel-Menü' , 'mit Ketschup' , 2 , 1 , 1 , 6.99  );
-INSERT INTO ORDERPOSITION (id, offername, comment, state, order_Id, modificationCounter, price) VALUES ( 2 , 'Goulasch-Menü' , '' , 2 , 1 , 1 , 7.99  );
-INSERT INTO ORDERPOSITION (id, offername, comment, state, order_Id, modificationCounter, price) VALUES ( 3 , 'Pfifferlinge-Menü' , '' , 2 , 1 , 1 , 8.99  );
-INSERT INTO ORDERPOSITION (id, offername, comment, state, order_Id, modificationCounter, price) VALUES ( 4 , 'Salat-Menü' , '' , 2 , 1 , 1 , 5.99  );
+INSERT INTO ORDERPOSITION (id, offername, comment, state, drink_state, order_Id, modificationCounter, price) VALUES ( 1 , 'Schnitzel-Menü' , 'mit Ketschup' , 2 , 1 , 1 , 6.99  );
+INSERT INTO ORDERPOSITION (id, offername, comment, state, drink_state, order_Id, modificationCounter, price) VALUES ( 2 , 'Goulasch-Menü' , '' , 2 , 1 , 1 , 7.99  );
+INSERT INTO ORDERPOSITION (id, offername, comment, state, drink_state, order_Id, modificationCounter, price) VALUES ( 3 , 'Pfifferlinge-Menü' , '' , 2 , 1 , 1 , 8.99  );
+INSERT INTO ORDERPOSITION (id, offername, comment, state, drink_state, order_Id, modificationCounter, price) VALUES ( 4 , 'Salat-Menü' , '' , 2 , 2 , 1 , 1 , 5.99  );
 
 INSERT INTO BILL (id, payed, modificationCounter, totalamount,tip) VALUES ( 1 , false , 1 , 14.98 , 1.3  );
 INSERT INTO BILL_ORDERPOSITION (bill_id, orderpositions_id) VALUES ( 1 , 1  );
