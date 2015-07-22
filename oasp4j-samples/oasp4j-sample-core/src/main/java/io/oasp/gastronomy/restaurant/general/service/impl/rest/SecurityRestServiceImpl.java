@@ -3,6 +3,7 @@ package io.oasp.gastronomy.restaurant.general.service.impl.rest;
 import io.oasp.gastronomy.restaurant.general.common.api.exception.NoActiveUserException;
 import io.oasp.gastronomy.restaurant.general.common.api.security.UserData;
 import io.oasp.gastronomy.restaurant.general.common.api.to.UserDetailsClientTo;
+import io.oasp.gastronomy.restaurant.general.common.i18n.ApplicationLocaleResolver;
 
 import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
@@ -16,10 +17,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.commons.lang3.LocaleUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.util.StringUtils;
 
 /**
  * The security REST service provides access to the csrf token, the authenticated user's meta-data. Furthermore, it
@@ -39,6 +42,8 @@ public class SecurityRestServiceImpl {
    * Use {@link CsrfTokenRepository} for CSRF protection.
    */
   private CsrfTokenRepository csrfTokenRepository;
+
+  private ApplicationLocaleResolver applicationLocaleResolver;
 
   /**
    * Retrieves the CSRF token from the server session.
@@ -79,7 +84,34 @@ public class SecurityRestServiceImpl {
     if (request.getRemoteUser() == null) {
       throw new NoActiveUserException();
     }
-    return UserData.get().toClientTo();
+
+    // Sample to translate user last name using i18n
+    UserDetailsClientTo userDetailsTo = UserData.get().toClientTo();
+
+    if (StringUtils.hasText(userDetailsTo.getLastName())) {
+      userDetailsTo.setLastName(getApplicationLocaleResolver().getMessage(userDetailsTo.getLastName().toLowerCase()));
+    }
+
+    return userDetailsTo;
+  }
+
+  /**
+   * Gets the profile of the user being currently logged in.
+   *
+   * @param request provided by the RS-Context
+   * @return the {@link UserData} taken from the Spring Security context
+   */
+  @Produces(MediaType.APPLICATION_JSON)
+  @GET
+  @Path("/changelanguage/")
+  @PermitAll
+  public UserDetailsClientTo changeLanguage(@Context HttpServletRequest request) {
+
+    String language = request.getParameter("language");
+    UserData userInfo = UserData.get();
+    userInfo.getUserProfile().setLanguage(LocaleUtils.toLocale(language));
+
+    return userInfo.toClientTo();
   }
 
   /**
@@ -89,5 +121,22 @@ public class SecurityRestServiceImpl {
   public void setCsrfTokenRepository(CsrfTokenRepository csrfTokenRepository) {
 
     this.csrfTokenRepository = csrfTokenRepository;
+  }
+
+  /**
+   * @param applicationLocaleResolver the {@link ApplicationLocaleResolver} to set
+   */
+  @Inject
+  public void setApplicationLocaleResolver(ApplicationLocaleResolver applicationLocaleResolver) {
+
+    this.applicationLocaleResolver = applicationLocaleResolver;
+  }
+
+  /**
+   * @return applicationLocaleResolver
+   */
+  public ApplicationLocaleResolver getApplicationLocaleResolver() {
+
+    return this.applicationLocaleResolver;
   }
 }
