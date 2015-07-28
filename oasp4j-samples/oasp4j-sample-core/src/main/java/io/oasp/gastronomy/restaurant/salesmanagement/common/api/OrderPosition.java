@@ -1,9 +1,12 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.common.api;
 
+import javax.validation.constraints.NotNull;
+
 import io.oasp.gastronomy.restaurant.general.common.api.ApplicationEntity;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
-import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
+import io.oasp.gastronomy.restaurant.general.common.api.datatype.validation.NotNegativeMoney;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 
 /**
  * This is the interface for an {@link OrderPosition}.
@@ -15,6 +18,7 @@ public interface OrderPosition extends ApplicationEntity {
   /**
    * @return the {@link Order#getId ID} of the {@link Order} this {@link OrderPosition} belongs to.
    */
+  @NotNull
   Long getOrderId();
 
   /**
@@ -40,6 +44,7 @@ public interface OrderPosition extends ApplicationEntity {
    *         key and might not point to an existing
    *         {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer} for historic {@link OrderPosition}s.
    */
+  @NotNull
   Long getOfferId();
 
   /**
@@ -53,6 +58,7 @@ public interface OrderPosition extends ApplicationEntity {
    *         This is stored redundant so that it is still available later if the
    *         {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer} has been changed.
    */
+  @NotNull
   String getOfferName();
 
   /**
@@ -63,6 +69,7 @@ public interface OrderPosition extends ApplicationEntity {
   /**
    * @return the current {@link OrderPositionState state}.
    */
+  @NotNull
   OrderPositionState getState();
 
   /**
@@ -86,6 +93,8 @@ public interface OrderPosition extends ApplicationEntity {
    *         is still available later if the {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer} has
    *         been changed.
    */
+  @NotNull
+  @NotNegativeMoney
   Money getPrice();
 
   /**

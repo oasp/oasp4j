@@ -101,8 +101,8 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
       orderPosition.setPrice(offer.getPrice());
       orderPosition.setOfferName(offer.getName());
     } else {
-      OrderPositionEntity targetOrderPosition = getOrderPositionDao().find(orderPositionId);
-      verifyUpdate(targetOrderPosition, orderPosition);
+      OrderPositionEntity currentOrderPosition = getOrderPositionDao().find(orderPositionId);
+      verifyUpdate(currentOrderPosition, orderPosition);
       action = "updated";
     }
 

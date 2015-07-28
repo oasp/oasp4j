@@ -15,7 +15,6 @@ import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.OrderPos
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
-import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import io.oasp.module.configuration.common.api.ApplicationConfigurationConstants;
 
 /**
@@ -33,26 +32,10 @@ public class SalesManagementTest extends AbstractSpringIntegrationTest {
   private OrderPositionDao orderPositionDao;
 
   /**
-   * Tests if a Bill is persisted correctly. Special focus is on the mapping of {@link Money} and furthermore the query
-   * of one of the {@link Money} fields is tested.
-   */
-  @Test
-  public void testSalesmanagement() {
-
-    TableEto table = new TableEto();
-    Long tableId = 1L;
-    table.setId(tableId);
-    OrderEto order = this.salesManagement.saveOrder(table);
-    assertEquals(tableId, Long.valueOf(order.getTableId()));
-  }
-
-  /**
    * Tests if the {@link OrderPositionState} is persisted correctly. The test modifies the {@link OrderPositionState} as
    * well as the drinkState {@link ProductOrderState}. The test focuses on saving {@link OrderPositionEto} saving and
    * verification of state change.
-   *
    */
-
   @Test
   public void testOrderPositionStateChange() {
 
