@@ -19,11 +19,11 @@ INSERT INTO PRODUCT (id, modificationCounter, dtype, description, alcoholic) VAL
 INSERT INTO PRODUCT (id, modificationCounter, dtype, description, alcoholic) VALUES (11, 1, 'Drink', 'Bier', false);
 INSERT INTO PRODUCT (id, modificationCounter, dtype, description, alcoholic) VALUES (12, 1, 'Drink', 'Wein / Apfelwein', false);
 
-INSERT INTO OFFER (id, modificationCounter, description, state, meal_id, sidedish_id, drink_id, price) VALUES (1, 1, 'Schnitzel-Menü', 0, 1, 5, 10, 6.99);
-INSERT INTO OFFER (id, modificationCounter, description, state, meal_id, sidedish_id, drink_id, price) VALUES (2, 1, 'Goulasch-Menü', 0, 2, 6, 11, 7.99);
-INSERT INTO OFFER (id, modificationCounter, description, state, meal_id, sidedish_id, drink_id, price) VALUES (3, 1, 'Pfifferlinge-Menü', 0, 3, 8, 12, 8.99);
-INSERT INTO OFFER (id, modificationCounter, description, state, meal_id, sidedish_id, drink_id, price) VALUES (4, 1, 'Salat-Menü', 0, 4, 7, 9, 5.99);
-INSERT INTO OFFER (id, modificationCounter, description, state, meal_id, sidedish_id, drink_id, price) VALUES (5, 1, 'Cola', 0, null, null, 10, 1.20);
+INSERT INTO OFFER (id, modificationCounter, name, description, state, meal_id, sidedish_id, drink_id, price) VALUES (1, 1, 'Schnitzel-Menü', 'Description of Schnitzel-Menü', 0, 1, 5, 10, 6.99);
+INSERT INTO OFFER (id, modificationCounter, name, description, state, meal_id, sidedish_id, drink_id, price) VALUES (2, 1, 'Goulasch-Menü', 'Description of Goulasch-Menü', 0, 2, 6, 11, 7.99);
+INSERT INTO OFFER (id, modificationCounter, name, description, state, meal_id, sidedish_id, drink_id, price) VALUES (3, 1, 'Pfifferlinge-Menü', 'Description of Pfifferlinge-Menü', 0, 3, 8, 12, 8.99);
+INSERT INTO OFFER (id, modificationCounter, name, description, state, meal_id, sidedish_id, drink_id, price) VALUES (4, 1, 'Salat-Menü', 'Description of Salat-Menü', 0, 4, 7, 9, 5.99);
+INSERT INTO OFFER (id, modificationCounter, name, description, state, meal_id, sidedish_id, drink_id, price) VALUES (5, 1, 'Cola', 'Description of Salat-Menü', 0, null, null, 10, 1.20);
 
 INSERT INTO RESTAURANTORDER (id, modificationCounter, table_id, state) VALUES (1, 1, 101, 1);
 

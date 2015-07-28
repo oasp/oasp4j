@@ -1,5 +1,17 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 
+import java.util.Objects;
+
+import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.validation.annotation.Validated;
+
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException;
 import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalPropertyChangeException;
@@ -19,17 +31,6 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionE
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrderPosition;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.base.usecase.AbstractOrderPositionUc;
 
-import java.util.Objects;
-
-import javax.annotation.security.RolesAllowed;
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Implementation of {@link UcManageOrderPosition}.
  *
@@ -37,6 +38,7 @@ import org.slf4j.LoggerFactory;
  */
 @Named
 @UseCase
+@Validated
 public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implements UcManageOrderPosition {
 
   /** Logger instance. */
@@ -77,8 +79,8 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
     // Save the order position and return it.
     getOrderPositionDao().save(orderPosition);
 
-    LOG.debug("The order position with id '" + orderPosition.getId()
-        + "' has been created. It's linked with order id '" + order.getId() + "' and offer id '" + offerId + "'.");
+    LOG.debug("The order position with id '" + orderPosition.getId() + "' has been created. It's linked with order id '"
+        + order.getId() + "' and offer id '" + offerId + "'.");
 
     return getBeanMapper().map(orderPosition, OrderPositionEto.class);
   }
@@ -93,6 +95,11 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
     String action;
     if (orderPositionId == null) {
       action = "saved";
+      Long offerId = orderPosition.getOfferId();
+      OfferEto offer = this.offerManagement.findOffer(offerId);
+      Objects.requireNonNull(offer, "Offer@" + offerId);
+      orderPosition.setPrice(offer.getPrice());
+      orderPosition.setOfferName(offer.getName());
     } else {
       OrderPositionEntity targetOrderPosition = getOrderPositionDao().find(orderPositionId);
       verifyUpdate(targetOrderPosition, orderPosition);
@@ -116,6 +123,12 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
     }
     if (!Objects.equals(currentOrderPosition.getOfferId(), currentOrderPosition.getOfferId())) {
       throw new IllegalPropertyChangeException(updateOrderPosition, "offerId");
+    }
+    if (!Objects.equals(currentOrderPosition.getPrice(), currentOrderPosition.getPrice())) {
+      throw new IllegalPropertyChangeException(updateOrderPosition, "price");
+    }
+    if (!Objects.equals(currentOrderPosition.getOfferName(), currentOrderPosition.getOfferName())) {
+      throw new IllegalPropertyChangeException(updateOrderPosition, "offerName");
     }
     OrderPositionState currentState = currentOrderPosition.getState();
     OrderPositionState newState = updateOrderPosition.getState();

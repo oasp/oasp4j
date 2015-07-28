@@ -1,21 +1,22 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl;
 
+import javax.inject.Inject;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+
+import org.junit.Test;
+import org.springframework.test.context.ContextConfiguration;
+
 import io.oasp.gastronomy.restaurant.general.common.AbstractSpringIntegrationTest;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
-import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderPositionEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.OrderPositionDao;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import io.oasp.module.configuration.common.api.ApplicationConfigurationConstants;
-
-import javax.inject.Inject;
-
-import org.junit.Test;
-import org.springframework.test.context.ContextConfiguration;
 
 /**
  * This is the test-case of {@link Salesmanagement}.
@@ -55,26 +56,43 @@ public class SalesManagementTest extends AbstractSpringIntegrationTest {
   @Test
   public void testOrderPositionStateChange() {
 
-    OrderPositionEntity orderPosition = new OrderPositionEntity();
-    this.orderPositionDao.save(orderPosition);
-    assertNotNull(orderPosition.getId());
+    try {
+      OrderEto order = new OrderEto();
+      order.setTableId(1L);
+      order = this.salesManagement.saveOrder(order);
+      OrderPositionEto orderPosition = new OrderPositionEto();
+      orderPosition.setOfferId(5L);
+      orderPosition.setOrderId(order.getId());
+      orderPosition.setOfferName("Cola");
+      orderPosition.setPrice(new Money(1.2));
 
-    OrderPositionEto orderPositionEto = new OrderPositionEto();
+      orderPosition = this.salesManagement.saveOrderPosition(orderPosition);
 
-    orderPositionEto.setId(orderPosition.getId());
-    orderPositionEto.setState(OrderPositionState.ORDERED);
-    orderPositionEto.setDrinkState(ProductOrderState.ORDERED);
+      orderPosition.setState(OrderPositionState.ORDERED);
+      orderPosition.setDrinkState(ProductOrderState.ORDERED);
 
-    OrderPositionEto loadedOrderPositionEto = this.salesManagement.saveOrderPosition(orderPositionEto);
+      OrderPositionEto updatedOrderPosition = this.salesManagement.saveOrderPosition(orderPosition);
 
-    assertEquals(loadedOrderPositionEto.getState(), OrderPositionState.ORDERED);
+      assertEquals(updatedOrderPosition.getState(), OrderPositionState.ORDERED);
 
-    loadedOrderPositionEto.setState(OrderPositionState.PREPARED);
-    loadedOrderPositionEto.setDrinkState(ProductOrderState.PREPARED);
+      updatedOrderPosition.setState(OrderPositionState.PREPARED);
+      updatedOrderPosition.setDrinkState(ProductOrderState.PREPARED);
 
-    OrderPositionEto updatedOrderPositionEto = this.salesManagement.saveOrderPosition(loadedOrderPositionEto);
+      updatedOrderPosition = this.salesManagement.saveOrderPosition(updatedOrderPosition);
 
-    assertEquals(updatedOrderPositionEto.getState(), OrderPositionState.PREPARED);
+      assertEquals(updatedOrderPosition.getState(), OrderPositionState.PREPARED);
+    } catch (ConstraintViolationException e) {
+      // BV is really painful as you need such code to see the actual error in JUnit.
+      StringBuilder sb = new StringBuilder(64);
+      sb.append("Constraints violated:");
+      for (ConstraintViolation<?> v : e.getConstraintViolations()) {
+        sb.append("\n");
+        sb.append(v.getPropertyPath());
+        sb.append(":");
+        sb.append(v.getMessage());
+      }
+      throw new IllegalStateException(sb.toString(), e);
+    }
 
   }
 

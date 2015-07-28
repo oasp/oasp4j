@@ -1,12 +1,15 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to;
 
+import java.util.Objects;
+
+import javax.validation.constraints.NotNull;
+
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
+import io.oasp.gastronomy.restaurant.general.common.api.datatype.validation.NotNegativeMoney;
 import io.oasp.gastronomy.restaurant.general.common.api.to.AbstractEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
-import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
-
-import java.util.Objects;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 
 /**
  * {@link AbstractEto ETO} for an {@link OrderPosition}.
@@ -17,18 +20,23 @@ public class OrderPositionEto extends AbstractEto implements OrderPosition {
 
   private static final long serialVersionUID = 1L;
 
+  @NotNull
   private Long orderId;
 
   private Long cookId;
 
+  @NotNull
   private Long offerId;
 
+  @NotNull
   private String offerName;
 
   private OrderPositionState state;
 
   private ProductOrderState drinkState;
 
+  @NotNull
+  @NotNegativeMoney
   private Money price;
 
   private String comment;
@@ -172,6 +180,7 @@ public class OrderPositionEto extends AbstractEto implements OrderPosition {
    *
    * @return Comment as string
    */
+  @Override
   public String getComment() {
 
     return this.comment;
@@ -182,6 +191,7 @@ public class OrderPositionEto extends AbstractEto implements OrderPosition {
    *
    * @param comment new value for comment
    */
+  @Override
   public void setComment(String comment) {
 
     this.comment = comment;
