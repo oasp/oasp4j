@@ -3,6 +3,10 @@ package io.oasp.module.rest.service.impl.json;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Calendar;
+import java.util.Date;
+
+import net.sf.mmm.util.date.base.Iso8601UtilImpl;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -74,6 +78,10 @@ public abstract class AbstractJsonDeserializer<T> extends JsonDeserializer<T> {
             value = type.cast(new BigDecimal(childNode.asText()));
           } else if (type == BigInteger.class) {
             value = type.cast(new BigInteger(childNode.asText()));
+          } else if (type == Date.class) {
+            value = type.cast(Iso8601UtilImpl.getInstance().parseDate(childNode.asText()));
+          } else if (type == Calendar.class) {
+            value = type.cast(Iso8601UtilImpl.getInstance().parseCalendar(childNode.asText()));
           } else if (type == Boolean.class) {
             // types that may be primitive shall be casted explicitly as Class.cast does not work for primitive types.
             value = (V) Boolean.valueOf(childNode.booleanValue());
