@@ -28,4 +28,6 @@
   <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
   <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>
 
+  <bean id="applicationLocaleResolver" class="io.oasp.gastronomy.restaurant.general.common.i18n.ApplicationLocaleResolver"/>
+
 </beans>

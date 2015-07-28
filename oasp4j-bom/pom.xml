@@ -235,6 +235,12 @@
         <scope>test</scope>
       </dependency>
 
+      <!-- Dependencies for locale utils in ApplicationWebAuthenticationDetails-->
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>3.2.1</version>
+      </dependency>
       <!-- *** INTERNAL DEPENDENCIES *** -->
       <dependency>
         <groupId>io.oasp.java.modules</groupId>
