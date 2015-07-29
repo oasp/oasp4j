@@ -53,6 +53,11 @@
       <artifactId>jackson-databind</artifactId>
     </dependency>
 
+    <!-- Dependencies for locale utils in ApplicationWebAuthenticationDetails-->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+    </dependency>
 
     <!-- Test Dependencies -->
     <dependency>

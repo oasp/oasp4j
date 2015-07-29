@@ -1,7 +1,7 @@
 package io.oasp.gastronomy.restaurant.general.logic.base;
 
-
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSupport;
+import io.oasp.gastronomy.restaurant.general.common.i18n.ApplicationLocaleResolver;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.ArrayList;
@@ -9,6 +9,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.inject.Inject;
 
 import net.sf.mmm.util.entity.api.GenericEntity;
 import net.sf.mmm.util.entity.api.PersistenceEntity;
@@ -26,12 +28,31 @@ public abstract class AbstractComponentFacade extends AbstractBeanMapperSupport 
    */
   protected static final int MAXIMUM_HIT_LIMIT = 500;
 
+  private ApplicationLocaleResolver applicationLocaleResolver;
+
   /**
    * The constructor.
    */
   public AbstractComponentFacade() {
 
     super();
+  }
+
+  /**
+   * @param applicationLocaleResolver the {@link ApplicationLocaleResolver} to set
+   */
+  @Inject
+  public void setApplicationLocaleResolver(ApplicationLocaleResolver applicationLocaleResolver) {
+
+    this.applicationLocaleResolver = applicationLocaleResolver;
+  }
+
+  /**
+   * @return applicationLocaleResolver
+   */
+  public ApplicationLocaleResolver getApplicationLocaleResolver() {
+
+    return this.applicationLocaleResolver;
   }
 
   /**

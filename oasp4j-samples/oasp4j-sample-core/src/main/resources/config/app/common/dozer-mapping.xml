@@ -50,4 +50,8 @@
       <b is-accessible="true">persistentEntity</b>
     </field>
   </mapping>
+  <mapping type="one-way">
+    <class-a>java.util.Locale</class-a>
+    <class-b bean-factory="io.oasp.module.beanmapping.common.impl.dozer.LocaleDozerFactory">java.util.Locale</class-b>
+  </mapping>
 </mappings>
