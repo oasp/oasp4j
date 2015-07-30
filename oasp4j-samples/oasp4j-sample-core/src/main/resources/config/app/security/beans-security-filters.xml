@@ -16,9 +16,6 @@
 
   <bean id="AnonymousAuthenticationFilter" class="org.springframework.security.web.authentication.AnonymousAuthenticationFilter">
     <constructor-arg value="BF93JFJ091N00Q7HF"/>
-    <property name="authenticationDetailsSource">
-       <bean class="io.oasp.module.security.common.impl.rest.ApplicationAuthenticationDetailsSource"/>
-    </property>
   </bean>
 
   <bean id="RequestCacheAwareFilter" class="org.springframework.security.web.savedrequest.RequestCacheAwareFilter"/>

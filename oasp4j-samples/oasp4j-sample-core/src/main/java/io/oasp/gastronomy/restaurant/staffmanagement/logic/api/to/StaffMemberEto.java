@@ -82,14 +82,18 @@ public class StaffMemberEto extends AbstractEto implements StaffMember {
 
     this.role = role;
   }
-  @Override
+
+  /**
+   * @return language
+   */
   public Locale getLanguage() {
 
     return this.language;
   }
 
-
-  @Override
+  /**
+   * @param language the language to set
+   */
   public void setLanguage(Locale language) {
 
     this.language = language;

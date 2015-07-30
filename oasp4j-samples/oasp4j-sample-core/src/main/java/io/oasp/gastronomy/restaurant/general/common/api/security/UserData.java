@@ -69,8 +69,6 @@ public class UserData extends User implements Principal {
     clientTo.setFirstName(this.userProfile.getFirstName());
     clientTo.setLastName(this.userProfile.getLastName());
     clientTo.setRole(this.userProfile.getRole());
-    clientTo.setLanguage(this.userProfile.getLanguage());
-
     return clientTo;
   }
 

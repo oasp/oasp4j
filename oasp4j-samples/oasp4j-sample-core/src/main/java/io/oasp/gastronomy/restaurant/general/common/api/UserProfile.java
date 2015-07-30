@@ -3,7 +3,6 @@ package io.oasp.gastronomy.restaurant.general.common.api;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Role;
 
 import java.security.Principal;
-import java.util.Locale;
 
 /**
  * This is the interface for the profile of a user interacting with this application. Currently this can only be a
@@ -23,7 +22,6 @@ public interface UserProfile extends Principal {
   /**
    * @return the unique login of the user for authentication and identification.
    */
-  @Override
   String getName();
 
   /**
@@ -40,14 +38,4 @@ public interface UserProfile extends Principal {
    * @return {@link Role} of this {@link UserProfile}.
    */
   Role getRole();
-
-  /**
-   * @return the language of the user.
-   */
-  Locale getLanguage();
-
-  /**
-   * @return the language of the user.
-   */
-  void setLanguage(Locale language);
 }

@@ -3,8 +3,6 @@ package io.oasp.gastronomy.restaurant.general.common.api.to;
 import io.oasp.gastronomy.restaurant.general.common.api.UserProfile;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Role;
 
-import java.util.Locale;
-
 /**
  * This is the {@link AbstractTo TO} for the client view on the user details.
  *
@@ -24,8 +22,6 @@ public class UserDetailsClientTo extends AbstractTo implements UserProfile {
   private String lastName;
 
   private Role role;
-
-  private Locale language;
 
   /**
    * The constructor.
@@ -63,12 +59,6 @@ public class UserDetailsClientTo extends AbstractTo implements UserProfile {
   public Role getRole() {
 
     return this.role;
-  }
-
-  @Override
-  public Locale getLanguage() {
-
-    return this.language;
   }
 
   /**
@@ -111,12 +101,6 @@ public class UserDetailsClientTo extends AbstractTo implements UserProfile {
   public void setRole(Role role) {
 
     this.role = role;
-  }
-
-  @Override
-  public void setLanguage(Locale language) {
-
-    this.language = language;
   }
 
 }
