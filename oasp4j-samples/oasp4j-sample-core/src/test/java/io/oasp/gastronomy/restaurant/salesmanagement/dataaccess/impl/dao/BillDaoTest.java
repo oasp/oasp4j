@@ -27,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author mvielsac
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@TestExecutionListeners({ TransactionalTestExecutionListener.class, DependencyInjectionTestExecutionListener.class })
 @ContextConfiguration({ ApplicationConfigurationConstants.BEANS_DATA_ACCESS })
 @Transactional
 public class BillDaoTest extends AbstractSpringIntegrationTest {
