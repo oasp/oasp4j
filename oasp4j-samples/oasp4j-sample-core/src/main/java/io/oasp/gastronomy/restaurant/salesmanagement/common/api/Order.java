@@ -1,5 +1,7 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.common.api;
 
+import javax.validation.constraints.NotNull;
+
 import io.oasp.gastronomy.restaurant.general.common.api.ApplicationEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
 
@@ -17,6 +19,7 @@ public interface Order extends ApplicationEntity {
    *         {@link io.oasp.gastronomy.restaurant.tablemanagement.common.api.Table} where this {@link Order} was
    *         disposed.
    */
+  @NotNull
   long getTableId();
 
   /**
@@ -27,6 +30,7 @@ public interface Order extends ApplicationEntity {
   /**
    * @return the {@link OrderState state} of this {@link Order}.
    */
+  @NotNull
   OrderState getState();
 
   /**

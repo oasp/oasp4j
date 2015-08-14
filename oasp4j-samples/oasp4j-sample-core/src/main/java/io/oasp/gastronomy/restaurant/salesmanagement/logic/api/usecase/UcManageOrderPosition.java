@@ -1,5 +1,7 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase;
 
+import javax.validation.Valid;
+
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
@@ -28,6 +30,6 @@ public interface UcManageOrderPosition {
    * @param orderPosition is the {@link OrderPositionEto} to persist.
    * @return the saved {@link OrderPositionEto}.
    */
-  OrderPositionEto saveOrderPosition(OrderPositionEto orderPosition);
+  OrderPositionEto saveOrderPosition(@Valid OrderPositionEto orderPosition);
 
 }

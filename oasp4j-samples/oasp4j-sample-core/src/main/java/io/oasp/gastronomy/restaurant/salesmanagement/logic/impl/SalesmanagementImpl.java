@@ -1,5 +1,10 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl;
 
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.general.logic.base.AbstractComponentFacade;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
@@ -20,13 +25,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcFindOrd
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageBill;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrder;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrderPosition;
-import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-
-import java.util.List;
-
-import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  * This is the implementation of {@link Salesmanagement}.
@@ -236,12 +235,6 @@ public class SalesmanagementImpl extends AbstractComponentFacade implements Sale
   public OrderEto saveOrder(OrderEto order) {
 
     return this.ucManageOrder.saveOrder(order);
-  }
-
-  @Override
-  public OrderEto saveOrder(TableEto table) {
-
-    return this.ucManageOrder.saveOrder(table);
   }
 
   @Override

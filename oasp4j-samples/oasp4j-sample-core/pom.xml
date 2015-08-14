@@ -193,6 +193,11 @@
       <artifactId>oasp4j-test</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>javax.el</groupId>
+      <artifactId>javax.el-api</artifactId>
+    </dependency>
   </dependencies>
 
   <build>

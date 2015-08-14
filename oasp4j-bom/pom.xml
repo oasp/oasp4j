@@ -19,8 +19,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <cxf.version>3.0.5</cxf.version>
-    <spring.version>4.0.9.RELEASE</spring.version>
+    <cxf.version>3.0.6</cxf.version>
     <oasp.gpg.keyname>joerg.hohwiller@capgemini.com</oasp.gpg.keyname>
     <oasp.flatten.mode>bom</oasp.flatten.mode>
   </properties>
@@ -28,12 +27,6 @@
   <dependencyManagement>
     <dependencies>
       <!-- *** EXTERNAL DEPENDENCIES *** -->
-      <!-- spring-context is missing in spring-boot -->
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-context</artifactId>
-        <version>${spring.version}</version>
-      </dependency>
       <!-- JSR 250 for component/bean lifecycle management -->
       <dependency>
         <groupId>javax.annotation</groupId>

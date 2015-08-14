@@ -1,11 +1,12 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to;
 
+import java.util.Objects;
+
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.common.api.to.AbstractEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
-
-import java.util.Objects;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 
 /**
  * {@link AbstractEto ETO} for an {@link OrderPosition}.
@@ -26,6 +27,8 @@ public class OrderPositionEto extends AbstractEto implements OrderPosition {
 
   private OrderPositionState state;
 
+  private ProductOrderState drinkState;
+
   private Money price;
 
   private String comment;
@@ -36,6 +39,7 @@ public class OrderPositionEto extends AbstractEto implements OrderPosition {
   public OrderPositionEto() {
 
     this.state = OrderPositionState.ORDERED;
+
   }
 
   @Override
@@ -122,6 +126,7 @@ public class OrderPositionEto extends AbstractEto implements OrderPosition {
     result = prime * result + ((this.comment == null) ? 0 : this.comment.hashCode());
     result = prime * result + ((this.price == null) ? 0 : this.price.hashCode());
     result = prime * result + ((this.state == null) ? 0 : this.state.hashCode());
+    result = prime * result + ((this.drinkState == null) ? 0 : this.drinkState.hashCode());
     return result;
   }
 
@@ -156,6 +161,9 @@ public class OrderPositionEto extends AbstractEto implements OrderPosition {
     if (this.state != other.state) {
       return false;
     }
+    if (this.drinkState != other.drinkState) {
+      return false;
+    }
     return true;
   }
 
@@ -164,6 +172,7 @@ public class OrderPositionEto extends AbstractEto implements OrderPosition {
    *
    * @return Comment as string
    */
+  @Override
   public String getComment() {
 
     return this.comment;
@@ -174,9 +183,30 @@ public class OrderPositionEto extends AbstractEto implements OrderPosition {
    *
    * @param comment new value for comment
    */
+  @Override
   public void setComment(String comment) {
 
     this.comment = comment;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public ProductOrderState getDrinkState() {
+
+    return this.drinkState;
+
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void setDrinkState(ProductOrderState drinkState) {
+
+    this.drinkState = drinkState;
+
   }
 
 }
