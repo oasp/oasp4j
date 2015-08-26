@@ -1,5 +1,7 @@
 package io.oasp.gastronomy.restaurant.general.common.api;
 
+import io.oasp.gastronomy.restaurant.offermanagement.common.api.exception.ProductNotFoundException;
+
 import javax.inject.Named;
 
 import net.sf.mmm.util.nls.api.NlsBundle;
@@ -61,6 +63,14 @@ public interface NlsBundleApplicationRoot extends NlsBundle {
    */
   @NlsBundleMessage("The offer is empty - it must contain a drink, meal, or side-dish!")
   NlsMessage errorOfferEmpty();
+
+  /**
+   * @see ProductNotFoundException
+   * @param productId Product ID
+   * @return the {@link NlsMessage}
+   */
+  @NlsBundleMessage("Product with id {productId} not found!")
+  NlsMessage productNotFound(@Named("productId") Long productId);
 
   /**
    * @see io.oasp.gastronomy.restaurant.salesmanagement.common.api.exception.ChangeTableIllegalStateCombinationException
