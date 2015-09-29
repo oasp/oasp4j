@@ -1,0 +1,1 @@
+call %~dp0\runbatch.bat billExportJob hello world

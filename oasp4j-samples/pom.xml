@@ -22,7 +22,7 @@
   <modules>
     <module>oasp4j-sample-core</module>
     <module>oasp4j-sample-server</module>
-    <module>oasp4j-sample-batch-server</module>
+    <module>oasp4j-sample-batch</module>
   </modules>
 
   <dependencyManagement>
