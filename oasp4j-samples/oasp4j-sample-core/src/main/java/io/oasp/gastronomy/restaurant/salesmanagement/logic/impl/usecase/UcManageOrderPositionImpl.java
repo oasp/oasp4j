@@ -118,10 +118,10 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
    */
   private void verifyUpdate(OrderPosition currentOrderPosition, OrderPosition updateOrderPosition) {
 
-    if (!Objects.equals(currentOrderPosition.getOrderId(), currentOrderPosition.getOrderId())) {
+    if (!Objects.equals(currentOrderPosition.getOrderId(), updateOrderPosition.getOrderId())) {
       throw new IllegalPropertyChangeException(updateOrderPosition, "orderId");
     }
-    if (!Objects.equals(currentOrderPosition.getOfferId(), currentOrderPosition.getOfferId())) {
+    if (!Objects.equals(currentOrderPosition.getOfferId(), updateOrderPosition.getOfferId())) {
       throw new IllegalPropertyChangeException(updateOrderPosition, "offerId");
     }
     if (!Objects.equals(currentOrderPosition.getPrice(), currentOrderPosition.getPrice())) {
