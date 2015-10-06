@@ -55,12 +55,15 @@ public class PerformanceLogFilter implements Filter {
 
     if (this.urlFilter == null || path.matches(this.urlFilter)) {
       startTime = System.nanoTime();
-      chain.doFilter(request, response);
-      endTime = System.nanoTime();
-      duration = TimeUnit.MILLISECONDS.convert(endTime - startTime, TimeUnit.NANOSECONDS);
+      try {
+        chain.doFilter(request, response);
+      } finally {
+        endTime = System.nanoTime();
+        duration = TimeUnit.MILLISECONDS.convert(endTime - startTime, TimeUnit.NANOSECONDS);
 
-      // Log the request url, time taken and the http status code
-      LOG.info(url + "," + duration + "," + ((HttpServletResponse) response).getStatus());
+        // Log the request url, time taken and the http status code
+        LOG.info(url + "," + duration + "," + ((HttpServletResponse) response).getStatus());
+      }
     } else {
       chain.doFilter(request, response);
     }
