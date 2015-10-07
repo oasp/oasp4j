@@ -4,9 +4,9 @@ import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionCons
 import io.oasp.gastronomy.restaurant.general.logic.api.to.BinaryObjectEto;
 import io.oasp.gastronomy.restaurant.general.logic.base.AbstractComponentFacade;
 import io.oasp.gastronomy.restaurant.general.logic.base.UcManageBinaryObject;
+import io.oasp.gastronomy.restaurant.offermanagement.common.api.Product;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.ProductType;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.exception.OfferEmptyException;
-import io.oasp.gastronomy.restaurant.offermanagement.common.api.exception.ProductNotFoundException;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.ProductEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.DrinkDao;
@@ -40,6 +40,7 @@ import javax.inject.Named;
 import javax.validation.Valid;
 
 import net.sf.mmm.util.exception.api.ObjectMismatchException;
+import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -382,7 +383,7 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
       product.setPictureId(binaryObjectEto.getId());
       getProductDao().save(product);
     } else {
-      throw new ProductNotFoundException(productId);
+      throw new ObjectNotFoundUserException(Product.class, productId);
     }
 
   }
