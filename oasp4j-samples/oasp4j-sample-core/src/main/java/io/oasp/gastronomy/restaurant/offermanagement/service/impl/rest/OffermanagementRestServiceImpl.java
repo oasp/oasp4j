@@ -36,6 +36,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
@@ -340,6 +341,23 @@ public class OffermanagementRestServiceImpl {
     atts.add(new Attachment("blob", MediaType.APPLICATION_OCTET_STREAM, new ByteArrayInputStream(data)));
     return new MultipartBody(atts, true);
 
+  }
+
+  @SuppressWarnings("javadoc")
+  @Produces(MediaType.APPLICATION_OCTET_STREAM)
+  @GET
+  @Path("/product/{id}/rawpicture")
+  @Deprecated
+  public Response getProductRawPicture(@PathParam("id") long productId) throws SQLException, IOException {
+
+    Blob blob = this.offerManagement.findProductPictureBlob(productId);
+    if (blob != null) {
+      byte[] data = IOUtils.readBytesFromStream(blob.getBinaryStream());
+      BinaryObjectEto metadata = this.offerManagement.findProductPicture(productId);
+      return Response.ok(new ByteArrayInputStream(data)).header("Content-Type", metadata.getMimeType()).build();
+    } else {
+      return Response.noContent().build();
+    }
   }
 
   @SuppressWarnings("javadoc")
