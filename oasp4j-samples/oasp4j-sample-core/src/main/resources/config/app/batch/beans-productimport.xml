@@ -6,12 +6,12 @@
   <batch:job id="productImportJob" incrementer="incrementer">
     <batch:step id="drinkImportStep" next="mealImportStep">
       <batch:tasklet>
-        <batch:chunk reader="drinkReader" writer="productWriter" commit-interval="50"/>
+        <batch:chunk reader="drinkReader" writer="productWriter" commit-interval="2"/>
       </batch:tasklet>
     </batch:step>
     <batch:step id="mealImportStep">
       <batch:tasklet>
-        <batch:chunk reader="mealReader" writer="productWriter" commit-interval="50"/>
+        <batch:chunk reader="mealReader" writer="productWriter" commit-interval="2"/>
       </batch:tasklet>
     </batch:step>
   </batch:job>

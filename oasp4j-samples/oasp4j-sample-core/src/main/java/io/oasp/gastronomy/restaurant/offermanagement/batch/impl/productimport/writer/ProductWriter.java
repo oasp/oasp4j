@@ -31,6 +31,7 @@ public class ProductWriter implements ItemWriter<ProductEto> {
     LOG.debug("Writting " + items.size() + " products");
 
     for (ProductEto item : items) {
+      LOG.debug("Saving product: " + item.getName());
       this.offerManagement.saveProduct(item);
     }
 
