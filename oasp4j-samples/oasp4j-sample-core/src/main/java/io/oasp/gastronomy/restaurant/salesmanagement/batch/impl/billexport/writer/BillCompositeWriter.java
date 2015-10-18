@@ -15,7 +15,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.io.Resource;
 
 /**
- * TODO ABIELEWI This type ...
+ * Implementation of ItemWriter. It gets BillCto and writes it in csv format into file.
  *
  * @author ABIELEWI
  */

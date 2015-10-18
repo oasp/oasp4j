@@ -15,7 +15,7 @@ import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
- * End-To-End test if job "import offer management from csv"
+ * End-To-End test job "import offer management from csv"
  *
  * @author jczas
  */

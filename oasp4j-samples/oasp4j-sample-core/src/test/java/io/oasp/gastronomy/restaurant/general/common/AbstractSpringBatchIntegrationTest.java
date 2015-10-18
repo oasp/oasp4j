@@ -13,7 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
- * TODO ABIELEWI This type ...
+ * Base class for all spring batch integration tests. It helps to do End-to-End job tests.
  *
  * @author ABIELEWI
  */

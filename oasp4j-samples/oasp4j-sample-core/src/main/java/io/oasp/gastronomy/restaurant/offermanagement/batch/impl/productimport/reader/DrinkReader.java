@@ -24,6 +24,7 @@ public class DrinkReader extends FlatFileItemReader<DrinkEto> {
   public DrinkReader() {
 
     super();
+
     // setting line tokenizer and mapper
     DelimitedLineTokenizer delimitedLineTokenizer = new DelimitedLineTokenizer();
     delimitedLineTokenizer.setNames(new String[] { "name", "description", "pictureId", "alcoholic" });
@@ -37,5 +38,4 @@ public class DrinkReader extends FlatFileItemReader<DrinkEto> {
 
     setLineMapper(defaultLineMapper);
   }
-
 }

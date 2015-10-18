@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import org.springframework.batch.item.ItemProcessor;
 
 /**
- * TODO ABIELEWI This type ...
+ * Implementation of ItemProcessor. It finds BillCto by id and returns it.
  *
  * @author ABIELEWI
  */

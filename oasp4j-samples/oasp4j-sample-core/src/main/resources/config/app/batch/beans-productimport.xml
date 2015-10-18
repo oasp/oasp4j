@@ -42,5 +42,4 @@
   </bean>
 
   <bean id="productWriter" class="io.oasp.gastronomy.restaurant.offermanagement.batch.impl.productimport.writer.ProductWriter"/>
-
 </beans>

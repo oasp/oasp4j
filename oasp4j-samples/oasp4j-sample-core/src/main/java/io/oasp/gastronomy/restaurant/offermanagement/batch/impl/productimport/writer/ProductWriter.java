@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemWriter;
 
 /**
@@ -16,6 +18,8 @@ import org.springframework.batch.item.ItemWriter;
  */
 public class ProductWriter implements ItemWriter<ProductEto> {
 
+  private static final Logger LOG = LoggerFactory.getLogger(ProductWriter.class);
+
   private Offermanagement offerManagement;
 
   /**
@@ -23,6 +27,8 @@ public class ProductWriter implements ItemWriter<ProductEto> {
    */
   @Override
   public void write(List<? extends ProductEto> items) throws Exception {
+
+    LOG.debug("Writting " + items.size() + " products");
 
     for (ProductEto item : items) {
       this.offerManagement.saveProduct(item);
