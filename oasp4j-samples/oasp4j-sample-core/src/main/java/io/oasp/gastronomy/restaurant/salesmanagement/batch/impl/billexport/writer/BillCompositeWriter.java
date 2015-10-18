@@ -7,6 +7,8 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionE
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemStreamException;
 import org.springframework.batch.item.file.ResourceAwareItemWriterItemStream;
@@ -20,6 +22,8 @@ import org.springframework.core.io.Resource;
  * @author ABIELEWI
  */
 public class BillCompositeWriter implements ResourceAwareItemWriterItemStream<BillCto>, InitializingBean {
+
+  private static final Logger LOG = LoggerFactory.getLogger(BillCompositeWriter.class);
 
   private ResourceAwareItemWriterItemStream<String> delegate;
 
@@ -36,6 +40,8 @@ public class BillCompositeWriter implements ResourceAwareItemWriterItemStream<Bi
   public void afterPropertiesSet() throws Exception {
 
     this.delegate.setResource(this.resource);
+
+    LOG.debug("Resource filename: " + this.resource.getFilename());
   }
 
   /**
@@ -45,6 +51,8 @@ public class BillCompositeWriter implements ResourceAwareItemWriterItemStream<Bi
   public void open(ExecutionContext executionContext) throws ItemStreamException {
 
     this.delegate.open(executionContext);
+
+    LOG.debug("Bill composite writed opened");
   }
 
   /**
@@ -63,6 +71,8 @@ public class BillCompositeWriter implements ResourceAwareItemWriterItemStream<Bi
   public void close() throws ItemStreamException {
 
     this.delegate.close();
+
+    LOG.debug("Bill composite writed closed");
   }
 
   /**
@@ -74,10 +84,10 @@ public class BillCompositeWriter implements ResourceAwareItemWriterItemStream<Bi
     List<String> lines = newArrayList();
     for (BillCto item : items) {
       String billLine = this.billLineAggregator.aggregate(item.getBill());
-      lines.add(billLine);
       for (OrderPositionEto position : item.getPositions()) {
         String positionLine = this.positionLineAggregator.aggregate(position);
-        lines.add(positionLine);
+        lines.add(billLine + "," + positionLine);
+        LOG.debug("Write bill line, offer name: " + position.getOfferName());
       }
     }
     this.delegate.write(lines);
