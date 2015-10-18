@@ -39,9 +39,10 @@ public class BillCompositeWriter implements ResourceAwareItemWriterItemStream<Bi
   @Override
   public void afterPropertiesSet() throws Exception {
 
+    LOG.debug("Resource: " + this.resource);
+
     this.delegate.setResource(this.resource);
 
-    LOG.debug("Resource filename: " + this.resource.getFilename());
   }
 
   /**

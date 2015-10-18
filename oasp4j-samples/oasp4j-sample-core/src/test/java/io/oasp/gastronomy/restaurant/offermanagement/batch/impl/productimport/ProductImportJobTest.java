@@ -26,7 +26,7 @@ public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
   private Job productImportJob;
 
   @Test
-  public void shouldImportProducts() throws Exception {
+  public void testJob() throws Exception {
 
     JobParametersBuilder jobParameterBuilder = new JobParametersBuilder();
     jobParameterBuilder.addString("drinks.file", "classpath:drinks.csv");

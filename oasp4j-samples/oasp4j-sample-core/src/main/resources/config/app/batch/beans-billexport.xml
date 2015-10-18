@@ -6,7 +6,7 @@
   <batch:job id="billExportJob" incrementer="incrementer">
     <batch:step id="billExportStep">
       <batch:tasklet>
-        <batch:chunk reader="billReader" processor="billProcessor" writer="billWriter" commit-interval="50"/>
+        <batch:chunk reader="billReader" processor="billProcessor" writer="billWriter" commit-interval="2"/>
       </batch:tasklet>
     </batch:step>
   </batch:job>
@@ -27,7 +27,7 @@
 
   <bean id="billProcessor" class="io.oasp.gastronomy.restaurant.salesmanagement.batch.impl.billexport.processor.BillProcessor"/>
 
-  <bean id="billWriter" class="io.oasp.gastronomy.restaurant.salesmanagement.batch.impl.billexport.writer.BillCompositeWriter">
+  <bean id="billWriter" class="io.oasp.gastronomy.restaurant.salesmanagement.batch.impl.billexport.writer.BillCompositeWriter" scope="step">
     <property name="billLineAggregator">
       <bean class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
         <property name="fieldExtractor">
@@ -46,8 +46,6 @@
         </property>
       </bean>
     </property>
-    <!-- TODO todo_jczas File should be written to working directory and then copied to final directory -->
-    <property name="resource" value="file:./temp/bills.csv"/>
     <property name="delegate">
       <bean class="org.springframework.batch.item.file.FlatFileItemWriter">
         <property name="lineAggregator">
@@ -55,6 +53,7 @@
         </property>
       </bean>
     </property>
+    <property name="resource" value="file:#{jobParameters['bills.file']}"/>
   </bean>
 
 </beans>

@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
@@ -24,10 +26,13 @@ public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
   private Job billExportJob;
 
   @Test
-  public void shouldExportBills() throws Exception {
+  public void testJob() throws Exception {
 
-    JobExecution jobExecution = getJobLauncherTestUtils(this.billExportJob).launchJob();
+    JobParametersBuilder jobParameterBuilder = new JobParametersBuilder();
+    jobParameterBuilder.addString("bills.file", "./tmp/bills.csv");
+    JobParameters jobParameters = jobParameterBuilder.toJobParameters();
 
+    JobExecution jobExecution = getJobLauncherTestUtils(this.billExportJob).launchJob(jobParameters);
     assertEquals(BatchStatus.COMPLETED, jobExecution.getStatus());
   }
 }
