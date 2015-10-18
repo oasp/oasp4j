@@ -7,7 +7,8 @@ import org.hibernate.Query;
 import org.springframework.beans.factory.FactoryBean;
 
 /**
- * TODO ABIELEWI This type ...
+ * ProductWriter allows to get named query from resource NamedQueries.xml.
+ * It is used for example in job to get sql for JdbcCursorItemReader.
  *
  * @author ABIELEWI
  */

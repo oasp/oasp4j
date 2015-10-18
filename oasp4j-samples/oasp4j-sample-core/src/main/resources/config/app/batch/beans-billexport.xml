@@ -46,7 +46,7 @@
         </property>
       </bean>
     </property>
-    <!-- TODO jczast File should be written to working directory and then copied to final directory -->
+    <!-- TODO todo_jczas File should be written to working directory and then copied to final directory -->
     <property name="resource" value="file:./temp/bills.csv"/>
     <property name="delegate">
       <bean class="org.springframework.batch.item.file.FlatFileItemWriter">

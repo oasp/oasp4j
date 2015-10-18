@@ -5,7 +5,6 @@
   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
   <import resource="../logic/beans-logic.xml"/>
-  <!-- TODO How to add our job xmls? -->
   <import resource="beans-productimport.xml"/>
   <import resource="beans-billexport.xml"/>
 
@@ -23,7 +22,8 @@
     class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
     <property name="dataSource" ref="appDataSource" />
     <property name="transactionManager" ref="transactionManager" />
-    <!-- TODO jczast see http://stackoverflow.com/questions/26581033/exception-hibernatejpadialect-does-not-support-custom-isolation-levels-due-to -->
+    <!-- HibernateJpaDialect does not support custom isolation levels due to limitations in standard JPA. Specific arrangements may be implemented in custom JpaDialect variants.
+         see http://stackoverflow.com/questions/26581033/exception-hibernatejpadialect-does-not-support-custom-isolation-levels-due-to -->
     <property name="isolationLevelForCreate" value="ISOLATION_DEFAULT"/>
   </bean>
 

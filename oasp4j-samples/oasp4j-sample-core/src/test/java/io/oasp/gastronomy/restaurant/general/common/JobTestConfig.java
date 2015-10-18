@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * TODO ABIELEWI This type ...
+ * TODO todo_jczas This type ...
  *
  * @author ABIELEWI
  */
