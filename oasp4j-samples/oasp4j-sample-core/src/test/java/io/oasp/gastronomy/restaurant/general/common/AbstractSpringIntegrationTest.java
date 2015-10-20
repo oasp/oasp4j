@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.general.common;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -14,7 +15,6 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *

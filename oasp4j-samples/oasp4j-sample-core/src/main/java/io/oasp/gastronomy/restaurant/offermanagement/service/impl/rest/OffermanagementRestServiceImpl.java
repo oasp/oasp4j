@@ -42,7 +42,6 @@ import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * This class contains methods for REST calls. Some URI structures may seem depricated, but in fact are not. See the
@@ -54,7 +53,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Named("OffermanagementRestService")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@Transactional
 public class OffermanagementRestServiceImpl {
 
   private Offermanagement offerManagement;
