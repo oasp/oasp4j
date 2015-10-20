@@ -24,7 +24,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 /**
  * Base class for all spring batch integration tests. It helps to do End-to-End job tests.
  *
- * @author ABIELEWI
+ * @author jczas
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @DirtiesContext(classMode = ClassMode.AFTER_CLASS)
@@ -32,8 +32,15 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public abstract class AbstractSpringBatchIntegrationTest {
   private static final Logger LOG = LoggerFactory.getLogger(AbstractSpringBatchIntegrationTest.class);
 
+  /** directory for temporary test files */
   private static final String TMP_DIR = "./tmp";
 
+  /** scripts for all tests db setup */
+  private static final String ALL_TESTS_DB_SETUP_DIR = "classpath:AllTests/setup/db";
+
+  /**
+   * database migration helper
+   */
   @Inject
   protected DatabaseMigrator flyway;
 
@@ -41,6 +48,7 @@ public abstract class AbstractSpringBatchIntegrationTest {
   private JobLauncher jobLauncher;
 
   /**
+   * @param job job to configure
    * @return jobLauncherTestUtils
    */
   public JobLauncherTestUtils getJobLauncherTestUtils(Job job) {
@@ -52,8 +60,14 @@ public abstract class AbstractSpringBatchIntegrationTest {
     return jobLauncherTestUtils;
   }
 
+  /**
+   * setup run before all tests
+   */
   @Before
   public void setup() {
+
+    // setup test data
+    this.flyway.importTestData(ALL_TESTS_DB_SETUP_DIR);
 
     LOG.debug("Delete tmp directory");
     try {

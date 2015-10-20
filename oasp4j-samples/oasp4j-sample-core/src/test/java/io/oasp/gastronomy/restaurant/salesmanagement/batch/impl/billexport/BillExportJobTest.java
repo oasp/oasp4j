@@ -11,8 +11,6 @@ import javax.inject.Inject;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
@@ -28,11 +26,10 @@ import org.springframework.test.context.ContextConfiguration;
  */
 @ContextConfiguration(locations = { ApplicationConfigurationConstants.BEANS_BATCH })
 public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
-  private static final Logger LOG = LoggerFactory.getLogger(BillExportJobTest.class);
-
   @Inject
   private Job billExportJob;
 
+  @SuppressWarnings("javadoc")
   @Test
   public void testJob() throws Exception {
 
