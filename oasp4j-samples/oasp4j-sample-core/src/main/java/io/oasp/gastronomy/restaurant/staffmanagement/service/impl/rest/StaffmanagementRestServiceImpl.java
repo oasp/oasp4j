@@ -19,8 +19,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.springframework.transaction.annotation.Transactional;
-
 /**
  * This class contains methods for REST calls. Some URI structures may seem depricated, but in fact are not. See the
  * correspondent comments on top.
@@ -31,7 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Named("StaffmanagementRestService")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@Transactional
 public class StaffmanagementRestServiceImpl {
 
   private Staffmanagement staffManagement;

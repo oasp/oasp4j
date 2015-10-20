@@ -23,8 +23,6 @@ import javax.ws.rs.core.MediaType;
 
 import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
 
-import org.springframework.transaction.annotation.Transactional;
-
 /**
  * The service class for REST calls in order to execute the methods in {@link Tablemanagement}.
  *
@@ -34,7 +32,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Named("TablemanagementRestService")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@Transactional
 public class TablemanagementRestServiceImpl {
 
   private Tablemanagement tableManagement;
