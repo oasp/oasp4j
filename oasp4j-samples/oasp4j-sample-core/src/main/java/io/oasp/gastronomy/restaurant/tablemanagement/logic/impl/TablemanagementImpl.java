@@ -22,6 +22,7 @@ import java.util.Objects;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -33,6 +34,7 @@ import org.slf4j.LoggerFactory;
  * @author etomety
  */
 @Named
+@Transactional
 public class TablemanagementImpl extends AbstractComponentFacade implements Tablemanagement {
 
   /** Logger instance. */

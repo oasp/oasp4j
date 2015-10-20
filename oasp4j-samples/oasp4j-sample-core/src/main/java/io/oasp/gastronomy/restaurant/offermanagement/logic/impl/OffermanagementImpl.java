@@ -37,6 +37,7 @@ import java.util.Objects;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import net.sf.mmm.util.exception.api.ObjectMismatchException;
@@ -51,6 +52,7 @@ import org.slf4j.LoggerFactory;
  * @author loverbec
  */
 @Named
+@Transactional
 public class OffermanagementImpl extends AbstractComponentFacade implements Offermanagement {
 
   private static final Logger LOG = LoggerFactory.getLogger(OffermanagementImpl.class);

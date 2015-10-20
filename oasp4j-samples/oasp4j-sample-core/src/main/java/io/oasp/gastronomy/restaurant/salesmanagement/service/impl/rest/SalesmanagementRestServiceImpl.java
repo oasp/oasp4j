@@ -42,8 +42,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
-import org.springframework.transaction.annotation.Transactional;
-
 /**
  * This class contains methods for handling REST calls for {@link Salesmanagement}.
  *
@@ -53,7 +51,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Named("SalesmanagementRestService")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@Transactional
 public class SalesmanagementRestServiceImpl {
 
   private Salesmanagement salesManagement;
