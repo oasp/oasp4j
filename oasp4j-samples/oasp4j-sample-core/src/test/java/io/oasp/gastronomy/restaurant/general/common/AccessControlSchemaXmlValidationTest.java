@@ -1,5 +1,7 @@
 package io.oasp.gastronomy.restaurant.general.common;
 
+import io.oasp.module.test.common.base.ModuleTest;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -22,7 +24,7 @@ import org.xml.sax.SAXException;
  *
  * @author jmetzler
  */
-public class AccessControlSchemaXmlValidationTest {
+public class AccessControlSchemaXmlValidationTest extends ModuleTest {
 
   /**
    * Tests if the access-control-schema.xml is valid.

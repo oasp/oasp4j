@@ -14,21 +14,13 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author mvielsac
  */
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ ApplicationConfigurationConstants.BEANS_DATA_ACCESS })
-@Transactional
 public class BillDaoTest extends AbstractSpringIntegrationTest {
 
   @Inject
@@ -48,20 +40,20 @@ public class BillDaoTest extends AbstractSpringIntegrationTest {
     bill.setTotal(new Money(42.42));
     bill.setTip(new Money(1.0));
     bill.setPayed(true);
-    assertNull(bill.getId());
+    assertThat(bill.getId()).isNull();
     this.billDao.save(bill);
-    assertNotNull(bill.getId());
+    assertThat(bill.getId()).isNotNull();
     BillEntity loadedBill = this.billDao.findOne(bill.getId());
-    assertEquals(bill, loadedBill);
+    assertThat(bill).isEqualTo(loadedBill);
 
     TypedQuery<BillEntity> query =
         this.entityManager.createQuery("SELECT b from Bill b where b.total > 43", BillEntity.class);
     List<BillEntity> resultList = query.getResultList();
-    assertTrue(resultList.isEmpty());
+    assertThat(resultList.isEmpty()).isTrue();
 
     query = this.entityManager.createQuery("SELECT b from Bill b where b.total < 43", BillEntity.class);
     resultList = query.getResultList();
-    assertTrue(!resultList.isEmpty());
+    assertThat(!resultList.isEmpty()).isTrue();
 
   }
 
