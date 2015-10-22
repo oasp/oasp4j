@@ -12,6 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +50,7 @@ public class PerformanceLogFilter implements Filter {
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
       ServletException {
 
-    long startTime, endTime, duration;
+    long startTime;
     String path = ((HttpServletRequest) request).getServletPath();
     String url = ((HttpServletRequest) request).getRequestURL().toString();
 
@@ -57,16 +58,58 @@ public class PerformanceLogFilter implements Filter {
       startTime = System.nanoTime();
       try {
         chain.doFilter(request, response);
-      } finally {
-        endTime = System.nanoTime();
-        duration = TimeUnit.MILLISECONDS.convert(endTime - startTime, TimeUnit.NANOSECONDS);
-
-        // Log the request url, time taken and the http status code
-        LOG.info(url + "," + duration + "," + ((HttpServletResponse) response).getStatus());
+        logPerformance(response, startTime, url, null);
+      } catch (Throwable error) {
+        logPerformance(response, startTime, url, error);
       }
     } else {
       chain.doFilter(request, response);
     }
+  }
+
+  /**
+   * Logs the request URL, execution time and {@link HttpStatus}. In case of an error also logs class name and error
+   * message.
+   *
+   * @param response - the {@link ServletResponse}
+   * @param startTime - start time of the {@link #doFilter(ServletRequest, ServletResponse, FilterChain)} function
+   * @param url - requested URL
+   * @param error - error thrown by the requested servlet, {@code null} if execution did not cause an error
+   */
+  private void logPerformance(ServletResponse response, long startTime, String url, Throwable error) {
+
+    long endTime, duration;
+    int statusCode = ((HttpServletResponse) response).getStatus();
+    endTime = System.nanoTime();
+    duration = TimeUnit.MILLISECONDS.convert(endTime - startTime, TimeUnit.NANOSECONDS);
+
+    String message;
+    if (error != null) {
+      statusCode = HttpStatus.SC_INTERNAL_SERVER_ERROR;
+      message =
+          createMessage(new String[] { url, Long.toString(duration), Integer.toString(statusCode),
+          error.getClass().getName(), error.getMessage() });
+    } else {
+      message = createMessage(new String[] { url, Long.toString(duration), Integer.toString(statusCode) });
+    }
+
+    LOG.info(message);
+  }
+
+  /**
+   * Returns a {@link String} representing the log message, which contains the given arguments separated by ';'
+   *
+   * @param args - the arguments for the log message
+   * @return a {@link String} representing the log message
+   */
+  private String createMessage(String[] args) {
+
+    String message = "";
+    for (int i = 0; i < args.length; i++) {
+      message += (i != (args.length - 1)) ? args[i] + ";" : args[i];
+    }
+
+    return message;
   }
 
   @Override
