@@ -4,3 +4,6 @@
 [submodule "oasp4j-ide"]
 	path = oasp4j-ide
 	url = https://github.com/oasp/oasp4j-ide.git
+[submodule "oasp4js"]
+    path = oasp4j-samples/oasp4j-sample-server/src/main/client
+   	url = https://github.com/oasp/oasp4js.git
