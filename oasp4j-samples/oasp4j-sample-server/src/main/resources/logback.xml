@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!-- Configuration file for logback -->
-
 <configuration scan="true" scanPeriod="60 seconds">
-
-  <include resource="io/oasp/logging/logback/base.xml" />
-  <include resource="io/oasp/logging/logback/appenders.xml" />
-
+  <include resource="io/oasp/logging/logback/properties.xml" />
+  <property name="appname" value="restaurant"/>
+  <include resource="io/oasp/logging/logback/appenders-file-all.xml" />
 
   <root level="DEBUG">
     <appender-ref ref="ERROR_APPENDER"/>
@@ -14,8 +11,10 @@
     <appender-ref ref="DEBUG_APPENDER"/>
   </root>
 
-  <logger name="org.springframework" level="DEBUG"/>
-
+  <!-- Minimize infrastructure debug logs -->
   <logger name="org.dozer" level="INFO"/>
+  <logger name="org.flywaydb" level="INFO"/>
+  <logger name="org.springframework" level="INFO"/>
+  <logger name="org.hibernate" level="INFO"/>
 
 </configuration>
