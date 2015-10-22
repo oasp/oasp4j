@@ -13,6 +13,7 @@ import net.sf.mmm.util.filter.api.Filter;
 import net.sf.mmm.util.reflect.api.ReflectionUtil;
 import net.sf.mmm.util.reflect.base.ReflectionUtilImpl;
 
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 /**
@@ -43,6 +44,7 @@ public class PermissionCheckTest extends ModuleTest {
     ReflectionUtil ru = ReflectionUtilImpl.getInstance();
     Set<String> classNames = ru.findClassNames(packageName, true, filter);
     Set<Class<?>> classes = ru.loadClasses(classNames);
+    SoftAssertions assertions = new SoftAssertions();
     for (Class<?> clazz : classes) {
       Method[] methods = clazz.getDeclaredMethods();
       for (Method method : methods) {
@@ -55,11 +57,13 @@ public class PermissionCheckTest extends ModuleTest {
                 || method.getAnnotation(PermitAll.class) != null) {
               hasAnnotation = true;
             }
-            assertThat(hasAnnotation).isTrue().as(
-                "Method " + method.getName() + " in Class " + clazz.getSimpleName() + " is missing access control");
+            assertions.assertThat(hasAnnotation)
+                .as("Method " + method.getName() + " in Class " + clazz.getSimpleName() + " is missing access control")
+                .isTrue();
           }
         }
       }
     }
+    assertions.assertAll();
   }
 }
