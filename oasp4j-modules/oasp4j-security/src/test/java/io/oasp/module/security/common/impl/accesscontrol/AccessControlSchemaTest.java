@@ -5,6 +5,7 @@ import io.oasp.module.security.common.api.accesscontrol.AccessControlGroup;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlPermission;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlSchema;
+import io.oasp.module.test.common.base.ModuleTest;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -22,10 +23,10 @@ import org.springframework.core.io.ClassPathResource;
 
 /**
  * This is the test-case for {@link AccessControlSchema} and {@link AccessControlSchemaXmlMapper}.
- * 
+ *
  * @author hohwille
  */
-public class AccessControlSchemaTest extends Assert {
+public class AccessControlSchemaTest extends ModuleTest {
 
   /** The location of the reference configuration for regression tests. */
   private static final String SCHEMA_XML = "config/app/security/access-control-schema.xml";
@@ -52,7 +53,7 @@ public class AccessControlSchemaTest extends Assert {
 
   /**
    * Regression test for {@link AccessControlSchemaXmlMapper#write(AccessControlSchema, java.io.OutputStream)}.
-   * 
+   *
    * @throws Exception if something goes wrong.
    */
   @Test
@@ -66,12 +67,12 @@ public class AccessControlSchemaTest extends Assert {
     new AccessControlSchemaXmlMapper().write(conf, baos);
     String actualXml = baos.toString();
     // then
-    assertEquals(expectedXml.replaceAll("\\r *|\\n *", ""), actualXml);
+    assertThat(expectedXml.replaceAll("\\r *|\\n *", "")).isEqualTo(actualXml);
   }
 
   /**
    * Regression test for {@link AccessControlSchemaXmlMapper#read(InputStream)}.
-   * 
+   *
    * @throws Exception if something goes wrong.
    */
   @Test
@@ -86,7 +87,7 @@ public class AccessControlSchemaTest extends Assert {
       actualConf = new AccessControlSchemaXmlMapper().read(in);
     }
     // then
-    assertEquals(expectedConf, actualConf);
+    assertThat(expectedConf).isEqualTo(actualConf);
   }
 
   /**
@@ -99,7 +100,7 @@ public class AccessControlSchemaTest extends Assert {
       createProvider(SCHEMA_XML_CYCLIC);
       fail("Exception expected!");
     } catch (IllegalStateException e) {
-      assertTrue(e.getMessage().startsWith("Cyclic inheritance "));
+      assertThat(e.getMessage()).startsWith("Cyclic inheritance ");
     }
   }
 
@@ -114,9 +115,9 @@ public class AccessControlSchemaTest extends Assert {
       fail("Exception expected!");
     } catch (IllegalStateException e) {
       String message = e.getMessage();
-      assertTrue(message, message.contains(SCHEMA_XML_CORRUPTED.toString()));
+      assertThat(message).contains(SCHEMA_XML_CORRUPTED.toString());
       String causeMessage = e.getCause().getMessage();
-      assertEquals("Unmarshalling XML failed!", causeMessage);
+      assertThat("Unmarshalling XML failed!").isEqualToIgnoringCase(causeMessage);
     }
   }
 
@@ -131,9 +132,9 @@ public class AccessControlSchemaTest extends Assert {
       fail("Exception expected!");
     } catch (IllegalStateException e) {
       String message = e.getMessage();
-      assertTrue(message, message.contains(SCHEMA_XML_ILLEGAL.toString()));
+      assertThat(message).contains(SCHEMA_XML_ILLEGAL.toString());
       String causeMessage = e.getCause().getMessage();
-      assertTrue(causeMessage, causeMessage.contains("Undefined ID \"Waiter\""));
+      assertThat(causeMessage).contains("Undefined ID \"Waiter\"");
     }
   }
 
@@ -146,20 +147,20 @@ public class AccessControlSchemaTest extends Assert {
     Set<AccessControl> permissions = new HashSet<>();
     boolean success;
     success = provider.collectAccessControls("", permissions);
-    assertFalse(success);
-    assertEquals(0, permissions.size());
+    assertThat(success).isFalse();
+    assertThat(permissions.size()).isEqualTo(0);
     success = provider.collectAccessControls("Admin", permissions);
-    assertTrue(success);
-    assertTrue(permissions.contains(provider.getAccessControl("Customer_ReadCustomer")));
-    assertTrue(permissions.contains(provider.getAccessControl("Customer_CreateCustomer")));
-    assertTrue(permissions.contains(provider.getAccessControl("Customer_DeleteCustomer")));
-    assertEquals(24, permissions.size());
+    assertThat(success).isTrue();
+    assertThat(permissions).contains(provider.getAccessControl("Customer_ReadCustomer"));
+    assertThat(permissions).contains(provider.getAccessControl("Customer_CreateCustomer"));
+    assertThat(permissions).contains(provider.getAccessControl("Customer_DeleteCustomer"));
+    assertThat(permissions.size()).isEqualTo(24);
     success = provider.collectAccessControls("ReadOnly", permissions);
-    assertTrue(success);
-    assertTrue(permissions.contains(provider.getAccessControl("Contract_ReadContractAsset")));
-    assertTrue(permissions.contains(provider.getAccessControl("Contract_UpdateContractAsset")));
-    assertFalse(permissions.contains(provider.getAccessControl("System_DeleteUser")));
-    assertEquals(5, permissions.size());
+    assertThat(success).isTrue();
+    assertThat(permissions).contains(provider.getAccessControl("Contract_ReadContractAsset"));
+    assertThat(permissions).contains(provider.getAccessControl("Contract_UpdateContractAsset"));
+    assertThat(permissions).doesNotContain(provider.getAccessControl("System_DeleteUser"));
+    assertThat(permissions.size()).isEqualTo(5);
 
   }
 

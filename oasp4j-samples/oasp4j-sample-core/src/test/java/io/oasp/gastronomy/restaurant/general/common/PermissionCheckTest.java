@@ -1,6 +1,6 @@
 package io.oasp.gastronomy.restaurant.general.common;
 
-import static org.junit.Assert.assertTrue;
+import io.oasp.module.test.common.base.ModuleTest;
 
 import java.lang.reflect.Method;
 import java.util.Set;
@@ -20,7 +20,7 @@ import org.junit.Test;
  *
  * @author jmetzler
  */
-public class PermissionCheckTest {
+public class PermissionCheckTest extends ModuleTest {
 
   /**
    * Check if all relevant methods in use case implementations have permission checks i.e. {@link RolesAllowed},
@@ -50,16 +50,16 @@ public class PermissionCheckTest {
         if (parentMethod != null) {
           Class<?> declaringClass = parentMethod.getDeclaringClass();
           if (declaringClass.isInterface() && declaringClass.getSimpleName().startsWith("Uc")) {
-            // ...
-            assertTrue(
-
-            "Method " + method.getName() + " in Class " + clazz.getSimpleName() + " is missing access control",
-                method.getAnnotation(RolesAllowed.class) != null || method.getAnnotation(DenyAll.class) != null
-                    || method.getAnnotation(PermitAll.class) != null);
+            boolean hasAnnotation = false;
+            if (method.getAnnotation(RolesAllowed.class) != null || method.getAnnotation(DenyAll.class) != null
+                || method.getAnnotation(PermitAll.class) != null) {
+              hasAnnotation = true;
+            }
+            assertThat(hasAnnotation).isTrue().as(
+                "Method " + method.getName() + " in Class " + clazz.getSimpleName() + " is missing access control");
           }
         }
       }
     }
   }
-
 }
