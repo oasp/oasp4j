@@ -4,90 +4,9 @@
 
 <configuration scan="true" scanPeriod="60 seconds">
 
-  <property resource="config/app/application-default.properties" />
-  <property resource="config/env/application.properties" />
-  <property name="appname" value="restaurant"></property>
+  <include resource="io/oasp/logging/logback/base.xml" />
+  <include resource="io/oasp/logging/logback/appenders.xml" />
 
-  <property name="logPattern" value="[D: %d{ISO8601}] [P: %-5p] [C: %X{correlationId}] [T: %t] [L: %c] - [M: %m]  %n"/>
-
-  <property name="rollingPattern" value="%d{yyyy-MM-dd_HH}"></property>
-
-  <!-- filePath is set relatively to the 'logs' directory of Tomcat -->
-  <property name="filePath" value="${log.dir}"></property>
-
-  <property name="errorLogFile" value="error_log_${HOSTNAME}_${appname}"></property>
-
-  <property name="infoLogFile" value="info_log_${HOSTNAME}_${appname}"></property>
-
-  <property name="debugLogFile" value="debug_log_${HOSTNAME}_${appname}"></property>
-
-  <property name="consoleDisabled" value="${log.console.disabled}"></property>
-
-  <!-- Automatic removal of old log archives maxHistory=... needed? -->
-  <!-- RollingFileAppender: Automatic compression of archived log files -->
-  <!-- Prudent mode needed? (multiple FileAppender instances running on multiple JVMs can safely write to the same log file) -->
-  <!-- Logback-beagle: eclipse plug-in for viewing logs -->
-
-  <appender name="ERROR_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <File>${filePath}${errorLogFile}.log</File>
-    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-      <level>WARN</level>
-    </filter>
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${filePath}${errorLogFile}_${rollingPattern}00.log</fileNamePattern>
-    </rollingPolicy>
-    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-      <layout class="io.oasp.module.logging.common.impl.SingleLinePatternLayout">
-        <pattern>${logPattern}</pattern>
-      </layout>
-    </encoder>
-  </appender>
-
-  <appender name="INFO_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <File>${filePath}${infoLogFile}.log</File>
-    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-      <level>INFO</level>
-    </filter>
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${filePath}${infoLogFile}_${rollingPattern}00.log</fileNamePattern>
-    </rollingPolicy>
-    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-      <layout class="io.oasp.module.logging.common.impl.SingleLinePatternLayout">
-        <pattern>${logPattern}</pattern>
-      </layout>
-    </encoder>
-  </appender>
-
-  <appender name="DEBUG_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <File>${filePath}${debugLogFile}.log</File>
-    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-      <level>ALL</level>
-    </filter>
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${filePath}${debugLogFile}_${rollingPattern}00.log</fileNamePattern>
-    </rollingPolicy>
-    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-      <layout class="io.oasp.module.logging.common.impl.SingleLinePatternLayout">
-        <pattern>${logPattern}</pattern>
-      </layout>
-    </encoder>
-  </appender>
-
-  <if condition='!property("consoleDisabled").equalsIgnoreCase("true")'>
-    <then>
-      <appender name="CONSOLE_APPENDER" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-          <pattern>${logPattern}</pattern>
-        </encoder>
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-          <level>DEBUG</level>
-        </filter>
-      </appender>
-      <root level="DEBUG">
-        <appender-ref ref="CONSOLE_APPENDER"/>
-      </root>
-    </then>
-  </if>
 
   <root level="DEBUG">
     <appender-ref ref="ERROR_APPENDER"/>
