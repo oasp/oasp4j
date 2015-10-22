@@ -4,19 +4,15 @@ import io.oasp.gastronomy.restaurant.general.dataaccess.base.DatabaseMigrator;
 import io.oasp.gastronomy.restaurant.test.general.AppProperties.LoginCredentials;
 import io.oasp.gastronomy.restaurant.test.general.webclient.WebClientWrapper;
 import io.oasp.module.configuration.common.api.ApplicationConfigurationConstants;
+import io.oasp.module.test.common.base.SubsystemTest;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import org.junit.Before;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.support.TransactionTemplate;
 
 /**
@@ -26,12 +22,10 @@ import org.springframework.transaction.support.TransactionTemplate;
  * @author mbrunnli
  * @author jmetzler
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@TestExecutionListeners({ TransactionalTestExecutionListener.class, DependencyInjectionTestExecutionListener.class })
 @ContextConfiguration({ ApplicationConfigurationConstants.BEANS_DATA_ACCESS,
 "classpath:/config/app/dataaccess/beans-db-connector.xml" })
 @ActiveProfiles({ "integrationTest", "db-plain" })
-public abstract class AbstractRestServiceTest {
+public abstract class AbstractRestServiceTest extends SubsystemTest {
 
   /**
    * WebClientWrapper with access rights of the role waiter.

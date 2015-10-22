@@ -4,6 +4,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.DrinkEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.DrinkDao;
 import io.oasp.module.configuration.common.api.ApplicationConfigurationConstants;
 import io.oasp.module.jpa.dataaccess.api.RevisionMetadata;
+import io.oasp.module.test.common.base.ComponentTest;
 
 import java.util.List;
 
@@ -14,13 +15,10 @@ import javax.transaction.Transactional;
 
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
-import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 /**
@@ -28,12 +26,11 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
  *
  * @author jmetzler
  */
-@RunWith(SpringJUnit4ClassRunner.class)
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class })
 @ContextConfiguration({ ApplicationConfigurationConstants.BEANS_DATA_ACCESS,
 "classpath:/config/app/service/beans-test-service-rest.xml" })
 @ActiveProfiles("db-plain")
-public class DrinkDaoTest extends Assert {
+public class DrinkDaoTest extends ComponentTest {
 
   @Inject
   DrinkDaoTestBean testBean;
@@ -79,7 +76,7 @@ public class DrinkDaoTest extends Assert {
       drink.setAlcoholic(false);
       drink.setDescription(this.description);
       drink.setName("some name");
-      assertNull(drink.getId());
+      assertThat(drink.getId()).isNull();
       drink = this.drinkDao.save(drink);
       return drink;
     }
@@ -98,23 +95,23 @@ public class DrinkDaoTest extends Assert {
 
       AuditReader auditReader = AuditReaderFactory.get(this.entityManager);
 
-      assertTrue(auditReader.isEntityClassAudited(DrinkEntity.class));
+      assertThat(auditReader.isEntityClassAudited(DrinkEntity.class)).isTrue();
 
       List<Number> revisions = auditReader.getRevisions(DrinkEntity.class, id);
-      assertEquals(2, revisions.size());
+      assertThat(2).isEqualTo(revisions.size());
 
       List<RevisionMetadata> history = this.drinkDao.getRevisionHistoryMetadata(id);
-      assertEquals(2, history.size());
+      assertThat(2).isEqualTo(history.size());
 
       // get first revision
       Number rev = history.get(0).getRevision();
       DrinkEntity drink = this.drinkDao.load(id, rev);
-      assertTrue(drink.getDescription().equals(this.description));
+      assertThat(drink.getDescription()).isEqualTo(this.description);
 
       // get second revision
       rev = history.get(1).getRevision();
       drink = this.drinkDao.load(id, rev);
-      assertTrue(drink.getDescription().equals(this.changedDescription));
+      assertThat(drink.getDescription()).isEqualTo(this.changedDescription);
     }
 
     /**

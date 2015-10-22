@@ -5,7 +5,6 @@ import io.oasp.gastronomy.restaurant.test.general.AppProperties;
 import io.oasp.gastronomy.restaurant.test.general.webclient.ResponseData;
 import io.oasp.gastronomy.restaurant.test.general.webclient.WebClientWrapper;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -13,7 +12,7 @@ import org.junit.Test;
  *
  * @author jmetzler
  */
-public class SecurityRestServiceTest {
+public class SecurityRestServiceTest extends AbstractRestServiceTest {
 
   /**
    * Login and check if current user is the one logged in.
@@ -27,6 +26,6 @@ public class SecurityRestServiceTest {
     ResponseData<UserDetailsClientTo> response =
         user.get(AppProperties.SERVER_URL + "/services/rest/security/v1/currentuser/", UserDetailsClientTo.class);
 
-    Assert.assertEquals(login, response.getResponseObject().getName());
+    assertThat(login).isEqualTo(response.getResponseObject().getName());
   }
 }

@@ -1,12 +1,5 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl;
 
-import javax.inject.Inject;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-
-import org.junit.Test;
-import org.springframework.test.context.ContextConfiguration;
-
 import io.oasp.gastronomy.restaurant.general.common.AbstractSpringIntegrationTest;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
@@ -17,6 +10,13 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 import io.oasp.module.configuration.common.api.ApplicationConfigurationConstants;
 
+import javax.inject.Inject;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+
+import org.junit.Test;
+import org.springframework.test.context.ContextConfiguration;
+
 /**
  * This is the test-case of {@link Salesmanagement}.
  *
@@ -24,7 +24,6 @@ import io.oasp.module.configuration.common.api.ApplicationConfigurationConstants
  */
 @ContextConfiguration({ ApplicationConfigurationConstants.BEANS_LOGIC })
 public class SalesManagementTest extends AbstractSpringIntegrationTest {
-
   @Inject
   private Salesmanagement salesManagement;
 
@@ -55,15 +54,14 @@ public class SalesManagementTest extends AbstractSpringIntegrationTest {
       orderPosition.setDrinkState(ProductOrderState.ORDERED);
 
       OrderPositionEto updatedOrderPosition = this.salesManagement.saveOrderPosition(orderPosition);
-
-      assertEquals(updatedOrderPosition.getState(), OrderPositionState.ORDERED);
+      assertThat(updatedOrderPosition.getState()).isEqualTo(OrderPositionState.ORDERED);
 
       updatedOrderPosition.setState(OrderPositionState.PREPARED);
       updatedOrderPosition.setDrinkState(ProductOrderState.PREPARED);
 
       updatedOrderPosition = this.salesManagement.saveOrderPosition(updatedOrderPosition);
 
-      assertEquals(updatedOrderPosition.getState(), OrderPositionState.PREPARED);
+      assertThat(updatedOrderPosition.getState()).isEqualTo(OrderPositionState.PREPARED);
     } catch (ConstraintViolationException e) {
       // BV is really painful as you need such code to see the actual error in JUnit.
       StringBuilder sb = new StringBuilder(64);
