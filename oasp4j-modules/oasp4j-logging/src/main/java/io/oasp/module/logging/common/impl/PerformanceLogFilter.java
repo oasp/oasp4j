@@ -87,10 +87,10 @@ public class PerformanceLogFilter implements Filter {
     if (error != null) {
       statusCode = HttpStatus.SC_INTERNAL_SERVER_ERROR;
       message =
-          createMessage(new String[] { url, Long.toString(duration), Integer.toString(statusCode),
-          error.getClass().getName(), error.getMessage() });
+          createMessage(url, Long.toString(duration), Integer.toString(statusCode), error.getClass().getName(),
+              error.getMessage());
     } else {
-      message = createMessage(new String[] { url, Long.toString(duration), Integer.toString(statusCode) });
+      message = createMessage(url, Long.toString(duration), Integer.toString(statusCode));
     }
 
     LOG.info(message);
@@ -102,7 +102,7 @@ public class PerformanceLogFilter implements Filter {
    * @param args - the arguments for the log message
    * @return a {@link String} representing the log message
    */
-  private String createMessage(String[] args) {
+  private String createMessage(String... args) {
 
     String message = "";
     for (int i = 0; i < args.length; i++) {
