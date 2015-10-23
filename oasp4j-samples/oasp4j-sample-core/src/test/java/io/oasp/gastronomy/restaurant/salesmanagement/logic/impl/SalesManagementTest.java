@@ -1,12 +1,5 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl;
 
-import javax.inject.Inject;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-
-import org.junit.Test;
-import org.springframework.test.context.ContextConfiguration;
-
 import io.oasp.gastronomy.restaurant.general.common.AbstractSpringIntegrationTest;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
@@ -16,6 +9,13 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 import io.oasp.module.configuration.common.api.ApplicationConfigurationConstants;
+
+import javax.inject.Inject;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+
+import org.junit.Test;
+import org.springframework.test.context.ContextConfiguration;
 
 /**
  * This is the test-case of {@link Salesmanagement}.
