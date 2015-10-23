@@ -7,6 +7,7 @@
     </filter>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
       <fileNamePattern>${logPath}/${infoLogFile}_${rollingPattern}${rollingSuffix}.log</fileNamePattern>
+      <maxHistory>${rollingAppenderMaxHistory}</maxHistory>
     </rollingPolicy>
     <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
       <layout class="io.oasp.module.logging.common.impl.SingleLinePatternLayout">
