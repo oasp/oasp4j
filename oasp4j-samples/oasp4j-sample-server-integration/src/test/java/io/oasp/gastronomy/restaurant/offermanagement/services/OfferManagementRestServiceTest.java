@@ -1,7 +1,5 @@
 package io.oasp.gastronomy.restaurant.offermanagement.services;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 import io.oasp.gastronomy.restaurant.general.common.AbstractRestServiceTest;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferState;
@@ -70,9 +68,9 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
     ResponseData<OfferEto> offer =
         this.waiter.get(RestUrls.OfferManagement.Offer.getGetOfferUrl(createdOffer.getId()), OfferEto.class);
 
-    Assert.assertNotNull(offer.getResponseObject());
-    Assert.assertEquals(createdOffer.getDescription(), offer.getResponseObject().getDescription());
-    Assert.assertEquals(createdOffer.getState(), offer.getResponseObject().getState());
+    assertThat(offer.getResponseObject()).isNotNull();
+    assertThat(createdOffer.getDescription()).isEqualTo(offer.getResponseObject().getDescription());
+    assertThat(createdOffer.getState()).isEqualTo(offer.getResponseObject().getState());
 
     // update offer
     OfferState newState = OfferState.SOLDOUT;
@@ -80,17 +78,16 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
     OfferEto updatedOffer =
         this.chief.post(createdOffer, RestUrls.OfferManagement.Offer.getCreateOfferUrl(), OfferEto.class);
 
-    Assert.assertEquals(newState, updatedOffer.getState());
+    assertThat(newState).isEqualTo(updatedOffer.getState());
 
     // delete created offer
     Response deleteResponse = this.chief.delete(RestUrls.OfferManagement.Offer.getDeleteOfferUrl(createdOffer.getId()));
-    Assert.assertEquals(deleteResponse.getStatus(), 204);
+    assertThat(deleteResponse.getStatus()).isEqualTo(204);
 
     // check if offer is deleted
     ResponseData<OfferEto> getDeletedOfferResponse =
         this.waiter.get(RestUrls.OfferManagement.Offer.getGetOfferUrl(createdOffer.getId()), OfferEto.class);
-    Assert.assertNull(getDeletedOfferResponse.getResponseObject());
-
+    assertThat(getDeletedOfferResponse.getResponseObject()).isNull();
   }
 
   /**
@@ -116,12 +113,12 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
     Long id = DB.OFFER_1.getId();
     ResponseData<OfferEto> offer = this.waiter.get(RestUrls.OfferManagement.Offer.getGetOfferUrl(id), OfferEto.class);
     // assertThat(offer.getResponse().getStatus(), is(200));
-    assertThat(offer.getResponseObject().getId(), is(id));
+    assertThat(offer.getResponseObject().getId()).isEqualTo(id);
 
     id = TestData.DB.OFFER_2.getId();
     offer = this.waiter.get(RestUrls.OfferManagement.Offer.getGetOfferUrl(id), OfferEto.class);
     // assertThat(offer.getResponse().getStatus(), is(200));
-    assertThat(offer.getResponseObject().getId(), is(id));
+    assertThat(offer.getResponseObject().getId()).isEqualTo(id);
 
   }
 
@@ -135,8 +132,8 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
     Long id = Additional.CHANGED_OFFER_1.getId();
     this.chief.put(RestUrls.OfferManagement.Offer.getUpdateOfferUrl(id), Additional.CHANGED_OFFER_1);
     ResponseData<OfferEto> offer = this.chief.get(RestUrls.OfferManagement.Offer.getGetOfferUrl(id), OfferEto.class);
-    assertThat(offer.getResponse().getStatus(), is(200));
-    assertThat(offer.getResponseObject().getName(), is(Additional.CHANGED_OFFER_1.getName()));
+    assertThat(offer.getResponse().getStatus()).isEqualTo(200);
+    assertThat(offer.getResponseObject().getName()).isEqualTo(Additional.CHANGED_OFFER_1.getName());
   }
 
   /**
@@ -149,7 +146,7 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
         this.waiter.getAll(RestUrls.OfferManagement.Offer.getGetAllOffersUrl(), OfferEto.class);
     // assertThat(offer.size(), is(TestData.DB.ALL_OFFERS.size()));
     for (ResponseData<OfferEto> responseData : offer) {
-      assertThat(responseData.getResponse().getStatus(), is(200));
+      assertThat(responseData.getResponse().getStatus()).isEqualTo(200);
     }
   }
 
@@ -163,7 +160,7 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
     this.chief.post(RestUrls.OfferManagement.Product.getCreateProductUrl(), TestData.Additional.MEAL);
     List<ResponseData<ProductEto>> offer =
         this.waiter.getAll(RestUrls.OfferManagement.Product.getGetAllProductsUrl(), ProductEto.class);
-    assertThat(offer.size(), is(DB.ALL_PRODUCTS.size() + 1));
+    assertThat(offer.size()).isEqualTo(DB.ALL_PRODUCTS.size() + 1);
   }
 
   /**
@@ -176,7 +173,7 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
         this.waiter.getAll(RestUrls.OfferManagement.Product.getGetAllProductsUrl(), ProductEto.class);
     // assertThat(offer.size(), is(DB.ALL_PRODUCTS.size()));
     for (ResponseData<ProductEto> responseData : offer) {
-      assertThat(responseData.getResponse().getStatus(), is(200));
+      assertThat(responseData.getResponse().getStatus()).isEqualTo(200);
     }
   }
 
@@ -191,7 +188,7 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
         this.waiter.getAll(RestUrls.OfferManagement.Product.getGetAllMealsUrl(), MealEto.class);
     // assertThat(offer.size(), is(DB.ALL_MEALS.size()));
     for (ResponseData<MealEto> responseData : offer) {
-      assertThat(responseData.getResponse().getStatus(), is(200));
+      assertThat(responseData.getResponse().getStatus()).isEqualTo(200);
     }
   }
 
@@ -205,7 +202,7 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
         this.waiter.getAll(RestUrls.OfferManagement.Product.getGetAllDrinksUrl(), DrinkEto.class);
     // assertThat(offer.size(), is(DB.ALL_DRINKS.size()));
     for (ResponseData<DrinkEto> responseData : offer) {
-      assertThat(responseData.getResponse().getStatus(), is(200));
+      assertThat(responseData.getResponse().getStatus()).isEqualTo(200);
     }
   }
 
@@ -219,7 +216,7 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
         this.waiter.getAll(RestUrls.OfferManagement.Product.getGetAllSideDishesUrl(), SideDishEto.class);
     // assertThat(offer.size(), is(DB.ALL_SIDE_DISHES.size()));
     for (ResponseData<SideDishEto> responseData : offer) {
-      assertThat(responseData.getResponse().getStatus(), is(200));
+      assertThat(responseData.getResponse().getStatus()).isEqualTo(200);
     }
   }
 
@@ -235,7 +232,7 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
 
     this.chief.delete(RestUrls.OfferManagement.Offer.getDeleteOfferUrl(DB.OFFER_1.getId()));
     offers = this.chief.getAll(RestUrls.OfferManagement.Offer.getGetAllOffersUrl(), OfferEto.class);
-    assertThat(offers.size(), is(DB.ALL_OFFERS.size() - 1));
+    assertThat(offers.size()).isEqualTo(DB.ALL_OFFERS.size() - 1);
   }
 
   /**
@@ -247,8 +244,8 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
     Long drinkId = createDrink().getId();
     ResponseData<ProductEto> offer =
         this.waiter.get(RestUrls.OfferManagement.Product.getFindProductUrl(drinkId), ProductEto.class);
-    assertThat(offer.getResponse().getStatus(), is(200));
-    assertThat(offer.getResponseObject().getId(), is(drinkId));
+    assertThat(offer.getResponse().getStatus()).isEqualTo(200);
+    assertThat(offer.getResponseObject().getId()).isEqualTo(drinkId);
 
     offer = this.waiter.get(RestUrls.OfferManagement.Product.getFindProductUrl(drinkId + 1), ProductEto.class);
     Assert.assertNull(offer.getResponseObject());
@@ -292,8 +289,8 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
     ResponseData<ProductEto> product =
         this.chief.get(RestUrls.OfferManagement.Product.getFindProductUrl(productToUpdate.getId()), ProductEto.class);
 
-    assertThat(product.getResponse().getStatus(), is(200));
-    assertThat(product.getResponseObject().getName(), is(productToUpdate.getName()));
+    assertThat(product.getResponse().getStatus()).isEqualTo(200);
+    assertThat(product.getResponseObject().getName()).isEqualTo(productToUpdate.getName());
   }
 
   /**
@@ -307,7 +304,7 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
         new Money(new BigDecimal(2.5))), RestUrls.OfferManagement.Offer.getCreateOfferUrl(), OfferEto.class);
     ResponseData<Boolean> isproductInUse =
         this.waiter.get(RestUrls.OfferManagement.Product.getIsProductInUseByOfferUrl(drinkId), Boolean.class);
-    assertThat(isproductInUse.getResponseObject(), is(true));
+    assertThat(isproductInUse.getResponseObject()).isTrue();
   }
 
   /**
@@ -321,7 +318,7 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
 
     List<ResponseData<OfferEto>> offer =
         this.waiter.getAll(RestUrls.OfferManagement.Offer.getFilteredOffers(sortBy), OfferEto.class);
-    assertThat(offer.size(), is(DB.ALL_OFFERS.size()));
+    assertThat(offer.size()).isEqualTo(DB.ALL_OFFERS.size());
   }
 
   /**
@@ -335,6 +332,6 @@ public class OfferManagementRestServiceTest extends AbstractRestServiceTest {
 
     List<ResponseData<ProductEto>> offer =
         this.waiter.getAll(RestUrls.OfferManagement.Product.getFilteredProducts(sortBy), ProductEto.class);
-    assertThat(offer.size(), is(DB.ALL_PRODUCTS.size()));
+    assertThat(offer.size()).isEqualTo(DB.ALL_PRODUCTS.size());
   }
 }

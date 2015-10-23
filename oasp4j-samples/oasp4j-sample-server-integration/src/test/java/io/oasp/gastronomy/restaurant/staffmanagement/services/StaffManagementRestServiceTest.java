@@ -1,7 +1,5 @@
 package io.oasp.gastronomy.restaurant.staffmanagement.services;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 import io.oasp.gastronomy.restaurant.general.common.AbstractRestServiceTest;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto;
 import io.oasp.gastronomy.restaurant.test.config.RestUrls;
@@ -31,8 +29,8 @@ public class StaffManagementRestServiceTest extends AbstractRestServiceTest {
         this.waiter.get(
             RestUrls.StaffManagement.getDeleteStaffMemberUrl(DB.STAFF_MEMEBR_1.getLastName().toLowerCase()),
             StaffMemberEto.class);
-    assertThat(member.getResponse().getStatus(), is(200));
-    assertThat(member.getResponseObject().getId(), is(DB.STAFF_MEMEBR_1.getId()));
+    assertThat(member.getResponse().getStatus()).isEqualTo(200);
+    assertThat(member.getResponseObject().getId()).isEqualTo(DB.STAFF_MEMEBR_1.getId());
   }
 
   /**
@@ -43,7 +41,7 @@ public class StaffManagementRestServiceTest extends AbstractRestServiceTest {
 
     List<ResponseData<StaffMemberEto>> members =
         this.waiter.getAll(RestUrls.StaffManagement.getGetAllStaffMembersUrl(), StaffMemberEto.class);
-    assertThat(4, is(members.size()));
+    assertThat(members.size()).isEqualTo(4);
   }
 
   /**
@@ -58,8 +56,8 @@ public class StaffManagementRestServiceTest extends AbstractRestServiceTest {
     ResponseData<StaffMemberEto> member =
         this.chief.get(RestUrls.StaffManagement.getGetStaffMember(DB.STAFF_MEMEBR_1.getLastName().toLowerCase()),
             StaffMemberEto.class);
-    assertThat(member.getResponse().getStatus(), is(200));
-    assertThat(member.getResponseObject().getFirstName(), is(Additional.CHANGED_STAFF_MEMEBR_1.getFirstName()));
+    assertThat(member.getResponse().getStatus()).isEqualTo(200);
+    assertThat(member.getResponseObject().getFirstName()).isEqualTo(Additional.CHANGED_STAFF_MEMEBR_1.getFirstName());
   }
 
   /**
@@ -72,6 +70,6 @@ public class StaffManagementRestServiceTest extends AbstractRestServiceTest {
     this.chief.delete(RestUrls.StaffManagement.getDeleteStaffMemberUrl(DB.STAFF_MEMEBR_1.getLastName().toLowerCase()));
     List<ResponseData<StaffMemberEto>> members =
         this.waiter.getAll(RestUrls.StaffManagement.getGetAllStaffMembersUrl(), StaffMemberEto.class);
-    assertThat(members.size(), is(DB.ALL_STAFF_MEMBER.size() - 1));
+    assertThat(members.size()).isEqualTo((DB.ALL_STAFF_MEMBER.size() - 1));
   }
 }

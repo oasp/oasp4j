@@ -55,15 +55,14 @@ public class SalesManagementTest extends AbstractSpringIntegrationTest {
       orderPosition.setDrinkState(ProductOrderState.ORDERED);
 
       OrderPositionEto updatedOrderPosition = this.salesManagement.saveOrderPosition(orderPosition);
-
-      assertEquals(updatedOrderPosition.getState(), OrderPositionState.ORDERED);
+      assertThat(updatedOrderPosition.getState()).isEqualTo(OrderPositionState.ORDERED);
 
       updatedOrderPosition.setState(OrderPositionState.PREPARED);
       updatedOrderPosition.setDrinkState(ProductOrderState.PREPARED);
 
       updatedOrderPosition = this.salesManagement.saveOrderPosition(updatedOrderPosition);
 
-      assertEquals(updatedOrderPosition.getState(), OrderPositionState.PREPARED);
+      assertThat(updatedOrderPosition.getState()).isEqualTo(OrderPositionState.PREPARED);
     } catch (ConstraintViolationException e) {
       // BV is really painful as you need such code to see the actual error in JUnit.
       StringBuilder sb = new StringBuilder(64);
