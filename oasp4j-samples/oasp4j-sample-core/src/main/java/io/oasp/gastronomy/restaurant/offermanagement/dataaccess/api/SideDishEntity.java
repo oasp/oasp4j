@@ -13,7 +13,7 @@ import org.hibernate.envers.Audited;
  *
  * @author loverbec
  */
-@Entity(name = "SideDish")
+@Entity
 @DiscriminatorValue("SideDish")
 @Audited
 public class SideDishEntity extends ProductEntity implements SideDish {

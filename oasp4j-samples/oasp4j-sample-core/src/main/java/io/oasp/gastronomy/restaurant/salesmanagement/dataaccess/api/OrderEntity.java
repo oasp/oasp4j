@@ -17,7 +17,7 @@ import javax.persistence.Table;
  *
  * @author rjoeris
  */
-@Entity(name = "Order")
+@Entity
 // Order is a reserved word in SQL/RDBMS and can not be used as table name
 @Table(name = "RestaurantOrder")
 public class OrderEntity extends ApplicationPersistenceEntity implements Order {

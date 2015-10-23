@@ -18,8 +18,8 @@ import javax.persistence.UniqueConstraint;
  *
  * @author loverbec
  */
-@Entity(name = "Offer")
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "description" }) })
+@Entity
+@Table(name = "Offer", uniqueConstraints = { @UniqueConstraint(columnNames = { "description" }) })
 public class OfferEntity extends MenuItemEntity implements Offer {
 
   private static final long serialVersionUID = 1L;

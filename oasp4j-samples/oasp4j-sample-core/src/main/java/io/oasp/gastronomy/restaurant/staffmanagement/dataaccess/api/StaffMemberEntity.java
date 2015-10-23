@@ -13,7 +13,7 @@ import javax.persistence.Entity;
  *
  * @author loverbec
  */
-@Entity(name = "StaffMember")
+@Entity
 public class StaffMemberEntity extends ApplicationPersistenceEntity implements StaffMember {
 
   private static final long serialVersionUID = 1L;

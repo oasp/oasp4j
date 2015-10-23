@@ -12,7 +12,7 @@ import javax.persistence.Lob;
  *
  * @author sspielma
  */
-@Entity(name = "BinaryObject")
+@Entity
 public class BinaryObjectEntity extends ApplicationPersistenceEntity implements BinaryObject {
 
   private static final long serialVersionUID = 1L;
