@@ -130,7 +130,7 @@ public class SalesmanagementImpl extends AbstractComponentFacade implements Sale
   }
 
   @Override
-  public OrderEto findOrder(Long id) {
+  public OrderEto findOrder(long id) {
 
     return this.ucFindOrder.findOrder(id);
   }
@@ -154,7 +154,7 @@ public class SalesmanagementImpl extends AbstractComponentFacade implements Sale
   }
 
   @Override
-  public OrderEto findOpenOrderForTable(Long tableId) {
+  public OrderEto findOpenOrderForTable(long tableId) {
 
     return this.ucFindOrder.findOpenOrderForTable(tableId);
   }
@@ -173,7 +173,7 @@ public class SalesmanagementImpl extends AbstractComponentFacade implements Sale
   }
 
   @Override
-  public OrderPositionEto findOrderPosition(Long orderPositionId) {
+  public OrderPositionEto findOrderPosition(long orderPositionId) {
 
     return this.ucFindOrderPosition.findOrderPosition(orderPositionId);
   }
@@ -185,13 +185,13 @@ public class SalesmanagementImpl extends AbstractComponentFacade implements Sale
   }
 
   @Override
-  public List<OrderPositionEto> findOrderPositionsByOrderId(Long orderId) {
+  public List<OrderPositionEto> findOrderPositionsByOrderId(long orderId) {
 
     return this.ucFindOrderPosition.findOrderPositionsByOrderId(orderId);
   }
 
   @Override
-  public List<OrderPositionEto> findOpenOrderPositionsByOrderId(Long orderId) {
+  public List<OrderPositionEto> findOpenOrderPositionsByOrderId(long orderId) {
 
     return this.ucFindOrderPosition.findOpenOrderPositionsByOrderId(orderId);
   }
@@ -209,20 +209,20 @@ public class SalesmanagementImpl extends AbstractComponentFacade implements Sale
   }
 
   @Override
-  public BillCto findBill(Long id) {
+  public BillCto findBill(long id) {
 
     return this.ucFindBill.findBill(id);
 
   }
 
   @Override
-  public void deleteBill(Long billId) {
+  public void deleteBill(long billId) {
 
     this.ucManageBill.deleteBill(billId);
   }
 
   @Override
-  public void deleteOrder(Long id) {
+  public void deleteOrder(long id) {
 
     this.ucManageOrder.deleteOrder(id);
   }

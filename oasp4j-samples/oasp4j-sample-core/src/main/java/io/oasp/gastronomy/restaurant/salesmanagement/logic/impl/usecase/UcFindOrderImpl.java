@@ -37,7 +37,7 @@ public class UcFindOrderImpl extends AbstractOrderUc implements UcFindOrder {
 
   @Override
   @RolesAllowed(PermissionConstants.FIND_ORDER)
-  public OrderEto findOrder(Long orderId) {
+  public OrderEto findOrder(long orderId) {
 
     LOG.debug("Get order.");
     return getBeanMapper().map(getOrderDao().findOne(orderId), OrderEto.class);
@@ -82,7 +82,7 @@ public class UcFindOrderImpl extends AbstractOrderUc implements UcFindOrder {
 
   @Override
   @RolesAllowed(PermissionConstants.FIND_ORDER)
-  public OrderEto findOpenOrderForTable(Long tableId) {
+  public OrderEto findOpenOrderForTable(long tableId) {
 
     OrderEntity order = getOrderDao().findOpenOrderByTable(tableId);
     return getBeanMapper().map(order, OrderEto.class);

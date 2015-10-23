@@ -28,7 +28,7 @@ public interface UcManageBill {
    *
    * @param billId the ID of the {@link BillEto} that has to be deleted.
    */
-  void deleteBill(Long billId);
+  void deleteBill(long billId);
 
   /**
    * This method provides the payment process. It provides the cash-only functionality without any additional
