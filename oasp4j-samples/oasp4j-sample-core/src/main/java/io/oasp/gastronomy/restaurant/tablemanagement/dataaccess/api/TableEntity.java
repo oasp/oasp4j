@@ -15,7 +15,7 @@ import javax.persistence.Entity;
  *
  * @author hohwille
  */
-@Entity(name = "Table")
+@Entity
 // Table is a reserved word in SQL/RDBMS and can not be used as table name
 @javax.persistence.Table(name = "RestaurantTable")
 public class TableEntity extends ApplicationPersistenceEntity implements Table {
