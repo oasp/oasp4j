@@ -3,6 +3,7 @@
 <configuration scan="true" scanPeriod="60 seconds">
   <property resource="io/oasp/logging/logback/application-logging.properties" />
   <property name="appname" value="restaurant"/>
+  <property name="logPath" value="../logs"/>
   <include resource="io/oasp/logging/logback/appenders-file-all.xml" />
   <include resource="io/oasp/logging/logback/appender-console.xml" />
 
