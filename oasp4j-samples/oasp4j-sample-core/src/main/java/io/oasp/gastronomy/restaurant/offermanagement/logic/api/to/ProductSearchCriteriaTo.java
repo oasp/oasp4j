@@ -1,13 +1,13 @@
 package io.oasp.gastronomy.restaurant.offermanagement.logic.api.to;
 
+import io.oasp.gastronomy.restaurant.offermanagement.common.api.Product;
 import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
 
 /**
  * This is the {@link SearchCriteriaTo search criteria} {@link net.sf.mmm.util.transferobject.api.TransferObject TO}
- * used to find {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.Product}s.
+ * used to find {@link Product}s.
  *
- * If no boolean is set to true, no {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.Product}s will be
- * found.
+ * If no boolean is set to true, no {@link Product}s will be found.
  *
  * @author lgoerlac
  */
