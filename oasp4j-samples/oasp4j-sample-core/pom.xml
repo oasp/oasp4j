@@ -134,6 +134,11 @@
       <artifactId>hibernate-validator</artifactId>
     </dependency>
 
+	<dependency>
+		<groupId>org.mapstruct</groupId>
+		<artifactId>mapstruct</artifactId>
+	</dependency>
+
     <!-- CXF for REST and Webservices -->
     <dependency>
       <groupId>org.apache.cxf</groupId>
@@ -201,7 +206,36 @@
             <exclude>config/env/*</exclude>
           </excludes>
         </configuration>
-      </plugin>
+        </plugin>
+		<plugin>
+			<groupId>org.bsc.maven</groupId>
+			<artifactId>maven-processor-plugin</artifactId>
+			<version>2.2.4</version>
+			<configuration>
+				<defaultOutputDirectory>
+					${project.build.directory}/generated-sources
+				</defaultOutputDirectory>
+				<processors>
+					<processor>org.mapstruct.ap.MappingProcessor</processor>
+				</processors>
+			</configuration>
+			<executions>
+				<execution>
+					<id>process</id>
+					<phase>generate-sources</phase>
+					<goals>
+						<goal>process</goal>
+					</goals>
+				</execution>
+			</executions>
+			<dependencies>
+				<dependency>
+					<groupId>org.mapstruct</groupId>
+					<artifactId>mapstruct-processor</artifactId>
+					<version>1.0.0.CR1</version>
+				</dependency>
+			</dependencies>
+		</plugin>
     </plugins>
   </build>
 

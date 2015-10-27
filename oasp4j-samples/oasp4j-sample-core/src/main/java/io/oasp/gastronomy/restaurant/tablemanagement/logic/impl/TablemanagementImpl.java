@@ -14,6 +14,7 @@ import io.oasp.gastronomy.restaurant.tablemanagement.dataaccess.api.dao.TableDao
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableSearchCriteriaTo;
+import io.oasp.gastronomy.restaurant.tablemanagement.logic.mapper.TableMapper;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.List;
@@ -47,6 +48,8 @@ public class TablemanagementImpl extends AbstractComponentFacade implements Tabl
 
   private Staffmanagement staffmanagement;
 
+  private TableMapper tableMapper;
+
   /**
    * The constructor.
    */
@@ -60,7 +63,7 @@ public class TablemanagementImpl extends AbstractComponentFacade implements Tabl
   public TableEto findTable(Long id) {
 
     LOG.debug("Get table with id '" + id + "' from database.");
-    return getBeanMapper().map(getTableDao().findOne(id), TableEto.class);
+    return getTableMapper().toTableEto(getTableDao().findOne(id));
   }
 
   @Override
@@ -69,7 +72,7 @@ public class TablemanagementImpl extends AbstractComponentFacade implements Tabl
 
     LOG.debug("Get all restaurant tables from database.");
     List<TableEntity> tables = getTableDao().findAll();
-    return getBeanMapper().mapList(tables, TableEto.class);
+    return getTableMapper().toTableEtos(tables);
   }
 
   @Override
@@ -79,7 +82,7 @@ public class TablemanagementImpl extends AbstractComponentFacade implements Tabl
     LOG.debug("Get all free restaurant tables from database.");
 
     List<TableEntity> tables = getTableDao().getFreeTables();
-    return getBeanMapper().mapList(tables, TableEto.class);
+    return getTableMapper().toTableEtos(tables);
   }
 
   @Override
@@ -89,7 +92,7 @@ public class TablemanagementImpl extends AbstractComponentFacade implements Tabl
     criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
     PaginatedListTo<TableEntity> tables = getTableDao().findTables(criteria);
 
-    return mapPaginatedEntityList(tables, TableEto.class);
+    return new PaginatedListTo<>(getTableMapper().toTableEtos(tables.getResult()), tables.getPagination());
   }
 
   @Override
@@ -113,7 +116,7 @@ public class TablemanagementImpl extends AbstractComponentFacade implements Tabl
 
     Long tableId = table.getId();
 
-    TableEntity tableEntity = getBeanMapper().map(table, TableEntity.class);
+    TableEntity tableEntity = getTableMapper().toTableEntity(table);
     // initialize
     if (tableEntity.getState() == null) {
       tableEntity.setState(TableState.FREE);
@@ -129,7 +132,7 @@ public class TablemanagementImpl extends AbstractComponentFacade implements Tabl
 
     getTableDao().save(tableEntity);
     LOG.debug("Table with id '{}' has been created.", tableEntity.getId());
-    return getBeanMapper().map(tableEntity, TableEto.class);
+    return getTableMapper().toTableEto(tableEntity);
   }
 
   @Override
@@ -179,6 +182,17 @@ public class TablemanagementImpl extends AbstractComponentFacade implements Tabl
   public void setStaffmanagement(Staffmanagement staffmanagement) {
 
     this.staffmanagement = staffmanagement;
+  }
+  
+  public TableMapper getTableMapper() {
+
+      return tableMapper;
+  }
+
+  @Inject
+  public void setTableMapper(TableMapper tableMapper) {
+
+      this.tableMapper = tableMapper;
   }
 
 }
