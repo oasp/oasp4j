@@ -2,7 +2,10 @@ package io.oasp.module.jpa.common.api.to;
 
 import java.util.List;
 
+import net.sf.mmm.util.exception.api.NlsIllegalStateException;
 import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
+import net.sf.mmm.util.transferobject.api.TransferObject;
+import net.sf.mmm.util.transferobject.api.TransferObjectUtil;
 
 /**
  * This is the interface for a {@link net.sf.mmm.util.transferobject.api.TransferObject transfer-object } with the
@@ -14,7 +17,7 @@ import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
  *
  * @author hohwille
  */
-public class SearchCriteriaTo extends AbstractTransferObject {
+public class SearchCriteriaTo implements TransferObject, Cloneable {
 
   /** UID for serialization. */
   private static final long serialVersionUID = 1L;
@@ -109,6 +112,44 @@ public class SearchCriteriaTo extends AbstractTransferObject {
   public void setSort(List<OrderByTo> sort) {
 
     this.sort = sort;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * <b>ATTENTION:</b><br>
+   * For being type-safe please use {@link TransferObjectUtil#clone(AbstractTransferObject)} instead.
+   */
+  @Override
+  public SearchCriteriaTo clone() {
+
+    try {
+      return (SearchCriteriaTo) super.clone();
+    } catch (CloneNotSupportedException e) {
+      throw new NlsIllegalStateException(e);
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final String toString() {
+
+    StringBuilder buffer = new StringBuilder();
+    toString(buffer);
+    return buffer.toString();
+  }
+
+  /**
+   * Method to extend {@link #toString()} logic. Override to add additional information.
+   *
+   * @param buffer is the {@link StringBuilder} where to {@link StringBuilder#append(Object) append} the string
+   *        representation.
+   */
+  protected void toString(StringBuilder buffer) {
+
+    buffer.append(getClass().getSimpleName());
   }
 
 }

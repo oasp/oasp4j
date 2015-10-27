@@ -1,5 +1,7 @@
 package io.oasp.gastronomy.restaurant.offermanagement.logic.api.to;
 
+import io.oasp.gastronomy.restaurant.general.common.api.to.AbstractTo;
+
 import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
 
 /**
@@ -8,7 +10,7 @@ import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
  *
  * @author etomety
  */
-public class ProductFilter extends AbstractTransferObject {
+public class ProductFilter extends AbstractTo {
 
   private static final long serialVersionUID = 1L;
 
@@ -36,8 +38,7 @@ public class ProductFilter extends AbstractTransferObject {
    *
    * @param fetchDrinks is the flag for getting {@link DrinkEto drinks} from db (set this to {@code true})
    * @param fetchMeals is the flag for getting {@link MealEto meals} from db (set this to {@code true})
-   * @param fetchSideDishes is the flag for getting {@link SideDishEto side dishes} from db (set this to
-   *        {@code true})
+   * @param fetchSideDishes is the flag for getting {@link SideDishEto side dishes} from db (set this to {@code true})
    */
   public ProductFilter(boolean fetchDrinks, boolean fetchMeals, boolean fetchSideDishes) {
 
@@ -104,39 +105,6 @@ public class ProductFilter extends AbstractTransferObject {
   public void setFetchDrinks(boolean fetchDrinks) {
 
     this.fetchDrinks = fetchDrinks;
-  }
-
-  @Override
-  public int hashCode() {
-
-    final int prime = 31;
-    int result = super.hashCode();
-    result = prime * result + (this.fetchDrinks ? 1 : 0);
-    result = prime * result + (this.fetchMeals ? 1 : 0);
-    result = prime * result + (this.fetchSideDishes ? 1 : 0);
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-
-    if (this == obj) {
-      return true;
-    }
-    if (!super.equals(obj)) {
-      return false;
-    }
-    ProductFilter other = (ProductFilter) obj;
-    if (this.fetchDrinks != other.fetchDrinks) {
-      return false;
-    }
-    if (this.fetchMeals != other.fetchMeals) {
-      return false;
-    }
-    if (this.fetchSideDishes != other.fetchSideDishes) {
-      return false;
-    }
-    return true;
   }
 
 }
