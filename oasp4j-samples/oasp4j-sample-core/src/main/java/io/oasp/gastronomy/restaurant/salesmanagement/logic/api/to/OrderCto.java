@@ -4,7 +4,6 @@ import io.oasp.gastronomy.restaurant.general.common.api.to.AbstractCto;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * {@link AbstractCto CTO} for an {@link #getOrder() order} with its {@link #getPositions() positions}.
@@ -62,37 +61,4 @@ public class OrderCto extends AbstractCto {
 
     this.positions = positions;
   }
-
-  @Override
-  public int hashCode() {
-
-    final int prime = 31;
-    int result = super.hashCode();
-    result = prime * result + ((this.order == null) ? 0 : this.order.hashCode());
-    result = prime * result + ((this.positions == null) ? 0 : this.positions.hashCode());
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-
-    if (this == obj) {
-      return true;
-    }
-    if (!super.equals(obj)) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    OrderCto other = (OrderCto) obj;
-    if (Objects.equals(this.order, other.order)) {
-      return false;
-    }
-    if (Objects.equals(this.positions, other.positions)) {
-      return false;
-    }
-    return true;
-  }
-
 }
