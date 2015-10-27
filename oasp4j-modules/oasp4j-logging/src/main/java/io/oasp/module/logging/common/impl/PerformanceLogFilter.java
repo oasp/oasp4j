@@ -83,16 +83,15 @@ public class PerformanceLogFilter implements Filter {
     endTime = System.nanoTime();
     duration = TimeUnit.MILLISECONDS.convert(endTime - startTime, TimeUnit.NANOSECONDS);
 
-    String message;
+    String errorClass = "";
+    String errorMessage = "";
     if (error != null) {
       statusCode = HttpStatus.SC_INTERNAL_SERVER_ERROR;
-      message =
-          createMessage(url, Long.toString(duration), Integer.toString(statusCode), error.getClass().getName(),
-              error.getMessage());
-    } else {
-      message = createMessage(url, Long.toString(duration), Integer.toString(statusCode));
+      errorClass = error.getClass().getName();
+      errorMessage = error.getMessage();
     }
-
+    String message =
+        createMessage(url, Long.toString(duration), Integer.toString(statusCode), errorClass, errorMessage);
     LOG.info(message);
   }
 
@@ -104,12 +103,7 @@ public class PerformanceLogFilter implements Filter {
    */
   private String createMessage(String... args) {
 
-    String message = "";
-    for (int i = 0; i < args.length; i++) {
-      message += (i != (args.length - 1)) ? args[i] + ";" : args[i];
-    }
-
-    return message;
+    return String.join(";", args);
   }
 
   @Override
