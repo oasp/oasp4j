@@ -5,8 +5,6 @@ import io.oasp.gastronomy.restaurant.general.common.api.datatype.validation.NotN
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferState;
 
-import java.util.Objects;
-
 /**
  * The {@link io.oasp.gastronomy.restaurant.general.common.api.to.AbstractEto ETO} for an {@link Offer}.
  *
@@ -108,53 +106,4 @@ public class OfferEto extends MenuItemEto implements Offer {
 
     this.state = state;
   }
-
-  @Override
-  public int hashCode() {
-
-    final Integer prime = 31;
-    Integer result = super.hashCode();
-    result = prime * result + ((this.number == null) ? 0 : this.number.hashCode());
-    result = prime * result + ((this.currentPrice == null) ? 0 : this.currentPrice.hashCode());
-    result = prime * result + ((this.drinkId == null) ? 0 : this.drinkId.hashCode());
-    result = prime * result + ((this.mealId == null) ? 0 : this.mealId.hashCode());
-    result = prime * result + ((this.sideDishId == null) ? 0 : this.sideDishId.hashCode());
-    result = prime * result + ((this.state == null) ? 0 : this.state.ordinal());
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (!super.equals(obj)) {
-      return false;
-    }
-    OfferEto other = (OfferEto) obj;
-    if (!Objects.equals(this.number, other.number)) {
-      return false;
-    }
-    if (!Objects.equals(this.currentPrice, other.currentPrice)) {
-      return false;
-    }
-    if (!Objects.equals(this.drinkId, other.drinkId)) {
-      return false;
-    }
-    if (!Objects.equals(this.mealId, other.mealId)) {
-      return false;
-    }
-    if (!Objects.equals(this.sideDishId, other.sideDishId)) {
-      return false;
-    }
-    if (this.state != other.state) {
-      return false;
-    }
-    return true;
-  }
-
 }

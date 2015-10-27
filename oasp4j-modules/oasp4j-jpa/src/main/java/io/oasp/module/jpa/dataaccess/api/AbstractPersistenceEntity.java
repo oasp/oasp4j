@@ -1,7 +1,5 @@
 package io.oasp.module.jpa.dataaccess.api;
 
-import java.util.Objects;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -47,6 +45,10 @@ public abstract class AbstractPersistenceEntity implements MutablePersistenceEnt
     return this.id;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   public void setId(Long id) {
 
     this.id = id;
@@ -75,41 +77,10 @@ public abstract class AbstractPersistenceEntity implements MutablePersistenceEnt
   /**
    * @param revision the revision to set
    */
+  @Override
   public void setRevision(Number revision) {
 
     this.revision = revision;
-  }
-
-  @Override
-  public int hashCode() {
-
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
-    result = prime * result + this.modificationCounter;
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    AbstractPersistenceEntity other = (AbstractPersistenceEntity) obj;
-    if (!Objects.equals(this.id, other.id)) {
-      return false;
-    }
-    if (this.modificationCounter != other.modificationCounter) {
-      return false;
-    }
-    return true;
   }
 
   @Override
