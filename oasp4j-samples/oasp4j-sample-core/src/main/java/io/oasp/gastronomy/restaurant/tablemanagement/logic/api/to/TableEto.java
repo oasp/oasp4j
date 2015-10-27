@@ -65,43 +65,4 @@ public class TableEto extends AbstractEto implements Table {
 
     this.state = state;
   }
-
-  @Override
-  public int hashCode() {
-
-    final int prime = 31;
-    int result = super.hashCode();
-    result = prime * result + ((this.state == null) ? 0 : this.state.hashCode());
-    result = prime * result + ((this.waiterId == null) ? 0 : this.waiterId.hashCode());
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    if (!super.equals(obj)) {
-      return false;
-    }
-    TableEto other = (TableEto) obj;
-    if (this.state != other.state) {
-      return false;
-    }
-    if (this.waiterId == null) {
-      if (other.waiterId != null) {
-        return false;
-      }
-    } else if (!this.waiterId.equals(other.waiterId)) {
-      return false;
-    }
-    return true;
-  }
 }

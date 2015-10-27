@@ -1,7 +1,5 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to;
 
-import java.util.Objects;
-
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.common.api.to.AbstractEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
@@ -112,59 +110,6 @@ public class OrderPositionEto extends AbstractEto implements OrderPosition {
   public void setPrice(Money price) {
 
     this.price = price;
-  }
-
-  @Override
-  public int hashCode() {
-
-    final int prime = 31;
-    int result = super.hashCode();
-    result = prime * result + ((this.orderId == null) ? 0 : this.orderId.hashCode());
-    result = prime * result + ((this.cookId == null) ? 0 : this.cookId.hashCode());
-    result = prime * result + ((this.offerName == null) ? 0 : this.offerName.hashCode());
-    result = prime * result + ((this.offerId == null) ? 0 : this.offerId.hashCode());
-    result = prime * result + ((this.comment == null) ? 0 : this.comment.hashCode());
-    result = prime * result + ((this.price == null) ? 0 : this.price.hashCode());
-    result = prime * result + ((this.state == null) ? 0 : this.state.hashCode());
-    result = prime * result + ((this.drinkState == null) ? 0 : this.drinkState.hashCode());
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-
-    if (obj == null) {
-      return false;
-    }
-    if (!super.equals(obj)) {
-      return false;
-    }
-    OrderPositionEto other = (OrderPositionEto) obj;
-    if (!Objects.equals(this.orderId, other.orderId)) {
-      return false;
-    }
-    if (!Objects.equals(this.cookId, other.cookId)) {
-      return false;
-    }
-    if (!Objects.equals(this.offerId, other.offerId)) {
-      return false;
-    }
-    if (!Objects.equals(this.offerName, other.offerName)) {
-      return false;
-    }
-    if (!Objects.equals(this.price, other.price)) {
-      return false;
-    }
-    if (!Objects.equals(this.comment, other.comment)) {
-      return false;
-    }
-    if (this.state != other.state) {
-      return false;
-    }
-    if (this.drinkState != other.drinkState) {
-      return false;
-    }
-    return true;
   }
 
   /**

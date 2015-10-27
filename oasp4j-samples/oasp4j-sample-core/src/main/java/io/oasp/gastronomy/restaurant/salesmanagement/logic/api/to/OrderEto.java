@@ -52,39 +52,4 @@ public class OrderEto extends AbstractEto implements Order {
     this.state = state;
   }
 
-  @Override
-  public int hashCode() {
-
-    final int prime = 31;
-    int result = super.hashCode();
-    result = prime * result + ((this.state == null) ? 0 : this.state.hashCode());
-    result = prime * result + (int) this.tableId;
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (!super.equals(obj)) {
-      return false;
-    }
-    OrderEto other = (OrderEto) obj;
-    if (getId() == other.getId()) {
-      return false;
-    }
-    if (this.state != other.state) {
-      return false;
-    }
-    if (this.tableId != other.tableId) {
-      return false;
-    }
-    return true;
-  }
-
 }
