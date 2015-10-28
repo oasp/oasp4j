@@ -6,6 +6,7 @@ import java.sql.Blob;
 
 import javax.persistence.Entity;
 import javax.persistence.Lob;
+import javax.persistence.Table;
 
 /**
  * {@link ApplicationPersistenceEntity Entity} for {@link BinaryObject}. Contains the actual {@link Blob}.
@@ -13,6 +14,7 @@ import javax.persistence.Lob;
  * @author sspielma
  */
 @Entity
+@Table(name = "BinaryObject")
 public class BinaryObjectEntity extends ApplicationPersistenceEntity implements BinaryObject {
 
   private static final long serialVersionUID = 1L;
