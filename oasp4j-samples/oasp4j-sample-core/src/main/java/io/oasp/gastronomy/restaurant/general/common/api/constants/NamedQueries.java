@@ -26,5 +26,8 @@ public abstract class NamedQueries {
 
   /** @see io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.impl.dao.OrderDaoImpl */
   public static final String GET_OPEN_ORDER_FOR_TABLE = "get.open.order.for.table";
+
+  /** @see io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.impl.dao.BillDaoImpl */
+  public static final String GET_ALL_IDS_OF_PAYED_BILLS = "get.all.ids.of.payed.bills";
   // END ARCHETYPE SKIP
 }
