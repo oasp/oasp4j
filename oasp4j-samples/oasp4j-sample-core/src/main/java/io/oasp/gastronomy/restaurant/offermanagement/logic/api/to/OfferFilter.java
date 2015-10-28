@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.offermanagement.logic.api.to;
 
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
+import io.oasp.gastronomy.restaurant.general.common.api.to.AbstractTo;
 
 import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
 
@@ -9,7 +10,7 @@ import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
  *
  * @author etomety
  */
-public class OfferFilter extends AbstractTransferObject {
+public class OfferFilter extends AbstractTo {
 
   private static final long serialVersionUID = 1L;
 

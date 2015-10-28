@@ -24,6 +24,7 @@ import org.springframework.test.context.ContextConfiguration;
  */
 @ContextConfiguration({ ApplicationConfigurationConstants.BEANS_LOGIC })
 public class SalesManagementTest extends AbstractSpringIntegrationTest {
+
   @Inject
   private Salesmanagement salesManagement;
 
