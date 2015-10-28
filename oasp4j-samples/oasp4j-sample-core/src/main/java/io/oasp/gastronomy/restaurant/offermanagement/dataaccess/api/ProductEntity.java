@@ -7,6 +7,7 @@ import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
 
@@ -16,7 +17,8 @@ import org.hibernate.envers.Audited;
  *
  * @author loverbec
  */
-@Entity(name = "Product")
+@Entity
+@Table(name = "Product")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
 @Audited

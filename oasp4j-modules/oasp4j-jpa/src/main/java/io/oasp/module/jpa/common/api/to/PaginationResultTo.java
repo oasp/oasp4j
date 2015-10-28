@@ -1,14 +1,13 @@
 package io.oasp.module.jpa.common.api.to;
 
 import net.sf.mmm.util.exception.api.NlsIllegalArgumentException;
-import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
 
 /**
  * Pagination information about a paginated query.
  *
  * @author henning
  */
-public class PaginationResultTo extends AbstractTransferObject {
+public class PaginationResultTo extends AbstractTo {
 
   /** UID for serialization. */
   private static final long serialVersionUID = 1L;
@@ -87,4 +86,21 @@ public class PaginationResultTo extends AbstractTransferObject {
 
     this.total = total;
   }
+
+  @Override
+  protected void toString(StringBuilder buffer) {
+
+    super.toString(buffer);
+    buffer.append("@page=");
+    buffer.append(this.page);
+    if (this.size != null) {
+      buffer.append(", size=");
+      buffer.append(this.size);
+    }
+    if (this.total != null) {
+      buffer.append(", total=");
+      buffer.append(this.total);
+    }
+  }
+
 }

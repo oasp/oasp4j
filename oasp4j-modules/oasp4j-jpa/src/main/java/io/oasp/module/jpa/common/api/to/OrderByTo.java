@@ -1,11 +1,9 @@
 package io.oasp.module.jpa.common.api.to;
 
-import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
-
 /**
  * Transfer object to transmit order criteria
  */
-public class OrderByTo extends AbstractTransferObject {
+public class OrderByTo extends AbstractTo {
 
   private static final long serialVersionUID = 1L;
 
@@ -59,6 +57,14 @@ public class OrderByTo extends AbstractTransferObject {
   public void setDirection(OrderDirection direction) {
 
     this.direction = direction;
+  }
+
+  @Override
+  protected void toString(StringBuilder buffer) {
+
+    buffer.append(this.name);
+    buffer.append(' ');
+    buffer.append(this.direction);
   }
 
 }

@@ -2,8 +2,6 @@ package io.oasp.module.jpa.common.api.to;
 
 import java.util.List;
 
-import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
-
 /**
  * This is the interface for a {@link net.sf.mmm.util.transferobject.api.TransferObject transfer-object } with the
  * criteria for a search and pagination query. Such object specifies the criteria selecting which hits will match when
@@ -14,7 +12,7 @@ import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
  *
  * @author hohwille
  */
-public class SearchCriteriaTo extends AbstractTransferObject {
+public class SearchCriteriaTo extends AbstractTo {
 
   /** UID for serialization. */
   private static final long serialVersionUID = 1L;

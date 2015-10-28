@@ -48,11 +48,11 @@ public class BillDaoTest extends AbstractSpringIntegrationTest {
     assertThat(bill).isEqualTo(loadedBill);
 
     TypedQuery<BillEntity> query =
-        this.entityManager.createQuery("SELECT b from Bill b where b.total > 43", BillEntity.class);
+        this.entityManager.createQuery("SELECT b from BillEntity b where b.total > 43", BillEntity.class);
     List<BillEntity> resultList = query.getResultList();
     assertThat(resultList.isEmpty()).isTrue();
 
-    query = this.entityManager.createQuery("SELECT b from Bill b where b.total < 43", BillEntity.class);
+    query = this.entityManager.createQuery("SELECT b from BillEntity b where b.total < 43", BillEntity.class);
     resultList = query.getResultList();
     assertThat(!resultList.isEmpty()).isTrue();
 

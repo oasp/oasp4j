@@ -13,7 +13,7 @@ import org.hibernate.envers.Audited;
  *
  * @author loverbec
  */
-@Entity(name = "Drink")
+@Entity
 @DiscriminatorValue("Drink")
 @Audited
 public class DrinkEntity extends ProductEntity implements Drink {
@@ -35,6 +35,7 @@ public class DrinkEntity extends ProductEntity implements Drink {
    *
    * @return Value of alcoholic
    */
+  @Override
   public boolean isAlcoholic() {
 
     return this.alcoholic;
@@ -45,6 +46,7 @@ public class DrinkEntity extends ProductEntity implements Drink {
    *
    * @param alcoholic New value for alcoholic
    */
+  @Override
   public void setAlcoholic(boolean alcoholic) {
 
     this.alcoholic = alcoholic;
