@@ -1,13 +1,9 @@
 package io.oasp.gastronomy.restaurant.general.common.api.to;
 
-import io.oasp.module.jpa.dataaccess.api.MutablePersistenceEntity;
-
 import net.sf.mmm.util.entity.api.GenericEntity;
+import net.sf.mmm.util.entity.api.MutableRevisionedEntity;
 import net.sf.mmm.util.entity.api.PersistenceEntity;
-import net.sf.mmm.util.exception.api.NlsIllegalStateException;
-import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
 import net.sf.mmm.util.transferobject.api.TransferObject;
-import net.sf.mmm.util.transferobject.api.TransferObjectUtil;
 
 /**
  * This is the abstract base class for an {@link TransferObject} that only contains data without relations. This is
@@ -20,7 +16,7 @@ import net.sf.mmm.util.transferobject.api.TransferObjectUtil;
  * @author hohwille
  * @author erandres
  */
-public abstract class AbstractEto implements TransferObject, Cloneable, MutablePersistenceEntity<Long> {
+public abstract class AbstractEto extends AbstractTo implements MutableRevisionedEntity<Long> {
 
   private static final long serialVersionUID = 1L;
 
@@ -45,33 +41,6 @@ public abstract class AbstractEto implements TransferObject, Cloneable, MutableP
 
     super();
     this.revision = LATEST_REVISION;
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * <b>ATTENTION:</b><br>
-   * For being type-safe please use {@link TransferObjectUtil#clone(AbstractTransferObject)} instead.
-   */
-  @Override
-  public AbstractEto clone() {
-
-    try {
-      return (AbstractEto) super.clone();
-    } catch (CloneNotSupportedException e) {
-      throw new NlsIllegalStateException(e);
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final String toString() {
-
-    StringBuilder buffer = new StringBuilder();
-    toString(buffer);
-    return buffer.toString();
   }
 
   /**
@@ -141,9 +110,10 @@ public abstract class AbstractEto implements TransferObject, Cloneable, MutableP
    * @param buffer is the {@link StringBuilder} where to {@link StringBuilder#append(Object) append} the string
    *        representation.
    */
+  @Override
   protected void toString(StringBuilder buffer) {
 
-    buffer.append(getClass().getSimpleName());
+    super.toString(buffer);
     if (this.id != null) {
       buffer.append("[id=");
       buffer.append(this.id);
