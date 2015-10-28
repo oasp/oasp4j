@@ -4,6 +4,10 @@ import io.oasp.gastronomy.restaurant.general.common.api.to.UserDetailsClientTo;
 import io.oasp.gastronomy.restaurant.test.general.AppProperties;
 import io.oasp.gastronomy.restaurant.test.general.webclient.ResponseData;
 import io.oasp.gastronomy.restaurant.test.general.webclient.WebClientWrapper;
+<<<<<<< HEAD
+=======
+import io.oasp.module.test.common.base.ModuleTest;
+>>>>>>> #199:Cleaned up exisiting test-cases as described
 
 import org.junit.Test;
 
@@ -12,7 +16,11 @@ import org.junit.Test;
  *
  * @author jmetzler
  */
+<<<<<<< HEAD
 public class SecurityRestServiceTest extends AbstractRestServiceTest {
+=======
+public class SecurityRestServiceTest extends ModuleTest {
+>>>>>>> #199:Cleaned up exisiting test-cases as described
 
   /**
    * Login and check if current user is the one logged in.

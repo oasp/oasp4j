@@ -26,6 +26,11 @@ import java.util.List;
 
 import javax.ws.rs.core.Response;
 
+<<<<<<< HEAD
+=======
+import net.sf.mmm.util.lang.api.Datatype;
+
+>>>>>>> #199:Cleaned up exisiting test-cases as described
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.junit.Ignore;
@@ -135,7 +140,10 @@ public class SalesManagementRestServiceTest extends AbstractRestServiceTest {
    */
   @SuppressWarnings("unchecked")
   @Test
+<<<<<<< HEAD
   @Ignore
+=======
+>>>>>>> #199:Cleaned up exisiting test-cases as described
   public void updateOrderPositionTest() {
 
     this.chief.post(RestUrls.SalesManagement.Order.getUpdateOrderPositionURL(), Additional.CHANGED_ORDER_POSITION_1);
@@ -167,7 +175,11 @@ public class SalesManagementRestServiceTest extends AbstractRestServiceTest {
         this.chief.get(RestUrls.SalesManagement.Order.getGetOrderPositionURL(createdOrderPosition.getId()),
             OrderPositionEto.class);
 
+<<<<<<< HEAD
     assertThat(changedPosition.getResponseObject().getPrice()).isEqualTo(newPrice);
+=======
+    assertThat((Datatype) changedPosition.getResponseObject().getPrice()).isEqualTo(newPrice);
+>>>>>>> #199:Cleaned up exisiting test-cases as described
 
   }
 
@@ -256,7 +268,10 @@ public class SalesManagementRestServiceTest extends AbstractRestServiceTest {
    * Test the do payment rest service
    */
   @Test
+<<<<<<< HEAD
   @Ignore
+=======
+>>>>>>> #199:Cleaned up exisiting test-cases as described
   public void doPaymentTest() {
 
     // create table
@@ -316,7 +331,10 @@ public class SalesManagementRestServiceTest extends AbstractRestServiceTest {
    * Test the delteBill rest service
    */
   @Test
+<<<<<<< HEAD
   @Ignore
+=======
+>>>>>>> #199:Cleaned up exisiting test-cases as described
   public void deleteBillTest() {
 
     // create table

@@ -2,6 +2,10 @@ package io.oasp.module.security.common.impl.accesscontrol;
 
 import io.oasp.module.security.common.api.accesscontrol.AccessControl;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlGroup;
+<<<<<<< HEAD
+=======
+import io.oasp.module.security.common.api.accesscontrol.AccessControlGroup;
+>>>>>>> #199:Cleaned up exisiting test-cases as described
 import io.oasp.module.security.common.api.accesscontrol.AccessControlPermission;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlSchema;
