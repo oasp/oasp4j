@@ -1,7 +1,5 @@
 package io.oasp.gastronomy.restaurant.tablemanagement.services;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 import io.oasp.gastronomy.restaurant.general.common.AbstractRestServiceTest;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.builders.TableEntityBuilder;
@@ -79,12 +77,13 @@ public class TableManagementRestServiceTest extends AbstractRestServiceTest {
     Response deleteResponse = this.chief.delete(RestUrls.TableManagement.getDeleteTableUrl(createdTable.getId()));
     Assert.assertEquals(deleteResponse.getStatus(), 400);
 
-    updatedTable = this.waiter.get(RestUrls.TableManagement.getGetTableUrl(createdTable.getId()), TableEto.class).getResponseObject();
+    updatedTable =
+        this.waiter.get(RestUrls.TableManagement.getGetTableUrl(createdTable.getId()), TableEto.class)
+            .getResponseObject();
 
     newState = TableState.FREE;
     updatedTable.setState(newState);
-    updatedTable =
-        this.waiter.post(updatedTable, RestUrls.TableManagement.getCreateTableUrl(), TableEto.class);
+    updatedTable = this.waiter.post(updatedTable, RestUrls.TableManagement.getCreateTableUrl(), TableEto.class);
 
     Assert.assertEquals(newState, updatedTable.getState());
 
@@ -181,14 +180,14 @@ public class TableManagementRestServiceTest extends AbstractRestServiceTest {
     this.waiter.post(table.getResponseObject(), RestUrls.TableManagement.getCreateTableUrl(), TableEto.class);
 
     table = this.waiter.get(RestUrls.TableManagement.getGetTableUrl(tableEntity.getId()), TableEto.class);
-    assertThat(table.getResponse().getStatus(), is(200));
-    assertThat(table.getResponseObject().getState(), is(TableState.OCCUPIED));
+    assertThat(table.getResponse().getStatus()).isEqualTo(200);
+    assertThat(table.getResponseObject().getState()).isEqualTo(TableState.OCCUPIED);
 
     table.getResponseObject().setState(TableState.FREE);
     this.waiter.post(table.getResponseObject(), RestUrls.TableManagement.getCreateTableUrl(), TableEto.class);
     table = this.waiter.get(RestUrls.TableManagement.getGetTableUrl(tableEntity.getId()), TableEto.class);
-    assertThat(table.getResponse().getStatus(), is(200));
-    assertThat(table.getResponseObject().getState(), is(TableState.FREE));
+    assertThat(table.getResponse().getStatus()).isEqualTo(200);
+    assertThat(table.getResponseObject().getState()).isEqualTo((TableState.FREE));
   }
 
   /**
@@ -240,7 +239,7 @@ public class TableManagementRestServiceTest extends AbstractRestServiceTest {
     ResponseData<Boolean> response =
         this.waiter.get(RestUrls.TableManagement.isTableReleasableUrl(tableTarget.getId()), Boolean.class);
 
-    assertThat(response.getResponseObject(), is(true));
+    assertThat(response.getResponseObject()).isTrue();
   }
 
 }

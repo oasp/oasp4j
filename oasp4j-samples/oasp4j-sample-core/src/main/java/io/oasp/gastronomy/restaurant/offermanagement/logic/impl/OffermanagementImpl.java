@@ -4,6 +4,7 @@ import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionCons
 import io.oasp.gastronomy.restaurant.general.logic.api.to.BinaryObjectEto;
 import io.oasp.gastronomy.restaurant.general.logic.base.AbstractComponentFacade;
 import io.oasp.gastronomy.restaurant.general.logic.base.UcManageBinaryObject;
+import io.oasp.gastronomy.restaurant.offermanagement.common.api.Product;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.ProductType;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.exception.OfferEmptyException;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity;
@@ -36,9 +37,11 @@ import java.util.Objects;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import net.sf.mmm.util.exception.api.ObjectMismatchException;
+import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +52,7 @@ import org.slf4j.LoggerFactory;
  * @author loverbec
  */
 @Named
+@Transactional
 public class OffermanagementImpl extends AbstractComponentFacade implements Offermanagement {
 
   private static final Logger LOG = LoggerFactory.getLogger(OffermanagementImpl.class);
@@ -321,14 +325,24 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public BinaryObjectEto findProductPicture(Long productId) {
 
-    return getUcManageBinaryObject().findBinaryObject(findProduct(productId).getPictureId());
+    ProductEto product = findProduct(productId);
+    if (product != null) {
+      return getUcManageBinaryObject().findBinaryObject(product.getPictureId());
+    } else {
+      return null;
+    }
   }
 
   @Override
   @RolesAllowed(PermissionConstants.FIND_PRODUCT_PICTURE)
   public Blob findProductPictureBlob(Long productId) {
 
-    return getUcManageBinaryObject().getBinaryObjectBlob(findProductPicture(productId).getId());
+    ProductEto product = findProduct(productId);
+    if (product != null) {
+      return getUcManageBinaryObject().getBinaryObjectBlob(product.getPictureId());
+    } else {
+      return null;
+    }
   }
 
   @Override
@@ -366,9 +380,13 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
   public void updateProductPicture(Long productId, Blob blob, BinaryObjectEto binaryObjectEto) {
 
     ProductEntity product = getProductDao().findOne(productId);
-    binaryObjectEto = getUcManageBinaryObject().saveBinaryObject(blob, binaryObjectEto);
-    product.setPictureId(binaryObjectEto.getId());
-    getProductDao().save(product);
+    if (product != null) {
+      binaryObjectEto = getUcManageBinaryObject().saveBinaryObject(blob, binaryObjectEto);
+      product.setPictureId(binaryObjectEto.getId());
+      getProductDao().save(product);
+    } else {
+      throw new ObjectNotFoundUserException(Product.class, productId);
+    }
 
   }
 
@@ -377,8 +395,9 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
   public void deleteProductPicture(Long productId) {
 
     ProductEntity product = getProductDao().findOne(productId);
-    getUcManageBinaryObject().deleteBinaryObject(product.getPictureId());
-
+    if (product != null) {
+      getUcManageBinaryObject().deleteBinaryObject(product.getPictureId());
+    }
   }
 
   @Override
