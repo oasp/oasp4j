@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:batch="http://www.springframework.org/schema/batch"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd">
+
+  <batch:job id="productImportJob" incrementer="incrementer">
+    <batch:step id="drinkImportStep" next="mealImportStep">
+      <batch:tasklet>
+        <batch:chunk reader="drinkReader" writer="productWriter" commit-interval="2"/>
+      </batch:tasklet>
+    </batch:step>
+    <batch:step id="mealImportStep">
+      <batch:tasklet>
+        <batch:chunk reader="mealReader" writer="productWriter" commit-interval="2"/>
+      </batch:tasklet>
+    </batch:step>
+  </batch:job>
+
+  <bean id="drinkReader" class="org.springframework.batch.item.file.FlatFileItemReader" scope="step">
+    <property name="lineMapper">
+      <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+        <property name="fieldSetMapper">
+          <bean class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper">
+            <property name="targetType" value="io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto"/>
+          </bean>
+        </property>
+        <property name="lineTokenizer">
+          <bean class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
+            <property name="names" value="name, description, pictureId, alcoholic"/>
+          </bean>
+        </property>
+      </bean>
+    </property>
+    <!-- Pass values to the confguration when launching a job. -->
+    <property name="resource" value="#{jobParameters['drinks.file']}"/>
+  </bean>
+
+  <bean id="mealReader" class="org.springframework.batch.item.file.FlatFileItemReader" scope="step">
+    <property name="lineMapper">
+      <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+        <property name="fieldSetMapper">
+          <bean class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper">
+            <property name="targetType" value="io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto"/>
+          </bean>
+        </property>
+        <property name="lineTokenizer">
+          <bean class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
+            <property name="names" value="name, description, pictureId"/>
+          </bean>
+        </property>
+      </bean>
+    </property>
+    <!-- Pass values to the confguration when launching a job. -->
+    <property name="resource" value="#{jobParameters['meals.file']}"/>
+  </bean>
+
+  <bean id="productWriter" class="io.oasp.gastronomy.restaurant.offermanagement.batch.impl.productimport.writer.ProductWriter"/>
+</beans>
