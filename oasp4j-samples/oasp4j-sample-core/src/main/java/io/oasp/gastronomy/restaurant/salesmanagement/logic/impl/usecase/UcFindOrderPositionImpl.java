@@ -29,7 +29,7 @@ public class UcFindOrderPositionImpl extends AbstractOrderPositionUc implements 
 
   @Override
   @RolesAllowed(PermissionConstants.FIND_ORDER_POSITION)
-  public OrderPositionEto findOrderPosition(Long orderPositionId) {
+  public OrderPositionEto findOrderPosition(long orderPositionId) {
 
     LOG.debug("Get order position.");
     OrderPositionEntity orderPositionEntities = getOrderPositionDao().findOne(orderPositionId);
@@ -39,7 +39,7 @@ public class UcFindOrderPositionImpl extends AbstractOrderPositionUc implements 
 
   @Override
   @RolesAllowed(PermissionConstants.FIND_ORDER_POSITION)
-  public List<OrderPositionEto> findOrderPositionsByOrderId(Long orderId) {
+  public List<OrderPositionEto> findOrderPositionsByOrderId(long orderId) {
 
     List<OrderPositionEntity> positions = getOrderPositionDao().findOrderPositionsByOrder(orderId);
     return getBeanMapper().mapList(positions, OrderPositionEto.class);
@@ -47,7 +47,7 @@ public class UcFindOrderPositionImpl extends AbstractOrderPositionUc implements 
 
   @Override
   @RolesAllowed(PermissionConstants.FIND_ORDER_POSITION)
-  public List<OrderPositionEto> findOpenOrderPositionsByOrderId(Long orderId) {
+  public List<OrderPositionEto> findOpenOrderPositionsByOrderId(long orderId) {
 
     LOG.debug("Get all open order positions for order id '" + orderId + "'.");
     return getBeanMapper()

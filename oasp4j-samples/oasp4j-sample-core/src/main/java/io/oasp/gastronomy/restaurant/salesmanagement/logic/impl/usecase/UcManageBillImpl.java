@@ -140,7 +140,7 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
 
   @Override
   @RolesAllowed(PermissionConstants.DELETE_BILL)
-  public void deleteBill(Long billId) {
+  public void deleteBill(long billId) {
 
     getBillDao().delete(billId);
   }

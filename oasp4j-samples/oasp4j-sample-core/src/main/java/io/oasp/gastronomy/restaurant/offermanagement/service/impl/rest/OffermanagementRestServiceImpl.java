@@ -74,7 +74,7 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/offer/{id}")
-  public OfferEto getOffer(@PathParam("id") Long id) {
+  public OfferEto getOffer(@PathParam("id") long id) {
 
     return this.offerManagement.findOffer(id);
   }
@@ -201,7 +201,7 @@ public class OffermanagementRestServiceImpl {
    */
   @DELETE
   @Path("/offer/{id}")
-  public void deleteOffer(@PathParam("id") Long id) {
+  public void deleteOffer(@PathParam("id") long id) {
 
     this.offerManagement.deleteOffer(id);
   }
@@ -215,7 +215,7 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/product/{id}/{revision}")
-  public ProductEto findProductByRevision(@PathParam("id") Long id, @PathParam("revision") Long revision) {
+  public ProductEto findProductByRevision(@PathParam("id") long id, @PathParam("revision") Long revision) {
 
     if (revision != null) {
       return this.offerManagement.findProductByRevision(id, revision);
@@ -232,7 +232,7 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/product/{id}")
-  public ProductEto findProduct(@PathParam("id") Long id) {
+  public ProductEto findProduct(@PathParam("id") long id) {
 
     return this.offerManagement.findProduct(id);
   }
@@ -261,7 +261,7 @@ public class OffermanagementRestServiceImpl {
    */
   @GET
   @Path("/product/{id}/inuse")
-  public boolean isProductInUseByOffer(@PathParam("id") Long id) {
+  public boolean isProductInUseByOffer(@PathParam("id") long id) {
 
     return this.offerManagement.isProductInUseByOffer(findProduct(id));
   }
@@ -273,7 +273,7 @@ public class OffermanagementRestServiceImpl {
    */
   @DELETE
   @Path("/product/{id}")
-  public void deleteProduct(@PathParam("id") Long id) {
+  public void deleteProduct(@PathParam("id") long id) {
 
     this.offerManagement.deleteProduct(id);
   }
@@ -312,7 +312,7 @@ public class OffermanagementRestServiceImpl {
   @Consumes("multipart/mixed")
   @POST
   @Path("/product/{id}/picture")
-  public void updateProductPicture(@PathParam("id") Long productId,
+  public void updateProductPicture(@PathParam("id") long productId,
       @Multipart(value = "binaryObjectEto", type = MediaType.APPLICATION_JSON) BinaryObjectEto binaryObjectEto,
       @Multipart(value = "blob", type = MediaType.APPLICATION_OCTET_STREAM) InputStream picture)
       throws SerialException, SQLException, IOException {
