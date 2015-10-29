@@ -37,10 +37,10 @@ public interface UcFindOrder {
    * This method returns an {@link OrderEto order}.
    *
    * @param orderId identifier of the searched {@link OrderEto order}
-   * @return the {@link OrderEto order} with the given identifier. Will be {@code null} if the {@link OrderEto
-   *         order} does not exist.
+   * @return the {@link OrderEto order} with the given identifier. Will be {@code null} if the {@link OrderEto order}
+   *         does not exist.
    */
-  OrderEto findOrder(Long orderId);
+  OrderEto findOrder(long orderId);
 
   /**
    * This method returns a the {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState#OPEN
@@ -52,6 +52,6 @@ public interface UcFindOrder {
    *         {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState#OPEN open}
    *         {@link OrderEto#getState() state} or {@code null} if no such {@link OrderEto order} exists.
    */
-  OrderEto findOpenOrderForTable(Long tableId);
+  OrderEto findOpenOrderForTable(long tableId);
 
 }

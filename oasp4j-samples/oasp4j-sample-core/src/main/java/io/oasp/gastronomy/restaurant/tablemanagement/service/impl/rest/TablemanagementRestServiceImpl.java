@@ -4,6 +4,7 @@ import io.oasp.gastronomy.restaurant.tablemanagement.common.api.Table;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableSearchCriteriaTo;
+import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.usecase.UcFindTable;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.List;
@@ -57,7 +58,7 @@ public class TablemanagementRestServiceImpl {
   @Path("/table/{id}/")
   public TableEto getTable(@PathParam("id") String id) {
 
-    Long idAsLong;
+    long idAsLong;
     if (id == null) {
       throw new BadRequestException("missing id");
     }
@@ -119,7 +120,7 @@ public class TablemanagementRestServiceImpl {
    */
   @DELETE
   @Path("/table/{id}/")
-  public void deleteTable(@PathParam("id") Long id) {
+  public void deleteTable(@PathParam("id") long id) {
 
     this.tableManagement.deleteTable(id);
   }
@@ -146,7 +147,7 @@ public class TablemanagementRestServiceImpl {
    */
   @GET
   @Path("/table/{id}/istablereleasable/")
-  public boolean isTableReleasable(@PathParam("id") Long id) {
+  public boolean isTableReleasable(@PathParam("id") long id) {
 
     TableEto table = this.tableManagement.findTable(id);
     if (table == null) {

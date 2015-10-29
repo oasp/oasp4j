@@ -15,10 +15,10 @@ public interface UcFindOrderPosition {
 
   /**
    * @param orderPositionId is the {@link OrderPositionEto#getId() ID} of the requested {@link OrderPositionEto}.
-   * @return the {@link OrderPositionEto} with the given ID. Will be {@code null} if the {@link OrderPositionEto}
-   *         does not exist.
+   * @return the {@link OrderPositionEto} with the given ID. Will be {@code null} if the {@link OrderPositionEto} does
+   *         not exist.
    */
-  OrderPositionEto findOrderPosition(Long orderPositionId);
+  OrderPositionEto findOrderPosition(long orderPositionId);
 
   /**
    * @param orderId is the {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.Order#getId() ID} of the
@@ -27,7 +27,7 @@ public interface UcFindOrderPosition {
    * @return the {@link List} of {@link OrderPositionEto}s {@link OrderPositionEto#getOrderId() associated} with the
    *         given <code>orderId</code>.
    */
-  List<OrderPositionEto> findOrderPositionsByOrderId(Long orderId);
+  List<OrderPositionEto> findOrderPositionsByOrderId(long orderId);
 
   /**
    * @param criteria the {@link OrderPositionSearchCriteriaTo}.
@@ -40,6 +40,6 @@ public interface UcFindOrderPosition {
    * @return the {@link List} of all {@link OrderPositionEto}s {@link OrderPositionEto#getId() associated} with the
    *         given <code>orderId</code>. Will be the empty {@link List} if no such {@link OrderPositionEto} exists.
    */
-  List<OrderPositionEto> findOpenOrderPositionsByOrderId(Long orderId);
+  List<OrderPositionEto> findOpenOrderPositionsByOrderId(long orderId);
 
 }
