@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api;
+ppackage io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api;
 
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Role;
 import io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity;
@@ -6,6 +6,7 @@ import io.oasp.gastronomy.restaurant.staffmanagement.common.api.StaffMember;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * The {@link io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity persistent entity} for
@@ -14,6 +15,7 @@ import javax.persistence.Entity;
  * @author loverbec
  */
 @Entity
+@Table(name = "StaffMember")
 public class StaffMemberEntity extends ApplicationPersistenceEntity implements StaffMember {
 
   private static final long serialVersionUID = 1L;

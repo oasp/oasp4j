@@ -19,6 +19,7 @@ import javax.persistence.Transient;
  * @author etomety
  */
 @Entity
+@Table(name = "Bill")
 public class BillEntity extends ApplicationPersistenceEntity implements Bill {
 
   private static final long serialVersionUID = 1L;

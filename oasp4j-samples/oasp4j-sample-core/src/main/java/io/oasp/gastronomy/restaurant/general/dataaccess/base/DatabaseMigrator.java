@@ -50,6 +50,19 @@ public class DatabaseMigrator {
   }
 
   /**
+   * Import test data.
+   *
+   * @param importTestDataPath path to directory with files with test data
+   */
+  public void importTestData(String importTestDataPath) {
+
+    final Flyway flyway = new Flyway();
+    flyway.setDataSource(this.dataSource);
+    flyway.setLocations(importTestDataPath);
+    flyway.migrate();
+  }
+
+  /**
    * @return enabled
    */
   public boolean isEnabled() {

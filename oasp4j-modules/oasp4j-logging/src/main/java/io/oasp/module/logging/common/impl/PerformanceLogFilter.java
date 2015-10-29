@@ -103,7 +103,14 @@ public class PerformanceLogFilter implements Filter {
    */
   private String createMessage(String... args) {
 
-    return String.join(";", args);
+    StringBuilder buffer = new StringBuilder();
+    for (String s : args) {
+      if (buffer.length() > 0) {
+        buffer.append(';');
+      }
+      buffer.append(s);
+    }
+    return buffer.toString();
   }
 
   @Override
