@@ -4,7 +4,6 @@ import io.oasp.gastronomy.restaurant.tablemanagement.common.api.Table;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableSearchCriteriaTo;
-import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.usecase.UcFindTable;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.List;
@@ -158,7 +157,7 @@ public class TablemanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcFindTable#findTableEtos}.
+   * Delegates to {@link Tablemanagement#findTableEtos}.
    *
    * @param searchCriteriaTo the pagination and search criteria to be used for finding tables.
    * @return the {@link PaginatedListTo list} of matching {@link TableEto}s.

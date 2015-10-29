@@ -103,7 +103,7 @@ public class StaffmanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcFindStaffMember#findStaffMemberEtos}.
+   * Delegates to {@link Staffmanagement#findStaffMemberEtos}.
    *
    * @param searchCriteriaTo the pagination and search criteria to be used for finding staffmembers.
    * @return the {@link PaginatedListTo list} of matching {@link StaffMemberEto}s.
