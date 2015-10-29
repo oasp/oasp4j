@@ -21,7 +21,7 @@ import javax.persistence.Transient;
  * @author hohwille
  */
 @Entity
-@Table(name = "Bill")
+@Table(name = "OrderPosition")
 public class OrderPositionEntity extends ApplicationPersistenceEntity implements OrderPosition {
 
   private static final long serialVersionUID = 1L;
