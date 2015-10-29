@@ -1,7 +1,5 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.batch.impl.billexport;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import io.oasp.gastronomy.restaurant.general.common.AbstractSpringBatchIntegrationTest;
 import io.oasp.module.configuration.common.api.ApplicationConfigurationConstants;
 
@@ -9,12 +7,14 @@ import java.io.File;
 
 import javax.inject.Inject;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
@@ -27,7 +27,9 @@ public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
   @Inject
   private Job billExportJob;
 
-  @SuppressWarnings("javadoc")
+  /**
+   * @throws Exception thrown by JobLauncherTestUtils
+   */
   @Test
   public void testJob() throws Exception {
 
@@ -45,13 +47,13 @@ public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
 
     // check results
     // - job status
-    assertEquals(BatchStatus.COMPLETED, jobExecution.getStatus());
+    assertThat(jobExecution.getStatus()).isEqualTo(BatchStatus.COMPLETED);
 
     // - exported data
-    assertTrue(targetPath.exists());
+    assertThat(targetPath.exists()).isTrue();
 
-    // TODO local is ok, on travis-ci is not running, why?
-    // assertTrue(FileUtils.contentEquals(targetPath,
-    // new ClassPathResource("BillExportJobTest/expected/bills.csv").getFile()));
+    assertThat(
+        FileUtils.contentEquals(targetPath, new ClassPathResource("BillExportJobTest/expected/bills.csv").getFile()))
+        .isTrue();
   }
 }

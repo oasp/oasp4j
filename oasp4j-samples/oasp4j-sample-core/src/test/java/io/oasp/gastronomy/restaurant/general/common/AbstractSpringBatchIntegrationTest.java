@@ -1,14 +1,13 @@
 package io.oasp.gastronomy.restaurant.general.common;
 
-import static org.junit.Assert.fail;
 import io.oasp.gastronomy.restaurant.general.dataaccess.base.DatabaseMigrator;
 
 import java.io.File;
-import java.io.IOException;
 
 import javax.inject.Inject;
 
 import org.apache.commons.io.FileUtils;
+import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -29,7 +28,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @DirtiesContext(classMode = ClassMode.AFTER_CLASS)
 @ActiveProfiles("db-plain")
-public abstract class AbstractSpringBatchIntegrationTest {
+public abstract class AbstractSpringBatchIntegrationTest extends Assertions {
   private static final Logger LOG = LoggerFactory.getLogger(AbstractSpringBatchIntegrationTest.class);
 
   /** directory for temporary test files */
@@ -62,18 +61,16 @@ public abstract class AbstractSpringBatchIntegrationTest {
 
   /**
    * setup run before all tests
+   *
+   * @throws Exception throw by FileUtils
    */
   @Before
-  public void setup() {
+  public void setup() throws Exception {
 
     // setup test data
     this.flyway.importTestData(ALL_TESTS_DB_SETUP_DIR);
 
     LOG.debug("Delete tmp directory");
-    try {
-      FileUtils.deleteDirectory(new File(TMP_DIR));
-    } catch (IOException e) {
-      fail();
-    }
+    FileUtils.deleteDirectory(new File(TMP_DIR));
   }
 }
