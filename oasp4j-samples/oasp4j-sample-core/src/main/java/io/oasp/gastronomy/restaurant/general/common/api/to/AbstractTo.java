@@ -24,6 +24,25 @@ public abstract class AbstractTo implements TransferObject {
 
   /**
    * {@inheritDoc}
+<<<<<<< HEAD
+   *
+   * <b>ATTENTION:</b><br>
+   * For being type-safe please use {@link TransferObjectUtil#clone(AbstractTransferObject)} instead.
+   */
+  @Override
+  public AbstractTo clone() {
+
+    try {
+      return (AbstractTo) super.clone();
+    } catch (CloneNotSupportedException e) {
+      throw new NlsIllegalStateException(e);
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+=======
+>>>>>>> afc5c448867bf6556fe5d709ac09077e988bd93d
    */
   @Override
   public final String toString() {

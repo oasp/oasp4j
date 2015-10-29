@@ -24,4 +24,43 @@ public abstract class AbstractCto extends AbstractTo {
     super();
   }
 
+<<<<<<< HEAD
+  /**
+   * {@inheritDoc}
+   *
+   * <b>ATTENTION:</b><br>
+   * For being type-safe please use {@link TransferObjectUtil#clone(AbstractTransferObject)} instead.
+   */
+  @Override
+  public AbstractCto clone() {
+
+    try {
+      return (AbstractCto) super.clone();
+    } catch (CloneNotSupportedException e) {
+      throw new NlsIllegalStateException(e);
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final String toString() {
+
+    StringBuilder buffer = new StringBuilder();
+    toString(buffer);
+    return buffer.toString();
+  }
+
+  /**
+   * Method to extend {@link #toString()} logic. Override to add additional information.
+   *
+   * @param buffer is the {@link StringBuilder} where to {@link StringBuilder#append(Object) append} the string
+   *        representation.
+   */
+  protected void toString(StringBuilder buffer) {
+
+    buffer.append(getClass().getSimpleName());
+  }
+
 }

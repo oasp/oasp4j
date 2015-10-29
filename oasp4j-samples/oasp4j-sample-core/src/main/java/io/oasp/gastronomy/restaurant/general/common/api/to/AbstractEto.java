@@ -1,21 +1,5 @@
 package io.oasp.gastronomy.restaurant.general.common.api.to;
 
-import net.sf.mmm.util.entity.api.GenericEntity;
-import net.sf.mmm.util.entity.api.MutableRevisionedEntity;
-import net.sf.mmm.util.entity.api.PersistenceEntity;
-import net.sf.mmm.util.transferobject.api.TransferObject;
-
-/**
- * This is the abstract base class for an {@link TransferObject} that only contains data without relations. This is
- * called <em>DTO</em> (data transfer object). Here data means properties that typically represent a
- * {@link net.sf.mmm.util.lang.api.Datatype} and potentially for relations the ID (as {@link Long}). For actual
- * relations you will use {@link AbstractCto CTO}s to express what set of entities to transfer, load, save, update, etc.
- * without redundancies. It typically corresponds to an {@link net.sf.mmm.util.entity.api.GenericEntity entity}. For
- * additional details and an example consult the {@link net.sf.mmm.util.transferobject.api package JavaDoc}.
- *
- * @author hohwille
- * @author erandres
- */
 public abstract class AbstractEto extends AbstractTo implements MutableRevisionedEntity<Long> {
 
   private static final long serialVersionUID = 1L;
@@ -45,6 +29,36 @@ public abstract class AbstractEto extends AbstractTo implements MutableRevisione
 
   /**
    * {@inheritDoc}
+<<<<<<< HEAD
+   *
+   * <b>ATTENTION:</b><br>
+   * For being type-safe please use {@link TransferObjectUtil#clone(AbstractTransferObject)} instead.
+   */
+  @Override
+  public AbstractEto clone() {
+
+    try {
+      return (AbstractEto) super.clone();
+    } catch (CloneNotSupportedException e) {
+      throw new NlsIllegalStateException(e);
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final String toString() {
+
+    StringBuilder buffer = new StringBuilder();
+    toString(buffer);
+    return buffer.toString();
+  }
+
+  /**
+   * {@inheritDoc}
+=======
+>>>>>>> afc5c448867bf6556fe5d709ac09077e988bd93d
    */
   @Override
   public Long getId() {
@@ -110,10 +124,16 @@ public abstract class AbstractEto extends AbstractTo implements MutableRevisione
    * @param buffer is the {@link StringBuilder} where to {@link StringBuilder#append(Object) append} the string
    *        representation.
    */
+<<<<<<< HEAD
+  protected void toString(StringBuilder buffer) {
+
+    buffer.append(getClass().getSimpleName());
+=======
   @Override
   protected void toString(StringBuilder buffer) {
 
     super.toString(buffer);
+>>>>>>> afc5c448867bf6556fe5d709ac09077e988bd93d
     if (this.id != null) {
       buffer.append("[id=");
       buffer.append(this.id);

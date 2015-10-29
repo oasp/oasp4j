@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api;
+ppackage io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api;
 
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Role;
 import io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity;

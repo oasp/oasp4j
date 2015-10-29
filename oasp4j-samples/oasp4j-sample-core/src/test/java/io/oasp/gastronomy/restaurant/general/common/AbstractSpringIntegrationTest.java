@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.general.common;
+ppackage io.oasp.gastronomy.restaurant.general.common;
 
 import io.oasp.module.test.common.base.ComponentTest;
 

@@ -1,13 +1,17 @@
 package io.oasp.module.jpa.common.api.to;
 
 import net.sf.mmm.util.exception.api.NlsIllegalArgumentException;
+import net.sf.mmm.util.exception.api.NlsIllegalStateException;
+import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
+import net.sf.mmm.util.transferobject.api.TransferObject;
+import net.sf.mmm.util.transferobject.api.TransferObjectUtil;
 
 /**
  * Pagination information about a paginated query.
  *
  * @author henning
  */
-public class PaginationResultTo extends AbstractTo {
+public class PaginationResultTo implements TransferObject {
 
   /** UID for serialization. */
   private static final long serialVersionUID = 1L;
@@ -87,20 +91,42 @@ public class PaginationResultTo extends AbstractTo {
     this.total = total;
   }
 
+  /**
+   * {@inheritDoc}
+   *
+   * <b>ATTENTION:</b><br>
+   * For being type-safe please use {@link TransferObjectUtil#clone(AbstractTransferObject)} instead.
+   */
   @Override
+  public SearchCriteriaTo clone() {
+
+    try {
+      return (SearchCriteriaTo) super.clone();
+    } catch (CloneNotSupportedException e) {
+      throw new NlsIllegalStateException(e);
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final String toString() {
+
+    StringBuilder buffer = new StringBuilder();
+    toString(buffer);
+    return buffer.toString();
+  }
+
+  /**
+   * Method to extend {@link #toString()} logic. Override to add additional information.
+   *
+   * @param buffer is the {@link StringBuilder} where to {@link StringBuilder#append(Object) append} the string
+   *        representation.
+   */
   protected void toString(StringBuilder buffer) {
 
-    super.toString(buffer);
-    buffer.append("@page=");
-    buffer.append(this.page);
-    if (this.size != null) {
-      buffer.append(", size=");
-      buffer.append(this.size);
-    }
-    if (this.total != null) {
-      buffer.append(", total=");
-      buffer.append(this.total);
-    }
+    buffer.append(getClass().getSimpleName());
   }
 
 }

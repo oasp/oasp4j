@@ -367,7 +367,7 @@ public class OffermanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcFindOffer#findOfferEtos}.
+   * Delegates to {@link Offermanagement#findOfferEtos}.
    *
    * @param searchCriteriaTo the pagination and search criteria to be used for finding offers.
    * @return the {@link PaginatedListTo list} of matching {@link OfferEto}s.
@@ -380,7 +380,7 @@ public class OffermanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcFindProduct#findProductEtos}.
+   * Delegates to {@link Offermanagement#findProductEtos}.
    *
    * @param searchCriteriaTo the pagination and search criteria to be used for finding products.
    * @return the {@link PaginatedListTo list} of matching {@link ProductEto}s.
