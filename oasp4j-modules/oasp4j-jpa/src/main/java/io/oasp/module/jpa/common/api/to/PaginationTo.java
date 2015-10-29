@@ -1,15 +1,14 @@
 package io.oasp.module.jpa.common.api.to;
 
 import net.sf.mmm.util.exception.api.NlsIllegalArgumentException;
-import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
 
 /**
- * A {@link net.sf.mmm.util.transferobject.api.TransferObject transfer-object } containing criteria for paginating
+ * A {@link net.sf.mmm.util.transferobject.api.TransferObject transfer-object} containing criteria for paginating
  * queries.
  *
  * @author henning
  */
-public class PaginationTo extends AbstractTransferObject {
+public class PaginationTo extends AbstractTo {
 
   /**
    * Empty {@link PaginationTo} indicating no pagination.
@@ -77,6 +76,21 @@ public class PaginationTo extends AbstractTransferObject {
   public void setTotal(boolean total) {
 
     this.total = total;
+  }
+
+  @Override
+  protected void toString(StringBuilder buffer) {
+
+    super.toString(buffer);
+    buffer.append("@page=");
+    buffer.append(this.page);
+    if (this.size != null) {
+      buffer.append(", size=");
+      buffer.append(this.size);
+    }
+    if (this.total) {
+      buffer.append(", total");
+    }
   }
 
 }

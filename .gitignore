@@ -4,8 +4,10 @@
 *.iml
 .*
 target/
+jsclient/
 eclipse-target/
 **/src/generated/
+**/tmp/
 
 # Package Files #
 *.jar

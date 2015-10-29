@@ -26,6 +26,7 @@ public class DrinkEto extends ProductEto implements Drink {
    *
    * @return Value of alcoholic
    */
+  @Override
   public boolean isAlcoholic() {
 
     return this.alcoholic;
@@ -36,34 +37,10 @@ public class DrinkEto extends ProductEto implements Drink {
    *
    * @param alcoholic New value for alcoholic
    */
+  @Override
   public void setAlcoholic(boolean alcoholic) {
 
     this.alcoholic = alcoholic;
-  }
-
-  @Override
-  public int hashCode() {
-
-    final int prime = 31;
-    int result = super.hashCode();
-    result = prime * result + (this.alcoholic ? 1 : 0);
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-
-    if (this == obj) {
-      return true;
-    }
-    if (!super.equals(obj)) {
-      return false;
-    }
-    DrinkEto other = (DrinkEto) obj;
-    if (this.alcoholic != other.alcoholic) {
-      return false;
-    }
-    return true;
   }
 
 }

@@ -92,6 +92,15 @@
     <url-pattern>/services/*</url-pattern>
   </filter-mapping>
 
+  <filter>
+    <filter-name>PerformanceLogFilter</filter-name>
+    <filter-class>io.oasp.module.logging.common.impl.PerformanceLogFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>PerformanceLogFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
   <!-- Spring Security Filter -->
   <filter>
     <filter-name>SecurityFilterChain</filter-name>

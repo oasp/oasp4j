@@ -3,7 +3,6 @@ package io.oasp.module.jpa.common.api.to;
 import java.util.List;
 
 import net.sf.mmm.util.entity.api.PersistenceEntity;
-import net.sf.mmm.util.transferobject.api.CompositeTo;
 import net.sf.mmm.util.transferobject.api.TransferObject;
 
 /**
@@ -14,7 +13,7 @@ import net.sf.mmm.util.transferobject.api.TransferObject;
  *
  * @author henning
  */
-public class PaginatedListTo<E> extends CompositeTo {
+public class PaginatedListTo<E> extends AbstractTo {
 
   /** UID for serialization. */
   private static final long serialVersionUID = 1L;
@@ -53,4 +52,18 @@ public class PaginatedListTo<E> extends CompositeTo {
     return this.pagination;
   }
 
+  @Override
+  protected void toString(StringBuilder buffer) {
+
+    super.toString(buffer);
+    buffer.append('@');
+    if (this.result != null) {
+      buffer.append("#result=");
+      buffer.append(this.result.size());
+    }
+    if (this.pagination != null) {
+      buffer.append(',');
+      this.pagination.toString(buffer);
+    }
+  }
 }

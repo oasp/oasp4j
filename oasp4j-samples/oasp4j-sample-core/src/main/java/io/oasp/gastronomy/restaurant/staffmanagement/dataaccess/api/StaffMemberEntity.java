@@ -6,6 +6,7 @@ import io.oasp.gastronomy.restaurant.staffmanagement.common.api.StaffMember;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * The {@link io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity persistent entity} for
@@ -13,7 +14,8 @@ import javax.persistence.Entity;
  *
  * @author loverbec
  */
-@Entity(name = "StaffMember")
+@Entity
+@Table(name = "StaffMember")
 public class StaffMemberEntity extends ApplicationPersistenceEntity implements StaffMember {
 
   private static final long serialVersionUID = 1L;

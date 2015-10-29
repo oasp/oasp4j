@@ -2,11 +2,11 @@ package io.oasp.gastronomy.restaurant.general.common;
 
 import io.oasp.gastronomy.restaurant.general.common.api.MoneyHelper;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
+import io.oasp.module.test.common.base.ModuleTest;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -14,7 +14,7 @@ import org.junit.Test;
  *
  * @author mvielsac
  */
-public class MoneyHelperTest extends Assert {
+public class MoneyHelperTest extends ModuleTest {
 
   // /**
   // * Test for summing up {@link Money}s with other currency (USD) then default (EUR).
@@ -34,7 +34,7 @@ public class MoneyHelperTest extends Assert {
   //
   // Money summedAmount = MoneyHelper.sumMoneys(moneyList);
   //
-  // assertEquals(MoneyHelper.getMoney(sum, "USD"), summedAmount);
+  // assertThat(MoneyHelper.getMoney(sum, "USD")).isEqualTo(summedAmount);
   //
   // }
 
@@ -46,7 +46,7 @@ public class MoneyHelperTest extends Assert {
 
     List<Money> moneyList = new ArrayList<>();
     Money summedAmount = MoneyHelper.sumMoneys(moneyList);
-    assertEquals(MoneyHelper.ZERO_MONEY, summedAmount);
+    assertThat(MoneyHelper.ZERO_MONEY).isEqualTo(summedAmount);
   }
 
   /**
@@ -67,7 +67,7 @@ public class MoneyHelperTest extends Assert {
 
     Money summedAmount = MoneyHelper.sumMoneys(moneyList);
 
-    assertEquals(MoneyHelper.getMoney(sum, "EUR"), summedAmount);
+    assertThat(MoneyHelper.getMoney(sum, "EUR")).isEqualTo(summedAmount);
   }
 
 }
