@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.general.common.api.to;
 
+<<<<<<< HEAD
 import io.oasp.module.jpa.dataaccess.api.MutablePersistenceEntity;
 
 import net.sf.mmm.util.entity.api.GenericEntity;
@@ -8,6 +9,12 @@ import net.sf.mmm.util.exception.api.NlsIllegalStateException;
 import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
 import net.sf.mmm.util.transferobject.api.TransferObject;
 import net.sf.mmm.util.transferobject.api.TransferObjectUtil;
+=======
+import net.sf.mmm.util.entity.api.GenericEntity;
+import net.sf.mmm.util.entity.api.MutableRevisionedEntity;
+import net.sf.mmm.util.entity.api.PersistenceEntity;
+import net.sf.mmm.util.transferobject.api.TransferObject;
+>>>>>>> afc5c448867bf6556fe5d709ac09077e988bd93d
 
 /**
  * This is the abstract base class for an {@link TransferObject} that only contains data without relations. This is
@@ -20,7 +27,11 @@ import net.sf.mmm.util.transferobject.api.TransferObjectUtil;
  * @author hohwille
  * @author erandres
  */
+<<<<<<< HEAD
 public abstract class AbstractEto implements TransferObject, Cloneable, MutablePersistenceEntity<Long> {
+=======
+public abstract class AbstractEto extends AbstractTo implements MutableRevisionedEntity<Long> {
+>>>>>>> afc5c448867bf6556fe5d709ac09077e988bd93d
 
   private static final long serialVersionUID = 1L;
 
@@ -49,6 +60,7 @@ public abstract class AbstractEto implements TransferObject, Cloneable, MutableP
 
   /**
    * {@inheritDoc}
+<<<<<<< HEAD
    *
    * <b>ATTENTION:</b><br>
    * For being type-safe please use {@link TransferObjectUtil#clone(AbstractTransferObject)} instead.
@@ -76,6 +88,8 @@ public abstract class AbstractEto implements TransferObject, Cloneable, MutableP
 
   /**
    * {@inheritDoc}
+=======
+>>>>>>> afc5c448867bf6556fe5d709ac09077e988bd93d
    */
   @Override
   public Long getId() {
@@ -141,9 +155,16 @@ public abstract class AbstractEto implements TransferObject, Cloneable, MutableP
    * @param buffer is the {@link StringBuilder} where to {@link StringBuilder#append(Object) append} the string
    *        representation.
    */
+<<<<<<< HEAD
   protected void toString(StringBuilder buffer) {
 
     buffer.append(getClass().getSimpleName());
+=======
+  @Override
+  protected void toString(StringBuilder buffer) {
+
+    super.toString(buffer);
+>>>>>>> afc5c448867bf6556fe5d709ac09077e988bd93d
     if (this.id != null) {
       buffer.append("[id=");
       buffer.append(this.id);

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 /**
@@ -19,6 +20,10 @@ import javax.persistence.Transient;
  * @author etomety
  */
 @Entity
+<<<<<<< HEAD
+=======
+@Table(name = "Bill")
+>>>>>>> afc5c448867bf6556fe5d709ac09077e988bd93d
 public class BillEntity extends ApplicationPersistenceEntity implements Bill {
 
   private static final long serialVersionUID = 1L;

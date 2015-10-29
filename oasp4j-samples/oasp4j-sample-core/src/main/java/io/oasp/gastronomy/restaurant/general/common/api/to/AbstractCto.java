@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.general.common.api.to;
 
+<<<<<<< HEAD
 import net.sf.mmm.util.exception.api.NlsIllegalStateException;
 import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
 import net.sf.mmm.util.transferobject.api.TransferObject;
@@ -16,6 +17,21 @@ import net.sf.mmm.util.transferobject.api.TransferObjectUtil;
  * @author hohwille
  */
 public abstract class AbstractCto implements TransferObject, Cloneable {
+=======
+import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
+import net.sf.mmm.util.transferobject.api.TransferObject;
+
+/**
+ * This is the abstract base class for a composite {@link AbstractTo transfer-object}. Such object should contain
+ * (aggregate) other {@link AbstractTransferObject}s but no atomic data. This means it has properties that contain a
+ * {@link TransferObject} or a {@link java.util.Collection} of those but no {@link net.sf.mmm.util.lang.api.Datatype
+ * values}. <br>
+ * Classes extending this class should carry the suffix <code>Cto</code>.
+ *
+ * @author hohwille
+ */
+public abstract class AbstractCto extends AbstractTo {
+>>>>>>> afc5c448867bf6556fe5d709ac09077e988bd93d
 
   private static final long serialVersionUID = 1L;
 
@@ -27,6 +43,7 @@ public abstract class AbstractCto implements TransferObject, Cloneable {
     super();
   }
 
+<<<<<<< HEAD
   /**
    * {@inheritDoc}
    *
@@ -65,4 +82,6 @@ public abstract class AbstractCto implements TransferObject, Cloneable {
     buffer.append(getClass().getSimpleName());
   }
 
+=======
+>>>>>>> afc5c448867bf6556fe5d709ac09077e988bd93d
 }
