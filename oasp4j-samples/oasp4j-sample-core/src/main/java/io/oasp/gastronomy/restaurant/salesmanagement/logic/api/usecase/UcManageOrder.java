@@ -1,10 +1,10 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  * Interface of UcMangeOrder to centralize documentation and signatures of methods.
@@ -34,6 +34,6 @@ public interface UcManageOrder {
   /**
    * @param id is the {@link OrderEto#getId() ID} of the order to delete.
    */
-  void deleteOrder(Long id);
+  void deleteOrder(long id);
 
 }
