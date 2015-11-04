@@ -54,7 +54,7 @@ public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
 
     // - imported data (there is 7 products in setup data)
     List<ProductEto> allProducts = this.offermanagement.findAllProducts();
-    assertThat(allProducts.size()).isEqualTo(7);
+    assertThat(allProducts).hasSize(7);
 
     // - exemplary drink
     DrinkEto drink = (DrinkEto) allProducts.get(0);
