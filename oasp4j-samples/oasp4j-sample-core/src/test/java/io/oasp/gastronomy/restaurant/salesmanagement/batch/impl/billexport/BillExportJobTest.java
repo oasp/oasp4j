@@ -42,10 +42,12 @@ public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
     // setup test data
     this.flyway.importTestData("classpath:BillExportJobTest/setup/db");
 
+    File targetFile = new File("./tmp/bills.csv");
+    File exportedFile = new ClassPathResource("BillExportJobTest/expected/bills.csv").getFile();
+
     // configure job
-    File targetPath = new File("./tmp/bills.csv");
     JobParametersBuilder jobParameterBuilder = new JobParametersBuilder();
-    jobParameterBuilder.addString("bills.file", targetPath.getPath());
+    jobParameterBuilder.addString("bills.file", targetFile.getPath());
     JobParameters jobParameters = jobParameterBuilder.toJobParameters();
 
     // run job
@@ -56,19 +58,15 @@ public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
     assertThat(jobExecution.getStatus()).isEqualTo(BatchStatus.COMPLETED);
 
     // - exported data
-    assertThat(targetPath.exists()).isTrue();
+    assertThat(targetFile.exists()).isTrue();
+    assertThat(exportedFile.exists()).isTrue();
 
-    logFileContent(targetPath);
-    logFileContent(new ClassPathResource("BillExportJobTest/expected/bills.csv").getFile());
-
-    // TODO failed on travis-is, ok local
-    // assertThat(
-    // FileUtils.contentEquals(targetPath, new ClassPathResource("BillExportJobTest/expected/bills.csv").getFile()))
-    // .isTrue();
+    assertThat(getFileContent(exportedFile)).isEqualTo(getFileContent(targetFile));
   }
 
-  private void logFileContent(File file) {
+  private String getFileContent(File file) {
 
+    StringBuffer sb = new StringBuffer();
     try {
 
       LOG.debug("--> file content: " + file.getPath());
@@ -80,6 +78,8 @@ public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
 
         while ((line = br.readLine()) != null) {
           LOG.debug(line);
+          sb.append(line);
+          sb.append(System.lineSeparator());
         }
       } finally {
         if (br != null) {
@@ -91,6 +91,6 @@ public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
       LOG.debug(e.toString());
       e.printStackTrace();
     }
+    return sb.toString();
   }
-
 }
