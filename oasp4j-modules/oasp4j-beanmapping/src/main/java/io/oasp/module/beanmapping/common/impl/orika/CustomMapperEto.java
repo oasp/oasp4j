@@ -36,12 +36,12 @@ public class CustomMapperEto extends CustomMapper<GenericEntity, EntityTo> {
   public CustomMapperEto() {
 
     super();
+
   }
 
   @Override
   public void mapAtoB(GenericEntity source, EntityTo target, MappingContext context) {
 
-    super.mapAtoB(source, target, context);
     this.descriptor.setProperty(target, "persistentEntity", source);
   }
 
