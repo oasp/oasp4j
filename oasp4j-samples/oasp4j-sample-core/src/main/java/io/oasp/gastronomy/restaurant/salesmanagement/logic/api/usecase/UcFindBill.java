@@ -17,5 +17,5 @@ public interface UcFindBill {
    * @param id is the {@link BillEto#getId() id} of the Bill to fetch.
    * @return the {@link BillCto bill} for the given id.
    */
-  BillCto findBill(Long id);
+  BillCto findBill(long id);
 }
