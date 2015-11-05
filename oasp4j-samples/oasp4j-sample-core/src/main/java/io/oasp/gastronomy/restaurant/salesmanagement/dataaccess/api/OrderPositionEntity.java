@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 /**
  * {@link ApplicationPersistenceEntity Entity} that represents a single {@link OrderPosition position} of an
@@ -26,6 +27,7 @@ public class OrderPositionEntity extends ApplicationPersistenceEntity implements
 
   private static final long serialVersionUID = 1L;
 
+  @NotNull
   private OrderEntity order;
 
   private Long cookId;
