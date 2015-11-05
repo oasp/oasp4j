@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to;
 
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
+import io.oasp.gastronomy.restaurant.general.common.api.datatype.validation.NotNegativeMoney;
 import io.oasp.gastronomy.restaurant.general.common.api.to.AbstractEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.Bill;
 
@@ -62,6 +63,7 @@ public class BillEto extends AbstractEto implements Bill {
   }
 
   @Override
+  @NotNegativeMoney(message = "The tip must not be negative!")
   public void setTip(Money tip) {
 
     this.tip = tip;
