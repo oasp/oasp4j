@@ -2,6 +2,7 @@ package io.oasp.gastronomy.restaurant.salesmanagement.common.api;
 
 import io.oasp.gastronomy.restaurant.general.common.api.ApplicationEntity;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
+import io.oasp.gastronomy.restaurant.general.common.api.datatype.validation.NotNegativeMoney;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public interface Bill extends ApplicationEntity {
   /**
    * @return the tip (voluntary payment in addition to {@link #getTotal() total amount}).
    */
+  @NotNegativeMoney(message = "The tip must not be negative!")
   Money getTip();
 
   /**
