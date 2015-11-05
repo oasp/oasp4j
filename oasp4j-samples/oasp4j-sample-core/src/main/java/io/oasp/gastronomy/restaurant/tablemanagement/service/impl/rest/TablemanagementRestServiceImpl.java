@@ -57,7 +57,7 @@ public class TablemanagementRestServiceImpl {
   @Path("/table/{id}/")
   public TableEto getTable(@PathParam("id") String id) {
 
-    Long idAsLong;
+    long idAsLong;
     if (id == null) {
       throw new BadRequestException("missing id");
     }
@@ -119,7 +119,7 @@ public class TablemanagementRestServiceImpl {
    */
   @DELETE
   @Path("/table/{id}/")
-  public void deleteTable(@PathParam("id") Long id) {
+  public void deleteTable(@PathParam("id") long id) {
 
     this.tableManagement.deleteTable(id);
   }
@@ -146,7 +146,7 @@ public class TablemanagementRestServiceImpl {
    */
   @GET
   @Path("/table/{id}/istablereleasable/")
-  public boolean isTableReleasable(@PathParam("id") Long id) {
+  public boolean isTableReleasable(@PathParam("id") long id) {
 
     TableEto table = this.tableManagement.findTable(id);
     if (table == null) {
@@ -157,7 +157,7 @@ public class TablemanagementRestServiceImpl {
   }
 
   /**
-   * Delegates to {@link UcFindTable#findTableEtos}.
+   * Delegates to {@link Tablemanagement#findTableEtos}.
    *
    * @param searchCriteriaTo the pagination and search criteria to be used for finding tables.
    * @return the {@link PaginatedListTo list} of matching {@link TableEto}s.
