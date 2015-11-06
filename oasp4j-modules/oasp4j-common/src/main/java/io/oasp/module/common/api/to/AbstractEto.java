@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.general.common.api.to;
+package io.oasp.module.common.api.to;
 
 import net.sf.mmm.util.entity.api.GenericEntity;
 import net.sf.mmm.util.entity.api.MutableRevisionedEntity;
