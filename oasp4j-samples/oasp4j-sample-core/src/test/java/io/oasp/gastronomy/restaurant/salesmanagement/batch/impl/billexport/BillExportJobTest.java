@@ -18,6 +18,7 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
+import org.springframework.batch.test.AssertFile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -43,7 +44,7 @@ public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
     this.flyway.importTestData("classpath:BillExportJobTest/setup/db");
 
     File targetFile = new File("./tmp/bills.csv");
-    File exportedFile = new ClassPathResource("BillExportJobTest/expected/bills.csv").getFile();
+    File expectedFile = new ClassPathResource("BillExportJobTest/expected/bills.csv").getFile();
 
     // configure job
     JobParametersBuilder jobParameterBuilder = new JobParametersBuilder();
@@ -59,16 +60,17 @@ public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
 
     // - exported data
     assertThat(targetFile.exists()).isTrue();
-    assertThat(exportedFile.exists()).isTrue();
+    assertThat(expectedFile.exists()).isTrue();
 
-    assertThat(getFileContent(exportedFile)).isEqualTo(getFileContent(targetFile));
+    logFileContent(expectedFile);
+    logFileContent(targetFile);
+
+    AssertFile.assertFileEquals(expectedFile, targetFile);
   }
 
-  private String getFileContent(File file) {
+  private void logFileContent(File file) {
 
-    StringBuffer sb = new StringBuffer();
     try {
-
       LOG.debug("--> file content: " + file.getPath());
       BufferedReader br = null;
 
@@ -78,8 +80,6 @@ public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
 
         while ((line = br.readLine()) != null) {
           LOG.debug(line);
-          sb.append(line);
-          sb.append(System.lineSeparator());
         }
       } finally {
         if (br != null) {
@@ -91,6 +91,5 @@ public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
       LOG.debug(e.toString());
       e.printStackTrace();
     }
-    return sb.toString();
   }
 }
