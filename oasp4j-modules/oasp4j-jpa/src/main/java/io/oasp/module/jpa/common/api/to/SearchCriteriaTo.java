@@ -1,5 +1,7 @@
 package io.oasp.module.jpa.common.api.to;
 
+import io.oasp.module.common.api.to.AbstractTo;
+
 import java.util.List;
 
 /**

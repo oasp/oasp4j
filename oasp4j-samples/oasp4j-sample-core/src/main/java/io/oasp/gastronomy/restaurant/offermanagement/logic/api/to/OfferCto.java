@@ -1,6 +1,6 @@
 package io.oasp.gastronomy.restaurant.offermanagement.logic.api.to;
 
-import io.oasp.gastronomy.restaurant.general.common.api.to.AbstractCto;
+import io.oasp.module.common.api.to.AbstractCto;
 
 /**
  * The {@link AbstractCto CTO} for an {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer}.

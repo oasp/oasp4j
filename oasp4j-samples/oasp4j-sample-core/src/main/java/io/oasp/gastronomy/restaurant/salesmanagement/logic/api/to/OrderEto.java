@@ -3,9 +3,9 @@
  */
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to;
 
-import io.oasp.gastronomy.restaurant.general.common.api.to.AbstractEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.Order;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
+import io.oasp.module.common.api.to.AbstractEto;
 
 /**
  * {@link AbstractEto ETO} for an {@link Order}.
