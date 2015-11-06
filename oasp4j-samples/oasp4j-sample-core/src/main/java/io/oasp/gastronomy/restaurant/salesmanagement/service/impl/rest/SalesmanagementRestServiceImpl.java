@@ -72,7 +72,7 @@ public class SalesmanagementRestServiceImpl {
    */
   @Path("/order/{orderId}")
   @GET
-  public OrderEto findOrder(@PathParam("orderId") Long orderId) {
+  public OrderEto findOrder(@PathParam("orderId") long orderId) {
 
     return this.salesManagement.findOrder(orderId);
   }
@@ -145,7 +145,7 @@ public class SalesmanagementRestServiceImpl {
   @Path("/order/{orderId}")
   @PUT
   @Deprecated
-  public OrderCto updateOrder(OrderCto order, @PathParam("orderId") Long orderId) {
+  public OrderCto updateOrder(OrderCto order, @PathParam("orderId") long orderId) {
 
     Objects.requireNonNull(order, "order");
     OrderEto orderEto = order.getOrder();
@@ -180,7 +180,7 @@ public class SalesmanagementRestServiceImpl {
    */
   @Path("/orderposition/{orderPositionId}")
   @GET
-  public OrderPositionEto findOrderPosition(@PathParam("orderPositionId") Long orderPositionId) {
+  public OrderPositionEto findOrderPosition(@PathParam("orderPositionId") long orderPositionId) {
 
     return this.salesManagement.findOrderPosition(orderPositionId);
 
@@ -198,7 +198,7 @@ public class SalesmanagementRestServiceImpl {
   @Path("/order/{orderId}/position/{comment}")
   @POST
   @Deprecated
-  public OrderPositionEto createOrderPosition(OfferEto offer, @PathParam("orderId") Long orderId,
+  public OrderPositionEto createOrderPosition(OfferEto offer, @PathParam("orderId") long orderId,
       @PathParam("comment") String comment) {
 
     return this.salesManagement.createOrderPosition(offer, findOrder(orderId), comment);
@@ -225,7 +225,7 @@ public class SalesmanagementRestServiceImpl {
    */
   @GET
   @Path("/bill/{billId}")
-  public BillCto findBill(@PathParam("billId") Long billId) {
+  public BillCto findBill(@PathParam("billId") long billId) {
 
     return this.salesManagement.findBill(billId);
   }
@@ -238,7 +238,7 @@ public class SalesmanagementRestServiceImpl {
    */
   @POST
   @Path("/bill/{billId}/payment")
-  public PaymentStatus doPayment(@PathParam("billId") Long billId) {
+  public PaymentStatus doPayment(@PathParam("billId") long billId) {
 
     return this.salesManagement.doPayment(findBill(billId).getBill());
   }
@@ -252,7 +252,7 @@ public class SalesmanagementRestServiceImpl {
    */
   @Path("/bill/{billId}/payment")
   @POST
-  public PaymentStatus doPayment(@PathParam("billId") Long billId, PaymentData paymentData) {
+  public PaymentStatus doPayment(@PathParam("billId") long billId, PaymentData paymentData) {
 
     return this.salesManagement.doPayment(findBill(billId).getBill(), paymentData);
   }
@@ -277,7 +277,7 @@ public class SalesmanagementRestServiceImpl {
    */
   @Path("/bill/{billId}")
   @DELETE
-  public void deleteBill(@PathParam("billId") Long billId) {
+  public void deleteBill(@PathParam("billId") long billId) {
 
     this.salesManagement.deleteBill(billId);
   }
@@ -290,7 +290,7 @@ public class SalesmanagementRestServiceImpl {
    */
   @Path("/order/{orderId}")
   @POST
-  public void changeTable(@PathParam("orderId") Long orderId, long newTableId) {
+  public void changeTable(@PathParam("orderId") long orderId, long newTableId) {
 
     this.salesManagement.changeTable(orderId, newTableId);
   }

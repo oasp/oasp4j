@@ -34,7 +34,7 @@ public class UcFindBillImpl extends AbstractBillUc implements UcFindBill {
 
   @Override
   @RolesAllowed(PermissionConstants.FIND_BILL)
-  public BillCto findBill(Long id) {
+  public BillCto findBill(long id) {
 
     LOG.debug("Get Bill with id '" + id + "' from database.");
     BillCto billCto = new BillCto();
