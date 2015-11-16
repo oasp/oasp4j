@@ -27,7 +27,6 @@ public class OrderPositionEntity extends ApplicationPersistenceEntity implements
 
   private static final long serialVersionUID = 1L;
 
-  @NotNull
   private OrderEntity order;
 
   private Long cookId;
@@ -58,6 +57,7 @@ public class OrderPositionEntity extends ApplicationPersistenceEntity implements
    */
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "order_id")
+  @NotNull
   public OrderEntity getOrder() {
 
     return this.order;
