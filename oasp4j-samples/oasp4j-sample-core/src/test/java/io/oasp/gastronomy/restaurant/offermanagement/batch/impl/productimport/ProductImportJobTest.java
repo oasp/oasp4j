@@ -1,6 +1,5 @@
 package io.oasp.gastronomy.restaurant.offermanagement.batch.impl.productimport;
 
-import static org.junit.Assert.assertEquals;
 import io.oasp.gastronomy.restaurant.general.common.AbstractSpringBatchIntegrationTest;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
@@ -34,7 +33,9 @@ public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
   @Inject
   private Offermanagement offermanagement;
 
-  @SuppressWarnings("javadoc")
+  /**
+   * @throws Exception thrown by JobLauncherTestUtils
+   */
   @Test
   public void testJob() throws Exception {
 
@@ -49,23 +50,23 @@ public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
 
     // check results
     // - job status
-    assertEquals(BatchStatus.COMPLETED, jobExecution.getStatus());
+    assertThat(jobExecution.getStatus()).isEqualTo(BatchStatus.COMPLETED);
 
-    // - imported data
+    // - imported data (there is 7 products in setup data)
     List<ProductEto> allProducts = this.offermanagement.findAllProducts();
-    assertEquals(7, allProducts.size());
+    assertThat(allProducts).hasSize(7);
 
     // - exemplary drink
     DrinkEto drink = (DrinkEto) allProducts.get(0);
-    assertEquals("Heineken", drink.getName());
-    assertEquals("Pretty good beer", drink.getDescription());
-    assertEquals(1, drink.getPictureId().longValue());
-    assertEquals(true, drink.isAlcoholic());
+    assertThat(drink.getName()).isEqualTo("Heineken");
+    assertThat(drink.getDescription()).isEqualTo("Pretty good beer");
+    assertThat(drink.getPictureId()).isEqualTo(1);
+    assertThat(drink.isAlcoholic()).isTrue();
 
     // - exemplary meal
     MealEto meal = (MealEto) allProducts.get(3);
-    assertEquals("Bratwurst", meal.getName());
-    assertEquals("Tasty sausage", meal.getDescription());
-    assertEquals(1, meal.getPictureId().longValue());
+    assertThat(meal.getName()).isEqualTo("Bratwurst");
+    assertThat(meal.getDescription()).isEqualTo("Tasty sausage");
+    assertThat(meal.getPictureId()).isEqualTo(1);
   }
 }
