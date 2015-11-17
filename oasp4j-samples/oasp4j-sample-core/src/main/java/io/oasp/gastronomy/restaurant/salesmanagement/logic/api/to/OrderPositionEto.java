@@ -1,10 +1,10 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to;
 
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
-import io.oasp.gastronomy.restaurant.general.common.api.to.AbstractEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
+import io.oasp.module.common.api.to.AbstractEto;
 
 /**
  * {@link AbstractEto ETO} for an {@link OrderPosition}.

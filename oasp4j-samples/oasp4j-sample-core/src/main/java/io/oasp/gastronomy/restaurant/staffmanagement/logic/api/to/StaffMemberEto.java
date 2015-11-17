@@ -1,8 +1,8 @@
 package io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to;
 
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Role;
-import io.oasp.gastronomy.restaurant.general.common.api.to.AbstractEto;
 import io.oasp.gastronomy.restaurant.staffmanagement.common.api.StaffMember;
+import io.oasp.module.common.api.to.AbstractEto;
 
 import java.util.Locale;
 
