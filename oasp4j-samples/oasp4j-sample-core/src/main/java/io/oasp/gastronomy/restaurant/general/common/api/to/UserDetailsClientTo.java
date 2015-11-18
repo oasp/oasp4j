@@ -2,6 +2,7 @@ package io.oasp.gastronomy.restaurant.general.common.api.to;
 
 import io.oasp.gastronomy.restaurant.general.common.api.UserProfile;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Role;
+import io.oasp.module.basic.common.api.to.AbstractTo;
 
 /**
  * This is the {@link AbstractTo TO} for the client view on the user details.

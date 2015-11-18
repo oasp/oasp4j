@@ -44,7 +44,7 @@
        serialization. -->
   <mapping type="one-way">
     <class-a>io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity</class-a>
-    <class-b>io.oasp.gastronomy.restaurant.general.common.api.to.AbstractEto</class-b>
+    <class-b>io.oasp.module.basic.common.api.to.AbstractEto</class-b>
     <field custom-converter="io.oasp.module.beanmapping.common.impl.dozer.IdentityConverter">
       <a>this</a>
       <b is-accessible="true">persistentEntity</b>
