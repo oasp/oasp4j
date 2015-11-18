@@ -3,7 +3,7 @@ package io.oasp.gastronomy.restaurant.offermanagement.logic.api.to;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.SideDish;
 
 /**
- * The {@link io.oasp.gastronomy.restaurant.general.common.api.to.AbstractEto ETO} for a {@link SideDish}.
+ * The {@link io.oasp.module.basic.common.api.to.AbstractEto ETO} for a {@link SideDish}.
  *
  * @author jozitz
  */

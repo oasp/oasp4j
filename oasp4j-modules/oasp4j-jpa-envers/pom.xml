@@ -23,7 +23,7 @@
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-envers</artifactId>
     </dependency>
-    
+
     <dependency>
       <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-test</artifactId>

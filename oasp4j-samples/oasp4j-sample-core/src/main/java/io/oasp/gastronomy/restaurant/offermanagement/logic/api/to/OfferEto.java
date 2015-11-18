@@ -6,7 +6,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferState;
 
 /**
- * The {@link io.oasp.gastronomy.restaurant.general.common.api.to.AbstractEto ETO} for an {@link Offer}.
+ * The {@link io.oasp.module.basic.common.api.to.AbstractEto ETO} for an {@link Offer}.
  *
  * @author jozitz
  */

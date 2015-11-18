@@ -1,5 +1,7 @@
 package io.oasp.module.jpa.common.api.to;
 
+import io.oasp.module.basic.common.api.to.AbstractTo;
+
 import net.sf.mmm.util.exception.api.NlsIllegalArgumentException;
 
 /**

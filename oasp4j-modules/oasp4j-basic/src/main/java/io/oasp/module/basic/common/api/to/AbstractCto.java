@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.general.common.api.to;
+package io.oasp.module.basic.common.api.to;
 
 import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
 import net.sf.mmm.util.transferobject.api.TransferObject;

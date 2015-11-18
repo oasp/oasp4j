@@ -1,6 +1,6 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to;
 
-import io.oasp.gastronomy.restaurant.general.common.api.to.AbstractCto;
+import io.oasp.module.basic.common.api.to.AbstractCto;
 
 import java.util.ArrayList;
 import java.util.List;

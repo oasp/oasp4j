@@ -1,6 +1,6 @@
 package io.oasp.gastronomy.restaurant.offermanagement.logic.api.to;
 
-import io.oasp.gastronomy.restaurant.general.common.api.to.AbstractTo;
+import io.oasp.module.basic.common.api.to.AbstractTo;
 
 import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
 
