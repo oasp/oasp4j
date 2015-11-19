@@ -1,7 +1,7 @@
 package io.oasp.gastronomy.restaurant.offermanagement.logic.api.to;
 
-import io.oasp.gastronomy.restaurant.general.common.api.to.AbstractEto;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.MenuItem;
+import io.oasp.module.basic.common.api.to.AbstractEto;
 
 /**
  * The {@link AbstractEto ETO} for a {@link MenuItem}.

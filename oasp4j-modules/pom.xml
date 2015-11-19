@@ -24,6 +24,7 @@
     <module>oasp4j-jpa-envers</module>
     <module>oasp4j-batch</module>
     <module>oasp4j-web</module>
+    <module>oasp4j-basic</module>
   </modules>
 
   <dependencyManagement>

@@ -46,6 +46,11 @@
 
     <dependency>
       <groupId>io.oasp.java.modules</groupId>
+      <artifactId>oasp4j-basic</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-jpa-envers</artifactId>
     </dependency>
 
@@ -91,15 +96,15 @@
 
     <!-- Spring Security -->
     <!--
-    <dependency>
+      <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-web</artifactId>
-    </dependency>
+      </dependency>
 
-    <dependency>
+      <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-config</artifactId>
-    </dependency>
+      </dependency>
     -->
 
     <!-- for Object Relational Mapping (JPA/Hibernate) -->
@@ -178,7 +183,7 @@
     </dependency>
 
     <!-- Tests -->
-     <dependency>
+    <dependency>
       <groupId>org.springframework.batch</groupId>
       <artifactId>spring-batch-test</artifactId>
       <scope>test</scope>

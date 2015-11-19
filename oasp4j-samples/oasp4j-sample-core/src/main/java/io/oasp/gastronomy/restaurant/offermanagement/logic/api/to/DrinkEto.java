@@ -3,7 +3,7 @@ package io.oasp.gastronomy.restaurant.offermanagement.logic.api.to;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.Drink;
 
 /**
- * The {@link io.oasp.gastronomy.restaurant.general.common.api.to.AbstractEto ETO} for a {@link Drink}.
+ * The {@link io.oasp.module.basic.common.api.to.AbstractEto ETO} for a {@link Drink}.
  *
  * @author jozitz
  */

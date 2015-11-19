@@ -1,10 +1,10 @@
 package io.oasp.gastronomy.restaurant.general.logic.api.to;
 
 import io.oasp.gastronomy.restaurant.general.common.api.BinaryObject;
-import io.oasp.gastronomy.restaurant.general.common.api.to.AbstractEto;
+import io.oasp.module.basic.common.api.to.AbstractEto;
 
 /**
- * The {@link io.oasp.gastronomy.restaurant.general.common.api.to.AbstractEto ETO} for a {@link BinaryObject}.
+ * The {@link io.oasp.module.basic.common.api.to.AbstractEto ETO} for a {@link BinaryObject}.
  *
  * @author sspielma
  */
