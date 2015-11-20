@@ -133,7 +133,7 @@ public class SalesManagementRestServiceTest extends AbstractRestServiceTest {
   /**
    * Test update order position
    */
-  @SuppressWarnings("unchecked")
+
   @Test
   @Ignore
   public void updateOrderPositionTest() {

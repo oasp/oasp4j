@@ -13,7 +13,7 @@ import net.sf.mmm.util.lang.api.AbstractSimpleDatatype;
  *
  * @author hohwille
  */
-public class Money extends AbstractSimpleDatatype<BigDecimal> implements Comparable {
+public class Money extends AbstractSimpleDatatype<BigDecimal> implements Comparable<Object> {
 
   /** A {@link Money} instance where the {@link #getValue() amount} is <code>0</code>. */
   public static final Money ZERO = new Money(BigDecimal.ZERO);
