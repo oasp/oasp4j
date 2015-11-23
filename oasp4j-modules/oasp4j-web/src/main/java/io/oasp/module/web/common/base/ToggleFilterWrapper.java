@@ -14,17 +14,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class is responsible for wrapping a {@link Filter} and allows to be {@link #setDisabled(Boolean) disabled} e.g.
- * for development tests (e.g. via some {@link System#getProperty(String) system property}. In case the filter gets
- * {@link #setDisabled(Boolean) disabled} a WARNING log message is produced and also written to {@link System#err}. <br/>
+ * This class is responsible for wrapping a {@link Filter} and allows to be {@link #setEnabled(Boolean) disabled} e.g.
+ * for development tests (e.g. via an application property). In case the filter gets {@link #setEnabled(Boolean)
+ * disabled} a WARNING log message is produced and also written to {@link System#err}. <br/>
  *
  * Here is an example spring XML config from our sample application that allows to disable the <code>CsrfFilter</code>
- * via a {@link System#getProperties() system property} (<code>-DCsrfDisabled=true</code>):
+ * via an application property (<code>enabled=false</code>):
  *
  * <pre>
- * &lt;bean id="CsrfFilterWrapper" class="io.oasp.gastronomy.restaurant.general.service.impl.rest.ToggleFilterWrapper">
+ * &lt;bean id="CsrfFilterWrapper" class="io.oasp.module.web.common.base.ToggleFilterWrapper">
  *   &lt;property name="delegateFilter" ref="CsrfFilter"/>
- *   &lt;property name="disabledString" value="#{systemProperties['CsrfDisabled']}"/>
+ *   &lt;property name="enabled" value="${oasp.filter.csrf}"/>
  * &lt;/bean>
  * </pre>
  *
@@ -93,7 +93,11 @@ public class ToggleFilterWrapper implements Filter {
    */
   public void setEnabled(Boolean enabled) {
 
-    this.enabled = enabled;
+    if (enabled != null) {
+      this.enabled = enabled;
+    } else {
+      LOG.warn(this.delegateFilter + " - ToggleFilterWrapper#setEnabled should not be set to NULL");
+    }
   }
 
   /**
@@ -103,4 +107,5 @@ public class ToggleFilterWrapper implements Filter {
 
     return this.enabled;
   }
+
 }
