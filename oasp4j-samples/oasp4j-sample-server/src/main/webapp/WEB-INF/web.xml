@@ -5,21 +5,10 @@
   <display-name>Restaurant</display-name>
 
   <!-- Spring: Registration of ApplicationContext -->
-
-  <context-param>
-    <param-name>contextClass</param-name>
-    <param-value>
-      org.springframework.web.context.support.AnnotationConfigWebApplicationContext
-    </param-value>
-  </context-param>
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>
-      config.app.ApplicationConfig
-    </param-value>
+    <param-value>classpath:config/app/beans-application.xml</param-value>
   </context-param>
-
-
   <!-- Definition of the WebAppRooKey. This is necessary if multiple applications are handled by Tomcat, because
     the Tomcat-server does not manage the WebAppRoot for all applications separately. -->
   <context-param>
