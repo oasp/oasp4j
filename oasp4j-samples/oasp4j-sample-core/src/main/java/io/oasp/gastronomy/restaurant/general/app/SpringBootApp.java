@@ -1,4 +1,4 @@
-package app;
+package io.oasp.gastronomy.restaurant.general.app;
 
 import java.util.Arrays;
 
