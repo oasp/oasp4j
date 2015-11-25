@@ -11,7 +11,7 @@
 
   <import resource="../logic/beans-logic.xml"/>
   <import resource="beans-monitoring.xml"/>
-  <import resource="../security/beans-security.xml"/>
+  <!--  <import resource="../security/beans-security.xml"/>-->
 
 
   <context:component-scan base-package="io.oasp.gastronomy.restaurant.*.service"/>
@@ -37,7 +37,7 @@
 
 
   <jaxrs:server id="CxfRestServices" address="/rest"/>
-    
+
   <!-- JSON mapping config -->
   <bean id="JacksonObjectMapper" factory-bean="ApplicationObjectMapperFactory" factory-method="createInstance"/>
 </beans>

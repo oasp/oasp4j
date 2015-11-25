@@ -1,12 +1,5 @@
 package io.oasp.gastronomy.restaurant.general.common.impl.security;
 
-import io.oasp.gastronomy.restaurant.general.common.api.UserProfile;
-import io.oasp.module.security.common.api.accesscontrol.PrincipalAccessControlProvider;
-
-import java.util.Arrays;
-import java.util.Collection;
-
-import javax.inject.Named;
 
 /**
  * The implementation of {@link PrincipalAccessControlProvider} for this sample application.<br/>
@@ -18,21 +11,20 @@ import javax.inject.Named;
  *
  * @author hohwille
  */
-@Named
-public class PrincipalAccessControlProviderImpl implements PrincipalAccessControlProvider<UserProfile> {
+/*
+ @Named
+ public class PrincipalAccessControlProviderImpl implements PrincipalAccessControlProvider<UserProfile> {
 
-  /**
-   * The constructor.
-   */
-  public PrincipalAccessControlProviderImpl() {
+ public PrincipalAccessControlProviderImpl() {
 
-    super();
-  }
+ super();
+ }
 
-  @Override
-  public Collection<String> getAccessControlIds(UserProfile principal) {
+ @Override
+ public Collection<String> getAccessControlIds(UserProfile principal) {
 
-    return Arrays.asList(principal.getRole().getName());
-  }
+ return Arrays.asList(principal.getRole().getName());
+ }
 
-}
+ }
+ */
