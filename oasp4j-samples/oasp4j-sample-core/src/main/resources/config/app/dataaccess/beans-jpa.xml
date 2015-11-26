@@ -36,21 +36,4 @@
       </property>
   </bean>
 
-  <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-    <property name="entityManagerFactory">
-      <ref bean="entityManagerFactory"/>
-    </property>
-  </bean>
-
-  <!-- Transaction handling by @Transactional annotation via AOP -->
-  <tx:annotation-driven transaction-manager="transactionManager"/>
-
-  <!-- This bean ensures, that JPA-Exceptions of DAOs, declared with "@Repository",
-    will be mapped to more treatable Spring-Persistence-Excetions. -->
-  <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
-
-  <bean id="entityManagerFactoryBean" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
-    <property name="entityManagerFactory" ref="entityManagerFactory"/>
-  </bean>
-
 </beans>
