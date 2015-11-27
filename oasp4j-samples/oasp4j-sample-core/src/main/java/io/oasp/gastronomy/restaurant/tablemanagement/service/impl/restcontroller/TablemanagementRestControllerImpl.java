@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Configuration
-@RequestMapping("/tablemanagement/v1")
+@RequestMapping("/tablemanagement/v2")
 public class TablemanagementRestControllerImpl {
 
   private Tablemanagement tableManagement;
