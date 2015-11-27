@@ -48,7 +48,7 @@ public class WebClientWrapper {
 
   /**
    * The constructor.
-   * 
+   *
    * @param username The username that is used for a login
    */
   public WebClientWrapper(String username) {
@@ -279,6 +279,13 @@ public class WebClientWrapper {
     return new ResponseData<>(responseObject, response, jsonString);
   }
 
+  /**
+   * @param <T> type of Post
+   * @param body body of post
+   * @param url URL
+   * @param responseObjectClass Class of object
+   * @return responseObject
+   */
   public <T> T post(Object body, String url, Class<T> responseObjectClass) {
 
     this.webClient.replacePath(url);
