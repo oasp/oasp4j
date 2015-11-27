@@ -12,6 +12,8 @@
   <import resource="../logic/beans-logic.xml"/>
   <import resource="beans-monitoring.xml"/>
   <!--  <import resource="../security/beans-security.xml"/>-->
+  <context:annotation-config/>
+  <context:component-scan base-package="io.oasp.gastronomy.restaurant.general.configuration"/>
 
 
   <context:component-scan base-package="io.oasp.gastronomy.restaurant.*.service"/>

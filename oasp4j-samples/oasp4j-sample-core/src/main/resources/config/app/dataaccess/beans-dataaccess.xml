@@ -9,7 +9,7 @@
   <import resource="../common/beans-common.xml"/>
   <import resource="beans-db-plain.xml"/>
   <import resource="beans-db-server.xml"/>
-  <import resource="beans-jpa.xml"/>
+
 
   <context:component-scan base-package="io.oasp.gastronomy.restaurant.*.dataaccess"/>
 

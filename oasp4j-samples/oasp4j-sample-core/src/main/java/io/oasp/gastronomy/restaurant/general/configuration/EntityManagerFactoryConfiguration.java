@@ -12,10 +12,10 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 @Configuration
 public class EntityManagerFactoryConfiguration {
 
-  @Value("${io.oasp.gastronomy.restaurant.*.dataaccess}")
+  @Value("io.oasp.gastronomy.restaurant.*.dataaccess")
   private String firstPackageToScan;
 
-  @Value("${io.oasp.module.jpa.dataaccess.api}")
+  @Value("io.oasp.module.jpa.dataaccess.api")
   private String secondPackageToScan;
 
   @Value("${database.hibernate.show.sql}")
