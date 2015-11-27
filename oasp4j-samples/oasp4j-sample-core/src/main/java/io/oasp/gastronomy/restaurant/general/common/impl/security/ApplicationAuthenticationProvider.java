@@ -1,6 +1,5 @@
 package io.oasp.gastronomy.restaurant.general.common.impl.security;
 
-
 /**
  * This class is responsible for the security aspects of authentication as well as providing user profile data and the
  * access-controls for authoriziation.
@@ -10,6 +9,9 @@ package io.oasp.gastronomy.restaurant.general.common.impl.security;
  * @author agreul
  */
 /*
+ * TODO restore after security for spring-boot is reenabled
+ * https://github.com/oasp/oasp4j/issues/354
+ *
  @Named("ApplicationAuthenticationProvider")
  public class ApplicationAuthenticationProvider extends
  AbstractAccessControlBasedAuthenticationProvider<UserData, UserProfile> {
