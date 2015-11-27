@@ -14,6 +14,11 @@ import org.springframework.dao.annotation.PersistenceExceptionTranslationPostPro
 import org.springframework.orm.jpa.support.SharedEntityManagerBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+/**
+ * Java configuration for JPA
+ *
+ * @author tkuzynow
+ */
 @Configuration
 @EnableTransactionManagement
 public class BeansJpaConfiguration {

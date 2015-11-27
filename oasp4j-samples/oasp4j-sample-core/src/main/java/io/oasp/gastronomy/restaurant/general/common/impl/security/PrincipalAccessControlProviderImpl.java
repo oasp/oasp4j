@@ -1,6 +1,5 @@
 package io.oasp.gastronomy.restaurant.general.common.impl.security;
 
-
 /**
  * The implementation of {@link PrincipalAccessControlProvider} for this sample application.<br/>
  * ATTENTION:<br/>
@@ -12,6 +11,8 @@ package io.oasp.gastronomy.restaurant.general.common.impl.security;
  * @author hohwille
  */
 /*
+ * TODO restore after security for spring-boot is reenabled:
+ * https://github.com/oasp/oasp4j/issues/354
  @Named
  public class PrincipalAccessControlProviderImpl implements PrincipalAccessControlProvider<UserProfile> {
 

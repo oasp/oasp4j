@@ -11,6 +11,8 @@
 
   <import resource="../logic/beans-logic.xml"/>
   <import resource="beans-monitoring.xml"/>
+  <!-- TODO restore after security for spring-boot is reenabled:
+   https://github.com/oasp/oasp4j/issues/354 -->
   <!--  <import resource="../security/beans-security.xml"/>-->
   <context:annotation-config/>
   <context:component-scan base-package="io.oasp.gastronomy.restaurant.general.configuration"/>
