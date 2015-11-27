@@ -11,6 +11,12 @@ import org.springframework.context.annotation.ImportResource;
 DispatcherServletAutoConfiguration.class })
 @ImportResource("config/app/service/beans-service.xml")
 public class SpringBootApp {
+
+  /**
+   * Entry point for spring-boot based app
+   *
+   * @param args - arguments
+   */
   public static void main(String[] args) {
 
     SpringApplication.run(SpringBootApp.class, args);
