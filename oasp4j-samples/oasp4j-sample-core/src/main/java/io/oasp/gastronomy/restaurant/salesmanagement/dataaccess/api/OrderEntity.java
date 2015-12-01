@@ -42,7 +42,6 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
 
     super();
     this.state = OrderState.OPEN;
-    this.created = new Date();
   }
 
   @Override
