@@ -7,6 +7,8 @@ import io.oasp.gastronomy.restaurant.salesmanagement.common.api.Order;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
 import io.oasp.module.basic.common.api.to.AbstractEto;
 
+import java.util.Date;
+
 /**
  * {@link AbstractEto ETO} for an {@link Order}.
  *
@@ -19,6 +21,8 @@ public class OrderEto extends AbstractEto implements Order {
   private long tableId;
 
   private OrderState state;
+
+  private Date created;
 
   /**
    * The constructor.
@@ -50,6 +54,18 @@ public class OrderEto extends AbstractEto implements Order {
   public void setState(OrderState state) {
 
     this.state = state;
+  }
+
+  @Override
+  public Date getCreated() {
+
+    return this.created;
+  }
+
+  @Override
+  public void setCreated(Date created) {
+
+    this.created = created;
   }
 
 }
