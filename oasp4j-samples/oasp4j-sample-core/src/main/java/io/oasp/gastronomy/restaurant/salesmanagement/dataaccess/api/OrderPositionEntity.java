@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 /**
  * {@link ApplicationPersistenceEntity Entity} that represents a single {@link OrderPosition position} of an
@@ -56,6 +57,7 @@ public class OrderPositionEntity extends ApplicationPersistenceEntity implements
    */
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "order_id")
+  @NotNull
   public OrderEntity getOrder() {
 
     return this.order;
