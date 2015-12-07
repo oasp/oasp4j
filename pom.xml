@@ -79,6 +79,31 @@
         </executions>
       </plugin>
 
+      <!-- http://mojo.codehaus.org/flatten-maven-plugin/ -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
+        <configuration>
+          <flattenMode>${oasp.flatten.mode}</flattenMode>
+        </configuration>
+        <executions>
+          <execution>
+            <id>flatten</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>flatten</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>flatten.clean</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
       <!-- avoid version in local war files, exclude sources JARs from WARs -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -247,7 +272,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>flatten-maven-plugin</artifactId>
-          <version>1.0.0-beta-4</version>
+          <version>1.0.0</version>
         </plugin>
         <plugin>
           <groupId>org.eclipse.m2e</groupId>
@@ -395,30 +420,6 @@
       <id>deploy</id>
       <build>
         <plugins>
-          <!-- http://mojo.codehaus.org/flatten-maven-plugin/ -->
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>flatten-maven-plugin</artifactId>
-            <configuration>
-              <flattenMode>${oasp.flatten.mode}</flattenMode>
-            </configuration>
-            <executions>
-              <execution>
-                <id>flatten</id>
-                <phase>process-test-resources</phase>
-                <goals>
-                  <goal>flatten</goal>
-                </goals>
-              </execution>
-              <execution>
-                <id>flatten.clean</id>
-                <phase>clean</phase>
-                <goals>
-                  <goal>clean</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
           <!-- also generate javadoc JARs -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
