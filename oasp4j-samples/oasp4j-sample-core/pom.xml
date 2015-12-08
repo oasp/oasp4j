@@ -34,10 +34,10 @@
       <artifactId>oasp4j-configuration</artifactId>
     </dependency>
 
-   <!--   <dependency>
+    <dependency>
       <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-security</artifactId>
-    </dependency>-->
+    </dependency>
 
 
     <dependency>

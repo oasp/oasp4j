@@ -1,7 +1,5 @@
 package io.oasp.gastronomy.restaurant.general.configuration;
 
-import io.oasp.gastronomy.restaurant.tablemanagement.service.impl.ws.v1_0.TablemanagementWebServiceImpl;
-
 import javax.xml.ws.Endpoint;
 
 import org.apache.cxf.bus.spring.SpringBus;
@@ -12,6 +10,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ws.config.annotation.EnableWs;
 import org.springframework.ws.config.annotation.WsConfigurerAdapter;
+
+// BEGIN ARCHETYPE SKIP
+import io.oasp.gastronomy.restaurant.tablemanagement.service.impl.ws.v1_0.TablemanagementWebServiceImpl;
+// END ARCHETYPE SKIP
 
 @Configuration
 @EnableWs
@@ -32,6 +34,7 @@ public class WebServiceConfiguration extends WsConfigurerAdapter {
     return servlet;
   }
 
+  // BEGIN ARCHETYPE SKIP
   @Bean
   public Endpoint tableManagement() {
 
@@ -40,4 +43,5 @@ public class WebServiceConfiguration extends WsConfigurerAdapter {
     endpoint.publish("/TablemanagementWebService");
     return endpoint;
   }
+  // END ARCHETYPE SKIP
 }
