@@ -1,15 +1,10 @@
 package io.oasp.gastronomy.restaurant.offermanagement.batch.impl.productimport;
 
-import io.oasp.gastronomy.restaurant.general.common.AbstractSpringBatchIntegrationTest;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
-import io.oasp.module.configuration.common.api.ApplicationConfigurationConstants;
-
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.junit.Test;
 import org.springframework.batch.core.BatchStatus;
@@ -19,6 +14,13 @@ import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.test.context.ContextConfiguration;
 
+import io.oasp.gastronomy.restaurant.general.common.AbstractSpringBatchIntegrationTest;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
+import io.oasp.module.configuration.common.api.ApplicationConfigurationConstants;
+
 /**
  * End-To-End test job "import offer management from csv"
  *
@@ -26,6 +28,9 @@ import org.springframework.test.context.ContextConfiguration;
  */
 @ContextConfiguration(locations = { ApplicationConfigurationConstants.BEANS_BATCH })
 public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
+
+  @PersistenceContext
+  private EntityManager entityManager;
 
   @Inject
   private Job productImportJob;
@@ -38,6 +43,9 @@ public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
    */
   @Test
   public void testJob() throws Exception {
+
+    // TODO hohwille temporary hack for travis build failure
+    this.entityManager.createNativeQuery("Delete from ProductEntity");
 
     // configure job
     JobParametersBuilder jobParameterBuilder = new JobParametersBuilder();
