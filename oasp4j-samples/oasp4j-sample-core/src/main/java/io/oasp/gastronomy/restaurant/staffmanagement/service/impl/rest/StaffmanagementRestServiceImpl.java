@@ -31,15 +31,15 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 public class StaffmanagementRestServiceImpl {
 
-  private Staffmanagement staffManagement;
+  private Staffmanagement staffmanagement;
 
   /**
    * @param staffManagement the staffManagement to be set
    */
   @Inject
-  public void setStaffManagement(Staffmanagement staffManagement) {
+  public void setStaffmanagement(Staffmanagement staffManagement) {
 
-    this.staffManagement = staffManagement;
+    this.staffmanagement = staffManagement;
   }
 
   /**
@@ -51,7 +51,7 @@ public class StaffmanagementRestServiceImpl {
   @Deprecated
   public List<StaffMemberEto> getAllStaffMember() {
 
-    return this.staffManagement.findAllStaffMembers();
+    return this.staffmanagement.findAllStaffMembers();
   }
 
   /**
@@ -62,7 +62,7 @@ public class StaffmanagementRestServiceImpl {
   @Path("/{login}")
   public StaffMemberEto getStaffMember(@PathParam("login") String login) {
 
-    return this.staffManagement.findStaffMemberByLogin(login);
+    return this.staffmanagement.findStaffMemberByLogin(login);
   }
 
   // although login is not explicitly needed here, the path structure is intentionally chosen
@@ -76,7 +76,7 @@ public class StaffmanagementRestServiceImpl {
   @Deprecated
   public void updateStaffMember(StaffMemberEto staffMemberBo) {
 
-    this.staffManagement.saveStaffMember(staffMemberBo);
+    this.staffmanagement.saveStaffMember(staffMemberBo);
   }
 
   /**
@@ -89,7 +89,7 @@ public class StaffmanagementRestServiceImpl {
   @Path("/")
   public StaffMemberEto saveStaffMember(StaffMemberEto staffMemberEto) {
 
-    return this.staffManagement.saveStaffMember(staffMemberEto);
+    return this.staffmanagement.saveStaffMember(staffMemberEto);
   }
 
   /**
@@ -99,7 +99,7 @@ public class StaffmanagementRestServiceImpl {
   @Path("/{login}")
   public void deleteStaffMember(@PathParam("login") String login) {
 
-    this.staffManagement.deleteStaffMemberByLogin(login);
+    this.staffmanagement.deleteStaffMemberByLogin(login);
   }
 
   /**
@@ -112,6 +112,6 @@ public class StaffmanagementRestServiceImpl {
   @POST
   public PaginatedListTo<StaffMemberEto> findStaffMembersByPost(StaffMemberSearchCriteriaTo searchCriteriaTo) {
 
-    return this.staffManagement.findStaffMemberEtos(searchCriteriaTo);
+    return this.staffmanagement.findStaffMemberEtos(searchCriteriaTo);
   }
 }
