@@ -13,8 +13,13 @@ import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import io.oasp.gastronomy.restaurant.general.common.AbstractSpringBatchIntegrationTest;
+import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.ProductEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto;
@@ -33,6 +38,9 @@ public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
   private EntityManager entityManager;
 
   @Inject
+  private PlatformTransactionManager txManager;
+
+  @Inject
   private Job productImportJob;
 
   @Inject
@@ -45,7 +53,15 @@ public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
   public void testJob() throws Exception {
 
     // TODO hohwille temporary hack for travis build failure
-    this.entityManager.createNativeQuery("Delete from ProductEntity");
+    TransactionDefinition def = new DefaultTransactionDefinition();
+    TransactionStatus status = this.txManager.getTransaction(def);
+    try {
+      this.entityManager.createQuery("Delete from " + ProductEntity.class.getSimpleName()).executeUpdate();
+      this.txManager.commit(status);
+    } catch (Exception e) {
+      this.txManager.rollback(status);
+      throw e;
+    }
 
     // configure job
     JobParametersBuilder jobParameterBuilder = new JobParametersBuilder();
