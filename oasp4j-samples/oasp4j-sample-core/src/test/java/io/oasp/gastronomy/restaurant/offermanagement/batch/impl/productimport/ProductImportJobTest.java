@@ -19,6 +19,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import io.oasp.gastronomy.restaurant.general.common.AbstractSpringBatchIntegrationTest;
+import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.ProductEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
@@ -56,6 +57,7 @@ public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
     TransactionDefinition def = new DefaultTransactionDefinition();
     TransactionStatus status = this.txManager.getTransaction(def);
     try {
+      this.entityManager.createQuery("Delete from " + OfferEntity.class.getSimpleName()).executeUpdate();
       this.entityManager.createQuery("Delete from " + ProductEntity.class.getSimpleName()).executeUpdate();
       this.txManager.commit(status);
     } catch (Exception e) {
