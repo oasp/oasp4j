@@ -11,33 +11,19 @@
 
   <import resource="../logic/beans-logic.xml"/>
   <import resource="beans-monitoring.xml"/>
-  <import resource="../security/beans-security.xml"/>
+  <!-- TODO restore after security for spring-boot is reenabled:
+   https://github.com/oasp/oasp4j/issues/354 -->
+  <context:annotation-config/>
+  <context:component-scan base-package="io.oasp.gastronomy.restaurant.general.configuration"/>
 
+<context:annotation-config/>
 
-  <context:component-scan base-package="io.oasp.gastronomy.restaurant.*.service"/>
-  <import resource="classpath:META-INF/cxf/cxf.xml"/>
-  <!-- <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" /> -->
-  <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+  <context:component-scan base-package="io.oasp.gastronomy.restaurant.*"/>
 
   <!-- By convention web-services should be located in the path folder "ws" -->
   <!-- BEGIN ARCHETYPE SKIP -->
-  <jaxws:endpoint id="tableManagement" implementor="#TablemanagementWebService" address="/ws/Tablemanagement/v1_0"/>
+  <!-- <jaxws:endpoint id="tableManagement" implementor="#TablemanagementWebService" address="/ws/Tablemanagement/v1_0"/>-->
   <!-- END ARCHETYPE SKIP -->
 
-  <!-- By convention REST services should be located in the path folder "rest" -->
-  <bean id="RestServiceExceptionFacade" class="io.oasp.module.rest.service.impl.RestServiceExceptionFacade">
-    <property name="exposeInternalErrorDetails" value="${security.expose.error.details}"/>
-  </bean>
-
-<bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider">
-      <property name="mapper">
-        <ref bean="JacksonObjectMapper"/>
-      </property>
-      </bean>
-
-
-  <jaxrs:server id="CxfRestServices" address="/rest"/>
-    
-  <!-- JSON mapping config -->
-  <bean id="JacksonObjectMapper" factory-bean="ApplicationObjectMapperFactory" factory-method="createInstance"/>
 </beans>
+
