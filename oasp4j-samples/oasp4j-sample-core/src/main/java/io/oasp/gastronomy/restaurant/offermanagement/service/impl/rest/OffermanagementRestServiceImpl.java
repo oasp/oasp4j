@@ -55,15 +55,15 @@ import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 @Produces(MediaType.APPLICATION_JSON)
 public class OffermanagementRestServiceImpl {
 
-  private Offermanagement offerManagement;
+  private Offermanagement offermanagement;
 
   /**
    * @param offerManagement the offerManagement to be set
    */
   @Inject
-  public void setOfferManagement(Offermanagement offerManagement) {
+  public void setOffermanagement(Offermanagement offerManagement) {
 
-    this.offerManagement = offerManagement;
+    this.offermanagement = offerManagement;
   }
 
   /**
@@ -76,7 +76,7 @@ public class OffermanagementRestServiceImpl {
   @Path("/offer/{id}")
   public OfferEto getOffer(@PathParam("id") long id) {
 
-    return this.offerManagement.findOffer(id);
+    return this.offermanagement.findOffer(id);
   }
 
   /**
@@ -90,7 +90,7 @@ public class OffermanagementRestServiceImpl {
   @Path("/offer/")
   public OfferEto saveOffer(OfferEto offer) {
 
-    return this.offerManagement.saveOffer(offer);
+    return this.offermanagement.saveOffer(offer);
   }
 
   // although id in path is redundant, this structure is intentionally chosen
@@ -107,7 +107,7 @@ public class OffermanagementRestServiceImpl {
   @Deprecated
   public OfferEto updateOffer(OfferEto offer) {
 
-    return this.offerManagement.saveOffer(offer);
+    return this.offermanagement.saveOffer(offer);
   }
 
   /**
@@ -120,7 +120,7 @@ public class OffermanagementRestServiceImpl {
   @Deprecated
   public List<OfferEto> getAllOffers() {
 
-    return this.offerManagement.findAllOffers();
+    return this.offermanagement.findAllOffers();
   }
 
   /**
@@ -133,7 +133,7 @@ public class OffermanagementRestServiceImpl {
   @Deprecated
   public List<ProductEto> getAllProducts() {
 
-    return this.offerManagement.findAllProducts();
+    return this.offermanagement.findAllProducts();
   }
 
   /**
@@ -146,7 +146,7 @@ public class OffermanagementRestServiceImpl {
   @Path("/product/")
   public ProductEto saveProduct(ProductEto product) {
 
-    return this.offerManagement.saveProduct(product);
+    return this.offermanagement.saveProduct(product);
   }
 
   /**
@@ -161,7 +161,7 @@ public class OffermanagementRestServiceImpl {
   @Deprecated
   public List<MealEto> getAllMeals() {
 
-    return this.offerManagement.findAllMeals();
+    return this.offermanagement.findAllMeals();
   }
 
   /**
@@ -176,7 +176,7 @@ public class OffermanagementRestServiceImpl {
   @Deprecated
   public List<DrinkEto> getAllDrinks() {
 
-    return this.offerManagement.findAllDrinks();
+    return this.offermanagement.findAllDrinks();
   }
 
   /**
@@ -191,7 +191,7 @@ public class OffermanagementRestServiceImpl {
   @Deprecated
   public List<SideDishEto> getAllSideDishes() {
 
-    return this.offerManagement.findAllSideDishes();
+    return this.offermanagement.findAllSideDishes();
   }
 
   /**
@@ -203,7 +203,7 @@ public class OffermanagementRestServiceImpl {
   @Path("/offer/{id}")
   public void deleteOffer(@PathParam("id") long id) {
 
-    this.offerManagement.deleteOffer(id);
+    this.offermanagement.deleteOffer(id);
   }
 
   /**
@@ -218,9 +218,9 @@ public class OffermanagementRestServiceImpl {
   public ProductEto findProductByRevision(@PathParam("id") long id, @PathParam("revision") Long revision) {
 
     if (revision != null) {
-      return this.offerManagement.findProductByRevision(id, revision);
+      return this.offermanagement.findProductByRevision(id, revision);
     } else {
-      return this.offerManagement.findProduct(id);
+      return this.offermanagement.findProduct(id);
     }
   }
 
@@ -234,7 +234,7 @@ public class OffermanagementRestServiceImpl {
   @Path("/product/{id}")
   public ProductEto findProduct(@PathParam("id") long id) {
 
-    return this.offerManagement.findProduct(id);
+    return this.offermanagement.findProduct(id);
   }
 
   // although id in path is redundant, this structure is intentionally chosen
@@ -250,7 +250,7 @@ public class OffermanagementRestServiceImpl {
   @Deprecated
   public void updateProduct(ProductEto product) {
 
-    this.offerManagement.saveProduct(product);
+    this.offermanagement.saveProduct(product);
   }
 
   /**
@@ -263,7 +263,7 @@ public class OffermanagementRestServiceImpl {
   @Path("/product/{id}/inuse")
   public boolean isProductInUseByOffer(@PathParam("id") long id) {
 
-    return this.offerManagement.isProductInUseByOffer(findProduct(id));
+    return this.offermanagement.isProductInUseByOffer(findProduct(id));
   }
 
   /**
@@ -275,7 +275,7 @@ public class OffermanagementRestServiceImpl {
   @Path("/product/{id}")
   public void deleteProduct(@PathParam("id") long id) {
 
-    this.offerManagement.deleteProduct(id);
+    this.offermanagement.deleteProduct(id);
   }
 
   /**
@@ -290,7 +290,7 @@ public class OffermanagementRestServiceImpl {
   @Deprecated
   public List<OfferEto> getFilteredOffers(OfferFilter offerFilter, @PathParam("sortBy") OfferSortBy sortBy) {
 
-    return this.offerManagement.findOffersFiltered(offerFilter, sortBy);
+    return this.offermanagement.findOffersFiltered(offerFilter, sortBy);
   }
 
   /**
@@ -305,7 +305,7 @@ public class OffermanagementRestServiceImpl {
   @Deprecated
   public List<ProductEto> getFilteredProducts(ProductFilter productFilter, @PathParam("sortBy") ProductSortBy sortBy) {
 
-    return this.offerManagement.findProductsFiltered(productFilter, sortBy);
+    return this.offermanagement.findProductsFiltered(productFilter, sortBy);
   }
 
   @SuppressWarnings("javadoc")
@@ -318,7 +318,7 @@ public class OffermanagementRestServiceImpl {
       throws SerialException, SQLException, IOException {
 
     Blob blob = new SerialBlob(IOUtils.readBytesFromStream(picture));
-    this.offerManagement.updateProductPicture(productId, blob, binaryObjectEto);
+    this.offermanagement.updateProductPicture(productId, blob, binaryObjectEto);
 
   }
 
@@ -328,13 +328,13 @@ public class OffermanagementRestServiceImpl {
   @Path("/product/{id}/picture")
   public MultipartBody getProductPicture(@PathParam("id") long productId) throws SQLException, IOException {
 
-    Blob blob = this.offerManagement.findProductPictureBlob(productId);
+    Blob blob = this.offermanagement.findProductPictureBlob(productId);
     // REVIEW arturk88 (hohwille) we need to find another way to stream the blob without loading into heap.
     // https://github.com/oasp/oasp4j-sample/pull/45
     byte[] data = IOUtils.readBytesFromStream(blob.getBinaryStream());
 
     List<Attachment> atts = new LinkedList<>();
-    atts.add(new Attachment("binaryObjectEto", MediaType.APPLICATION_JSON, this.offerManagement
+    atts.add(new Attachment("binaryObjectEto", MediaType.APPLICATION_JSON, this.offermanagement
         .findProductPicture(productId)));
     atts.add(new Attachment("blob", MediaType.APPLICATION_OCTET_STREAM, new ByteArrayInputStream(data)));
     return new MultipartBody(atts, true);
@@ -348,10 +348,10 @@ public class OffermanagementRestServiceImpl {
   @Deprecated
   public Response getProductRawPicture(@PathParam("id") long productId) throws SQLException, IOException {
 
-    Blob blob = this.offerManagement.findProductPictureBlob(productId);
+    Blob blob = this.offermanagement.findProductPictureBlob(productId);
     if (blob != null) {
       byte[] data = IOUtils.readBytesFromStream(blob.getBinaryStream());
-      BinaryObjectEto metadata = this.offerManagement.findProductPicture(productId);
+      BinaryObjectEto metadata = this.offermanagement.findProductPicture(productId);
       return Response.ok(new ByteArrayInputStream(data)).header("Content-Type", metadata.getMimeType()).build();
     } else {
       return Response.noContent().build();
@@ -363,7 +363,7 @@ public class OffermanagementRestServiceImpl {
   @Path("/product/{id}/picture")
   public void deleteProductPicture(long productId) {
 
-    this.offerManagement.deleteProductPicture(productId);
+    this.offermanagement.deleteProductPicture(productId);
   }
 
   /**
@@ -376,7 +376,7 @@ public class OffermanagementRestServiceImpl {
   @POST
   public PaginatedListTo<OfferEto> findOfferEtosByPost(OfferSearchCriteriaTo searchCriteriaTo) {
 
-    return this.offerManagement.findOfferEtos(searchCriteriaTo);
+    return this.offermanagement.findOfferEtos(searchCriteriaTo);
   }
 
   /**
@@ -389,7 +389,7 @@ public class OffermanagementRestServiceImpl {
   @POST
   public PaginatedListTo<ProductEto> findProductEtosByPost(ProductSearchCriteriaTo searchCriteriaTo) {
 
-    return this.offerManagement.findProductEtos(searchCriteriaTo);
+    return this.offermanagement.findProductEtos(searchCriteriaTo);
   }
 
 }

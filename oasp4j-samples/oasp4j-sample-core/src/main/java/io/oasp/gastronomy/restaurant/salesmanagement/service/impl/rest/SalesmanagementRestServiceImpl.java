@@ -53,16 +53,7 @@ import javax.ws.rs.core.UriInfo;
 @Produces(MediaType.APPLICATION_JSON)
 public class SalesmanagementRestServiceImpl {
 
-  private Salesmanagement salesManagement;
-
-  /**
-   * @param salesManagement the salesManagement to be set
-   */
-  @Inject
-  public void setSalesManagement(Salesmanagement salesManagement) {
-
-    this.salesManagement = salesManagement;
-  }
+  private Salesmanagement salesmanagement;
 
   /**
    * Delegates to {@link UcFindOrder#findOrder}.
@@ -74,7 +65,7 @@ public class SalesmanagementRestServiceImpl {
   @GET
   public OrderEto findOrder(@PathParam("orderId") long orderId) {
 
-    return this.salesManagement.findOrder(orderId);
+    return this.salesmanagement.findOrder(orderId);
   }
 
   /**
@@ -100,7 +91,7 @@ public class SalesmanagementRestServiceImpl {
       criteria.setPagination(pagination);
     }
 
-    return this.salesManagement.findOrderCtos(criteria);
+    return this.salesmanagement.findOrderCtos(criteria);
   }
 
   /**
@@ -113,7 +104,7 @@ public class SalesmanagementRestServiceImpl {
   @POST
   public PaginatedListTo<OrderCto> findOrdersByPost(OrderSearchCriteriaTo searchCriteriaTo) {
 
-    return this.salesManagement.findOrderCtos(searchCriteriaTo);
+    return this.salesmanagement.findOrderCtos(searchCriteriaTo);
   }
 
   /**
@@ -132,7 +123,7 @@ public class SalesmanagementRestServiceImpl {
     criteria.setCookId(parameters.get("cookId", Long.class, false));
     criteria.setState(parameters.get("state", OrderPositionState.class, false));
     criteria.setMealOrSideDish(parameters.get("mealOrSideDish", boolean.class, false));
-    return this.salesManagement.findOrderPositions(criteria);
+    return this.salesmanagement.findOrderPositions(criteria);
   }
 
   /**
@@ -156,7 +147,7 @@ public class SalesmanagementRestServiceImpl {
     } else if (!jsonOrderId.equals(orderId)) {
       throw new BadRequestException("Order ID of URL does not match JSON payload!");
     }
-    return this.salesManagement.saveOrder(order);
+    return this.salesmanagement.saveOrder(order);
   }
 
   /**
@@ -169,7 +160,7 @@ public class SalesmanagementRestServiceImpl {
   @POST
   public OrderCto saveOrder(OrderCto order) {
 
-    return this.salesManagement.saveOrder(order);
+    return this.salesmanagement.saveOrder(order);
   }
 
   /**
@@ -182,7 +173,7 @@ public class SalesmanagementRestServiceImpl {
   @GET
   public OrderPositionEto findOrderPosition(@PathParam("orderPositionId") long orderPositionId) {
 
-    return this.salesManagement.findOrderPosition(orderPositionId);
+    return this.salesmanagement.findOrderPosition(orderPositionId);
 
   }
 
@@ -201,7 +192,7 @@ public class SalesmanagementRestServiceImpl {
   public OrderPositionEto createOrderPosition(OfferEto offer, @PathParam("orderId") long orderId,
       @PathParam("comment") String comment) {
 
-    return this.salesManagement.createOrderPosition(offer, findOrder(orderId), comment);
+    return this.salesmanagement.createOrderPosition(offer, findOrder(orderId), comment);
   }
 
   /**
@@ -214,7 +205,7 @@ public class SalesmanagementRestServiceImpl {
   @Path("/orderposition/")
   public OrderPositionEto saveOrderPosition(OrderPositionEto orderPosition) {
 
-    return this.salesManagement.saveOrderPosition(orderPosition);
+    return this.salesmanagement.saveOrderPosition(orderPosition);
   }
 
   /**
@@ -227,7 +218,7 @@ public class SalesmanagementRestServiceImpl {
   @Path("/bill/{billId}")
   public BillCto findBill(@PathParam("billId") long billId) {
 
-    return this.salesManagement.findBill(billId);
+    return this.salesmanagement.findBill(billId);
   }
 
   /**
@@ -240,7 +231,7 @@ public class SalesmanagementRestServiceImpl {
   @Path("/bill/{billId}/payment")
   public PaymentStatus doPayment(@PathParam("billId") long billId) {
 
-    return this.salesManagement.doPayment(findBill(billId).getBill());
+    return this.salesmanagement.doPayment(findBill(billId).getBill());
   }
 
   /**
@@ -254,7 +245,7 @@ public class SalesmanagementRestServiceImpl {
   @POST
   public PaymentStatus doPayment(@PathParam("billId") long billId, PaymentData paymentData) {
 
-    return this.salesManagement.doPayment(findBill(billId).getBill(), paymentData);
+    return this.salesmanagement.doPayment(findBill(billId).getBill(), paymentData);
   }
 
   /**
@@ -267,7 +258,7 @@ public class SalesmanagementRestServiceImpl {
   @Path("/bill/")
   public BillEto createBill(BillEto bill) {
 
-    return this.salesManagement.createBill(bill);
+    return this.salesmanagement.createBill(bill);
   }
 
   /**
@@ -279,7 +270,7 @@ public class SalesmanagementRestServiceImpl {
   @DELETE
   public void deleteBill(@PathParam("billId") long billId) {
 
-    this.salesManagement.deleteBill(billId);
+    this.salesmanagement.deleteBill(billId);
   }
 
   /**
@@ -292,6 +283,18 @@ public class SalesmanagementRestServiceImpl {
   @POST
   public void changeTable(@PathParam("orderId") long orderId, long newTableId) {
 
-    this.salesManagement.changeTable(orderId, newTableId);
+    this.salesmanagement.changeTable(orderId, newTableId);
   }
+
+  /**
+   * This method sets the field <tt>salesmanagement</tt>.
+   *
+   * @param salesmanagement the new value of the field salesmanagement
+   */
+  @Inject
+  public void setSalesmanagement(Salesmanagement salesmanagement) {
+
+    this.salesmanagement = salesmanagement;
+  }
+
 }
