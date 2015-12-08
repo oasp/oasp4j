@@ -85,7 +85,7 @@ public class SecurityRestServiceImpl {
   /**
    * @param csrfTokenRepository the csrfTokenRepository to set
    */
-  @Inject
+  /*@Inject*/
   public void setCsrfTokenRepository(CsrfTokenRepository csrfTokenRepository) {
 
     this.csrfTokenRepository = csrfTokenRepository;
