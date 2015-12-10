@@ -20,9 +20,9 @@
   </properties>
 
   <modules>
-    <module>oasp4j-sample-core</module>
-    <module>oasp4j-sample-server</module>
-    <module>oasp4j-sample-batch</module>
+    <module>core</module>
+    <module>server</module>
+    <module>batch</module>
   </modules>
 
   <dependencyManagement>
@@ -73,9 +73,10 @@
     <profile>
       <id>integration-test</id>
       <modules>
-        <module>oasp4j-sample-core</module>
-        <module>oasp4j-sample-server</module>
-        <module>oasp4j-sample-server-integration</module>
+        <module>core</module>
+        <module>server</module>
+        <module>server-integration</module>
+        <module>batch</module>
       </modules>
     </profile>
     <profile>

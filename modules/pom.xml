@@ -14,17 +14,17 @@
   <description>Reusable modules of the Open Application Standard Platform for Java (OASP4J).</description>
 
   <modules>
-    <module>oasp4j-logging</module>
-    <module>oasp4j-test</module>
-    <module>oasp4j-configuration</module>
-    <module>oasp4j-beanmapping</module>
-    <module>oasp4j-rest</module>
-    <module>oasp4j-security</module>
-    <module>oasp4j-jpa</module>
-    <module>oasp4j-jpa-envers</module>
-    <module>oasp4j-batch</module>
-    <module>oasp4j-web</module>
-    <module>oasp4j-basic</module>
+    <module>logging</module>
+    <module>test</module>
+    <module>configuration</module>
+    <module>beanmapping</module>
+    <module>rest</module>
+    <module>security</module>
+    <module>jpa</module>
+    <module>jpa-envers</module>
+    <module>batch</module>
+    <module>web</module>
+    <module>basic</module>
   </modules>
 
   <dependencyManagement>

@@ -14,7 +14,7 @@
   <description>Templates (maven archetypes) of the Open Application Standard Platform for Java (OASP4J).</description>
   
   <modules>
-    <module>oasp4j-template-server</module>
+    <module>server</module>
   </modules>
   
 </project>

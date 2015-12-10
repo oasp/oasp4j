@@ -20,9 +20,9 @@
     <filtered.input>${basedir}/target/archetype</filtered.input>
     <sample.package>io.oasp.gastronomy.restaurant</sample.package>
     <sample.package.path>io/oasp/gastronomy/restaurant</sample.package.path>
-    <sample.input>../../oasp4j-samples</sample.input>
+    <sample.input>../../samples</sample.input>
     <sample.output>${project.build.outputDirectory}/archetype-resources</sample.output>
-    <sample.core.input>${sample.input}/oasp4j-sample-core</sample.core.input>
+    <sample.core.input>${sample.input}/core</sample.core.input>
     <sample.core.output>${sample.output}/__rootArtifactId__-core</sample.core.output>
     <sample.core.sources.input>${sample.core.input}/src/main/java/${sample.package.path}</sample.core.sources.input>
     <sample.core.sources.output>${sample.core.output}/src/main/java</sample.core.sources.output>
@@ -34,13 +34,13 @@
     <sample.core.test.resources.input>${sample.core.input}/src/test/resources</sample.core.test.resources.input>
     <sample.core.test.resources.output>${sample.core.output}/src/test/resources</sample.core.test.resources.output>
 
-    <sample.server.input>${sample.input}/oasp4j-sample-server</sample.server.input>
+    <sample.server.input>${sample.input}/server</sample.server.input>
     <sample.server.output>${sample.output}/__rootArtifactId__-server</sample.server.output>
     <sample.server.resources.input>${sample.server.input}/src/main/resources</sample.server.resources.input>
     <sample.server.resources.output>${sample.server.output}/src/main/resources</sample.server.resources.output>
     <sample.server.webresources.input>${sample.server.input}/src/main/webapp</sample.server.webresources.input>
     <sample.server.webresources.output>${sample.server.output}/src/main/webapp</sample.server.webresources.output>
-    <sample.integration.input>${sample.input}/oasp4j-sample-server-integration</sample.integration.input>
+    <sample.integration.input>${sample.input}/integration</sample.integration.input>
     <sample.integration.output>${sample.output}/__rootArtifactId__-server-integration</sample.integration.output>
     <sample.integration.sources.input>${sample.integration.input}/src/main/java/${sample.package.path}/test</sample.integration.sources.input>
     <sample.integration.sources.output>${sample.integration.output}/src/main/java/test</sample.integration.sources.output>
