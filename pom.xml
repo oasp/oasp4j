@@ -12,9 +12,9 @@
   <inceptionYear>2014</inceptionYear>
 
   <modules>
-    <module>oasp4j-bom</module>
-    <module>oasp4j-modules</module>
-    <module>oasp4j-templates</module>
+    <module>bom</module>
+    <module>modules</module>
+    <module>templates</module>
   </modules>
 
   <properties>
@@ -413,7 +413,7 @@
         </file>
       </activation>
       <modules>
-        <module>oasp4j-samples</module>
+        <module>samples</module>
       </modules>
     </profile>
     <profile>
