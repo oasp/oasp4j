@@ -19,10 +19,7 @@
       <artifactId>oasp4j-sample-core</artifactId>
       <version>${project.version}</version>
     </dependency>
-
   </dependencies>
-
-
 
   <!-- Overlays for JavaScript client -->
   <profiles>
