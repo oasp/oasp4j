@@ -60,4 +60,18 @@
     </profile>
   </profiles>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>io.oasp.gastronomy.restaurant.SpringBootApp</mainClass>
+          <classifier>bootified</classifier>
+          <finalName>${project.artifactId}</finalName>
+          <layout>WAR</layout>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
