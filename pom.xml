@@ -105,12 +105,12 @@
         </executions>
       </plugin>
 
-      <!-- avoid version in local war files, exclude sources JARs from WARs -->
+      <!-- avoid version in local war files, exclude development properties from WARs -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
-          <packagingExcludes>WEB-INF/lib/*-sources.jar</packagingExcludes>
+          <packagingExcludes>WEB-INF/classes/config/application.properties</packagingExcludes>
           <warName>${project.artifactId}</warName>
         </configuration>
       </plugin>

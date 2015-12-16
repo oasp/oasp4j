@@ -1,5 +1,23 @@
 package io.oasp.gastronomy.restaurant.general.common.impl.security;
 
+import java.util.Set;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import io.oasp.gastronomy.restaurant.general.common.api.UserProfile;
+import io.oasp.gastronomy.restaurant.general.common.api.Usermanagement;
+import io.oasp.gastronomy.restaurant.general.common.api.security.UserData;
+import io.oasp.module.security.common.base.accesscontrol.AbstractAccessControlBasedAuthenticationProvider;
+
 /**
  * This class is responsible for the security aspects of authentication as well as providing user profile data and the
  * access-controls for authoriziation.
@@ -8,58 +26,59 @@ package io.oasp.gastronomy.restaurant.general.common.impl.security;
  * @author hohwille
  * @author agreul
  */
-/*
- * TODO restore after security for spring-boot is reenabled
- * https://github.com/oasp/oasp4j/issues/354
- *
- @Named("ApplicationAuthenticationProvider")
- public class ApplicationAuthenticationProvider extends
- AbstractAccessControlBasedAuthenticationProvider<UserData, UserProfile> {
+@Named("ApplicationAuthenticationProvider")
+public class ApplicationAuthenticationProvider
+    extends AbstractAccessControlBasedAuthenticationProvider<UserData, UserProfile> {
 
+  /** Logger instance. */
+  private static final Logger LOG = LoggerFactory.getLogger(ApplicationAuthenticationProvider.class);
 
- private static final Logger LOG = LoggerFactory.getLogger(ApplicationAuthenticationProvider.class);
+  private Usermanagement usermanagement;
 
- private Usermanagement usermanagement;
+  /**
+   * The constructor.
+   */
+  public ApplicationAuthenticationProvider() {
 
+    super();
+  }
 
- public ApplicationAuthenticationProvider() {
+  @Override
+  protected void additionalAuthenticationChecks(UserDetails userDetails,
+      UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
 
- super();
- }
+    authentication.setDetails(userDetails);
+  }
 
+  /**
+   * @param usermanagement the {@link Usermanagement} to set
+   */
+  @Inject
+  public void setUsermanagement(Usermanagement usermanagement) {
 
- @Inject
- public void setUsermanagement(Usermanagement usermanagement) {
+    this.usermanagement = usermanagement;
+  }
 
- this.usermanagement = usermanagement;
- if (usermanagement instanceof StaffmanagementImpl) {
- List<StaffMemberEto> staffmembers = ((StaffmanagementImpl) usermanagement).findAllStaffMembers();
- for (StaffMemberEto staffmember : staffmembers) {
- System.out.println(staffmember.getName());
- }
- }
- }
+  @Override
+  protected UserProfile retrievePrincipal(String username, UsernamePasswordAuthenticationToken authentication) {
 
- @Override
- protected UserProfile retrievePrincipal(String username, UsernamePasswordAuthenticationToken authentication) {
+    try {
+      return this.usermanagement.findUserProfileByLogin(username);
+    } catch (RuntimeException e) {
+      e.printStackTrace();
+      UsernameNotFoundException exception = new UsernameNotFoundException("Authentication failed.", e);
+      LOG.warn("Failed to get user {}.", username, exception);
+      throw exception;
+    }
+  }
 
- try {
- return this.usermanagement.findUserProfileByLogin(username);
- } catch (RuntimeException e) {
- e.printStackTrace();
- UsernameNotFoundException exception = new UsernameNotFoundException("Authentication failed.", e);
- LOG.warn("Failed to get user {}.", username, exception);
- throw exception;
- }
- }
+  @Override
+  protected UserData createUser(String username, String password, UserProfile principal,
+      Set<GrantedAuthority> authorities) {
 
- @Override
- protected UserData createUser(String username, String password, UserProfile principal,
- Set<GrantedAuthority> authorities) {
+    UserData user = new UserData(username, password, authorities);
+    user.setUserProfile(principal);
+    return user;
+  }
 
- UserData user = new UserData(username, password, authorities);
- user.setUserProfile(principal);
- return user;
- }
-
- }*/
+}

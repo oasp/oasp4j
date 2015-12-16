@@ -4,7 +4,9 @@ package io.oasp.module.configuration.common.api;
  * Central constants for spring configuration files. Mainly for testing but may also be used for productive usage.
  *
  * @author hohwille
+ * @deprecated will be removed as spring-boot is suggested and XML config has to die.
  */
+@Deprecated
 public final class ApplicationConfigurationConstants {
 
   /** Path to the spring XML configuration file for the entire application. */

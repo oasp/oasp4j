@@ -24,6 +24,10 @@
       <artifactId>hibernate-jpa-2.1-api</artifactId>
     </dependency>
     <dependency>
+      <groupId>javax.transaction</groupId>
+      <artifactId>javax.transaction-api</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.mysema.querydsl</groupId>
       <artifactId>querydsl-jpa</artifactId>
     </dependency>

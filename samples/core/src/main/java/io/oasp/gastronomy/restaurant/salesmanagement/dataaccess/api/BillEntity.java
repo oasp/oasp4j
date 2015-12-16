@@ -1,17 +1,19 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api;
 
-import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
-import io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity;
-import io.oasp.gastronomy.restaurant.salesmanagement.common.api.Bill;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
+import io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.Bill;
 
 /**
  * {@link ApplicationPersistenceEntity Entity} that represents the {@link Bill} related to one or multiple
@@ -45,6 +47,7 @@ public class BillEntity extends ApplicationPersistenceEntity implements Bill {
    * @return the {@link List} of {@link OrderPositionEntity} objects associated with this {@link BillEntity}.
    */
   @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "Bill_OrderPosition", joinColumns = { @JoinColumn(name = "Bill_id") })
   public List<OrderPositionEntity> getOrderPositions() {
 
     return this.orderPositions;

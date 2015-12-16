@@ -1,8 +1,5 @@
 package io.oasp.gastronomy.restaurant.general.common;
 
-import io.oasp.gastronomy.restaurant.general.dataaccess.base.DatabaseMigrator;
-import io.oasp.module.test.common.base.ComponentTest;
-
 import java.io.File;
 
 import javax.inject.Inject;
@@ -14,17 +11,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.test.JobLauncherTestUtils;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
-import org.springframework.test.context.ActiveProfiles;
+
+import io.oasp.gastronomy.restaurant.general.dataaccess.base.DatabaseMigrator;
+import io.oasp.module.test.common.base.ComponentTest;
 
 /**
  * Base class for all spring batch integration tests. It helps to do End-to-End job tests.
  *
  * @author jczas
  */
-@DirtiesContext(classMode = ClassMode.AFTER_CLASS)
-@ActiveProfiles("db-plain")
+// @DirtiesContext(classMode = ClassMode.AFTER_CLASS)
 public abstract class AbstractSpringBatchIntegrationTest extends ComponentTest {
   private static final Logger LOG = LoggerFactory.getLogger(AbstractSpringBatchIntegrationTest.class);
 

@@ -1,5 +1,13 @@
 package io.oasp.gastronomy.restaurant.general.common.impl.security;
 
+import java.util.Arrays;
+import java.util.Collection;
+
+import javax.inject.Named;
+
+import io.oasp.gastronomy.restaurant.general.common.api.UserProfile;
+import io.oasp.module.security.common.api.accesscontrol.PrincipalAccessControlProvider;
+
 /**
  * The implementation of {@link PrincipalAccessControlProvider} for this sample application.<br/>
  * ATTENTION:<br/>
@@ -10,22 +18,21 @@ package io.oasp.gastronomy.restaurant.general.common.impl.security;
  *
  * @author hohwille
  */
-/*
- * TODO restore after security for spring-boot is reenabled:
- * https://github.com/oasp/oasp4j/issues/354
- @Named
- public class PrincipalAccessControlProviderImpl implements PrincipalAccessControlProvider<UserProfile> {
+@Named
+public class PrincipalAccessControlProviderImpl implements PrincipalAccessControlProvider<UserProfile> {
 
- public PrincipalAccessControlProviderImpl() {
+  /**
+   * The constructor.
+   */
+  public PrincipalAccessControlProviderImpl() {
 
- super();
- }
+    super();
+  }
 
- @Override
- public Collection<String> getAccessControlIds(UserProfile principal) {
+  @Override
+  public Collection<String> getAccessControlIds(UserProfile principal) {
 
- return Arrays.asList(principal.getRole().getName());
- }
+    return Arrays.asList(principal.getRole().getName());
+  }
 
- }
- */
+}

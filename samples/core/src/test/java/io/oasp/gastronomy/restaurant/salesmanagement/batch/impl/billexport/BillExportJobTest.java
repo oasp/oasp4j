@@ -1,8 +1,5 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.batch.impl.billexport;
 
-import io.oasp.gastronomy.restaurant.general.common.AbstractSpringBatchIntegrationTest;
-import io.oasp.module.configuration.common.api.ApplicationConfigurationConstants;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -10,6 +7,7 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,11 +20,15 @@ import org.springframework.batch.test.AssertFile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 
+import io.oasp.gastronomy.restaurant.general.common.AbstractSpringBatchIntegrationTest;
+import io.oasp.module.configuration.common.api.ApplicationConfigurationConstants;
+
 /**
  * End-To-End test job "import offer management from csv"
  *
  * @author jczas
  */
+@Ignore
 @ContextConfiguration(locations = { ApplicationConfigurationConstants.BEANS_BATCH })
 public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
   private static final Logger LOG = LoggerFactory.getLogger(AbstractSpringBatchIntegrationTest.class);

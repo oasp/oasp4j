@@ -1,11 +1,5 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.impl.dao;
 
-import io.oasp.gastronomy.restaurant.general.common.AbstractSpringIntegrationTest;
-import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
-import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.BillEntity;
-import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.BillDao;
-import io.oasp.module.configuration.common.api.ApplicationConfigurationConstants;
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -15,14 +9,24 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import org.junit.Test;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.web.WebAppConfiguration;
+
+import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
+import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.BillEntity;
+import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.BillDao;
+import io.oasp.module.test.common.base.ComponentTest;
 
 /**
+ * Test of {@link BillDao}.
  *
  * @author mvielsac
  */
-@ContextConfiguration({ ApplicationConfigurationConstants.BEANS_DATA_ACCESS })
-public class BillDaoTest extends AbstractSpringIntegrationTest {
+@Transactional
+@SpringApplicationConfiguration(classes = { SpringBootApp.class })
+@WebAppConfiguration
+public class BillDaoTest extends ComponentTest {
 
   @Inject
   private BillDao billDao;

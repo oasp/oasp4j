@@ -41,7 +41,7 @@
             <phase>package</phase>
             <configuration>
               <target name="Copy application.properties">
-                <copy file="${project.basedir}/../core/src/main/resources/config/env/application.properties"
+                <copy file="${project.basedir}/../core/src/main/resources/config/application.properties"
                   tofile="${project.build.directory}/etc/config/env/application.properties"/>
               </target>
             </configuration>
