@@ -69,4 +69,11 @@ public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
     assertThat(meal.getDescription()).isEqualTo("Tasty sausage");
     assertThat(meal.getPictureId()).isEqualTo(1);
   }
+
+  private void deleteProducts() {
+
+    for (ProductEto product : this.offermanagement.findAllProducts()) {
+      this.offermanagement.deleteProduct(product.getId());
+    }
+  }
 }
