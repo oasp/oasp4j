@@ -10,6 +10,13 @@ public class PositionStatusChangeTo {
 
   private OrderPositionState status;
 
+  /**
+   *
+   * The constructor.
+   *
+   * @param id OrderId
+   * @param status OrderPositionState
+   */
   @JsonCreator
   public PositionStatusChangeTo(@JsonProperty("id") Long id, @JsonProperty("status") OrderPositionState status) {
 
