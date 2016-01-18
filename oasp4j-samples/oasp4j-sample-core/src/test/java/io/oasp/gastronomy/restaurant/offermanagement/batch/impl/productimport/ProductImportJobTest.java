@@ -4,6 +4,7 @@ import io.oasp.gastronomy.restaurant.general.common.AbstractSpringBatchIntegrati
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
 import io.oasp.module.configuration.common.api.ApplicationConfigurationConstants;
 
@@ -39,6 +40,8 @@ public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
   @Test
   public void testJob() throws Exception {
 
+    cleanDatabase();
+
     // configure job
     JobParametersBuilder jobParameterBuilder = new JobParametersBuilder();
     jobParameterBuilder.addString("drinks.file", "classpath:ProductImportJobTest/data/drinks.csv");
@@ -68,5 +71,16 @@ public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
     assertThat(meal.getName()).isEqualTo("Bratwurst");
     assertThat(meal.getDescription()).isEqualTo("Tasty sausage");
     assertThat(meal.getPictureId()).isEqualTo(1);
+  }
+
+  private void cleanDatabase() {
+
+    for (OfferEto offer : this.offermanagement.findAllOffers()) {
+      this.offermanagement.deleteOffer(offer.getId());
+    }
+
+    for (ProductEto product : this.offermanagement.findAllProducts()) {
+      this.offermanagement.deleteProduct(product.getId());
+    }
   }
 }
