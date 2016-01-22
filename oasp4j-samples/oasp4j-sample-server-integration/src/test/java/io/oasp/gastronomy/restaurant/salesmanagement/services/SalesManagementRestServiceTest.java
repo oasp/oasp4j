@@ -279,6 +279,8 @@ public class SalesManagementRestServiceTest extends AbstractRestServiceTest {
             BillEto.class);
     this.waiter.post(RestUrls.SalesManagement.Bill.getDoPaymentURL(createdBill.getId()));
     // get payed bill
+    @SuppressWarnings("unused")
+    // Is unused SEE TODO:remove SupressWarnings("unused") once payment does persist changes
     ResponseData<BillCto> response =
         this.waiter.get(RestUrls.SalesManagement.Bill.getGetBillURL(createdBill.getId()), BillCto.class);
     // TODO: This check will not work currently because payment does not persist changes
