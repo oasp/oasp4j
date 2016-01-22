@@ -43,7 +43,7 @@ public class TablemanagementImpl extends AbstractComponentFacade implements Tabl
   /** @see #getTableDao() */
   private TableDao tableDao;
 
-  private Salesmanagement salesManagement;
+  private Salesmanagement salesmanagement;
 
   private Staffmanagement staffmanagement;
 
@@ -139,7 +139,7 @@ public class TablemanagementImpl extends AbstractComponentFacade implements Tabl
     if (table.getState() != TableState.OCCUPIED) {
       return true;
     }
-    OrderEto order = this.salesManagement.findOpenOrderForTable(table.getId());
+    OrderEto order = this.salesmanagement.findOpenOrderForTable(table.getId());
     // no open order so the table is actually free...
     return order == null;
   }
@@ -167,9 +167,9 @@ public class TablemanagementImpl extends AbstractComponentFacade implements Tabl
    * @param salesManagement new value for salesManagement
    */
   @Inject
-  public void setSalesManagement(Salesmanagement salesManagement) {
+  public void setSalesmanagement(Salesmanagement salesManagement) {
 
-    this.salesManagement = salesManagement;
+    this.salesmanagement = salesManagement;
   }
 
   /**
