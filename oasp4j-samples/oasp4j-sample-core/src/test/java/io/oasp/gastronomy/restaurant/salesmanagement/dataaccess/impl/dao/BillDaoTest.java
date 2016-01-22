@@ -12,7 +12,6 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
