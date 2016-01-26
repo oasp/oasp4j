@@ -13,6 +13,11 @@
   <name>${project.artifactId}</name>
   <description>Server for the restaurant application - a simple example using the Open Application Standard Platform for Java (OASP4J).</description>
 
+  <properties>
+      <java.version>1.7</java.version>
+      <tomcat.version>7.0.57</tomcat.version>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>

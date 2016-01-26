@@ -13,6 +13,12 @@
   <name>${project.artifactId}</name>
   <description>Core of the server for the restaurant application - a simple example using the Open Application Standard Platform for Java (OASP4J).</description>
 
+  <properties>
+      <java.version>1.7</java.version>
+      <tomcat.version>8.0.28</tomcat.version>
+      <!-- tomcat.version>7.0.57</tomcat.version -->
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>io.oasp.java.modules</groupId>
@@ -225,10 +231,6 @@
       <artifactId>spring-boot-starter-ws</artifactId>
     </dependency>
   </dependencies>
-
-  <properties>
-    <java.version>1.7</java.version>
-  </properties>
 
   <build>
     <resources>

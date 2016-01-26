@@ -22,6 +22,7 @@
     <cxf.version>3.1.4</cxf.version>
     <oasp.gpg.keyname>joerg.hohwiller@capgemini.com</oasp.gpg.keyname>
     <oasp.flatten.mode>bom</oasp.flatten.mode>
+    <tomcat.version>7.0.57</tomcat.version>
   </properties>
 
   <dependencyManagement>
@@ -107,8 +108,7 @@
       <dependency>
         <groupId>javax.servlet</groupId>
         <artifactId>javax.servlet-api</artifactId>
-        <version>3.1.0</version>
-        <!-- <scope>provided</scope> -->
+        <scope>provided</scope>
       </dependency>
       <!-- Servlet Taglib -->
       <dependency>
