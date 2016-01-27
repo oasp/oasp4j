@@ -84,21 +84,4 @@ public class WebConfig {
     registration.addUrlPatterns("/*");
     return registration;
   }
-
-  // <!-- Web Sockets
-  // <servlet>
-  // <servlet-name>web-socket-dispatcher</servlet-name>
-  // <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-  // <init-param>
-  // <param-name>contextConfigLocation</param-name>
-  // <param-value>classpath:config/app/websocket/websocket-context.xml</param-value>
-  // </init-param>
-  // <load-on-startup>1</load-on-startup>
-  // <async-supported>true</async-supported>
-  // </servlet>
-  // <servlet-mapping>
-  // <servlet-name>web-socket-dispatcher</servlet-name>
-  // <url-pattern>/websocket/*</url-pattern>
-  // </servlet-mapping>
-
 }

@@ -19,7 +19,7 @@ public class LoginController {
   /**
    * Default URL to redirect to after successfully login.
    */
-  public final static String defaultTargetUrl = "/services";
+  public final static String defaultTargetUrl = "/";
 
   /**
    * Builds the model for the login page---mainly focusing on the error message handling.
