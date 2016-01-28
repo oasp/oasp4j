@@ -28,7 +28,7 @@ public class ProductWriter implements ItemWriter<ProductEto> {
   @Override
   public void write(List<? extends ProductEto> items) throws Exception {
 
-    LOG.debug("Writting " + items.size() + " products");
+    LOG.debug("Writing " + items.size() + " products");
 
     for (ProductEto item : items) {
       LOG.debug("Saving product: " + item.getName());

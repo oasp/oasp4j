@@ -129,3 +129,4 @@ CREATE TABLE PUBLIC.REVINFO(
     timestamp BIGINT NOT NULL,
     user VARCHAR(255)
 );
+

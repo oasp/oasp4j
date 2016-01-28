@@ -1,5 +1,11 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.impl.dao;
 
+import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.DrinkEntity;
+import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.DrinkDao;
+import io.oasp.module.jpa.dataaccess.api.RevisionMetadata;
+import io.oasp.module.test.common.base.ComponentTest;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -12,13 +18,8 @@ import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.test.context.ContextConfiguration;
-
-import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.DrinkEntity;
-import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.DrinkDao;
-import io.oasp.module.configuration.common.api.ApplicationConfigurationConstants;
-import io.oasp.module.jpa.dataaccess.api.RevisionMetadata;
-import io.oasp.module.test.common.base.ComponentTest;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 /**
  * Test class to test the {@link DrinkDao}.
@@ -27,8 +28,8 @@ import io.oasp.module.test.common.base.ComponentTest;
  */
 @Ignore("fails in maven surefire - will be re-enabled after proper spring-boot refactoring")
 // @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class })
-@ContextConfiguration({ ApplicationConfigurationConstants.BEANS_DATA_ACCESS })
-// @ActiveProfiles("db-plain")
+@SpringApplicationConfiguration(classes = { SpringBootApp.class })
+@WebAppConfiguration
 public class DrinkDaoTest extends ComponentTest {
 
   @Inject

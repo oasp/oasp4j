@@ -4,7 +4,6 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-  <import resource="../logic/beans-logic.xml"/>
   <import resource="beans-productimport.xml"/>
   <import resource="beans-billexport.xml"/>
 
@@ -20,7 +19,7 @@
 
   <bean id="jobRepository"
     class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
-    <property name="dataSource" ref="appDataSource" />
+    <property name="dataSource" ref="dataSource" />
     <property name="transactionManager" ref="transactionManager" />
     <!-- HibernateJpaDialect does not support custom isolation levels due to limitations in standard JPA. Specific arrangements may be implemented in custom JpaDialect variants.
          see http://stackoverflow.com/questions/26581033/exception-hibernatejpadialect-does-not-support-custom-isolation-levels-due-to -->
@@ -34,7 +33,7 @@
 
   <bean id="jobExplorer"
     class="org.springframework.batch.core.explore.support.JobExplorerFactoryBean">
-    <property name="dataSource" ref="appDataSource" />
+    <property name="dataSource" ref="dataSource" />
   </bean>
 
   <bean id="jobRegistryBeanPostProcessor"

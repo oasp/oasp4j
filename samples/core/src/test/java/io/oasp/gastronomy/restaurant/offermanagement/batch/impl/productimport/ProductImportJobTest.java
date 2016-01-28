@@ -1,47 +1,34 @@
 package io.oasp.gastronomy.restaurant.offermanagement.batch.impl.productimport;
 
+import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.general.common.AbstractSpringBatchIntegrationTest;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
+
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
-
-import io.oasp.gastronomy.restaurant.general.common.AbstractSpringBatchIntegrationTest;
-import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity;
-import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.ProductEntity;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
-import io.oasp.module.configuration.common.api.ApplicationConfigurationConstants;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 /**
  * End-To-End test job "import offer management from csv"
  *
  * @author jczas
  */
-@Ignore
-@ContextConfiguration(locations = { ApplicationConfigurationConstants.BEANS_BATCH })
+@SpringApplicationConfiguration(classes = { SpringBootApp.class }, locations = { "classpath:/config/app/batch/beans-batch.xml" })
+@WebAppConfiguration
 public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
-
-  @PersistenceContext
-  private EntityManager entityManager;
-
-  @Inject
-  private PlatformTransactionManager txManager;
 
   @Inject
   private Job productImportJob;
@@ -55,17 +42,7 @@ public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
   @Test
   public void testJob() throws Exception {
 
-    // TODO hohwille temporary hack for travis build failure
-    TransactionDefinition def = new DefaultTransactionDefinition();
-    TransactionStatus status = this.txManager.getTransaction(def);
-    try {
-      this.entityManager.createQuery("Delete from " + OfferEntity.class.getSimpleName()).executeUpdate();
-      this.entityManager.createQuery("Delete from " + ProductEntity.class.getSimpleName()).executeUpdate();
-      this.txManager.commit(status);
-    } catch (Exception e) {
-      this.txManager.rollback(status);
-      throw e;
-    }
+    cleanDatabase();
 
     // configure job
     JobParametersBuilder jobParameterBuilder = new JobParametersBuilder();
@@ -96,5 +73,16 @@ public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
     assertThat(meal.getName()).isEqualTo("Bratwurst");
     assertThat(meal.getDescription()).isEqualTo("Tasty sausage");
     assertThat(meal.getPictureId()).isEqualTo(1);
+  }
+
+  private void cleanDatabase() {
+
+    for (OfferEto offer : this.offermanagement.findAllOffers()) {
+      this.offermanagement.deleteOffer(offer.getId());
+    }
+
+    for (ProductEto product : this.offermanagement.findAllProducts()) {
+      this.offermanagement.deleteProduct(product.getId());
+    }
   }
 }

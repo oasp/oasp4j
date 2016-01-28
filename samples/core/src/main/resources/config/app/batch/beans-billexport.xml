@@ -12,7 +12,7 @@
   </batch:job>
 
   <bean id="billReader" class="org.springframework.batch.item.database.JdbcCursorItemReader">
-    <property name="dataSource" ref="appDataSource"/>
+    <property name="dataSource" ref="dataSource"/>
     <property name="rowMapper">
       <bean class="org.springframework.jdbc.core.SingleColumnRowMapper">
         <property name="requiredType" value="java.lang.Long"/>
