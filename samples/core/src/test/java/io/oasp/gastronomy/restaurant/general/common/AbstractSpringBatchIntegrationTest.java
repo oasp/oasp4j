@@ -1,6 +1,9 @@
 package io.oasp.gastronomy.restaurant.general.common;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -11,8 +14,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.test.JobLauncherTestUtils;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 
+import io.oasp.gastronomy.restaurant.general.common.api.security.UserData;
 import io.oasp.gastronomy.restaurant.general.dataaccess.base.DatabaseMigrator;
+import io.oasp.module.security.common.api.accesscontrol.AccessControlPermission;
+import io.oasp.module.security.common.base.accesscontrol.AccessControlGrantedAuthority;
 import io.oasp.module.test.common.base.ComponentTest;
 
 /**
@@ -29,6 +38,23 @@ public abstract class AbstractSpringBatchIntegrationTest extends ComponentTest {
 
   /** scripts for all tests db setup */
   private static final String ALL_TESTS_DB_SETUP_DIR = "classpath:AllTests/setup/db";
+
+  protected static void login(String login, String password, String... permissions) {
+  
+    Set<String> groups = new HashSet<>(Arrays.asList(permissions));
+  
+    Set<GrantedAuthority> authorities = new HashSet<>();
+    for (String permission : groups) {
+      authorities.add(new AccessControlGrantedAuthority(new AccessControlPermission(permission)));
+    }
+    SecurityContextHolder.getContext().setAuthentication(
+        new UsernamePasswordAuthenticationToken(new UserData(login, password, authorities), password));
+  }
+
+  public static void logout() {
+  
+    SecurityContextHolder.getContext().setAuthentication(null);
+  }
 
   /**
    * database migration helper

@@ -42,6 +42,9 @@ public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
   @Test
   public void testJob() throws Exception {
 
+    // login
+    login("chief", "chief", "FindOffer", "SaveOffer", "DeleteOffer", "FindProduct", "SaveProduct", "DeleteProduct");
+
     cleanDatabase();
 
     // configure job

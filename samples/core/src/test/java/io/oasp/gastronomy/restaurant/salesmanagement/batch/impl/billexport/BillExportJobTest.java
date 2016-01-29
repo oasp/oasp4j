@@ -42,6 +42,9 @@ public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
   @Test
   public void testJob() throws Exception {
 
+    // login
+    login("chief", "chief", "FindOffer", "SaveOffer", "DeleteOffer", "FindProduct", "SaveProduct", "DeleteProduct");
+
     // setup test data
     this.flyway.importTestData("classpath:BillExportJobTest/setup/db");
 
