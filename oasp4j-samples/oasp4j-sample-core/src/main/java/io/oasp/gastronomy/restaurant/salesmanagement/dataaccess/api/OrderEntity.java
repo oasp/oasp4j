@@ -7,9 +7,14 @@ import io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersisten
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.Order;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * {@link ApplicationPersistenceEntity Entity} that represents an {@link Order} of a customer associated with the
@@ -27,6 +32,8 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
   private long tableId;
 
   private OrderState state;
+
+  private Date created;
 
   /**
    * The constructor.
@@ -60,6 +67,29 @@ public class OrderEntity extends ApplicationPersistenceEntity implements Order {
   public void setState(OrderState state) {
 
     this.state = state;
+  }
+
+  @Override
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column()
+  public Date getCreated() {
+
+    return this.created;
+  }
+
+  @Override
+  public void setCreated(Date created) {
+
+    this.created = created;
+  }
+
+  /**
+   * Otherwise the date isn't initialized from the database (HANA especially)
+   */
+  @PrePersist
+  protected void onCreate() {
+
+    this.created = new Date();
   }
 
 }

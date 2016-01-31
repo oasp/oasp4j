@@ -1,9 +1,11 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.common.api;
 
-import javax.validation.constraints.NotNull;
-
 import io.oasp.gastronomy.restaurant.general.common.api.ApplicationEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
+
+import java.util.Date;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * This is the interface for an {@link Order}. It is {@link #getTableId() associated} with a
@@ -37,4 +39,14 @@ public interface Order extends ApplicationEntity {
    * @param state is the new {@link #getState() state}.
    */
   void setState(OrderState state);
+
+  /**
+   * @return the {@link Date} of the placed {@link Order}
+   */
+  Date getCreated();
+
+  /**
+   * @param date the {@link Date} of the placed {@link Order}.
+   */
+  void setCreated(Date date);
 }
