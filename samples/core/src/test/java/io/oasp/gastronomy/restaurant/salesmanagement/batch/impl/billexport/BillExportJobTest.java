@@ -28,7 +28,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
  *
  * @author jczas
  */
-@SpringApplicationConfiguration(classes = { SpringBootApp.class }, locations = { "classpath:/config/app/batch/beans-batch.xml" })
+@SpringApplicationConfiguration(classes = { SpringBootApp.class }, locations = { "classpath:/config/app/batch/beans-billexport.xml" })
 @WebAppConfiguration
 public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
   private static final Logger LOG = LoggerFactory.getLogger(AbstractSpringBatchIntegrationTest.class);

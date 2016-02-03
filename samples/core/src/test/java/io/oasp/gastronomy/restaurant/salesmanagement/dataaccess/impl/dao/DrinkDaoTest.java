@@ -26,8 +26,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
  *
  * @author jmetzler
  */
-@Ignore("fails in maven surefire - will be re-enabled after proper spring-boot refactoring")
-// @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class })
+
 @SpringApplicationConfiguration(classes = { SpringBootApp.class })
 @WebAppConfiguration
 public class DrinkDaoTest extends ComponentTest {

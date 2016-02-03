@@ -26,7 +26,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
  *
  * @author jczas
  */
-@SpringApplicationConfiguration(classes = { SpringBootApp.class }, locations = { "classpath:/config/app/batch/beans-batch.xml" })
+@SpringApplicationConfiguration(classes = { SpringBootApp.class }, locations = { "classpath:/config/app/batch/beans-productimport.xml" })
 @WebAppConfiguration
 public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
 
