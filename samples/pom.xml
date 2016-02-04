@@ -73,15 +73,6 @@
 
   <profiles>
     <profile>
-      <id>integration-test</id>
-      <modules>
-        <module>core</module>
-        <module>server</module>
-        <module>server-integration</module>
-        <module>batch</module>
-      </modules>
-    </profile>
-    <profile>
       <id>subsystemtest</id>
       <properties>
         <oasp.test.excluded.groups>io.oasp.module.test.common.api.category.CategorySystemTest</oasp.test.excluded.groups>
