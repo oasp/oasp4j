@@ -87,6 +87,7 @@ public class OfferDaoImpl extends ApplicationMasterDataDaoImpl<OfferEntity> impl
       builder.and(Alias.$(offer.getPrice()).loe(offerFilterBo.getMaxPrice()));
     }
 
+    // sorting
     if (sortBy.getSortByEntry().equals(OfferSortByHitEntry.DESCRIPTION)) {
       if (sortBy.getOrderBy().isDesc())
         query.where(builder).orderBy(Alias.$(offer.getDescription()).desc());

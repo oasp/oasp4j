@@ -242,22 +242,7 @@
         </configuration>
       </plugin>
 
- <plugin>
-      <groupId>com.mysema.maven</groupId>
-      <artifactId>maven-apt-plugin</artifactId>
-      <version>1.0</version>
-      <executions>
-        <execution>
-          <goals>
-            <goal>process</goal>
-          </goals>
-          <configuration>
-            <outputDirectory>target/generated-sources/java</outputDirectory>
-            <processor>com.mysema.query.apt.jpa.HibernateAnnotationProcessor</processor>
-          </configuration>
-        </execution>
-      </executions>
-    </plugin>
+
 
     </plugins>
     </pluginManagement>
