@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.general.security;
+package io.oasp.gastronomy.restaurant.general.configuration;
 
 import java.io.IOException;
 
