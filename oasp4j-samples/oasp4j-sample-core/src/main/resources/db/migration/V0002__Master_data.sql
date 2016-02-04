@@ -24,6 +24,8 @@ INSERT INTO OFFER (id, modificationCounter, name, description, state, meal_id, s
 INSERT INTO OFFER (id, modificationCounter, name, description, state, meal_id, sidedish_id, drink_id, price) VALUES (3, 1, 'Pfifferlinge-Menü', 'Description of Pfifferlinge-Menü', 0, 3, 8, 12, 8.99);
 INSERT INTO OFFER (id, modificationCounter, name, description, state, meal_id, sidedish_id, drink_id, price) VALUES (4, 1, 'Salat-Menü', 'Description of Salat-Menü', 0, 4, 7, 9, 5.99);
 INSERT INTO OFFER (id, modificationCounter, name, description, state, meal_id, sidedish_id, drink_id, price) VALUES (5, 1, 'Cola', 'Description of Salat-Menü', 0, null, null, 10, 1.20);
+INSERT INTO OFFER (id, modificationCounter, name, description, state, meal_id, sidedish_id, drink_id, price) VALUES (6, 1, 'Schnitzel-Brot', 'Description of Schnitzel-Menü', 0, 1, 7, 11, 1.23);
+INSERT INTO OFFER (id, modificationCounter, name, description, state, meal_id, sidedish_id, drink_id, price) VALUES (7, 1, 'Schnitzel-Reis', 'Description of Schnitzel-Menü', 0, 1, 6, 9, 4.23);
 
 INSERT INTO RESTAURANTORDER (id, modificationCounter, table_id, state) VALUES (1, 1, 101, 1);
 
