@@ -13,6 +13,8 @@
   <name>${project.artifactId}</name>
   <description>Core of the server for the restaurant application - a simple example using the Open Application Standard Platform for Java (OASP4J).</description>
 
+
+
   <dependencies>
     <dependency>
       <groupId>io.oasp.java.modules</groupId>
@@ -198,6 +200,27 @@
       <groupId>javax.el</groupId>
       <artifactId>javax.el-api</artifactId>
     </dependency>
+
+<dependency>
+  <groupId>com.mysema.querydsl</groupId>
+  <artifactId>querydsl-apt</artifactId>
+  <version>3.4.3</version>
+  <scope>provided</scope>
+</dependency>
+
+<dependency>
+  <groupId>com.mysema.querydsl</groupId>
+  <artifactId>querydsl-jpa</artifactId>
+  <version>3.7.1</version>
+</dependency>
+
+<dependency>
+  <groupId>org.slf4j</groupId>
+  <artifactId>slf4j-log4j12</artifactId>
+  <version>1.6.1</version>
+</dependency>
+
+
   </dependencies>
 
   <build>
@@ -207,6 +230,7 @@
         <filtering>true</filtering>
       </resource>
     </resources>
+    <pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -217,7 +241,11 @@
           </excludes>
         </configuration>
       </plugin>
+
+
+
     </plugins>
+    </pluginManagement>
   </build>
 
 </project>
