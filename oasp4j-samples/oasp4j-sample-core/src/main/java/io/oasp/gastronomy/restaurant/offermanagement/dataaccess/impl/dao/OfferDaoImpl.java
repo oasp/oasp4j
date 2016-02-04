@@ -87,7 +87,6 @@ public class OfferDaoImpl extends ApplicationMasterDataDaoImpl<OfferEntity> impl
       builder.and(Alias.$(offer.getPrice()).loe(offerFilterBo.getMaxPrice()));
     }
 
-    // This sort does not make any sense, as all the descriptions begin with the same word "Description of ...." ???
     if (sortBy.getSortByEntry().equals(OfferSortByHitEntry.DESCRIPTION)) {
       if (sortBy.getOrderBy().isDesc())
         query.where(builder).orderBy(Alias.$(offer.getDescription()).desc());
