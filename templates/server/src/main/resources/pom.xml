@@ -18,11 +18,11 @@
   </properties>
 
   <modules>
-    <module>${artifactId}-core</module>
+    <module>core</module>
 #if($earProjectName != '.')
     <module>${earProjectName}</module>
 #end
-    <module>${artifactId}-server</module>
+    <module>server</module>
   </modules>
 
   <dependencyManagement>
