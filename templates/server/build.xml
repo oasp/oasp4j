@@ -49,6 +49,7 @@
           <replaceregex pattern="io.oasp.java.samples" replace="${groupId}" flags="g"/>
           <replaceregex pattern="oasp4j-sample-core" replace="${rootArtifactId}-core" flags="g"/>
           <replaceregex pattern="oasp4j-samples" replace="${rootArtifactId}" flags="g"/>
+          <replaceregex pattern="${sample.package}" replace="${package}" flags="g"/>
           <replaceregex pattern="restaurant" replace="${rootArtifactId}" flags="gi"/>
         </tokenfilter>
       </filterchain>
