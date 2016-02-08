@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.general.configuration;
+package io.oasp.gastronomy.restaurant.general.common.impl.configuration;
 
 /**
  * This class contains the configuration like jobLauncher,Jobrepository etc.

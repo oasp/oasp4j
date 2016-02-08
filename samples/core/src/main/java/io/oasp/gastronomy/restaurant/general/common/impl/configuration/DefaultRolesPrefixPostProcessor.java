@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.general.configuration;
+package io.oasp.gastronomy.restaurant.general.common.impl.configuration;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;

@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.general.configuration;
+package io.oasp.gastronomy.restaurant.general.common.impl.configuration;
 
 import io.oasp.gastronomy.restaurant.general.common.impl.security.ApplicationAuthenticationProvider;
 import io.oasp.gastronomy.restaurant.general.common.impl.security.CsrfRequestMatcher;
