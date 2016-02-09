@@ -1,19 +1,10 @@
 package io.oasp.gastronomy.restaurant.general.common.impl.configuration;
 
-import io.oasp.gastronomy.restaurant.general.common.impl.security.ApplicationAuthenticationProvider;
-import io.oasp.gastronomy.restaurant.general.common.impl.security.CsrfRequestMatcher;
-import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
-import io.oasp.module.security.common.base.accesscontrol.AccessControlSchemaProvider;
-import io.oasp.module.security.common.impl.accesscontrol.AccessControlProviderImpl;
-import io.oasp.module.security.common.impl.accesscontrol.AccessControlSchemaProviderImpl;
-import io.oasp.module.security.common.impl.rest.AuthenticationSuccessHandlerSendingOkHttpStatusCode;
-import io.oasp.module.security.common.impl.rest.JsonUsernamePasswordAuthenticationFilter;
-import io.oasp.module.security.common.impl.rest.LogoutSuccessHandlerReturningOkHttpStatusCode;
-
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.servlet.Filter;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -25,9 +16,23 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+import io.oasp.gastronomy.restaurant.general.common.impl.security.ApplicationAuthenticationProvider;
+import io.oasp.gastronomy.restaurant.general.common.impl.security.CsrfRequestMatcher;
+import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
+import io.oasp.module.security.common.base.accesscontrol.AccessControlSchemaProvider;
+import io.oasp.module.security.common.impl.accesscontrol.AccessControlProviderImpl;
+import io.oasp.module.security.common.impl.accesscontrol.AccessControlSchemaProviderImpl;
+import io.oasp.module.security.common.impl.rest.AuthenticationSuccessHandlerSendingOkHttpStatusCode;
+import io.oasp.module.security.common.impl.rest.JsonUsernamePasswordAuthenticationFilter;
+import io.oasp.module.security.common.impl.rest.LogoutSuccessHandlerReturningOkHttpStatusCode;
 
 /**
  * Security configuration based on {@link WebSecurityConfigurerAdapter}. This configuration is by purpose designed most
@@ -39,6 +44,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+  @Value("${security.cors.enabled}")
+  boolean corsEnabled=false;
+  
   @Inject
   private AuthenticationManagerBuilder authenticationManagerBuilder;
 
@@ -69,6 +77,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // By default Spring-Security is setting the prefix "ROLE_" for all permissions/authorities.
     // We disable this undesired behavior here...
     return new DefaultRolesPrefixPostProcessor("");
+  }
+  
+  private CorsFilter getCorsFilter() {
+
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    CorsConfiguration config = new CorsConfiguration();
+    config.setAllowCredentials(true);
+    config.addAllowedOrigin("*");
+    config.addAllowedHeader("*");
+    config.addAllowedMethod("OPTIONS");
+    config.addAllowedMethod("HEAD");
+    config.addAllowedMethod("GET");
+    config.addAllowedMethod("PUT");
+    config.addAllowedMethod("POST");
+    config.addAllowedMethod("DELETE");
+    config.addAllowedMethod("PATCH");
+    source.registerCorsConfiguration("/**", config);
+    return new CorsFilter(source);
   }
 
   /**
@@ -103,6 +129,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // register login and logout filter that handles rest logins
         .addFilterAfter(getSimpleRestAuthenticationFilter(), BasicAuthenticationFilter.class)
         .addFilterAfter(getSimpleRestLogoutFilter(), LogoutFilter.class);
+    
+    if (corsEnabled){
+            http.addFilterBefore(getCorsFilter(),CsrfFilter.class);
+    }
   }
 
   /**
