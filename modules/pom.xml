@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>io.oasp.java.dev</groupId>
+    <artifactId>oasp4j</artifactId>
+    <version>dev-SNAPSHOT</version>
+  </parent>
+  <artifactId>oasp4j-modules</artifactId>
+  <version>dev-SNAPSHOT</version> <!-- This POM will never be released -->
+  <packaging>pom</packaging>
+  <name>${project.artifactId}</name>
+  <description>Reusable modules of the Open Application Standard Platform for Java (OASP4J).</description>
+
+  <modules>
+    <module>logging</module>
+    <module>test</module>
+    <module>configuration</module>
+    <module>beanmapping</module>
+    <module>rest</module>
+    <module>security</module>
+    <module>jpa</module>
+    <module>jpa-envers</module>
+    <module>batch</module>
+    <module>web</module>
+    <module>basic</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- BOM of spring-boot -->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring.boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- BOM of OASP4J -->
+      <dependency>
+        <groupId>io.oasp.java</groupId>
+        <artifactId>oasp4j-bom</artifactId>
+        <version>${oasp4j.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+  </dependencies>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <!--<notree>true</notree>-->
+          <show>private</show>
+          <encoding>${project.reporting.outputEncoding}</encoding>
+          <charset>${project.build.sourceEncoding}</charset>
+          <docfilessubdirs>true</docfilessubdirs>
+          <stylesheetfile>${user.dir}/src/main/javadoc/stylesheet.css</stylesheetfile>
+          <!--<additionalparam>-Xdoclint:none -source ${java.version}</additionalparam>-->
+          <links>
+            <link>http://docs.oracle.com/javase/7/docs/api/</link>
+            <link>http://oasp.github.io/oasp4j/maven/apidocs/</link>
+          </links>
+          <doctitle>JavaDocs for ${project.name}</doctitle>
+          <windowtitle>JavaDocs for ${project.name}</windowtitle>
+        </configuration>
+        <reportSets>
+          <reportSet>
+            <id>oasp.javadoc</id>
+            <reports>
+              <report>javadoc</report>
+            </reports>
+          </reportSet>
+          <reportSet>
+            <id>oasp.javadoc.aggregate</id>
+            <reports>
+              <report>aggregate</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
+
+</project>
