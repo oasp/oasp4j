@@ -51,6 +51,9 @@ public class OfferDaoImpl extends ApplicationMasterDataDaoImpl<OfferEntity> impl
   @Deprecated
   public List<OfferEntity> findOffersFiltered(OfferFilter offerFilterBo, OfferSortBy sortBy) {
 
+    /*
+     * Default error handling
+     */
     if (offerFilterBo == null || sortBy == null) {
       return new ArrayList<>(0);
     }
@@ -59,18 +62,24 @@ public class OfferDaoImpl extends ApplicationMasterDataDaoImpl<OfferEntity> impl
     JPQLQuery query = new JPAQuery(getEntityManager()).from(Alias.$(offer));
     BooleanBuilder builder = new BooleanBuilder();
 
+    /*
+     * Applying the filters
+     */
+    // Meal
     MealEntity meal = Alias.alias(MealEntity.class);
     if (offerFilterBo.getMealId() != null && offerFilterBo.getMealId() > 0) {
       query = query.join(Alias.$(offer.getMeal()), Alias.$(meal));
       builder.and(Alias.$(meal.getId()).eq(offerFilterBo.getMealId()));
     }
 
+    // Drink
     DrinkEntity drink = Alias.alias(DrinkEntity.class);
     if (offerFilterBo.getDrinkId() != null && offerFilterBo.getDrinkId() > 0) {
       query.join(Alias.$(offer.getDrink()), Alias.$(drink));
       builder.and(Alias.$(drink.getId()).eq(offerFilterBo.getDrinkId()));
     }
 
+    // SideDish
     SideDishEntity sideDish = Alias.alias(SideDishEntity.class);
     if (offerFilterBo.getSideDishId() != null && offerFilterBo.getSideDishId() > 0) {
       query.join(Alias.$(offer.getSideDish()), Alias.$(sideDish));
@@ -120,6 +129,9 @@ public class OfferDaoImpl extends ApplicationMasterDataDaoImpl<OfferEntity> impl
         query.where(builder).orderBy(Alias.$(offer.getId()).asc());
     }
 
+    /*
+     * Result
+     */
     List<OfferEntity> result = query.where(builder).list(Alias.$(offer));
     return result;
   }
