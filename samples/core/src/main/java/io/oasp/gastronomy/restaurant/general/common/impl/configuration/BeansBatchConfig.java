@@ -10,12 +10,10 @@ import javax.sql.DataSource;
 
 import org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor;
 import org.springframework.batch.core.configuration.support.MapJobRegistry;
-import org.springframework.batch.core.explore.JobExplorer;
 import org.springframework.batch.core.explore.support.JobExplorerFactoryBean;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.batch.core.launch.support.SimpleJobOperator;
-import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.repository.support.JobRepositoryFactoryBean;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.annotation.Value;
@@ -70,25 +68,26 @@ public class BeansBatchConfig {
    * This method is creating joboperator bean
    *
    * @return SimpleJobOperator
-   * @throws Exception
    */
   @Bean
   @DependsOn({ "jobRepository", "jobExplorer", "jobRegistry", "jobLauncher" })
   public SimpleJobOperator jobOperator() {
 
     SimpleJobOperator jobOperator = new SimpleJobOperator();
-    jobOperator.setJobExplorer((JobExplorer) this.jobExplorer);
+    try {
+      jobOperator.setJobExplorer(this.jobExplorer.getObject());
+    } catch (Exception e) {
+      throw new BeanCreationException("Could not create BatchJobOperator", e);
+    }
+
     jobOperator.setJobLauncher(this.jobLauncher);
     jobOperator.setJobRegistry(this.jobRegistry);
 
-    JobRepository jobRepoObj;
     try {
-      jobRepoObj = this.jobRepository.getObject();
+      jobOperator.setJobRepository(this.jobRepository.getObject());
     } catch (Exception e) {
-      throw new BeanCreationException("Could not create BatchJobRepository", e);
+      throw new BeanCreationException("Could not create BatchJobOperator", e);
     }
-
-    jobOperator.setJobRepository(jobRepoObj);
 
     return jobOperator;
   }
@@ -118,14 +117,13 @@ public class BeansBatchConfig {
   public SimpleJobLauncher jobLauncher() {
 
     this.jobLauncher = new SimpleJobLauncher();
-    JobRepository jobRepoObj;
+
     try {
-      jobRepoObj = this.jobRepository.getObject();
+      this.jobLauncher.setJobRepository(this.jobRepository.getObject());
     } catch (Exception e) {
-      throw new BeanCreationException("Could not create BatchJobRepository", e);
+      throw new BeanCreationException("Could not create BatchJobOperator", e);
     }
 
-    this.jobLauncher.setJobRepository(jobRepoObj);
     return this.jobLauncher;
   }
 
@@ -208,7 +206,7 @@ public class BeansBatchConfig {
 
   /**
    *
-   * @param transactionManager
+   * @param transactionManager the transactionManager to set
    */
   @Inject
   public void setTransactionManager(PlatformTransactionManager transactionManager) {
