@@ -18,16 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Named;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
+import com.mysema.query.BooleanBuilder;
 import com.mysema.query.alias.Alias;
+import com.mysema.query.jpa.JPQLQuery;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.path.EntityPathBase;
 
@@ -57,117 +51,76 @@ public class OfferDaoImpl extends ApplicationMasterDataDaoImpl<OfferEntity> impl
   @Deprecated
   public List<OfferEntity> findOffersFiltered(OfferFilter offerFilterBo, OfferSortBy sortBy) {
 
-    /*
-     * Default error handling
-     */
     if (offerFilterBo == null || sortBy == null) {
       return new ArrayList<>(0);
     }
 
-    CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
-    CriteriaQuery<OfferEntity> criteriaQuery = criteriaBuilder.createQuery(OfferEntity.class);
+    OfferEntity offer = Alias.alias(OfferEntity.class);
+    JPQLQuery query = new JPAQuery(getEntityManager()).from(Alias.$(offer));
+    BooleanBuilder builder = new BooleanBuilder();
 
-    Root<OfferEntity> offerRoot = criteriaQuery.from(OfferEntity.class);
-    List<Predicate> predicateParameters = new ArrayList<>();
-
-    /*
-     * Applying the filters
-     */
-    // Meal
-    Join<OfferEntity, MealEntity> mealJoin = null;
+    MealEntity meal = Alias.alias(MealEntity.class);
     if (offerFilterBo.getMealId() != null && offerFilterBo.getMealId() > 0) {
-      mealJoin = offerRoot.join("meal");
-      Path<Long> mealId = mealJoin.get("id");
-
-      predicateParameters.add(criteriaBuilder.equal(mealId, offerFilterBo.getMealId()));
+      query = query.join(Alias.$(offer.getMeal()), Alias.$(meal));
+      builder.and(Alias.$(meal.getId()).eq(offerFilterBo.getMealId()));
     }
 
-    // Drink
-    Join<OfferEntity, DrinkEntity> drinkJoin = null;
+    DrinkEntity drink = Alias.alias(DrinkEntity.class);
     if (offerFilterBo.getDrinkId() != null && offerFilterBo.getDrinkId() > 0) {
-      drinkJoin = offerRoot.join("drink");
-      Path<Long> drinkId = drinkJoin.get("id");
-
-      predicateParameters.add(criteriaBuilder.equal(drinkId, offerFilterBo.getDrinkId()));
+      query.join(Alias.$(offer.getDrink()), Alias.$(drink));
+      builder.and(Alias.$(drink.getId()).eq(offerFilterBo.getDrinkId()));
     }
 
-    // SideDish
-    Join<OfferEntity, SideDishEntity> sideDishJoin = null;
+    SideDishEntity sideDish = Alias.alias(SideDishEntity.class);
     if (offerFilterBo.getSideDishId() != null && offerFilterBo.getSideDishId() > 0) {
-      sideDishJoin = offerRoot.join("sideDish");
-      Path<Long> sideDishId = sideDishJoin.get("id");
-
-      predicateParameters.add(criteriaBuilder.equal(sideDishId, offerFilterBo.getSideDishId()));
+      query.join(Alias.$(offer.getSideDish()), Alias.$(sideDish));
+      builder.and(Alias.$(sideDish.getId()).eq(offerFilterBo.getSideDishId()));
     }
 
-    // REVIEW <who> (hohwille) the following code will IMHO not work at all as Query. If it does then it is still
-    // incorrect as the conversion to double is imprecise.
-
-    /*
-     * Price
-     */
     // only min price is given
     if (offerFilterBo.getMinPrice() != null) {
-      Path<Money> offerCurrentPrice = offerRoot.get("currentPrice");
-      predicateParameters.add(criteriaBuilder.ge(offerCurrentPrice.as(Double.class), offerFilterBo.getMinPrice()
-          .getValue().doubleValue()));
+      builder.and(Alias.$(offer.getPrice()).goe(offerFilterBo.getMinPrice()));
     }
 
     // only max price is given
     if (offerFilterBo.getMaxPrice() != null) {
-      Path<Money> offerCurrentPrice = offerRoot.get("currentPrice");
-      predicateParameters.add(criteriaBuilder.le(offerCurrentPrice.as(Double.class), offerFilterBo.getMaxPrice()
-          .getValue().doubleValue()));
+      builder.and(Alias.$(offer.getPrice()).loe(offerFilterBo.getMaxPrice()));
     }
 
-    /*
-     * Build query
-     */
-
-    /*
-     * Get the attribute name to sort by
-     */
-    // Default: Sort by attribute "id"
-    Expression<?> sortByExpression = offerRoot.get("id");
-
+    // sorting
     if (sortBy.getSortByEntry().equals(OfferSortByHitEntry.DESCRIPTION)) {
-      sortByExpression = offerRoot.get("description");
-    }
-    if (sortBy.getSortByEntry().equals(OfferSortByHitEntry.PRICE)) {
-      sortByExpression = offerRoot.get("currentPrice");
-    }
-    if (mealJoin != null && sortBy.getSortByEntry().equals(OfferSortByHitEntry.MEAL)) {
-      sortByExpression = mealJoin.get("description");
-    }
-    if (drinkJoin != null && sortBy.getSortByEntry().equals(OfferSortByHitEntry.DRINK)) {
-      sortByExpression = drinkJoin.get("description");
-    }
-    if (sideDishJoin != null && sortBy.getSortByEntry().equals(OfferSortByHitEntry.SIDEDISH)) {
-      sortByExpression = sideDishJoin.get("description");
+      if (sortBy.getOrderBy().isDesc())
+        query.where(builder).orderBy(Alias.$(offer.getDescription()).desc());
+      else
+        query.where(builder).orderBy(Alias.$(offer.getDescription()).asc());
+    } else if (sortBy.getSortByEntry().equals(OfferSortByHitEntry.PRICE)) {
+      if (sortBy.getOrderBy().isDesc())
+        query.where(builder).orderBy(Alias.$(offer.getPrice()).desc());
+      else
+        query.where(builder).orderBy(Alias.$(offer.getPrice()).asc());
+    } else if (sortBy.getSortByEntry().equals(OfferSortByHitEntry.MEAL)) {
+      if (sortBy.getOrderBy().isDesc())
+        query.where(builder).orderBy(Alias.$(offer.getMeal().getDescription()).desc());
+      else
+        query.where(builder).orderBy(Alias.$(offer.getMeal().getDescription()).asc());
+    } else if (sortBy.getSortByEntry().equals(OfferSortByHitEntry.DRINK)) {
+      if (sortBy.getOrderBy().isDesc())
+        query.where(builder).orderBy(Alias.$(offer.getDrink().getDescription()).desc());
+      else
+        query.where(builder).orderBy(Alias.$(offer.getDrink().getDescription()).asc());
+    } else if (sortBy.getSortByEntry().equals(OfferSortByHitEntry.SIDEDISH)) {
+      if (sortBy.getOrderBy().isDesc())
+        query.where(builder).orderBy(Alias.$(offer.getSideDish().getDescription()).desc());
+      else
+        query.where(builder).orderBy(Alias.$(offer.getSideDish().getDescription()).asc());
+    } else {
+      if (sortBy.getOrderBy().isDesc())
+        query.where(builder).orderBy(Alias.$(offer.getId()).desc());
+      else
+        query.where(builder).orderBy(Alias.$(offer.getId()).asc());
     }
 
-    /*
-     * Sorting order direction
-     */
-    // Default: Ascend sorting
-    criteriaQuery.select(offerRoot).where(predicateParameters.toArray(new Predicate[] {}))
-        .orderBy(criteriaBuilder.asc(sortByExpression));
-
-    if (sortBy.getOrderBy().isDesc()) {
-      /*
-       * Descend ordering
-       */
-
-      criteriaQuery.select(offerRoot).where(predicateParameters.toArray(new Predicate[] {}))
-          .orderBy(criteriaBuilder.desc(sortByExpression));
-    }
-
-    /*
-     * Result
-     */
-    TypedQuery<OfferEntity> typedQuery = getEntityManager().createQuery(criteriaQuery);
-    List<OfferEntity> result = typedQuery.getResultList();
-
+    List<OfferEntity> result = query.where(builder).list(Alias.$(offer));
     return result;
   }
 
