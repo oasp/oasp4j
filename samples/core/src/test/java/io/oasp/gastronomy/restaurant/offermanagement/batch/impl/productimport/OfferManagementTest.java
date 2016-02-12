@@ -37,12 +37,18 @@ public class OfferManagementTest extends ComponentTest {
   @Inject
   private Offermanagement offerManagement;
 
+  /**
+   * Login
+   */
   @Before
   public void setUp() {
 
     TestUtil.login("waiter", PermissionConstants.FIND_OFFER);
   }
 
+  /**
+   * Logout
+   */
   @After
   public void tearDown() {
 
