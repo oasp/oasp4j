@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.general.common.impl.configuration;
+package io.oasp.gastronomy.restaurant.general.configuration;
 
 import java.util.ArrayList;
 import java.util.Collection;
