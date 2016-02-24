@@ -82,6 +82,7 @@
     <copy todir="${sample.core.resources.output}">
       <fileset dir="${sample.core.resources.input}">
         <exclude name="**/NamedQueries.xml"/>
+      	<exclude name="**/orm.xml"/>  <!--New -->
         <exclude name="db/**/*"/>
         <exclude name="**/error_de.properties"/>
         <exclude name="**/error_en.properties"/>
@@ -120,6 +121,7 @@
     <copy todir="${sample.core.test.resources.output}">
       <fileset dir="${sample.core.test.resources.input}">
         <exclude name="**/NamedQueries.xml"/>
+      	<exclude name="**/orm.xml"/> <!--New -->
         <exclude name="db/**/*"/>
         <exclude name="**/beans-test-service-rest.xml"/>
       </fileset>
