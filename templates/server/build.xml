@@ -57,7 +57,6 @@
 
     <copy todir="${sample.core.sources.output}">
       <fileset dir="${sample.core.sources.input}">
-      	<exclude name="**/BeansBatchConfig.java"/>
         <exclude name="**/NamedQueries.java"/>
         <exclude name="*management"/>
         <exclude name="*management/*"/>
