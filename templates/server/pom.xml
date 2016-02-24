@@ -40,6 +40,7 @@
     <sample.server.resources.output>${sample.server.output}/src/main/resources</sample.server.resources.output>
     <sample.server.webresources.input>${sample.server.input}/src/main/webapp</sample.server.webresources.input>
     <sample.server.webresources.output>${sample.server.output}/src/main/webapp</sample.server.webresources.output>
+
   </properties>
 
   <build>
