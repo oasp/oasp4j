@@ -15,7 +15,6 @@
 
   <properties>
       <java.version>1.7</java.version>
-      <tomcat.version>7.0.57</tomcat.version>
   </properties>
 
   <dependencies>
@@ -24,7 +23,7 @@
       <artifactId>oasp4j-sample-core</artifactId>
       <version>${project.version}</version>
     </dependency>
-  </dependencies>
+ </dependencies>
 
   <profiles>
     <profile>
