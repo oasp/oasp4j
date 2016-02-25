@@ -1,6 +1,5 @@
 package io.oasp.module.jpa.dataaccess.base;
 
-import io.oasp.module.configuration.common.api.ApplicationConfigurationConstants;
 import io.oasp.module.jpa.dataaccess.api.GenericDao;
 import io.oasp.module.test.common.base.ComponentTest;
 
@@ -19,7 +18,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
  * @author fawinter
  */
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class })
-@ContextConfiguration({ ApplicationConfigurationConstants.BEANS_DATA_ACCESS })
+@ContextConfiguration({ "classpath:config/app/dataaccess/beans-dataaccess.xml" })
 public class AbstractGenericDaoTest extends ComponentTest {
 
   @Inject
