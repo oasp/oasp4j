@@ -52,8 +52,7 @@ public class AccessControlSchemaProviderImpl implements AccessControlSchemaProvi
       this.accessControlSchemaMapper = new AccessControlSchemaXmlMapper();
     }
     if (this.accessControlSchema == null) {
-      // this.accessControlSchema = new
-      // ClassPathResource(ApplicationConfigurationConstants.SECURITY_ACCESS_CONTROL_SCHEMA);
+
       this.accessControlSchema = new ClassPathResource("config/app/security/access-control-schema.xml");
     }
     this.initialized = true;
