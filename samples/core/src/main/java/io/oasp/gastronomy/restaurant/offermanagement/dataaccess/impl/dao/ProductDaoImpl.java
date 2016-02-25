@@ -171,8 +171,6 @@ public class ProductDaoImpl extends ApplicationMasterDataDaoImpl<ProductEntity> 
       query.where(Alias.$(product.getDescription()).eq(description));
     }
 
-    System.out.println("criteria: " + criteria.toStrink());
-
     // include filter for entity type
 
     if (!(criteria.isFetchDrinks() || criteria.isFetchMeals() || criteria.isFetchSideDishes())) {

@@ -1,22 +1,22 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.impl.dao;
 
+import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
+import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.BillEntity;
+import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.BillDao;
+import io.oasp.module.test.common.base.ComponentTest;
+
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 
 import org.junit.Test;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
-
-import io.oasp.gastronomy.restaurant.SpringBootApp;
-import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
-import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.BillEntity;
-import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.BillDao;
-import io.oasp.module.test.common.base.ComponentTest;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Test of {@link BillDao}.

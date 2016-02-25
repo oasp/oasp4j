@@ -14,9 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class is responsible for wrapping a {@link Filter} and allows to be {@link #setDisabled(Boolean) disabled} e.g.
- * for development tests (e.g. via some {@link System#getProperty(String) system property}. In case the filter gets
- * {@link #setDisabled(Boolean) disabled} a WARNING log message is produced and also written to {@link System#err}. <br/>
+ * This class is responsible for wrapping a {@link Filter} and allows to be {@link #setEnabled(Boolean)
+ * enabled/disabled} e.g. for development tests (e.g. via some {@link System#getProperty(String) system property}). In
+ * case the filter gets {@link #setEnabled(Boolean) disabled} a WARNING log message is produced and also written to
+ * {@link System#err}. <br/>
  *
  * Here is an example spring XML config from our sample application that allows to disable the <code>CsrfFilter</code>
  * via a {@link System#getProperties() system property} (<code>-DCsrfDisabled=true</code>):

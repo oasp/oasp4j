@@ -119,11 +119,12 @@ public class ProductSearchCriteriaTo extends SearchCriteriaTo {
     this.description = description;
   }
 
-  public String toStrink() {
+  @Override
+  protected void toString(StringBuilder buffer) {
 
-    return "ProductSearchCriteriaTo [fetchDrinks=" + this.fetchDrinks + ", fetchMeals=" + this.fetchMeals
+    buffer.append("ProductSearchCriteriaTo [fetchDrinks=" + this.fetchDrinks + ", fetchMeals=" + this.fetchMeals
         + ", fetchSideDishes=" + this.fetchSideDishes + ", name=" + this.name + ", description=" + this.description
-        + "]";
+        + "]");
   }
 
 }
