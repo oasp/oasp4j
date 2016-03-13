@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>io.oasp.java.dev</groupId>
+    <artifactId>oasp4j-templates</artifactId>
+    <version>dev-SNAPSHOT</version>
+  </parent>
+  <groupId>io.oasp.java.templates</groupId>
+  <artifactId>oasp4j-template-server</artifactId>
+  <version>${oasp4j.version}</version>
+  <packaging>maven-archetype</packaging>
+  <name>${project.artifactId}</name>
+  <description>Application template for the server of the Open Application Standard Platform for Java (OASP4J).</description>
+
+  <properties>
+    <template.java.version>${java.version}</template.java.version>
+    <template.input>${basedir}/src/main/templates/archetype-resources</template.input>
+    <filtered.input>${basedir}/target/archetype</filtered.input>
+    <sample.package>io.oasp.gastronomy.restaurant</sample.package>
+    <sample.package.path>io/oasp/gastronomy/restaurant</sample.package.path>
+    <sample.input>../../samples</sample.input>
+    <sample.output>${project.build.outputDirectory}/archetype-resources</sample.output>
+    <sample.core.input>${sample.input}/core</sample.core.input>
+    <sample.core.output>${sample.output}/core</sample.core.output>
+    <sample.core.sources.input>${sample.core.input}/src/main/java/${sample.package.path}</sample.core.sources.input>
+    <sample.core.sources.output>${sample.core.output}/src/main/java</sample.core.sources.output>
+    <sample.core.resources.input>${sample.core.input}/src/main/resources</sample.core.resources.input>
+    <sample.core.resources.output>${sample.core.output}/src/main/resources</sample.core.resources.output>
+
+    <sample.core.test.sources.input>${sample.core.input}/src/test/java/${sample.package.path}</sample.core.test.sources.input>
+    <sample.core.test.sources.output>${sample.core.output}/src/test/java</sample.core.test.sources.output>
+    <sample.core.test.resources.input>${sample.core.input}/src/test/resources</sample.core.test.resources.input>
+    <sample.core.test.resources.output>${sample.core.output}/src/test/resources</sample.core.test.resources.output>
+
+    <sample.server.input>${sample.input}/server</sample.server.input>
+    <sample.server.output>${sample.output}/server</sample.server.output>
+    <sample.server.resources.input>${sample.server.input}/src/main/resources</sample.server.resources.input>
+    <sample.server.resources.output>${sample.server.output}/src/main/resources</sample.server.resources.output>
+    <sample.server.webresources.input>${sample.server.input}/src/main/webapp</sample.server.webresources.input>
+    <sample.server.webresources.output>${sample.server.output}/src/main/webapp</sample.server.webresources.output>
+
+  </properties>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>${basedir}/src/main/resources/</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+    <outputDirectory>target/archetype</outputDirectory>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.archetype</groupId>
+        <artifactId>archetype-packaging</artifactId>
+        <version>2.2</version>
+      </extension>
+    </extensions>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <delimiters>
+            <delimiter>^*^</delimiter>
+          </delimiters>
+          <useDefaultDelimiters>false</useDefaultDelimiters>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-archetype-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <!--<settingsFile>${project.build.testResources[0].directory}/settings.xml</settingsFile>-->
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.7</version>
+        <dependencies>
+          <dependency>
+            <groupId>ant-contrib</groupId>
+            <artifactId>ant-contrib</artifactId>
+            <version>1.0b3</version>
+            <exclusions>
+              <exclusion>
+                <groupId>ant</groupId>
+                <artifactId>ant</artifactId>
+              </exclusion>
+            </exclusions>
+          </dependency>
+          <dependency>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant-nodeps</artifactId>
+            <version>1.8.1</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>copy-sources</id>
+            <phase>compile</phase>
+            <configuration>
+              <target>
+                <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath"/>
+                <ant antfile="${basedir}/build.xml"/>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="1.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+
+  <named-query name="get.free.tables">
+    <query><![CDATA[SELECT t FROM TableEntity t WHERE t.state = io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState.FREE]]></query>
+  </named-query>
+
+  <named-query name="get.staff.member.by.login">
+    <query><![CDATA[SELECT s FROM StaffMemberEntity s WHERE login = :login]]></query>
+  </named-query>
+
+  <named-query name="get.open.order.positions.for.order">
+    <query><![CDATA[SELECT op FROM OrderPositionEntity op where op.order.id = :orderId AND op.state NOT IN (io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState.PAYED, io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState.CANCELLED)]]></query>
+  </named-query>
+  <named-query name="get.all.order.positions">
+    <query><![CDATA[SELECT op FROM OrderPositionEntity op]]></query>
+  </named-query>
+  <named-query name="get.all.open.order.positions">
+    <query><![CDATA[SELECT op FROM OrderPositionEntity op where op.state NOT IN (io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState.PAYED, io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState.CANCELLED)]]></query>
+  </named-query>
+  <named-query name="get.open.order.for.table">
+    <query><![CDATA[SELECT o FROM OrderEntity o WHERE o.state = io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState.OPEN and o.tableId = :tableId]]></query>
+  </named-query>
+  <named-native-query name="get.all.ids.of.payed.bills">
+    <query><![CDATA[SELECT id FROM Bill WHERE payed = true]]></query>
+  </named-native-query>
+
+</entity-mappings>
