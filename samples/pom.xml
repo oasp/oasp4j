@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>io.oasp.java.dev</groupId>
+    <artifactId>oasp4j</artifactId>
+    <version>dev-SNAPSHOT</version>
+  </parent>
+  <artifactId>oasp4j-samples</artifactId>
+  <version>dev-SNAPSHOT</version> <!-- This POM will never be released -->
+  <packaging>pom</packaging>
+  <name>${project.artifactId}</name>
+  <description>Sample application of the Open Application Standard Platform for Java (OASP4J).</description>
+
+  <properties>
+    <oasp.port.range>81</oasp.port.range>
+    <oasp.http.port>${oasp.port.range}81</oasp.http.port>
+    <oasp.db.port>${oasp.port.range}43</oasp.db.port>
+    <oasp.test.excluded.groups>io.oasp.module.test.common.api.category.CategorySubsystemTest,io.oasp.module.test.common.api.category.CategorySystemTest</oasp.test.excluded.groups>
+  </properties>
+
+  <modules>
+    <module>core</module>
+    <module>server</module>
+    <module>batch</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- BOM of spring-boot -->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring.boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- BOM of OASP4J -->
+      <dependency>
+        <groupId>io.oasp.java</groupId>
+        <artifactId>oasp4j-bom</artifactId>
+        <version>${oasp4j.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <excludedGroups>${oasp.test.excluded.groups}</excludedGroups>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>subsystemtest</id>
+      <properties>
+        <oasp.test.excluded.groups>io.oasp.module.test.common.api.category.CategorySystemTest</oasp.test.excluded.groups>
+      </properties>
+    </profile>
+    <profile>
+      <id>systemtest</id>
+      <properties>
+        <oasp.test.excluded.groups/>
+      </properties>
+    </profile>
+  </profiles>
+
+</project>
