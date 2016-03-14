@@ -1,9 +1,2 @@
 @echo off
-call %~dp0\runbatch.bat productImportJob drinks.file=%~dp0\src\test\resources\drinks.csv meals.file=%~dp0\src\test\resources\meals.csv
-
-if errorlevel 0 goto success
-echo Failed.
-goto end
-:success
-echo Success.
-:end
+call %~dp0\runbatch.bat classpath:config/app/batch/beans-productimport.xml productImportJob drinks.file=file:src/test/resources/drinks.csv meals.file=file:src/test/resources/meals.csv date(date)=2015/12/20

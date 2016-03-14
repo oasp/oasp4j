@@ -5,6 +5,8 @@ package io.oasp.gastronomy.restaurant.general.configuration;
  * @author ssarmoka
  */
 
+import io.oasp.module.batch.common.impl.JobLauncherWithAdditionalRestartCapabilities;
+
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
@@ -12,7 +14,6 @@ import org.springframework.batch.core.configuration.support.JobRegistryBeanPostP
 import org.springframework.batch.core.configuration.support.MapJobRegistry;
 import org.springframework.batch.core.explore.support.JobExplorerFactoryBean;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
-import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.batch.core.launch.support.SimpleJobOperator;
 import org.springframework.batch.core.repository.support.JobRepositoryFactoryBean;
 import org.springframework.beans.factory.BeanCreationException;
@@ -41,7 +42,7 @@ public class BeansBatchConfig {
   /**
    * JobLauncher configuration
    */
-  private SimpleJobLauncher jobLauncher;
+  private JobLauncherWithAdditionalRestartCapabilities jobLauncher;
 
   /**
    * JobExplorer configuration
@@ -114,9 +115,9 @@ public class BeansBatchConfig {
    */
   @Bean
   @DependsOn("jobRepository")
-  public SimpleJobLauncher jobLauncher() {
+  public JobLauncherWithAdditionalRestartCapabilities jobLauncher() {
 
-    this.jobLauncher = new SimpleJobLauncher();
+    this.jobLauncher = new JobLauncherWithAdditionalRestartCapabilities();
 
     try {
       this.jobLauncher.setJobRepository(this.jobRepository.getObject());
