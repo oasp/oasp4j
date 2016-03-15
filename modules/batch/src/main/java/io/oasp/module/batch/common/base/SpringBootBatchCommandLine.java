@@ -151,7 +151,7 @@ public class SpringBootBatchCommandLine {
 		}
 	}
 
-	protected void findBeans(ConfigurableApplicationContext ctx) {
+	private void findBeans(ConfigurableApplicationContext ctx) {
 
 		launcher = ctx.getBean(JobLauncher.class);
 		locator = ctx.getBean(JobLocator.class); // supertype of JobRegistry
@@ -212,8 +212,8 @@ public class SpringBootBatchCommandLine {
 
 	}
 
-	private void startBatch(ConfigurableApplicationContext ctx,
-			String jobName, List<String> parameters) throws Exception {
+	private void startBatch(ConfigurableApplicationContext ctx, String jobName,
+			List<String> parameters) throws Exception {
 
 		JobExecution jobExecution = null;
 		try {
@@ -287,13 +287,26 @@ public class SpringBootBatchCommandLine {
 						+ jobName + " is currently not being executed.");
 			}
 
-			LOG.info("Found {} executions to be stopped.",
+			LOG.debug("Found {} executions to be stopped (potentially"
+					+ " already in state stopping).",
 					runningJobExecutionIDs.size());
 
+			int stoppedCount = 0;
 			for (Long id : runningJobExecutionIDs) {
 
-				operator.stop(id);
+				try {
+
+					operator.stop(id);
+					stoppedCount++;
+				} catch (JobExecutionNotRunningException e) {
+
+					// might have finished at this point
+					// or was in state stopping already
+				}
 			}
+
+			LOG.info("Actually stopped {} batch executions.", stoppedCount);
+
 		} catch (Exception e) {
 
 			returnCode = 1;
