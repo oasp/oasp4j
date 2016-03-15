@@ -25,7 +25,7 @@ INSERT INTO OFFER (id, modificationCounter, name, description, state, meal_id, s
 INSERT INTO OFFER (id, modificationCounter, name, description, state, meal_id, sidedish_id, drink_id, price) VALUES (4, 1, 'Salat-Menü', 'Description of Salat-Menü', 0, 4, 7, 9, 5.99);
 INSERT INTO OFFER (id, modificationCounter, name, description, state, meal_id, sidedish_id, drink_id, price) VALUES (5, 1, 'Cola', 'Description of Salat-Menü', 0, null, null, 10, 1.20);
 
-INSERT INTO RESTAURANTORDER (id, modificationCounter, table_id, state) VALUES (1, 1, 101, 1);
+INSERT INTO RESTAURANTORDER ( modificationCounter, table_id, state) VALUES ( 1, 101, 1);
 
 INSERT INTO ORDERPOSITION (id, modificationCounter, offer_id, offername, comment, state, drinkState, order_id, price) VALUES (1, 1, 1, 'Schnitzel-Menü', 'mit Ketschup', 2, 2, 1, 6.99);
 INSERT INTO ORDERPOSITION (id, modificationCounter, offer_id, offername, comment, state, drinkState, order_id, price) VALUES (2, 1, 2, 'Goulasch-Menü', '', 2, 2, 1, 7.99);
@@ -33,15 +33,15 @@ INSERT INTO ORDERPOSITION (id, modificationCounter, offer_id, offername, comment
 INSERT INTO ORDERPOSITION (id, modificationCounter, offer_id, offername, comment, state, drinkState, order_id, price) VALUES (4, 1, 4, 'Salat-Menü', '', 2, 2, 1, 5.99);
 INSERT INTO ORDERPOSITION (id, modificationCounter, offer_id, offername, comment, state, drinkState, order_id, price) VALUES (5, 1, 5, 'Cola', '', 2, 2, 1, 5.99);
 
-INSERT INTO BILL (id, modificationCounter, payed, total, tip) VALUES (1, 1, true, 14.98, 1.3);
+INSERT INTO BILL ( modificationCounter, payed, total, tip) VALUES ( 1, true, 14.98, 1.3);
 INSERT INTO BILL_ORDERPOSITION (bill_id, orderpositions_id) VALUES (1,1);
 INSERT INTO BILL_ORDERPOSITION (bill_id, orderpositions_id) VALUES (1,2);
 
-INSERT INTO BILL (id, modificationCounter, payed, total,tip) VALUES (2, 1, true, 14.98, 1.4);
+INSERT INTO BILL ( modificationCounter, payed, total,tip) VALUES ( 1, true, 14.98, 1.4);
 INSERT INTO BILL_ORDERPOSITION (bill_id, orderpositions_id) VALUES (2,3);
 INSERT INTO BILL_ORDERPOSITION (bill_id, orderpositions_id) VALUES (2,4);
 
-INSERT INTO STAFFMEMBER (id, login, role, firstname, lastname, modificationCounter) VALUES (0, 'chief', 3, 'Charly', 'Chief', 0);
-INSERT INTO STAFFMEMBER (id, login, role, firstname, lastname, modificationCounter) VALUES (1, 'cook', 0, 'Carl', 'Cook', 0);
-INSERT INTO STAFFMEMBER (id, login, role, firstname, lastname, modificationCounter) VALUES (2, 'waiter', 1, 'Willy', 'Waiter', 0);
-INSERT INTO STAFFMEMBER (id, login, role, firstname, lastname, modificationCounter) VALUES (3, 'barkeeper', 2, 'Bianca', 'Barkeeper', 0);
+INSERT INTO STAFFMEMBER ( login, role, firstname, lastname, modificationCounter) VALUES ( 'chief', 3, 'Charly', 'Chief', 0);
+INSERT INTO STAFFMEMBER ( login, role, firstname, lastname, modificationCounter) VALUES ('cook', 0, 'Carl', 'Cook', 0);
+INSERT INTO STAFFMEMBER ( login, role, firstname, lastname, modificationCounter) VALUES ( 'waiter', 1, 'Willy', 'Waiter', 0);
+INSERT INTO STAFFMEMBER ( login, role, firstname, lastname, modificationCounter) VALUES ( 'barkeeper', 2, 'Bianca', 'Barkeeper', 0);

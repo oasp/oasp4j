@@ -45,6 +45,7 @@ public class DatabaseMigrator {
       if (this.clean) {
         flyway.clean();
       }
+      flyway.setBaselineOnMigrate(true);
       flyway.migrate();
     }
   }
