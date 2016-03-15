@@ -1,6 +1,6 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.batch.impl.billexport;
 
-import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.SpringBootBatchApp;
 import io.oasp.gastronomy.restaurant.general.common.AbstractSpringBatchIntegrationTest;
 
 import java.io.BufferedReader;
@@ -28,7 +28,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
  *
  * @author jczas
  */
-@SpringApplicationConfiguration(classes = { SpringBootApp.class }, locations = { "classpath:/config/app/batch/beans-billexport.xml" })
+@SpringApplicationConfiguration(classes = { SpringBootBatchApp.class }, locations = { "classpath:/config/app/batch/beans-billexport.xml" })
 @WebAppConfiguration
 public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
   private static final Logger LOG = LoggerFactory.getLogger(AbstractSpringBatchIntegrationTest.class);
@@ -41,9 +41,6 @@ public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
    */
   @Test
   public void testJob() throws Exception {
-
-    // login
-    login("chief", "chief", "FindOffer", "SaveOffer", "DeleteOffer", "FindProduct", "SaveProduct", "DeleteProduct");
 
     // setup test data
     this.flyway.importTestData("classpath:BillExportJobTest/setup/db");

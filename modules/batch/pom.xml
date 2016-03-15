@@ -40,6 +40,13 @@
       <artifactId>spring-batch-integration</artifactId>
     </dependency>
 
+	<!-- Spring Boot: Only needed if SpringBootBatchCommandLine is used -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot</artifactId>
+      <optional>true</optional>
+    </dependency>
+
     <!-- Test dependencies -->
     <dependency>
       <groupId>org.springframework.batch</groupId>

@@ -1,9 +1,2 @@
 @echo off
-call %~dp0\runbatch.bat billExportJob bills.file=%~dp0\tmp\bills.csv
-
-if errorlevel 0 goto success
-echo Failed.
-goto end
-:success
-echo Success.
-:end
+call %~dp0\runbatch.bat classpath:config/app/batch/beans-billexport.xml billExportJob bills.file=bills.csv date(date)=2015/12/20
