@@ -39,7 +39,7 @@ public abstract class AbstractPersistenceEntity implements MutablePersistenceEnt
 
   @Override
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   public Long getId() {
 
     return this.id;
