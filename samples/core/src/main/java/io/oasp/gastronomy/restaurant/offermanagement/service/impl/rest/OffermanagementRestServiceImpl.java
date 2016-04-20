@@ -1,20 +1,5 @@
 package io.oasp.gastronomy.restaurant.offermanagement.service.impl.rest;
 
-import io.oasp.gastronomy.restaurant.general.logic.api.to.BinaryObjectEto;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferFilter;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSearchCriteriaTo;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSortBy;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSearchCriteriaTo;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SideDishEto;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,7 +16,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -43,17 +27,30 @@ import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 
+import io.oasp.gastronomy.restaurant.general.logic.api.to.BinaryObjectEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferFilter;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSearchCriteriaTo;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSortBy;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSearchCriteriaTo;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SideDishEto;
+import io.oasp.gastronomy.restaurant.offermanagement.service.api.rest.OffermanagementRestService;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+
 /**
  * This class contains methods for REST calls. Some URI structures may seem depricated, but in fact are not. See the
  * correspondent comments on top.
  *
  * @author agreul
  */
-@Path("/offermanagement/v1")
 @Named("OffermanagementRestService")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-public class OffermanagementRestServiceImpl {
+public class OffermanagementRestServiceImpl implements OffermanagementRestService {
 
   private Offermanagement offermanagement;
 
@@ -72,9 +69,8 @@ public class OffermanagementRestServiceImpl {
    * @param id the ID of the {@link OfferEto}
    * @return the {@link OfferEto}
    */
-  @GET
-  @Path("/offer/{id}")
-  public OfferEto getOffer(@PathParam("id") long id) {
+  @Override
+  public OfferEto getOffer(long id) {
 
     return this.offermanagement.findOffer(id);
   }
@@ -102,8 +98,7 @@ public class OffermanagementRestServiceImpl {
    *
    * @return the updated {@link OfferEto}
    */
-  @PUT
-  @Path("/offer/{id}")
+  @Override
   @Deprecated
   public OfferEto updateOffer(OfferEto offer) {
 
@@ -115,8 +110,7 @@ public class OffermanagementRestServiceImpl {
    *
    * @return all {@link OfferEto}s as list
    */
-  @GET
-  @Path("/offer/")
+  @Override
   @Deprecated
   public List<OfferEto> getAllOffers() {
 
@@ -128,8 +122,7 @@ public class OffermanagementRestServiceImpl {
    *
    * @return all {@link ProductEto}s as list
    */
-  @GET
-  @Path("/product/")
+  @Override
   @Deprecated
   public List<ProductEto> getAllProducts() {
 
@@ -142,8 +135,7 @@ public class OffermanagementRestServiceImpl {
    * @param product the product to save
    * @return the saved product
    */
-  @POST
-  @Path("/product/")
+  @Override
   public ProductEto saveProduct(ProductEto product) {
 
     return this.offermanagement.saveProduct(product);
@@ -156,8 +148,7 @@ public class OffermanagementRestServiceImpl {
    *             fetchMeals=true
    * @return all {@link MealEto}s as list
    */
-  @GET
-  @Path("/product/meal/")
+  @Override
   @Deprecated
   public List<MealEto> getAllMeals() {
 
@@ -171,8 +162,7 @@ public class OffermanagementRestServiceImpl {
    *             fetchDrinks=true
    * @return all {@link DrinkEto}s as list
    */
-  @GET
-  @Path("/product/drink/")
+  @Override
   @Deprecated
   public List<DrinkEto> getAllDrinks() {
 
@@ -186,8 +176,7 @@ public class OffermanagementRestServiceImpl {
    *             fetchSideDishes=true
    * @return all {@link SideDishEto}s as list
    */
-  @GET
-  @Path("/product/side/")
+  @Override
   @Deprecated
   public List<SideDishEto> getAllSideDishes() {
 
@@ -199,9 +188,8 @@ public class OffermanagementRestServiceImpl {
    *
    * @param id ID of the {@link OfferEto} to delete
    */
-  @DELETE
-  @Path("/offer/{id}")
-  public void deleteOffer(@PathParam("id") long id) {
+  @Override
+  public void deleteOffer(long id) {
 
     this.offermanagement.deleteOffer(id);
   }
@@ -213,9 +201,8 @@ public class OffermanagementRestServiceImpl {
    * @param revision revision of the {@link ProductEto}
    * @return the {@link ProductEto}
    */
-  @GET
-  @Path("/product/{id}/{revision}")
-  public ProductEto findProductByRevision(@PathParam("id") long id, @PathParam("revision") Long revision) {
+  @Override
+  public ProductEto findProductByRevision(long id, @PathParam("revision") Long revision) {
 
     if (revision != null) {
       return this.offermanagement.findProductByRevision(id, revision);
@@ -230,9 +217,8 @@ public class OffermanagementRestServiceImpl {
    * @param id ID of the {@link ProductEto}
    * @return the {@link ProductEto}
    */
-  @GET
-  @Path("/product/{id}")
-  public ProductEto findProduct(@PathParam("id") long id) {
+  @Override
+  public ProductEto findProduct(long id) {
 
     return this.offermanagement.findProduct(id);
   }
@@ -245,8 +231,7 @@ public class OffermanagementRestServiceImpl {
    *
    * @param product the {@link ProductEto} to be updated
    */
-  @PUT
-  @Path("/product/{id}")
+  @Override
   @Deprecated
   public void updateProduct(ProductEto product) {
 
@@ -259,9 +244,8 @@ public class OffermanagementRestServiceImpl {
    * @param id ID of the {@link ProductEto}
    * @return true, if there are no offers, that use the given ProductEto. false otherwise.
    */
-  @GET
-  @Path("/product/{id}/inuse")
-  public boolean isProductInUseByOffer(@PathParam("id") long id) {
+  @Override
+  public boolean isProductInUseByOffer(long id) {
 
     return this.offermanagement.isProductInUseByOffer(findProduct(id));
   }
@@ -271,9 +255,8 @@ public class OffermanagementRestServiceImpl {
    *
    * @param id ID of the ProductEto to delete
    */
-  @DELETE
-  @Path("/product/{id}")
-  public void deleteProduct(@PathParam("id") long id) {
+  @Override
+  public void deleteProduct(long id) {
 
     this.offermanagement.deleteProduct(id);
   }
@@ -285,8 +268,7 @@ public class OffermanagementRestServiceImpl {
    * @param sortBy sorting specification
    * @return list with all {@link OfferEto}s that match the {@link OfferFilter} criteria
    */
-  @GET
-  @Path("/sortby/{sortBy}")
+  @Override
   @Deprecated
   public List<OfferEto> getFilteredOffers(OfferFilter offerFilter, @PathParam("sortBy") OfferSortBy sortBy) {
 
@@ -300,14 +282,14 @@ public class OffermanagementRestServiceImpl {
    * @param sortBy sorting specification
    * @return list with all {@link ProductEto}s that match the {@link ProductFilter} criteria
    */
-  @GET
-  @Path("/product/sortby/{sortBy}")
+  @Override
   @Deprecated
   public List<ProductEto> getFilteredProducts(ProductFilter productFilter, @PathParam("sortBy") ProductSortBy sortBy) {
 
     return this.offermanagement.findProductsFiltered(productFilter, sortBy);
   }
 
+  @Override
   @SuppressWarnings("javadoc")
   @Consumes("multipart/mixed")
   @POST
@@ -315,7 +297,7 @@ public class OffermanagementRestServiceImpl {
   public void updateProductPicture(@PathParam("id") long productId,
       @Multipart(value = "binaryObjectEto", type = MediaType.APPLICATION_JSON) BinaryObjectEto binaryObjectEto,
       @Multipart(value = "blob", type = MediaType.APPLICATION_OCTET_STREAM) InputStream picture)
-      throws SerialException, SQLException, IOException {
+          throws SerialException, SQLException, IOException {
 
     Blob blob = new SerialBlob(IOUtils.readBytesFromStream(picture));
     this.offermanagement.updateProductPicture(productId, blob, binaryObjectEto);
@@ -334,8 +316,8 @@ public class OffermanagementRestServiceImpl {
     byte[] data = IOUtils.readBytesFromStream(blob.getBinaryStream());
 
     List<Attachment> atts = new LinkedList<>();
-    atts.add(new Attachment("binaryObjectEto", MediaType.APPLICATION_JSON, this.offermanagement
-        .findProductPicture(productId)));
+    atts.add(new Attachment("binaryObjectEto", MediaType.APPLICATION_JSON,
+        this.offermanagement.findProductPicture(productId)));
     atts.add(new Attachment("blob", MediaType.APPLICATION_OCTET_STREAM, new ByteArrayInputStream(data)));
     return new MultipartBody(atts, true);
 
