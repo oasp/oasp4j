@@ -337,7 +337,9 @@
         <reportSets>
           <reportSet>
             <reports>
-              <report>aggregate</report>
+              <!-- https://github.com/jeremylong/DependencyCheck/issues/386-->
+              <!-- <report>aggregate</report> -->
+              <report>check</report>
             </reports>
           </reportSet>
         </reportSets>
