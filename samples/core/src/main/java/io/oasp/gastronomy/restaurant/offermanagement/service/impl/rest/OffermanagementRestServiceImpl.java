@@ -12,19 +12,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
-import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 
 import io.oasp.gastronomy.restaurant.general.logic.api.to.BinaryObjectEto;
@@ -44,10 +36,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.service.api.rest.Offermanag
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
- * This class contains methods for REST calls. Some URI structures may seem depricated, but in fact are not. See the
- * correspondent comments on top.
- *
- * @author agreul
+ * @author agreul, geazzi, jmolinar
  */
 @Named("OffermanagementRestService")
 public class OffermanagementRestServiceImpl implements OffermanagementRestService {
@@ -63,41 +52,18 @@ public class OffermanagementRestServiceImpl implements OffermanagementRestServic
     this.offermanagement = offerManagement;
   }
 
-  /**
-   * Delegates to {@link Offermanagement#findOffer}.
-   *
-   * @param id the ID of the {@link OfferEto}
-   * @return the {@link OfferEto}
-   */
   @Override
   public OfferEto getOffer(long id) {
 
     return this.offermanagement.findOffer(id);
   }
 
-  /**
-   * Delegates to {@link Offermanagement#saveOffer}.
-   *
-   * @param offer the {@link OfferEto} to save
-   *
-   * @return the saved {@link OfferEto}
-   */
-  @POST
-  @Path("/offer/")
+  @Override
   public OfferEto saveOffer(OfferEto offer) {
 
     return this.offermanagement.saveOffer(offer);
   }
 
-  // although id in path is redundant, this structure is intentionally chosen
-  // for further reasons behind this decision see one of the other ***ManagementRestServiceImpl
-  /**
-   * Delegates to {@link Offermanagement#saveOffer}.
-   *
-   * @param offer the {@link OfferEto} to be updated
-   *
-   * @return the updated {@link OfferEto}
-   */
   @Override
   @Deprecated
   public OfferEto updateOffer(OfferEto offer) {
@@ -105,11 +71,6 @@ public class OffermanagementRestServiceImpl implements OffermanagementRestServic
     return this.offermanagement.saveOffer(offer);
   }
 
-  /**
-   * Delegates to {@link Offermanagement#findAllOffers}.
-   *
-   * @return all {@link OfferEto}s as list
-   */
   @Override
   @Deprecated
   public List<OfferEto> getAllOffers() {
@@ -117,11 +78,6 @@ public class OffermanagementRestServiceImpl implements OffermanagementRestServic
     return this.offermanagement.findAllOffers();
   }
 
-  /**
-   * Delegates to {@link Offermanagement#findAllProducts}.
-   *
-   * @return all {@link ProductEto}s as list
-   */
   @Override
   @Deprecated
   public List<ProductEto> getAllProducts() {
@@ -129,25 +85,12 @@ public class OffermanagementRestServiceImpl implements OffermanagementRestServic
     return this.offermanagement.findAllProducts();
   }
 
-  /**
-   * Delegates to {@link Offermanagement#saveProduct}.
-   *
-   * @param product the product to save
-   * @return the saved product
-   */
   @Override
   public ProductEto saveProduct(ProductEto product) {
 
     return this.offermanagement.saveProduct(product);
   }
 
-  /**
-   * Delegates to {@link Offermanagement#findAllMeals}.
-   *
-   * @deprecated use {@link OffermanagementRestServiceImpl#findProductEtosByPost(ProductSearchCriteriaTo)} with
-   *             fetchMeals=true
-   * @return all {@link MealEto}s as list
-   */
   @Override
   @Deprecated
   public List<MealEto> getAllMeals() {
@@ -155,13 +98,6 @@ public class OffermanagementRestServiceImpl implements OffermanagementRestServic
     return this.offermanagement.findAllMeals();
   }
 
-  /**
-   * Delegates to {@link Offermanagement#findAllDrinks}.
-   *
-   * @deprecated use {@link OffermanagementRestServiceImpl#findProductEtosByPost(ProductSearchCriteriaTo)} with
-   *             fetchDrinks=true
-   * @return all {@link DrinkEto}s as list
-   */
   @Override
   @Deprecated
   public List<DrinkEto> getAllDrinks() {
@@ -169,13 +105,6 @@ public class OffermanagementRestServiceImpl implements OffermanagementRestServic
     return this.offermanagement.findAllDrinks();
   }
 
-  /**
-   * Delegates to {@link Offermanagement#findAllSideDishes}.
-   *
-   * @deprecated use {@link OffermanagementRestServiceImpl#findProductEtosByPost(ProductSearchCriteriaTo)} with
-   *             fetchSideDishes=true
-   * @return all {@link SideDishEto}s as list
-   */
   @Override
   @Deprecated
   public List<SideDishEto> getAllSideDishes() {
@@ -183,26 +112,14 @@ public class OffermanagementRestServiceImpl implements OffermanagementRestServic
     return this.offermanagement.findAllSideDishes();
   }
 
-  /**
-   * Delegates to {@link Offermanagement#deleteOffer}.
-   *
-   * @param id ID of the {@link OfferEto} to delete
-   */
   @Override
   public void deleteOffer(long id) {
 
     this.offermanagement.deleteOffer(id);
   }
 
-  /**
-   * Delegates to {@link Offermanagement#findProductByRevision}.
-   *
-   * @param id ID of the {@link ProductEto}
-   * @param revision revision of the {@link ProductEto}
-   * @return the {@link ProductEto}
-   */
   @Override
-  public ProductEto findProductByRevision(long id, @PathParam("revision") Long revision) {
+  public ProductEto findProductByRevision(long id, Long revision) {
 
     if (revision != null) {
       return this.offermanagement.findProductByRevision(id, revision);
@@ -211,26 +128,12 @@ public class OffermanagementRestServiceImpl implements OffermanagementRestServic
     }
   }
 
-  /**
-   * Delegates to {@link Offermanagement#findProduct}.
-   *
-   * @param id ID of the {@link ProductEto}
-   * @return the {@link ProductEto}
-   */
   @Override
   public ProductEto findProduct(long id) {
 
     return this.offermanagement.findProduct(id);
   }
 
-  // although id in path is redundant, this structure is intentionally chosen
-  // for further reasons behind this decision see one of the other
-  // *ManagementRestServiceImpl
-  /**
-   * Delegates to {@link Offermanagement#saveProduct}.
-   *
-   * @param product the {@link ProductEto} to be updated
-   */
   @Override
   @Deprecated
   public void updateProduct(ProductEto product) {
@@ -238,77 +141,43 @@ public class OffermanagementRestServiceImpl implements OffermanagementRestServic
     this.offermanagement.saveProduct(product);
   }
 
-  /**
-   * Delegates to {@link Offermanagement#isProductInUseByOffer}.
-   *
-   * @param id ID of the {@link ProductEto}
-   * @return true, if there are no offers, that use the given ProductEto. false otherwise.
-   */
   @Override
   public boolean isProductInUseByOffer(long id) {
 
     return this.offermanagement.isProductInUseByOffer(findProduct(id));
   }
 
-  /**
-   * Delegates to {@link Offermanagement#deleteProduct}.
-   *
-   * @param id ID of the ProductEto to delete
-   */
   @Override
   public void deleteProduct(long id) {
 
     this.offermanagement.deleteProduct(id);
   }
 
-  /**
-   * Delegates to {@link Offermanagement#findOffersFiltered}.
-   *
-   * @param offerFilter the offers filter criteria
-   * @param sortBy sorting specification
-   * @return list with all {@link OfferEto}s that match the {@link OfferFilter} criteria
-   */
   @Override
   @Deprecated
-  public List<OfferEto> getFilteredOffers(OfferFilter offerFilter, @PathParam("sortBy") OfferSortBy sortBy) {
+  public List<OfferEto> getFilteredOffers(OfferFilter offerFilter, OfferSortBy sortBy) {
 
     return this.offermanagement.findOffersFiltered(offerFilter, sortBy);
   }
 
-  /**
-   * Delegates to {@link Offermanagement#findProductsFiltered}.
-   *
-   * @param productFilter filter specification
-   * @param sortBy sorting specification
-   * @return list with all {@link ProductEto}s that match the {@link ProductFilter} criteria
-   */
   @Override
   @Deprecated
-  public List<ProductEto> getFilteredProducts(ProductFilter productFilter, @PathParam("sortBy") ProductSortBy sortBy) {
+  public List<ProductEto> getFilteredProducts(ProductFilter productFilter, ProductSortBy sortBy) {
 
     return this.offermanagement.findProductsFiltered(productFilter, sortBy);
   }
 
   @Override
-  @SuppressWarnings("javadoc")
-  @Consumes("multipart/mixed")
-  @POST
-  @Path("/product/{id}/picture")
-  public void updateProductPicture(@PathParam("id") long productId,
-      @Multipart(value = "binaryObjectEto", type = MediaType.APPLICATION_JSON) BinaryObjectEto binaryObjectEto,
-      @Multipart(value = "blob", type = MediaType.APPLICATION_OCTET_STREAM) InputStream picture)
-          throws SerialException, SQLException, IOException {
+  public void updateProductPicture(long productId, BinaryObjectEto binaryObjectEto, InputStream picture)
+      throws SerialException, SQLException, IOException {
 
     Blob blob = new SerialBlob(IOUtils.readBytesFromStream(picture));
     this.offermanagement.updateProductPicture(productId, blob, binaryObjectEto);
 
   }
 
-  @SuppressWarnings("javadoc")
-  @Produces("multipart/mixed")
-  @GET
-  @Path("/product/{id}/picture")
-  public MultipartBody getProductPicture(@PathParam("id") long productId) throws SQLException, IOException {
+  @Override
+  public MultipartBody getProductPicture(long productId) throws SQLException, IOException {
 
     Blob blob = this.offermanagement.findProductPictureBlob(productId);
     // REVIEW arturk88 (hohwille) we need to find another way to stream the blob without loading into heap.
@@ -323,12 +192,9 @@ public class OffermanagementRestServiceImpl implements OffermanagementRestServic
 
   }
 
-  @SuppressWarnings("javadoc")
-  @Produces(MediaType.APPLICATION_OCTET_STREAM)
-  @GET
-  @Path("/product/{id}/rawpicture")
+  @Override
   @Deprecated
-  public Response getProductRawPicture(@PathParam("id") long productId) throws SQLException, IOException {
+  public Response getProductRawPicture(long productId) throws SQLException, IOException {
 
     Blob blob = this.offermanagement.findProductPictureBlob(productId);
     if (blob != null) {
@@ -340,35 +206,19 @@ public class OffermanagementRestServiceImpl implements OffermanagementRestServic
     }
   }
 
-  @SuppressWarnings("javadoc")
-  @DELETE
-  @Path("/product/{id}/picture")
+  @Override
   public void deleteProductPicture(long productId) {
 
     this.offermanagement.deleteProductPicture(productId);
   }
 
-  /**
-   * Delegates to {@link Offermanagement#findOfferEtos}.
-   *
-   * @param searchCriteriaTo the pagination and search criteria to be used for finding offers.
-   * @return the {@link PaginatedListTo list} of matching {@link OfferEto}s.
-   */
-  @Path("/offer/search")
-  @POST
+  @Override
   public PaginatedListTo<OfferEto> findOfferEtosByPost(OfferSearchCriteriaTo searchCriteriaTo) {
 
     return this.offermanagement.findOfferEtos(searchCriteriaTo);
   }
 
-  /**
-   * Delegates to {@link Offermanagement#findProductEtos}.
-   *
-   * @param searchCriteriaTo the pagination and search criteria to be used for finding products.
-   * @return the {@link PaginatedListTo list} of matching {@link ProductEto}s.
-   */
-  @Path("/product/search")
-  @POST
+  @Override
   public PaginatedListTo<ProductEto> findProductEtosByPost(ProductSearchCriteriaTo searchCriteriaTo) {
 
     return this.offermanagement.findProductEtos(searchCriteriaTo);

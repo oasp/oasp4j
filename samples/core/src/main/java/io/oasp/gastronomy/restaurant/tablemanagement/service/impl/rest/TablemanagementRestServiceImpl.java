@@ -6,8 +6,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 
 import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
 
@@ -19,11 +17,8 @@ import io.oasp.gastronomy.restaurant.tablemanagement.service.api.rest.Tablemanag
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
- * The service class for REST calls in order to execute the methods in {@link Tablemanagement}.
- *
- * @author agreul
+ * @author agreul, gazzi, jmolinar
  */
-@Path("/tablemanagement/v1")
 @Named("TablemanagementRestService")
 public class TablemanagementRestServiceImpl implements TablemanagementRestService {
 
@@ -58,6 +53,7 @@ public class TablemanagementRestServiceImpl implements TablemanagementRestServic
   }
 
   @Override
+  @Deprecated
   public List<TableEto> getAllTables() {
 
     List<TableEto> allTables = this.tableManagement.findAllTables();
@@ -65,6 +61,7 @@ public class TablemanagementRestServiceImpl implements TablemanagementRestServic
   }
 
   @Override
+  @Deprecated
   public TableEto createTable(TableEto table) {
 
     return this.tableManagement.saveTable(table);
@@ -77,19 +74,20 @@ public class TablemanagementRestServiceImpl implements TablemanagementRestServic
   }
 
   @Override
-  public void deleteTable(@PathParam("id") long id) {
+  public void deleteTable(long id) {
 
     this.tableManagement.deleteTable(id);
   }
 
   @Override
+  @Deprecated
   public List<TableEto> getFreeTables() {
 
     return this.tableManagement.findFreeTables();
   }
 
   @Override
-  public boolean isTableReleasable(@PathParam("id") long id) {
+  public boolean isTableReleasable(long id) {
 
     TableEto table = this.tableManagement.findTable(id);
     if (table == null) {

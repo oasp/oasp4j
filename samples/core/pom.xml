@@ -145,79 +145,48 @@
     </dependency>
 
     <!-- CXF for REST and Webservices -->
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-jaxws</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>asm</groupId>
+          <artifactId>asm</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
 
-<dependency>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+    </dependency>
 
-<groupId>org.apache.cxf</groupId>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-rs-client</artifactId>
+    </dependency>
 
-<artifactId>cxf-rt-frontend-jaxws</artifactId>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-rs-service-description</artifactId>
+    </dependency>
 
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-transports-http</artifactId>
+    </dependency>
 
-<exclusions>
-
-
-<exclusion>
-
-<groupId>asm</groupId>
-
-<artifactId>asm</artifactId>
-
-</exclusion>
-
-</exclusions>
-
-</dependency>
-
-
-<dependency>
-
-<groupId>org.apache.cxf</groupId>
-
-<artifactId>cxf-rt-frontend-jaxrs</artifactId>
-
-</dependency>
-
-
-<dependency>
-
-<groupId>org.apache.cxf</groupId>
-
-<artifactId>cxf-rt-rs-client</artifactId>
-
-</dependency>
-
-
-<dependency>
-
-<groupId>org.apache.cxf</groupId>
-
-<artifactId>cxf-rt-rs-service-description</artifactId>
-
-</dependency>
-
-
-<dependency>
-
-<groupId>org.apache.cxf</groupId>
-
-<artifactId>cxf-rt-transports-http</artifactId>
-
-</dependency>
-
-
-<dependency>
-
-<groupId>com.fasterxml.jackson.jaxrs</groupId>
-
-<artifactId>jackson-jaxrs-json-provider</artifactId>
-
-</dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.jaxrs</groupId>
+      <artifactId>jackson-jaxrs-json-provider</artifactId>
+    </dependency>
 
     <!-- Web Sockets -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-websocket</artifactId>
     </dependency>
+
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-messaging</artifactId>
@@ -229,6 +198,7 @@
       <artifactId>spring-batch-test</artifactId>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-test</artifactId>

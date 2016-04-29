@@ -34,12 +34,10 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageO
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
- * TODO geazzi This type ...
  *
  * The service class for REST calls in order to execute the methods in {@link Salesmanagement}.
  *
- * @author geazzi
- * @since dev
+ * @author agreul, geazzi, jmolinar
  */
 
 @Path("/salesmanagement/v1")

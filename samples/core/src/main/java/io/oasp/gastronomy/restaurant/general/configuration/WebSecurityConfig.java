@@ -125,7 +125,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .logout().logoutSuccessUrl("/login.html").and()
 
         // register login and logout filter that handles rest logins
-        .addFilterBefore(basicAuthenticationFilter(), BasicAuthenticationFilter.class)
+        // .addFilterBefore(basicAuthenticationFilter(), BasicAuthenticationFilter.class)
         .addFilterAfter(getSimpleRestAuthenticationFilter(), BasicAuthenticationFilter.class)
         .addFilterAfter(getSimpleRestLogoutFilter(), LogoutFilter.class);
 

@@ -15,8 +15,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
+import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 
 import io.oasp.gastronomy.restaurant.general.logic.api.to.BinaryObjectEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
@@ -24,6 +26,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferFilter;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSortBy;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
@@ -31,15 +34,14 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSearchC
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SideDishEto;
 import io.oasp.gastronomy.restaurant.offermanagement.service.impl.rest.OffermanagementRestServiceImpl;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
- * TODO geazzi This type ...
  *
- * This class contains methods for REST calls. Some URI structures may seem depricated, but in fact are not. See the
+ * This class contains methods for REST calls. Some URI structures may seem deprecated, but in fact are not. See the
  * correspondent comments on top.
  *
- * @author geazzi
- * @since dev
+ * @author agreul, geazzi, jmolinar
  */
 
 @Path("/offermanagement/v1")
@@ -56,6 +58,17 @@ public interface OffermanagementRestService {
   @GET
   @Path("/offer/{id}")
   OfferEto getOffer(@PathParam("id") long id);
+
+  /**
+   * Delegates to {@link Offermanagement#saveOffer}.
+   *
+   * @param offer the {@link OfferEto} to save
+   *
+   * @return the saved {@link OfferEto}
+   */
+  @POST
+  @Path("/offer/")
+  public OfferEto saveOffer(OfferEto offer);
 
   // although id in path is redundant, this structure is intentionally chosen
   // for further reasons behind this decision see one of the other ***ManagementRestServiceImpl
@@ -230,6 +243,43 @@ public interface OffermanagementRestService {
   public void updateProductPicture(@PathParam("id") long productId,
       @Multipart(value = "binaryObjectEto", type = MediaType.APPLICATION_JSON) BinaryObjectEto binaryObjectEto,
       @Multipart(value = "blob", type = MediaType.APPLICATION_OCTET_STREAM) InputStream picture)
-          throws SerialException, SQLException, IOException;
+      throws SerialException, SQLException, IOException;
 
+  @SuppressWarnings("javadoc")
+  @Produces("multipart/mixed")
+  @GET
+  @Path("/product/{id}/picture")
+  public MultipartBody getProductPicture(@PathParam("id") long productId) throws SQLException, IOException;
+
+  @SuppressWarnings("javadoc")
+  @Produces(MediaType.APPLICATION_OCTET_STREAM)
+  @GET
+  @Path("/product/{id}/rawpicture")
+  @Deprecated
+  public Response getProductRawPicture(@PathParam("id") long productId) throws SQLException, IOException;
+
+  @SuppressWarnings("javadoc")
+  @DELETE
+  @Path("/product/{id}/picture")
+  public void deleteProductPicture(long productId);
+
+  /**
+   * Delegates to {@link Offermanagement#findOfferEtos}.
+   *
+   * @param searchCriteriaTo the pagination and search criteria to be used for finding offers.
+   * @return the {@link PaginatedListTo list} of matching {@link OfferEto}s.
+   */
+  @Path("/offer/search")
+  @POST
+  public PaginatedListTo<OfferEto> findOfferEtosByPost(OfferSearchCriteriaTo searchCriteriaTo);
+
+  /**
+   * Delegates to {@link Offermanagement#findProductEtos}.
+   *
+   * @param searchCriteriaTo the pagination and search criteria to be used for finding products.
+   * @return the {@link PaginatedListTo list} of matching {@link ProductEto}s.
+   */
+  @Path("/product/search")
+  @POST
+  public PaginatedListTo<ProductEto> findProductEtosByPost(ProductSearchCriteriaTo searchCriteriaTo);
 }

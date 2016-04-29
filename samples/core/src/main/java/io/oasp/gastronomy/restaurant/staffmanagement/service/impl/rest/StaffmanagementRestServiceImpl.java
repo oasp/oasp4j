@@ -12,10 +12,7 @@ import io.oasp.gastronomy.restaurant.staffmanagement.service.api.rest.Staffmanag
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
- * This class contains methods for REST calls. Some URI structures may seem depricated, but in fact are not. See the
- * correspondent comments on top.
- *
- * @author agreul
+ * @author agreul, geazzi, jmolinar
  */
 @Named("StaffmanagementRestService")
 public class StaffmanagementRestServiceImpl implements StaffmanagementRestService {
@@ -48,6 +45,7 @@ public class StaffmanagementRestServiceImpl implements StaffmanagementRestServic
   // like that and do the update right in the view of a previously "loaded" StaffMember
 
   @Override
+  @Deprecated
   public void updateStaffMember(StaffMemberEto staffMemberBo) {
 
     this.staffmanagement.saveStaffMember(staffMemberBo);

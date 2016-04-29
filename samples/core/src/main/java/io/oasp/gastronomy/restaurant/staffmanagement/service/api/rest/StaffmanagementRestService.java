@@ -18,29 +18,15 @@ import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberSea
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
- * TODO geazzi This type ...
  *
  * The service class for REST calls in order to execute the methods in {@link Staffmanagement}.
  *
- * @author geazzi
- * @since dev
+ * @author agreul, geazzi, jmolinar
  */
 @Path("/staffmanagement/v1/staff")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public interface StaffmanagementRestService {
-
-  /**
-   * @param login the login of a staff member
-   * @return {@link StaffMemberEto}
-   */
-  @GET
-  @Path("/{login}")
-  StaffMemberEto getStaffMember(@PathParam("login") String login);
-
-  // although login is not explicitly needed here, the path structure is intentionally chosen
-  // it is up to the GUI-Team to either insert a (maybe redundant) call on getStaffMember or to leave it
-  // like that and do the update right in the view of a previously "loaded" StaffMember
 
   /**
    * @return a list of all {@link StaffMemberEto}
@@ -50,6 +36,14 @@ public interface StaffmanagementRestService {
   @Path("/")
   @Deprecated
   List<StaffMemberEto> getAllStaffMember();
+
+  /**
+   * @param login the login of a staff member
+   * @return {@link StaffMemberEto}
+   */
+  @GET
+  @Path("/{login}")
+  StaffMemberEto getStaffMember(@PathParam("login") String login);
 
   /**
    * @param staffMemberBo the staffMember to be updated as JSON
