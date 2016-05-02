@@ -11,10 +11,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
@@ -45,8 +47,8 @@ import io.oasp.module.security.common.impl.rest.LogoutSuccessHandlerReturningOkH
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Value("${security.cors.enabled}")
-  boolean corsEnabled=false;
-  
+  boolean corsEnabled = false;
+
   @Inject
   private AuthenticationManagerBuilder authenticationManagerBuilder;
 
@@ -78,7 +80,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // We disable this undesired behavior here...
     return new DefaultRolesPrefixPostProcessor("");
   }
-  
+
   private CorsFilter getCorsFilter() {
 
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -107,17 +109,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         new String[] { "/login", "/security/**", "/services/rest/login", "/services/rest/logout" };
 
     http
-    //
-    .authenticationProvider(this.authenticationProvider)
+        //
+        .authenticationProvider(this.authenticationProvider)
         // define all urls that are not to be secured
-        .authorizeRequests().antMatchers(unsecuredResources).permitAll().anyRequest()
-        .authenticated()
-        .and()
+        .authorizeRequests().antMatchers(unsecuredResources).permitAll().anyRequest().authenticated().and()
 
         // activate crsf check for a selection of urls (but not for login & logout)
-        .csrf()
-        .requireCsrfProtectionMatcher(new CsrfRequestMatcher())
-        .and()
+        .csrf().requireCsrfProtectionMatcher(new CsrfRequestMatcher()).and()
 
         // configure parameters for simple form login (and logout)
         .formLogin().successHandler(new SimpleUrlAuthenticationSuccessHandler()).defaultSuccessUrl("/")
@@ -127,11 +125,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .logout().logoutSuccessUrl("/login.html").and()
 
         // register login and logout filter that handles rest logins
+        // .addFilterBefore(basicAuthenticationFilter(), BasicAuthenticationFilter.class)
         .addFilterAfter(getSimpleRestAuthenticationFilter(), BasicAuthenticationFilter.class)
         .addFilterAfter(getSimpleRestLogoutFilter(), LogoutFilter.class);
-    
-    if (corsEnabled){
-            http.addFilterBefore(getCorsFilter(),CsrfFilter.class);
+
+    if (this.corsEnabled) {
+      http.addFilterBefore(getCorsFilter(), CsrfFilter.class);
     }
   }
 
@@ -189,5 +188,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     // add our own authenticatonProvider that has add on functionality compared to spring security
     this.authenticationManagerBuilder.authenticationProvider(this.authenticationProvider);
+  }
+
+  protected BasicAuthenticationFilter basicAuthenticationFilter() throws Exception {
+
+    AuthenticationEntryPoint authenticationEntryPoint = new BasicAuthenticationEntryPoint();
+    BasicAuthenticationFilter basicAuthenticationFilter =
+        new BasicAuthenticationFilter(authenticationManager(), authenticationEntryPoint);
+    return basicAuthenticationFilter;
   }
 }
