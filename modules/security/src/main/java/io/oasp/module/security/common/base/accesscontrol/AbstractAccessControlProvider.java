@@ -1,11 +1,5 @@
 package io.oasp.module.security.common.base.accesscontrol;
 
-import io.oasp.module.security.common.api.accesscontrol.AccessControl;
-import io.oasp.module.security.common.api.accesscontrol.AccessControlGroup;
-import io.oasp.module.security.common.api.accesscontrol.AccessControlPermission;
-import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
-import io.oasp.module.security.common.api.accesscontrol.AccessControlSchema;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -14,6 +8,12 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import io.oasp.module.security.common.api.accesscontrol.AccessControl;
+import io.oasp.module.security.common.api.accesscontrol.AccessControlGroup;
+import io.oasp.module.security.common.api.accesscontrol.AccessControlPermission;
+import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
+import io.oasp.module.security.common.api.accesscontrol.AccessControlSchema;
 
 /**
  * This is the abstract base implementation of {@link AccessControlProvider}.<br/>
@@ -86,16 +86,15 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
    */
   protected void collectAccessControls(AccessControlGroup group, Set<AccessControlGroup> toplevelGroups) {
 
-    // TODO hohwille Java HashMap buggy???
-    // if (!toplevelGroups.contains(group)) {
-    // throw new IllegalStateException("Invalid group not declared as top-level group in schema: " + group);
-    // }
+    if (!toplevelGroups.contains(group)) {
+      throw new IllegalStateException("Invalid group not declared as top-level group in schema: " + group);
+    }
     AccessControl old = this.id2nodeMap.put(group.getId(), group);
     if (old != null) {
       LOG.debug("Already visited access control group {}", group);
       if (old != group) {
-        throw new IllegalStateException("Invalid security configuration: duplicate groups with id " + group.getId()
-            + "!");
+        throw new IllegalStateException(
+            "Invalid security configuration: duplicate groups with id " + group.getId() + "!");
       }
       // group has already been visited, stop recursion...
       return;

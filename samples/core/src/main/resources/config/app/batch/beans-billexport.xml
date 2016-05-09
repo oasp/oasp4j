@@ -11,7 +11,6 @@
     </batch:step>
   </batch:job>
 
-  <!-- TODO: JdbcCursorItemReader should not be used, because it directly accesses the database (should only be done in DAOs) -->
   <bean id="billReader" class="org.springframework.batch.item.database.JdbcCursorItemReader">
     <property name="dataSource" ref="dataSource"/>
     <property name="rowMapper">

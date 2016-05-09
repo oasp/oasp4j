@@ -25,7 +25,8 @@ import io.oasp.gastronomy.restaurant.tablemanagement.service.api.rest.Tablemanag
 import io.oasp.module.test.common.base.SubsystemTest;
 
 /**
- * TODO geazzi This type ...
+ * This class tests the {@link TablemanagementRestService}. It allows running REST-Requests towards the server as an
+ * integration test of the server backend.
  *
  * @author geazzi
  * @since dev
