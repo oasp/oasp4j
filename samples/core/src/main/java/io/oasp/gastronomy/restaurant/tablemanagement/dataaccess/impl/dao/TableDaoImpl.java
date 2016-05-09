@@ -1,13 +1,14 @@
 package io.oasp.gastronomy.restaurant.tablemanagement.dataaccess.impl.dao;
 
+import static com.mysema.query.alias.Alias.$;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.NamedQueries;
 import io.oasp.gastronomy.restaurant.general.dataaccess.base.dao.ApplicationMasterDataDaoImpl;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
 import io.oasp.gastronomy.restaurant.tablemanagement.dataaccess.api.TableEntity;
 import io.oasp.gastronomy.restaurant.tablemanagement.dataaccess.api.dao.TableDao;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableSearchCriteriaTo;
-import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.OrderByTo;
+import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.List;
@@ -52,20 +53,20 @@ public class TableDaoImpl extends ApplicationMasterDataDaoImpl<TableEntity> impl
   public PaginatedListTo<TableEntity> findTables(TableSearchCriteriaTo criteria) {
 
     TableEntity table = Alias.alias(TableEntity.class);
-    EntityPathBase<TableEntity> alias = Alias.$(table);
+    EntityPathBase<TableEntity> alias = $(table);
     JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
 
     Long waiterId = criteria.getWaiterId();
     if (waiterId != null) {
-      query.where(Alias.$(table.getWaiterId()).eq(waiterId));
+      query.where($(table.getWaiterId()).eq(waiterId));
     }
     Long number = criteria.getNumber();
     if (number != null) {
-      query.where(Alias.$(table.getNumber()).eq(number));
+      query.where($(table.getNumber()).eq(number));
     }
     TableState state = criteria.getState();
     if (state != null) {
-      query.where(Alias.$(table.getState()).eq(state));
+      query.where($(table.getState()).eq(state));
     }
 
     // Add order by fields
@@ -81,25 +82,25 @@ public class TableDaoImpl extends ApplicationMasterDataDaoImpl<TableEntity> impl
         if ("number".equals(orderEntry.getName())) {
 
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(table.getNumber()).asc());
+            query.orderBy($(table.getNumber()).asc());
           } else {
-            query.orderBy(Alias.$(table.getNumber()).desc());
+            query.orderBy($(table.getNumber()).desc());
           }
 
         } else if ("waiterId".equals(orderEntry.getName())) {
 
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(table.getWaiterId()).asc());
+            query.orderBy($(table.getWaiterId()).asc());
           } else {
-            query.orderBy(Alias.$(table.getWaiterId()).desc());
+            query.orderBy($(table.getWaiterId()).desc());
           }
 
         } else if ("state".equals(orderEntry.getName())) {
 
           if (OrderDirection.ASC.equals(orderEntry.getDirection())) {
-            query.orderBy(Alias.$(table.getState()).asc());
+            query.orderBy($(table.getState()).asc());
           } else {
-            query.orderBy(Alias.$(table.getState()).desc());
+            query.orderBy($(table.getState()).desc());
           }
 
         }
