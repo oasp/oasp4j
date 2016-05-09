@@ -126,8 +126,9 @@ public class AccessControlGroup extends AccessControl { // implements java.secur
     final int prime = 31;
     int result = super.hashCode();
     // prevent infinity loops or other sick effects
-    // result = prime * result + ((this.inherits == null) ? 0 : this.inherits.hashCode());
-    result = prime * result + ((this.permissions == null) ? 0 : this.permissions.hashCode());
+    // result = prime * result + ((this.inherits == null || this.inherits.isEmpty()) ? 0 : this.inherits.hashCode());
+    result =
+        prime * result + ((this.permissions == null || this.permissions.isEmpty()) ? 0 : this.permissions.hashCode());
     result = prime * result + ((this.type == null) ? 0 : this.type.hashCode());
     return result;
   }
