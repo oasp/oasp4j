@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.offermanagement.dataaccess.impl.dao;
 
+import static com.mysema.query.alias.Alias.$;
 import io.oasp.gastronomy.restaurant.general.dataaccess.base.dao.ApplicationMasterDataDaoImpl;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.ProductSortByHitEntry;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.DrinkEntity;
@@ -59,46 +60,46 @@ public class ProductDaoImpl extends ApplicationMasterDataDaoImpl<ProductEntity> 
     }
 
     ProductEntity product = Alias.alias(ProductEntity.class);
-    JPQLQuery query = new JPAQuery(getEntityManager()).from(Alias.$(product));
+    JPQLQuery query = new JPAQuery(getEntityManager()).from($(product));
     BooleanBuilder builder = new BooleanBuilder();
 
     /*
      * Drinks
      */
     if (productFilterBo.getFetchDrinks()) {
-      builder.or(Alias.$(product).instanceOf(DrinkEntity.class));
+      builder.or($(product).instanceOf(DrinkEntity.class));
     }
 
     /*
      * Meals
      */
     if (productFilterBo.getFetchMeals()) {
-      builder.or(Alias.$(product).instanceOf(MealEntity.class));
+      builder.or($(product).instanceOf(MealEntity.class));
     }
 
     /*
      * SideDishes
      */
     if (productFilterBo.getFetchSideDishes()) {
-      builder.or(Alias.$(product).instanceOf(SideDishEntity.class));
+      builder.or($(product).instanceOf(SideDishEntity.class));
     }
 
     if (sortBy.getSortByEntry().equals(ProductSortByHitEntry.DESCRIPTION)) {
       if (sortBy.getOrderBy().isDesc()) {
-        query.where(builder).orderBy(Alias.$(product.getDescription()).desc());
+        query.where(builder).orderBy($(product.getDescription()).desc());
       } else {
-        query.where(builder).orderBy(Alias.$(product.getDescription()).asc());
+        query.where(builder).orderBy($(product.getDescription()).asc());
       }
     } else {
       if (sortBy.getOrderBy().isDesc()) {
-        query.where(builder).orderBy(Alias.$(product.getId()).desc());
+        query.where(builder).orderBy($(product.getId()).desc());
       } else {
-        query.where(builder).orderBy(Alias.$(product.getId()).asc());
+        query.where(builder).orderBy($(product.getId()).asc());
       }
 
     }
 
-    List<ProductEntity> result = query.list(Alias.$(product));
+    List<ProductEntity> result = query.list($(product));
     return result;
   }
 
@@ -106,17 +107,17 @@ public class ProductDaoImpl extends ApplicationMasterDataDaoImpl<ProductEntity> 
   public PaginatedListTo<ProductEntity> findProducts(ProductSearchCriteriaTo criteria) {
 
     ProductEntity product = Alias.alias(ProductEntity.class);
-    EntityPathBase<ProductEntity> alias = Alias.$(product);
+    EntityPathBase<ProductEntity> alias = $(product);
     JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
 
     String name = criteria.getName();
     if (name != null) {
-      query.where(Alias.$(product.getName()).eq(name));
+      query.where($(product.getName()).eq(name));
     }
 
     String description = criteria.getDescription();
     if (description != null) {
-      query.where(Alias.$(product.getDescription()).eq(description));
+      query.where($(product.getDescription()).eq(description));
     }
 
     System.out.println("criteria: " + criteria.toStrink());
@@ -135,13 +136,13 @@ public class ProductDaoImpl extends ApplicationMasterDataDaoImpl<ProductEntity> 
 
     BooleanBuilder builder = new BooleanBuilder();
     if (criteria.isFetchSideDishes()) {
-      builder.or(Alias.$(product).instanceOf(SideDishEntity.class));
+      builder.or($(product).instanceOf(SideDishEntity.class));
     }
     if (criteria.isFetchMeals()) {
-      builder.or(Alias.$(product).instanceOf(MealEntity.class));
+      builder.or($(product).instanceOf(MealEntity.class));
     }
     if (criteria.isFetchDrinks()) {
-      builder.or(Alias.$(product).instanceOf(DrinkEntity.class));
+      builder.or($(product).instanceOf(DrinkEntity.class));
     }
     query.where(builder);
 

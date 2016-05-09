@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.impl.dao;
 
+import static com.mysema.query.alias.Alias.$;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.NamedQueries;
 import io.oasp.gastronomy.restaurant.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
@@ -65,16 +66,16 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
   public PaginatedListTo<OrderEntity> findOrders(OrderSearchCriteriaTo criteria) {
 
     OrderEntity order = Alias.alias(OrderEntity.class);
-    EntityPathBase<OrderEntity> alias = Alias.$(order);
+    EntityPathBase<OrderEntity> alias = $(order);
     JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
 
     Long tableId = criteria.getTableId();
     if (tableId != null) {
-      query.where(Alias.$(order.getTableId()).eq(tableId));
+      query.where($(order.getTableId()).eq(tableId));
     }
     OrderState state = criteria.getState();
     if (state != null) {
-      query.where(Alias.$(order.getState()).eq(state));
+      query.where($(order.getState()).eq(state));
     }
 
     return findPaginated(criteria, query, alias);

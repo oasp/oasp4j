@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.impl.dao;
 
+import static com.mysema.query.alias.Alias.$;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.NamedQueries;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Role;
 import io.oasp.gastronomy.restaurant.general.dataaccess.base.dao.ApplicationMasterDataDaoImpl;
@@ -53,24 +54,24 @@ public class StaffMemberDaoImpl extends ApplicationMasterDataDaoImpl<StaffMember
   public PaginatedListTo<StaffMemberEntity> findStaffMembers(StaffMemberSearchCriteriaTo criteria) {
 
     StaffMemberEntity staffMember = Alias.alias(StaffMemberEntity.class);
-    EntityPathBase<StaffMemberEntity> alias = Alias.$(staffMember);
+    EntityPathBase<StaffMemberEntity> alias = $(staffMember);
     JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
 
     String firstName = criteria.getFirstName();
     if (firstName != null) {
-      query.where(Alias.$(staffMember.getFirstName()).eq(firstName));
+      query.where($(staffMember.getFirstName()).eq(firstName));
     }
     String lastName = criteria.getLastName();
     if (lastName != null) {
-      query.where(Alias.$(staffMember.getLastName()).eq(lastName));
+      query.where($(staffMember.getLastName()).eq(lastName));
     }
     String name = criteria.getName();
     if (name != null) {
-      query.where(Alias.$(staffMember.getName()).eq(name));
+      query.where($(staffMember.getName()).eq(name));
     }
     Role role = criteria.getRole();
     if (role != null) {
-      query.where(Alias.$(staffMember.getRole()).eq(role));
+      query.where($(staffMember.getRole()).eq(role));
     }
 
     return findPaginated(criteria, query, alias);

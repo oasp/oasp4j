@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.offermanagement.dataaccess.impl.dao;
 
+import static com.mysema.query.alias.Alias.$;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.dataaccess.base.dao.ApplicationMasterDataDaoImpl;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferSortByHitEntry;
@@ -59,7 +60,7 @@ public class OfferDaoImpl extends ApplicationMasterDataDaoImpl<OfferEntity> impl
     }
 
     OfferEntity offer = Alias.alias(OfferEntity.class);
-    JPQLQuery query = new JPAQuery(getEntityManager()).from(Alias.$(offer));
+    JPQLQuery query = new JPAQuery(getEntityManager()).from($(offer));
     BooleanBuilder builder = new BooleanBuilder();
 
     /*
@@ -68,71 +69,71 @@ public class OfferDaoImpl extends ApplicationMasterDataDaoImpl<OfferEntity> impl
     // Meal
     MealEntity meal = Alias.alias(MealEntity.class);
     if (offerFilterBo.getMealId() != null && offerFilterBo.getMealId() > 0) {
-      query = query.join(Alias.$(offer.getMeal()), Alias.$(meal));
-      builder.and(Alias.$(meal.getId()).eq(offerFilterBo.getMealId()));
+      query = query.join($(offer.getMeal()), $(meal));
+      builder.and($(meal.getId()).eq(offerFilterBo.getMealId()));
     }
 
     // Drink
     DrinkEntity drink = Alias.alias(DrinkEntity.class);
     if (offerFilterBo.getDrinkId() != null && offerFilterBo.getDrinkId() > 0) {
-      query.join(Alias.$(offer.getDrink()), Alias.$(drink));
-      builder.and(Alias.$(drink.getId()).eq(offerFilterBo.getDrinkId()));
+      query.join($(offer.getDrink()), $(drink));
+      builder.and($(drink.getId()).eq(offerFilterBo.getDrinkId()));
     }
 
     // SideDish
     SideDishEntity sideDish = Alias.alias(SideDishEntity.class);
     if (offerFilterBo.getSideDishId() != null && offerFilterBo.getSideDishId() > 0) {
-      query.join(Alias.$(offer.getSideDish()), Alias.$(sideDish));
-      builder.and(Alias.$(sideDish.getId()).eq(offerFilterBo.getSideDishId()));
+      query.join($(offer.getSideDish()), $(sideDish));
+      builder.and($(sideDish.getId()).eq(offerFilterBo.getSideDishId()));
     }
 
     // only min price is given
     if (offerFilterBo.getMinPrice() != null) {
-      builder.and(Alias.$(offer.getPrice()).goe(offerFilterBo.getMinPrice()));
+      builder.and($(offer.getPrice()).goe(offerFilterBo.getMinPrice()));
     }
 
     // only max price is given
     if (offerFilterBo.getMaxPrice() != null) {
-      builder.and(Alias.$(offer.getPrice()).loe(offerFilterBo.getMaxPrice()));
+      builder.and($(offer.getPrice()).loe(offerFilterBo.getMaxPrice()));
     }
 
     // sorting
     if (sortBy.getSortByEntry().equals(OfferSortByHitEntry.DESCRIPTION)) {
       if (sortBy.getOrderBy().isDesc())
-        query.where(builder).orderBy(Alias.$(offer.getDescription()).desc());
+        query.where(builder).orderBy($(offer.getDescription()).desc());
       else
-        query.where(builder).orderBy(Alias.$(offer.getDescription()).asc());
+        query.where(builder).orderBy($(offer.getDescription()).asc());
     } else if (sortBy.getSortByEntry().equals(OfferSortByHitEntry.PRICE)) {
       if (sortBy.getOrderBy().isDesc())
-        query.where(builder).orderBy(Alias.$(offer.getPrice()).desc());
+        query.where(builder).orderBy($(offer.getPrice()).desc());
       else
-        query.where(builder).orderBy(Alias.$(offer.getPrice()).asc());
+        query.where(builder).orderBy($(offer.getPrice()).asc());
     } else if (sortBy.getSortByEntry().equals(OfferSortByHitEntry.MEAL)) {
       if (sortBy.getOrderBy().isDesc())
-        query.where(builder).orderBy(Alias.$(offer.getMeal().getDescription()).desc());
+        query.where(builder).orderBy($(offer.getMeal().getDescription()).desc());
       else
-        query.where(builder).orderBy(Alias.$(offer.getMeal().getDescription()).asc());
+        query.where(builder).orderBy($(offer.getMeal().getDescription()).asc());
     } else if (sortBy.getSortByEntry().equals(OfferSortByHitEntry.DRINK)) {
       if (sortBy.getOrderBy().isDesc())
-        query.where(builder).orderBy(Alias.$(offer.getDrink().getDescription()).desc());
+        query.where(builder).orderBy($(offer.getDrink().getDescription()).desc());
       else
-        query.where(builder).orderBy(Alias.$(offer.getDrink().getDescription()).asc());
+        query.where(builder).orderBy($(offer.getDrink().getDescription()).asc());
     } else if (sortBy.getSortByEntry().equals(OfferSortByHitEntry.SIDEDISH)) {
       if (sortBy.getOrderBy().isDesc())
-        query.where(builder).orderBy(Alias.$(offer.getSideDish().getDescription()).desc());
+        query.where(builder).orderBy($(offer.getSideDish().getDescription()).desc());
       else
-        query.where(builder).orderBy(Alias.$(offer.getSideDish().getDescription()).asc());
+        query.where(builder).orderBy($(offer.getSideDish().getDescription()).asc());
     } else {
       if (sortBy.getOrderBy().isDesc())
-        query.where(builder).orderBy(Alias.$(offer.getId()).desc());
+        query.where(builder).orderBy($(offer.getId()).desc());
       else
-        query.where(builder).orderBy(Alias.$(offer.getId()).asc());
+        query.where(builder).orderBy($(offer.getId()).asc());
     }
 
     /*
      * Result
      */
-    List<OfferEntity> result = query.where(builder).list(Alias.$(offer));
+    List<OfferEntity> result = query.where(builder).list($(offer));
     return result;
   }
 
@@ -140,38 +141,38 @@ public class OfferDaoImpl extends ApplicationMasterDataDaoImpl<OfferEntity> impl
   public PaginatedListTo<OfferEntity> findOffers(OfferSearchCriteriaTo criteria) {
 
     OfferEntity offer = Alias.alias(OfferEntity.class);
-    EntityPathBase<OfferEntity> alias = Alias.$(offer);
+    EntityPathBase<OfferEntity> alias = $(offer);
     JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
 
     Long number = criteria.getNumber();
     if (number != null) {
-      query.where(Alias.$(offer.getNumber()).eq(number));
+      query.where($(offer.getNumber()).eq(number));
     }
     Long mealId = criteria.getMealId();
     if (mealId != null) {
-      query.where(Alias.$(offer.getMealId()).eq(mealId));
+      query.where($(offer.getMealId()).eq(mealId));
     }
     Long drinkId = criteria.getDrinkId();
     if (drinkId != null) {
-      query.where(Alias.$(offer.getDrinkId()).eq(drinkId));
+      query.where($(offer.getDrinkId()).eq(drinkId));
     }
     Long sideDishId = criteria.getSideDishId();
     if (sideDishId != null) {
-      query.where(Alias.$(offer.getSideDishId()).eq(sideDishId));
+      query.where($(offer.getSideDishId()).eq(sideDishId));
     }
     OfferState state = criteria.getState();
     if (state != null) {
-      query.where(Alias.$(offer.getState()).eq(state));
+      query.where($(offer.getState()).eq(state));
     }
 
     Money minPrice = criteria.getMinPrice();
     if (minPrice != null) {
-      query.where(Alias.$(offer.getPrice()).goe(minPrice));
+      query.where($(offer.getPrice()).goe(minPrice));
     }
 
     Money maxPrice = criteria.getMaxPrice();
     if (maxPrice != null) {
-      query.where(Alias.$(offer.getPrice()).loe(maxPrice));
+      query.where($(offer.getPrice()).loe(maxPrice));
     }
 
     return findPaginated(criteria, query, alias);
