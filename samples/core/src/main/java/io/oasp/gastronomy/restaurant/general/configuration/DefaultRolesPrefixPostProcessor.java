@@ -9,7 +9,7 @@ import org.springframework.security.web.access.expression.DefaultWebSecurityExpr
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 
 /**
- * TODO hohwille This type ...
+ * This type allows setting the desired role prefix.
  *
  * @author hohwille
  */
@@ -18,9 +18,9 @@ public class DefaultRolesPrefixPostProcessor implements BeanPostProcessor, Prior
   private final String rolePrefix;
 
   /**
-   * Der Konstruktor.
+   * The constructor.
    *
-   * @param rolePrefix das gewünschte Rollen-Präfix (z.B. der leere String).
+   * @param rolePrefix the desired role prefix (e.g., an empty string).
    */
   public DefaultRolesPrefixPostProcessor(String rolePrefix) {
     super();
