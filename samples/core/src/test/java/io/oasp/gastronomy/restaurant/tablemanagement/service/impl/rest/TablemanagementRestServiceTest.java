@@ -27,7 +27,7 @@ import io.oasp.module.test.common.base.SubsystemTest;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = SpringBootApp.class)
 @WebIntegrationTest("server.port:0")
-@ActiveProfiles(profiles = { OaspProfile.DEFAULT_TEST })
+@ActiveProfiles(profiles = { OaspProfile.JUNIT_TEST })
 public class TablemanagementRestServiceTest extends SubsystemTest {
 
   @Value("${local.server.port}")

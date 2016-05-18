@@ -20,7 +20,7 @@ import io.oasp.module.basic.configuration.OaspProfile;
  */
 @Configuration
 @EnableWebSecurity
-@Profile(OaspProfile.DEFAULT_TEST)
+@Profile(OaspProfile.JUNIT_TEST)
 public class TestWebSecurityConfig extends BaseWebSecurityConfig {
   private static Logger LOG = LoggerFactory.getLogger(TestWebSecurityConfig.class);
 

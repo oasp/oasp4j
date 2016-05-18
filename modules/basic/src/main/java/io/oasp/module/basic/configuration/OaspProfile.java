@@ -14,7 +14,7 @@ public class OaspProfile {
   /**
    * This constant applies to all tests.
    */
-  public static final String DEFAULT_TEST = "basic-test";
+  public static final String JUNIT_TEST = "basic-test";
 
   /**
    * This constant should be used in conjunction with component tests.

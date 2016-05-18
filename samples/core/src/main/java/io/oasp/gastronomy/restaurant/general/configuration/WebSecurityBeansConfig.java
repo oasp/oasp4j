@@ -11,32 +11,51 @@ import io.oasp.module.security.common.impl.accesscontrol.AccessControlProviderIm
 import io.oasp.module.security.common.impl.accesscontrol.AccessControlSchemaProviderImpl;
 
 /**
- * TODO jmolinar This type ...
+ * This configuration class provides factory methods for several Spring security related beans.
  *
  * @author jmolinar
- * @since dev
  */
 @Configuration
 public class WebSecurityBeansConfig {
 
+  /**
+   * This method provides a new instance of {@code AccessControlProvider}
+   *
+   * @return the newly created {@code AccessControlProvider}
+   */
   @Bean
   public AccessControlProvider accessControlProvider() {
 
     return new AccessControlProviderImpl();
   }
 
+  /**
+   * This method provides a new instance of {@code AccessControlSchemaProvider}
+   *
+   * @return the newly created {@code AccessControlSchemaProvider}
+   */
   @Bean
   public AccessControlSchemaProvider accessControlSchemaProvider() {
 
     return new AccessControlSchemaProviderImpl();
   }
 
+  /**
+   * This method provides a new instance of {@code CsrfTokenRepository}
+   *
+   * @return the newly created {@code CsrfTokenRepository}
+   */
   @Bean
   public CsrfTokenRepository csrfTokenRepository() {
 
     return new HttpSessionCsrfTokenRepository();
   }
 
+  /**
+   * This method provides a new instance of {@code DefaultRolesPrefixPostProcessor}
+   *
+   * @return the newly create {@code DefaultRolesPrefixPostProcessor}
+   */
   @Bean
   public static DefaultRolesPrefixPostProcessor defaultRolesPrefixPostProcessor() {
 
