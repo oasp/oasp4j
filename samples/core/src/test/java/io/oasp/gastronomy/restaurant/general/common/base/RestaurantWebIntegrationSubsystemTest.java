@@ -13,7 +13,6 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 import io.oasp.gastronomy.restaurant.general.common.RestTestClientBuilder;
 import io.oasp.gastronomy.restaurant.general.common.RestraurantTestHelper;
-import io.oasp.gastronomy.restaurant.general.common.api.RestService;
 import io.oasp.gastronomy.restaurant.general.configuration.RestaurantTestConfig;
 import io.oasp.module.basic.configuration.SpringProfileConstants;
 import io.oasp.module.test.common.base.SubsystemTest;
@@ -31,60 +30,102 @@ import io.oasp.module.test.common.base.SubsystemTest;
 public class RestaurantWebIntegrationSubsystemTest extends SubsystemTest {
 
   /**
-   *
-   */
-  private static final String LOGIN = "waiter";
-
-  /**
    * The port of the web server during the test.
    */
   @Value("${local.server.port}")
   protected int port;
 
+  /**
+   * The user name used during the test.
+   */
+  @Value("${server.rest.test.user}")
+  private String user;
+
+  /**
+   * The password used during the test.
+   */
+  @Value("${server.rest.test.password}")
+  private String password;
+
+  /**
+   * The {@code RestaurantTestHelper}.
+   */
   @Inject
   private RestraurantTestHelper restaurantTestHelper;
 
+  /**
+   * The {@code RestTestClientBuilder}.
+   */
   @Inject
   private RestTestClientBuilder restTestClientBuilder;
 
+  /**
+   * The {@code JacksonJsonProvider}
+   */
   @Inject
   private JacksonJsonProvider jacksonJsonProvider;
 
+  /**
+   * Calls {@link #doSetUp()}.
+   */
   @Before
   public final void setUp() {
 
     doSetUp();
   }
 
+  /**
+   * Calls {@link #doTearDown()}.
+   */
   @After
   public final void testDown() {
 
     doTearDown();
   }
 
+  /**
+   * Sets up the test.
+   */
   protected void doSetUp() {
 
+    this.restTestClientBuilder.setLocalServerPort(this.port);
+    this.restTestClientBuilder.setUser(this.user);
+    this.restTestClientBuilder.setPassword(this.password);
+    this.restTestClientBuilder.setJacksonJsonProvider(this.jacksonJsonProvider);
   }
 
+  /**
+   * Cleans up the test.
+   */
   protected void doTearDown() {
 
-    // TODO implement
+    // empty implementation which may be overridden by a subclass.
   }
 
+  /**
+   *
+   * @return {@code true} if test database should be reset before each test method execution (default). {@code false}
+   *         otherwise.
+   */
   protected boolean isRestDatabase() {
 
     return true;
   }
 
+  /**
+   * @return the {@code RestaurantTestHelper}
+   */
   public RestraurantTestHelper getRestaurantTestHelper() {
 
     return this.restaurantTestHelper;
   }
 
-  protected <T extends RestService> T createRestClient(Class<T> serviceInterface) {
+  /**
+   * @return the {@code RestTestClientBuilder}
+   */
+  public RestTestClientBuilder getRestTestClientBuilder() {
 
-    this.restTestClientBuilder.setLocalServerPort(this.port);
-    this.restTestClientBuilder.setJacksonJsonProvider(this.jacksonJsonProvider);
-    return this.restTestClientBuilder.build(serviceInterface, LOGIN, LOGIN);
+    return this.restTestClientBuilder;
   }
+
 }
