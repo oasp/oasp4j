@@ -5,14 +5,16 @@ import java.util.HashMap;
 
 import org.apache.cxf.common.util.Base64Utility;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 /**
- * This class contains a static method to aid simulating a REST client.
+ * This class contains a method to aid simulating a REST client.
  *
  * @author jmolinar
  */
+@Component
 public class RestTestClientBuilder {
 
   /**
@@ -29,7 +31,7 @@ public class RestTestClientBuilder {
    * @param jacksonJsonProvider FIXME
    * @return An client object... FIXME
    */
-  public static <T> T build(Class<T> clazz, String userName, String password, String address,
+  public <T> T build(Class<T> clazz, String userName, String password, String address,
       JacksonJsonProvider jacksonJsonProvider) {
 
     JAXRSClientFactoryBean factoryBean = new JAXRSClientFactoryBean();
