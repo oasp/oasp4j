@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import io.oasp.module.basic.configuration.OaspProfile;
+import io.oasp.module.basic.configuration.SpringProfileConstants;
 
 /**
  * Security configuration based on {@link WebSecurityConfigurerAdapter}. This configuration is by purpose designed most
@@ -16,7 +16,7 @@ import io.oasp.module.basic.configuration.OaspProfile;
  */
 @Configuration
 @EnableWebSecurity
-@Profile(OaspProfile.NO_TEST)
+@Profile(SpringProfileConstants.NOT_JUNIT)
 public class WebSecurityConfig extends BaseWebSecurityConfig {
 
 }

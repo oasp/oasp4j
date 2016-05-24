@@ -2,14 +2,20 @@ package io.oasp.gastronomy.restaurant.general.common.base;
 
 import javax.inject.Inject;
 
+import org.junit.After;
+import org.junit.Before;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 import io.oasp.gastronomy.restaurant.general.common.RestTestClientBuilder;
+import io.oasp.gastronomy.restaurant.general.common.RestraurantTestHelper;
+import io.oasp.gastronomy.restaurant.general.common.api.RestService;
 import io.oasp.gastronomy.restaurant.general.configuration.RestaurantTestConfig;
+import io.oasp.module.basic.configuration.SpringProfileConstants;
 import io.oasp.module.test.common.base.SubsystemTest;
 
 /**
@@ -20,14 +26,14 @@ import io.oasp.module.test.common.base.SubsystemTest;
  * @author jmolinar
  */
 @SpringApplicationConfiguration(classes = RestaurantTestConfig.class)
-@WebIntegrationTest("server.port:0")
-public class RestaurantWebIntegrationSubsystemTest {
+@WebIntegrationTest
+@ActiveProfiles(profiles = { SpringProfileConstants.JUNIT })
+public class RestaurantWebIntegrationSubsystemTest extends SubsystemTest {
 
-  @Value("${test.user:waiter}")
-  private String userName = "waiter";
-
-  @Value("${test.user:waiter}")
-  private String password = "waiter";
+  /**
+   *
+   */
+  private static final String LOGIN = "waiter";
 
   /**
    * The port of the web server during the test.
@@ -35,44 +41,50 @@ public class RestaurantWebIntegrationSubsystemTest {
   @Value("${local.server.port}")
   protected int port;
 
-  /**
-   * The name of the application during the test.
-   */
-  @Value("${spring.application.name:restaurant}")
-  protected String appName;
+  @Inject
+  private RestraurantTestHelper restaurantTestHelper;
 
-  /**
-   * An instance of type {@code RestTestClientBuilder}.
-   */
   @Inject
   private RestTestClientBuilder restTestClientBuilder;
 
-  /**
-   * An instance of type {@code JacksonJsonProvider}
-   */
   @Inject
-  protected JacksonJsonProvider jacksonJsonProvider;
+  private JacksonJsonProvider jacksonJsonProvider;
 
-  /**
-   * @return the URL of the REST service.
-   */
-  public String createRestServiceUrl() {
+  @Before
+  public final void setUp() {
 
-    return "http://localhost:" + this.port + "/services/rest";
+    doSetUp();
   }
 
-  /**
-   * @return restTestClientBuilder
-   */
-  public RestTestClientBuilder getRestTestClientBuilder() {
+  @After
+  public final void testDown() {
 
-    return this.restTestClientBuilder;
+    doTearDown();
   }
 
-  public <T> T build(Class<T> clazz) {
+  protected void doSetUp() {
 
-    return getRestTestClientBuilder().build(clazz, this.userName, this.password, createRestServiceUrl(),
-        this.jacksonJsonProvider);
   }
 
+  protected void doTearDown() {
+
+    // TODO implement
+  }
+
+  protected boolean isRestDatabase() {
+
+    return true;
+  }
+
+  public RestraurantTestHelper getRestaurantTestHelper() {
+
+    return this.restaurantTestHelper;
+  }
+
+  protected <T extends RestService> T createRestClient(Class<T> serviceInterface) {
+
+    this.restTestClientBuilder.setLocalServerPort(this.port);
+    this.restTestClientBuilder.setJacksonJsonProvider(this.jacksonJsonProvider);
+    return this.restTestClientBuilder.build(serviceInterface, LOGIN, LOGIN);
+  }
 }
