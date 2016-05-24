@@ -5,17 +5,21 @@ import java.util.HashMap;
 
 import org.apache.cxf.common.util.Base64Utility;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean;
-import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+
+import io.oasp.gastronomy.restaurant.general.common.api.RestService;
 
 /**
  * This class contains a method to aid simulating a REST client.
  *
  * @author jmolinar
  */
-@Component
 public class RestTestClientBuilder {
+
+  private int localServerPort;
+
+  private JacksonJsonProvider jacksonJsonProvider;
 
   /**
    * This method returns an instance of an implementation the specified {@code clazz} (which should be a REST service
@@ -27,24 +31,44 @@ public class RestTestClientBuilder {
    * @param clazz This must be an interface type.
    * @param userName The userName for basic authentication.
    * @param password The password for basic authentication.
-   * @param address The base URI of the REST service in {@code String} representation.
-   * @param jacksonJsonProvider FIXME
    * @return An client object... FIXME
    */
-  public <T> T build(Class<T> clazz, String userName, String password, String address,
-      JacksonJsonProvider jacksonJsonProvider) {
+  public <T extends RestService> T build(Class<T> clazz, String userName, String password) {
 
     JAXRSClientFactoryBean factoryBean = new JAXRSClientFactoryBean();
-    factoryBean.setAddress(address);
+    factoryBean.setAddress(createRestServiceUrl());
     factoryBean.setHeaders(new HashMap<String, String>());
     // example for basic auth
     String payload = userName + ":" + password;
     String authorizationHeader = "Basic " + Base64Utility.encode(payload.getBytes());
     factoryBean.getHeaders().put("Authorization", Arrays.asList(authorizationHeader));
-    factoryBean.setProviders(Arrays.asList(jacksonJsonProvider));
+    factoryBean.setProviders(Arrays.asList(this.jacksonJsonProvider));
 
     factoryBean.setServiceClass(clazz);
     return factoryBean.create(clazz);
   }
 
+  /**
+   * @return the URL of the REST service.
+   */
+  private String createRestServiceUrl() {
+
+    return "http://localhost:" + this.localServerPort + "/services/rest";
+  }
+
+  /**
+   * @param jacksonJsonProvider new value of {@link #getjacksonJsonProvider}.
+   */
+  public void setJacksonJsonProvider(JacksonJsonProvider jacksonJsonProvider) {
+
+    this.jacksonJsonProvider = jacksonJsonProvider;
+  }
+
+  /**
+   * @param localServerPort new value of {@link #getlocalServerPort}.
+   */
+  public void setLocalServerPort(int localServerPort) {
+
+    this.localServerPort = localServerPort;
+  }
 }
