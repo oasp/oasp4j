@@ -26,7 +26,7 @@ public class TablemanagementRestServiceWebIntegrationTest extends RestaurantWebI
   public void testFindTable() {
 
     String id = "101";
-    TablemanagementRestService service = createRestClient(TablemanagementRestService.class);
+    TablemanagementRestService service = getRestTestClientBuilder().build(TablemanagementRestService.class);
     TableEto table = service.getTable(id);
     assertThat(table).isNotNull();
     assertThat(table.getId()).isEqualTo(Long.parseLong(id));
