@@ -24,6 +24,8 @@ import io.oasp.module.test.common.base.SubsystemTest;
  *
  * @author geazzi
  */
+
+// Test
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = SpringBootApp.class)
 @WebIntegrationTest("server.port:0")
