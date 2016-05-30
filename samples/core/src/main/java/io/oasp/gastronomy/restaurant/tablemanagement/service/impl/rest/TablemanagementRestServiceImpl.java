@@ -42,12 +42,20 @@ public class TablemanagementRestServiceImpl implements TablemanagementRestServic
     if (id == null) {
       throw new BadRequestException("missing id");
     }
+
+    TableEto tableEto = null;
+
     try {
       idAsLong = Long.parseLong(id);
+      tableEto = this.tableManagement.findTable(idAsLong);
+
+      if (tableEto == null)
+        throw new NotFoundException("table not found");
+
     } catch (NumberFormatException e) {
       throw new BadRequestException("id is not a number");
     } catch (NotFoundException e) {
-      throw new BadRequestException("table not found");
+      throw new BadRequestException(e.getMessage());
     }
     return this.tableManagement.findTable(idAsLong);
   }
