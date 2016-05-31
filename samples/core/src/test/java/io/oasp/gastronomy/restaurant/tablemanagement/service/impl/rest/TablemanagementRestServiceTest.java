@@ -25,16 +25,27 @@ import io.oasp.module.test.common.base.SubsystemTest;
  * @author geazzi
  */
 
-// Test
+// in order to run a unit test the framework must load the job's ApplicationContext
+// spring ApplicationContext: subclass of BeanFactory
 @RunWith(SpringJUnit4ClassRunner.class)
+
+// @SpringApplicationConfiguration used to configure the ApplicationContext used in the test
+// Starts application as SpringBootApp
 @SpringApplicationConfiguration(classes = SpringBootApp.class)
+// start web application: 0 from random port
 @WebIntegrationTest("server.port:0")
+// profile: named, logical group of bean definitions
+// Bean definition profiles: mechanism for registration of different beans in
+// different environments
+// @ActiveProfiles(profiles = { OaspProfile.JUNIT_TEST }): Activate Profile "OaspProfile.JUNIT_TEST"
 @ActiveProfiles(profiles = { OaspProfile.JUNIT_TEST })
 public class TablemanagementRestServiceTest extends SubsystemTest {
 
+  // reads from test/resources/config/application.properties the variable server.port
   @Value("${local.server.port}")
   private int port;
 
+  // instance needed to bind JSON to POJO
   @Inject
   private JacksonJsonProvider jacksonJsonProvider;
 
