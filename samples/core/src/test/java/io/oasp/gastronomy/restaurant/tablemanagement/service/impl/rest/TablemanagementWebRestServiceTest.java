@@ -70,9 +70,23 @@ public class TablemanagementWebRestServiceTest extends SubsystemTest {
   @Test
   public void updateTable() {
 
+    // getRequestBefore
+    HttpEntity<String> getRequestEntity = new HttpEntity<String>(this.authentificatedHeaders);
+    long tableId = 102;
+
+    ResponseEntity<String> getResponse = this.template.exchange(
+        "http://localhost:" + this.port + "/services/rest" + "/tablemanagement/v1/table/" + Long.toString(tableId),
+        HttpMethod.GET, getRequestEntity, String.class);
+    String getResponseString = getResponse.getBody();
+    assertThat(getResponse).isNotNull();
+    assertThat(getResponseString).isNotNull();
+    System.out.println("-----------------getRequestBefore-----------------");
+    System.out.println(getResponse);
+    System.out.println(getResponseString);
+
+    // putRequest
     HttpHeaders postRequestHeaders = this.authentificatedHeaders;
     postRequestHeaders.setContentType(MediaType.APPLICATION_JSON);
-
     String requestPayload =
         "{\"id\": 102, \"modificationCounter\": 1, \"revision\": null, \"waiterId\": null, \"number\": 2, \"state\": \"OCCUPIED\"}";
     HttpEntity<String> postRequestEntity = new HttpEntity<String>(requestPayload, postRequestHeaders);
@@ -83,9 +97,23 @@ public class TablemanagementWebRestServiceTest extends SubsystemTest {
     String postResponseString = postResponse.getBody();
     assertThat(postResponse).isNotNull();
     assertThat(postResponseString).isNotNull();
-    System.out.println("-----------------Test-----------------");
+    System.out.println("-----------------postRequestHeaders-----------------");
     System.out.println(postResponse);
     System.out.println(postResponseString);
+
+    // getRequestAfter
+    getRequestEntity = new HttpEntity<String>(this.authentificatedHeaders);
+
+    getResponse = this.template.exchange(
+        "http://localhost:" + this.port + "/services/rest" + "/tablemanagement/v1/table/" + Long.toString(tableId),
+        HttpMethod.GET, getRequestEntity, String.class);
+    getResponseString = getResponse.getBody();
+    assertThat(getResponse).isNotNull();
+    assertThat(getResponseString).isNotNull();
+    System.out.println("-----------------getRequestAfter-----------------");
+    System.out.println(getResponse);
+    System.out.println(getResponseString);
+
   }
 
   // @Test
