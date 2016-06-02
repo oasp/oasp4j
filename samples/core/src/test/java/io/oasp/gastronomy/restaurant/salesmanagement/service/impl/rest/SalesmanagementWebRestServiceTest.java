@@ -4,14 +4,17 @@ import javax.inject.Inject;
 
 import org.apache.commons.codec.binary.Base64;
 import org.flywaydb.core.Flyway;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.RestTemplate;
@@ -42,11 +45,13 @@ import io.oasp.module.test.common.base.SubsystemTest;
 
 public class SalesmanagementWebRestServiceTest extends SubsystemTest {
 
-  private String rootPath;
-
   private String salesmanagement;
 
   private String orderPositions;
+
+  private HttpEntity<String> request;
+
+  private HttpHeaders authentificatedHeaders;
 
   // reads from test/resources/config/application.properties the variable server.port
   @Value("${local.server.port}")
@@ -63,42 +68,77 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
     long sampleOrderId = 1;
 
     this.template = new RestTemplate();
-    this.rootPath = "http://localhost:" + this.port + "/services/rest";
     this.salesmanagement = "/salesmanagement/v1";
     this.orderPositions = "/orderposition/" + Long.toString(sampleOrderId);
+    this.authentificatedHeaders = getAuthentificatedHeaders();
+
   }
 
   @Before
   public void prepareTest() {
 
-    // this.flyway.clean();
-    // this.flyway.migrate();
-
+    this.flyway.clean();
+    this.flyway.migrate();
   }
 
   @Test
   public void getOrder() {
 
-    // Setup
+    // ResponseEntity<String> responseNew = this.template.exchange(
+    // "http://localhost:" + this.port + "/services/rest" + this.salesmanagement + this.orderPositions,
+    // HttpMethod.POST, this.request, String.class);
+    // System.out.println(responseNew);
+    System.out.println("-----------------Test1-----------------");
+    // setup
 
-    // OrderCto sampleOrderCto = createSampleOrderCto(SAMPLE_TABLE_ID);
-    // this.service.saveOrder(sampleOrderCto);
+    HttpEntity<String> getRequest = new HttpEntity<String>(this.authentificatedHeaders);
 
-    String authentificationResult = authentification();
-    System.out.println("-----------------Test---------------------------");
-    System.out.println(authentificationResult);
-    assertThat(authentificationResult).isNotNull();
-    System.out.println("-----------------Test---------------------------");
-    String result =
-        // this.template.getForObject("http://localhost:" + this.port + "/services/rest", String.class, "chief",
-        // "chief");
-        this.template.getForObject(
-            "http://localhost:" + this.port + "/services/rest" + this.salesmanagement + this.orderPositions,
-            String.class, "chief", "chief");
-    System.out.println("http://localhost:" + this.port + "/services/rest");
-    System.out.println(this.rootPath + this.salesmanagement + this.orderPositions);
-    System.out.println(result);
-    assertThat(result).isNotNull();
+    ResponseEntity<String> getResponse = this.template.exchange(
+        "http://localhost:" + this.port + "/services/rest" + this.salesmanagement + this.orderPositions, HttpMethod.GET,
+        getRequest, String.class);
+
+    // execute
+    String responseJson = getResponse.getBody();
+    System.out.println(responseJson);
+    System.out.println("-----------------Test2-----------------");
+    assertThat(getResponse).isNotNull();
+    JSONAssert.assertEquals("{id:1}", responseJson, false);
+    JSONAssert.assertEquals("{modificationCounter:1}", responseJson, false);
+    JSONAssert.assertEquals("{orderId:1}", responseJson, false);
+    JSONAssert.assertEquals("{offerId:1}", responseJson, false);
+    JSONAssert.assertEquals("{offerName:Schnitzel-Menü}", responseJson, false);
+
+    System.out.println("-----------------Test2-----------------");
+    HttpHeaders postRequestHeaders = this.authentificatedHeaders;
+    postRequestHeaders.setContentType(MediaType.APPLICATION_JSON);
+    JSONObject request = new JSONObject();
+
+    request.put("id", 6);
+    request.put("modificationCounter", 1);
+    // request.put("revision", Null);
+    request.put("orderId", 1);
+    request.put("offerId", 1);
+    request.put("offerName", "Schnitzel-Menü");
+    request.put("state", "DELIVERED");
+    request.put("drinkState", "DELIVERED");
+    request.put("price", "6.99");
+    request.put("comment", "mit Ketschup");
+    // {"id":1,"modificationCounter":1,"revision":null,"orderId":1,"cookId":null,"offerId":1,"offerName":"Schnitzel-Menü","state":"DELIVERED","drinkState":"DELIVERED","price":"6.99","comment":"mit
+    // Ketschup"}
+    String request2 =
+        "{id:6,modificationCounter:1,revision:null,orderId:1,cookId:null, offerId:1,\"offerName\":\"Schnitzel-Menü\",\"state\":\"DELIVERED\",\"drinkState\":\"DELIVERED\",\"price\":\"6.99\",\"comment\":\"mit Ketschup\"}";
+    HttpEntity<String> postRequestEntity = new HttpEntity<String>(request2, postRequestHeaders);
+    System.out.println("-----------------request-----------------");
+    System.out.println(request2);
+    ResponseEntity<String> putResponse =
+        // this.template.exchange("http://localhost:" + this.port + "/services/rest" + this.salesmanagement
+        // + "/orderposition/" + Long.toString(6), HttpMethod.POST, postRequestEntity, String.class);
+        this.template.exchange(
+            "http://localhost:" + this.port + "/services/rest" + this.salesmanagement + "/orderposition",
+            HttpMethod.POST, postRequestEntity, String.class);
+
+    System.out.println("-----------------putResponse-----------------");
+    System.out.println(putResponse);
 
     // RequestEntity request =
     // RequestEntity
@@ -109,7 +149,7 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
 
   }
 
-  public String authentification() {
+  public HttpHeaders getAuthentificatedHeaders() {
 
     String plainCreds = "chief:chief";
     byte[] plainCredsBytes = plainCreds.getBytes();
@@ -119,12 +159,21 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
     HttpHeaders headers = new HttpHeaders();
     headers.add("Authorization", "Basic " + base64Creds);
 
-    HttpEntity<String> request = new HttpEntity<String>(headers);
-    ResponseEntity<String> response = this.template.exchange(
-        "http://localhost:" + this.port + "/services/rest" + this.salesmanagement + this.orderPositions, HttpMethod.GET,
-        request, String.class);
-    String responseText = response.getBody();
-    return responseText;
+    return headers;
   }
+
+  // public HttpEntity<String> getAuthentificatedRequest() {
+  //
+  // String plainCreds = "chief:chief";
+  // byte[] plainCredsBytes = plainCreds.getBytes();
+  // byte[] base64CredsBytes = Base64.encodeBase64(plainCredsBytes);
+  // String base64Creds = new String(base64CredsBytes);
+  //
+  // HttpHeaders headers = new HttpHeaders();
+  // headers.add("Authorization", "Basic " + base64Creds);
+  //
+  // HttpEntity<String> request = new HttpEntity<String>(headers);
+  // return request;
+  // }
 
 }
