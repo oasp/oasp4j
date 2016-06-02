@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import org.apache.commons.codec.binary.Base64;
 import org.flywaydb.core.Flyway;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
@@ -87,9 +88,17 @@ public class TablemanagementWebRestServiceTest extends SubsystemTest {
     // putRequest
     HttpHeaders postRequestHeaders = this.authentificatedHeaders;
     postRequestHeaders.setContentType(MediaType.APPLICATION_JSON);
-    String requestPayload =
-        "{\"id\": 102, \"modificationCounter\": 1, \"revision\": null, \"waiterId\": null, \"number\": 2, \"state\": \"OCCUPIED\"}";
-    HttpEntity<String> postRequestEntity = new HttpEntity<String>(requestPayload, postRequestHeaders);
+    // String requestPayload = "{\"id\": 102, \"modificationCounter\": 1, \"number\": 2, \"state\": \"OCCUPIED\"}";
+
+    // String requestPayload = "{\"id\": 102, \"modificationCounter\": 1, \"number\": 2, \"state\": \"OCCUPIED\"}";
+
+    JSONObject requestPayload = new JSONObject();
+    requestPayload.put("id", tableId);
+    requestPayload.put("modificationCounter", 1);
+    requestPayload.put("number", 2);
+    requestPayload.put("state", "OCCUPIED");
+
+    HttpEntity<String> postRequestEntity = new HttpEntity<String>(requestPayload.toString(), postRequestHeaders);
 
     ResponseEntity<String> postResponse =
         this.template.exchange("http://localhost:" + this.port + "/services/rest" + "/tablemanagement/v1/table/",
