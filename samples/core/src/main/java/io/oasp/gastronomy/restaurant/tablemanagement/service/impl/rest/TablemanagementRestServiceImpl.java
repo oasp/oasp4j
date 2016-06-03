@@ -9,8 +9,6 @@ import javax.ws.rs.NotFoundException;
 
 import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
 
-import org.slf4j.LoggerFactory;
-
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.Table;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
@@ -40,7 +38,6 @@ public class TablemanagementRestServiceImpl implements TablemanagementRestServic
   @Override
   public TableEto getTable(String id) {
 
-    LoggerFactory.getLogger(TablemanagementRestServiceImpl.class).trace("impl test");
     long idAsLong;
     if (id == null) {
       throw new BadRequestException("missing id");
