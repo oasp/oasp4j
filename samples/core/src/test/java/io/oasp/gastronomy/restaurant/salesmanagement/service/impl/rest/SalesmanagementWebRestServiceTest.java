@@ -29,6 +29,7 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.general.common.RestTestClientBuilder;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.service.api.rest.SalesmanagementRestService;
@@ -59,12 +60,12 @@ import io.oasp.module.test.common.base.SubsystemTest;
 
 public class SalesmanagementWebRestServiceTest extends SubsystemTest {
 
+  // reads from test/resources/config/application.properties the variable server.port
+  @Value("${local.server.port}")
+  private int port;
+
   @Inject
   private JacksonJsonProvider jacksonJsonProvider;
-
-  private String baseUrlPraefix = "http://localhost:";
-
-  private String baseUrlSuffix = "/services/rest/salesmanagement/v1/";
 
   private HttpEntity<String> request;
 
@@ -72,9 +73,27 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
 
   private UriInfo uriInfo;
 
-  // reads from test/resources/config/application.properties the variable server.port
-  @Value("${local.server.port}")
-  private int port;
+  private static final String BASE_URL_PRAEFIX = "http://localhost:";
+
+  private static final String BASE_URL_SUFFIX = "/services/rest/salesmanagement/v1/";
+
+  private static final String ROLE = "chief";
+
+  private static final long SAMPLE_ORDER_ID = 1L;
+
+  private static final long SAMPLE_OFFER_ID = 5L;
+
+  private static final String SAMPLE_OFFER_NAME = "Cola";
+
+  private static final OrderState SAMPLE_ORDER_STATE = OrderState.OPEN;
+
+  private static final OrderPositionState SAMPLE_ORDER_POSITION_STATE = OrderPositionState.DELIVERED;
+
+  private static final ProductOrderState SAMPLE_DRINK_STATE = ProductOrderState.DELIVERED;
+
+  private static final String SAMPLE_COMMENT = "";
+
+  private static final double SAMPLE_PRICE = 1.20;
 
   private SalesmanagementRestService service;
 
@@ -104,6 +123,8 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
   // @Test
   public void getOrderPosition() {
 
+    // OrderPositionEto expectedOrderPositionEto = this.service.saveOrderPosition(6, 1, "");
+
     // setup
 
     HttpEntity<String> getRequest = new HttpEntity<String>(this.authentificatedHeaders);
@@ -125,27 +146,23 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
   @Test
   public void postOrderPosition() {
 
-    long sampleOrderID = 1;
-    long sampleOfferID = 5;
-    String sampleOfferName = "Cola";
-    OrderPositionState sampleOrderState = OrderPositionState.ORDERED;
-    ProductOrderState sampleDrinkState = ProductOrderState.ORDERED;
-    double samplePrice = 1.20;
-    String sampleComment = "";
-
-    long numberOfOrderPositions = 0;
-
     // setup
+    long numberOfOrderPositions = 0;
     HttpHeaders postRequestHeaders = this.authentificatedHeaders;
     postRequestHeaders.setContentType(MediaType.APPLICATION_JSON);
     JSONObject request = new JSONObject();
 
-    request.put("orderId", sampleOrderID);
-    request.put("offerId", sampleOfferID);
-    request.put("offerName", sampleOfferName);
-    request.put("state", sampleOrderState);
-    request.put("drinkState", sampleDrinkState);
-    request.put("comment", sampleComment);
+    request.put("orderId", SAMPLE_ORDER_ID);
+    request.put("offerId", SAMPLE_OFFER_ID);
+    request.put("offerName", SAMPLE_OFFER_NAME);
+    request.put("state", SAMPLE_ORDER_POSITION_STATE);
+    request.put("drinkState", SAMPLE_DRINK_STATE);
+    request.put("comment", SAMPLE_COMMENT);
+
+    // both operations are redundant as the values of the attributes "offername" and "price" are persisted
+    // automatically according to offerId
+    request.put("offerName", SAMPLE_OFFER_NAME);
+    request.put("price", SAMPLE_PRICE);
 
     HttpEntity<String> postRequestEntity = new HttpEntity<String>(request.toString(), postRequestHeaders);
 
@@ -158,25 +175,21 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
     ResponseEntity<String> postResponse =
         this.template.exchange(generateBaseUrl() + "orderposition/", HttpMethod.POST, postRequestEntity, String.class);
 
-    System.out.println("---------------------TEST-------------------");
-    System.out.println(postResponse);
-
     // verify
     OrderPositionEto expectedOrderPositionEto = this.service.findOrderPosition(numberOfOrderPositions + 1);
     assertThat(expectedOrderPositionEto).isNotNull();
     assertThat(expectedOrderPositionEto.getId()).isEqualTo(numberOfOrderPositions + 1);
-    assertThat(expectedOrderPositionEto.getOrderId()).isEqualTo(sampleOrderID);
-    assertThat(expectedOrderPositionEto.getOfferName()).isEqualTo(sampleOfferName);
-    assertThat(expectedOrderPositionEto.getState()).isEqualTo(sampleOrderState);
-    assertThat(expectedOrderPositionEto.getDrinkState()).isEqualTo(sampleDrinkState);
-    assertThat(expectedOrderPositionEto.getPrice()).isEqualTo(samplePrice);
-    assertThat(expectedOrderPositionEto.getComment()).isEqualTo(sampleComment);
-
+    assertThat(expectedOrderPositionEto.getOrderId()).isEqualTo(SAMPLE_ORDER_ID);
+    assertThat(expectedOrderPositionEto.getOfferName()).isEqualTo(SAMPLE_OFFER_NAME);
+    assertThat(expectedOrderPositionEto.getState()).isEqualTo(SAMPLE_ORDER_POSITION_STATE);
+    assertThat(expectedOrderPositionEto.getDrinkState()).isEqualTo(SAMPLE_DRINK_STATE);
+    assertThat(expectedOrderPositionEto.getPrice().getValue().doubleValue()).isEqualTo(SAMPLE_PRICE);
+    assertThat(expectedOrderPositionEto.getComment()).isEqualTo(SAMPLE_COMMENT);
   }
 
   public HttpHeaders getAuthentificatedHeaders() {
 
-    String plainCreds = "chief:chief";
+    String plainCreds = ROLE + ":" + ROLE;
     byte[] plainCredsBytes = plainCreds.getBytes();
     byte[] base64CredsBytes = Base64.encodeBase64(plainCredsBytes);
     String base64Creds = new String(base64CredsBytes);
@@ -186,12 +199,12 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
     return headers;
   }
 
-  // this function is necessary is necessary as the default port changes in between the invocation of the constructor
+  // this function is necessary as the default port changes in between the invocation of the constructor
   // and
   // the execution of the test methods
   public String generateBaseUrl() {
 
-    return this.baseUrlPraefix + this.port + this.baseUrlSuffix;
+    return BASE_URL_PRAEFIX + this.port + BASE_URL_SUFFIX;
   }
 
   // public HttpEntity<String> getAuthentificatedRequest() {
