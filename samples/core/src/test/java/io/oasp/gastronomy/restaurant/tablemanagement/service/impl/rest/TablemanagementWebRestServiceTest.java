@@ -75,8 +75,7 @@ public class TablemanagementWebRestServiceTest extends SubsystemTest {
     HttpEntity<String> getRequestEntity = new HttpEntity<String>(this.authentificatedHeaders);
     long tableId = 102;
 
-    ResponseEntity<String> getResponse = this.template.exchange(
-        "http://localhost:" + this.port + "/services/rest" + "/tablemanagement/v1/table/" + Long.toString(tableId),
+    ResponseEntity<String> getResponse = this.template.exchange(generateBaseUrl() + "table/" + Long.toString(tableId),
         HttpMethod.GET, getRequestEntity, String.class);
     String getResponseString = getResponse.getBody();
     assertThat(getResponse).isNotNull();
@@ -101,8 +100,7 @@ public class TablemanagementWebRestServiceTest extends SubsystemTest {
     HttpEntity<String> postRequestEntity = new HttpEntity<String>(requestPayload.toString(), postRequestHeaders);
 
     ResponseEntity<String> postResponse =
-        this.template.exchange("http://localhost:" + this.port + "/services/rest" + "/tablemanagement/v1/table/",
-            HttpMethod.POST, postRequestEntity, String.class);
+        this.template.exchange(generateBaseUrl() + "table/", HttpMethod.POST, postRequestEntity, String.class);
     String postResponseString = postResponse.getBody();
     assertThat(postResponse).isNotNull();
     assertThat(postResponseString).isNotNull();
@@ -113,9 +111,8 @@ public class TablemanagementWebRestServiceTest extends SubsystemTest {
     // getRequestAfter
     getRequestEntity = new HttpEntity<String>(this.authentificatedHeaders);
 
-    getResponse = this.template.exchange(
-        "http://localhost:" + this.port + "/services/rest" + "/tablemanagement/v1/table/" + Long.toString(tableId),
-        HttpMethod.GET, getRequestEntity, String.class);
+    getResponse = this.template.exchange(generateBaseUrl() + "table/" + Long.toString(tableId), HttpMethod.GET,
+        getRequestEntity, String.class);
     getResponseString = getResponse.getBody();
     assertThat(getResponse).isNotNull();
     assertThat(getResponseString).isNotNull();
@@ -153,6 +150,11 @@ public class TablemanagementWebRestServiceTest extends SubsystemTest {
     headers.add("Authorization", "Basic " + base64Creds);
 
     return headers;
+  }
+
+  public String generateBaseUrl() {
+
+    return "http://localhost:" + this.port + "/services/rest/tablemanagement/v1/";
   }
 
 }
