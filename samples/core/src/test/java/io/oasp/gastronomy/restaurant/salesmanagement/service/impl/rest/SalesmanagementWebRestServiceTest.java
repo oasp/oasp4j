@@ -28,6 +28,7 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.general.common.RestTestClientBuilder;
+import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
@@ -69,7 +70,9 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
 
   private HttpEntity<String> request;
 
-  private HttpHeaders authentificatedHeaders;
+  private long numberOfOrderPositions = 0;
+
+  private static final HttpHeaders AUTHENTIFICATED_HEADERS = getAuthentificatedHeaders();
 
   private UriInfo uriInfo;
 
@@ -93,7 +96,7 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
 
   private static final String SAMPLE_COMMENT = "";
 
-  private static final double SAMPLE_PRICE = 1.20;
+  private static final String SAMPLE_PRICE = "1.20";
 
   private SalesmanagementRestService service;
 
@@ -107,8 +110,6 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
   public SalesmanagementWebRestServiceTest() {
     long sampleOrderId = 1;
     this.template = new RestTemplate();
-    this.authentificatedHeaders = getAuthentificatedHeaders();
-
   }
 
   @Before
@@ -116,45 +117,66 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
 
     this.flyway.clean();
     this.flyway.migrate();
-    this.service = RestTestClientBuilder.build(SalesmanagementRestService.class, "waiter", "waiter",
+    // cannot be put into constructor, as port is set after the constructor invocation
+    this.service = RestTestClientBuilder.build(SalesmanagementRestService.class, ROLE, ROLE,
         "http://localhost:" + this.port + "/services/rest", this.jacksonJsonProvider);
+    this.numberOfOrderPositions = getNumberOfOrderPositions();
+
   }
 
-  // @Test
+  @Test
   public void getOrderPosition() {
 
-    // OrderPositionEto expectedOrderPositionEto = this.service.saveOrderPosition(6, 1, "");
-
     // setup
+    HttpEntity<String> getRequest = new HttpEntity<String>(AUTHENTIFICATED_HEADERS);
 
-    HttpEntity<String> getRequest = new HttpEntity<String>(this.authentificatedHeaders);
-    ResponseEntity<String> getResponse =
-        this.template.exchange(generateBaseUrl() + "orderposition/", HttpMethod.GET, getRequest, String.class);
+    OrderPositionEto sampleOrderPositionEto = new OrderPositionEto();
+    sampleOrderPositionEto.setOrderId(SAMPLE_ORDER_ID);
+    sampleOrderPositionEto.setOfferId(SAMPLE_OFFER_ID);
+    sampleOrderPositionEto.setOfferName(SAMPLE_OFFER_NAME);
+    sampleOrderPositionEto.setState(SAMPLE_ORDER_POSITION_STATE);
+    sampleOrderPositionEto.setDrinkState(SAMPLE_DRINK_STATE);
+    sampleOrderPositionEto.setPrice(new Money(Double.parseDouble(SAMPLE_PRICE)));
+
+    this.service.saveOrderPosition(sampleOrderPositionEto);
 
     // execute
-    String responseJson = getResponse.getBody();
-    System.out.println(responseJson);
-    System.out.println("-----------------Test2-----------------");
-    assertThat(getResponse).isNotNull();
-    JSONAssert.assertEquals("{id:1}", responseJson, false);
-    JSONAssert.assertEquals("{modificationCounter:1}", responseJson, false);
-    JSONAssert.assertEquals("{orderId:1}", responseJson, false);
-    JSONAssert.assertEquals("{offerId:1}", responseJson, false);
-    JSONAssert.assertEquals("{offerName:Schnitzel-Menü}", responseJson, false);
+    ResponseEntity<String> getResponse =
+        this.template.exchange(generateBaseUrl() + "orderposition/" + Long.toString(this.numberOfOrderPositions + 1),
+            HttpMethod.GET, getRequest, String.class);
+
+    // validate
+    String getResponseJson = getResponse.getBody();
+
+    // JSONAssert.assertEquals("{id:" + this.numberOfOrderPositions + 1 + "}", getResponseJson, true);
+    // JSONAssert.assertEquals("{modificationCounter:1}", getResponseJson, true);
+    String test = "{orderId:" + Long.toString(SAMPLE_ORDER_ID) + "}";
+    System.out.println("---------------getOrderPosition------------------------");
+    System.out.println(getResponseJson);
+
+    JSONAssert.assertEquals("{id:" + Long.toString(this.numberOfOrderPositions + 1) + "}", getResponseJson, false);
+    JSONAssert.assertEquals("{orderId:" + Long.toString(SAMPLE_ORDER_ID) + "}", getResponseJson, false);
+    JSONAssert.assertEquals("{offerId:" + Long.toString(SAMPLE_OFFER_ID) + "}", getResponseJson, false);
+    JSONAssert.assertEquals("{offerName:" + SAMPLE_OFFER_NAME + "}", getResponseJson, false);
+    JSONAssert.assertEquals("{state:" + SAMPLE_ORDER_POSITION_STATE.toString() + "}", getResponseJson, false);
+    JSONAssert.assertEquals("{drinkState:" + SAMPLE_DRINK_STATE.toString() + "}", getResponseJson, false);
+    // JSONAssert.assertEquals("{comment:" + SAMPLE_COMMENT + "}", getResponseJson, false);
+    // JSONAssert.assertEquals("{comment: }", getResponseJson, false);
+    System.out.println(SAMPLE_PRICE);
+    JSONAssert.assertEquals("{price:" + SAMPLE_PRICE + "}", getResponseJson, false);
+    JSONAssert.assertEquals("{comment:" + SAMPLE_COMMENT + "}", getResponseJson, false);
   }
 
   @Test
   public void postOrderPosition() {
 
     // setup
-    long numberOfOrderPositions = 0;
-    HttpHeaders postRequestHeaders = this.authentificatedHeaders;
+    HttpHeaders postRequestHeaders = AUTHENTIFICATED_HEADERS;
     postRequestHeaders.setContentType(MediaType.APPLICATION_JSON);
     JSONObject request = new JSONObject();
 
     request.put("orderId", SAMPLE_ORDER_ID);
     request.put("offerId", SAMPLE_OFFER_ID);
-    request.put("offerName", SAMPLE_OFFER_NAME);
     request.put("state", SAMPLE_ORDER_POSITION_STATE);
     request.put("drinkState", SAMPLE_DRINK_STATE);
     request.put("comment", SAMPLE_COMMENT);
@@ -166,19 +188,17 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
 
     HttpEntity<String> postRequestEntity = new HttpEntity<String>(request.toString(), postRequestHeaders);
 
-    List<OrderPositionEto> orderPositions = this.service.findOrderPositions(this.uriInfo);
-    if (orderPositions != null) {
-      numberOfOrderPositions = orderPositions.size();
-    }
-
     // execute
     ResponseEntity<String> postResponse =
         this.template.exchange(generateBaseUrl() + "orderposition/", HttpMethod.POST, postRequestEntity, String.class);
 
+    System.out.println("---------------postOrderPosition------------------------");
+    System.out.println(postResponse.getBody());
+
     // verify
-    OrderPositionEto expectedOrderPositionEto = this.service.findOrderPosition(numberOfOrderPositions + 1);
+    OrderPositionEto expectedOrderPositionEto = this.service.findOrderPosition(this.numberOfOrderPositions + 1);
     assertThat(expectedOrderPositionEto).isNotNull();
-    assertThat(expectedOrderPositionEto.getId()).isEqualTo(numberOfOrderPositions + 1);
+    assertThat(expectedOrderPositionEto.getId()).isEqualTo(this.numberOfOrderPositions + 1);
     assertThat(expectedOrderPositionEto.getOrderId()).isEqualTo(SAMPLE_ORDER_ID);
     assertThat(expectedOrderPositionEto.getOfferName()).isEqualTo(SAMPLE_OFFER_NAME);
     assertThat(expectedOrderPositionEto.getState()).isEqualTo(SAMPLE_ORDER_POSITION_STATE);
@@ -187,7 +207,7 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
     assertThat(expectedOrderPositionEto.getComment()).isEqualTo(SAMPLE_COMMENT);
   }
 
-  public HttpHeaders getAuthentificatedHeaders() {
+  private static HttpHeaders getAuthentificatedHeaders() {
 
     String plainCreds = ROLE + ":" + ROLE;
     byte[] plainCredsBytes = plainCreds.getBytes();
@@ -202,9 +222,19 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
   // this function is necessary as the default port changes in between the invocation of the constructor
   // and
   // the execution of the test methods
-  public String generateBaseUrl() {
+  private String generateBaseUrl() {
 
     return BASE_URL_PRAEFIX + this.port + BASE_URL_SUFFIX;
+  }
+
+  private long getNumberOfOrderPositions() {
+
+    long numberOfOrderPositions = 0;
+    List<OrderPositionEto> orderPositions = this.service.findOrderPositions(this.uriInfo);
+    if (orderPositions != null) {
+      numberOfOrderPositions = orderPositions.size();
+    }
+    return numberOfOrderPositions;
   }
 
   // public HttpEntity<String> getAuthentificatedRequest() {
