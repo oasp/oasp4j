@@ -66,9 +66,9 @@ public class SalesmanagementRestServiceTest extends SubsystemTest {
 
   private static final int EXPECTED_NUMBER_OF_ORDER_POSITIONS = 5;
 
-  private static final long SAMPLE_OFFER_ID = 6L;
+  private static final long SAMPLE_OFFER_ID = 5L;
 
-  private static final String SAMPLE_OFFER_NAME = "Pizza-Menü";
+  private static final String SAMPLE_OFFER_NAME = "Cola";
 
   private static final OrderState SAMPLE_ORDER_STATE = OrderState.OPEN;
 
@@ -135,7 +135,7 @@ public class SalesmanagementRestServiceTest extends SubsystemTest {
   @Test
   public void testFindOrdersByPost() {
 
-    // Setup
+    // setup
     long sampleOrderId = EXPECTED_NUMBER_OF_ORDERS + 1;
 
     OrderSearchCriteriaTo criteria = new OrderSearchCriteriaTo();
@@ -152,7 +152,7 @@ public class SalesmanagementRestServiceTest extends SubsystemTest {
     sampleOrderCto.setPositions(sampleOrderPositions);
     this.service.saveOrder(sampleOrderCto);
 
-    // Exercise
+    // exercise
 
     PaginatedListTo<OrderCto> orderCtoList = this.service.findOrdersByPost(criteria);
     System.out.println(orderCtoList.toString());
@@ -206,7 +206,8 @@ public class SalesmanagementRestServiceTest extends SubsystemTest {
     return sampleOrderCto;
   }
 
-  private OrderPositionEto createSampleOrderPositionEto(long orderId) {
+  // TODO talk with Jonas, where to put this function
+  static public OrderPositionEto createSampleOrderPositionEto(long orderId) {
 
     OrderPositionEto orderPositionEto = new OrderPositionEto();
     orderPositionEto.setOrderId(orderId);
@@ -215,6 +216,7 @@ public class SalesmanagementRestServiceTest extends SubsystemTest {
     orderPositionEto.setState(SAMPLE_ORDER_POSITION_STATE);
     orderPositionEto.setDrinkState(SAMPLE_DRINK_STATE);
     orderPositionEto.setPrice(SAMPLE_PRICE);
+    orderPositionEto.setComment(SAMPLE_OFFER_NAME);
     return orderPositionEto;
   }
 }
