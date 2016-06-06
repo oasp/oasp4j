@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -87,6 +88,7 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
 
   private static final long SAMPLE_OFFER_ID = 5L;
 
+  // TODO talk to Jonas, problematic for ü, escapes donnot work \u00fc
   private static final String SAMPLE_OFFER_NAME = "Cola";
 
   private static final OrderState SAMPLE_ORDER_STATE = OrderState.OPEN;
@@ -150,13 +152,6 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
 
     // validate
     String getResponseJson = getResponse.getBody();
-
-    // JSONAssert.assertEquals("{id:" + this.numberOfOrderPositions + 1 + "}", getResponseJson, true);
-    // JSONAssert.assertEquals("{modificationCounter:1}", getResponseJson, true);
-    String test = "{orderId:" + Long.toString(SAMPLE_ORDER_ID) + "}";
-    System.out.println("---------------getOrderPosition------------------------");
-    System.out.println(getResponseJson);
-
     JSONAssert.assertEquals("{id:" + Long.toString(this.numberOfOrderPositions + 1) + "}", getResponseJson, false);
     JSONAssert.assertEquals("{orderId:" + Long.toString(SAMPLE_ORDER_ID) + "}", getResponseJson, false);
     JSONAssert.assertEquals("{offerId:" + Long.toString(SAMPLE_OFFER_ID) + "}", getResponseJson, false);
@@ -164,9 +159,35 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
     JSONAssert.assertEquals("{state:" + SAMPLE_ORDER_POSITION_STATE.toString() + "}", getResponseJson, false);
     JSONAssert.assertEquals("{drinkState:" + SAMPLE_DRINK_STATE.toString() + "}", getResponseJson, false);
     JSONAssert.assertEquals("{price:" + "\"" + SAMPLE_PRICE.getValue() + "\"" + "}", getResponseJson, false);
-
-    // JSONAssert.assertEquals("{comment:" + SAMPLE_COMMENT + "}", getResponseJson, false);
     JSONAssert.assertEquals("{comment:" + SAMPLE_COMMENT + "}", getResponseJson, false);
+  }
+
+  @Test
+  public void getOrderPositions() {
+
+    // setup
+    HttpEntity<String> getRequest = new HttpEntity<String>(AUTHENTIFICATED_HEADERS);
+
+    long index = 0;
+
+    OrderPositionEto sampleOrderPositionEto = new OrderPositionEto();
+    sampleOrderPositionEto.setOrderId(SAMPLE_ORDER_ID);
+    sampleOrderPositionEto.setOfferId(SAMPLE_OFFER_ID);
+    this.service.saveOrderPosition(sampleOrderPositionEto);
+
+    // execute
+    ResponseEntity<String> getResponse =
+        this.template.exchange(generateBaseUrl() + "orderposition/", HttpMethod.GET, getRequest, String.class);
+
+    // validate
+    String getResponseJson = getResponse.getBody();
+    ArrayList<String> jsonObjectArrayList = buildJsonObjectArrayList(getResponseJson);
+
+    for (String jsonObject : jsonObjectArrayList) {
+      index++;
+      JSONAssert.assertEquals("{id:" + index + "}", jsonObject, false);
+    }
+    assertThat(index).isEqualTo(getNumberOfOrderPositions());
   }
 
   @Test
@@ -235,4 +256,21 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
     }
     return numberOfOrderPositions;
   }
+
+  private ArrayList<String> buildJsonObjectArrayList(String getResponseJson) {
+
+    String truncatedGetResponseJson = getResponseJson.replace("[", "").replace("]", "");
+    ArrayList<String> arrayList = new ArrayList();
+    int index = truncatedGetResponseJson.indexOf("},{");
+    String tempStringEnd = truncatedGetResponseJson;
+    while (index != -1) {
+      String tempStringBegin = tempStringEnd.substring(0, index + 1);
+      arrayList.add(tempStringBegin);
+      tempStringEnd = tempStringEnd.substring(index + 2);
+      index = tempStringEnd.indexOf("},{");
+    }
+    arrayList.add(tempStringEnd);
+    return arrayList;
+  }
+
 }
