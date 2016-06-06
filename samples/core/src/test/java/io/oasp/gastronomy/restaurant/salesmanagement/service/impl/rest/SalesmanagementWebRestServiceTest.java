@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -94,9 +95,10 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
 
   private static final ProductOrderState SAMPLE_DRINK_STATE = ProductOrderState.DELIVERED;
 
-  private static final String SAMPLE_COMMENT = "";
+  // TODO talk to Jonas, that this does not work for empty strings
+  private static final String SAMPLE_COMMENT = "with ice";
 
-  private static final String SAMPLE_PRICE = "1.20";
+  private static final Money SAMPLE_PRICE = new Money(new BigDecimal("1.20"));
 
   private SalesmanagementRestService service;
 
@@ -136,7 +138,8 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
     sampleOrderPositionEto.setOfferName(SAMPLE_OFFER_NAME);
     sampleOrderPositionEto.setState(SAMPLE_ORDER_POSITION_STATE);
     sampleOrderPositionEto.setDrinkState(SAMPLE_DRINK_STATE);
-    sampleOrderPositionEto.setPrice(new Money(Double.parseDouble(SAMPLE_PRICE)));
+    sampleOrderPositionEto.setPrice(SAMPLE_PRICE);
+    sampleOrderPositionEto.setComment(SAMPLE_COMMENT);
 
     this.service.saveOrderPosition(sampleOrderPositionEto);
 
@@ -160,10 +163,9 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
     JSONAssert.assertEquals("{offerName:" + SAMPLE_OFFER_NAME + "}", getResponseJson, false);
     JSONAssert.assertEquals("{state:" + SAMPLE_ORDER_POSITION_STATE.toString() + "}", getResponseJson, false);
     JSONAssert.assertEquals("{drinkState:" + SAMPLE_DRINK_STATE.toString() + "}", getResponseJson, false);
+    JSONAssert.assertEquals("{price:" + "\"" + SAMPLE_PRICE.getValue() + "\"" + "}", getResponseJson, false);
+
     // JSONAssert.assertEquals("{comment:" + SAMPLE_COMMENT + "}", getResponseJson, false);
-    // JSONAssert.assertEquals("{comment: }", getResponseJson, false);
-    System.out.println(SAMPLE_PRICE);
-    JSONAssert.assertEquals("{price:" + SAMPLE_PRICE + "}", getResponseJson, false);
     JSONAssert.assertEquals("{comment:" + SAMPLE_COMMENT + "}", getResponseJson, false);
   }
 
@@ -184,16 +186,13 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
     // both operations are redundant as the values of the attributes "offername" and "price" are persisted
     // automatically according to offerId
     request.put("offerName", SAMPLE_OFFER_NAME);
-    request.put("price", SAMPLE_PRICE);
+    request.put("price", SAMPLE_PRICE.getValue());
 
     HttpEntity<String> postRequestEntity = new HttpEntity<String>(request.toString(), postRequestHeaders);
 
     // execute
     ResponseEntity<String> postResponse =
         this.template.exchange(generateBaseUrl() + "orderposition/", HttpMethod.POST, postRequestEntity, String.class);
-
-    System.out.println("---------------postOrderPosition------------------------");
-    System.out.println(postResponse.getBody());
 
     // verify
     OrderPositionEto expectedOrderPositionEto = this.service.findOrderPosition(this.numberOfOrderPositions + 1);
@@ -203,7 +202,7 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
     assertThat(expectedOrderPositionEto.getOfferName()).isEqualTo(SAMPLE_OFFER_NAME);
     assertThat(expectedOrderPositionEto.getState()).isEqualTo(SAMPLE_ORDER_POSITION_STATE);
     assertThat(expectedOrderPositionEto.getDrinkState()).isEqualTo(SAMPLE_DRINK_STATE);
-    assertThat(expectedOrderPositionEto.getPrice().getValue().doubleValue()).isEqualTo(SAMPLE_PRICE);
+    assertThat(expectedOrderPositionEto.getPrice()).isEqualTo(SAMPLE_PRICE);
     assertThat(expectedOrderPositionEto.getComment()).isEqualTo(SAMPLE_COMMENT);
   }
 
@@ -236,19 +235,4 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
     }
     return numberOfOrderPositions;
   }
-
-  // public HttpEntity<String> getAuthentificatedRequest() {
-  //
-  // String plainCreds = "chief:chief";
-  // byte[] plainCredsBytes = plainCreds.getBytes();
-  // byte[] base64CredsBytes = Base64.encodeBase64(plainCredsBytes);
-  // String base64Creds = new String(base64CredsBytes);
-  //
-  // HttpHeaders headers = new HttpHeaders();
-  // headers.add("Authorization", "Basic " + base64Creds);
-  //
-  // HttpEntity<String> request = new HttpEntity<String>(headers);
-  // return request;
-  // }
-
 }
