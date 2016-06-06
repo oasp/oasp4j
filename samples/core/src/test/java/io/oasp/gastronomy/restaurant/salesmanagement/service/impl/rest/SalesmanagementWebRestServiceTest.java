@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import io.oasp.gastronomy.restaurant.general.common.RestTestClientBuilder;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.service.api.rest.SalesmanagementRestService;
 
@@ -74,10 +75,9 @@ public class SalesmanagementWebRestServiceTest extends SalesmanagementTest {
 
     // setup
     HttpEntity<String> getRequest = new HttpEntity<String>(this.AUTHENTIFICATED_HEADERS);
+    OrderCto sampleOrderCto = createSampleOrderCto(this.SAMPLE_TABLE_ID);
 
-    OrderPositionEto sampleOrderPositionEto = createSampleOrderPositionEto(SAMPLE_ORDER_ID);
-
-    this.service.saveOrderPosition(sampleOrderPositionEto);
+    // this.service.saveOrderPosition(sampleOrderPositionEto);
 
     // execute
     ResponseEntity<String> getResponse =
