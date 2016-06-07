@@ -42,7 +42,7 @@ CREATE TABLE PRODUCT_AUD(
 
 -- *** Offer ***
 CREATE TABLE OFFER(
-    id BIGINT NOT NULL,
+    id BIGINT NOT NULL AUTO_INCREMENT,
     modificationCounter INTEGER NOT NULL,
     description VARCHAR(255),
     name VARCHAR(255),

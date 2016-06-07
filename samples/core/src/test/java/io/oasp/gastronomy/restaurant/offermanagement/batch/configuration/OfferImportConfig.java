@@ -1,9 +1,6 @@
 package io.oasp.gastronomy.restaurant.offermanagement.batch.configuration;
 
-import java.beans.PropertyEditor;
 import java.net.MalformedURLException;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -11,6 +8,7 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
@@ -18,21 +16,16 @@ import org.springframework.batch.item.file.FlatFileParseException;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
+import org.springframework.batch.item.file.transform.IncorrectTokenCountException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.validation.BindException;
 
-import io.oasp.gastronomy.restaurant.general.batch.api.MoneyEditor;
-import io.oasp.gastronomy.restaurant.general.batch.api.OfferStateEditor;
-import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
+import io.oasp.gastronomy.restaurant.offermanagement.batch.impl.offerimport.writer.OfferItemConverter;
 import io.oasp.gastronomy.restaurant.offermanagement.batch.impl.offerimport.writer.OfferWriter;
-import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferState;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 
 /**
- *
- * TODO sroeger need to insert custom editors OfferStateEditor and MoneyEditor to get functionality
  *
  * This class defines job and steps for an offer import test
  *
@@ -55,11 +48,12 @@ public class OfferImportConfig {
   }
 
   @Bean
-  public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader reader, ItemWriter writer) {
+  public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader reader, ItemProcessor processor,
+      ItemWriter writer) {
 
-    /* it handles bunches of 10 units and skips 1 error of types given below */
-    return stepBuilderFactory.get("step1").chunk(10).reader(reader).writer(writer).faultTolerant().skipLimit(1)
-        .skip(BindException.class).skip(FlatFileParseException.class).build();
+    /* it handles bunches of 2 units and skips 1 error of types given below */
+    return stepBuilderFactory.get("step1").chunk(2).reader(reader).processor(processor).writer(writer).faultTolerant()
+        .skipLimit(1).skip(IncorrectTokenCountException.class).skip(FlatFileParseException.class).build();
 
   }
 
@@ -70,26 +64,21 @@ public class OfferImportConfig {
   }
 
   @Bean
-  public ItemReader<OfferEto> reader() throws MalformedURLException {
+  public ItemReader<OfferCsv> reader() throws MalformedURLException {
 
-    final Map<? extends Object, ? extends PropertyEditor> customEditors1 = new HashMap<OfferState, OfferStateEditor>();
-    final Map<? extends Object, ? extends PropertyEditor> customEditors2 = new HashMap<Money, MoneyEditor>();
-
-    FlatFileItemReader<OfferEto> reader = new FlatFileItemReader<OfferEto>();
+    FlatFileItemReader<OfferCsv> reader = new FlatFileItemReader<OfferCsv>();
     reader.setResource(new ClassPathResource("ProductImportJobTest/data/offers.csv"));
 
-    reader.setLineMapper(new DefaultLineMapper<OfferEto>() {
+    reader.setLineMapper(new DefaultLineMapper<OfferCsv>() {
       {
         setLineTokenizer(new DelimitedLineTokenizer() {
           {
             setNames(new String[] { "name", "description", "state", "meal_id", "sidedish_id", "drink_id", "price" });
           }
         });
-        setFieldSetMapper(new BeanWrapperFieldSetMapper<OfferEto>() {
+        setFieldSetMapper(new BeanWrapperFieldSetMapper<OfferCsv>() {
           {
-            setTargetType(OfferEto.class);
-            setCustomEditors(customEditors1);
-            setCustomEditors(customEditors2);
+            setTargetType(OfferCsv.class);
 
           }
         });
@@ -99,9 +88,15 @@ public class OfferImportConfig {
   }
 
   @Bean
-  public ItemWriter writer() {
+  public ItemWriter<OfferEto> writer() {
 
     return new OfferWriter();
+  }
+
+  @Bean
+  public ItemProcessor<OfferCsv, OfferEto> processor() {
+
+    return new OfferItemConverter();
   }
 
 }

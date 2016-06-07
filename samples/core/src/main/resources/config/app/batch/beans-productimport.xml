@@ -31,7 +31,7 @@
         </property>
       </bean>
     </property>
-    Pass values to the configuration when launching a job.
+    <!-- Pass values to the confguration when launching a job. -->
     <property name="resource" value="#{jobParameters['drinks.file']}"/>
   </bean>
 
@@ -50,7 +50,7 @@
         </property>
       </bean>
     </property>
-    Pass values to the configuration when launching a job.
+    <!-- Pass values to the confguration when launching a job. -->
     <property name="resource" value="#{jobParameters['meals.file']}"/>
   </bean>
 
