@@ -1,5 +1,8 @@
 package io.oasp.gastronomy.restaurant.general.configuration;
 
+import javax.sql.DataSource;
+
+import org.flywaydb.core.Flyway;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -37,9 +40,9 @@ public class RestaurantTestConfig {
    * @return an instance of type {@code RestTestHelper}
    */
   @Bean
-  public RestraurantTestHelper restraurantTestHelper() {
+  public RestraurantTestHelper restraurantTestHelper(Flyway flyway, DataSource dataSource) {
 
-    return new RestraurantTestHelper();
+    return new RestraurantTestHelper(flyway, dataSource);
   }
 
 }

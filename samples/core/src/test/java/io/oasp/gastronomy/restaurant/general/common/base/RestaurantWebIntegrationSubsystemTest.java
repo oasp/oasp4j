@@ -2,6 +2,8 @@ package io.oasp.gastronomy.restaurant.general.common.base;
 
 import javax.inject.Inject;
 
+import org.flywaydb.core.Flyway;
+import org.flywaydb.core.api.MigrationVersion;
 import org.junit.After;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,6 +50,25 @@ public class RestaurantWebIntegrationSubsystemTest extends SubsystemTest {
   private String password;
 
   /**
+   * The baseline to be used by {@link Flyway}
+   */
+  @Value("${server.rest.test.flyway.baseline}")
+  private String baseline;
+
+  /**
+   * The target version for migration to be used by {@link Flyway}
+   */
+  @Value("${server.rest.test.flyway.target}")
+  private String target;
+
+  /**
+   * TODO revise: is this really necessary? <br/>
+   * A version that identifies a migration script by {@link Flyway}
+   */
+  @Value("${server.rest.test.flyway.empty}")
+  private String emptyDatabaseVersion;
+
+  /**
    * The {@code RestaurantTestHelper}.
    */
   @Inject
@@ -92,6 +113,15 @@ public class RestaurantWebIntegrationSubsystemTest extends SubsystemTest {
     this.restTestClientBuilder.setUser(this.user);
     this.restTestClientBuilder.setPassword(this.password);
     this.restTestClientBuilder.setJacksonJsonProvider(this.jacksonJsonProvider);
+
+    // Setup necessary versions for Flyway
+    assert (this.baseline != null && !"".equals(this.baseline));
+    assert (this.target != null && !"".equals(this.target));
+    assert (this.emptyDatabaseVersion != null && !"".equals(this.emptyDatabaseVersion));
+
+    this.restaurantTestHelper.setBaselineVersion(MigrationVersion.fromVersion(this.baseline));
+    this.restaurantTestHelper.setMigrationVersion(MigrationVersion.fromVersion(this.target));
+    this.restaurantTestHelper.setEmptyDatabaseVersion(MigrationVersion.fromVersion(this.emptyDatabaseVersion));
   }
 
   /**
