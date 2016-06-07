@@ -1,12 +1,20 @@
 package io.oasp.gastronomy.restaurant.general.common;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationVersion;
 
 /**
- * TODO jmolinar This type ...
+ * This class serves as a helper class for configuring test fixtures using {@link Flyway} for database migrations of H2
+ * database.
  *
  * @author jmolinar
  */
@@ -21,8 +29,6 @@ public class RestraurantTestHelper {
 
   private MigrationVersion baselineVersion;
 
-  private MigrationVersion emptyDatabaseVersion;
-
   /**
    * The constructor.
    */
@@ -33,8 +39,8 @@ public class RestraurantTestHelper {
   /**
    * The constructor.
    *
-   * @param flyway
-   * @param dataSource
+   * @param flyway an instance of type {@link Flyway}
+   * @param dataSource an instance of type {@link DataSource}
    */
   public RestraurantTestHelper(Flyway flyway, DataSource dataSource) {
     super();
@@ -63,11 +69,125 @@ public class RestraurantTestHelper {
   }
 
   /**
+   * This is an alternative implementation of {@link #dropAllH2Tables()}.
+   */
+  public void dropTablesAlternative() {
+
+    TxTask<Void> task = new DropTablesTask(true);
+    doInTx(task);
+  }
+
+  /**
+   * @param <T> The generic type to be returned.
+   * @param task an instance of type {@link TxTask<T>}
+   * @return If {@code <T>} equals {@link Void}, then return nothing. Else return {@code <T>}
+   */
+  private <T> T doInTx(TxTask<T> task) {
+
+    try (Connection connection = this.dataSource.getConnection()) {
+      try {
+        T result = task.invoke(connection);
+        connection.commit();
+        return result;
+      } catch (SQLException e) {
+        connection.rollback();
+        throw e;
+      }
+    } catch (Exception e) {
+      throw new IllegalStateException();
+    }
+  }
+
+  /*
+   * This interface serves as a strategy pattern to simulate functional programming capabilities.
+   */
+  private interface TxTask<T> {
+    /**
+     * This method servers as the basis for the strategy pattern.
+     *
+     * @param connection an instance of {@link DataSource}
+     * @return The generic type {@code T} as specified.
+     * @throws SQLException May throw an {@link SQLException}.
+     */
+    T invoke(Connection connection) throws SQLException;
+  }
+
+  /*
+   * This class serves as an implementation of the strategy pattern. Its task is to drop all tables in the database, or
+   * to simply delete all rows of all tables.
+   */
+  private class DropTablesTask implements TxTask<Void> {
+    /*
+     * Default value: true
+     */
+    private boolean drop = true;
+
+    /**
+     * The constructor.
+     *
+     * @param drop if {@code true}, drops all database tables. Else delete all rows from all tables. Default is
+     *        {@code true}.
+     */
+    public DropTablesTask(boolean drop) {
+      super();
+      this.drop = drop;
+    }
+
+    @Override
+    public Void invoke(Connection connection) throws SQLException {
+
+      Statement statement = connection.createStatement();
+      statement.execute("SET REFERENTIAL_INTEGRITY FALSE");
+      statement.execute("SHOW TABLES");
+      List<String> tables = new ArrayList<>();
+      ResultSet resultSet = statement.getResultSet();
+      while (resultSet.next()) {
+        tables.add(resultSet.getString(1));
+      }
+      for (String table : tables) {
+        String sql;
+        if (this.drop) {
+          sql = "DROP TABLE \"" + table + "\"";
+        } else {
+          sql = "TRUNCATE TABLE \"" + table + "\"";
+        }
+        statement.execute(sql);
+      }
+      statement.execute("SET REFERENTIAL_INTEGRITY TRUE");
+      return null;
+    }
+
+  }
+
+  /*
+   * This class servers as an implementation of the strategy pattern. Its task is to drop all objects in the database.
+   */
+  private class DropObjectsTask implements TxTask<Void> {
+    @Override
+    public Void invoke(Connection connection) throws SQLException {
+
+      Statement statement = connection.createStatement();
+      statement.execute("DROP ALL OBJECTS");
+      return null;
+    }
+
+  }
+
+  /**
    * This method simply uses {@link Flyway#clean()} to drop the whole database schema.
    */
   public void dropH2() {
 
     this.flyway.clean();
+  }
+
+  /**
+   * This is an alternative implementation of {@link #dropH2()}.
+   */
+  public void dropH2Alternative() {
+
+    TxTask<Void> task = new DropObjectsTask();
+    doInTx(task);
   }
 
   /**
@@ -99,7 +219,7 @@ public class RestraurantTestHelper {
   }
 
   /**
-   * @param flyway new value of {@link #getflyway}.
+   * @param flyway new value of {@link #flyway}.
    */
   public void setFlyway(Flyway flyway) {
 
@@ -107,7 +227,7 @@ public class RestraurantTestHelper {
   }
 
   /**
-   * @param dataSource new value of {@link #getdataSource}.
+   * @param dataSource new value of {@link #dataSource}.
    */
   public void setDataSource(DataSource dataSource) {
 
@@ -115,7 +235,7 @@ public class RestraurantTestHelper {
   }
 
   /**
-   * @param migrationVersion new value of {@link #getmigrationVersion}.
+   * @param migrationVersion new value of {@link #migrationVersion}.
    */
   public void setMigrationVersion(MigrationVersion migrationVersion) {
 
@@ -123,19 +243,11 @@ public class RestraurantTestHelper {
   }
 
   /**
-   * @param baselineVersion new value of {@link #getbaselineVersion}.
+   * @param baselineVersion new value of {@link #baselineVersion}.
    */
   public void setBaselineVersion(MigrationVersion baselineVersion) {
 
     this.baselineVersion = baselineVersion;
-  }
-
-  /**
-   * @param emptyDatabaseVersion new value of {@link #getemptyDatabaseVersion}.
-   */
-  public void setEmptyDatabaseVersion(MigrationVersion emptyDatabaseVersion) {
-
-    this.emptyDatabaseVersion = emptyDatabaseVersion;
   }
 
 }

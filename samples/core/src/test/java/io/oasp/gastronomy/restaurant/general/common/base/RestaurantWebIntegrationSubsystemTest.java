@@ -62,13 +62,6 @@ public class RestaurantWebIntegrationSubsystemTest extends SubsystemTest {
   private String target;
 
   /**
-   * TODO revise: is this really necessary? <br/>
-   * A version that identifies a migration script by {@link Flyway}
-   */
-  @Value("${server.rest.test.flyway.empty}")
-  private String emptyDatabaseVersion;
-
-  /**
    * The {@code RestaurantTestHelper}.
    */
   @Inject
@@ -99,7 +92,7 @@ public class RestaurantWebIntegrationSubsystemTest extends SubsystemTest {
    * Calls {@link #doTearDown()}.
    */
   @After
-  public final void testDown() {
+  public final void tearDown() {
 
     doTearDown();
   }
@@ -117,11 +110,9 @@ public class RestaurantWebIntegrationSubsystemTest extends SubsystemTest {
     // Setup necessary versions for Flyway
     assert (this.baseline != null && !"".equals(this.baseline));
     assert (this.target != null && !"".equals(this.target));
-    assert (this.emptyDatabaseVersion != null && !"".equals(this.emptyDatabaseVersion));
 
     this.restaurantTestHelper.setBaselineVersion(MigrationVersion.fromVersion(this.baseline));
     this.restaurantTestHelper.setMigrationVersion(MigrationVersion.fromVersion(this.target));
-    this.restaurantTestHelper.setEmptyDatabaseVersion(MigrationVersion.fromVersion(this.emptyDatabaseVersion));
   }
 
   /**
