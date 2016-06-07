@@ -1,0 +1,46 @@
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
+<!-- <beans xmlns="http://www.springframework.org/schema/beans" -->
+<!--   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:batch="http://www.springframework.org/schema/batch" -->
+<!--   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd"> -->
+
+<!--   <batch:job id="offerImportJob" incrementer="incrementer"> -->
+
+<!--     <batch:step id="offerImportStep"> -->
+<!--       <batch:tasklet> -->
+<!--         <batch:chunk reader="offerReader" writer="offerWriter" commit-interval="2"/> -->
+<!--       </batch:tasklet> -->
+<!--     </batch:step> -->
+<!--   </batch:job> -->
+
+<!--   <bean id="offerReader" class="org.springframework.batch.item.file.FlatFileItemReader" scope="step"> -->
+<!--     <property name="lineMapper"> -->
+<!--       <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper"> -->
+<!--         <property name="fieldSetMapper"> -->
+<!--           <bean class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper"> -->
+<!--             <property name="targetType" value="io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto"/> -->
+<!--                     <property name="customEditors"> -->
+<!--                         <map> -->
+<!--                             <entry key="io.oasp.gastronomy.restaurant.general.common.api.datatype.Money" value-ref="moneyHelper" /> -->
+<!--                             <entry key="io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferState" value-ref="stateHelper" /> -->
+<!--                         </map> -->
+<!--                     </property> -->
+<!--          </bean> -->
+<!--         </property> -->
+
+<!--         <property name="lineTokenizer"> -->
+<!--           <bean class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer"> -->
+<!--             <property name="names" value="name, description, state, meal_id, sidedish_id, drink_id, price"/> -->
+<!--           </bean> -->
+<!--         </property> -->
+<!--       </bean> -->
+<!--     </property> -->
+<!--     Pass values to the configuration when launching a job. -->
+<!--     <property name="resource" value="#{jobParameters['offers.file']}"/> -->
+<!--   </bean> -->
+
+<!--   <bean id="offerWriter" class="io.oasp.gastronomy.restaurant.offermanagement.batch.impl.offerimport.writer.OfferWriter"/> -->
+
+<!-- <!--   <bean id= "moneyHelper" class="io.oasp.gastronomy.restaurant.general.common.api.datatype.Money"></bean> --> -->
+<!-- <!--   <bean id= "statesHelper" class="io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferState"></bean> --> -->
+
+<!-- </beans> -->
