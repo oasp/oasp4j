@@ -135,6 +135,24 @@
       </filterchain>
     </copy>
 
+    <!-- ****** client project ****-->
+          <copy file="${sample.client.input}/pom.xml" todir="${sample.client.output}">
+           <filterchain>
+                   <tokenfilter>
+                     <linetokenizer/>
+                     <replaceregex pattern="dev-SNAPSHOT" replace="${version}" flags="g"/>
+                     <replaceregex pattern="io.oasp.java.samples" replace="${groupId}" flags="g"/>
+                     <replaceregex pattern="io.oasp.java.dev" replace="${groupId}" flags="g"/>
+                     <replaceregex pattern="oasp4j-sample-client" replace="${rootArtifactId}-client" flags="g"/>
+                     <replaceregex pattern="oasp4j-sample-server" replace="${rootArtifactId}-server" flags="g"/>
+                     <replaceregex pattern="oasp4j-sample-core" replace="${rootArtifactId}-core" flags="g"/>
+                     <replaceregex pattern="oasp4j-samples" replace="${rootArtifactId}" flags="g"/>
+                     <replaceregex pattern="restaurant" replace="${rootArtifactId}" flags="gi"/>
+                   </tokenfilter>
+                 </filterchain>
+           </copy>
+
+
     <!-- **** server project **** -->
     <copy file="${sample.server.input}/pom.xml" todir="${sample.server.output}">
       <filterchain>
