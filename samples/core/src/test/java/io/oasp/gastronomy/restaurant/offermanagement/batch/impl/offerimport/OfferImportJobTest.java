@@ -24,10 +24,10 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 
 /**
- * This Test grabs the offers.csv and saves it into database. ItemProcessor is used here to convert type OfferCsv to
+ * This test grabs the offers.csv and saves it into database. ItemProcessor is used here to convert type OfferCsv to
  * OfferEto. This is necessary because OfferEto contains types Money and OfferState. Other possibility is using custom
  * type converters. I had to insert AUTO_INCREMENT into database table offer. @TestPropertySource is needed because
- * database needs products.
+ * database needs products. Logs skipped item as log.warn
  *
  * @author sroeger
  */
@@ -54,11 +54,11 @@ public class OfferImportJobTest extends AbstractSpringBatchIntegrationTest {
     // prepare database - migrate all data but erase offers
     this.flyway.clean();
     this.flyway.migrate();
-    cleanDatabase();
+    cleanOffers();
 
     // configure job
     JobParametersBuilder jobParameterBuilder = new JobParametersBuilder();
-    jobParameterBuilder.addString("offers.file", "classpath:ProductImportJobTest/data/offers.csv");
+    jobParameterBuilder.addString("pathToFile", "offerImportJobTest/offers.csv");
     JobParameters jobParameters = jobParameterBuilder.toJobParameters();
 
     // run job
@@ -80,7 +80,7 @@ public class OfferImportJobTest extends AbstractSpringBatchIntegrationTest {
     assertThat(offer.getState()).isEqualTo(OfferState.NORMAL);
   }
 
-  private void cleanDatabase() {
+  private void cleanOffers() {
 
     for (OfferEto offer : this.offermanagement.findAllOffers()) {
       this.offermanagement.deleteOffer(offer.getId());
