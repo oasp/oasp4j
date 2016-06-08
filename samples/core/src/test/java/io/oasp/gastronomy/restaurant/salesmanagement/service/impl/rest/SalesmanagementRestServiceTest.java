@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
@@ -89,7 +90,7 @@ public class SalesmanagementRestServiceTest extends SalesmanagementTest {
     // exercise
     PaginatedListTo<OrderCto> orderCtoList = this.service.findOrdersByPost(criteria);
 
-    // validate
+    // verify
     assertThat(orderCtoList).isNotNull();
     // TODO Jonas
     assertThat(orderCtoList.getResult().size()).isEqualTo(1);
@@ -100,25 +101,60 @@ public class SalesmanagementRestServiceTest extends SalesmanagementTest {
   }
 
   @Test
+  public void cancelOrderPosition() {
+
+    // setup
+    long sampleOrderId = EXPECTED_NUMBER_OF_ORDERS + 1;
+
+    OrderCto sampleOrderCto = createSampleOrderCto(SAMPLE_TABLE_ID + 1);
+    OrderCto responseOrderCto = this.service.saveOrder(sampleOrderCto);
+    long responseOrderId = responseOrderCto.getOrder().getId();
+
+    OrderPositionEto sampleOrderPositionEto = createSampleOrderPositionEto(sampleOrderId);
+    OrderPositionEto responseOrderPositionEto = this.service.saveOrderPosition(sampleOrderPositionEto);
+    long sampleOrderPositionId = responseOrderPositionEto.getId();
+
+    OrderEto sampleOrderEto = new OrderEto();
+    sampleOrderEto.setId(responseOrderId);
+    sampleOrderCto.setOrder(sampleOrderEto);
+
+    // execute
+    this.service.saveOrder(sampleOrderCto);
+
+    // TODO Jonas, is this also execution
+    responseOrderPositionEto = this.service.findOrderPosition(sampleOrderPositionId);
+
+    // verify
+    assertThat(responseOrderPositionEto.getState()).isEqualTo(OrderPositionState.CANCELLED);
+
+    // TODO Jonas where is not scope of the test
+    assertThat(responseOrderPositionEto.getId()).isEqualTo(sampleOrderPositionId);
+    assertThat(responseOrderId).isEqualTo(sampleOrderId);
+
+  }
+
+  @Test
   public void findOrderPositions() {
 
-    List<OrderPositionEto> orderPositions = this.service.findOrderPositions(null);
-    if (orderPositions != null) {
-      numberOfOrderPositions = orderPositions.size();
-    }
-    assertThat(numberOfOrderPositions).isEqualTo(EXPECTED_NUMBER_OF_ORDER_POSITIONS);
+    // setup
+    OrderPositionEto sampleOrderPositionEto = createSampleOrderPositionEto(EXPECTED_NUMBER_OF_ORDERS);
+    this.service.saveOrderPosition(sampleOrderPositionEto);
 
+    // execute
+    List<OrderPositionEto> orderPositionEtos = this.service.findOrderPositions(null);
+
+    // verify
+    assertThat(getNumberOfOrderPositions()).isEqualTo(EXPECTED_NUMBER_OF_ORDER_POSITIONS + 1);
+    for (int i = 0; i < orderPositionEtos.size(); i++) {
+      assertThat(orderPositionEtos.get(i).getId()).isEqualTo(i + 1);
+      assertThat(orderPositionEtos.get(i).getOrderId()).isEqualTo(EXPECTED_NUMBER_OF_ORDERS);
+    }
   }
 
   @Test
   public void findOrderPosition() {
 
     // setup
-    List<OrderPositionEto> orderPositions = this.service.findOrderPositions(null);
-    if (orderPositions != null) {
-      numberOfOrderPositions = orderPositions.size();
-    }
-
     OrderPositionEto sampleOrderPositionEto = createSampleOrderPositionEto(EXPECTED_NUMBER_OF_ORDERS);
     this.service.saveOrderPosition(sampleOrderPositionEto);
 

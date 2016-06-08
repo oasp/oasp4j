@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -69,7 +70,7 @@ public abstract class SalesmanagementTest extends SubsystemTest {
 
   protected static final OrderState SAMPLE_ORDER_STATE = OrderState.OPEN;
 
-  protected static final OrderPositionState SAMPLE_ORDER_POSITION_STATE = OrderPositionState.DELIVERED;
+  protected static final OrderPositionState SAMPLE_ORDER_POSITION_STATE = OrderPositionState.ORDERED;
 
   protected static final ProductOrderState SAMPLE_DRINK_STATE = ProductOrderState.DELIVERED;
 
@@ -94,7 +95,7 @@ public abstract class SalesmanagementTest extends SubsystemTest {
 
     this.service = RestTestClientBuilder.build(SalesmanagementRestService.class, ROLE, ROLE,
         BASE_URL_PRAEFIX + this.port + BASE_URL_SUFFIX_1, this.jacksonJsonProvider);
-    numberOfOrderPositions = 0;
+    numberOfOrderPositions = getNumberOfOrderPositions();
   }
 
   @PreDestroy
@@ -129,6 +130,16 @@ public abstract class SalesmanagementTest extends SubsystemTest {
     sampleOrderEto.setTableId(tableId);
     sampleOrderCto.setOrder(sampleOrderEto);
     return sampleOrderCto;
+  }
+
+  protected long getNumberOfOrderPositions() {
+
+    long numberOfOrderPositions = 0;
+    List<OrderPositionEto> orderPositions = this.service.findOrderPositions(null);
+    if (orderPositions != null) {
+      numberOfOrderPositions = orderPositions.size();
+    }
+    return numberOfOrderPositions;
   }
 
 }

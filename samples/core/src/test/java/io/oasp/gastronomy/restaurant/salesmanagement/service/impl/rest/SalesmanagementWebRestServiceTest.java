@@ -3,9 +3,6 @@ package io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.PostConstruct;
 
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONArray;
@@ -48,14 +45,6 @@ public class SalesmanagementWebRestServiceTest extends SalesmanagementTest {
     this.template = new RestTemplate();
   }
 
-  @Override
-  @PostConstruct
-  public void init() {
-
-    super.init();
-    numberOfOrderPositions = getNumberOfOrderPositions();
-  }
-
   @Test
   public void getOrder() {
 
@@ -69,7 +58,7 @@ public class SalesmanagementWebRestServiceTest extends SalesmanagementTest {
         this.template.exchange(generateBaseUrl() + "order/" + Long.toString(EXPECTED_NUMBER_OF_ORDERS + 1),
             HttpMethod.GET, getRequest, String.class);
 
-    // validate
+    // verify
     String getResponseJson = getResponse.getBody();
     System.out.println("\n\n\n----------------------------getResponseJson----------------\n\n\n");
     System.out.println("\n\n\n" + getResponseJson + "\n\n\n");
@@ -140,7 +129,7 @@ public class SalesmanagementWebRestServiceTest extends SalesmanagementTest {
         this.template.exchange(generateBaseUrl() + "orderposition/" + Long.toString(numberOfOrderPositions + 1),
             HttpMethod.GET, getRequest, String.class);
 
-    // validate
+    // verify
     String getResponseJson = getResponse.getBody();
     JSONAssert.assertEquals("{id:" + Long.toString(numberOfOrderPositions + 1) + "}", getResponseJson, false);
     JSONAssert.assertEquals("{orderId:" + Long.toString(SAMPLE_ORDER_ID) + "}", getResponseJson, false);
@@ -169,7 +158,7 @@ public class SalesmanagementWebRestServiceTest extends SalesmanagementTest {
     ResponseEntity<String> getResponse =
         this.template.exchange(generateBaseUrl() + "orderposition/", HttpMethod.GET, getRequest, String.class);
 
-    // validate
+    // verify
     String getResponseJson = getResponse.getBody();
     ArrayList<String> jsonObjectArrayList = buildJsonObjectArrayList(getResponseJson);
 
@@ -246,16 +235,6 @@ public class SalesmanagementWebRestServiceTest extends SalesmanagementTest {
   private String generateBaseUrl() {
 
     return BASE_URL_PRAEFIX + this.port + BASE_URL_SUFFIX_1 + BASE_URL_SUFFIX_2;
-  }
-
-  private long getNumberOfOrderPositions() {
-
-    long numberOfOrderPositions = 0;
-    List<OrderPositionEto> orderPositions = this.service.findOrderPositions(null);
-    if (orderPositions != null) {
-      numberOfOrderPositions = orderPositions.size();
-    }
-    return numberOfOrderPositions;
   }
 
   private ArrayList<String> buildJsonObjectArrayList(String getResponseJson) {
