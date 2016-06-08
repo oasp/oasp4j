@@ -28,7 +28,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionE
  * @since dev
  */
 
-public class SalesmanagementWebRestServiceTest extends SalesmanagementTest {
+public class SalesmanagementWebRestServiceTest extends SalesmanagementRestServiceTestHelper {
 
   private static HttpEntity<String> request;
 

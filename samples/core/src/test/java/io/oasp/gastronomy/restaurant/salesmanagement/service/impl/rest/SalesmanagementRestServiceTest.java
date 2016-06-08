@@ -19,7 +19,7 @@ import io.oasp.module.jpa.common.api.to.PaginationTo;
  * @since dev
  */
 
-public class SalesmanagementRestServiceTest extends SalesmanagementTest {
+public class SalesmanagementRestServiceTest extends SalesmanagementRestServiceTestHelper {
 
   private static int numberOfOrders;
 
@@ -41,7 +41,6 @@ public class SalesmanagementRestServiceTest extends SalesmanagementTest {
     OrderEto expectedOrderEto = this.service.findOrder(sampleOrderId);
 
     // verify
-    assertThat(expectedOrderEto).isNotNull();
     assertThat(expectedOrderEto.getId()).isEqualTo(sampleOrderId);
     assertThat(expectedOrderEto.getTableId()).isEqualTo(SAMPLE_TABLE_ID);
   }
@@ -77,25 +76,27 @@ public class SalesmanagementRestServiceTest extends SalesmanagementTest {
 
     // setup
     long sampleOrderId = EXPECTED_NUMBER_OF_ORDERS + 1;
+    long tableId = SAMPLE_TABLE_ID + 1;
 
     OrderSearchCriteriaTo criteria = new OrderSearchCriteriaTo();
-    criteria.setTableId(SAMPLE_TABLE_ID + 1);
+    criteria.setTableId(tableId);
     criteria.setState(SAMPLE_ORDER_STATE);
     PaginationTo pagination = PaginationTo.NO_PAGINATION;
     criteria.setPagination(pagination);
 
-    OrderCto sampleOrderCto = createSampleOrderCto(SAMPLE_TABLE_ID + 1);
+    OrderCto sampleOrderCto = createSampleOrderCto(tableId);
     this.service.saveOrder(sampleOrderCto);
 
     // exercise
     PaginatedListTo<OrderCto> orderCtoList = this.service.findOrdersByPost(criteria);
 
     // verify
+    // TODO Jonas, assert obsolete?
     assertThat(orderCtoList).isNotNull();
     // TODO Jonas
     assertThat(orderCtoList.getResult().size()).isEqualTo(1);
     assertThat(orderCtoList.getResult().get(0).getOrder().getId()).isEqualTo(sampleOrderId);
-    assertThat(orderCtoList.getResult().get(0).getOrder().getTableId()).isEqualTo(SAMPLE_TABLE_ID + 1);
+    assertThat(orderCtoList.getResult().get(0).getOrder().getTableId()).isEqualTo(tableId);
     assertThat(orderCtoList.getResult().get(0).getOrder().getState()).isEqualTo(SAMPLE_ORDER_STATE);
 
   }

@@ -45,7 +45,7 @@ import io.oasp.module.test.common.base.SubsystemTest;
 @WebIntegrationTest("server.port:0")
 @ActiveProfiles(profiles = { OaspProfile.JUNIT_TEST })
 @Transactional
-public abstract class SalesmanagementTest extends SubsystemTest {
+public abstract class SalesmanagementRestServiceTestHelper extends SubsystemTest {
 
   @Value("${local.server.port}")
   protected int port;
