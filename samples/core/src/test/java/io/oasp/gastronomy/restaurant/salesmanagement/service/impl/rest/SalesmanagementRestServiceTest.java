@@ -1,17 +1,13 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest;
 
-import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import io.oasp.gastronomy.restaurant.general.common.RestTestClientBuilder;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
-import io.oasp.gastronomy.restaurant.salesmanagement.service.api.rest.SalesmanagementRestService;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 import io.oasp.module.jpa.common.api.to.PaginationTo;
 
@@ -24,11 +20,7 @@ import io.oasp.module.jpa.common.api.to.PaginationTo;
 
 public class SalesmanagementRestServiceTest extends SalesmanagementTest {
 
-  private int numberOfOrders;
-
-  private int numberOfOrderPositions;
-
-  private static final int EXPECTED_NUMBER_OF_ORDERS = 1;
+  private static int numberOfOrders;
 
   private static final int EXPECTED_NUMBER_OF_ORDER_POSITIONS = 5;
 
@@ -36,111 +28,119 @@ public class SalesmanagementRestServiceTest extends SalesmanagementTest {
     super();
   }
 
-  @Override
-  @Before
-  public void prepareTest() {
-
-    this.flyway.clean();
-    this.flyway.migrate();
-    // cannot be put into constructor, as port is set after the constructor invocation
-    this.service = RestTestClientBuilder.build(SalesmanagementRestService.class, this.ROLE, this.ROLE,
-        "http://localhost:" + this.port + "/services/rest", this.jacksonJsonProvider);
-    this.numberOfOrderPositions = 0;
-
-  }
-
   @Test
-  public void testFindOrder() {
+  public void findOrder() {
 
-    // Setup
+    // setup
     long sampleOrderId = EXPECTED_NUMBER_OF_ORDERS + 1;
-    OrderCto sampleOrderCto = createSampleOrderCto(this.SAMPLE_TABLE_ID);
+    OrderCto sampleOrderCto = createSampleOrderCto(SAMPLE_TABLE_ID);
     this.service.saveOrder(sampleOrderCto);
 
-    // Exercise
+    // exercise
     OrderEto expectedOrderEto = this.service.findOrder(sampleOrderId);
 
-    // Verify
+    // verify
     assertThat(expectedOrderEto).isNotNull();
     assertThat(expectedOrderEto.getId()).isEqualTo(sampleOrderId);
-    assertThat(expectedOrderEto.getTableId()).isEqualTo(this.SAMPLE_TABLE_ID);
-    assertThat(expectedOrderEto.getState()).isEqualTo(this.SAMPLE_ORDER_STATE);
+    assertThat(expectedOrderEto.getTableId()).isEqualTo(SAMPLE_TABLE_ID);
   }
 
   @Test
-  public void testFindOrders() {
+  public void findOrders() {
+
+    // MultivaluedMap<String, String> myParameterMap = new MultivaluedHashMap<>();
+    // myParameterMap.add("tableId", "102");
+    // myParameterMap.add("state", OrderState.OPEN.toString());
+    // myParameterMap.add("pagination[page]", "1");
+    // UriInfo uriInfo = Mockito.mock(UriInfo.class);
+    // Mockito.when(uriInfo.getQueryParameters()).thenReturn(myParameterMap);
+    //
+    //
+
+    PaginatedListTo<OrderCto> orders = this.service.findOrders(new MyUriInfo(null, null));
+    assertThat(orders).isNotNull();
+
+    // System.out.println("\n\n\n---------------OHWACHT!!!!----------------\n\n\n");
+    // for (OrderCto cto : orders.getResult()) {
+
+    // LOG.debug("cto: " + cto.getOrder().getTableId());
+    // System.out.println(("cto: " + cto.getOrder().getTableId()));
+    // }
+
+    assertThat(orders).isNotNull();
 
   }
 
   @Test
-  public void testFindOrdersByPost() {
+  public void findOrdersByPost() {
 
     // setup
     long sampleOrderId = EXPECTED_NUMBER_OF_ORDERS + 1;
 
     OrderSearchCriteriaTo criteria = new OrderSearchCriteriaTo();
-    criteria.setTableId(this.SAMPLE_TABLE_ID);
-    criteria.setState(this.SAMPLE_ORDER_STATE);
+    criteria.setTableId(SAMPLE_TABLE_ID + 1);
+    criteria.setState(SAMPLE_ORDER_STATE);
     PaginationTo pagination = PaginationTo.NO_PAGINATION;
-    // pagination.setSize(100);
-
     criteria.setPagination(pagination);
 
-    OrderCto sampleOrderCto = createSampleOrderCto(this.SAMPLE_TABLE_ID);
-    List<OrderPositionEto> sampleOrderPositions = new LinkedList<OrderPositionEto>();
-    sampleOrderPositions.add(createSampleOrderPositionEto(sampleOrderId));
-    sampleOrderCto.setPositions(sampleOrderPositions);
+    OrderCto sampleOrderCto = createSampleOrderCto(SAMPLE_TABLE_ID + 1);
     this.service.saveOrder(sampleOrderCto);
 
     // exercise
-
     PaginatedListTo<OrderCto> orderCtoList = this.service.findOrdersByPost(criteria);
-    System.out.println(orderCtoList.toString());
+
+    // validate
+    assertThat(orderCtoList).isNotNull();
+    // TODO Jonas
+    assertThat(orderCtoList.getResult().size()).isEqualTo(1);
+    assertThat(orderCtoList.getResult().get(0).getOrder().getId()).isEqualTo(sampleOrderId);
+    assertThat(orderCtoList.getResult().get(0).getOrder().getTableId()).isEqualTo(SAMPLE_TABLE_ID + 1);
+    assertThat(orderCtoList.getResult().get(0).getOrder().getState()).isEqualTo(SAMPLE_ORDER_STATE);
 
   }
 
   @Test
-  public void testFindOrderPositions() {
+  public void findOrderPositions() {
 
-    List<OrderPositionEto> orderPositions = this.service.findOrderPositions(this.uriInfo);
+    List<OrderPositionEto> orderPositions = this.service.findOrderPositions(null);
     if (orderPositions != null) {
-      this.numberOfOrderPositions = orderPositions.size();
+      numberOfOrderPositions = orderPositions.size();
     }
-    assertThat(this.numberOfOrderPositions).isEqualTo(EXPECTED_NUMBER_OF_ORDER_POSITIONS);
+    assertThat(numberOfOrderPositions).isEqualTo(EXPECTED_NUMBER_OF_ORDER_POSITIONS);
+
   }
 
   @Test
-  public void testFindOrderPosition() {
+  public void findOrderPosition() {
 
-    // Setup
-
-    List<OrderPositionEto> orderPositions = this.service.findOrderPositions(this.uriInfo);
+    // setup
+    List<OrderPositionEto> orderPositions = this.service.findOrderPositions(null);
     if (orderPositions != null) {
-      this.numberOfOrderPositions = orderPositions.size();
+      numberOfOrderPositions = orderPositions.size();
     }
 
     OrderPositionEto sampleOrderPositionEto = createSampleOrderPositionEto(EXPECTED_NUMBER_OF_ORDERS);
     this.service.saveOrderPosition(sampleOrderPositionEto);
 
-    // Exercise
-    OrderPositionEto expectedOrderPositionEto = this.service.findOrderPosition(this.numberOfOrderPositions + 1);
+    // exercise
+    OrderPositionEto expectedOrderPositionEto = this.service.findOrderPosition(numberOfOrderPositions + 1);
 
-    // Verify
+    // verify
     assertThat(expectedOrderPositionEto).isNotNull();
-    assertThat(this.numberOfOrderPositions).isEqualTo(EXPECTED_NUMBER_OF_ORDER_POSITIONS);
-    assertThat(expectedOrderPositionEto.getId()).isEqualTo(this.numberOfOrderPositions + 1);
+    assertThat(numberOfOrderPositions).isEqualTo(EXPECTED_NUMBER_OF_ORDER_POSITIONS);
+    assertThat(expectedOrderPositionEto.getId()).isEqualTo(numberOfOrderPositions + 1);
     assertThat(expectedOrderPositionEto.getOrderId()).isEqualTo(EXPECTED_NUMBER_OF_ORDERS);
-    assertThat(expectedOrderPositionEto.getOfferId()).isEqualTo(this.SAMPLE_OFFER_ID);
-    assertThat(expectedOrderPositionEto.getOfferName()).isEqualTo(this.SAMPLE_OFFER_NAME);
-    assertThat(expectedOrderPositionEto.getState()).isEqualTo(this.SAMPLE_ORDER_POSITION_STATE);
-    assertThat(expectedOrderPositionEto.getDrinkState()).isEqualTo(this.SAMPLE_DRINK_STATE);
-    assertThat(expectedOrderPositionEto.getPrice()).isEqualTo(this.SAMPLE_PRICE);
+    assertThat(expectedOrderPositionEto.getOfferId()).isEqualTo(SAMPLE_OFFER_ID);
+    assertThat(expectedOrderPositionEto.getOfferName()).isEqualTo(SAMPLE_OFFER_NAME);
+    assertThat(expectedOrderPositionEto.getState()).isEqualTo(SAMPLE_ORDER_POSITION_STATE);
+    assertThat(expectedOrderPositionEto.getDrinkState()).isEqualTo(SAMPLE_DRINK_STATE);
+    assertThat(expectedOrderPositionEto.getPrice()).isEqualTo(SAMPLE_PRICE);
   }
 }
 /*
  * public OrderPositionEto findOrderPosition(long orderPositionId) {
  *
- * return this.salesmanagement.findOrderPosition(orderPositionId);
+ * return salesmanagement.findOrderPosition(orderPositionId);
  *
  * }
  */
