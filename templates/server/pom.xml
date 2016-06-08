@@ -24,6 +24,8 @@
     <sample.output>${project.build.outputDirectory}/archetype-resources</sample.output>
     <sample.core.input>${sample.input}/core</sample.core.input>
     <sample.core.output>${sample.output}/core</sample.core.output>
+    <sample.client.input>${sample.input}/client</sample.client.input>
+    <sample.client.output>${sample.output}/client</sample.client.output>
     <sample.core.sources.input>${sample.core.input}/src/main/java/${sample.package.path}</sample.core.sources.input>
     <sample.core.sources.output>${sample.core.output}/src/main/java</sample.core.sources.output>
     <sample.core.resources.input>${sample.core.input}/src/main/resources</sample.core.resources.input>
@@ -74,7 +76,7 @@
         <artifactId>maven-archetype-plugin</artifactId>
         <version>2.2</version>
         <configuration>
-          <!--<settingsFile>${project.build.testResources[0].directory}/settings.xml</settingsFile>-->
+          <!--<settingsFile>${project.build.testResources[0].directory}/settings.xml</settingsFile> -->
         </configuration>
       </plugin>
 
