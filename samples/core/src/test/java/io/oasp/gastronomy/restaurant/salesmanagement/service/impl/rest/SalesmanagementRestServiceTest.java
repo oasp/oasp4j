@@ -57,8 +57,10 @@ public class SalesmanagementRestServiceTest extends SubsystemTest {
   @PostConstruct
   public void beforeTest() {
 
-    // this.helper.setPort(this.port);
-    // this.helper.init();
+    this.helper.flyway.clean();
+    this.helper.flyway.migrate();
+    this.helper.setPort(this.port);
+    this.helper.init();
   }
 
   @Inject
@@ -74,10 +76,10 @@ public class SalesmanagementRestServiceTest extends SubsystemTest {
   public void prepareTest() {
 
     // TODO WARUM geht des ned in @Postconstruct
-    this.helper.flyway.clean();
-    this.helper.flyway.migrate();
-    this.helper.setPort(this.port);
-    this.helper.init();
+    // this.helper.flyway.clean();
+    // this.helper.flyway.migrate();
+    // this.helper.setPort(this.port);
+    // this.helper.init();
   }
 
   @Test

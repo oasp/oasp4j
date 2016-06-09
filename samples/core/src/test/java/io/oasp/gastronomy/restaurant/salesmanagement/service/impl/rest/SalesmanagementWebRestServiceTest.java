@@ -86,6 +86,8 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
   @PostConstruct
   public void beforeTest() {
 
+    this.helper.flyway.clean();
+    this.helper.flyway.migrate();
     this.helper.setPort(this.port);
     this.helper.init();
   }
@@ -93,8 +95,8 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
   @Before
   public void prepareTest() {
 
-    this.helper.flyway.clean();
-    this.helper.flyway.migrate();
+    // this.helper.flyway.clean();
+    // this.helper.flyway.migrate();
   }
 
   @Inject
