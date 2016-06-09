@@ -28,30 +28,10 @@ import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 public class SalesmanagementRestServiceTestHelper {
 
-  // @Value("${local.server.port}")
-  protected int port;
-
-  /**
-   * @return port
-   */
-  public int getPort() {
-
-    return this.port;
-  }
-
-  /**
-   * @param port new value of {@link #getport}.
-   */
-  public void setPort(int port) {
-
-    this.port = port;
-  }
-
-  // @Inject
   protected JacksonJsonProvider jacksonJsonProvider;
 
   // TODO just workaraound, as Jonas solution is not yet approved
-  // @Inject
+
   protected Flyway flyway;
 
   // @Inject
@@ -113,12 +93,15 @@ public class SalesmanagementRestServiceTestHelper {
   }
 
   // @PostConstruct
-  public void init() {
+  public void init(int port) {
 
+    this.flyway.clean();
+    this.flyway.migrate();
     this.service = RestTestClientBuilder.build(SalesmanagementRestService.class, ROLE, ROLE,
-        BASE_URL_PRAEFIX + this.port + BASE_URL_SUFFIX_1, this.jacksonJsonProvider);
+        BASE_URL_PRAEFIX + port + BASE_URL_SUFFIX_1, this.jacksonJsonProvider);
     INITIAL_NUMBER_OF_ORDER_POSITIONS = getNumberOfOrderPositions();
     INITIAL_NUMBER_OF_ORDERS = getNumberOfOrders();
+
   }
 
   // @PreDestroy

@@ -14,9 +14,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +22,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
@@ -43,43 +42,35 @@ import io.oasp.module.test.common.base.SubsystemTest;
  * @since dev
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = SpringBootApp.class)
+// loads beans defined through SpringBootApp.class
+@SpringApplicationConfiguration(classes = { SpringBootApp.class, SalesmanagementRestTestConfiguration.class })
+// context loader knows that you want to test a web application
+// specify random port
 @WebIntegrationTest("server.port:0")
+// activate a profile, to use beans defined in profile @Profile(OaspProfile.JUNIT_TEST)
+// in file TestWebSecurity
 @ActiveProfiles(profiles = { OaspProfile.JUNIT_TEST })
+
+// runs also without the following
 @Transactional
+@RunWith(SpringJUnit4ClassRunner.class)
 
 public class SalesmanagementRestServiceTest extends SubsystemTest {
 
   @Value("${local.server.port}")
   private int port;
 
-  @PostConstruct
-  public void beforeTest() {
-
-    this.helper.flyway.clean();
-    this.helper.flyway.migrate();
-    this.helper.setPort(this.port);
-    this.helper.init();
-  }
-
   @Inject
   private SalesmanagementRestServiceTestHelper helper;
-
-  private static int numberOfOrders;
 
   public SalesmanagementRestServiceTest() {
     super();
   }
 
-  @Before
-  public void prepareTest() {
+  @PostConstruct
+  public void beforeTest() {
 
-    // TODO WARUM geht des ned in @Postconstruct
-    // this.helper.flyway.clean();
-    // this.helper.flyway.migrate();
-    // this.helper.setPort(this.port);
-    // this.helper.init();
+    this.helper.init(this.port);
   }
 
   @Test
