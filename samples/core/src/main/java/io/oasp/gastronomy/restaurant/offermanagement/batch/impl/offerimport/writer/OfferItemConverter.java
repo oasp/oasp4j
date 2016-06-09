@@ -7,7 +7,7 @@ import java.text.ParsePosition;
 import org.springframework.batch.item.ItemProcessor;
 
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
-import io.oasp.gastronomy.restaurant.offermanagement.batch.configuration.OfferCsv;
+import io.oasp.gastronomy.restaurant.offermanagement.batch.impl.offerimport.OfferCsv;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferState;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 

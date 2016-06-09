@@ -18,7 +18,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import io.oasp.gastronomy.restaurant.SpringBootBatchApp;
 import io.oasp.gastronomy.restaurant.general.common.AbstractSpringBatchIntegrationTest;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
-import io.oasp.gastronomy.restaurant.offermanagement.batch.configuration.OfferImportConfig;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferState;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;

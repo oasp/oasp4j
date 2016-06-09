@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.offermanagement.batch.configuration;
+package io.oasp.gastronomy.restaurant.offermanagement.batch.impl.offerimport;
 
 import java.net.MalformedURLException;
 
@@ -25,7 +25,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import io.oasp.gastronomy.restaurant.batch.common.CustomSkipListener;
-import io.oasp.gastronomy.restaurant.offermanagement.batch.impl.offerimport.OfferImportJobTest;
 import io.oasp.gastronomy.restaurant.offermanagement.batch.impl.offerimport.writer.OfferItemConverter;
 import io.oasp.gastronomy.restaurant.offermanagement.batch.impl.offerimport.writer.OfferWriter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
