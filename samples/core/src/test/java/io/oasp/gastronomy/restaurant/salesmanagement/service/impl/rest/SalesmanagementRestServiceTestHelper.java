@@ -3,23 +3,10 @@ package io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-
 import org.flywaydb.core.Flyway;
-import org.junit.Before;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
-import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.general.common.RestTestClientBuilder;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
@@ -30,8 +17,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.service.api.rest.SalesmanagementRestService;
-import io.oasp.module.basic.configuration.OaspProfile;
-import io.oasp.module.test.common.base.SubsystemTest;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
  * TODO shuber This type ...
@@ -40,29 +26,57 @@ import io.oasp.module.test.common.base.SubsystemTest;
  * @since dev
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = SpringBootApp.class)
-@WebIntegrationTest("server.port:0")
-@ActiveProfiles(profiles = { OaspProfile.JUNIT_TEST })
-@Transactional
-public abstract class SalesmanagementRestServiceTestHelper extends SubsystemTest {
+public class SalesmanagementRestServiceTestHelper {
 
-  @Value("${local.server.port}")
+  // @Value("${local.server.port}")
   protected int port;
 
-  @Inject
+  /**
+   * @return port
+   */
+  public int getPort() {
+
+    return this.port;
+  }
+
+  /**
+   * @param port new value of {@link #getport}.
+   */
+  public void setPort(int port) {
+
+    this.port = port;
+  }
+
+  // @Inject
   protected JacksonJsonProvider jacksonJsonProvider;
 
   // TODO just workaraound, as Jonas solution is not yet approved
-  @Inject
+  // @Inject
   protected Flyway flyway;
 
-  @Inject
+  // @Inject
   protected Salesmanagement salesmanagement;
 
-  protected static final String ROLE = "chief";
+  /**
+   * The constructor.
+   *
+   * @param jacksonJsonProvider
+   * @param flyway
+   * @param salesmanagement
+   */
+  public SalesmanagementRestServiceTestHelper(JacksonJsonProvider jacksonJsonProvider, Flyway flyway,
+      Salesmanagement salesmanagement) {
+    super();
+    this.jacksonJsonProvider = jacksonJsonProvider;
+    this.flyway = flyway;
+    this.salesmanagement = salesmanagement;
+  }
 
-  protected static final int EXPECTED_NUMBER_OF_ORDERS = 1;
+  protected static long INITIAL_NUMBER_OF_ORDERS = 0;
+
+  protected static long INITIAL_NUMBER_OF_ORDER_POSITIONS = 0;
+
+  protected static final String ROLE = "chief";
 
   protected static final long SAMPLE_OFFER_ID = 6L;
 
@@ -90,25 +104,34 @@ public abstract class SalesmanagementRestServiceTestHelper extends SubsystemTest
 
   protected static long numberOfOrderPositions = 0;
 
-  @PostConstruct
+  /**
+   * @return service
+   */
+  public SalesmanagementRestService getService() {
+
+    return this.service;
+  }
+
+  // @PostConstruct
   public void init() {
 
     this.service = RestTestClientBuilder.build(SalesmanagementRestService.class, ROLE, ROLE,
         BASE_URL_PRAEFIX + this.port + BASE_URL_SUFFIX_1, this.jacksonJsonProvider);
-    numberOfOrderPositions = getNumberOfOrderPositions();
+    INITIAL_NUMBER_OF_ORDER_POSITIONS = getNumberOfOrderPositions();
+    INITIAL_NUMBER_OF_ORDERS = getNumberOfOrders();
   }
 
-  @PreDestroy
-  public void destroy() {
+  // @PreDestroy
+  // public void destroy() {
+  //
+  // }
 
-  }
-
-  @Before
-  public void prepareTest() {
-
-    this.flyway.clean();
-    this.flyway.migrate();
-  }
+  // // @Before
+  // public void prepareTest() {
+  //
+  // flyway.clean();
+  // flyway.migrate();
+  // }
 
   protected OrderPositionEto createSampleOrderPositionEto(long orderId) {
 
@@ -130,6 +153,16 @@ public abstract class SalesmanagementRestServiceTestHelper extends SubsystemTest
     sampleOrderEto.setTableId(tableId);
     sampleOrderCto.setOrder(sampleOrderEto);
     return sampleOrderCto;
+  }
+
+  protected long getNumberOfOrders() {
+
+    long numberOfOrders = 0;
+    PaginatedListTo<OrderCto> orderPositions = this.service.findOrders(null);
+    if (orderPositions != null) {
+      numberOfOrders = orderPositions.getResult().size();
+    }
+    return numberOfOrders;
   }
 
   protected long getNumberOfOrderPositions() {

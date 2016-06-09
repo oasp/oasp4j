@@ -1,16 +1,40 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest;
 
+import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.INITIAL_NUMBER_OF_ORDERS;
+import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.INITIAL_NUMBER_OF_ORDER_POSITIONS;
+import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.SAMPLE_DRINK_STATE;
+import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.SAMPLE_OFFER_ID;
+import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.SAMPLE_OFFER_NAME;
+import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.SAMPLE_ORDER_POSITION_STATE;
+import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.SAMPLE_ORDER_STATE;
+import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.SAMPLE_PRICE;
+import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.SAMPLE_TABLE_ID;
+
 import java.util.List;
 
-import org.junit.Test;
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.transaction.Transactional;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
+import io.oasp.module.basic.configuration.OaspProfile;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 import io.oasp.module.jpa.common.api.to.PaginationTo;
+import io.oasp.module.test.common.base.SubsystemTest;
 
 /**
  * TODO shuber This type ...
@@ -19,28 +43,56 @@ import io.oasp.module.jpa.common.api.to.PaginationTo;
  * @since dev
  */
 
-public class SalesmanagementRestServiceTest extends SalesmanagementRestServiceTestHelper {
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = SpringBootApp.class)
+@WebIntegrationTest("server.port:0")
+@ActiveProfiles(profiles = { OaspProfile.JUNIT_TEST })
+@Transactional
+
+public class SalesmanagementRestServiceTest extends SubsystemTest {
+
+  @Value("${local.server.port}")
+  private int port;
+
+  @PostConstruct
+  public void beforeTest() {
+
+    // this.helper.setPort(this.port);
+    // this.helper.init();
+  }
+
+  @Inject
+  private SalesmanagementRestServiceTestHelper helper;
 
   private static int numberOfOrders;
 
-  private static final int EXPECTED_NUMBER_OF_ORDER_POSITIONS = 5;
-
   public SalesmanagementRestServiceTest() {
     super();
+  }
+
+  @Before
+  public void prepareTest() {
+
+    // TODO WARUM geht des ned in @Postconstruct
+    this.helper.flyway.clean();
+    this.helper.flyway.migrate();
+    this.helper.setPort(this.port);
+    this.helper.init();
   }
 
   @Test
   public void findOrder() {
 
     // setup
-    long sampleOrderId = EXPECTED_NUMBER_OF_ORDERS + 1;
-    OrderCto sampleOrderCto = createSampleOrderCto(SAMPLE_TABLE_ID);
-    this.service.saveOrder(sampleOrderCto);
+    long sampleOrderId = INITIAL_NUMBER_OF_ORDERS + 1;
+    OrderCto sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID);
+    this.helper.getService().saveOrder(sampleOrderCto);
 
     // exercise
-    OrderEto expectedOrderEto = this.service.findOrder(sampleOrderId);
+    OrderEto expectedOrderEto = this.helper.getService().findOrder(sampleOrderId);
 
     // verify
+    assertThat(expectedOrderEto).isNotNull();
     assertThat(expectedOrderEto.getId()).isEqualTo(sampleOrderId);
     assertThat(expectedOrderEto.getTableId()).isEqualTo(SAMPLE_TABLE_ID);
   }
@@ -57,7 +109,7 @@ public class SalesmanagementRestServiceTest extends SalesmanagementRestServiceTe
     //
     //
 
-    PaginatedListTo<OrderCto> orders = this.service.findOrders(new MyUriInfo(null, null));
+    PaginatedListTo<OrderCto> orders = this.helper.getService().findOrders(new MyUriInfo(null, null));
     assertThat(orders).isNotNull();
 
     // System.out.println("\n\n\n---------------OHWACHT!!!!----------------\n\n\n");
@@ -75,7 +127,7 @@ public class SalesmanagementRestServiceTest extends SalesmanagementRestServiceTe
   public void findOrdersByPost() {
 
     // setup
-    long sampleOrderId = EXPECTED_NUMBER_OF_ORDERS + 1;
+    long sampleOrderId = INITIAL_NUMBER_OF_ORDERS + 1;
     long tableId = SAMPLE_TABLE_ID + 1;
 
     OrderSearchCriteriaTo criteria = new OrderSearchCriteriaTo();
@@ -84,11 +136,11 @@ public class SalesmanagementRestServiceTest extends SalesmanagementRestServiceTe
     PaginationTo pagination = PaginationTo.NO_PAGINATION;
     criteria.setPagination(pagination);
 
-    OrderCto sampleOrderCto = createSampleOrderCto(tableId);
-    this.service.saveOrder(sampleOrderCto);
+    OrderCto sampleOrderCto = this.helper.createSampleOrderCto(tableId);
+    this.helper.getService().saveOrder(sampleOrderCto);
 
     // exercise
-    PaginatedListTo<OrderCto> orderCtoList = this.service.findOrdersByPost(criteria);
+    PaginatedListTo<OrderCto> orderCtoList = this.helper.getService().findOrdersByPost(criteria);
 
     // verify
     // TODO Jonas, assert obsolete?
@@ -105,14 +157,14 @@ public class SalesmanagementRestServiceTest extends SalesmanagementRestServiceTe
   public void cancelOrderPosition() {
 
     // setup
-    long sampleOrderId = EXPECTED_NUMBER_OF_ORDERS + 1;
+    long sampleOrderId = INITIAL_NUMBER_OF_ORDERS + 1;
 
-    OrderCto sampleOrderCto = createSampleOrderCto(SAMPLE_TABLE_ID + 1);
-    OrderCto responseOrderCto = this.service.saveOrder(sampleOrderCto);
+    OrderCto sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID + 1);
+    OrderCto responseOrderCto = this.helper.getService().saveOrder(sampleOrderCto);
     long responseOrderId = responseOrderCto.getOrder().getId();
 
-    OrderPositionEto sampleOrderPositionEto = createSampleOrderPositionEto(sampleOrderId);
-    OrderPositionEto responseOrderPositionEto = this.service.saveOrderPosition(sampleOrderPositionEto);
+    OrderPositionEto sampleOrderPositionEto = this.helper.createSampleOrderPositionEto(sampleOrderId);
+    OrderPositionEto responseOrderPositionEto = this.helper.getService().saveOrderPosition(sampleOrderPositionEto);
     long sampleOrderPositionId = responseOrderPositionEto.getId();
 
     OrderEto sampleOrderEto = new OrderEto();
@@ -120,10 +172,10 @@ public class SalesmanagementRestServiceTest extends SalesmanagementRestServiceTe
     sampleOrderCto.setOrder(sampleOrderEto);
 
     // execute
-    this.service.saveOrder(sampleOrderCto);
+    this.helper.getService().saveOrder(sampleOrderCto);
 
     // TODO Jonas, is this also execution
-    responseOrderPositionEto = this.service.findOrderPosition(sampleOrderPositionId);
+    responseOrderPositionEto = this.helper.getService().findOrderPosition(sampleOrderPositionId);
 
     // verify
     assertThat(responseOrderPositionEto.getState()).isEqualTo(OrderPositionState.CANCELLED);
@@ -138,17 +190,17 @@ public class SalesmanagementRestServiceTest extends SalesmanagementRestServiceTe
   public void findOrderPositions() {
 
     // setup
-    OrderPositionEto sampleOrderPositionEto = createSampleOrderPositionEto(EXPECTED_NUMBER_OF_ORDERS);
-    this.service.saveOrderPosition(sampleOrderPositionEto);
+    OrderPositionEto sampleOrderPositionEto = this.helper.createSampleOrderPositionEto(INITIAL_NUMBER_OF_ORDERS);
+    this.helper.getService().saveOrderPosition(sampleOrderPositionEto);
 
     // execute
-    List<OrderPositionEto> orderPositionEtos = this.service.findOrderPositions(null);
+    List<OrderPositionEto> orderPositionEtos = this.helper.getService().findOrderPositions(null);
 
     // verify
-    assertThat(getNumberOfOrderPositions()).isEqualTo(EXPECTED_NUMBER_OF_ORDER_POSITIONS + 1);
+    assertThat(this.helper.getNumberOfOrderPositions()).isEqualTo(INITIAL_NUMBER_OF_ORDER_POSITIONS + 1);
     for (int i = 0; i < orderPositionEtos.size(); i++) {
       assertThat(orderPositionEtos.get(i).getId()).isEqualTo(i + 1);
-      assertThat(orderPositionEtos.get(i).getOrderId()).isEqualTo(EXPECTED_NUMBER_OF_ORDERS);
+      assertThat(orderPositionEtos.get(i).getOrderId()).isEqualTo(INITIAL_NUMBER_OF_ORDERS);
     }
   }
 
@@ -156,17 +208,18 @@ public class SalesmanagementRestServiceTest extends SalesmanagementRestServiceTe
   public void findOrderPosition() {
 
     // setup
-    OrderPositionEto sampleOrderPositionEto = createSampleOrderPositionEto(EXPECTED_NUMBER_OF_ORDERS);
-    this.service.saveOrderPosition(sampleOrderPositionEto);
+    OrderPositionEto sampleOrderPositionEto = this.helper.createSampleOrderPositionEto(INITIAL_NUMBER_OF_ORDERS);
+    this.helper.getService().saveOrderPosition(sampleOrderPositionEto);
 
     // exercise
-    OrderPositionEto expectedOrderPositionEto = this.service.findOrderPosition(numberOfOrderPositions + 1);
+    OrderPositionEto expectedOrderPositionEto =
+        this.helper.getService().findOrderPosition(this.helper.getNumberOfOrderPositions());
 
     // verify
     assertThat(expectedOrderPositionEto).isNotNull();
-    assertThat(numberOfOrderPositions).isEqualTo(EXPECTED_NUMBER_OF_ORDER_POSITIONS);
-    assertThat(expectedOrderPositionEto.getId()).isEqualTo(numberOfOrderPositions + 1);
-    assertThat(expectedOrderPositionEto.getOrderId()).isEqualTo(EXPECTED_NUMBER_OF_ORDERS);
+    assertThat(this.helper.getNumberOfOrderPositions()).isEqualTo(INITIAL_NUMBER_OF_ORDER_POSITIONS + 1);
+    assertThat(expectedOrderPositionEto.getId()).isEqualTo(this.helper.getNumberOfOrderPositions());
+    assertThat(expectedOrderPositionEto.getOrderId()).isEqualTo(INITIAL_NUMBER_OF_ORDERS);
     assertThat(expectedOrderPositionEto.getOfferId()).isEqualTo(SAMPLE_OFFER_ID);
     assertThat(expectedOrderPositionEto.getOfferName()).isEqualTo(SAMPLE_OFFER_NAME);
     assertThat(expectedOrderPositionEto.getState()).isEqualTo(SAMPLE_ORDER_POSITION_STATE);
