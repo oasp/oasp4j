@@ -102,7 +102,7 @@ public class SalesmanagementRestServiceTest extends SubsystemTest {
     //
     //
 
-    PaginatedListTo<OrderCto> orders = this.helper.getService().findOrders(new MyUriInfo(null, null));
+    PaginatedListTo<OrderCto> orders = this.helper.getService().findOrders(null);
     assertThat(orders).isNotNull();
 
     // System.out.println("\n\n\n---------------OHWACHT!!!!----------------\n\n\n");
