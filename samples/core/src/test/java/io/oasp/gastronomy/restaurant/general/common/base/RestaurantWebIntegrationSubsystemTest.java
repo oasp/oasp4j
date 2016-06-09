@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
@@ -27,6 +28,11 @@ import io.oasp.module.test.common.base.SubsystemTest;
 @SpringApplicationConfiguration(classes = RestaurantTestConfig.class)
 @WebIntegrationTest
 @ActiveProfiles(profiles = { SpringProfileConstants.JUNIT })
+/*
+ * @Ignore disable the class test becase we dont need to test it. We dont have any runnable method. More information
+ * here http://junit.sourceforge.net/javadoc/org/junit/Ignore.html
+ */
+@Ignore
 public class RestaurantWebIntegrationSubsystemTest extends SubsystemTest {
 
   /**
