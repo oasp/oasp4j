@@ -71,6 +71,7 @@ public class SalesmanagementRestServiceTest extends SubsystemTest {
   public void beforeTest() {
 
     this.helper.init(this.port);
+
   }
 
   @Test

@@ -34,7 +34,6 @@ public class SalesmanagementRestServiceTestHelper {
 
   protected Flyway flyway;
 
-  // @Inject
   protected Salesmanagement salesmanagement;
 
   /**
@@ -46,7 +45,6 @@ public class SalesmanagementRestServiceTestHelper {
    */
   public SalesmanagementRestServiceTestHelper(JacksonJsonProvider jacksonJsonProvider, Flyway flyway,
       Salesmanagement salesmanagement) {
-    super();
     this.jacksonJsonProvider = jacksonJsonProvider;
     this.flyway = flyway;
     this.salesmanagement = salesmanagement;
@@ -116,7 +114,7 @@ public class SalesmanagementRestServiceTestHelper {
   // flyway.migrate();
   // }
 
-  protected OrderPositionEto createSampleOrderPositionEto(long orderId) {
+  public OrderPositionEto createSampleOrderPositionEto(long orderId) {
 
     OrderPositionEto orderPositionEto = new OrderPositionEto();
     orderPositionEto.setOrderId(orderId);
