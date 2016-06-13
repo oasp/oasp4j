@@ -1,45 +1,37 @@
 package io.oasp.gastronomy.restaurant.general.common;
 
-import javax.sql.DataSource;
-
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationVersion;
 
 /**
- * TODO jmolinar This type ...
+ * This class serves as a helper for subsystem tests.
  *
  * @author jmolinar
  */
 
-public class RestraurantTestHelper {
+public class RestaurantTestHelper {
 
   private Flyway flyway;
-
-  private DataSource dataSource;
 
   private MigrationVersion migrationVersion;
 
   private MigrationVersion baselineVersion;
 
-  private MigrationVersion emptyDatabaseVersion;
-
   /**
    * The constructor.
    */
-  public RestraurantTestHelper() {
+  public RestaurantTestHelper() {
     super();
   }
 
   /**
    * The constructor.
    *
-   * @param flyway
-   * @param dataSource
+   * @param flyway The instance of type {@link Flyway}.
    */
-  public RestraurantTestHelper(Flyway flyway, DataSource dataSource) {
+  public RestaurantTestHelper(Flyway flyway) {
     super();
     this.flyway = flyway;
-    this.dataSource = dataSource;
   }
 
   public void login(String name) {
@@ -53,53 +45,42 @@ public class RestraurantTestHelper {
   }
 
   /**
-   * At first, this method cleans H2 database using {@link Flyway}. Next, it calls {@link #baseline()} to restore.
-   *
-   */
-  public void dropAllH2Tables() {
-
-    dropH2();
-    baseline();
-  }
-
-  /**
    * This method simply uses {@link Flyway#clean()} to drop the whole database schema.
    */
-  public void dropH2() {
+  public void dropDatabase() {
 
     this.flyway.clean();
   }
 
   /**
-   * This method uses {@link #dropH2()}, and then calls {@link #migrate()}.
-   */
-  public void resetH2() {
-
-    dropH2();
-    migrate();
-  }
-
-  /**
    * This method sets the target for migration as specified by {@link #setBaselineVersion(MigrationVersion)}, and
-   * executes the migration.
+   * executes the migration. Beforehand, the database is reset internally by calling {@link #dropDatabase()}.
    */
   public void migrate() {
 
-    this.flyway.setTarget(this.migrationVersion);
+    dropDatabase();
+    if (this.migrationVersion != null) {
+
+      this.flyway.setTarget(this.migrationVersion);
+    }
     this.flyway.migrate();
   }
 
   /**
    * This method baselines according to the version specified by {@link #setBaselineVersion(MigrationVersion)}.
+   * Beforehand, the database is reset internally by calling {@link #dropDatabase()}.
    */
   public void baseline() {
 
-    this.flyway.setBaselineVersion(this.baselineVersion);
+    dropDatabase();
+    if (this.baselineVersion != null) {
+      this.flyway.setBaselineVersion(this.baselineVersion);
+    }
     this.flyway.baseline();
   }
 
   /**
-   * @param flyway new value of {@link #getflyway}.
+   * @param flyway new value of internal {@code Flyway} member.
    */
   public void setFlyway(Flyway flyway) {
 
@@ -107,15 +88,7 @@ public class RestraurantTestHelper {
   }
 
   /**
-   * @param dataSource new value of {@link #getdataSource}.
-   */
-  public void setDataSource(DataSource dataSource) {
-
-    this.dataSource = dataSource;
-  }
-
-  /**
-   * @param migrationVersion new value of {@link #getmigrationVersion}.
+   * @param migrationVersion new value of internal {@code migrationVersion}.
    */
   public void setMigrationVersion(MigrationVersion migrationVersion) {
 
@@ -123,19 +96,11 @@ public class RestraurantTestHelper {
   }
 
   /**
-   * @param baselineVersion new value of {@link #getbaselineVersion}.
+   * @param baselineVersion new value of {@code baselineVersion}
    */
   public void setBaselineVersion(MigrationVersion baselineVersion) {
 
     this.baselineVersion = baselineVersion;
-  }
-
-  /**
-   * @param emptyDatabaseVersion new value of {@link #getemptyDatabaseVersion}.
-   */
-  public void setEmptyDatabaseVersion(MigrationVersion emptyDatabaseVersion) {
-
-    this.emptyDatabaseVersion = emptyDatabaseVersion;
   }
 
 }

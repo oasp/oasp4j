@@ -14,7 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 import io.oasp.gastronomy.restaurant.general.common.RestTestClientBuilder;
-import io.oasp.gastronomy.restaurant.general.common.RestraurantTestHelper;
+import io.oasp.gastronomy.restaurant.general.common.RestaurantTestHelper;
 import io.oasp.gastronomy.restaurant.general.configuration.RestaurantTestConfig;
 import io.oasp.module.basic.configuration.SpringProfileConstants;
 import io.oasp.module.test.common.base.SubsystemTest;
@@ -56,16 +56,16 @@ public class RestaurantWebIntegrationSubsystemTest extends SubsystemTest {
   private String baseline;
 
   /**
-   * The target version for migration to be used by {@link Flyway}
+   * The migration to be used by {@link Flyway}
    */
-  @Value("${server.rest.test.flyway.target}")
-  private String target;
+  @Value("${server.rest.test.flyway.migration}")
+  private String migration;
 
   /**
    * The {@code RestaurantTestHelper}.
    */
   @Inject
-  private RestraurantTestHelper restaurantTestHelper;
+  private RestaurantTestHelper restaurantTestHelper;
 
   /**
    * The {@code RestTestClientBuilder}.
@@ -107,12 +107,14 @@ public class RestaurantWebIntegrationSubsystemTest extends SubsystemTest {
     this.restTestClientBuilder.setPassword(this.password);
     this.restTestClientBuilder.setJacksonJsonProvider(this.jacksonJsonProvider);
 
-    // Setup necessary versions for Flyway
-    assert (this.baseline != null && !"".equals(this.baseline));
-    assert (this.target != null && !"".equals(this.target));
+    // Setup necessary versions for Flyway usage
+    if (this.baseline != null && !"".equals(this.baseline)) {
+      this.restaurantTestHelper.setBaselineVersion(MigrationVersion.fromVersion(this.baseline));
+    }
+    if (this.migration != null && !"".equals(this.migration)) {
+      this.restaurantTestHelper.setMigrationVersion(MigrationVersion.fromVersion(this.migration));
+    }
 
-    this.restaurantTestHelper.setBaselineVersion(MigrationVersion.fromVersion(this.baseline));
-    this.restaurantTestHelper.setMigrationVersion(MigrationVersion.fromVersion(this.target));
   }
 
   /**
@@ -124,19 +126,9 @@ public class RestaurantWebIntegrationSubsystemTest extends SubsystemTest {
   }
 
   /**
-   *
-   * @return {@code true} if test database should be reset before each test method execution (default). {@code false}
-   *         otherwise.
-   */
-  protected boolean isRestDatabase() {
-
-    return true;
-  }
-
-  /**
    * @return the {@code RestaurantTestHelper}
    */
-  public RestraurantTestHelper getRestaurantTestHelper() {
+  public RestaurantTestHelper getRestaurantTestHelper() {
 
     return this.restaurantTestHelper;
   }
