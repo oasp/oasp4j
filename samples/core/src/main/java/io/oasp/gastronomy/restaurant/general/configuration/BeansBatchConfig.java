@@ -53,6 +53,7 @@ public class BeansBatchConfig {
   /**
    * Datasource configuration
    */
+
   private DataSource dataSource;
 
   /**
@@ -61,8 +62,15 @@ public class BeansBatchConfig {
   private PlatformTransactionManager transactionManager;
 
   /**
+   * Custom modification of the application context
+   */
+  private BeanFactoryPostProcessor beanFactoryPostProcessor;
+
+  /**
    * This method is creating beanFactoryPostProcesor bean to register a bean of type 'scope' in
    * {@link CustomBeanFactoryPostProcessor}
+   * 
+   * @return {@link CustomBeanFactoryPostProcessor}
    */
   @Bean
   public static BeanFactoryPostProcessor beanFactoryPostProcessor() {

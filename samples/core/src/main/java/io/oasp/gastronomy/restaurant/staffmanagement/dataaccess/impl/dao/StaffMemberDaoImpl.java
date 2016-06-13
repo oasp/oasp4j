@@ -1,13 +1,6 @@
 package io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.impl.dao;
 
 import static com.mysema.query.alias.Alias.$;
-import io.oasp.gastronomy.restaurant.general.common.api.constants.NamedQueries;
-import io.oasp.gastronomy.restaurant.general.common.api.datatype.Role;
-import io.oasp.gastronomy.restaurant.general.dataaccess.base.dao.ApplicationMasterDataDaoImpl;
-import io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api.StaffMemberEntity;
-import io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api.dao.StaffMemberDao;
-import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberSearchCriteriaTo;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import javax.inject.Named;
 import javax.persistence.TypedQuery;
@@ -15,6 +8,14 @@ import javax.persistence.TypedQuery;
 import com.mysema.query.alias.Alias;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.path.EntityPathBase;
+
+import io.oasp.gastronomy.restaurant.general.common.api.constants.NamedQueries;
+import io.oasp.gastronomy.restaurant.general.common.api.datatype.Role;
+import io.oasp.gastronomy.restaurant.general.dataaccess.base.dao.ApplicationMasterDataDaoImpl;
+import io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api.StaffMemberEntity;
+import io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api.dao.StaffMemberDao;
+import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberSearchCriteriaTo;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
  * Implementation of {@link StaffMemberDao}.

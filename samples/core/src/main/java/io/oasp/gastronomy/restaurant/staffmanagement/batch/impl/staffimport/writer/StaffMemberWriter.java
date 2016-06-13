@@ -12,7 +12,7 @@ import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.Staffmanagement;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto;
 
 /**
- * OfferWriter is responsible for writing OfferEto to database.
+ * StaffMemberWriter is responsible for writing StaffMemberEto to database.
  *
  * @author sroeger
  */
@@ -38,7 +38,7 @@ public class StaffMemberWriter implements ItemWriter<StaffMemberEto> {
   }
 
   /**
-   * @param offerManagement the offerManagement to set
+   * @param staffManagement the staffManagement to set
    */
   @Inject
   public void setStaffManagement(Staffmanagement staffManagement) {

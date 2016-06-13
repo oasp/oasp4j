@@ -31,9 +31,9 @@ import io.oasp.gastronomy.restaurant.staffmanagement.batch.impl.staffimport.writ
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto;
 
 /**
- * This class serves as configuration class for the StaffImportJobTest. There is no xml-configuration needed
- * additionally. The conversation of a read String to enum type "Role" is done using {@link setCustomEditors} method of
- * {@link BeanWrapperFieldSetMapper} by registering a custom {@link RoleEditor}.
+ * This class serves as configuration class for the StaffImportJobTest. The conversation of a read String to enum type
+ * "Role" is done using {@link setCustomEditors} method of {@link BeanWrapperFieldSetMapper} by registering a custom
+ * {@link RoleEditor}.
  *
  *
  * @author sroeger
@@ -57,7 +57,7 @@ public class StaffImportConfig {
   public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader reader, ItemWriter writer,
       SkipListener skipListener) {
 
-    /* it handles bunches of 2 units and skips 1 error of types given below */
+    /* it handles bunches of 200 units and skips 1 error of types given below */
     return stepBuilderFactory.get("step1").chunk(200).reader(reader).writer(writer).faultTolerant().skipLimit(1)
         .skip(IncorrectTokenCountException.class).skip(FlatFileParseException.class).listener(skipListener).build();
 

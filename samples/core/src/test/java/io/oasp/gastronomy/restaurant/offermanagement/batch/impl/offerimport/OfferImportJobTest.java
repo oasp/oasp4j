@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.offermanagement.batch.impl.offerimport;
 
+import java.beans.PropertyEditor;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -21,12 +22,14 @@ import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferState;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
+import io.oasp.gastronomy.restaurant.staffmanagement.batch.impl.staffimport.StaffImportJobTest;
 
 /**
- * This test grabs the offers.csv and saves it into database. ItemProcessor is used here to convert type OfferCsv to
- * OfferEto. This is necessary because OfferEto contains types Money and OfferState. Other possibility is using custom
- * type converters. I had to insert AUTO_INCREMENT into database table offer. @TestPropertySource is needed because
- * database needs products. Logs skipped item as log.warn
+ * This test grabs the offers.csv and saves it into the database. ItemProcessor is used here to convert type OfferCsv to
+ * OfferEto. This is necessary because OfferEto contains types Money and OfferState. Another possibility is using custom
+ * type converters or {@link PropertyEditor} (as an example for this see {@link StaffImportJobTest}. @TestPropertySource
+ * is needed because the database needs products as foreign keys. There is one line in the csv that does not fit the
+ * criteria. You can specify the behavior of this in the step bean (e.g. skipping a fixed amount of lines as done here)
  *
  * @author sroeger
  */
@@ -86,4 +89,5 @@ public class OfferImportJobTest extends AbstractSpringBatchIntegrationTest {
     }
 
   }
+
 }

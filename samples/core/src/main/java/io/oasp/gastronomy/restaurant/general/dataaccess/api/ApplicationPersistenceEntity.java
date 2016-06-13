@@ -1,9 +1,9 @@
 package io.oasp.gastronomy.restaurant.general.dataaccess.api;
 
+import javax.persistence.MappedSuperclass;
+
 import io.oasp.gastronomy.restaurant.general.common.api.ApplicationEntity;
 import io.oasp.module.jpa.dataaccess.api.AbstractPersistenceEntity;
-
-import javax.persistence.MappedSuperclass;
 
 /**
  * Abstract Entity for all Entities with an id and a version field.

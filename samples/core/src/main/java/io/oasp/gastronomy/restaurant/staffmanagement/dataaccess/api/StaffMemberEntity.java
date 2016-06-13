@@ -1,12 +1,12 @@
 package io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api;
 
-import io.oasp.gastronomy.restaurant.general.common.api.datatype.Role;
-import io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity;
-import io.oasp.gastronomy.restaurant.staffmanagement.common.api.StaffMember;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import io.oasp.gastronomy.restaurant.general.common.api.datatype.Role;
+import io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity;
+import io.oasp.gastronomy.restaurant.staffmanagement.common.api.StaffMember;
 
 /**
  * The {@link io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity persistent entity} for

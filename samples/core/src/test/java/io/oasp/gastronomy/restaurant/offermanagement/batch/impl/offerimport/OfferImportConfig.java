@@ -32,7 +32,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 /**
  *
  * This class defines batch configuration for {@link OfferImportJobTest} in an annotations based way for jobs and steps.
- * step 1 contains a skipListener to log skipped items while reading.
+ * Bean step 1 contains a skipListener to log skipped items while reading.
  *
  * @author sroeger
  */
@@ -96,15 +96,15 @@ public class OfferImportConfig {
   }
 
   @Bean
-  public ItemWriter<OfferEto> writer() {
-
-    return new OfferWriter();
-  }
-
-  @Bean
   public ItemProcessor<OfferCsv, OfferEto> processor() {
 
     return new OfferItemConverter();
+  }
+
+  @Bean
+  public ItemWriter<OfferEto> writer() {
+
+    return new OfferWriter();
   }
 
   @Bean

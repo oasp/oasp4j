@@ -12,10 +12,9 @@ import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferSt
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 
 /**
- * TODO sroeger This type ...
+ * Helper class that implements {@link ItemProcessor} for converting {@link OfferCsv} into {@link OfferEto}.
  *
  * @author sroeger
- * @since dev
  */
 public class OfferItemConverter implements ItemProcessor<OfferCsv, OfferEto> {
 
