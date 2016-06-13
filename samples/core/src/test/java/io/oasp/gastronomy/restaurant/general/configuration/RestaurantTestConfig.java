@@ -1,18 +1,21 @@
 package io.oasp.gastronomy.restaurant.general.configuration;
 
-import javax.sql.DataSource;
-
 import org.flywaydb.core.Flyway;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import io.oasp.gastronomy.restaurant.general.common.RestTestClientBuilder;
-import io.oasp.gastronomy.restaurant.general.common.RestraurantTestHelper;
+import io.oasp.gastronomy.restaurant.general.common.RestaurantTestHelper;
+import io.oasp.gastronomy.restaurant.general.common.base.RestaurantWebIntegrationSubsystemTest;
 import io.oasp.module.basic.configuration.SpringProfileConstants;
 
 /**
- * TODO jmolinar This type ...
+ * This configuration class provides {@code @Bean} annotated methods. It is applied to a test class by using the
+ * following class annotation: {@code @SpringApplicationConfiguration(classes = RestaurantTestConfig.class)}. Hence,
+ * beans provided by {@code @Bean} annotated methods will not be available outside the test configuration. <br/>
+ * <br/>
+ * See {@link RestaurantWebIntegrationSubsystemTest} as an example.
  *
  * @author jmolinar
  */
@@ -40,9 +43,9 @@ public class RestaurantTestConfig {
    * @return an instance of type {@code RestTestHelper}
    */
   @Bean
-  public RestraurantTestHelper restraurantTestHelper(Flyway flyway, DataSource dataSource) {
+  public RestaurantTestHelper restraurantTestHelper(Flyway flyway) {
 
-    return new RestraurantTestHelper(flyway, dataSource);
+    return new RestaurantTestHelper(flyway);
   }
 
 }
