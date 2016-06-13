@@ -54,12 +54,11 @@ public class RestaurantTestHelper {
 
   /**
    * This method sets the target for migration as specified by {@link #setBaselineVersion(MigrationVersion)}, and
-   * executes the migration. Beforehand, the database is reset internally by calling {@link #dropDatabase()}.
+   * executes the migration.
    */
   public void migrate() {
 
-    dropDatabase();
-    if (this.migrationVersion != null) {
+    if (this.migrationVersion != null) { // FIXME review if this can become null
 
       this.flyway.setTarget(this.migrationVersion);
     }
@@ -68,11 +67,9 @@ public class RestaurantTestHelper {
 
   /**
    * This method baselines according to the version specified by {@link #setBaselineVersion(MigrationVersion)}.
-   * Beforehand, the database is reset internally by calling {@link #dropDatabase()}.
    */
   public void baseline() {
 
-    dropDatabase();
     if (this.baselineVersion != null) {
       this.flyway.setBaselineVersion(this.baselineVersion);
     }
