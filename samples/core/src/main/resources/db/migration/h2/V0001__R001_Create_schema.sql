@@ -36,7 +36,7 @@ CREATE TABLE PRODUCT_AUD(
     pictureId BIGINT,
     alcoholic BOOLEAN,
     dtype VARCHAR(31) NOT NULL,
-    id BIGINT NOT NULL AUTO_INCREMENT,
+    id BIGINT NOT NULL,
     rev BIGINT NOT NULL
 );
 
