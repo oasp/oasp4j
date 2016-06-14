@@ -33,7 +33,8 @@ import io.oasp.gastronomy.restaurant.staffmanagement.batch.impl.staffimport.Staf
  *
  * @author sroeger
  */
-@SpringApplicationConfiguration(classes = { SpringBootBatchApp.class, OfferImportConfig.class })
+@SpringApplicationConfiguration(classes = { SpringBootBatchApp.class }, locations = {
+"classpath:config/app/batch/beans-offerimport.xml" })
 @WebAppConfiguration
 @TestPropertySource(properties = { "flyway.locations=db/migration" })
 public class OfferImportJobTest extends AbstractSpringBatchIntegrationTest {
@@ -60,7 +61,7 @@ public class OfferImportJobTest extends AbstractSpringBatchIntegrationTest {
 
     // configure job
     JobParametersBuilder jobParameterBuilder = new JobParametersBuilder();
-    jobParameterBuilder.addString("pathToFile", "offerImportJobTest/offers.csv");
+    jobParameterBuilder.addString("pathToFile", "classpath:offerImportJobTest/offers.csv");
     JobParameters jobParameters = jobParameterBuilder.toJobParameters();
 
     // run job
