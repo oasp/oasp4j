@@ -36,7 +36,7 @@ public class DiagnosticContextFilter implements Filter {
   private static final String CORRELATION_ID_HEADER_NAME_PARAM = "correlationIdHeaderName";
 
   /** The default value for {@link #setCorrelationIdHttpHeaderName(String)}. */
-  public static final String CORRELATION_ID_HEADER_NAME_DEFAULT = "X-CORRELATION-ID";
+  public static final String CORRELATION_ID_HEADER_NAME_DEFAULT = "X-Correlation-Id";
 
   /** @see #setCorrelationIdHttpHeaderName(String) */
   private String correlationIdHttpHeaderName;
