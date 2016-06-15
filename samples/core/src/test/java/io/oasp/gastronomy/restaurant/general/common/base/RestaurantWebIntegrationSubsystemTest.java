@@ -3,7 +3,6 @@ package io.oasp.gastronomy.restaurant.general.common.base;
 import javax.inject.Inject;
 
 import org.flywaydb.core.Flyway;
-import org.flywaydb.core.api.MigrationVersion;
 import org.junit.After;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,8 +12,9 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
+import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
 import io.oasp.gastronomy.restaurant.general.common.RestTestClientBuilder;
-import io.oasp.gastronomy.restaurant.general.common.RestaurantTestHelper;
+import io.oasp.gastronomy.restaurant.general.common.SecurityTestHelper;
 import io.oasp.gastronomy.restaurant.general.configuration.RestaurantTestConfig;
 import io.oasp.module.basic.configuration.SpringProfileConstants;
 import io.oasp.module.test.common.base.SubsystemTest;
@@ -65,7 +65,10 @@ public class RestaurantWebIntegrationSubsystemTest extends SubsystemTest {
    * The {@code RestaurantTestHelper}.
    */
   @Inject
-  private RestaurantTestHelper restaurantTestHelper;
+  private SecurityTestHelper securityTestHelper;
+
+  @Inject
+  private DbTestHelper dbTestHelper;
 
   /**
    * The {@code RestTestClientBuilder}.
@@ -107,12 +110,8 @@ public class RestaurantWebIntegrationSubsystemTest extends SubsystemTest {
     this.restTestClientBuilder.setPassword(this.password);
     this.restTestClientBuilder.setJacksonJsonProvider(this.jacksonJsonProvider);
 
-    // Setup necessary versions for Flyway usage
-    if (this.baseline != null && !"".equals(this.baseline)) {
-      this.restaurantTestHelper.setBaselineVersion(MigrationVersion.fromVersion(this.baseline));
-    }
     if (this.migration != null && !"".equals(this.migration)) {
-      this.restaurantTestHelper.setMigrationVersion(MigrationVersion.fromVersion(this.migration));
+      this.dbTestHelper.setMigrationVersion(this.migration);
     }
 
   }
@@ -126,15 +125,23 @@ public class RestaurantWebIntegrationSubsystemTest extends SubsystemTest {
   }
 
   /**
-   * @return the {@code RestaurantTestHelper}
+   * @return the {@link SecurityTestHelper}
    */
-  public RestaurantTestHelper getRestaurantTestHelper() {
+  public SecurityTestHelper getSecurityTestHelper() {
 
-    return this.restaurantTestHelper;
+    return this.securityTestHelper;
   }
 
   /**
-   * @return the {@code RestTestClientBuilder}
+   * @return the {@link DbTestHelper}
+   */
+  public DbTestHelper getDbTestHelper() {
+
+    return this.dbTestHelper;
+  }
+
+  /**
+   * @return the {@link RestTestClientBuilder}
    */
   public RestTestClientBuilder getRestTestClientBuilder() {
 

@@ -39,8 +39,7 @@ public class TablemanagementRestServiceWebIntegrationTest extends RestaurantWebI
   @Before
   public void init() {
 
-    getRestaurantTestHelper().dropDatabase();
-    getRestaurantTestHelper().migrate();
+    getDbTestHelper().resetDatabase();
     this.service = getRestTestClientBuilder().build(TablemanagementRestService.class);
 
   }

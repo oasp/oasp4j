@@ -5,8 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
 import io.oasp.gastronomy.restaurant.general.common.RestTestClientBuilder;
-import io.oasp.gastronomy.restaurant.general.common.RestaurantTestHelper;
+import io.oasp.gastronomy.restaurant.general.common.SecurityTestHelper;
 import io.oasp.gastronomy.restaurant.general.common.base.RestaurantWebIntegrationSubsystemTest;
 import io.oasp.module.basic.configuration.SpringProfileConstants;
 
@@ -40,12 +41,23 @@ public class RestaurantTestConfig {
   }
 
   /**
-   * @return an instance of type {@code RestTestHelper}
+   * @return an instance of type {@link SecurityTestHelper}
    */
   @Bean
-  public RestaurantTestHelper restraurantTestHelper(Flyway flyway) {
+  public SecurityTestHelper securityTestHelper() {
 
-    return new RestaurantTestHelper(flyway);
+    return new SecurityTestHelper();
+  }
+
+  /**
+   * @param flyway an instance of type {@link Flyway}.
+   * @return an instance of type {@link DbTestHelper}.
+   */
+  @Bean
+  public DbTestHelper dbTestHelper(Flyway flyway) {
+
+    return new DbTestHelper(flyway);
+
   }
 
 }
