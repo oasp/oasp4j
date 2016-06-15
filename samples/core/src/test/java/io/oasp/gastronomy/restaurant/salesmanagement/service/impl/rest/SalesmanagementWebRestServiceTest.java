@@ -86,19 +86,20 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
   @Test
   public void getOrder() {
 
+    // TODO change to given, when, then
     // setup
     HttpEntity<String> getRequest = new HttpEntity<String>(this.AUTHENTIFICATED_HEADERS);
     OrderCto sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID);
     this.helper.getService().saveOrder(sampleOrderCto);
 
     // execute
-    ResponseEntity<String> getResponse =
-        this.template.exchange(generateBaseUrl() + "order/" + Long.toString(INITIAL_NUMBER_OF_ORDERS + 1),
-            HttpMethod.GET, getRequest, String.class);
+    ResponseEntity<String> getResponse = this.template.exchange(
+        // TODO change id like this in other requests
+        generateBaseUrl() + "order/" + sampleOrderCto.getOrder().getId(), HttpMethod.GET, getRequest, String.class);
 
     // verify
     String getResponseJson = getResponse.getBody();
-    JSONAssert.assertEquals("{id:" + Long.toString(INITIAL_NUMBER_OF_ORDERS + 1) + "}", getResponseJson, false);
+    JSONAssert.assertEquals("{id:" + sampleOrderCto.getOrder().getId() + "}", getResponseJson, false);
     JSONAssert.assertEquals("{tableId:" + Long.toString(SAMPLE_TABLE_ID) + "}", getResponseJson, false);
 
   }
