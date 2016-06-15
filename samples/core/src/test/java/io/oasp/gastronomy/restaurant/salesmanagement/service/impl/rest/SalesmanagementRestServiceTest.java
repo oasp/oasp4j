@@ -77,15 +77,15 @@ public class SalesmanagementRestServiceTest extends SubsystemTest {
   @Test
   public void findOrder() {
 
-    // setup
+    // given
     long sampleOrderId = INITIAL_NUMBER_OF_ORDERS + 1;
     OrderCto sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID);
     this.helper.getService().saveOrder(sampleOrderCto);
 
-    // exercise
+    // when
     OrderEto expectedOrderEto = this.helper.getService().findOrder(sampleOrderId);
 
-    // verify
+    // then
     assertThat(expectedOrderEto).isNotNull();
     assertThat(expectedOrderEto.getId()).isEqualTo(sampleOrderId);
     assertThat(expectedOrderEto.getTableId()).isEqualTo(SAMPLE_TABLE_ID);
@@ -120,7 +120,7 @@ public class SalesmanagementRestServiceTest extends SubsystemTest {
   @Test
   public void findOrdersByPost() {
 
-    // setup
+    // given
     long sampleOrderId = INITIAL_NUMBER_OF_ORDERS + 1;
     long tableId = SAMPLE_TABLE_ID + 1;
 
@@ -133,10 +133,10 @@ public class SalesmanagementRestServiceTest extends SubsystemTest {
     OrderCto sampleOrderCto = this.helper.createSampleOrderCto(tableId);
     this.helper.getService().saveOrder(sampleOrderCto);
 
-    // exercise
+    // when
     PaginatedListTo<OrderCto> orderCtoList = this.helper.getService().findOrdersByPost(criteria);
 
-    // verify
+    // then
     // TODO Jonas, assert obsolete?
     assertThat(orderCtoList).isNotNull();
     // TODO Jonas
@@ -150,7 +150,7 @@ public class SalesmanagementRestServiceTest extends SubsystemTest {
   @Test
   public void cancelOrderPosition() {
 
-    // setup
+    // given
     long sampleOrderId = INITIAL_NUMBER_OF_ORDERS + 1;
 
     OrderCto sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID + 1);
@@ -165,13 +165,13 @@ public class SalesmanagementRestServiceTest extends SubsystemTest {
     sampleOrderEto.setId(responseOrderId);
     sampleOrderCto.setOrder(sampleOrderEto);
 
-    // execute
+    // when
     this.helper.getService().saveOrder(sampleOrderCto);
 
     // TODO Jonas, is this also execution
     responseOrderPositionEto = this.helper.getService().findOrderPosition(sampleOrderPositionId);
 
-    // verify
+    // then
     assertThat(responseOrderPositionEto.getState()).isEqualTo(OrderPositionState.CANCELLED);
 
     // TODO Jonas where is not scope of the test
@@ -183,14 +183,14 @@ public class SalesmanagementRestServiceTest extends SubsystemTest {
   @Test
   public void findOrderPositions() {
 
-    // setup
+    // given
     OrderPositionEto sampleOrderPositionEto = this.helper.createSampleOrderPositionEto(INITIAL_NUMBER_OF_ORDERS);
     this.helper.getService().saveOrderPosition(sampleOrderPositionEto);
 
-    // execute
+    // when
     List<OrderPositionEto> orderPositionEtos = this.helper.getService().findOrderPositions(null);
 
-    // verify
+    // then
     assertThat(this.helper.getNumberOfOrderPositions()).isEqualTo(INITIAL_NUMBER_OF_ORDER_POSITIONS + 1);
     for (int i = 0; i < orderPositionEtos.size(); i++) {
       assertThat(orderPositionEtos.get(i).getId()).isEqualTo(i + 1);
@@ -201,15 +201,15 @@ public class SalesmanagementRestServiceTest extends SubsystemTest {
   @Test
   public void findOrderPosition() {
 
-    // setup
+    // given
     OrderPositionEto sampleOrderPositionEto = this.helper.createSampleOrderPositionEto(INITIAL_NUMBER_OF_ORDERS);
     this.helper.getService().saveOrderPosition(sampleOrderPositionEto);
 
-    // exercise
+    // when
     OrderPositionEto expectedOrderPositionEto =
         this.helper.getService().findOrderPosition(this.helper.getNumberOfOrderPositions());
 
-    // verify
+    // then
     assertThat(expectedOrderPositionEto).isNotNull();
     assertThat(this.helper.getNumberOfOrderPositions()).isEqualTo(INITIAL_NUMBER_OF_ORDER_POSITIONS + 1);
     assertThat(expectedOrderPositionEto.getId()).isEqualTo(this.helper.getNumberOfOrderPositions());

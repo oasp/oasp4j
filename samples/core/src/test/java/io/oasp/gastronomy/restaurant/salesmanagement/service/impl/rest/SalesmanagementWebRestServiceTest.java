@@ -86,28 +86,50 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
   @Test
   public void getOrder() {
 
-    // TODO change to given, when, then
-    // setup
-    HttpEntity<String> getRequest = new HttpEntity<String>(this.AUTHENTIFICATED_HEADERS);
+    // given
+    HttpEntity<String> getRequest = new HttpEntity<>(this.AUTHENTIFICATED_HEADERS);
     OrderCto sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID);
-    this.helper.getService().saveOrder(sampleOrderCto);
+    OrderCto responseOrderCto = this.helper.getService().saveOrder(sampleOrderCto);
 
-    // execute
+    // when
     ResponseEntity<String> getResponse = this.template.exchange(
         // TODO change id like this in other requests
-        generateBaseUrl() + "order/" + sampleOrderCto.getOrder().getId(), HttpMethod.GET, getRequest, String.class);
+        generateBaseUrl() + "order/" + responseOrderCto.getOrder().getId(), HttpMethod.GET, getRequest, String.class);
 
-    // verify
+    // then
+    assertThat(getResponse).isNotNull();
     String getResponseJson = getResponse.getBody();
-    JSONAssert.assertEquals("{id:" + sampleOrderCto.getOrder().getId() + "}", getResponseJson, false);
+    JSONAssert.assertEquals("{id:" + responseOrderCto.getOrder().getId() + "}", getResponseJson, false);
     JSONAssert.assertEquals("{tableId:" + Long.toString(SAMPLE_TABLE_ID) + "}", getResponseJson, false);
+    JSONAssert.assertEquals("{tableId:" + Long.toString(responseOrderCto.getOrder().getTableId()) + "}",
+        getResponseJson, false);
 
   }
 
-  @Test
-  public void postOrder() {
+  // @Test
+  // public void getOrderWithPositions() {
+  //
+  // // given
+  // HttpEntity<String> getRequest = new HttpEntity<>(this.AUTHENTIFICATED_HEADERS);
+  // OrderCto sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID);
+  // this.helper.getService().saveOrder(sampleOrderCto);
+  //
+  // // when
+  // ResponseEntity<String> getResponse = this.template.exchange(
+  // // TODO change id like this in other requests
+  // generateBaseUrl() + "order/" + sampleOrderCto.getOrder().getId(), HttpMethod.GET, getRequest, String.class);
+  //
+  // // then
+  // assertThat(getResponse).isNotNull();
+  // String getResponseJson = getResponse.getBody();
+  // JSONAssert.assertEquals("{id:" + sampleOrderCto.getOrder().getId() + "}", getResponseJson, false);
+  // JSONAssert.assertEquals("{tableId:" + Long.toString(SAMPLE_TABLE_ID) + "}", getResponseJson, false);
+  // }
 
-    // setup
+  @Test
+  public void postOrderWithPosition() {
+
+    // given
     HttpHeaders postRequestHeaders = this.AUTHENTIFICATED_HEADERS;
     postRequestHeaders.setContentType(MediaType.APPLICATION_JSON);
     JSONArray jsonArray = new JSONArray();
@@ -117,7 +139,7 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
 
     JSONObject orderPosition = new JSONObject();
 
-    orderPosition.put("orderId", INITIAL_NUMBER_OF_ORDERS + 1);
+    // orderPosition.put("orderId", INITIAL_NUMBER_OF_ORDERS + 6);
     orderPosition.put("offerId", SAMPLE_OFFER_ID);
     orderPosition.put("state", SAMPLE_ORDER_POSITION_STATE);
     orderPosition.put("drinkState", SAMPLE_DRINK_STATE);
@@ -127,13 +149,14 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
     request.put("positions", jsonArray);
     request.put("order", innerObject);
 
-    HttpEntity<String> postRequestEntity = new HttpEntity<String>(request.toString(), postRequestHeaders);
+    HttpEntity<String> postRequestEntity = new HttpEntity<>(request.toString(), postRequestHeaders);
 
-    // execute
+    // when
     ResponseEntity<String> postResponse =
         this.template.exchange(generateBaseUrl() + "order/", HttpMethod.POST, postRequestEntity, String.class);
 
-    // verify
+    // then
+    // TODO get ID out of postResponse
     OrderEto expectedOrderEto = this.helper.getService().findOrder(INITIAL_NUMBER_OF_ORDERS + 1);
     OrderPositionEto expectedOrderPositionEto =
         this.helper.getService().findOrderPosition(this.helper.getNumberOfOrderPositions());
@@ -156,21 +179,25 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
   @Test
   public void getOrderPosition() {
 
-    // setup
-    HttpEntity<String> getRequest = new HttpEntity<String>(this.AUTHENTIFICATED_HEADERS);
-    OrderPositionEto sampleOrderPositionEto = this.helper.createSampleOrderPositionEto(INITIAL_NUMBER_OF_ORDERS);
-    this.helper.getService().saveOrderPosition(sampleOrderPositionEto);
+    // given
+    OrderCto sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID);
+    OrderCto responseOrderCto = this.helper.getService().saveOrder(sampleOrderCto);
 
-    // execute
+    HttpEntity<String> getRequest = new HttpEntity<>(this.AUTHENTIFICATED_HEADERS);
+    OrderPositionEto sampleOrderPositionEto =
+        this.helper.createSampleOrderPositionEto(responseOrderCto.getOrder().getId());
+    OrderPositionEto responseOrderPositionEto = this.helper.getService().saveOrderPosition(sampleOrderPositionEto);
+
+    // when
     ResponseEntity<String> getResponse = this.template.exchange(
         generateBaseUrl() + "orderposition/" + Long.toString(this.helper.getNumberOfOrderPositions()), HttpMethod.GET,
         getRequest, String.class);
 
-    // verify
+    // then
     String getResponseJson = getResponse.getBody();
-    JSONAssert.assertEquals("{id:" + Long.toString(this.helper.getNumberOfOrderPositions()) + "}", getResponseJson,
+    JSONAssert.assertEquals("{id:" + Long.toString(responseOrderPositionEto.getId()) + "}", getResponseJson, false);
+    JSONAssert.assertEquals("{orderId:" + Long.toString(responseOrderCto.getOrder().getId()) + "}", getResponseJson,
         false);
-    JSONAssert.assertEquals("{orderId:" + Long.toString(INITIAL_NUMBER_OF_ORDERS) + "}", getResponseJson, false);
     JSONAssert.assertEquals("{offerId:" + Long.toString(SAMPLE_OFFER_ID) + "}", getResponseJson, false);
     JSONAssert.assertEquals("{offerName:" + SAMPLE_OFFER_NAME + "}", getResponseJson, false);
     JSONAssert.assertEquals("{state:" + SAMPLE_ORDER_POSITION_STATE.toString() + "}", getResponseJson, false);
@@ -182,27 +209,45 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
   @Test
   public void getOrderPositions() {
 
-    // setup
-    HttpEntity<String> getRequest = new HttpEntity<String>(this.AUTHENTIFICATED_HEADERS);
+    // given
+    OrderCto sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID);
+    OrderCto responseOrderCto = this.helper.getService().saveOrder(sampleOrderCto);
+    HttpEntity<String> getRequest = new HttpEntity<>(this.AUTHENTIFICATED_HEADERS);
 
-    long index = 0;
-
-    OrderPositionEto sampleOrderPositionEto = new OrderPositionEto();
-    sampleOrderPositionEto.setOrderId(INITIAL_NUMBER_OF_ORDERS);
-    sampleOrderPositionEto.setOfferId(SAMPLE_OFFER_ID);
-    this.helper.getService().saveOrderPosition(sampleOrderPositionEto);
-
-    // execute
+    long numberOfOrderPositions = 2;
+    OrderPositionEto sampleOrderPositionEto;
+    ArrayList<OrderPositionEto> responseOrderPositions = new ArrayList();
+    for (int i = 0; i < numberOfOrderPositions; ++i) {
+      sampleOrderPositionEto = new OrderPositionEto();
+      sampleOrderPositionEto.setOrderId(responseOrderCto.getOrder().getId());
+      sampleOrderPositionEto.setOfferId(SAMPLE_OFFER_ID);
+      responseOrderPositions.add(this.helper.getService().saveOrderPosition(sampleOrderPositionEto));
+    }
+    // when
     ResponseEntity<String> getResponse =
         this.template.exchange(generateBaseUrl() + "orderposition/", HttpMethod.GET, getRequest, String.class);
 
-    // verify
+    // then
     String getResponseJson = getResponse.getBody();
     ArrayList<String> jsonObjectArrayList = buildJsonObjectArrayList(getResponseJson);
 
+    int index = 0;
+
     for (String jsonObject : jsonObjectArrayList) {
+
+      JSONAssert.assertEquals("{id:" + Long.toString(responseOrderPositions.get(index).getId()) + "}", getResponseJson,
+          false);
+      JSONAssert.assertEquals("{orderId:" + Long.toString(responseOrderPositions.get(index).getOrderId()) + "}",
+          getResponseJson, false);
+      JSONAssert.assertEquals("{offerId:" + Long.toString(responseOrderPositions.get(index).getOfferId()) + "}",
+          getResponseJson, false);
+
+      JSONAssert.assertEquals("{offerName:" + responseOrderPositions.get(index).getOfferName() + "}", getResponseJson,
+          false);
+
+      JSONAssert.assertEquals("{price:" + responseOrderPositions.get(index).getPrice() + "}", getResponseJson, false);
+
       index++;
-      JSONAssert.assertEquals("{id:" + index + "}", jsonObject, false);
     }
     assertThat(index).isEqualTo(this.helper.getNumberOfOrderPositions());
   }
@@ -212,10 +257,11 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
 
   }
 
+  // TODO get ID out of postResponse
   @Test
   public void postOrderPosition() {
 
-    // setup
+    // given
     HttpHeaders postRequestHeaders = this.AUTHENTIFICATED_HEADERS;
     postRequestHeaders.setContentType(MediaType.APPLICATION_JSON);
     JSONObject request = new JSONObject();
@@ -237,13 +283,13 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
     }
     request.put("price", SAMPLE_PRICE.getValue());
 
-    HttpEntity<String> postRequestEntity = new HttpEntity<String>(request.toString(), postRequestHeaders);
+    HttpEntity<String> postRequestEntity = new HttpEntity<>(request.toString(), postRequestHeaders);
 
-    // execute
+    // when
     ResponseEntity<String> postResponse =
         this.template.exchange(generateBaseUrl() + "orderposition/", HttpMethod.POST, postRequestEntity, String.class);
 
-    // verify
+    // then
     OrderPositionEto expectedOrderPositionEto =
         this.helper.getService().findOrderPosition(this.helper.getNumberOfOrderPositions());
     assertThat(expectedOrderPositionEto).isNotNull();
