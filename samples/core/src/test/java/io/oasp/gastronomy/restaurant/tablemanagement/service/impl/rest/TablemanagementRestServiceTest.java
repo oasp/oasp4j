@@ -11,7 +11,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
-import io.oasp.gastronomy.restaurant.general.common.base.RestaurantWebIntegrationSubsystemTest;
+import io.oasp.gastronomy.restaurant.general.common.base.AbstractRestServiceTest;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.tablemanagement.service.api.rest.TablemanagementRestService;
@@ -27,9 +27,9 @@ import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 @TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement" })
 // , locations = {"file:src/test/resources/config" })
 
-public class TablemanagementRestServiceWebIntegrationTest extends RestaurantWebIntegrationSubsystemTest {
+public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
 
-  private static Logger LOG = LoggerFactory.getLogger(TablemanagementRestServiceWebIntegrationTest.class);
+  private static Logger LOG = LoggerFactory.getLogger(TablemanagementRestServiceTest.class);
 
   private TablemanagementRestService service;
 
@@ -51,7 +51,7 @@ public class TablemanagementRestServiceWebIntegrationTest extends RestaurantWebI
   }
 
   /**
-   * This test method serves as an example of how to use {@link RestaurantWebIntegrationSubsystemTest} in practice.
+   * This test method serves as an example of how to use {@link AbstractRestServiceTest} in practice.
    */
   @Test
   public void testFindTable() {

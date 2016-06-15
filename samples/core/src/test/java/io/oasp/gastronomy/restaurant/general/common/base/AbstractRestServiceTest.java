@@ -29,7 +29,7 @@ import io.oasp.module.test.common.base.SubsystemTest;
 @SpringApplicationConfiguration(classes = RestaurantTestConfig.class)
 @WebIntegrationTest
 @ActiveProfiles(profiles = { SpringProfileConstants.JUNIT })
-public class RestaurantWebIntegrationSubsystemTest extends SubsystemTest {
+public abstract class AbstractRestServiceTest extends SubsystemTest {
 
   /**
    * The port of the web server during the test.
