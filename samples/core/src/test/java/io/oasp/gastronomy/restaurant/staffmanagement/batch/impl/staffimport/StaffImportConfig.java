@@ -33,12 +33,16 @@ import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto
 /**
  * This class serves as configuration class for the StaffImportJobTest. The conversation of a read String to enum type
  * "Role" is done using {@link setCustomEditors} method of {@link BeanWrapperFieldSetMapper} by registering a custom
- * {@link RoleEditor}.
+ * {@link RoleEditor}. This class makes use of the application.properties file by accessing the {@code chunk.size}
+ * value.
  *
  *
  * @author sroeger
  */
 public class StaffImportConfig {
+
+  @Value("${chunk.size}")
+  private int chunkSize;
 
   @Bean
   public JobBuilderFactory jobBuilderFactory(JobRepository jobRepository) {
@@ -57,9 +61,9 @@ public class StaffImportConfig {
   public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader reader, ItemWriter writer,
       SkipListener skipListener) {
 
-    /* it handles bunches of 200 units and skips 1 error of types given below */
-    return stepBuilderFactory.get("step1").chunk(200).reader(reader).writer(writer).faultTolerant().skipLimit(1)
-        .skip(IncorrectTokenCountException.class).skip(FlatFileParseException.class).listener(skipListener).build();
+    return stepBuilderFactory.get("step1").chunk(this.chunkSize).reader(reader).writer(writer).faultTolerant()
+        .skipLimit(1).skip(IncorrectTokenCountException.class).skip(FlatFileParseException.class).listener(skipListener)
+        .build();
 
   }
 
@@ -108,36 +112,5 @@ public class StaffImportConfig {
     return new CustomSkipListener();
 
   }
-
-  // @Bean
-  // public ConversionService getConversionService() {
-  //
-  // ConversionServiceFactoryBean bean = new ConversionServiceFactoryBean();
-  // bean.setConverters(getConverters());
-  // bean.afterPropertiesSet();
-  // ConversionService object = bean.getObject();
-  // return object;
-  // }
-  //
-  // private Set<Converter<?, ?>> getConverters() {
-  //
-  // Set<Converter<?, ?>> converters = new HashSet<Converter<?, ?>>();
-  //
-  // converters.add(this.roleToStringConverter);
-  // converters.add(this.stringToRoleConverter);
-  // // add here more custom converters, either as spring bean references or directly instantiated
-  //
-  // return converters;
-  // }
-
-  // @Bean
-  // public DefaultPropertyEditorRegistrar propertyEditorRegistrar() {
-  //
-  // PropertyEditorRegistrySupport registry = new PropertyEditorRegistrySupport();
-  // registry.registerCustomEditor(Role.class, new RoleEditor());
-  // DefaultPropertyEditorRegistrar registrar = new DefaultPropertyEditorRegistrar();
-  // registrar.registerCustomEditors(registry);
-  // return registrar;
-  // }
 
 }
