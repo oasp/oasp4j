@@ -11,7 +11,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import io.oasp.module.basic.configuration.OaspProfile;
+import io.oasp.module.basic.configuration.SpringProfileConstants;
 
 /**
  * This type provides web security configuration for testing purposes.
@@ -20,7 +20,7 @@ import io.oasp.module.basic.configuration.OaspProfile;
  */
 @Configuration
 @EnableWebSecurity
-@Profile(OaspProfile.JUNIT_TEST)
+@Profile(SpringProfileConstants.JUNIT)
 public class TestWebSecurityConfig extends BaseWebSecurityConfig {
   private static Logger LOG = LoggerFactory.getLogger(TestWebSecurityConfig.class);
 

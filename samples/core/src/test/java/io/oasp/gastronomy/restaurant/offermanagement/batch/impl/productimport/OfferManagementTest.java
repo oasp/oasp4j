@@ -1,6 +1,18 @@
 package io.oasp.gastronomy.restaurant.offermanagement.batch.impl.productimport;
 
 import static org.junit.Assert.assertEquals;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.flywaydb.core.Flyway;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.web.WebAppConfiguration;
+
 import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.general.common.TestUtil;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
@@ -13,16 +25,6 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSortBy;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.test.common.base.ComponentTest;
-
-import java.util.List;
-
-import javax.inject.Inject;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 /**
  * This is the test-case of {@link Offermanagement}
@@ -37,11 +39,17 @@ public class OfferManagementTest extends ComponentTest {
   @Inject
   private Offermanagement offerManagement;
 
+  @Inject
+  private Flyway flyway;
+
   /**
    * Login
    */
   @Before
   public void setUp() {
+
+    this.flyway.clean();
+    this.flyway.migrate();
 
     TestUtil.login("waiter", PermissionConstants.FIND_OFFER);
   }

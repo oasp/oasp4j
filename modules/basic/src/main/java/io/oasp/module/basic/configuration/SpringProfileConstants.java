@@ -9,12 +9,17 @@ package io.oasp.module.basic.configuration;
  * @author jmolinar
  * @since 2.1.0
  */
-public class OaspProfile {
+public class SpringProfileConstants {
 
   /**
    * This constant applies to all tests.
    */
-  public static final String JUNIT_TEST = "basic-test";
+  public static final String JUNIT = "junit";
+
+  /**
+   * This constant denotes a live profile.
+   */
+  public static final String NOT_JUNIT = "!" + JUNIT;
 
   /**
    * This constant should be used in conjunction with component tests.
@@ -35,10 +40,5 @@ public class OaspProfile {
    * This constant should be used in conjunction with system tests.
    */
   public static final String SYSTEM_TEST = "system-test";
-
-  /**
-   * This constant denotes a live profile.
-   */
-  public static final String NO_TEST = "non-test";
 
 }
