@@ -2,6 +2,7 @@ package io.oasp.gastronomy.restaurant.general.common.base;
 
 import javax.inject.Inject;
 
+import org.flywaydb.core.Flyway;
 import org.junit.After;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,8 +12,9 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
+import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
 import io.oasp.gastronomy.restaurant.general.common.RestTestClientBuilder;
-import io.oasp.gastronomy.restaurant.general.common.RestraurantTestHelper;
+import io.oasp.gastronomy.restaurant.general.common.SecurityTestHelper;
 import io.oasp.gastronomy.restaurant.general.configuration.RestaurantTestConfig;
 import io.oasp.module.basic.configuration.SpringProfileConstants;
 import io.oasp.module.test.common.base.SubsystemTest;
@@ -27,7 +29,7 @@ import io.oasp.module.test.common.base.SubsystemTest;
 @SpringApplicationConfiguration(classes = RestaurantTestConfig.class)
 @WebIntegrationTest
 @ActiveProfiles(profiles = { SpringProfileConstants.JUNIT })
-public class RestaurantWebIntegrationSubsystemTest extends SubsystemTest {
+public abstract class AbstractRestServiceTest extends SubsystemTest {
 
   /**
    * The port of the web server during the test.
@@ -48,10 +50,25 @@ public class RestaurantWebIntegrationSubsystemTest extends SubsystemTest {
   private String password;
 
   /**
+   * The baseline to be used by {@link Flyway}
+   */
+  @Value("${server.rest.test.flyway.baseline}")
+  private String baseline;
+
+  /**
+   * The migration to be used by {@link Flyway}
+   */
+  @Value("${server.rest.test.flyway.migration}")
+  private String migration;
+
+  /**
    * The {@code RestaurantTestHelper}.
    */
   @Inject
-  private RestraurantTestHelper restaurantTestHelper;
+  private SecurityTestHelper securityTestHelper;
+
+  @Inject
+  private DbTestHelper dbTestHelper;
 
   /**
    * The {@code RestTestClientBuilder}.
@@ -78,7 +95,7 @@ public class RestaurantWebIntegrationSubsystemTest extends SubsystemTest {
    * Calls {@link #doTearDown()}.
    */
   @After
-  public final void testDown() {
+  public final void tearDown() {
 
     doTearDown();
   }
@@ -92,6 +109,11 @@ public class RestaurantWebIntegrationSubsystemTest extends SubsystemTest {
     this.restTestClientBuilder.setUser(this.user);
     this.restTestClientBuilder.setPassword(this.password);
     this.restTestClientBuilder.setJacksonJsonProvider(this.jacksonJsonProvider);
+
+    if (this.migration != null && !"".equals(this.migration)) {
+      this.dbTestHelper.setMigrationVersion(this.migration);
+    }
+
   }
 
   /**
@@ -103,25 +125,23 @@ public class RestaurantWebIntegrationSubsystemTest extends SubsystemTest {
   }
 
   /**
-   *
-   * @return {@code true} if test database should be reset before each test method execution (default). {@code false}
-   *         otherwise.
+   * @return the {@link SecurityTestHelper}
    */
-  protected boolean isRestDatabase() {
+  public SecurityTestHelper getSecurityTestHelper() {
 
-    return true;
+    return this.securityTestHelper;
   }
 
   /**
-   * @return the {@code RestaurantTestHelper}
+   * @return the {@link DbTestHelper}
    */
-  public RestraurantTestHelper getRestaurantTestHelper() {
+  public DbTestHelper getDbTestHelper() {
 
-    return this.restaurantTestHelper;
+    return this.dbTestHelper;
   }
 
   /**
-   * @return the {@code RestTestClientBuilder}
+   * @return the {@link RestTestClientBuilder}
    */
   public RestTestClientBuilder getRestTestClientBuilder() {
 

@@ -22,18 +22,15 @@ public class RestTestClientBuilder {
    */
   private int localServerPort;
 
-  /**
-   * The {@code JacksonJsonProvider}
-   */
   private JacksonJsonProvider jacksonJsonProvider;
 
-  /**
-   * The {@code user} used for authentication.
+  /*
+   * The user used for authentication during testing.
    */
   private String user;
 
-  /**
-   * The {@code password} used for authentication.
+  /*
+   * The password used for authentication during testing.
    */
   private String password;
 
@@ -75,16 +72,17 @@ public class RestTestClientBuilder {
    * @param <T> The return type.
    * @param clazz This must be an interface type.
    * @param userName The userName for basic authentication.
-   * @param password The password for basic authentication.
-   * @return An client object... FIXME
+   * @param tmpPassword The password for basic authentication.
+   * @param tmpUrl The URL through which the server is reached.
+   * @return A REST proxy of type {@code T}
    */
-  public <T extends RestService> T build(Class<T> clazz, String userName, String password, String url) {
+  public <T extends RestService> T build(Class<T> clazz, String userName, String tmpPassword, String tmpUrl) {
 
     JAXRSClientFactoryBean factoryBean = new JAXRSClientFactoryBean();
-    factoryBean.setAddress(url);
+    factoryBean.setAddress(tmpUrl);
     factoryBean.setHeaders(new HashMap<String, String>());
     // example for basic auth
-    String payload = userName + ":" + password;
+    String payload = userName + ":" + tmpPassword;
     String authorizationHeader = "Basic " + Base64Utility.encode(payload.getBytes());
     factoryBean.getHeaders().put("Authorization", Arrays.asList(authorizationHeader));
     factoryBean.setProviders(Arrays.asList(this.jacksonJsonProvider));
@@ -93,7 +91,7 @@ public class RestTestClientBuilder {
     return factoryBean.create(clazz);
   }
 
-  /**
+  /*
    * @return the URL of the REST service.
    */
   private String createRestServiceUrl() {
@@ -102,7 +100,9 @@ public class RestTestClientBuilder {
   }
 
   /**
-   * @param jacksonJsonProvider new value of {@link #jacksonJsonProvider}.
+   * Sets the {@code jacksonJsonProvider}.
+   *
+   * @param jacksonJsonProvider An instance of {@link JacksonJsonProvider}
    */
   public void setJacksonJsonProvider(JacksonJsonProvider jacksonJsonProvider) {
 
@@ -110,7 +110,9 @@ public class RestTestClientBuilder {
   }
 
   /**
-   * @param localServerPort new value of {@link #localServerPort}.
+   * Sets the {@code localServerPort}.
+   *
+   * @param localServerPort The port through which the server is available during testing
    */
   public void setLocalServerPort(int localServerPort) {
 
@@ -118,7 +120,9 @@ public class RestTestClientBuilder {
   }
 
   /**
-   * @param user new value of {@link user}.
+   * Sets the {@code user}.
+   *
+   * @param user Used for authentication.
    */
   public void setUser(String user) {
 
@@ -126,7 +130,9 @@ public class RestTestClientBuilder {
   }
 
   /**
-   * @param password new value of {@code password}.
+   * Sets the {@code password}.
+   *
+   * @param password Used for authentication.
    */
   public void setPassword(String password) {
 
