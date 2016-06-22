@@ -222,8 +222,8 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
           countNumberOfSavedOrderPositions++;
         }
       }
-
     }
+    assertThat(countNumberOfSavedOrderPositions).isEqualTo(numberOfOrderPositionsToSave);
   }
 
   // orderPosition is canceled by saving new order with same id as order referenced to orderPosition

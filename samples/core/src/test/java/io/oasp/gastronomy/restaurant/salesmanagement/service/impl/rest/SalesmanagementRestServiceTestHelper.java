@@ -2,15 +2,12 @@ package io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest;
 
 import java.math.BigDecimal;
 
-import org.flywaydb.core.Flyway;
-
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-
+import io.oasp.gastronomy.restaurant.common.builders.OrderEtoBuilder;
+import io.oasp.gastronomy.restaurant.common.builders.OrderPositionEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
@@ -23,14 +20,6 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionE
 
 public class SalesmanagementRestServiceTestHelper {
 
-  protected JacksonJsonProvider jacksonJsonProvider;
-
-  // TODO just workaraound, as Jonas solution is not yet approved
-
-  protected Flyway flyway;
-
-  protected Salesmanagement salesmanagement;
-
   /**
    * The constructor.
    *
@@ -38,12 +27,6 @@ public class SalesmanagementRestServiceTestHelper {
    * @param flyway
    * @param salesmanagement
    */
-  public SalesmanagementRestServiceTestHelper(JacksonJsonProvider jacksonJsonProvider, Flyway flyway,
-      Salesmanagement salesmanagement) {
-    this.jacksonJsonProvider = jacksonJsonProvider;
-    this.flyway = flyway;
-    this.salesmanagement = salesmanagement;
-  }
 
   protected static final String ROLE = "chief";
 
@@ -73,32 +56,18 @@ public class SalesmanagementRestServiceTestHelper {
 
   protected static long numberOfOrderPositions = 0;
 
-  // @PostConstruct
-  public void init() {
-
-    this.flyway.clean();
-    this.flyway.migrate();
-
-  }
-
   public OrderPositionEto createSampleOrderPositionEto(long orderId) {
 
-    OrderPositionEto orderPositionEto = new OrderPositionEto();
-    orderPositionEto.setOrderId(orderId);
-    orderPositionEto.setOfferId(SAMPLE_OFFER_ID);
-    orderPositionEto.setOfferName(SAMPLE_OFFER_NAME);
-    orderPositionEto.setState(SAMPLE_ORDER_POSITION_STATE);
-    orderPositionEto.setDrinkState(SAMPLE_DRINK_STATE);
-    orderPositionEto.setPrice(SAMPLE_PRICE);
-    orderPositionEto.setComment(SAMPLE_COMMENT);
-    return orderPositionEto;
+    OrderPositionEto sampleOrderPositionEto = new OrderPositionEtoBuilder().orderId(orderId).offerId(SAMPLE_OFFER_ID)
+        .offerName(SAMPLE_OFFER_NAME).state(SAMPLE_ORDER_POSITION_STATE).drinkState(SAMPLE_DRINK_STATE)
+        .price(SAMPLE_PRICE).comment(SAMPLE_COMMENT).createNew();
+    return sampleOrderPositionEto;
   }
 
   protected OrderCto createSampleOrderCto(long tableId) {
 
     OrderCto sampleOrderCto = new OrderCto();
-    OrderEto sampleOrderEto = new OrderEto();
-    sampleOrderEto.setTableId(tableId);
+    OrderEto sampleOrderEto = new OrderEtoBuilder().tableId(SAMPLE_TABLE_ID).createNew();
     sampleOrderCto.setOrder(sampleOrderEto);
     return sampleOrderCto;
   }

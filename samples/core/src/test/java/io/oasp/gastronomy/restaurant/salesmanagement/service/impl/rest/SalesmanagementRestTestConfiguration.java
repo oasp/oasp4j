@@ -21,7 +21,7 @@ public class SalesmanagementRestTestConfiguration {
       JacksonJsonProvider jacksonJsonProvider, Flyway flyway, Salesmanagement salesmanagement) {
 
     SalesmanagementRestServiceTestHelper salesmanagementRestServiceTestHelper =
-        new SalesmanagementRestServiceTestHelper(jacksonJsonProvider, flyway, salesmanagement);
+        new SalesmanagementRestServiceTestHelper();
     return salesmanagementRestServiceTestHelper;
   }
 }
