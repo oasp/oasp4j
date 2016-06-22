@@ -32,6 +32,8 @@ public class SalesmanagementRestServiceTestHelper {
 
   protected static final long SAMPLE_OFFER_ID = 4L;
 
+  protected static final int NUMBER_OF_SAMPLE_ORDERS = 2;
+
   protected static final int NUMBER_OF_SAMPLE_ORDER_POSITIONS = 2;
 
   protected static final String SAMPLE_OFFER_NAME = "Salat-Menü";

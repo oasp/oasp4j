@@ -37,10 +37,10 @@ import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 import io.oasp.module.jpa.common.api.to.PaginationTo;
 
 /**
- * TODO shuber This type ...
+ * This class serves as an example of how to perform a subsystem test (e.g., call a *RestService interface). The test
+ * database is accessed via an instance of the class {@link SalesmanagementRestService}.
  *
  * @author shuber
- * @since dev
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -56,6 +56,9 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
   @Inject
   private SalesmanagementRestServiceTestHelper helper;
 
+  /**
+   * Provides initialization previous to the creation of the text fixture.
+   */
   @Before
   public void init() {
 
@@ -63,12 +66,20 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
     this.service = getRestTestClientBuilder().build(SalesmanagementRestService.class);
   }
 
+  /**
+   * Provides clean up after tests.
+   */
   @After
   public void clean() {
 
     this.service = null;
   }
 
+  /**
+   * This test method creates the sample instance of {@link OrderCto} sampleOrderCto and saves it into the database.
+   * Thereafter the {@link OrderEto} object linked to the sampleOrderCto object is loaded from the database and its
+   * attributes are tested for correctness.
+   */
   @Test
   public void findOrder() {
 
@@ -113,6 +124,12 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
 
   }
 
+  /**
+   * This test method creates the sample instance of {@link OrderCto} sampleOrderCto and saves it into the database.
+   * Subsequently {@link OrderSearchCriteriaTo} like tableId and OrderState are defined. Thereafter sampleOrderCto is
+   * loaded from the database, if its attributes match the {@link OrderSearchCriteriaTo}. Finally the attributes of
+   * sampleOrderCto are tested for correctness.
+   */
   @Test
   public void findOrderByPost() {
 
@@ -145,6 +162,13 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
 
   }
 
+  /**
+   * This test method creates the sample instance of {@link OrderCto} sampleOrderCto and saves it into the database. In
+   * addition the sample instance of {@link OrderPositionEto} sampleOrderPositionEto is created and linked to
+   * sampleOrderCto by the orderId. Subsequently sampleOrderPositionEto is saved into the database. Finally
+   * sampleOrderPositionEto is identified by its id, loaded from the database and its attributes are tested for
+   * correctness.
+   */
   @Test
   public void findOrderPosition() {
 
@@ -174,6 +198,15 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
     assertThat(responseFindOrderPositionEto.getPrice()).isEqualTo(SAMPLE_PRICE);
   }
 
+  /**
+   * This test method creates the sample instance of {@link OrderCto} sampleOrderCto and saves it into the database. In
+   * addition some sample instances of {@link OrderPositionEto} savedOrderPositionEtos are created and linked to
+   * sampleOrderCto by the orderId. Subsequently these samples are saved into the database. Thereafter all
+   * {@link OrderPositionEto} are loaded from the database. The method tests the number of loaded orderPositionEtos and
+   * the attributes of the sample instances
+   *
+   * and its attributes are tested for correctness.
+   */
   @Test
   public void findAllOrderPositions() {
 
