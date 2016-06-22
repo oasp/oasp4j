@@ -3,7 +3,7 @@ package io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest;
 import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.BASE_URL_PRAEFIX;
 import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.BASE_URL_SUFFIX_1;
 import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.BASE_URL_SUFFIX_2;
-import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.INITIAL_NUMBER_OF_ORDERS;
+import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.NUMBER_OF_SAMPLE_ORDER_POSITIONS;
 import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.ROLE;
 import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.SAMPLE_COMMENT;
 import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.SAMPLE_DRINK_STATE;
@@ -16,36 +16,37 @@ import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.Sa
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
-import org.springframework.beans.factory.annotation.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.general.common.base.AbstractRestServiceTest;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
-import io.oasp.module.basic.configuration.OaspProfile;
-import io.oasp.module.test.common.base.SubsystemTest;
+import io.oasp.gastronomy.restaurant.salesmanagement.service.api.rest.SalesmanagementRestService;
 
 /**
  * TODO shuber This type ...
@@ -55,19 +56,18 @@ import io.oasp.module.test.common.base.SubsystemTest;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = { SpringBootApp.class, SalesmanagementRestTestConfiguration.class })
-@WebIntegrationTest("server.port:0")
-@ActiveProfiles(profiles = { OaspProfile.JUNIT_TEST })
-@Transactional
+@TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement" })
 
-public class SalesmanagementWebRestServiceTest extends SubsystemTest {
+public class SalesmanagementWebRestServiceTest extends AbstractRestServiceTest {
 
-  @Value("${local.server.port}")
-  private int port;
+  private final HttpHeaders AUTHENTIFICATED_HEADERS = getAuthentificatedHeaders();
+
+  private static Logger LOG = LoggerFactory.getLogger(SalesmanagementWebRestServiceTest.class);
+
+  private SalesmanagementRestService service;
 
   @Inject
   private SalesmanagementRestServiceTestHelper helper;
-
-  private final HttpHeaders AUTHENTIFICATED_HEADERS = getAuthentificatedHeaders();
 
   // TODO Inject ...
   private RestTemplate template;
@@ -77,32 +77,48 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
     this.template = new RestTemplate();
   }
 
-  @PostConstruct
-  public void beforeTest() {
+  @Before
+  public void init() {
 
-    this.helper.init(this.port);
+    getDbTestHelper().resetDatabase();
+    this.service = getRestTestClientBuilder().build(SalesmanagementRestService.class);
+  }
+
+  @After
+  public void clean() {
+
+    this.service = null;
   }
 
   @Test
   public void getOrder() {
 
     // given
-    HttpEntity<String> getRequest = new HttpEntity<>(this.AUTHENTIFICATED_HEADERS);
     OrderCto sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID);
-    OrderCto responseOrderCto = this.helper.getService().saveOrder(sampleOrderCto);
+    OrderCto responseOrderCto = this.service.saveOrder(sampleOrderCto);
+    assertThat(responseOrderCto).isNotNull();
+
+    HttpEntity<String> getRequest = new HttpEntity<>(this.AUTHENTIFICATED_HEADERS);
 
     // when
     ResponseEntity<String> getResponse = this.template.exchange(
-        // TODO change id like this in other requests
         generateBaseUrl() + "order/" + responseOrderCto.getOrder().getId(), HttpMethod.GET, getRequest, String.class);
 
     // then
     assertThat(getResponse).isNotNull();
     String getResponseJson = getResponse.getBody();
+    assertThat(getResponseJson).isNotNull();
     JSONAssert.assertEquals("{id:" + responseOrderCto.getOrder().getId() + "}", getResponseJson, false);
     JSONAssert.assertEquals("{tableId:" + Long.toString(SAMPLE_TABLE_ID) + "}", getResponseJson, false);
+    // TODO ask Jonas if this is too much? If not adjustments of other methods necessary
     JSONAssert.assertEquals("{tableId:" + Long.toString(responseOrderCto.getOrder().getTableId()) + "}",
         getResponseJson, false);
+
+  }
+
+  // TODO implement corresponding to getAllOrderPositions
+  @Test
+  public void getAllOrders() {
 
   }
 
@@ -112,7 +128,7 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
   // // given
   // HttpEntity<String> getRequest = new HttpEntity<>(this.AUTHENTIFICATED_HEADERS);
   // OrderCto sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID);
-  // this.helper.getService().saveOrder(sampleOrderCto);
+  // this.service.saveOrder(sampleOrderCto);
   //
   // // when
   // ResponseEntity<String> getResponse = this.template.exchange(
@@ -127,27 +143,27 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
   // }
 
   @Test
-  public void postOrderWithPosition() {
+  public void postOrderWithOrderPosition() {
 
     // given
     HttpHeaders postRequestHeaders = this.AUTHENTIFICATED_HEADERS;
     postRequestHeaders.setContentType(MediaType.APPLICATION_JSON);
-    JSONArray jsonArray = new JSONArray();
-    JSONObject innerObject = new JSONObject();
-    innerObject.put("tableId", SAMPLE_TABLE_ID);
+
+    // TODO ask Jonas regarding naming (postResponseJson)
     JSONObject request = new JSONObject();
 
-    JSONObject orderPosition = new JSONObject();
+    JSONObject order = new JSONObject();
+    order.put("tableId", SAMPLE_TABLE_ID);
+    request.put("order", order);
 
-    // orderPosition.put("orderId", INITIAL_NUMBER_OF_ORDERS + 6);
+    JSONArray orderPositions = new JSONArray();
+    JSONObject orderPosition = new JSONObject();
     orderPosition.put("offerId", SAMPLE_OFFER_ID);
     orderPosition.put("state", SAMPLE_ORDER_POSITION_STATE);
     orderPosition.put("drinkState", SAMPLE_DRINK_STATE);
     orderPosition.put("comment", SAMPLE_COMMENT);
-    jsonArray.put(orderPosition);
-
-    request.put("positions", jsonArray);
-    request.put("order", innerObject);
+    orderPositions.put(orderPosition);
+    request.put("positions", orderPositions);
 
     HttpEntity<String> postRequestEntity = new HttpEntity<>(request.toString(), postRequestHeaders);
 
@@ -156,24 +172,31 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
         this.template.exchange(generateBaseUrl() + "order/", HttpMethod.POST, postRequestEntity, String.class);
 
     // then
-    // TODO get ID out of postResponse
-    OrderEto expectedOrderEto = this.helper.getService().findOrder(INITIAL_NUMBER_OF_ORDERS + 1);
-    OrderPositionEto expectedOrderPositionEto =
-        this.helper.getService().findOrderPosition(this.helper.getNumberOfOrderPositions());
+    JSONObject postResponseJson = new JSONObject(postResponse.getBody());
+    assertThat(postResponseJson).isNotNull();
 
-    assertThat(expectedOrderEto).isNotNull();
-    assertThat(expectedOrderEto.getId()).isEqualTo(INITIAL_NUMBER_OF_ORDERS + 1);
-    assertThat(expectedOrderEto.getTableId()).isEqualTo(SAMPLE_TABLE_ID);
+    JSONArray responseOrderPositions = postResponseJson.getJSONArray("positions");
+    assertThat(responseOrderPositions).isNotNull();
+    assertThat(responseOrderPositions.length()).isEqualTo(1);
 
-    // TODO ask Jonas if really necessary to safe and verify an orderposition
-    assertThat(expectedOrderPositionEto.getId()).isEqualTo(this.helper.getNumberOfOrderPositions());
-    assertThat(expectedOrderPositionEto.getOrderId()).isEqualTo(INITIAL_NUMBER_OF_ORDERS + 1);
-    assertThat(expectedOrderPositionEto.getOfferName()).isEqualTo(SAMPLE_OFFER_NAME);
-    assertThat(expectedOrderPositionEto.getState()).isEqualTo(SAMPLE_ORDER_POSITION_STATE);
-    assertThat(expectedOrderPositionEto.getDrinkState()).isEqualTo(SAMPLE_DRINK_STATE);
-    assertThat(expectedOrderPositionEto.getPrice()).isEqualTo(SAMPLE_PRICE);
-    assertThat(expectedOrderPositionEto.getComment()).isEqualTo(SAMPLE_COMMENT);
+    long responseOrderId = postResponseJson.getJSONObject("order").getInt("id");
+    long responseOrderPositionId = responseOrderPositions.getJSONObject(0).getInt("id");
+    assertThat(responseOrderId).isEqualTo(responseOrderPositions.getJSONObject(0).getInt("orderId"));
 
+    OrderEto responseOrderEto = this.service.findOrder(responseOrderId);
+    assertThat(responseOrderEto).isNotNull();
+    assertThat(responseOrderEto.getId()).isEqualTo(responseOrderId);
+    assertThat(responseOrderEto.getTableId()).isEqualTo(SAMPLE_TABLE_ID);
+
+    OrderPositionEto responseOrderPositionEto = this.service.findOrderPosition(responseOrderPositionId);
+    assertThat(responseOrderPositionEto).isNotNull();
+    assertThat(responseOrderPositionEto.getId()).isEqualTo(responseOrderPositionId);
+    assertThat(responseOrderPositionEto.getOrderId()).isEqualTo(responseOrderId);
+    assertThat(responseOrderPositionEto.getOfferName()).isEqualTo(SAMPLE_OFFER_NAME);
+    assertThat(responseOrderPositionEto.getState()).isEqualTo(SAMPLE_ORDER_POSITION_STATE);
+    assertThat(responseOrderPositionEto.getDrinkState()).isEqualTo(SAMPLE_DRINK_STATE);
+    assertThat(responseOrderPositionEto.getPrice()).isEqualTo(SAMPLE_PRICE);
+    assertThat(responseOrderPositionEto.getComment()).isEqualTo(SAMPLE_COMMENT);
   }
 
   @Test
@@ -181,20 +204,27 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
 
     // given
     OrderCto sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID);
-    OrderCto responseOrderCto = this.helper.getService().saveOrder(sampleOrderCto);
+    OrderCto responseOrderCto = this.service.saveOrder(sampleOrderCto);
+    assertThat(responseOrderCto).isNotNull();
 
-    HttpEntity<String> getRequest = new HttpEntity<>(this.AUTHENTIFICATED_HEADERS);
     OrderPositionEto sampleOrderPositionEto =
         this.helper.createSampleOrderPositionEto(responseOrderCto.getOrder().getId());
-    OrderPositionEto responseOrderPositionEto = this.helper.getService().saveOrderPosition(sampleOrderPositionEto);
+    OrderPositionEto responseOrderPositionEto = this.service.saveOrderPosition(sampleOrderPositionEto);
+    assertThat(responseOrderPositionEto).isNotNull();
+    assertThat(responseOrderPositionEto.getOrderId()).isEqualTo(responseOrderCto.getOrder().getId());
+
+    HttpEntity<String> getRequest = new HttpEntity<>(this.AUTHENTIFICATED_HEADERS);
 
     // when
-    ResponseEntity<String> getResponse = this.template.exchange(
-        generateBaseUrl() + "orderposition/" + Long.toString(this.helper.getNumberOfOrderPositions()), HttpMethod.GET,
-        getRequest, String.class);
+    ResponseEntity<String> getResponse =
+        this.template.exchange(generateBaseUrl() + "orderposition/" + Long.toString(responseOrderPositionEto.getId()),
+            HttpMethod.GET, getRequest, String.class);
 
     // then
+    assertThat(getResponse).isNotNull();
     String getResponseJson = getResponse.getBody();
+    assertThat(getResponseJson).isNotNull();
+
     JSONAssert.assertEquals("{id:" + Long.toString(responseOrderPositionEto.getId()) + "}", getResponseJson, false);
     JSONAssert.assertEquals("{orderId:" + Long.toString(responseOrderCto.getOrder().getId()) + "}", getResponseJson,
         false);
@@ -207,49 +237,65 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
   }
 
   @Test
-  public void getOrderPositions() {
+  public void getAllOrderPositions() {
 
     // given
     OrderCto sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID);
-    OrderCto responseOrderCto = this.helper.getService().saveOrder(sampleOrderCto);
-    HttpEntity<String> getRequest = new HttpEntity<>(this.AUTHENTIFICATED_HEADERS);
+    OrderCto responseOrderCto = this.service.saveOrder(sampleOrderCto);
+    assertThat(responseOrderCto).isNotNull();
 
-    long numberOfOrderPositions = 2;
+    int oldNumberOfOrderPositions = getNumberOfOrderPositions();
+    int numberOfOrderPositionsToSave = NUMBER_OF_SAMPLE_ORDER_POSITIONS;
+
     OrderPositionEto sampleOrderPositionEto;
-    ArrayList<OrderPositionEto> responseOrderPositions = new ArrayList();
-    for (int i = 0; i < numberOfOrderPositions; ++i) {
+    ArrayList<OrderPositionEto> savedOrderPositionEtos = new ArrayList();
+    for (int i = 0; i < numberOfOrderPositionsToSave; ++i) {
       sampleOrderPositionEto = new OrderPositionEto();
       sampleOrderPositionEto.setOrderId(responseOrderCto.getOrder().getId());
       sampleOrderPositionEto.setOfferId(SAMPLE_OFFER_ID);
-      responseOrderPositions.add(this.helper.getService().saveOrderPosition(sampleOrderPositionEto));
+      savedOrderPositionEtos.add(this.service.saveOrderPosition(sampleOrderPositionEto));
     }
+
+    int newNumberOfOrderPositions = getNumberOfOrderPositions();
+
+    HttpEntity<String> getRequest = new HttpEntity<>(this.AUTHENTIFICATED_HEADERS);
+
     // when
     ResponseEntity<String> getResponse =
         this.template.exchange(generateBaseUrl() + "orderposition/", HttpMethod.GET, getRequest, String.class);
 
     // then
-    String getResponseJson = getResponse.getBody();
-    ArrayList<String> jsonObjectArrayList = buildJsonObjectArrayList(getResponseJson);
+    assertThat(getResponse).isNotNull();
 
-    int index = 0;
+    JSONArray responseOrderPositions = new JSONArray(getResponse.getBody());
+    assertThat(responseOrderPositions).isNotNull();
 
-    for (String jsonObject : jsonObjectArrayList) {
+    assertThat(oldNumberOfOrderPositions + numberOfOrderPositionsToSave).isEqualTo(newNumberOfOrderPositions);
+    assertThat(responseOrderPositions.length()).isEqualTo(newNumberOfOrderPositions);
 
-      JSONAssert.assertEquals("{id:" + Long.toString(responseOrderPositions.get(index).getId()) + "}", getResponseJson,
-          false);
-      JSONAssert.assertEquals("{orderId:" + Long.toString(responseOrderPositions.get(index).getOrderId()) + "}",
-          getResponseJson, false);
-      JSONAssert.assertEquals("{offerId:" + Long.toString(responseOrderPositions.get(index).getOfferId()) + "}",
-          getResponseJson, false);
+    long responseOrderPositionId = 0;
+    long countNumberOfSavedOrderPositions = 0;
 
-      JSONAssert.assertEquals("{offerName:" + responseOrderPositions.get(index).getOfferName() + "}", getResponseJson,
-          false);
+    for (int i = 0; i < responseOrderPositions.length(); ++i) {
+      responseOrderPositionId = responseOrderPositions.getJSONObject(i).getInt("id");
+      for (OrderPositionEto orderPositionEto : savedOrderPositionEtos) {
+        if (responseOrderPositionId == orderPositionEto.getId()) {
 
-      JSONAssert.assertEquals("{price:" + responseOrderPositions.get(index).getPrice() + "}", getResponseJson, false);
+          JSONAssert.assertEquals("{orderId:" + Long.toString(orderPositionEto.getOrderId()) + "}",
+              responseOrderPositions.getJSONObject(i), false);
+          JSONAssert.assertEquals("{offerId:" + Long.toString(SAMPLE_OFFER_ID) + "}",
+              responseOrderPositions.getJSONObject(i), false);
+          JSONAssert.assertEquals("{offerName:" + SAMPLE_OFFER_NAME + "}", responseOrderPositions.getJSONObject(i),
+              false);
+          JSONAssert.assertEquals("{price:" + "\"" + SAMPLE_PRICE.getValue() + "\"" + "}",
+              responseOrderPositions.getJSONObject(i).toString(), false);
 
-      index++;
+          countNumberOfSavedOrderPositions++;
+        }
+      }
     }
-    assertThat(index).isEqualTo(this.helper.getNumberOfOrderPositions());
+
+    assertThat(countNumberOfSavedOrderPositions).isEqualTo(numberOfOrderPositionsToSave);
   }
 
   @Test
@@ -257,24 +303,23 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
 
   }
 
-  // TODO get ID out of postResponse
   @Test
   public void postOrderPosition() {
 
     // given
+    OrderCto sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID);
+    OrderCto responseOrderCto = this.service.saveOrder(sampleOrderCto);
+    assertThat(responseOrderCto).isNotNull();
+
     HttpHeaders postRequestHeaders = this.AUTHENTIFICATED_HEADERS;
     postRequestHeaders.setContentType(MediaType.APPLICATION_JSON);
     JSONObject request = new JSONObject();
 
-    request.put("orderId", INITIAL_NUMBER_OF_ORDERS);
+    request.put("orderId", responseOrderCto.getOrder().getId());
     request.put("offerId", SAMPLE_OFFER_ID);
     request.put("state", SAMPLE_ORDER_POSITION_STATE);
     request.put("drinkState", SAMPLE_DRINK_STATE);
     request.put("comment", SAMPLE_COMMENT);
-
-    // both operations are redundant as the values of the attributes "offername" and "price" are persisted
-    // automatically according to offerId
-    // request.put("offerName", SAMPLE_OFFER_NAME); %C3%BC
 
     try {
       request.put("offerName", URLEncoder.encode(SAMPLE_OFFER_NAME, "UTF-8"));
@@ -290,16 +335,21 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
         this.template.exchange(generateBaseUrl() + "orderposition/", HttpMethod.POST, postRequestEntity, String.class);
 
     // then
-    OrderPositionEto expectedOrderPositionEto =
-        this.helper.getService().findOrderPosition(this.helper.getNumberOfOrderPositions());
-    assertThat(expectedOrderPositionEto).isNotNull();
-    assertThat(expectedOrderPositionEto.getId()).isEqualTo(this.helper.getNumberOfOrderPositions());
-    assertThat(expectedOrderPositionEto.getOrderId()).isEqualTo(INITIAL_NUMBER_OF_ORDERS);
-    assertThat(expectedOrderPositionEto.getOfferName()).isEqualTo(SAMPLE_OFFER_NAME);
-    assertThat(expectedOrderPositionEto.getState()).isEqualTo(SAMPLE_ORDER_POSITION_STATE);
-    assertThat(expectedOrderPositionEto.getDrinkState()).isEqualTo(SAMPLE_DRINK_STATE);
-    assertThat(expectedOrderPositionEto.getPrice()).isEqualTo(SAMPLE_PRICE);
-    assertThat(expectedOrderPositionEto.getComment()).isEqualTo(SAMPLE_COMMENT);
+
+    assertThat(postResponse).isNotNull();
+    JSONObject postResponseJson = new JSONObject(postResponse.getBody());
+    assertThat(postResponseJson).isNotNull();
+
+    OrderPositionEto responseOrderPositionEto = this.service.findOrderPosition(postResponseJson.getInt("id"));
+    assertThat(responseOrderPositionEto).isNotNull();
+    assertThat(responseOrderPositionEto.getId()).isEqualTo(postResponseJson.getInt("id"));
+    assertThat(responseOrderPositionEto.getOrderId()).isEqualTo(responseOrderCto.getOrder().getId());
+    assertThat(responseOrderPositionEto.getOfferId()).isEqualTo(SAMPLE_OFFER_ID);
+    assertThat(responseOrderPositionEto.getOfferName()).isEqualTo(SAMPLE_OFFER_NAME);
+    assertThat(responseOrderPositionEto.getState()).isEqualTo(SAMPLE_ORDER_POSITION_STATE);
+    assertThat(responseOrderPositionEto.getDrinkState()).isEqualTo(SAMPLE_DRINK_STATE);
+    assertThat(responseOrderPositionEto.getPrice()).isEqualTo(SAMPLE_PRICE);
+    assertThat(responseOrderPositionEto.getComment()).isEqualTo(SAMPLE_COMMENT);
   }
 
   private HttpHeaders getAuthentificatedHeaders() {
@@ -322,20 +372,13 @@ public class SalesmanagementWebRestServiceTest extends SubsystemTest {
     return BASE_URL_PRAEFIX + this.port + BASE_URL_SUFFIX_1 + BASE_URL_SUFFIX_2;
   }
 
-  private ArrayList<String> buildJsonObjectArrayList(String getResponseJson) {
+  protected int getNumberOfOrderPositions() {
 
-    String truncatedGetResponseJson = getResponseJson.replace("[", "").replace("]", "");
-    ArrayList<String> arrayList = new ArrayList();
-    int index = truncatedGetResponseJson.indexOf("},{");
-    String tempStringEnd = truncatedGetResponseJson;
-    while (index != -1) {
-      String tempStringBegin = tempStringEnd.substring(0, index + 1);
-      arrayList.add(tempStringBegin);
-      tempStringEnd = tempStringEnd.substring(index + 2);
-      index = tempStringEnd.indexOf("},{");
+    int numberOfOrderPositions = 0;
+    List<OrderPositionEto> orderPositions = this.service.findOrderPositions(null);
+    if (orderPositions != null) {
+      numberOfOrderPositions = orderPositions.size();
     }
-    arrayList.add(tempStringEnd);
-    return arrayList;
+    return numberOfOrderPositions;
   }
-
 }
