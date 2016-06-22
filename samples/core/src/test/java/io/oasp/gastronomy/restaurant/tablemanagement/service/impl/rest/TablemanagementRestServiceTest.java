@@ -1,5 +1,7 @@
 package io.oasp.gastronomy.restaurant.tablemanagement.service.impl.rest;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +13,9 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.common.builders.TableEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractRestServiceTest;
+import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.tablemanagement.service.api.rest.TablemanagementRestService;
@@ -20,7 +24,7 @@ import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 /**
  * This class serves as an example of how to perform a subsystem test (e.g., call a *RestService interface).
  *
- * @author geazzi, jmolinar
+ * @author geazzi, jmolinar, sroeger
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = SpringBootApp.class)
@@ -34,7 +38,7 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
   private TablemanagementRestService service;
 
   /**
-   * Provides initialization prvious to the creation of the text fixture.
+   * Provides initialization previous to the creation of the text fixture.
    */
   @Before
   public void init() {
@@ -44,6 +48,9 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
 
   }
 
+  /**
+   * Provides clean up after tests.
+   */
   @After
   public void clean() {
 
@@ -63,12 +70,64 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
 
   }
 
+  /**
+   * This test method deletes a table. As a waiter (default login defined in application.properties) does not have the
+   * permission to do so, a workaround is needed to login as member "chief". Do not try to delete table 101 as is has an
+   * attached order and will fail with error code 400.
+   */
+  @Test
+  public void testDeleteTable() {
+
+    getRestTestClientBuilder().setUser("chief");
+    getRestTestClientBuilder().setPassword("chief");
+    this.service = getRestTestClientBuilder().build(TablemanagementRestService.class);
+
+    int deleteTableNumber = 102;
+
+    // initial state - 5 entries
+    List<TableEto> tableListBeforeDelete = this.service.getAllTables();
+    int numberOfTables = tableListBeforeDelete.size();
+
+    this.service.deleteTable(deleteTableNumber);
+    TableEto table = this.service.getTable(Integer.toString(deleteTableNumber));
+    assertThat(table).isNull();
+
+    // final state - 4 entries
+    List<TableEto> tableListAfterDelete = this.service.getAllTables();
+    assertThat(tableListAfterDelete).hasSize(numberOfTables - 1);
+  }
+
+  /**
+   * This test method creates a table using {@link TableEtoBuilder} and saves it into the database. As a waiter (default
+   * login defined in application.properties) does not have the permission to do so, a workaround is needed to login as
+   * member "chief".
+   */
+  @Test
+  public void testSaveTable() {
+
+    getRestTestClientBuilder().setUser("chief");
+    getRestTestClientBuilder().setPassword("chief");
+    this.service = getRestTestClientBuilder().build(TablemanagementRestService.class);
+
+    TableEto table = new TableEtoBuilder().number(7L).state(TableState.FREE).waiterId(2L).createNew();
+
+    assertThat(table.getId()).isNull();
+
+    table = this.service.saveTable(table);
+  }
+
+  /**
+   * This test method demonstrates a simple usage of {@link TableSearchCriteriaTo} for searching a table by post.
+   */
   @Test
   public void testFindTablesByPost() {
 
-    PaginatedListTo<TableEto> tables = this.service.findTablesByPost(new TableSearchCriteriaTo());
-    assertThat(tables).isNotNull();
+    TableSearchCriteriaTo criteria = new TableSearchCriteriaTo();
+    criteria.setState(TableState.FREE);
 
+    PaginatedListTo<TableEto> tables = this.service.findTablesByPost(criteria);
+    List<TableEto> result = tables.getResult();
+    assertThat(result).isNotEmpty();
   }
 
 }
