@@ -11,6 +11,8 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.common.builders.OrderEtoBuilder;
+import io.oasp.gastronomy.restaurant.common.builders.OrderPositionEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.TestUtil;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
@@ -25,7 +27,7 @@ import io.oasp.module.test.common.base.ComponentTest;
 /**
  * This is the test-case of {@link Salesmanagement}.
  *
- * @author hohwille
+ * @author hohwille, sroeger
  */
 @SpringApplicationConfiguration(classes = { SpringBootApp.class })
 @WebAppConfiguration
@@ -52,21 +54,18 @@ public class SalesManagementTest extends ComponentTest {
   /**
    * Tests if the {@link OrderPositionState} is persisted correctly. The test modifies the {@link OrderPositionState} as
    * well as the drinkState {@link ProductOrderState}. The test focuses on saving {@link OrderPositionEto} saving and
-   * verification of state change.
+   * verification of state change. Test data is created using Cobigen generated builders.
    */
   @Test
   public void testOrderPositionStateChange() {
 
     try {
-      OrderEto order = new OrderEto();
-      order.setTableId(1L);
-      order = this.salesManagement.saveOrder(order);
-      OrderPositionEto orderPosition = new OrderPositionEto();
-      orderPosition.setOfferId(5L);
-      orderPosition.setOrderId(order.getId());
-      orderPosition.setOfferName("Cola");
-      orderPosition.setPrice(new Money(1.2));
 
+      OrderEto order = new OrderEtoBuilder().tableId(1L).createNew();
+      order = this.salesManagement.saveOrder(order);
+
+      OrderPositionEto orderPosition = new OrderPositionEtoBuilder().offerId(5L).orderId(order.getId())
+          .offerName("Cola").price(new Money(1.2)).createNew();
       orderPosition = this.salesManagement.saveOrderPosition(orderPosition);
 
       orderPosition.setState(OrderPositionState.ORDERED);
