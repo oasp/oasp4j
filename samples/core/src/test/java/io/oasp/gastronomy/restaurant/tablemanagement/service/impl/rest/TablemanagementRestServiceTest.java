@@ -63,8 +63,13 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
   @Test
   public void testFindTable() {
 
+    // given
     String id = "102";
+
+    // when
     TableEto table = this.service.getTable(id);
+
+    // then
     assertThat(table).isNotNull();
     assertThat(table.getId()).isEqualTo(Long.parseLong(id));
 
@@ -78,21 +83,21 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
   @Test
   public void testDeleteTable() {
 
+    // setup
     getRestTestClientBuilder().setUser("chief");
     getRestTestClientBuilder().setPassword("chief");
     this.service = getRestTestClientBuilder().build(TablemanagementRestService.class);
 
+    // given
     int deleteTableNumber = 102;
-
-    // initial state - 5 entries
     List<TableEto> tableListBeforeDelete = this.service.getAllTables();
     int numberOfTables = tableListBeforeDelete.size();
 
+    // when
     this.service.deleteTable(deleteTableNumber);
-    TableEto table = this.service.getTable(Integer.toString(deleteTableNumber));
-    assertThat(table).isNull();
 
-    // final state - 4 entries
+    // then
+    assertThat(this.service.getTable(Integer.toString(deleteTableNumber))).isNull();
     List<TableEto> tableListAfterDelete = this.service.getAllTables();
     assertThat(tableListAfterDelete).hasSize(numberOfTables - 1);
   }
@@ -105,29 +110,49 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
   @Test
   public void testSaveTable() {
 
+    // given
+    long tableNumber = 7L;
+    long waiterId = 2L;
     getRestTestClientBuilder().setUser("chief");
     getRestTestClientBuilder().setPassword("chief");
     this.service = getRestTestClientBuilder().build(TablemanagementRestService.class);
-
-    TableEto table = new TableEtoBuilder().number(7L).state(TableState.FREE).waiterId(2L).createNew();
-
+    TableEto table = new TableEtoBuilder().number(tableNumber).waiterId(waiterId).createNew();
     assertThat(table.getId()).isNull();
 
-    table = this.service.saveTable(table);
+    // when
+    TableEto savedTable = this.service.saveTable(table);
+
+    // then
+    assertThat(savedTable).isNotNull();
+    assertThat(savedTable.getId()).isNotNull();
+    assertThat(savedTable.getState()).isEqualTo(TableState.FREE);
+    assertThat(savedTable.getNumber()).isEqualTo(tableNumber);
+    assertThat(savedTable.getWaiterId()).isEqualTo(waiterId);
   }
 
   /**
-   * This test method demonstrates a simple usage of {@link TableSearchCriteriaTo} for searching a table by post.
+   * This test method demonstrates a simple usage of {@link TableSearchCriteriaTo} for searching a table by post with
+   * {@link TableState} {@code RESERVED}.
    */
   @Test
   public void testFindTablesByPost() {
 
+    // given
+    long tableNumber = 7L;
+    long waiterId = 2L;
+    TableEto table =
+        new TableEtoBuilder().number(tableNumber).waiterId(waiterId).state(TableState.RESERVED).createNew();
+    TableEto savedTable = this.service.saveTable(table);
     TableSearchCriteriaTo criteria = new TableSearchCriteriaTo();
-    criteria.setState(TableState.FREE);
+    criteria.setState(TableState.RESERVED);
 
+    // when
     PaginatedListTo<TableEto> tables = this.service.findTablesByPost(criteria);
     List<TableEto> result = tables.getResult();
+
+    // then
     assertThat(result).isNotEmpty();
+    assertThat(result.get(0).getId()).isEqualTo(savedTable.getId());
   }
 
 }

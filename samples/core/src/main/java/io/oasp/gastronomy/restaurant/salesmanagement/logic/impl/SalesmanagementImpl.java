@@ -1,5 +1,11 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl;
 
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.transaction.Transactional;
+
 import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.general.logic.base.AbstractComponentFacade;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
@@ -21,12 +27,6 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageB
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrder;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrderPosition;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-
-import java.util.List;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.transaction.Transactional;
 
 /**
  * This is the implementation of {@link Salesmanagement}.

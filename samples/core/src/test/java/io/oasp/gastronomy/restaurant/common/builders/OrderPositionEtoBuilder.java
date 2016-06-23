@@ -9,7 +9,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.Product
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 
 /**
- * Cobigen generated builder for {@link OrderPositionEto}. Default values are set in method {@link createNew()}.
+ * Cobigen generated builder for {@link OrderPositionEto}. Default values can be set in method {@link createNew()}.
  *
  * @author sroeger
  */
@@ -18,8 +18,7 @@ public class OrderPositionEtoBuilder {
   private List<P<OrderPositionEto>> parameterToBeApplied;
 
   /**
-   * The constructor of a Cobigen generated builder for {@link OrderPositionEto}. Default values are set in method
-   * {@link createNew()}.
+   * The constructor of a Cobigen generated builder for {@link OrderPositionEto}.
    */
   public OrderPositionEtoBuilder() {
 

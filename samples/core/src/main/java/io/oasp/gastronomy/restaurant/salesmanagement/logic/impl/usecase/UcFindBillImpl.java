@@ -1,14 +1,5 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 
-import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
-import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BillCto;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BillEto;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcFindBill;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.base.usecase.AbstractBillUc;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +9,15 @@ import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BillCto;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BillEto;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcFindBill;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.base.usecase.AbstractBillUc;
 
 /**
  * Implementation of {@link UcFindBill}.

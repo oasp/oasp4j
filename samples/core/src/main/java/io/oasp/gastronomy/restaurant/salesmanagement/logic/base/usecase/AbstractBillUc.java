@@ -1,9 +1,9 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.base.usecase;
 
+import javax.inject.Inject;
+
 import io.oasp.gastronomy.restaurant.general.logic.base.AbstractUc;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.BillDao;
-
-import javax.inject.Inject;
 
 /**
  *

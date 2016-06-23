@@ -1,10 +1,10 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to;
 
+import java.util.List;
+
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.Bill;
 import io.oasp.module.basic.common.api.to.AbstractEto;
-
-import java.util.List;
 
 /**
  * {@link AbstractEto ETO} for {@link Bill}.

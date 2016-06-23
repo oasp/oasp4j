@@ -1,8 +1,5 @@
 package io.oasp.gastronomy.restaurant.general.logic.base;
 
-import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSupport;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -13,6 +10,9 @@ import net.sf.mmm.util.entity.api.GenericEntity;
 import net.sf.mmm.util.entity.api.PersistenceEntity;
 import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
 import net.sf.mmm.util.transferobject.api.TransferObject;
+
+import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSupport;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
  * Abstract base class for any <em>use case</em> in this application. Actual implementations need to be annotated with
@@ -57,8 +57,8 @@ public abstract class AbstractUc extends AbstractBeanMapperSupport {
 
   /**
    * Creates a {@link Map} with all {@link GenericEntity entities} from the given {@link Collection} using their
-   * {@link GenericEntity#getId() ID} as key. All {@link GenericEntity entities} without an
-   * {@link GenericEntity#getId() ID} ({@code null}) will be ignored.
+   * {@link GenericEntity#getId() ID} as key. All {@link GenericEntity entities} without an {@link GenericEntity#getId()
+   * ID} ({@code null}) will be ignored.
    *
    * @param <ID> is the generic type of the {@link GenericEntity#getId() ID}.
    * @param <E> is the generic type of the {@link GenericEntity entity}.
