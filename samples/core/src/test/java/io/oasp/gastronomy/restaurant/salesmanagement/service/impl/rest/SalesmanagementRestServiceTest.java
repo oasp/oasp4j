@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest;
 
+import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.NUMBER_OF_SAMPLE_ORDERS;
 import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.NUMBER_OF_SAMPLE_ORDER_POSITIONS;
 import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.SAMPLE_DRINK_STATE;
 import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.SAMPLE_OFFER_ID;
@@ -27,6 +28,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractRestServiceTest;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
@@ -42,7 +44,6 @@ import io.oasp.module.jpa.common.api.to.PaginationTo;
  *
  * @author shuber
  */
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = { SpringBootApp.class, SalesmanagementRestTestConfiguration.class })
 @TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement" })
@@ -76,8 +77,8 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
   }
 
   /**
-   * This test method creates the sample instance of {@link OrderCto} sampleOrderCto and saves it into the database.
-   * Thereafter the {@link OrderEto} object linked to the sampleOrderCto object is loaded from the database and its
+   * This test method creates a sample instance of {@link OrderCto} and saves it into the database. Thereafter the
+   * {@link OrderEto} object linked to the sample object of {@link OrderCto} is loaded from the database and its
    * attributes are tested for correctness.
    */
   @Test
@@ -97,38 +98,60 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
     assertThat(responseOrderEto.getTableId()).isEqualTo(SAMPLE_TABLE_ID);
   }
 
-  // TODO
+  /**
+   * This test method creates some sample instances of {@link OrderCto} and saves them into the database. Thereafter all
+   * {@link OrderCto} objects are loaded from the database. The method tests the number of loaded OrderCto and the
+   * attributes of the sample instances for correctness.
+   */
   @Test
-  public void findOrders() {
+  public void findAllOrders() {
 
-    // MultivaluedMap<String, String> myParameterMap = new MultivaluedHashMap<>();
-    // myParameterMap.add("tableId", "102");
-    // myParameterMap.add("state", OrderState.OPEN.toString());
-    // myParameterMap.add("pagination[page]", "1");
-    // UriInfo uriInfo = Mockito.mock(UriInfo.class);
-    // Mockito.when(uriInfo.getQueryParameters()).thenReturn(myParameterMap);
-    //
-    //
+    // given
+    int oldNumberOfOrders = getNumberOfOrders();
 
-    PaginatedListTo<OrderCto> orders = this.service.findOrders(null);
-    assertThat(orders).isNotNull();
+    OrderCto sampleOrderCto;
+    OrderCto responseOrderCto;
 
-    // System.out.println("\n\n\n---------------OHWACHT!!!!----------------\n\n\n");
-    // for (OrderCto cto : orders.getResult()) {
+    ArrayList<OrderCto> savedOrderCtos = new ArrayList();
+    for (int i = 0; i < NUMBER_OF_SAMPLE_ORDERS; ++i) {
 
-    // LOG.debug("cto: " + cto.getOrder().getTableId());
-    // System.out.println(("cto: " + cto.getOrder().getTableId()));
-    // }
+      sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID);
+      responseOrderCto = this.service.saveOrder(sampleOrderCto);
+      assertThat(responseOrderCto).isNotNull();
+      savedOrderCtos.add(responseOrderCto);
+    }
 
-    assertThat(orders).isNotNull();
+    int newNumberOfOrders = getNumberOfOrders();
+
+    // when
+    PaginatedListTo<OrderCto> responseOrderCtos = this.service.findOrders(null);
+    assertThat(responseOrderCtos).isNotNull();
+
+    // then
+    assertThat(responseOrderCtos).isNotNull();
+
+    assertThat(oldNumberOfOrders + NUMBER_OF_SAMPLE_ORDERS).isEqualTo(newNumberOfOrders);
+    assertThat(responseOrderCtos.getResult().size()).isEqualTo(newNumberOfOrders);
+
+    int countNumberOfSavedOrders = 0;
+
+    for (OrderCto responseOrder : responseOrderCtos.getResult()) {
+      for (OrderCto savedOrder : savedOrderCtos) {
+        if (responseOrder.getOrder().getId() == savedOrder.getOrder().getId()) {
+          assertThat(responseOrder.getOrder().getTableId()).isEqualTo(savedOrder.getOrder().getTableId());
+          countNumberOfSavedOrders++;
+        }
+      }
+    }
+    assertThat(countNumberOfSavedOrders).isEqualTo(NUMBER_OF_SAMPLE_ORDERS);
 
   }
 
   /**
-   * This test method creates the sample instance of {@link OrderCto} sampleOrderCto and saves it into the database.
-   * Subsequently {@link OrderSearchCriteriaTo} like tableId and OrderState are defined. Thereafter sampleOrderCto is
-   * loaded from the database, if its attributes match the {@link OrderSearchCriteriaTo}. Finally the attributes of
-   * sampleOrderCto are tested for correctness.
+   * This test method creates a sample instance of {@link OrderCto} and saves it into the database. Subsequently
+   * {@link OrderSearchCriteriaTo} like tableId and {@link OrderState} are defined. Thereafter the sample
+   * {@link OrderCto} object is loaded from the database, if its attributes match the {@link OrderSearchCriteriaTo}.
+   * Finally the attributes of the sample instance of {@link OrderCto} are tested for correctness.
    */
   @Test
   public void findOrderByPost() {
@@ -157,17 +180,18 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
 
   }
 
+  // TODO ask Jonas if save methods are also tested
+
   @Test
   public void findOrdersByPost() {
 
   }
 
   /**
-   * This test method creates the sample instance of {@link OrderCto} sampleOrderCto and saves it into the database. In
-   * addition the sample instance of {@link OrderPositionEto} sampleOrderPositionEto is created and linked to
-   * sampleOrderCto by the orderId. Subsequently sampleOrderPositionEto is saved into the database. Finally
-   * sampleOrderPositionEto is identified by its id, loaded from the database and its attributes are tested for
-   * correctness.
+   * This test method creates a sample instance of {@link OrderCto} and saves it into the database. In addition a sample
+   * instance of {@link OrderPositionEto} is created, linked to the sample {@link OrderCto} object by the id/orderId and
+   * saved into the database. Finally a the sample instance of {@link OrderPositionEto} is identified by its id, loaded
+   * from the database and its attributes are tested for correctness.
    */
   @Test
   public void findOrderPosition() {
@@ -199,13 +223,10 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
   }
 
   /**
-   * This test method creates the sample instance of {@link OrderCto} sampleOrderCto and saves it into the database. In
-   * addition some sample instances of {@link OrderPositionEto} savedOrderPositionEtos are created and linked to
-   * sampleOrderCto by the orderId. Subsequently these samples are saved into the database. Thereafter all
-   * {@link OrderPositionEto} are loaded from the database. The method tests the number of loaded orderPositionEtos and
-   * the attributes of the sample instances
-   *
-   * and its attributes are tested for correctness.
+   * This test method creates a sample instance of {@link OrderCto} and saves it into the database. In addition some
+   * sample instances of {@link OrderPositionEto} are created, linked to sampleOrderCto by the id/orderId and saved into
+   * the database. Thereafter all {@link OrderPositionEto} objects are loaded from the database. The method tests the
+   * number of loaded orderPositionEtos and the attributes of the sample instances for correctness.
    */
   @Test
   public void findAllOrderPositions() {
@@ -216,12 +237,11 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
     assertThat(responseOrderCto).isNotNull();
 
     int oldNumberOfOrderPositions = getNumberOfOrderPositions();
-    int numberOfOrderPositionsToSave = NUMBER_OF_SAMPLE_ORDER_POSITIONS;
     OrderPositionEto sampleOrderPositionEto;
     OrderPositionEto responseOrderPositionEto;
 
     ArrayList<OrderPositionEto> savedOrderPositionEtos = new ArrayList();
-    for (int i = 0; i < numberOfOrderPositionsToSave; ++i) {
+    for (int i = 0; i < NUMBER_OF_SAMPLE_ORDER_POSITIONS; ++i) {
       sampleOrderPositionEto = new OrderPositionEto();
       sampleOrderPositionEto.setOrderId(responseOrderCto.getOrder().getId());
       sampleOrderPositionEto.setOfferId(SAMPLE_OFFER_ID);
@@ -238,10 +258,10 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
     // then
     assertThat(responseOrderPositionEtos).isNotNull();
 
-    assertThat(oldNumberOfOrderPositions + numberOfOrderPositionsToSave).isEqualTo(newNumberOfOrderPositions);
+    assertThat(oldNumberOfOrderPositions + NUMBER_OF_SAMPLE_ORDER_POSITIONS).isEqualTo(newNumberOfOrderPositions);
     assertThat(responseOrderPositionEtos.size()).isEqualTo(newNumberOfOrderPositions);
 
-    long countNumberOfSavedOrderPositions = 0;
+    int countNumberOfSavedOrderPositions = 0;
 
     for (OrderPositionEto responseOrderPosition : responseOrderPositionEtos) {
       for (OrderPositionEto savedOrderPosition : savedOrderPositionEtos) {
@@ -256,10 +276,16 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
         }
       }
     }
-    assertThat(countNumberOfSavedOrderPositions).isEqualTo(numberOfOrderPositionsToSave);
+    assertThat(countNumberOfSavedOrderPositions).isEqualTo(NUMBER_OF_SAMPLE_ORDER_POSITIONS);
   }
 
-  // orderPosition is canceled by saving new order with same id as order referenced to orderPosition
+  /**
+   * This test method creates a sample instance of {@link OrderCto} and saves it into the database. In addition a sample
+   * instance of {@link OrderPositionEto} is created, linked to the sample {@link OrderCto} object by the id/orderId and
+   * saved into the database. After that another {@link OrderCto} object comprising a {@link OrderEto} object with the
+   * same id/orderId as the the previously saved {@link OrderCto}/{@link OrderEto} object is saved into the database.
+   * The resulting effect of the all {@link OrderPositionEto} objects being cancelled is tested.
+   */
   @Test
   public void cancelOrderPosition() {
 
@@ -287,6 +313,24 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
   }
 
   // TODO ask Jonas how to capsulate?
+
+  /**
+   * This test method loads all saved {@link OrderCto} objects from the database, counts the number and returns it.
+   */
+  protected int getNumberOfOrders() {
+
+    int numberOfOrders = 0;
+    PaginatedListTo<OrderCto> orders = this.service.findOrders(null);
+    if (orders != null) {
+      numberOfOrders = orders.getResult().size();
+    }
+    return numberOfOrders;
+  }
+
+  /**
+   * This test method loads all saved {@link OrderPositionEto} objects from the database, counts the number and returns
+   * it.
+   */
   protected int getNumberOfOrderPositions() {
 
     int numberOfOrderPositions = 0;
@@ -297,10 +341,3 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
     return numberOfOrderPositions;
   }
 }
-/*
- * public OrderPositionEto findOrderPosition(long orderPositionId) {
- *
- * return salesmanagement.findOrderPosition(orderPositionId);
- *
- * }
- */

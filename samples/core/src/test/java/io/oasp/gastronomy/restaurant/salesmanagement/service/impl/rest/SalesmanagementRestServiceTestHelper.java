@@ -13,20 +13,14 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 
 /**
- * TODO shuber This type ...
+ * This is a helper class for the classes {@link SalesmanagementRestServiceTest} and
+ * {@link SalesmanagementHttpRestServiceTest}. It capsulates some sample attributes as constants used both testing
+ * classes. Moreover it provides two methods to create sample {@link OrderCto} and {@link OrderPositionEto} objects
+ * using the sample attributes defined by this class.
  *
  * @author shuber
  */
-
 public class SalesmanagementRestServiceTestHelper {
-
-  /**
-   * The constructor.
-   *
-   * @param jacksonJsonProvider
-   * @param flyway
-   * @param salesmanagement
-   */
 
   protected static final String ROLE = "chief";
 
@@ -58,6 +52,26 @@ public class SalesmanagementRestServiceTestHelper {
 
   protected static long numberOfOrderPositions = 0;
 
+  /**
+   * This method creates a sample {@link OrderCto} depending on the constants defined by this class.
+   *
+   * @param tableId
+   * @return {@link OrderCto}
+   */
+  protected OrderCto createSampleOrderCto(long tableId) {
+
+    OrderCto sampleOrderCto = new OrderCto();
+    OrderEto sampleOrderEto = new OrderEtoBuilder().tableId(SAMPLE_TABLE_ID).createNew();
+    sampleOrderCto.setOrder(sampleOrderEto);
+    return sampleOrderCto;
+  }
+
+  /**
+   * This method creates a sample {@link OrderPositionEto} depending on the constants defined by this class.
+   *
+   * @param orderId
+   * @return {@link OrderPositionEto}
+   */
   public OrderPositionEto createSampleOrderPositionEto(long orderId) {
 
     OrderPositionEto sampleOrderPositionEto = new OrderPositionEtoBuilder().orderId(orderId).offerId(SAMPLE_OFFER_ID)
@@ -66,11 +80,4 @@ public class SalesmanagementRestServiceTestHelper {
     return sampleOrderPositionEto;
   }
 
-  protected OrderCto createSampleOrderCto(long tableId) {
-
-    OrderCto sampleOrderCto = new OrderCto();
-    OrderEto sampleOrderEto = new OrderEtoBuilder().tableId(SAMPLE_TABLE_ID).createNew();
-    sampleOrderCto.setOrder(sampleOrderEto);
-    return sampleOrderCto;
-  }
 }

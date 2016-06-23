@@ -1,27 +1,37 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest;
 
-import org.flywaydb.core.Flyway;
 import org.springframework.context.annotation.Bean;
-
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
+import org.springframework.web.client.RestTemplate;
 
 /**
- * TODO shuber This type ...
+ * This configuration class provides a {@link SalesmanagementRestServiceTestHelper} and a {@link RestTemplate} bean
  *
  * @author shuber
- * @since dev
  */
-// @Configuration
 public class SalesmanagementRestTestConfiguration {
 
+  /**
+   * This method is creating {@link SalesmanagementRestServiceTestHelper} bean
+   *
+   * @return {@link SalesmanagementRestServiceTestHelper}
+   */
   @Bean
-  public SalesmanagementRestServiceTestHelper salesmanagementRestServiceTestHelper(
-      JacksonJsonProvider jacksonJsonProvider, Flyway flyway, Salesmanagement salesmanagement) {
+  public SalesmanagementRestServiceTestHelper salesmanagementRestServiceTestHelper() {
 
     SalesmanagementRestServiceTestHelper salesmanagementRestServiceTestHelper =
         new SalesmanagementRestServiceTestHelper();
     return salesmanagementRestServiceTestHelper;
+  }
+
+  /**
+   * This method is creating {@link RestTemplate} bean
+   *
+   * @return {@link RestTemplate}
+   */
+  @Bean
+  public RestTemplate restTemplate() {
+
+    RestTemplate restTemplate = new RestTemplate();
+    return restTemplate;
   }
 }

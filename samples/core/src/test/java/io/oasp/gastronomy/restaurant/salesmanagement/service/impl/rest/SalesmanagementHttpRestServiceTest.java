@@ -43,40 +43,39 @@ import org.springframework.web.client.RestTemplate;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractRestServiceTest;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.service.api.rest.SalesmanagementRestService;
 
 /**
- * TODO shuber This type ...
+ * This class serves as an example of how to perform a subsystem test (e.g., call a *RestService interface). The test
+ * database is accessed via HTTP requests to the server running the restaurant application.
  *
  * @author shuber
- * @since dev
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = { SpringBootApp.class, SalesmanagementRestTestConfiguration.class })
 @TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement" })
 
-public class SalesmanagementWebRestServiceTest extends AbstractRestServiceTest {
+public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest {
 
   private final HttpHeaders AUTHENTIFICATED_HEADERS = getAuthentificatedHeaders();
 
-  private static Logger LOG = LoggerFactory.getLogger(SalesmanagementWebRestServiceTest.class);
+  private static Logger LOG = LoggerFactory.getLogger(SalesmanagementHttpRestServiceTest.class);
 
   private SalesmanagementRestService service;
 
   @Inject
   private SalesmanagementRestServiceTestHelper helper;
 
-  // TODO Inject ...
+  @Inject
   private RestTemplate template;
 
-  public SalesmanagementWebRestServiceTest() {
-
-    this.template = new RestTemplate();
-  }
-
+  /**
+   * Provides initialization previous to the creation of the text fixture.
+   */
   @Before
   public void init() {
 
@@ -84,12 +83,21 @@ public class SalesmanagementWebRestServiceTest extends AbstractRestServiceTest {
     this.service = getRestTestClientBuilder().build(SalesmanagementRestService.class);
   }
 
+  /**
+   * Provides clean up after tests.
+   */
   @After
   public void clean() {
 
     this.service = null;
   }
 
+  /**
+   * This test method creates a sample instance of {@link OrderCto} and saves it into the database. Thereafter a HTTP
+   * GET request specifying the same id as the previously created {@link OrderCto} object is sent. Finally the body of
+   * the response {@link JSONObject} is tested, if it comprises the same attributes as the sample {@link OrderCto}
+   * object.
+   */
   @Test
   public void getOrder() {
 
@@ -142,8 +150,14 @@ public class SalesmanagementWebRestServiceTest extends AbstractRestServiceTest {
   // JSONAssert.assertEquals("{tableId:" + Long.toString(SAMPLE_TABLE_ID) + "}", getResponseJson, false);
   // }
 
+  /**
+   * At first this method creates a {@link JSONObject} specifying a sample instance of {@link OrderCto} and a sample
+   * instance of {@link OrderPositionEto} linked to it by the id/orderId. Thereafter the HTTP Post request is sent.
+   * Finally the {@link OrderCto} object and the {@link OrderPositionEto} object are loaded from the database and its
+   * attributes are tested for correctness.
+   */
   @Test
-  public void postOrderWithOrderPosition() {
+  public void postOrderWithOrderPositionEto() {
 
     // given
     HttpHeaders postRequestHeaders = this.AUTHENTIFICATED_HEADERS;
@@ -175,22 +189,22 @@ public class SalesmanagementWebRestServiceTest extends AbstractRestServiceTest {
     JSONObject postResponseJson = new JSONObject(postResponse.getBody());
     assertThat(postResponseJson).isNotNull();
 
-    JSONArray responseOrderPositions = postResponseJson.getJSONArray("positions");
-    assertThat(responseOrderPositions).isNotNull();
-    assertThat(responseOrderPositions.length()).isEqualTo(1);
+    JSONArray responseOrderPositionEtos = postResponseJson.getJSONArray("positions");
+    assertThat(responseOrderPositionEtos).isNotNull();
+    assertThat(responseOrderPositionEtos.length()).isEqualTo(1);
 
     long responseOrderId = postResponseJson.getJSONObject("order").getInt("id");
-    long responseOrderPositionId = responseOrderPositions.getJSONObject(0).getInt("id");
-    assertThat(responseOrderId).isEqualTo(responseOrderPositions.getJSONObject(0).getInt("orderId"));
+    long responseOrderPositionEtoId = responseOrderPositionEtos.getJSONObject(0).getInt("id");
+    assertThat(responseOrderId).isEqualTo(responseOrderPositionEtos.getJSONObject(0).getInt("orderId"));
 
     OrderEto responseOrderEto = this.service.findOrder(responseOrderId);
     assertThat(responseOrderEto).isNotNull();
     assertThat(responseOrderEto.getId()).isEqualTo(responseOrderId);
     assertThat(responseOrderEto.getTableId()).isEqualTo(SAMPLE_TABLE_ID);
 
-    OrderPositionEto responseOrderPositionEto = this.service.findOrderPosition(responseOrderPositionId);
+    OrderPositionEto responseOrderPositionEto = this.service.findOrderPosition(responseOrderPositionEtoId);
     assertThat(responseOrderPositionEto).isNotNull();
-    assertThat(responseOrderPositionEto.getId()).isEqualTo(responseOrderPositionId);
+    assertThat(responseOrderPositionEto.getId()).isEqualTo(responseOrderPositionEtoId);
     assertThat(responseOrderPositionEto.getOrderId()).isEqualTo(responseOrderId);
     assertThat(responseOrderPositionEto.getOfferName()).isEqualTo(SAMPLE_OFFER_NAME);
     assertThat(responseOrderPositionEto.getState()).isEqualTo(SAMPLE_ORDER_POSITION_STATE);
@@ -199,6 +213,13 @@ public class SalesmanagementWebRestServiceTest extends AbstractRestServiceTest {
     assertThat(responseOrderPositionEto.getComment()).isEqualTo(SAMPLE_COMMENT);
   }
 
+  /**
+   * This test method creates a sample instance of {@link OrderCto} and a sample instance of {@link OrderPositionEto}
+   * linked to it and saves them to the database. Thereafter a HTTP GET request containing a {@link JSONObject}
+   * specifying the same id/orderId as the previously created {@link OrderPositionEto} object is sent. Finally the body
+   * of the response {@link JSONObject} is tested, if it comprises the same attributes as the sample
+   * {@link OrderPositionEto} object.
+   */
   @Test
   public void getOrderPosition() {
 
@@ -236,6 +257,13 @@ public class SalesmanagementWebRestServiceTest extends AbstractRestServiceTest {
     JSONAssert.assertEquals("{comment:" + SAMPLE_COMMENT + "}", getResponseJson, false);
   }
 
+  /**
+   * This test method creates a sample instance of {@link OrderCto} and saves it into the database. In addition some
+   * sample instances of {@link OrderPositionEto} are created, linked to the sample {@link OrderCto} object by the
+   * id/orderId and saved into the database. Thereafter a HTTP GET request is sent demanding all saved
+   * {@link OrderPositionEto} objects in the database. Finally the body of the response {@link JSONObject} is tested
+   * concerning the number of loaded orderPositionEtos and the correctness attributes of the sample instances.
+   */
   @Test
   public void getAllOrderPositions() {
 
@@ -298,11 +326,18 @@ public class SalesmanagementWebRestServiceTest extends AbstractRestServiceTest {
     assertThat(countNumberOfSavedOrderPositions).isEqualTo(numberOfOrderPositionsToSave);
   }
 
+  // TODO Jonas ask how the functions to come are handled
   @Test
   public void putOrderPosition() {
 
   }
 
+  /**
+   * At first the method creates a sample instance of {@link OrderCto} and saves it to the database. Thereafter a
+   * {@link JSONObject} specifying a sample instance of {@link OrderPosition} linked to the sample {@link OrderCto}
+   * object is created and the corresponding HTTP Post request is sent. Finally the {@link OrderPositionEto} object is
+   * loaded from the database and its attributes are tested for correctness.
+   */
   @Test
   public void postOrderPosition() {
 
@@ -335,7 +370,6 @@ public class SalesmanagementWebRestServiceTest extends AbstractRestServiceTest {
         this.template.exchange(generateBaseUrl() + "orderposition/", HttpMethod.POST, postRequestEntity, String.class);
 
     // then
-
     assertThat(postResponse).isNotNull();
     JSONObject postResponseJson = new JSONObject(postResponse.getBody());
     assertThat(postResponseJson).isNotNull();
@@ -352,6 +386,9 @@ public class SalesmanagementWebRestServiceTest extends AbstractRestServiceTest {
     assertThat(responseOrderPositionEto.getComment()).isEqualTo(SAMPLE_COMMENT);
   }
 
+  /**
+   * This method builds an encoded authentication header and returns it
+   */
   private HttpHeaders getAuthentificatedHeaders() {
 
     String plainCreds = ROLE + ":" + ROLE;
@@ -364,14 +401,19 @@ public class SalesmanagementWebRestServiceTest extends AbstractRestServiceTest {
     return headers;
   }
 
-  // this function is necessary as the default port changes in between the invocation of the constructor
-  // and
-  // the execution of the test methods
+  /**
+   * This method creates the base uri of the salesmanagement service. As the port changes in between the invocation of
+   * the constructor and the execution of the test method this method is necessary
+   */
   private String generateBaseUrl() {
 
     return BASE_URL_PRAEFIX + this.port + BASE_URL_SUFFIX_1 + BASE_URL_SUFFIX_2;
   }
 
+  /**
+   * This test method loads all saved {@link OrderPositionEto} objects from the database, counts the number and returns
+   * it.
+   */
   protected int getNumberOfOrderPositions() {
 
     int numberOfOrderPositions = 0;
