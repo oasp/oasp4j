@@ -132,7 +132,7 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
 
   /**
    * This test method demonstrates a simple usage of {@link TableSearchCriteriaTo} for searching a table by post with
-   * {@link TableState} {@code RESERVED}.
+   * {@link TableState} {@code RESERVED} that is created prior to the search job.
    */
   @Test
   public void testFindTablesByPost() {
@@ -142,8 +142,11 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
     long waiterId = 2L;
     TableEto table =
         new TableEtoBuilder().number(tableNumber).waiterId(waiterId).state(TableState.RESERVED).createNew();
+    assertThat(table).isNotNull();
     TableEto savedTable = this.service.saveTable(table);
+    assertThat(savedTable).isNotNull();
     TableSearchCriteriaTo criteria = new TableSearchCriteriaTo();
+    assertThat(criteria).isNotNull();
     criteria.setState(TableState.RESERVED);
 
     // when
@@ -152,7 +155,12 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
 
     // then
     assertThat(result).isNotEmpty();
-    assertThat(result.get(0).getId()).isEqualTo(savedTable.getId());
+    assertThat(result).hasAtLeastOneElementOfType(TableEto.class).extracting("state").contains(TableState.RESERVED);
+    assertThat(result).extracting("state").doesNotContain(TableState.FREE);
+    assertThat(result).extracting("state").doesNotContain(TableState.OCCUPIED);
+    assertThat(result).extracting("waiterId").contains(waiterId);
+    assertThat(result).extracting("number").contains(tableNumber);
+
   }
 
 }
