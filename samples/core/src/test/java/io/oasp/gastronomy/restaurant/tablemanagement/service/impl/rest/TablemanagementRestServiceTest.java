@@ -55,6 +55,7 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
   public void clean() {
 
     this.service = null;
+
   }
 
   /**

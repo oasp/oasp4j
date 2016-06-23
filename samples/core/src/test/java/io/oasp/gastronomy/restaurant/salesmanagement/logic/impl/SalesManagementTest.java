@@ -13,6 +13,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.common.builders.OrderEtoBuilder;
 import io.oasp.gastronomy.restaurant.common.builders.OrderPositionEtoBuilder;
+import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
 import io.oasp.gastronomy.restaurant.general.common.TestUtil;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
@@ -38,11 +39,15 @@ public class SalesManagementTest extends ComponentTest {
   @Inject
   private OrderPositionDao orderPositionDao;
 
+  @Inject
+  private DbTestHelper dbTestHelper;
+
   @Before
   public void setUp() {
 
     TestUtil.login("waiter", PermissionConstants.FIND_ORDER_POSITION, PermissionConstants.SAVE_ORDER_POSITION,
         PermissionConstants.SAVE_ORDER, PermissionConstants.FIND_OFFER);
+    this.dbTestHelper.resetDatabase();
   }
 
   @After
