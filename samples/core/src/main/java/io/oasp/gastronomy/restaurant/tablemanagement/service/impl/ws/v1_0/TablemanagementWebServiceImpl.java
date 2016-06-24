@@ -1,14 +1,12 @@
 package io.oasp.gastronomy.restaurant.tablemanagement.service.impl.ws.v1_0;
 
-import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement;
-import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
-import io.oasp.gastronomy.restaurant.tablemanagement.service.api.ws.v1_0.TablemanagmentWebService;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.jws.WebService;
-import javax.ws.rs.BadRequestException;
-import javax.ws.rs.NotFoundException;
+
+import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement;
+import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
+import io.oasp.gastronomy.restaurant.tablemanagement.service.api.ws.v1_0.TablemanagmentWebService;
 
 /**
  * Implementation of {@link TablemanagmentWebService}.
@@ -33,20 +31,9 @@ public class TablemanagementWebServiceImpl implements TablemanagmentWebService {
   }
 
   @Override
-  public TableEto getTable(String id) {
+  public TableEto getTable(long id) {
 
-    Long idAsLong;
-    if (id == null) {
-      throw new BadRequestException("missing id");
-    }
-    try {
-      idAsLong = Long.parseLong(id);
-    } catch (NumberFormatException e) {
-      throw new BadRequestException("id is not a number");
-    } catch (NotFoundException e) {
-      throw new BadRequestException("table not found");
-    }
-    return this.tableManagement.findTable(idAsLong);
+    return this.tableManagement.findTable(id);
   }
 
 }
