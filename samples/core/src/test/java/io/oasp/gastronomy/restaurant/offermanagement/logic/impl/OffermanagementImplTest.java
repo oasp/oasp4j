@@ -16,14 +16,16 @@ import io.oasp.module.beanmapping.common.api.BeanMapper;
 import io.oasp.module.test.common.base.ModuleTest;
 
 /**
- * TODO shuber This type ...
+ * This class tests the correct execution of the methods findOffer and findOfferCto belonging to the
+ * {@link OffermanagementImpl}
  *
  * @author shuber
- * @since dev
  */
 
 @RunWith(MockitoJUnitRunner.class)
 public class OffermanagementImplTest extends ModuleTest {
+
+  private static final long ID = 1;
 
   /**
    * The System Under Test (SUT)
@@ -32,16 +34,18 @@ public class OffermanagementImplTest extends ModuleTest {
   private OffermanagementImpl offerManagementImpl;
 
   @Mock
-  private OffermanagementImpl offerManagementImpl2;
-
-  @Mock
   private OfferDao offerDao;
 
   @Mock
   private BeanMapper beanMapper;
 
+  /**
+   * This method initializes the object {@link OffermanagementImpl} and assigns the mocked objects of the classes
+   * {@link OfferDao} and {@link BeanMapper} to the attributes of the {@link OffermanagementImpl} object before tests,
+   * if they are not null.
+   */
   @Before
-  public void setup() {
+  public void init() {
 
     assertThat(this.offerDao).isNotNull();
     assertThat(this.beanMapper).isNotNull();
@@ -50,67 +54,66 @@ public class OffermanagementImplTest extends ModuleTest {
     this.offerManagementImpl.setBeanMapper(this.beanMapper);
   }
 
+  /**
+   * This method dereferences all object after each test
+   */
   @After
-  public void tearDown() {
+  public void clean() {
 
     this.beanMapper = null;
     this.offerDao = null;
     this.offerManagementImpl = null;
   }
 
+  /**
+   * This method tests the execution of the findOffer method belonging to the {@link OffermanagementImpl} class
+   */
   @Test
   public void findOffer() {
 
-    // setup
     // given
-    long id = 1L;
+    OfferEntity offerEntity = Mockito.mock(OfferEntity.class);
+    OfferEto offerEto = new OfferEto();
 
-    OfferEntity entity = Mockito.mock(OfferEntity.class);
-    OfferEto eto = new OfferEto();
+    Mockito.when(this.offerDao.findOne(ID)).thenReturn(offerEntity);
+    Mockito.when(this.beanMapper.map(offerEntity, OfferEto.class)).thenReturn(offerEto);
 
-    Mockito.when(this.offerDao.findOne(id)).thenReturn(entity);
-    Mockito.when(this.beanMapper.map(entity, OfferEto.class)).thenReturn(eto);
-
-    // exercise
     // when
-    OfferEto resultEto = this.offerManagementImpl.findOffer(id);
+    OfferEto responseOfferEto = this.offerManagementImpl.findOffer(ID);
 
-    // verify
     // then
-    Mockito.verify(this.offerDao).findOne(id);
-    Mockito.verify(this.beanMapper).map(entity, OfferEto.class);
+    Mockito.verify(this.offerDao).findOne(ID);
+    Mockito.verify(this.beanMapper).map(offerEntity, OfferEto.class);
 
-    assertThat(resultEto).isNotNull();
-    assertThat(resultEto).isEqualTo(eto);
+    assertThat(responseOfferEto).isNotNull();
+    assertThat(responseOfferEto).isEqualTo(offerEto);
   }
 
+  /**
+   * This method tests the execution of the findOfferCto method belonging to the {@link OffermanagementImpl} class
+   */
   @Test
   public void findOfferCto() {
 
-    // setup
     // given
-    long id = 1L;
-
     OfferCto offerCto = new OfferCto();
     OfferEto offerEto = new OfferEto();
-    // OfferEto offerEto = Mockito.mock(OfferEto.class);
+
     offerCto.setOffer(offerEto);
-    OfferEntity entity = Mockito.mock(OfferEntity.class);
+    OfferEntity offerEntity = Mockito.mock(OfferEntity.class);
 
-    Mockito.when(this.offerDao.findOne(id)).thenReturn(entity);
-    Mockito.when(this.beanMapper.map(entity, OfferEto.class)).thenReturn(offerEto);
+    Mockito.when(this.offerDao.findOne(ID)).thenReturn(offerEntity);
+    Mockito.when(this.beanMapper.map(offerEntity, OfferEto.class)).thenReturn(offerEto);
 
-    // exercise
     // when
-    OfferCto resultCto = this.offerManagementImpl.findOfferCto(id);
+    OfferCto responseOfferCto = this.offerManagementImpl.findOfferCto(ID);
 
-    // verify
     // then
-    Mockito.verify(this.offerDao).findOne(id);
-    Mockito.verify(this.beanMapper).map(entity, OfferEto.class);
+    Mockito.verify(this.offerDao).findOne(ID);
+    Mockito.verify(this.beanMapper).map(offerEntity, OfferEto.class);
 
-    assertThat(resultCto).isNotNull();
-    assertThat(resultCto).isEqualTo(offerCto);
+    assertThat(responseOfferCto).isNotNull();
+    assertThat(responseOfferCto.getOffer()).isEqualTo(offerEto);
 
   }
 
