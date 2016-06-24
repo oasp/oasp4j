@@ -118,37 +118,7 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
     assertThat(getResponseJson).isNotNull();
     JSONAssert.assertEquals("{id:" + responseOrderCto.getOrder().getId() + "}", getResponseJson, false);
     JSONAssert.assertEquals("{tableId:" + Long.toString(SAMPLE_TABLE_ID) + "}", getResponseJson, false);
-    // TODO ask Jonas if this is too much? If not adjustments of other methods necessary
-    JSONAssert.assertEquals("{tableId:" + Long.toString(responseOrderCto.getOrder().getTableId()) + "}",
-        getResponseJson, false);
-
   }
-
-  // TODO implement corresponding to getAllOrderPositions
-  @Test
-  public void getAllOrders() {
-
-  }
-
-  // @Test
-  // public void getOrderWithPositions() {
-  //
-  // // given
-  // HttpEntity<String> getRequest = new HttpEntity<>(this.AUTHENTIFICATED_HEADERS);
-  // OrderCto sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID);
-  // this.service.saveOrder(sampleOrderCto);
-  //
-  // // when
-  // ResponseEntity<String> getResponse = this.template.exchange(
-  // // TODO change id like this in other requests
-  // generateBaseUrl() + "order/" + sampleOrderCto.getOrder().getId(), HttpMethod.GET, getRequest, String.class);
-  //
-  // // then
-  // assertThat(getResponse).isNotNull();
-  // String getResponseJson = getResponse.getBody();
-  // JSONAssert.assertEquals("{id:" + sampleOrderCto.getOrder().getId() + "}", getResponseJson, false);
-  // JSONAssert.assertEquals("{tableId:" + Long.toString(SAMPLE_TABLE_ID) + "}", getResponseJson, false);
-  // }
 
   /**
    * At first this method creates a {@link JSONObject} specifying a sample instance of {@link OrderCto} and a sample
@@ -163,12 +133,11 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
     HttpHeaders postRequestHeaders = this.AUTHENTIFICATED_HEADERS;
     postRequestHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-    // TODO ask Jonas regarding naming (postResponseJson)
-    JSONObject request = new JSONObject();
+    JSONObject postRequest = new JSONObject();
 
     JSONObject order = new JSONObject();
     order.put("tableId", SAMPLE_TABLE_ID);
-    request.put("order", order);
+    postRequest.put("order", order);
 
     JSONArray orderPositions = new JSONArray();
     JSONObject orderPosition = new JSONObject();
@@ -177,9 +146,9 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
     orderPosition.put("drinkState", SAMPLE_DRINK_STATE);
     orderPosition.put("comment", SAMPLE_COMMENT);
     orderPositions.put(orderPosition);
-    request.put("positions", orderPositions);
+    postRequest.put("positions", orderPositions);
 
-    HttpEntity<String> postRequestEntity = new HttpEntity<>(request.toString(), postRequestHeaders);
+    HttpEntity<String> postRequestEntity = new HttpEntity<>(postRequest.toString(), postRequestHeaders);
 
     // when
     ResponseEntity<String> postResponse =
@@ -193,8 +162,8 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
     assertThat(responseOrderPositionEtos).isNotNull();
     assertThat(responseOrderPositionEtos.length()).isEqualTo(1);
 
-    long responseOrderId = postResponseJson.getJSONObject("order").getInt("id");
-    long responseOrderPositionEtoId = responseOrderPositionEtos.getJSONObject(0).getInt("id");
+    int responseOrderId = postResponseJson.getJSONObject("order").getInt("id");
+    int responseOrderPositionEtoId = responseOrderPositionEtos.getJSONObject(0).getInt("id");
     assertThat(responseOrderId).isEqualTo(responseOrderPositionEtos.getJSONObject(0).getInt("orderId"));
 
     OrderEto responseOrderEto = this.service.findOrder(responseOrderId);
@@ -301,8 +270,8 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
     assertThat(oldNumberOfOrderPositions + numberOfOrderPositionsToSave).isEqualTo(newNumberOfOrderPositions);
     assertThat(responseOrderPositions.length()).isEqualTo(newNumberOfOrderPositions);
 
-    long responseOrderPositionId = 0;
-    long countNumberOfSavedOrderPositions = 0;
+    int responseOrderPositionId = 0;
+    int countNumberOfSavedOrderPositions = 0;
 
     for (int i = 0; i < responseOrderPositions.length(); ++i) {
       responseOrderPositionId = responseOrderPositions.getJSONObject(i).getInt("id");
@@ -326,12 +295,6 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
     assertThat(countNumberOfSavedOrderPositions).isEqualTo(numberOfOrderPositionsToSave);
   }
 
-  // TODO Jonas ask how the functions to come are handled
-  @Test
-  public void putOrderPosition() {
-
-  }
-
   /**
    * At first the method creates a sample instance of {@link OrderCto} and saves it to the database. Thereafter a
    * {@link JSONObject} specifying a sample instance of {@link OrderPosition} linked to the sample {@link OrderCto}
@@ -348,22 +311,22 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
 
     HttpHeaders postRequestHeaders = this.AUTHENTIFICATED_HEADERS;
     postRequestHeaders.setContentType(MediaType.APPLICATION_JSON);
-    JSONObject request = new JSONObject();
+    JSONObject postRequest = new JSONObject();
 
-    request.put("orderId", responseOrderCto.getOrder().getId());
-    request.put("offerId", SAMPLE_OFFER_ID);
-    request.put("state", SAMPLE_ORDER_POSITION_STATE);
-    request.put("drinkState", SAMPLE_DRINK_STATE);
-    request.put("comment", SAMPLE_COMMENT);
+    postRequest.put("orderId", responseOrderCto.getOrder().getId());
+    postRequest.put("offerId", SAMPLE_OFFER_ID);
+    postRequest.put("state", SAMPLE_ORDER_POSITION_STATE);
+    postRequest.put("drinkState", SAMPLE_DRINK_STATE);
+    postRequest.put("comment", SAMPLE_COMMENT);
 
     try {
-      request.put("offerName", URLEncoder.encode(SAMPLE_OFFER_NAME, "UTF-8"));
+      postRequest.put("offerName", URLEncoder.encode(SAMPLE_OFFER_NAME, "UTF-8"));
     } catch (JSONException | UnsupportedEncodingException e) {
 
     }
-    request.put("price", SAMPLE_PRICE.getValue());
+    postRequest.put("price", SAMPLE_PRICE.getValue());
 
-    HttpEntity<String> postRequestEntity = new HttpEntity<>(request.toString(), postRequestHeaders);
+    HttpEntity<String> postRequestEntity = new HttpEntity<>(postRequest.toString(), postRequestHeaders);
 
     // when
     ResponseEntity<String> postResponse =
@@ -413,6 +376,8 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
   /**
    * This test method loads all saved {@link OrderPositionEto} objects from the database, counts the number and returns
    * it.
+   *
+   * @return number of orderPositions saved in the database
    */
   protected int getNumberOfOrderPositions() {
 

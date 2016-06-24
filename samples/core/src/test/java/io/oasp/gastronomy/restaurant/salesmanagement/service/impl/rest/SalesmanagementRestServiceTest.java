@@ -172,18 +172,10 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
 
     // then
     assertThat(orderCtoList).isNotNull();
-    // TODO Jonas ask if 1 is ok
     assertThat(orderCtoList.getResult().size()).isEqualTo(1);
     assertThat(orderCtoList.getResult().get(0).getOrder().getId()).isEqualTo(responseOrderCto.getOrder().getId());
     assertThat(orderCtoList.getResult().get(0).getOrder().getTableId()).isEqualTo(SAMPLE_TABLE_ID);
     assertThat(orderCtoList.getResult().get(0).getOrder().getState()).isEqualTo(SAMPLE_ORDER_STATE);
-
-  }
-
-  // TODO ask Jonas if save methods are also tested
-
-  @Test
-  public void findOrdersByPost() {
 
   }
 
@@ -312,10 +304,10 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
     assertThat(responseOrderCto.getOrder().getId()).isEqualTo(sampleOrderCto.getOrder().getId());
   }
 
-  // TODO ask Jonas how to capsulate?
-
   /**
    * This test method loads all saved {@link OrderCto} objects from the database, counts the number and returns it.
+   *
+   * @return number of orders saved in the database
    */
   protected int getNumberOfOrders() {
 
@@ -330,6 +322,8 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
   /**
    * This test method loads all saved {@link OrderPositionEto} objects from the database, counts the number and returns
    * it.
+   *
+   * @return number of orderPositions saved in the database
    */
   protected int getNumberOfOrderPositions() {
 
