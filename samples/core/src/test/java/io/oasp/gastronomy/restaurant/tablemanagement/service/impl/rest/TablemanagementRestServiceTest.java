@@ -71,14 +71,15 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
   public void testFindTable() {
 
     // given
-    String id = "102";
+    long id = 102;
 
     // when
+
     TableEto table = this.service.getTable(id);
 
     // then
     assertThat(table).isNotNull();
-    assertThat(table.getId()).isEqualTo(Long.parseLong(id));
+    assertThat(table.getId()).isEqualTo(id);
 
   }
 
@@ -104,7 +105,7 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
     this.service.deleteTable(deleteTableNumber);
 
     // then
-    assertThat(this.service.getTable(Integer.toString(deleteTableNumber))).isNull();
+    assertThat(this.service.getTable(deleteTableNumber)).isNull();
     List<TableEto> tableListAfterDelete = this.service.getAllTables();
     assertThat(tableListAfterDelete).hasSize(numberOfTables - 1);
   }

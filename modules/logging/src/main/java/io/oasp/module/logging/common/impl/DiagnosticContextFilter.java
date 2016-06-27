@@ -1,7 +1,5 @@
 package io.oasp.module.logging.common.impl;
 
-import io.oasp.module.logging.common.api.DiagnosticContextFacade;
-
 import java.io.IOException;
 import java.util.UUID;
 
@@ -18,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.oasp.module.logging.common.api.DiagnosticContextFacade;
+
 /**
  * Request logging filter that adds the request log message to the SLF4j mapped diagnostic context (MDC) before the
  * request is processed, removing it again after the request is processed.
@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
  * @author <a href="malte.brunnlieb@capgemini.com">Malte Brunnlieb</a>
  * @author hohwille
  */
-// @WebFilter("/services/*")
 public class DiagnosticContextFilter implements Filter {
 
   private static final Logger LOG = LoggerFactory.getLogger(DiagnosticContextFilter.class);
@@ -37,7 +36,7 @@ public class DiagnosticContextFilter implements Filter {
   private static final String CORRELATION_ID_HEADER_NAME_PARAM = "correlationIdHeaderName";
 
   /** The default value for {@link #setCorrelationIdHttpHeaderName(String)}. */
-  private static final String CORRELATION_ID_HEADER_NAME_DEFAULT = "CorrelationId";
+  public static final String CORRELATION_ID_HEADER_NAME_DEFAULT = "X-Correlation-Id";
 
   /** @see #setCorrelationIdHttpHeaderName(String) */
   private String correlationIdHttpHeaderName;
@@ -78,8 +77,8 @@ public class DiagnosticContextFilter implements Filter {
   }
 
   @Override
-  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
-      ServletException {
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+      throws IOException, ServletException {
 
     setCorrelationId(request);
     try {
