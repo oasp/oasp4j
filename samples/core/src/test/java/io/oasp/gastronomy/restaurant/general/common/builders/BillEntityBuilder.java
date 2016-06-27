@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.common.builders;
+package io.oasp.gastronomy.restaurant.general.common.builders;
 
 import java.util.LinkedList;
 import java.util.List;
