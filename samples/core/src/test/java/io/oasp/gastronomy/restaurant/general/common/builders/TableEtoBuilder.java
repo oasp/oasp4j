@@ -6,43 +6,20 @@ import java.util.List;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 
-/**
- * Cobigen generated builder for {@link TableEto}. Default values are set in method {@link createNew()}.
- *
- * @author sroeger
- */
 public class TableEtoBuilder {
 
   private List<P<TableEto>> parameterToBeApplied;
 
-  /**
-   * The constructor of a Cobigen generated builder for {@link TableEto}. Default values are set in method
-   * {@link createNew()}.
-   */
   public TableEtoBuilder() {
 
-    this.parameterToBeApplied = new LinkedList<P<TableEto>>();
+    parameterToBeApplied = new LinkedList<P<TableEto>>();
     fillMandatoryFields();
     fillMandatoryFields_custom();
   }
 
-  /**
-   * Might be enrichted to users needs (will not be overwritten)
-   */
-  private void fillMandatoryFields_custom() {
-
-  }
-
-  /**
-   * Fills all mandatory fields by default. (will be overwritten on re-generation)
-   */
-  private void fillMandatoryFields() {
-
-  }
-
   public TableEtoBuilder number(final Long number) {
 
-    this.parameterToBeApplied.add(new P<TableEto>() {
+    parameterToBeApplied.add(new P<TableEto>() {
       @Override
       public void apply(TableEto target) {
 
@@ -54,7 +31,7 @@ public class TableEtoBuilder {
 
   public TableEtoBuilder waiterId(final Long waiterId) {
 
-    this.parameterToBeApplied.add(new P<TableEto>() {
+    parameterToBeApplied.add(new P<TableEto>() {
       @Override
       public void apply(TableEto target) {
 
@@ -66,7 +43,7 @@ public class TableEtoBuilder {
 
   public TableEtoBuilder state(final TableState state) {
 
-    this.parameterToBeApplied.add(new P<TableEto>() {
+    parameterToBeApplied.add(new P<TableEto>() {
       @Override
       public void apply(TableEto target) {
 
@@ -78,7 +55,7 @@ public class TableEtoBuilder {
 
   public TableEtoBuilder revision(final Number revision) {
 
-    this.parameterToBeApplied.add(new P<TableEto>() {
+    parameterToBeApplied.add(new P<TableEto>() {
       @Override
       public void apply(TableEto target) {
 
@@ -91,13 +68,24 @@ public class TableEtoBuilder {
   public TableEto createNew() {
 
     TableEto tableeto = new TableEto();
-
-    // set default {@link TableState} to {@Code FREE}
-    tableeto.setState(TableState.FREE);
-    for (P<TableEto> parameter : this.parameterToBeApplied) {
+    for (P<TableEto> parameter : parameterToBeApplied) {
       parameter.apply(tableeto);
     }
     return tableeto;
+  }
+
+  /**
+   * Fills all mandatory fields by default. (will be overwritten on re-generation)
+   */
+  private void fillMandatoryFields() {
+
+  }
+
+  /**
+   * Might be enrichted to users needs (will not be overwritten)
+   */
+  private void fillMandatoryFields_custom() {
+
   }
 
 }

@@ -7,23 +7,22 @@ import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.BillEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderPositionEntity;
 
-/**
- * Cobigen generated builder for {@link BillEntity}. Default values can be set in method {@link createNew()}.
- *
- * @author sroeger
- */
 public class BillEntityBuilder {
 
   private List<P<BillEntity>> parameterToBeApplied;
 
-  /**
-   * The constructor of a Cobigen generated builder for {@link BillEntity}.
-   */
   public BillEntityBuilder() {
 
-    this.parameterToBeApplied = new LinkedList<P<BillEntity>>();
+    parameterToBeApplied = new LinkedList<P<BillEntity>>();
     fillMandatoryFields();
     fillMandatoryFields_custom();
+  }
+
+  /**
+   * Fills all mandatory fields by default. (will be overwritten on re-generation)
+   */
+  private void fillMandatoryFields() {
+
   }
 
   /**
@@ -35,7 +34,7 @@ public class BillEntityBuilder {
 
   public BillEntityBuilder orderPositions(final List<OrderPositionEntity> orderPositions) {
 
-    this.parameterToBeApplied.add(new P<BillEntity>() {
+    parameterToBeApplied.add(new P<BillEntity>() {
       @Override
       public void apply(BillEntity target) {
 
@@ -47,7 +46,7 @@ public class BillEntityBuilder {
 
   public BillEntityBuilder total(final Money total) {
 
-    this.parameterToBeApplied.add(new P<BillEntity>() {
+    parameterToBeApplied.add(new P<BillEntity>() {
       @Override
       public void apply(BillEntity target) {
 
@@ -59,7 +58,7 @@ public class BillEntityBuilder {
 
   public BillEntityBuilder tip(final Money tip) {
 
-    this.parameterToBeApplied.add(new P<BillEntity>() {
+    parameterToBeApplied.add(new P<BillEntity>() {
       @Override
       public void apply(BillEntity target) {
 
@@ -71,7 +70,7 @@ public class BillEntityBuilder {
 
   public BillEntityBuilder payed(final boolean payed) {
 
-    this.parameterToBeApplied.add(new P<BillEntity>() {
+    parameterToBeApplied.add(new P<BillEntity>() {
       @Override
       public void apply(BillEntity target) {
 
@@ -83,7 +82,7 @@ public class BillEntityBuilder {
 
   public BillEntityBuilder revision(final Number revision) {
 
-    this.parameterToBeApplied.add(new P<BillEntity>() {
+    parameterToBeApplied.add(new P<BillEntity>() {
       @Override
       public void apply(BillEntity target) {
 
@@ -95,7 +94,7 @@ public class BillEntityBuilder {
 
   public BillEntityBuilder orderPositionIds(final List orderPositionIds) {
 
-    this.parameterToBeApplied.add(new P<BillEntity>() {
+    parameterToBeApplied.add(new P<BillEntity>() {
       @Override
       public void apply(BillEntity target) {
 
@@ -108,17 +107,10 @@ public class BillEntityBuilder {
   public BillEntity createNew() {
 
     BillEntity billentity = new BillEntity();
-    for (P<BillEntity> parameter : this.parameterToBeApplied) {
+    for (P<BillEntity> parameter : parameterToBeApplied) {
       parameter.apply(billentity);
     }
     return billentity;
-  }
-
-  /**
-   * Fills all mandatory fields by default. (will be overwritten on re-generation)
-   */
-  private void fillMandatoryFields() {
-
   }
 
 }

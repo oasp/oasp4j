@@ -8,21 +8,13 @@ import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPo
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 
-/**
- * Cobigen generated builder for {@link OrderPositionEto}. Default values can be set in method {@link createNew()}.
- *
- * @author sroeger
- */
 public class OrderPositionEtoBuilder {
 
   private List<P<OrderPositionEto>> parameterToBeApplied;
 
-  /**
-   * The constructor of a Cobigen generated builder for {@link OrderPositionEto}.
-   */
   public OrderPositionEtoBuilder() {
 
-    this.parameterToBeApplied = new LinkedList<P<OrderPositionEto>>();
+    parameterToBeApplied = new LinkedList<P<OrderPositionEto>>();
     fillMandatoryFields();
     fillMandatoryFields_custom();
   }
@@ -34,16 +26,9 @@ public class OrderPositionEtoBuilder {
 
   }
 
-  /**
-   * Fills all mandatory fields by default. (will be overwritten on re-generation)
-   */
-  private void fillMandatoryFields() {
-
-  }
-
   public OrderPositionEtoBuilder orderId(final Long orderId) {
 
-    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
+    parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -55,7 +40,7 @@ public class OrderPositionEtoBuilder {
 
   public OrderPositionEtoBuilder cookId(final Long cookId) {
 
-    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
+    parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -67,7 +52,7 @@ public class OrderPositionEtoBuilder {
 
   public OrderPositionEtoBuilder offerId(final Long offerId) {
 
-    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
+    parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -79,7 +64,7 @@ public class OrderPositionEtoBuilder {
 
   public OrderPositionEtoBuilder offerName(final String offerName) {
 
-    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
+    parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -91,7 +76,7 @@ public class OrderPositionEtoBuilder {
 
   public OrderPositionEtoBuilder state(final OrderPositionState state) {
 
-    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
+    parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -103,7 +88,7 @@ public class OrderPositionEtoBuilder {
 
   public OrderPositionEtoBuilder price(final Money price) {
 
-    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
+    parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -115,7 +100,7 @@ public class OrderPositionEtoBuilder {
 
   public OrderPositionEtoBuilder comment(final String comment) {
 
-    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
+    parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -127,7 +112,7 @@ public class OrderPositionEtoBuilder {
 
   public OrderPositionEtoBuilder drinkState(final ProductOrderState drinkState) {
 
-    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
+    parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -139,7 +124,7 @@ public class OrderPositionEtoBuilder {
 
   public OrderPositionEtoBuilder revision(final Number revision) {
 
-    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
+    parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -152,10 +137,17 @@ public class OrderPositionEtoBuilder {
   public OrderPositionEto createNew() {
 
     OrderPositionEto orderpositioneto = new OrderPositionEto();
-    for (P<OrderPositionEto> parameter : this.parameterToBeApplied) {
+    for (P<OrderPositionEto> parameter : parameterToBeApplied) {
       parameter.apply(orderpositioneto);
     }
     return orderpositioneto;
+  }
+
+  /**
+   * Fills all mandatory fields by default. (will be overwritten on re-generation)
+   */
+  private void fillMandatoryFields() {
+
   }
 
 }
