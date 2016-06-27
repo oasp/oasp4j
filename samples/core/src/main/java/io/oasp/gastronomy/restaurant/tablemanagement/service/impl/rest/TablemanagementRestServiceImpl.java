@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.ws.rs.BadRequestException;
-import javax.ws.rs.NotFoundException;
 
 import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
 
@@ -36,20 +34,9 @@ public class TablemanagementRestServiceImpl implements TablemanagementRestServic
   }
 
   @Override
-  public TableEto getTable(String id) {
+  public TableEto getTable(long id) {
 
-    long idAsLong;
-    if (id == null) {
-      throw new BadRequestException("missing id");
-    }
-    try {
-      idAsLong = Long.parseLong(id);
-    } catch (NumberFormatException e) {
-      throw new BadRequestException("id is not a number");
-    } catch (NotFoundException e) {
-      throw new BadRequestException("table not found");
-    }
-    return this.tableManagement.findTable(idAsLong);
+    return this.tableManagement.findTable(id);
   }
 
   @Override

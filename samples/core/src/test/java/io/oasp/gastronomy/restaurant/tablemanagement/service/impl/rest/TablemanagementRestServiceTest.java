@@ -56,10 +56,10 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
   @Test
   public void testFindTable() {
 
-    String id = "102";
+    long id = 102;
     TableEto table = this.service.getTable(id);
     assertThat(table).isNotNull();
-    assertThat(table.getId()).isEqualTo(Long.parseLong(id));
+    assertThat(table.getId()).isEqualTo(id);
 
   }
 
