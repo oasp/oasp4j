@@ -2,6 +2,8 @@ package io.oasp.gastronomy.restaurant.tablemanagement.service.impl.rest;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.common.builders.TableEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractRestServiceTest;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableSearchCriteriaTo;
@@ -36,6 +39,9 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
   private static Logger LOG = LoggerFactory.getLogger(TablemanagementRestServiceTest.class);
 
   private TablemanagementRestService service;
+
+  @Inject
+  private Salesmanagement salesmanagement;
 
   /**
    * Provides initialization previous to the creation of the text fixture.

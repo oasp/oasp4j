@@ -47,6 +47,7 @@ public class SalesManagementTest extends ComponentTest {
 
     TestUtil.login("waiter", PermissionConstants.FIND_ORDER_POSITION, PermissionConstants.SAVE_ORDER_POSITION,
         PermissionConstants.SAVE_ORDER, PermissionConstants.FIND_OFFER);
+    this.dbTestHelper.setMigrationVersion("0002");
     this.dbTestHelper.resetDatabase();
   }
 
@@ -65,26 +66,30 @@ public class SalesManagementTest extends ComponentTest {
   public void testOrderPositionStateChange() {
 
     try {
-
-      OrderEto order = new OrderEtoBuilder().tableId(1L).createNew();
-      order = this.salesManagement.saveOrder(order);
-
-      OrderPositionEto orderPosition = new OrderPositionEtoBuilder().offerId(5L).orderId(order.getId())
+      // given
+      OrderEto neworder = new OrderEtoBuilder().tableId(1L).createNew();
+      assertThat(neworder).isNotNull();
+      OrderEto order = this.salesManagement.saveOrder(neworder);
+      assertThat(order).isNotNull();
+      OrderPositionEto newOrderPosition = new OrderPositionEtoBuilder().offerId(5L).orderId(order.getId())
           .offerName("Cola").price(new Money(1.2)).createNew();
-      orderPosition = this.salesManagement.saveOrderPosition(orderPosition);
-
+      assertThat(newOrderPosition).isNotNull();
+      OrderPositionEto orderPosition = this.salesManagement.saveOrderPosition(newOrderPosition);
+      assertThat(orderPosition).isNotNull();
       orderPosition.setState(OrderPositionState.ORDERED);
       orderPosition.setDrinkState(ProductOrderState.ORDERED);
 
       OrderPositionEto updatedOrderPosition = this.salesManagement.saveOrderPosition(orderPosition);
       assertThat(updatedOrderPosition.getState()).isEqualTo(OrderPositionState.ORDERED);
 
+      // when
       updatedOrderPosition.setState(OrderPositionState.PREPARED);
       updatedOrderPosition.setDrinkState(ProductOrderState.PREPARED);
-
       updatedOrderPosition = this.salesManagement.saveOrderPosition(updatedOrderPosition);
 
+      // then
       assertThat(updatedOrderPosition.getState()).isEqualTo(OrderPositionState.PREPARED);
+
     } catch (ConstraintViolationException e) {
       // BV is really painful as you need such code to see the actual error in JUnit.
       StringBuilder sb = new StringBuilder(64);
