@@ -37,7 +37,7 @@ public interface TablemanagementRestService extends RestService {
    */
   @GET
   @Path("/table/{id}/")
-  TableEto getTable(@PathParam("id") String id);
+  TableEto getTable(@PathParam("id") long id);
 
   /**
    * Delegates to {@link Tablemanagement#findAllTables}.

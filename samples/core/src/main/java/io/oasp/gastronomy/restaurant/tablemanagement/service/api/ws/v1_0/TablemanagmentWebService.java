@@ -1,11 +1,11 @@
 package io.oasp.gastronomy.restaurant.tablemanagement.service.api.ws.v1_0;
 
-import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
-
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
+
+import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 
 /**
  * This is the interface for a service exposing the functionality of the
@@ -24,6 +24,6 @@ public interface TablemanagmentWebService {
    */
   @WebMethod
   @WebResult(name = "message")
-  TableEto getTable(@WebParam(name = "id") String id);
+  TableEto getTable(@WebParam(name = "id") long id);
 
 }
