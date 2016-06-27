@@ -82,7 +82,7 @@ public class StaffmanagementImplTest extends ModuleTest {
   /**
    * This test method updates a saved staffMemberEntity. It demonstrates the approach when there is a method call in the
    * method under test. To solve this you need to override the {@code @Inject} of the tested method by using the
-   * appropriate setter {@code setStaffMemberDao}.
+   * appropriate setter {@code setStaffMemberDao()}.
    */
   @Test
   public void testSaveStaffMember() {
@@ -102,6 +102,10 @@ public class StaffmanagementImplTest extends ModuleTest {
     Mockito.when(staffMemberEto.getName()).thenReturn("new Name");
     Mockito.when(staffMemberEntity.getName()).thenReturn("old Name");
 
+    Mockito.when(this.beanMapper.map(staffMemberEto, StaffMemberEntity.class)).thenReturn(staffMemberEntity);
+    Mockito.when(staffMemberDao.save(staffMemberEntity)).thenReturn(staffMemberEntity);
+    Mockito.when(this.beanMapper.map(staffMemberEntity, StaffMemberEto.class)).thenReturn(staffMemberEto);
+
     // exercise
     // when
     this.staffmanagementImpl.setStaffMemberDao(staffMemberDao);
@@ -113,10 +117,10 @@ public class StaffmanagementImplTest extends ModuleTest {
     Mockito.verify(staffMemberDao).find(id);
     Mockito.verify(staffMemberEto, Mockito.atLeastOnce()).getName();
     Mockito.verify(staffMemberEntity, Mockito.atLeastOnce()).getName();
-
-    // TODO verify other stub calls..
-    // teardown
-    // clear all used fields
+    Mockito.verify(this.beanMapper).map(staffMemberEto, StaffMemberEntity.class);
+    Mockito.verify(staffMemberDao).save(staffMemberEntity);
+    Mockito.verify(this.beanMapper).map(staffMemberEntity, StaffMemberEto.class);
+    assertThat(resultEto.getId()).isEqualTo(staffMemberEto.getId());
 
   }
 
