@@ -17,7 +17,8 @@ import io.oasp.module.test.common.base.ModuleTest;
 
 /**
  * This class provides a basic implementation of a {@code ModuleTest} which employs the Mockito framework to provide
- * fake objects to the SUT.
+ * fake objects to the SUT. For a limited number of test cases per class it can be convenient to use the annotation
+ * {@code @InjectMocks} to inject all needed mocks in the class under test.
  *
  * @author sroeger
  */
@@ -81,13 +82,11 @@ public class StaffmanagementImplTest extends ModuleTest {
 
   /**
    * This test method updates a saved staffMemberEntity. It demonstrates the approach when there is a method call in the
-   * method under test. To solve this you need to override the {@code @Inject} of the tested method by using the
-   * appropriate setter {@code setStaffMemberDao()}.
+   * method under test. To solve this in the given case you need to override the {@code @Inject} of the tested method by
+   * using the appropriate setter {@code setStaffMemberDao()}.
    */
   @Test
   public void testSaveStaffMember() {
-
-    // setup: availability of mocked dependencies is verified
 
     // given
     StaffMemberEto staffMemberEto = Mockito.mock(StaffMemberEto.class);

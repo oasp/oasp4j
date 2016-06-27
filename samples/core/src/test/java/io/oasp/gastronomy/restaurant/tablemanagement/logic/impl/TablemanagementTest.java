@@ -57,7 +57,8 @@ public class TablemanagementTest extends ComponentTest {
   public void setUp() {
 
     TestUtil.login("waiter", PermissionConstants.SAVE_ORDER_POSITION, PermissionConstants.SAVE_ORDER,
-        PermissionConstants.FIND_TABLE, PermissionConstants.FIND_ORDER, PermissionConstants.SAVE_TABLE);
+        PermissionConstants.FIND_TABLE, PermissionConstants.FIND_ORDER, PermissionConstants.SAVE_TABLE,
+        PermissionConstants.FIND_OFFER);
     this.dbTestHelper.setMigrationVersion("0002");
     this.dbTestHelper.resetDatabase();
 
@@ -91,10 +92,13 @@ public class TablemanagementTest extends ComponentTest {
     OrderEto newOrder = new OrderEtoBuilder().tableId(table.getId()).createNew();
     OrderEto order = this.salesmanagement.saveOrder(newOrder);
     long orderId = order.getId();
-    OrderPositionEto orderPosition = new OrderPositionEtoBuilder().orderId(orderId).offerId(offerId).createNew();
+    OrderPositionEto newOrderPosition = new OrderPositionEtoBuilder().orderId(orderId).offerId(offerId).createNew();
+    OrderPositionEto orderPosition = this.salesmanagement.saveOrderPosition(newOrderPosition);
 
     // then
     // table should be OCCUPIED
+    assertThat(order).isNotNull();
+    assertThat(orderPosition).isNotNull();
     assertThat(this.tablemanagement.isTableReleasable(table)).isFalse();
     assertThat(table.getState()).isEqualTo(TableState.OCCUPIED);
   }
