@@ -16,6 +16,7 @@ import javax.persistence.Version;
  * @author rjoeris
  */
 @MappedSuperclass
+@Deprecated
 public abstract class AbstractPersistenceEntity implements MutablePersistenceEntity<Long> {
 
   private static final long serialVersionUID = 1L;
