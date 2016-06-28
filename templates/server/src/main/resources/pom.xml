@@ -23,7 +23,6 @@
     <module>${earProjectName}</module>
 #end
     <module>server</module>
-     <module>client</module>
   </modules>
 
   <dependencyManagement>
