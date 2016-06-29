@@ -2,8 +2,6 @@ package io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest;
 
 import java.math.BigDecimal;
 
-import io.oasp.gastronomy.restaurant.common.builders.OrderEtoBuilder;
-import io.oasp.gastronomy.restaurant.common.builders.OrderPositionEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
@@ -61,8 +59,10 @@ public class SalesmanagementRestServiceTestHelper {
   protected OrderCto createSampleOrderCto(long tableId) {
 
     OrderCto sampleOrderCto = new OrderCto();
-    OrderEto sampleOrderEto = new OrderEtoBuilder().tableId(SAMPLE_TABLE_ID).createNew();
+    OrderEto sampleOrderEto = new OrderEto();
+    sampleOrderEto.setTableId(SAMPLE_TABLE_ID);
     sampleOrderCto.setOrder(sampleOrderEto);
+
     return sampleOrderCto;
   }
 
@@ -74,9 +74,15 @@ public class SalesmanagementRestServiceTestHelper {
    */
   public OrderPositionEto createSampleOrderPositionEto(long orderId) {
 
-    OrderPositionEto sampleOrderPositionEto = new OrderPositionEtoBuilder().orderId(orderId).offerId(SAMPLE_OFFER_ID)
-        .offerName(SAMPLE_OFFER_NAME).state(SAMPLE_ORDER_POSITION_STATE).drinkState(SAMPLE_DRINK_STATE)
-        .price(SAMPLE_PRICE).comment(SAMPLE_COMMENT).createNew();
+    OrderPositionEto sampleOrderPositionEto = new OrderPositionEto();
+    sampleOrderPositionEto.setOrderId(orderId);
+    sampleOrderPositionEto.setOfferId(SAMPLE_OFFER_ID);
+    sampleOrderPositionEto.setOfferName(SAMPLE_OFFER_NAME);
+    sampleOrderPositionEto.setState(SAMPLE_ORDER_POSITION_STATE);
+    sampleOrderPositionEto.setDrinkState(SAMPLE_DRINK_STATE);
+    sampleOrderPositionEto.setPrice(SAMPLE_PRICE);
+    sampleOrderPositionEto.setComment(SAMPLE_COMMENT);
+
     return sampleOrderPositionEto;
   }
 
