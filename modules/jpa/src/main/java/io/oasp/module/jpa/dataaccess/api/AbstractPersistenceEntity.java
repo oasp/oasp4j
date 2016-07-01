@@ -12,10 +12,17 @@ import javax.persistence.Version;
  * {@link #getId() primary key}. In case you need a different type of key add it as extra column and make it
  * {@link javax.persistence.Column#unique() unique}.
  *
+ * @deprecated will be removed in a future release. In order to give OASP users more flexibility we want to stop
+ *             providing an JPA entity base class in this library. Instead we provide it with our application template
+ *             (oasp4j-template-server) so you can take over control of JPA annotations. If you already started with
+ *             OASP in an earlier version you can simply update `ApplicationPersistenceEntity` from our current sample
+ *             on github to get rid of the dependency to this class.
+ *
  * @author hohwille
  * @author rjoeris
  */
 @MappedSuperclass
+@Deprecated
 public abstract class AbstractPersistenceEntity implements MutablePersistenceEntity<Long> {
 
   private static final long serialVersionUID = 1L;
