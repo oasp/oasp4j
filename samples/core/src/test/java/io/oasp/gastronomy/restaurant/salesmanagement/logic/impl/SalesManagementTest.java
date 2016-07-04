@@ -11,6 +11,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
 import io.oasp.gastronomy.restaurant.general.common.TestUtil;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
@@ -25,7 +26,7 @@ import io.oasp.module.test.common.base.ComponentTest;
 /**
  * This is the test-case of {@link Salesmanagement}.
  *
- * @author hohwille
+ * @author hohwille, sroeger
  */
 @SpringApplicationConfiguration(classes = { SpringBootApp.class })
 @WebAppConfiguration
@@ -36,11 +37,16 @@ public class SalesManagementTest extends ComponentTest {
   @Inject
   private OrderPositionDao orderPositionDao;
 
+  @Inject
+  private DbTestHelper dbTestHelper;
+
   @Before
   public void setUp() {
 
     TestUtil.login("waiter", PermissionConstants.FIND_ORDER_POSITION, PermissionConstants.SAVE_ORDER_POSITION,
         PermissionConstants.SAVE_ORDER, PermissionConstants.FIND_OFFER);
+    this.dbTestHelper.setMigrationVersion("0002");
+    this.dbTestHelper.resetDatabase();
   }
 
   @After

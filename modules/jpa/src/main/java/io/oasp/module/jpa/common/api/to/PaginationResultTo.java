@@ -1,8 +1,8 @@
 package io.oasp.module.jpa.common.api.to;
 
-import io.oasp.module.basic.common.api.to.AbstractTo;
-
 import net.sf.mmm.util.exception.api.NlsIllegalArgumentException;
+
+import io.oasp.module.basic.common.api.to.AbstractTo;
 
 /**
  * Pagination information about a paginated query.
@@ -22,6 +22,13 @@ public class PaginationResultTo extends AbstractTo {
 
   /** @see #getTotal() */
   private Long total;
+
+  /**
+   * The constructor.
+   */
+  public PaginationResultTo() {
+    super();
+  }
 
   /**
    * Constructor expecting an existing {@link PaginationTo pagination criteria} and the total number of results found.

@@ -1,11 +1,11 @@
 package io.oasp.module.jpa.common.api.to;
 
-import io.oasp.module.basic.common.api.to.AbstractTo;
-
 import java.util.List;
 
 import net.sf.mmm.util.entity.api.PersistenceEntity;
 import net.sf.mmm.util.transferobject.api.TransferObject;
+
+import io.oasp.module.basic.common.api.to.AbstractTo;
 
 /**
  * A paginated list of objects with additional pagination information.
@@ -25,6 +25,13 @@ public class PaginatedListTo<E> extends AbstractTo {
 
   /** @see #getResult() */
   private List<E> result;
+
+  /**
+   * The constructor.
+   */
+  public PaginatedListTo() {
+    super();
+  }
 
   /**
    * A convenience constructor which accepts a paginated list and {@link PaginationResultTo pagination information}.
