@@ -29,7 +29,7 @@ import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto
  */
 @SpringApplicationConfiguration(classes = { SpringBootBatchApp.class, StaffImportConfig.class })
 @WebAppConfiguration
-@TestPropertySource(properties = { "flyway.locations=db/migration" })
+@TestPropertySource(properties = { "flyway.locations=db/migration", "logging.level.io=WARN", "logging.level.org=WARN" })
 public class StaffImportJobTest extends AbstractSpringBatchIntegrationTest {
 
   @Inject
