@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.offermanagement.batch.impl.offerimport;
+package io.oasp.gastronomy.restaurant.offermanagement.batch.impl.offerimport.writer;
 
 /**
  * sroeger This type is needed to conver
