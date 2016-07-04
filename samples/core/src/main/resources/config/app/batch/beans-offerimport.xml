@@ -24,7 +24,7 @@
       <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
         <property name="fieldSetMapper">
           <bean class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper">
-            <property name="targetType" value="io.oasp.gastronomy.restaurant.offermanagement.batch.impl.offerimport.OfferCsv"/>
+            <property name="targetType" value="io.oasp.gastronomy.restaurant.offermanagement.batch.impl.offerimport.writer.OfferCsv"/>
           </bean>
         </property>
         <property name="lineTokenizer">
