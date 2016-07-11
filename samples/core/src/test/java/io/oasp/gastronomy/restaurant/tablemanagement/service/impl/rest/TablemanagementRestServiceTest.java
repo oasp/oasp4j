@@ -16,7 +16,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractRestServiceTest;
-import io.oasp.gastronomy.restaurant.general.common.builders.TableEtoBuilder;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
@@ -124,7 +123,10 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
     getRestTestClientBuilder().setUser("chief");
     getRestTestClientBuilder().setPassword("chief");
     this.service = getRestTestClientBuilder().build(TablemanagementRestService.class);
-    TableEto table = new TableEtoBuilder().number(tableNumber).waiterId(waiterId).createNew();
+    TableEto table = new TableEto();
+    table.setNumber(tableNumber);
+    table.setWaiterId(waiterId);
+    table.setState(TableState.FREE);
     assertThat(table.getId()).isNull();
 
     // when
@@ -148,8 +150,10 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
     // given
     long tableNumber = 7L;
     long waiterId = 2L;
-    TableEto table =
-        new TableEtoBuilder().number(tableNumber).waiterId(waiterId).state(TableState.RESERVED).createNew();
+    TableEto table = new TableEto();
+    table.setNumber(tableNumber);
+    table.setWaiterId(waiterId);
+    table.setState(TableState.RESERVED);
     assertThat(table).isNotNull();
     TableEto savedTable = this.service.saveTable(table);
     assertThat(savedTable).isNotNull();

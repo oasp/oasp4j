@@ -16,8 +16,6 @@ import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
 import io.oasp.gastronomy.restaurant.general.common.TestUtil;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
-import io.oasp.gastronomy.restaurant.general.common.builders.OrderEtoBuilder;
-import io.oasp.gastronomy.restaurant.general.common.builders.OrderPositionEtoBuilder;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
@@ -89,10 +87,13 @@ public class TablemanagementTest extends ComponentTest {
 
     // when
     // add order with open orderPosition to table
-    OrderEto newOrder = new OrderEtoBuilder().tableId(table.getId()).createNew();
+    OrderEto newOrder = new OrderEto();
+    newOrder.setTableId(table.getId());
     OrderEto order = this.salesmanagement.saveOrder(newOrder);
     long orderId = order.getId();
-    OrderPositionEto newOrderPosition = new OrderPositionEtoBuilder().orderId(orderId).offerId(offerId).createNew();
+    OrderPositionEto newOrderPosition = new OrderPositionEto();
+    newOrderPosition.setOrderId(orderId);
+    newOrderPosition.setOfferId(offerId);
     OrderPositionEto orderPosition = this.salesmanagement.saveOrderPosition(newOrderPosition);
 
     // then

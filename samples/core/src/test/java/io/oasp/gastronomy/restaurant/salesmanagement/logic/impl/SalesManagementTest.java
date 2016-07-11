@@ -15,8 +15,6 @@ import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
 import io.oasp.gastronomy.restaurant.general.common.TestUtil;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
-import io.oasp.gastronomy.restaurant.general.common.builders.OrderEtoBuilder;
-import io.oasp.gastronomy.restaurant.general.common.builders.OrderPositionEtoBuilder;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.OrderPositionDao;
@@ -67,14 +65,16 @@ public class SalesManagementTest extends ComponentTest {
 
     try {
       // given
-      OrderEto neworder = new OrderEtoBuilder().tableId(1L).createNew();
-      assertThat(neworder).isNotNull();
-      OrderEto order = this.salesManagement.saveOrder(neworder);
-      assertThat(order).isNotNull();
-      OrderPositionEto newOrderPosition = new OrderPositionEtoBuilder().offerId(5L).orderId(order.getId())
-          .offerName("Cola").price(new Money(1.2)).createNew();
-      assertThat(newOrderPosition).isNotNull();
-      OrderPositionEto orderPosition = this.salesManagement.saveOrderPosition(newOrderPosition);
+      OrderEto order = new OrderEto();
+      order.setTableId(1L);
+      order = this.salesManagement.saveOrder(order);
+      OrderPositionEto orderPosition = new OrderPositionEto();
+      orderPosition.setOfferId(5L);
+      orderPosition.setOrderId(order.getId());
+      orderPosition.setOfferName("Cola");
+      orderPosition.setPrice(new Money(1.2));
+
+      orderPosition = this.salesManagement.saveOrderPosition(orderPosition);
       assertThat(orderPosition).isNotNull();
       orderPosition.setState(OrderPositionState.ORDERED);
       orderPosition.setDrinkState(ProductOrderState.ORDERED);
