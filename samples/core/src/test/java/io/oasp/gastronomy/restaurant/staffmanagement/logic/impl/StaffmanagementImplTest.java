@@ -1,12 +1,10 @@
 package io.oasp.gastronomy.restaurant.staffmanagement.logic.impl;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api.StaffMemberEntity;
@@ -40,12 +38,6 @@ public class StaffmanagementImplTest extends ModuleTest {
 
   @InjectMocks
   StaffmanagementImpl staffmanagementImpl = new StaffmanagementImpl();
-
-  @Before
-  public void initMocks() {
-
-    MockitoAnnotations.initMocks(this);
-  }
 
   /**
    * This test method tests the {@code findStaffMember} method of {@link StaffmanagementImpl} by mocking needed
