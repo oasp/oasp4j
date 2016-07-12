@@ -4,18 +4,22 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
 import io.oasp.gastronomy.restaurant.general.common.TestUtil;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
+import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
@@ -156,4 +160,72 @@ public class TablemanagementTest extends ComponentTest {
     assertThat(allTables).extracting("number").contains(table.getNumber());
 
   }
+
+  /**
+   * This test tries to delete a table without credentials.
+   */
+  @Test(expected = AccessDeniedException.class)
+  public void testDeleteTableWithoutCredentials() {
+
+    // given
+    Long tableNumber = 101L;
+
+    // when
+    this.tablemanagement.deleteTable(tableNumber);
+
+    // then
+    assertThat(this.tablemanagement.findTable(tableNumber)).isNotNull();
+  }
+
+  /**
+   * This test tries to delete a table that is occupied.
+   */
+  @Test(expected = IllegalEntityStateException.class)
+  public void testDeleteTableWithCredentialsButNotDeletable() {
+
+    // given
+    TestUtil.login("waiter", PermissionConstants.DELETE_TABLE, PermissionConstants.FIND_TABLE);
+    Long tableNumber = 101L;
+
+    // when
+    this.tablemanagement.deleteTable(tableNumber);
+
+    // then
+    assertThat(this.tablemanagement.findTable(tableNumber)).isNotNull();
+  }
+
+  /**
+   * This table tries to delete a table that does not exist.
+   */
+  @Test(expected = ObjectNotFoundUserException.class)
+  public void testDeleteTableWithCredentialsNotExisting() {
+
+    // given
+    TestUtil.login("waiter", PermissionConstants.DELETE_TABLE, PermissionConstants.FIND_TABLE);
+    Long tableNumber = 100L;
+
+    // when
+    this.tablemanagement.deleteTable(tableNumber);
+
+    // then
+    assertThat(this.tablemanagement.findTable(tableNumber)).isNull();
+  }
+
+  /**
+   * This table deletes a table that is free.
+   */
+  @Test
+  public void testDeleteTableWithCredentials() {
+
+    // given
+    TestUtil.login("waiter", PermissionConstants.DELETE_TABLE, PermissionConstants.FIND_TABLE);
+    Long tableNumber = 102L;
+
+    // when
+    this.tablemanagement.deleteTable(tableNumber);
+
+    // then
+    assertThat(this.tablemanagement.findTable(tableNumber)).isNull();
+  }
+
 }
