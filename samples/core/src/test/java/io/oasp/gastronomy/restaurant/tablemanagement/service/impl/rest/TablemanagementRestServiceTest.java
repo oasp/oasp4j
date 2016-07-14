@@ -97,16 +97,14 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
 
     // given
     int deleteTableNumber = 102;
-    List<TableEto> tableListBeforeDelete = this.service.getAllTables();
-    int numberOfTables = tableListBeforeDelete.size();
+    assertThat(this.service.getTable(deleteTableNumber)).isNotNull();
 
     // when
     this.service.deleteTable(deleteTableNumber);
 
     // then
     assertThat(this.service.getTable(deleteTableNumber)).isNull();
-    List<TableEto> tableListAfterDelete = this.service.getAllTables();
-    assertThat(tableListAfterDelete).hasSize(numberOfTables - 1);
+
   }
 
   /**
