@@ -16,10 +16,16 @@ import org.springframework.web.context.ConfigurableWebApplicationContext;
 /**
  * Registers new {@link WebApplicationInitializer} which allows setting spring profiles in application properties.
  *
+ * @deprecated This is no longer required as we utilize Spring Boot and will be removed in oasp:3.0.0. Profile specific
+ *             configuration can be set in application-{profile}.properties which overwrites the standard
+ *             application.properties. Profile activation can be done via the SpringApplication API or the
+ *             spring.profiles.active file. If several profiles are specified, a last wins strategy applies. See Spring
+ *             Boot features: Externalized Configuration for more information.
  * @author sspielma
  */
-public class PropertiesWebApplicationContextInitializer implements
-    ApplicationContextInitializer<ConfigurableWebApplicationContext> {
+@Deprecated
+public class PropertiesWebApplicationContextInitializer
+    implements ApplicationContextInitializer<ConfigurableWebApplicationContext> {
 
   /** Logger instance. */
   private static final Logger LOG = LoggerFactory.getLogger(PropertiesWebApplicationContextInitializer.class);
@@ -27,8 +33,8 @@ public class PropertiesWebApplicationContextInitializer implements
   /**
    * List of application property resource names.
    */
-  private String[] applicationPropertyResources = { "classpath:/config/app/application-default.properties",
-  "classpath:/config/env/application.properties" };
+  private String[] applicationPropertyResources =
+      { "classpath:/config/app/application-default.properties", "classpath:/config/env/application.properties" };
 
   @Override
   public void initialize(ConfigurableWebApplicationContext applicationContext) {
