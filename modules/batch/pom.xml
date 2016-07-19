@@ -1,0 +1,62 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>io.oasp.java.dev</groupId>
+    <artifactId>oasp4j-modules</artifactId>
+    <version>dev-SNAPSHOT</version>
+  </parent>
+
+  <groupId>io.oasp.java.modules</groupId>
+  <artifactId>oasp4j-batch</artifactId>
+  <version>${oasp4j.version}</version>
+  <packaging>jar</packaging>
+  <name>${project.artifactId}</name>
+  <description>Batch infrastructure of the Open Application Standard Platform for Java (OASP4J).</description>
+
+  <dependencies>
+    <!-- OASP modules -->
+    <dependency>
+      <groupId>io.oasp.java.modules</groupId>
+      <artifactId>oasp4j-jpa</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.oasp.java.modules</groupId>
+      <artifactId>oasp4j-logging</artifactId>
+    </dependency>
+
+
+    <!-- Spring Batch -->
+    <dependency>
+      <groupId>org.springframework.batch</groupId>
+      <artifactId>spring-batch-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.batch</groupId>
+      <artifactId>spring-batch-infrastructure</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.batch</groupId>
+      <artifactId>spring-batch-integration</artifactId>
+    </dependency>
+
+	<!-- Spring Boot: Only needed if SpringBootBatchCommandLine is used -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <!-- Test dependencies -->
+    <dependency>
+      <groupId>org.springframework.batch</groupId>
+      <artifactId>spring-batch-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.oasp.java.modules</groupId>
+      <artifactId>oasp4j-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>

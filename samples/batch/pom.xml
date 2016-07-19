@@ -32,25 +32,6 @@
   </dependencies>
   <build>
     <plugins>
-      <!-- Copy environment configuration for batch -->
-      <plugin>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>copy-config</id>
-            <phase>package</phase>
-            <configuration>
-              <target name="Copy application.properties">
-                <copy file="${project.basedir}/../core/src/main/resources/config/application.properties"
-                  tofile="${project.build.directory}/etc/config/env/application.properties"/>
-              </target>
-            </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
       <!-- Copy dependencies for sample application -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

@@ -19,7 +19,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <cxf.version>3.1.4</cxf.version>
+    <cxf.version>3.1.6</cxf.version>
     <oasp.gpg.keyname>joerg.hohwiller@capgemini.com</oasp.gpg.keyname>
     <oasp.flatten.mode>bom</oasp.flatten.mode>
   </properties>
@@ -61,7 +61,7 @@
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-collections4</artifactId>
-        <version>4.0</version>
+        <version>4.1</version>
       </dependency>
       <!-- Support for money datatype including operations/calculations -->
       <dependency>
@@ -107,6 +107,7 @@
       <dependency>
         <groupId>javax.servlet</groupId>
         <artifactId>javax.servlet-api</artifactId>
+        <version>3.1.0</version>
         <scope>provided</scope>
       </dependency>
       <!-- Servlet Taglib -->
@@ -222,7 +223,7 @@
       <dependency>
         <groupId>org.glassfish.web</groupId>
         <artifactId>javax.el</artifactId>
-        <version>2.2.4</version>
+        <version>2.2.6</version>
       </dependency>
 
       <!-- *** INTERNAL DEPENDENCIES *** -->
