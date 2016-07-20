@@ -127,7 +127,7 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
    * attributes are tested for correctness.
    */
   @Test
-  public void postOrderWithOrderPositionEto() {
+  public void postOrderWithOrderPosition() {
 
     // given
     HttpHeaders postRequestHeaders = this.AUTHENTIFICATED_HEADERS;
