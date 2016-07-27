@@ -129,12 +129,18 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <mainClass>io.oasp.gastronomy.restaurant.SpringBootApp</mainClass>
-          <classifier>bootified</classifier>
-          <finalName>${project.artifactId}</finalName>
-          <layout>WAR</layout>
-        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+            <configuration>
+              <mainClass>io.oasp.gastronomy.restaurant.SpringBootApp</mainClass>
+              <classifier>bootified</classifier>
+              <finalName>${project.artifactId}</finalName>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
