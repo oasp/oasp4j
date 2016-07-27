@@ -113,5 +113,4 @@ public abstract class AbstractPersistenceEntity implements MutablePersistenceEnt
       buffer.append("]");
     }
   }
-
 }

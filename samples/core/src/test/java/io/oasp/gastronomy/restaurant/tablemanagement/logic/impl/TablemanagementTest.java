@@ -9,13 +9,13 @@ import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.common.builders.OrderEtoBuilder;
+import io.oasp.gastronomy.restaurant.common.builders.OrderPositionEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
 import io.oasp.gastronomy.restaurant.general.common.TestUtil;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
@@ -26,7 +26,6 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionE
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
-import io.oasp.gastronomy.restaurant.tablemanagement.service.impl.rest.TablemanagementRestServiceTest;
 import io.oasp.module.test.common.base.ComponentTest;
 
 /**
@@ -39,8 +38,6 @@ import io.oasp.module.test.common.base.ComponentTest;
 @SpringApplicationConfiguration(classes = { SpringBootApp.class })
 @WebAppConfiguration
 public class TablemanagementTest extends ComponentTest {
-
-  private static Logger LOG = LoggerFactory.getLogger(TablemanagementRestServiceTest.class);
 
   @Inject
   private Salesmanagement salesmanagement;
@@ -91,13 +88,10 @@ public class TablemanagementTest extends ComponentTest {
 
     // when
     // add order with open orderPosition to table
-    OrderEto newOrder = new OrderEto();
-    newOrder.setTableId(table.getId());
+    OrderEto newOrder = new OrderEtoBuilder().tableId(table.getId()).createNew();
     OrderEto order = this.salesmanagement.saveOrder(newOrder);
     long orderId = order.getId();
-    OrderPositionEto newOrderPosition = new OrderPositionEto();
-    newOrderPosition.setOrderId(orderId);
-    newOrderPosition.setOfferId(offerId);
+    OrderPositionEto newOrderPosition = new OrderPositionEtoBuilder().orderId(orderId).offerId(offerId).createNew();
     OrderPositionEto orderPosition = this.salesmanagement.saveOrderPosition(newOrderPosition);
 
     // then

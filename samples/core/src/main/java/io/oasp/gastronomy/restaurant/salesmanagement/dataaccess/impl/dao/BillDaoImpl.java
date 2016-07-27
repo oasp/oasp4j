@@ -1,10 +1,10 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.impl.dao;
 
-import javax.inject.Named;
-
 import io.oasp.gastronomy.restaurant.general.dataaccess.base.dao.ApplicationDaoImpl;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.BillEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.BillDao;
+
+import javax.inject.Named;
 
 /**
  * Implementation of {@link BillDao}.

@@ -1,11 +1,12 @@
 package io.oasp.gastronomy.restaurant.staffmanagement.logic.impl;
 
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
 import io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api.StaffMemberEntity;
 import io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api.dao.StaffMemberDao;
@@ -21,8 +22,13 @@ import io.oasp.module.test.common.base.ModuleTest;
  * @author sroeger
  */
 
-@RunWith(MockitoJUnitRunner.class)
 public class StaffmanagementImplTest extends ModuleTest {
+
+  /**
+   * Initializes mocks before each test method.
+   */
+  @Rule
+  public MockitoRule rule = MockitoJUnit.rule();
 
   @Mock
   private BeanMapper beanMapper;
@@ -44,13 +50,7 @@ public class StaffmanagementImplTest extends ModuleTest {
    * dependencies.
    */
   @Test
-  public void testfindStaffMember() {
-
-    // setup: availability of mocked dependencies is verified
-    assertThat(this.staffMemberEntity).isNotNull();
-    assertThat(this.staffMemberEto).isNotNull();
-    assertThat(this.staffMemberDao).isNotNull();
-    assertThat(this.beanMapper).isNotNull();
+  public void testFindStaffMember() {
 
     // given
     long id = 1L;
@@ -60,16 +60,11 @@ public class StaffmanagementImplTest extends ModuleTest {
     Mockito.when(this.beanMapper.map(this.staffMemberEntity, targetClass)).thenReturn(this.staffMemberEto);
 
     // when
-
     StaffMemberEto resultEto = this.staffmanagementImpl.findStaffMember(id);
 
     // then
-    Mockito.verify(this.staffMemberDao).find(id);
-    Mockito.verify(this.beanMapper).map(this.staffMemberEntity, targetClass);
-
     assertThat(resultEto).isNotNull();
     assertThat(resultEto).isEqualTo(this.staffMemberEto);
-
   }
 
   /**
@@ -81,38 +76,21 @@ public class StaffmanagementImplTest extends ModuleTest {
   public void testSaveStaffMember() {
 
     // given
-    StaffMemberEto staffMemberEto = Mockito.mock(StaffMemberEto.class);
-
-    StaffMemberDao staffMemberDao = Mockito.mock(StaffMemberDao.class);
-    StaffMemberEntity staffMemberEntity = Mockito.mock(StaffMemberEntity.class);
-
     long id = 1L;
 
-    Mockito.when(staffMemberEto.getId()).thenReturn(id);
-    Mockito.when(staffMemberDao.find(id)).thenReturn(staffMemberEntity);
-    Mockito.when(staffMemberEto.getName()).thenReturn("new Name");
-    Mockito.when(staffMemberEntity.getName()).thenReturn("old Name");
+    Mockito.when(this.staffMemberEto.getId()).thenReturn(id);
+    Mockito.when(this.staffMemberDao.find(id)).thenReturn(this.staffMemberEntity);
+    Mockito.when(this.staffMemberEto.getName()).thenReturn("new Name");
+    Mockito.when(this.staffMemberEntity.getName()).thenReturn("old Name");
+    Mockito.when(this.beanMapper.map(this.staffMemberEto, StaffMemberEntity.class)).thenReturn(this.staffMemberEntity);
+    Mockito.when(this.staffMemberDao.save(this.staffMemberEntity)).thenReturn(this.staffMemberEntity);
+    Mockito.when(this.beanMapper.map(this.staffMemberEntity, StaffMemberEto.class)).thenReturn(this.staffMemberEto);
 
-    Mockito.when(this.beanMapper.map(staffMemberEto, StaffMemberEntity.class)).thenReturn(staffMemberEntity);
-    Mockito.when(staffMemberDao.save(staffMemberEntity)).thenReturn(staffMemberEntity);
-    Mockito.when(this.beanMapper.map(staffMemberEntity, StaffMemberEto.class)).thenReturn(staffMemberEto);
-
-    // exercise
     // when
-    this.staffmanagementImpl.setStaffMemberDao(staffMemberDao);
-    StaffMemberEto resultEto = this.staffmanagementImpl.saveStaffMember(staffMemberEto);
+    this.staffmanagementImpl.setStaffMemberDao(this.staffMemberDao);
+    StaffMemberEto resultEto = this.staffmanagementImpl.saveStaffMember(this.staffMemberEto);
 
-    // verify
     // then
-    Mockito.verify(staffMemberEto).getId();
-    Mockito.verify(staffMemberDao).find(id);
-    Mockito.verify(staffMemberEto, Mockito.atLeastOnce()).getName();
-    Mockito.verify(staffMemberEntity, Mockito.atLeastOnce()).getName();
-    Mockito.verify(this.beanMapper).map(staffMemberEto, StaffMemberEntity.class);
-    Mockito.verify(staffMemberDao).save(staffMemberEntity);
-    Mockito.verify(this.beanMapper).map(staffMemberEntity, StaffMemberEto.class);
-    assertThat(resultEto.getId()).isEqualTo(staffMemberEto.getId());
-
+    assertThat(resultEto.getId()).isEqualTo(this.staffMemberEto.getId());
   }
-
 }

@@ -11,13 +11,14 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.common.builders.OrderEtoBuilder;
+import io.oasp.gastronomy.restaurant.common.builders.OrderPositionEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
 import io.oasp.gastronomy.restaurant.general.common.TestUtil;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
-import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.OrderPositionDao;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
@@ -31,15 +32,16 @@ import io.oasp.module.test.common.base.ComponentTest;
 @SpringApplicationConfiguration(classes = { SpringBootApp.class })
 @WebAppConfiguration
 public class SalesManagementTest extends ComponentTest {
+
   @Inject
   private Salesmanagement salesManagement;
 
   @Inject
-  private OrderPositionDao orderPositionDao;
-
-  @Inject
   private DbTestHelper dbTestHelper;
 
+  /**
+   * Initialization for the test.
+   */
   @Before
   public void setUp() {
 
@@ -49,6 +51,9 @@ public class SalesManagementTest extends ComponentTest {
     this.dbTestHelper.resetDatabase();
   }
 
+  /**
+   * Log out utility for the test.
+   */
   @After
   public void tearDown() {
 
@@ -65,15 +70,10 @@ public class SalesManagementTest extends ComponentTest {
 
     try {
       // given
-      OrderEto order = new OrderEto();
-      order.setTableId(1L);
+      OrderEto order = new OrderEtoBuilder().tableId(1L).createNew();
       order = this.salesManagement.saveOrder(order);
-      OrderPositionEto orderPosition = new OrderPositionEto();
-      orderPosition.setOfferId(5L);
-      orderPosition.setOrderId(order.getId());
-      orderPosition.setOfferName("Cola");
-      orderPosition.setPrice(new Money(1.2));
-
+      OrderPositionEto orderPosition = new OrderPositionEtoBuilder().offerId(5L).orderId(order.getId())
+          .offerName("Cola").price(new Money(1.2)).createNew();
       orderPosition = this.salesManagement.saveOrderPosition(orderPosition);
       assertThat(orderPosition).isNotNull();
       orderPosition.setState(OrderPositionState.ORDERED);

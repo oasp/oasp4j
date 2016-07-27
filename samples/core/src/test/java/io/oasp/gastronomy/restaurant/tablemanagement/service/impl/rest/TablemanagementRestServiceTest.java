@@ -2,21 +2,17 @@ package io.oasp.gastronomy.restaurant.tablemanagement.service.impl.rest;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.common.builders.TableEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractRestServiceTest;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableSearchCriteriaTo;
@@ -35,12 +31,7 @@ import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
 
-  private static Logger LOG = LoggerFactory.getLogger(TablemanagementRestServiceTest.class);
-
   private TablemanagementRestService service;
-
-  @Inject
-  private Salesmanagement salesmanagement;
 
   /**
    * Provides initialization previous to the creation of the text fixture.
@@ -121,10 +112,7 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
     getRestTestClientBuilder().setUser("chief");
     getRestTestClientBuilder().setPassword("chief");
     this.service = getRestTestClientBuilder().build(TablemanagementRestService.class);
-    TableEto table = new TableEto();
-    table.setNumber(tableNumber);
-    table.setWaiterId(waiterId);
-    table.setState(TableState.FREE);
+    TableEto table = new TableEtoBuilder().number(tableNumber).waiterId(waiterId).createNew();
     assertThat(table.getId()).isNull();
 
     // when
@@ -148,10 +136,8 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
     // given
     long tableNumber = 7L;
     long waiterId = 2L;
-    TableEto table = new TableEto();
-    table.setNumber(tableNumber);
-    table.setWaiterId(waiterId);
-    table.setState(TableState.RESERVED);
+    TableEto table =
+        new TableEtoBuilder().number(tableNumber).waiterId(waiterId).state(TableState.RESERVED).createNew();
     assertThat(table).isNotNull();
     TableEto savedTable = this.service.saveTable(table);
     assertThat(savedTable).isNotNull();
@@ -170,7 +156,6 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
     assertThat(result).extracting("state").doesNotContain(TableState.OCCUPIED);
     assertThat(result).extracting("waiterId").contains(waiterId);
     assertThat(result).extracting("number").contains(tableNumber);
-
   }
 
 }

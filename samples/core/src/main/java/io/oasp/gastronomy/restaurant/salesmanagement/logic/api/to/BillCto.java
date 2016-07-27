@@ -1,9 +1,9 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to;
 
+import io.oasp.module.basic.common.api.to.AbstractCto;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import io.oasp.module.basic.common.api.to.AbstractCto;
 
 /**
  * {@link AbstractCto CTO} for an {@link #getBill() bill} with its {@link #getPositions() positions}.

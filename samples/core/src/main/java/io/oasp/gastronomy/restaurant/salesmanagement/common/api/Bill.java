@@ -1,10 +1,10 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.common.api;
 
-import java.util.List;
-
 import io.oasp.gastronomy.restaurant.general.common.api.ApplicationEntity;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.validation.NotNegativeMoney;
+
+import java.util.List;
 
 /**
  * This is the interface for a {@link Bill}. It represents the actual payment for an {@link Order}.

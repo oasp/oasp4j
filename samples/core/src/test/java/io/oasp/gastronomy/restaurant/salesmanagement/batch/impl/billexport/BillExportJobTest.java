@@ -39,6 +39,9 @@ public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
   @Inject
   private Job billExportJob;
 
+  /**
+   * Clean up database before test.
+   */
   @Before
   public void init() {
 
@@ -47,6 +50,9 @@ public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
 
   }
 
+  /**
+   * Clean up database after test.
+   */
   @After
   public void clean() {
 

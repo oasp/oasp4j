@@ -13,6 +13,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.common.builders.BillEntityBuilder;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.BillEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.BillDao;
@@ -41,10 +42,7 @@ public class BillDaoTest extends ComponentTest {
   @Test
   public void testPersist() {
 
-    BillEntity bill = new BillEntity();
-    bill.setTotal(new Money(42.42));
-    bill.setTip(new Money(1.0));
-    bill.setPayed(true);
+    BillEntity bill = new BillEntityBuilder().total(new Money(42.42)).tip(new Money(1.0)).payed(true).createNew();
     assertThat(bill.getId()).isNull();
     this.billDao.save(bill);
     assertThat(bill.getId()).isNotNull();
