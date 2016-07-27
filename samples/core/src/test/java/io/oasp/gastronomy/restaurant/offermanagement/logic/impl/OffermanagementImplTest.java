@@ -2,11 +2,12 @@ package io.oasp.gastronomy.restaurant.offermanagement.logic.impl;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.OfferDao;
@@ -22,7 +23,6 @@ import io.oasp.module.test.common.base.ModuleTest;
  * @author shuber
  */
 
-@RunWith(MockitoJUnitRunner.class)
 public class OffermanagementImplTest extends ModuleTest {
 
   private static final long ID = 1;
@@ -32,6 +32,9 @@ public class OffermanagementImplTest extends ModuleTest {
    */
 
   private OffermanagementImpl offerManagementImpl;
+
+  @Rule
+  public MockitoRule rule = MockitoJUnit.rule();
 
   @Mock
   private OfferDao offerDao;
@@ -82,9 +85,6 @@ public class OffermanagementImplTest extends ModuleTest {
     OfferEto responseOfferEto = this.offerManagementImpl.findOffer(ID);
 
     // then
-    Mockito.verify(this.offerDao).findOne(ID);
-    Mockito.verify(this.beanMapper).map(offerEntity, OfferEto.class);
-
     assertThat(responseOfferEto).isNotNull();
     assertThat(responseOfferEto).isEqualTo(offerEto);
   }
@@ -109,9 +109,6 @@ public class OffermanagementImplTest extends ModuleTest {
     OfferCto responseOfferCto = this.offerManagementImpl.findOfferCto(ID);
 
     // then
-    Mockito.verify(this.offerDao).findOne(ID);
-    Mockito.verify(this.beanMapper).map(offerEntity, OfferEto.class);
-
     assertThat(responseOfferCto).isNotNull();
     assertThat(responseOfferCto.getOffer()).isEqualTo(offerEto);
 
