@@ -1,10 +1,11 @@
 package io.oasp.gastronomy.restaurant.staffmanagement.logic.impl;
 
+import static org.mockito.Mockito.when;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
@@ -56,8 +57,8 @@ public class StaffmanagementImplTest extends ModuleTest {
     long id = 1L;
     Class<StaffMemberEto> targetClass = StaffMemberEto.class;
 
-    Mockito.when(this.staffMemberDao.find(id)).thenReturn(this.staffMemberEntity);
-    Mockito.when(this.beanMapper.map(this.staffMemberEntity, targetClass)).thenReturn(this.staffMemberEto);
+    when(this.staffMemberDao.find(id)).thenReturn(this.staffMemberEntity);
+    when(this.beanMapper.map(this.staffMemberEntity, targetClass)).thenReturn(this.staffMemberEto);
 
     // when
     StaffMemberEto resultEto = this.staffmanagementImpl.findStaffMember(id);
@@ -78,13 +79,13 @@ public class StaffmanagementImplTest extends ModuleTest {
     // given
     long id = 1L;
 
-    Mockito.when(this.staffMemberEto.getId()).thenReturn(id);
-    Mockito.when(this.staffMemberDao.find(id)).thenReturn(this.staffMemberEntity);
-    Mockito.when(this.staffMemberEto.getName()).thenReturn("new Name");
-    Mockito.when(this.staffMemberEntity.getName()).thenReturn("old Name");
-    Mockito.when(this.beanMapper.map(this.staffMemberEto, StaffMemberEntity.class)).thenReturn(this.staffMemberEntity);
-    Mockito.when(this.staffMemberDao.save(this.staffMemberEntity)).thenReturn(this.staffMemberEntity);
-    Mockito.when(this.beanMapper.map(this.staffMemberEntity, StaffMemberEto.class)).thenReturn(this.staffMemberEto);
+    when(this.staffMemberEto.getId()).thenReturn(id);
+    when(this.staffMemberDao.find(id)).thenReturn(this.staffMemberEntity);
+    when(this.staffMemberEto.getName()).thenReturn("new Name");
+    when(this.staffMemberEntity.getName()).thenReturn("old Name");
+    when(this.beanMapper.map(this.staffMemberEto, StaffMemberEntity.class)).thenReturn(this.staffMemberEntity);
+    when(this.staffMemberDao.save(this.staffMemberEntity)).thenReturn(this.staffMemberEntity);
+    when(this.beanMapper.map(this.staffMemberEntity, StaffMemberEto.class)).thenReturn(this.staffMemberEto);
 
     // when
     this.staffmanagementImpl.setStaffMemberDao(this.staffMemberDao);
