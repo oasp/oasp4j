@@ -1,22 +1,23 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.impl.dao;
 
-import io.oasp.gastronomy.restaurant.SpringBootApp;
-import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
-import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.BillEntity;
-import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.BillDao;
-import io.oasp.module.test.common.base.ComponentTest;
-
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 
 import org.junit.Test;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.transaction.annotation.Transactional;
+
+import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.common.builders.BillEntityBuilder;
+import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
+import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.BillEntity;
+import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.BillDao;
+import io.oasp.module.test.common.base.ComponentTest;
 
 /**
  * Test of {@link BillDao}.
@@ -41,10 +42,7 @@ public class BillDaoTest extends ComponentTest {
   @Test
   public void testPersist() {
 
-    BillEntity bill = new BillEntity();
-    bill.setTotal(new Money(42.42));
-    bill.setTip(new Money(1.0));
-    bill.setPayed(true);
+    BillEntity bill = new BillEntityBuilder().total(new Money(42.42)).tip(new Money(1.0)).payed(true).createNew();
     assertThat(bill.getId()).isNull();
     this.billDao.save(bill);
     assertThat(bill.getId()).isNotNull();

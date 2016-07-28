@@ -1,11 +1,5 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.impl.dao;
 
-import io.oasp.gastronomy.restaurant.SpringBootApp;
-import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.DrinkEntity;
-import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.DrinkDao;
-import io.oasp.module.jpa.dataaccess.api.RevisionMetadata;
-import io.oasp.module.test.common.base.ComponentTest;
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -16,10 +10,16 @@ import javax.transaction.Transactional;
 
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
+
+import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.common.builders.DrinkEntityBuilder;
+import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.DrinkEntity;
+import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.DrinkDao;
+import io.oasp.module.jpa.dataaccess.api.RevisionMetadata;
+import io.oasp.module.test.common.base.ComponentTest;
 
 /**
  * Test class to test the {@link DrinkDao}.
@@ -72,10 +72,8 @@ public class DrinkDaoTest extends ComponentTest {
     @Transactional
     public DrinkEntity create() {
 
-      DrinkEntity drink = new DrinkEntity();
-      drink.setAlcoholic(false);
-      drink.setDescription(this.description);
-      drink.setName("some name");
+      DrinkEntity drink =
+          new DrinkEntityBuilder().alcoholic(false).description(this.description).name("some name").createNew();
       assertThat(drink.getId()).isNull();
       drink = this.drinkDao.save(drink);
       return drink;

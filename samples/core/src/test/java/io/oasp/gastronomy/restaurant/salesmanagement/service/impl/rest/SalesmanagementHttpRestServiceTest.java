@@ -42,6 +42,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.common.builders.OrderPositionEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractRestServiceTest;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
@@ -247,9 +248,8 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
     OrderPositionEto sampleOrderPositionEto;
     ArrayList<OrderPositionEto> savedOrderPositionEtos = new ArrayList();
     for (int i = 0; i < numberOfOrderPositionsToSave; ++i) {
-      sampleOrderPositionEto = new OrderPositionEto();
-      sampleOrderPositionEto.setOrderId(responseOrderCto.getOrder().getId());
-      sampleOrderPositionEto.setOfferId(SAMPLE_OFFER_ID);
+      sampleOrderPositionEto = new OrderPositionEtoBuilder().orderId(responseOrderCto.getOrder().getId())
+          .offerId(SAMPLE_OFFER_ID).createNew();
       savedOrderPositionEtos.add(this.service.saveOrderPosition(sampleOrderPositionEto));
     }
 

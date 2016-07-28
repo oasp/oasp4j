@@ -1,11 +1,13 @@
 package io.oasp.gastronomy.restaurant.offermanagement.logic.impl;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
@@ -50,8 +52,6 @@ public class OffermanagementImplTest extends ModuleTest {
   @Before
   public void init() {
 
-    assertThat(this.offerDao).isNotNull();
-    assertThat(this.beanMapper).isNotNull();
     this.offerManagementImpl = new OffermanagementImpl();
     this.offerManagementImpl.setOfferDao(this.offerDao);
     this.offerManagementImpl.setBeanMapper(this.beanMapper);
@@ -75,11 +75,11 @@ public class OffermanagementImplTest extends ModuleTest {
   public void findOffer() {
 
     // given
-    OfferEntity offerEntity = Mockito.mock(OfferEntity.class);
+    OfferEntity offerEntity = mock(OfferEntity.class);
     OfferEto offerEto = new OfferEto();
 
-    Mockito.when(this.offerDao.findOne(ID)).thenReturn(offerEntity);
-    Mockito.when(this.beanMapper.map(offerEntity, OfferEto.class)).thenReturn(offerEto);
+    when(this.offerDao.findOne(ID)).thenReturn(offerEntity);
+    when(this.beanMapper.map(offerEntity, OfferEto.class)).thenReturn(offerEto);
 
     // when
     OfferEto responseOfferEto = this.offerManagementImpl.findOffer(ID);
@@ -100,10 +100,10 @@ public class OffermanagementImplTest extends ModuleTest {
     OfferEto offerEto = new OfferEto();
 
     offerCto.setOffer(offerEto);
-    OfferEntity offerEntity = Mockito.mock(OfferEntity.class);
+    OfferEntity offerEntity = mock(OfferEntity.class);
 
-    Mockito.when(this.offerDao.findOne(ID)).thenReturn(offerEntity);
-    Mockito.when(this.beanMapper.map(offerEntity, OfferEto.class)).thenReturn(offerEto);
+    when(this.offerDao.findOne(ID)).thenReturn(offerEntity);
+    when(this.beanMapper.map(offerEntity, OfferEto.class)).thenReturn(offerEto);
 
     // when
     OfferCto responseOfferCto = this.offerManagementImpl.findOfferCto(ID);
