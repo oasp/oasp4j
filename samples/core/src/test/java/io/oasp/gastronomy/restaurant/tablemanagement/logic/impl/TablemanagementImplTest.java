@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.tablemanagement.logic.impl;
 
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.junit.After;
@@ -7,7 +8,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
@@ -84,7 +84,7 @@ public class TablemanagementImplTest extends ModuleTest {
   public void findTable() {
 
     // given
-    TableEntity entity = Mockito.mock(TableEntity.class);
+    TableEntity entity = mock(TableEntity.class);
     TableEto eto = new TableEto();
 
     when(this.tableDao.findOne(1L)).thenReturn(entity);
