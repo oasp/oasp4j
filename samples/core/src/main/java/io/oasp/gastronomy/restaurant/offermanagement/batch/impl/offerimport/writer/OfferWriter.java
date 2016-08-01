@@ -13,7 +13,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 
 /**
  * OfferWriter is responsible for writing OfferEto to database.
- * 
+ *
  * @author sroeger
  */
 public class OfferWriter implements ItemWriter<OfferEto> {
@@ -22,9 +22,6 @@ public class OfferWriter implements ItemWriter<OfferEto> {
 
   private Offermanagement offerManagement;
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void write(List<? extends OfferEto> items) throws Exception {
 

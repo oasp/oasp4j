@@ -1,7 +1,10 @@
 package io.oasp.gastronomy.restaurant.offermanagement.batch.impl.offerimport.writer;
 
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
+
 /**
- * sroeger This type is needed to conver
+ * Helper entity in order to convert imported data into a {@link OrderEto} as this contains an enum value and a custom
+ * type. An other solution is to use CustomEditors as done in staffImport.
  *
  * @author sroeger
  */
@@ -30,7 +33,7 @@ public class OfferCsv {
   }
 
   /**
-   * @param name new value of {@link #getname}.
+   * @param name new value of name.
    */
   public void setName(String name) {
 
@@ -46,7 +49,7 @@ public class OfferCsv {
   }
 
   /**
-   * @param description new value of {@link #getdescription}.
+   * @param description new value of description.
    */
   public void setDescription(String description) {
 
@@ -62,7 +65,7 @@ public class OfferCsv {
   }
 
   /**
-   * @param state new value of {@link #getstate}.
+   * @param state new value of state.
    */
   public void setState(String state) {
 
@@ -78,7 +81,7 @@ public class OfferCsv {
   }
 
   /**
-   * @param mealId new value of {@link #getmealId}.
+   * @param mealId new value of mealId.
    */
   public void setMealId(String mealId) {
 
@@ -94,7 +97,7 @@ public class OfferCsv {
   }
 
   /**
-   * @param sideDishId new value of {@link #getsideDishId}.
+   * @param sideDishId new value of sideDishId.
    */
   public void setSideDishId(String sideDishId) {
 
@@ -110,7 +113,7 @@ public class OfferCsv {
   }
 
   /**
-   * @param drinkId new value of {@link #getdrinkId}.
+   * @param drinkId new value of drinkId.
    */
   public void setDrinkId(String drinkId) {
 
@@ -126,7 +129,7 @@ public class OfferCsv {
   }
 
   /**
-   * @param price new value of {@link #getprice}.
+   * @param price new value of price.
    */
   public void setPrice(String price) {
 

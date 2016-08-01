@@ -22,9 +22,6 @@ public class StaffMemberWriter implements ItemWriter<StaffMemberEto> {
 
   private Staffmanagement staffManagement;
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void write(List<? extends StaffMemberEto> items) throws Exception {
 

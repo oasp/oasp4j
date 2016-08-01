@@ -32,24 +32,36 @@ import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto
 
 /**
  * This class serves as configuration class for the StaffImportJobTest. The conversation of a read String to enum type
- * "Role" is done using {@link setCustomEditors} method of {@link BeanWrapperFieldSetMapper} by registering a custom
- * {@link RoleEditor}. This class makes use of the application.properties file by accessing the {@code chunk.size}
- * value.
+ * "Role" is done using {code setCustomEditors()} method of {@link BeanWrapperFieldSetMapper} by registering a custom
+ * {@link RoleEditor}. This class makes use of the application.properties file by accessing the
+ * {@code batch.staffimport.chunk.size} value.
  *
  *
  * @author sroeger
  */
 public class StaffImportConfig {
 
-  @Value("${chunk.size}")
+  @Value("${batch.staffimport.chunk.size}")
   private int chunkSize;
 
+  @Value("${batch.staffimport.skip.limit}")
+  private int skipLimit;
+
+  /**
+   * @param jobRepository the {@link JobRepository}
+   * @return {@link JobBuilderFactory}
+   */
   @Bean
   public JobBuilderFactory jobBuilderFactory(JobRepository jobRepository) {
 
     return new JobBuilderFactory(jobRepository);
   }
 
+  /**
+   * @param jobRepository the {@link JobRepository}
+   * @param transactionManager the {@link PlatformTransactionManager}
+   * @return {@link StepBuilderFactory}
+   */
   @Bean
   public StepBuilderFactory stepBuilderFactory(JobRepository jobRepository,
       PlatformTransactionManager transactionManager) {
@@ -57,28 +69,45 @@ public class StaffImportConfig {
     return new StepBuilderFactory(jobRepository, transactionManager);
   }
 
+  /**
+   * @param stepBuilderFactory the {@link StepBuilderFactory}
+   * @param reader the {@link ItemReader}
+   * @param writer the {@link ItemWriter}
+   * @param skipListener the {@link SkipListener}
+   * @return the created stepBuilder
+   */
   @Bean
   public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader reader, ItemWriter writer,
       SkipListener skipListener) {
 
     return stepBuilderFactory.get("step1").chunk(this.chunkSize).reader(reader).writer(writer).faultTolerant()
-        .skipLimit(1).skip(IncorrectTokenCountException.class).skip(FlatFileParseException.class).listener(skipListener)
-        .build();
+        .skipLimit(this.skipLimit).skip(IncorrectTokenCountException.class).skip(FlatFileParseException.class)
+        .listener(skipListener).build();
 
   }
 
+  /**
+   * @param jobs the {@link JobBuilderFactory}
+   * @param step1 the {@link Step}
+   * @return the created jobBuilder
+   */
   @Bean
   public Job job1(JobBuilderFactory jobs, Step step1) {
 
     return jobs.get("job1").incrementer(new RunIdIncrementer()).flow(step1).end().build();
   }
 
+  /**
+   * @param pathToFile the path to the file to execute
+   * @return the created reader
+   * @throws MalformedURLException when the URL is not correctly formatted
+   */
   @Bean
   @StepScope
   public FlatFileItemReader<StaffMemberEto> reader(@Value("#{jobParameters[pathToFile]}") String pathToFile)
       throws MalformedURLException {
 
-    FlatFileItemReader<StaffMemberEto> reader = new FlatFileItemReader<StaffMemberEto>();
+    FlatFileItemReader<StaffMemberEto> reader = new FlatFileItemReader<>();
     reader.setResource(new ClassPathResource(pathToFile));
 
     reader.setLineMapper(new DefaultLineMapper<StaffMemberEto>() {
@@ -100,16 +129,22 @@ public class StaffImportConfig {
     return reader;
   }
 
+  /**
+   * @return the created writer
+   */
   @Bean
   public ItemWriter<StaffMemberEto> writer() {
 
     return new StaffMemberWriter();
   }
 
+  /**
+   * @return the created skipListener
+   */
   @Bean
-  public SkipListener skipListener() {
+  public SkipListener<?, ?> skipListener() {
 
-    return new CustomSkipListener();
+    return new CustomSkipListener<>();
 
   }
 

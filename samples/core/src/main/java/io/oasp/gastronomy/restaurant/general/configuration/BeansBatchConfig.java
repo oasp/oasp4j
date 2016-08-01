@@ -17,11 +17,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.transaction.PlatformTransactionManager;
 
-/**
- * This class contains the configuration like jobLauncher,Jobrepository etc.
- * @author ssarmoka
- */
-
 import io.oasp.module.batch.common.impl.JobLauncherWithAdditionalRestartCapabilities;
 
 /**
@@ -62,14 +57,9 @@ public class BeansBatchConfig {
   private PlatformTransactionManager transactionManager;
 
   /**
-   * Custom modification of the application context
-   */
-  private BeanFactoryPostProcessor beanFactoryPostProcessor;
-
-  /**
    * This method is creating beanFactoryPostProcesor bean to register a bean of type 'scope' in
    * {@link CustomBeanFactoryPostProcessor}
-   * 
+   *
    * @return {@link CustomBeanFactoryPostProcessor}
    */
   @Bean
