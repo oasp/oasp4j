@@ -259,6 +259,12 @@
       <version>1.6.1</version>
 
     </dependency>
+    <dependency>
+      <groupId>org.skyscreamer</groupId>
+      <artifactId>jsonassert</artifactId>
+      <version>1.3.0</version>
+    <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>

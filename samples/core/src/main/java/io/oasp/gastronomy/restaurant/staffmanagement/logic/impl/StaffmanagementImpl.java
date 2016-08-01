@@ -115,7 +115,7 @@ public class StaffmanagementImpl extends AbstractComponentFacade implements Staf
   @RolesAllowed(PermissionConstants.SAVE_STAFF_MEMBER)
   public StaffMemberEto saveStaffMember(StaffMemberEto staffMember) {
 
-    Objects.requireNonNull(staffMember, "staffMemaber");
+    Objects.requireNonNull(staffMember, "staffMember");
 
     Long id = staffMember.getId();
     StaffMemberEntity targetStaffMember = null;
@@ -130,7 +130,7 @@ public class StaffmanagementImpl extends AbstractComponentFacade implements Staf
       // StaffMember already exists: -> Update
       LOG.debug("Updating StaffMember with id '{}' in the database.", id);
       if (!Objects.equals(targetStaffMember.getName(), staffMember.getName())) {
-        LOG.debug("Chaning login of StaffMember with id '{}' from '{}' to '{}' in the database.", id,
+        LOG.debug("Changing login of StaffMember with id '{}' from '{}' to '{}' in the database.", id,
             targetStaffMember.getName(), staffMember.getName());
       }
     }
