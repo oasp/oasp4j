@@ -42,16 +42,17 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @Value("${security.cors.enabled}")
   boolean corsEnabled = false;
 
+  /**
+   * the AuthenticationManagerBuilder to inject
+   */
   @Inject
   protected AuthenticationManagerBuilder authenticationManagerBuilder;
 
+  /**
+   * the UserDetailsService to inject
+   */
   @Inject
   protected UserDetailsService userDetailsService;
-
-  // // By default Spring-Security is setting the prefix "ROLE_" for all permissions/authorities.
-  // // We disable this undesired behavior here...
-  // return new DefaultRolesPrefixPostProcessor("");
-  // }
 
   private CorsFilter getCorsFilter() {
 

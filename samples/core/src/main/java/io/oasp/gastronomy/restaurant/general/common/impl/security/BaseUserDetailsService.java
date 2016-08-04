@@ -51,7 +51,6 @@ public class BaseUserDetailsService<U extends UserDetails, P extends Principal>
     Set<GrantedAuthority> authorities = getAuthorities(username);
 
     UserDetails user = this.inMemoryUserDetailsManager.loadUserByUsername(username);
-    // TODO Auto-generated method stub
     return new User(user.getUsername(), user.getPassword(), authorities);
   }
 

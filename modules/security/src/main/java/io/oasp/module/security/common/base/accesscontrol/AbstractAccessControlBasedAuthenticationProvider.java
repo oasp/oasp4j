@@ -82,7 +82,6 @@ public abstract class AbstractAccessControlBasedAuthenticationProvider<U extends
       boolean success = this.accessControlProvider.collectAccessControls(id, accessControlSet);
       if (!success) {
         LOG.warn("Undefined access control {}.", id);
-        // authorities.add(new SimpleGrantedAuthority(id));
       }
     }
     for (AccessControl accessControl : accessControlSet) {
