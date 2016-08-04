@@ -162,6 +162,9 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
     return this.userDetailsService;
   }
 
+  /**
+   * @return bean with pre populated users with passwords and roles.
+   */
   @Bean
   public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
 

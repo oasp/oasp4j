@@ -17,10 +17,12 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import io.oasp.gastronomy.restaurant.general.common.api.UserProfile;
 import io.oasp.gastronomy.restaurant.general.common.api.Usermanagement;
+import io.oasp.gastronomy.restaurant.general.configuration.BaseWebSecurityConfig;
 import io.oasp.module.security.common.base.accesscontrol.AbstractAccessControlBasedAuthenticationProvider;
 
 /**
- * This..
+ * This class provides authorities to users that want to login. The actual authentication is done via in-memory
+ * authentication as defined in {@link BaseWebSecurityConfig}
  */
 @Named("BaseUserDetailsService")
 public class BaseUserDetailsService<U extends UserDetails, P extends Principal>
