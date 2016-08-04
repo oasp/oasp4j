@@ -1,13 +1,18 @@
 package io.oasp.gastronomy.restaurant.general.configuration;
 
+import java.util.Properties;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.servlet.Filter;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
@@ -19,7 +24,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import io.oasp.gastronomy.restaurant.general.common.impl.security.ApplicationAuthenticationProvider;
 import io.oasp.gastronomy.restaurant.general.common.impl.security.CsrfRequestMatcher;
 import io.oasp.module.security.common.impl.rest.AuthenticationSuccessHandlerSendingOkHttpStatusCode;
 import io.oasp.module.security.common.impl.rest.JsonUsernamePasswordAuthenticationFilter;
@@ -42,7 +46,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   protected AuthenticationManagerBuilder authenticationManagerBuilder;
 
   @Inject
-  protected ApplicationAuthenticationProvider authenticationProvider;
+  protected UserDetailsService userDetailsService;
 
   // // By default Spring-Security is setting the prefix "ROLE_" for all permissions/authorities.
   // // We disable this undesired behavior here...
@@ -78,9 +82,9 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
 
     http
         //
-        .authenticationProvider(this.authenticationProvider)
         // define all urls that are not to be secured
-        .authorizeRequests().antMatchers(unsecuredResources).permitAll().anyRequest().authenticated().and()
+        .userDetailsService(userDetailsService()).userDetailsService(inMemoryUserDetailsManager()).authorizeRequests()
+        .antMatchers(unsecuredResources).permitAll().anyRequest().authenticated().and()
 
         // activate crsf check for a selection of urls (but not for login & logout)
         .csrf().requireCsrfProtectionMatcher(new CsrfRequestMatcher()).and()
@@ -148,14 +152,25 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @PostConstruct
   public void init() throws Exception {
 
-    this.authenticationManagerBuilder.inMemoryAuthentication() //
-        .withUser("waiter").password("waiter").roles("Waiter").and() //
-        .withUser("cook").password("cook").roles("Cook").and() //
-        .withUser("barkeeper").password("barkeeper").roles("Barkeeeper") //
-        .and().withUser("chief").password("chief").roles("Chief");
+    this.authenticationManagerBuilder.inMemoryAuthentication(); //
 
-    // add our own authenticatonProvider that has add on functionality compared to spring security
-    this.authenticationManagerBuilder.authenticationProvider(this.authenticationProvider);
+  }
+
+  @Override
+  protected UserDetailsService userDetailsService() {
+
+    return this.userDetailsService;
+  }
+
+  @Bean
+  public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
+
+    final Properties users = new Properties();
+    users.put("waiter", "waiter,Waiter");
+    users.put("cook", "cook,Cook");
+    users.put("barkeeper", "barkeeper,Barkeeper");
+    users.put("chief", "chief,Chief");// add whatever other user you need
+    return new InMemoryUserDetailsManager(users);
   }
 
 }
