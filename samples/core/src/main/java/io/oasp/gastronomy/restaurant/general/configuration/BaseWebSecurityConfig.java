@@ -1,18 +1,13 @@
 package io.oasp.gastronomy.restaurant.general.configuration;
 
-import java.util.Properties;
-
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.servlet.Filter;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
@@ -73,7 +68,8 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   }
 
   /**
-   * Configure spring security to enable a simple webform-login + a simple rest login.
+   * Configure spring security to enable a simple webform-login + a simple rest login. A custom UserDetailsService is
+   * needed to provide additional functionality as granting custom permissions
    */
   @Override
   public void configure(HttpSecurity http) throws Exception {
@@ -83,9 +79,9 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
 
     http
         //
-        // define all urls that are not to be secured
-        .userDetailsService(userDetailsService()).userDetailsService(inMemoryUserDetailsManager()).authorizeRequests()
-        .antMatchers(unsecuredResources).permitAll().anyRequest().authenticated().and()
+        // define all urls that are not to be secured and the custom userDetailsService to use in the ProviderManager
+        .userDetailsService(userDetailsService()).authorizeRequests().antMatchers(unsecuredResources).permitAll()
+        .anyRequest().authenticated().and()
 
         // activate crsf check for a selection of urls (but not for login & logout)
         .csrf().requireCsrfProtectionMatcher(new CsrfRequestMatcher()).and()
@@ -137,7 +133,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
         new JsonUsernamePasswordAuthenticationFilter(new AntPathRequestMatcher("/services/rest/login"));
     jsonFilter.setPasswordParameter("j_password");
     jsonFilter.setUsernameParameter("j_username");
-    jsonFilter.setAuthenticationManager(authenticationManager());
+    jsonFilter.setAuthenticationManager(authenticationManagerBean());
     // set failurehandler that uses no redirect in case of login failure; just HTTP-status: 401
     jsonFilter.setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler());
     // set successhandler that uses no redirect in case of login success; just HTTP-status: 200
@@ -150,31 +146,18 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
    *
    * @throws Exception
    */
-  @PostConstruct
-  public void init() throws Exception {
+  @Inject
+  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
-    this.authenticationManagerBuilder.inMemoryAuthentication(); //
-
+    auth.inMemoryAuthentication().withUser("waiter").password("waiter").roles("Waiter").and().withUser("cook")
+        .password("cook").roles("Cook").and().withUser("barkeeper").password("barkeeper").roles("Barkeeper").and()
+        .withUser("chief").password("chief").roles("Chief");
   }
 
   @Override
   protected UserDetailsService userDetailsService() {
 
     return this.userDetailsService;
-  }
-
-  /**
-   * @return bean with pre populated users with passwords and roles.
-   */
-  @Bean
-  public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
-
-    final Properties users = new Properties();
-    users.put("waiter", "waiter,Waiter");
-    users.put("cook", "cook,Cook");
-    users.put("barkeeper", "barkeeper,Barkeeper");
-    users.put("chief", "chief,Chief");// add whatever other user you need
-    return new InMemoryUserDetailsManager(users);
   }
 
 }
