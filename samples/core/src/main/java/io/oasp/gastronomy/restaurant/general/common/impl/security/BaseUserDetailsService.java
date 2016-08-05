@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,7 +25,7 @@ import io.oasp.module.security.common.base.accesscontrol.AbstractAccessControlBa
  * authentication as defined in {@link BaseWebSecurityConfig}. To get access to the in memory authentication the
  * AuthenticationManagerBuilder is injected.
  */
-@Named("baseUserDetailsService")
+@Named
 public class BaseUserDetailsService<U extends UserDetails, P extends Principal>
     extends AbstractAccessControlBasedAuthenticationProvider implements UserDetailsService {
 
@@ -46,8 +45,6 @@ public class BaseUserDetailsService<U extends UserDetails, P extends Principal>
 
   @Inject
   private AuthenticationManagerBuilder amBuilder;
-
-  private SecurityContextHolder ctx;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
