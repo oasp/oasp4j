@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.sf.mmm.util.collection.base.NodeCycle;
+import net.sf.mmm.util.collection.base.NodeCycleException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,7 +57,8 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
     Set<AccessControlGroup> toplevelGroups = new HashSet<>(groups);
     for (AccessControlGroup group : groups) {
       collectAccessControls(group, toplevelGroups);
-      checkForCyclicDependencies(group, new HashSet<AccessControlGroup>());
+      NodeCycle<AccessControlGroup> nodeCycle = new NodeCycle<>(group);
+      checkForCyclicDependencies(group, nodeCycle);
     }
   }
 
@@ -63,17 +67,19 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
    * graph}.
    *
    * @param group is the {@link AccessControlGroup} to check.
-   * @param visitedGroups is where the {@link AccessControlGroup} are collected to detect cycles.
+   * @param nodeCycle the {@link NodeCycle} used to detect cycles.
    */
-  protected void checkForCyclicDependencies(AccessControlGroup group, Set<AccessControlGroup> visitedGroups) {
+  protected void checkForCyclicDependencies(AccessControlGroup group, NodeCycle<AccessControlGroup> nodeCycle) {
 
-    boolean added = visitedGroups.add(group);
-    if (!added) {
-      // mmm NodeCycleException would be very helpful here...
-      throw new IllegalStateException("Cyclic inheritance of access control groups detected for " + group);
-    }
     for (AccessControlGroup inheritedGroup : group.getInherits()) {
-      checkForCyclicDependencies(inheritedGroup, visitedGroups);
+      List<AccessControlGroup> inverseCycle = nodeCycle.getInverseCycle();
+      if (inverseCycle.contains(inheritedGroup)) {
+        throw new NodeCycleException(nodeCycle);
+      }
+      inverseCycle.add(inheritedGroup);
+      checkForCyclicDependencies(inheritedGroup, nodeCycle);
+      AccessControlGroup removed = inverseCycle.remove(inverseCycle.size() - 1);
+      assert (removed == inheritedGroup);
     }
   }
 
