@@ -13,7 +13,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.common.builders.OrderEtoBuilder;
 import io.oasp.gastronomy.restaurant.common.builders.OrderPositionEtoBuilder;
-import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
 import io.oasp.gastronomy.restaurant.general.common.TestUtil;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
@@ -23,6 +22,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 import io.oasp.module.test.common.base.ComponentTest;
+import io.oasp.module.test.common.helper.api.DbTestHelper;
 
 /**
  * This is the test-case of {@link Salesmanagement}.
@@ -36,27 +36,27 @@ public class SalesManagementTest extends ComponentTest {
   @Inject
   private Salesmanagement salesManagement;
 
-  @Inject
-  private DbTestHelper dbTestHelper;
-
   /**
    * Initialization for the test.
    */
+  @Override
   @Before
-  public void setUp() {
+  public void doSetUp() {
 
+    super.doSetUp();
     TestUtil.login("waiter", PermissionConstants.FIND_ORDER_POSITION, PermissionConstants.SAVE_ORDER_POSITION,
         PermissionConstants.SAVE_ORDER, PermissionConstants.FIND_OFFER);
-    this.dbTestHelper.setMigrationVersion("0002");
-    this.dbTestHelper.resetDatabase();
+    this.dbTestHelper.resetDatabase("0002");
   }
 
   /**
    * Log out utility for the test.
    */
+  @Override
   @After
-  public void tearDown() {
+  public void doTearDown() {
 
+    super.doTearDown();
     TestUtil.logout();
   }
 
@@ -105,4 +105,12 @@ public class SalesManagementTest extends ComponentTest {
 
   }
 
+  /**
+   * @param dbTestHelper new value of {@link #getdbTestHelper}.
+   */
+  @Inject
+  public void setDbTestHelper(DbTestHelper dbTestHelper) {
+
+    this.dbTestHelper = dbTestHelper;
+  }
 }

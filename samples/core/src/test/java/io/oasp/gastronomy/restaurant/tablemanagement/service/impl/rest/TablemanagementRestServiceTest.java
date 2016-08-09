@@ -2,15 +2,9 @@ package io.oasp.gastronomy.restaurant.tablemanagement.service.impl.rest;
 
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.common.builders.TableEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractRestServiceTest;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
@@ -24,8 +18,6 @@ import io.oasp.module.jpa.common.api.to.PaginatedListTo;
  *
  * @author geazzi, jmolinar, sroeger
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = SpringBootApp.class)
 @TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement" })
 // , locations = {"file:src/test/resources/config" })
 
@@ -36,22 +28,21 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
   /**
    * Provides initialization previous to the creation of the text fixture.
    */
-  @Before
-  public void init() {
+  @Override
+  public void doSetUp() {
 
-    getDbTestHelper().resetDatabase();
+    super.doSetUp();
     this.service = getRestTestClientBuilder().build(TablemanagementRestService.class);
-
   }
 
   /**
    * Provides clean up after tests.
    */
-  @After
-  public void clean() {
+  @Override
+  public void doTearDown() {
 
+    super.doTearDown();
     this.service = null;
-
   }
 
   /**

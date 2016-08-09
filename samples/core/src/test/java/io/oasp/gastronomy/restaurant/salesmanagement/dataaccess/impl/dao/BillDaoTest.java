@@ -15,9 +15,11 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.common.builders.BillEntityBuilder;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
+import io.oasp.gastronomy.restaurant.general.configuration.RestaurantTestConfig;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.BillEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.BillDao;
 import io.oasp.module.test.common.base.ComponentTest;
+import io.oasp.module.test.common.helper.api.DbTestHelper;
 
 /**
  * Test of {@link BillDao}.
@@ -25,7 +27,7 @@ import io.oasp.module.test.common.base.ComponentTest;
  * @author mvielsac
  */
 @Transactional
-@SpringApplicationConfiguration(classes = { SpringBootApp.class })
+@SpringApplicationConfiguration(classes = { SpringBootApp.class, RestaurantTestConfig.class })
 @WebAppConfiguration
 public class BillDaoTest extends ComponentTest {
 
@@ -60,4 +62,12 @@ public class BillDaoTest extends ComponentTest {
 
   }
 
+  /**
+   * @param dbTestHelper new value of {@link #getdbTestHelper}.
+   */
+  @Inject
+  public void setDbTestHelper(DbTestHelper dbTestHelper) {
+
+    this.dbTestHelper = dbTestHelper;
+  }
 }

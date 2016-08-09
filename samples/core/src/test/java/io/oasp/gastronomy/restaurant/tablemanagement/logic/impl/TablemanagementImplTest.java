@@ -3,8 +3,6 @@ package io.oasp.gastronomy.restaurant.tablemanagement.logic.impl;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -53,8 +51,8 @@ public class TablemanagementImplTest extends ModuleTest {
   /**
    * Injection of the mocked objects into the SUT.
    */
-  @Before
-  public void setup() {
+  @Override
+  public void doSetUp() {
 
     this.tableManagementImpl = new TablemanagementImpl();
     this.tableManagementImpl.setSalesmanagement(this.salesManagement);
@@ -67,8 +65,8 @@ public class TablemanagementImplTest extends ModuleTest {
   /**
    * Delete the used mocks.
    */
-  @After
-  public void tearDown() {
+  @Override
+  public void doTearDown() {
 
     this.salesManagement = null;
     this.staffManagement = null;

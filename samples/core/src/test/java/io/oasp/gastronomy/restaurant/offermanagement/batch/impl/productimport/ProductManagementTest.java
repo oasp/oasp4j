@@ -6,9 +6,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.flywaydb.core.Flyway;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -24,6 +21,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.test.common.base.ComponentTest;
+import io.oasp.module.test.common.helper.api.DbTestHelper;
 
 /**
  * This is the test case of {@ProductDaoImpl}
@@ -38,26 +36,24 @@ public class ProductManagementTest extends ComponentTest {
   @Inject
   private Offermanagement offerManagement;
 
-  @Inject
-  private Flyway flyway;
-
   /**
    * Login
    */
-  @Before
-  public void setUp() {
+  @Override
+  protected void doSetUp() {
 
-    this.flyway.clean();
-    this.flyway.migrate();
+    super.doSetUp();
     TestUtil.login("waiter", PermissionConstants.FIND_OFFER);
   }
 
   /**
    * Logout
    */
-  @After
-  public void tearDown() {
 
+  @Override
+  protected void doTearDown() {
+
+    super.doTearDown();
     TestUtil.logout();
   }
 
@@ -112,5 +108,14 @@ public class ProductManagementTest extends ComponentTest {
     assertEquals(products.get(2).getId(), new Long(12));
     assertEquals(products.get(3).getId(), new Long(11));
 
+  }
+
+  /**
+   * @param dbTestHelper new value of {@link #getdbTestHelper}.
+   */
+  @Inject
+  public void setDbTestHelper(DbTestHelper dbTestHelper) {
+
+    this.dbTestHelper = dbTestHelper;
   }
 }
