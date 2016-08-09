@@ -16,7 +16,7 @@
   <dependencies>
     <dependency>
       <groupId>net.sf.m-m-m</groupId>
-      <artifactId>mmm-util-core</artifactId>
+      <artifactId>mmm-util-entity</artifactId>
       </dependency>
   </dependencies>
 </project>

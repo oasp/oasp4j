@@ -25,7 +25,7 @@
     </dependency>
     <dependency>
       <groupId>net.sf.m-m-m</groupId>
-      <artifactId>mmm-util-core</artifactId>
+      <artifactId>mmm-util-entity</artifactId>
     </dependency>
 
     <!-- Orika (not yet default but will once replace dozer) -->
