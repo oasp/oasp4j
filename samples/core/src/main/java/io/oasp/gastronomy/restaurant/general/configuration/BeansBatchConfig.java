@@ -1,12 +1,5 @@
 package io.oasp.gastronomy.restaurant.general.configuration;
 
-/**
- * This class contains the configuration like jobLauncher,Jobrepository etc.
- * @author ssarmoka
- */
-
-import io.oasp.module.batch.common.impl.JobLauncherWithAdditionalRestartCapabilities;
-
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
@@ -18,10 +11,13 @@ import org.springframework.batch.core.launch.support.SimpleJobOperator;
 import org.springframework.batch.core.repository.support.JobRepositoryFactoryBean;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.transaction.PlatformTransactionManager;
+
+import io.oasp.module.batch.common.impl.JobLauncherWithAdditionalRestartCapabilities;
 
 /**
  * This class contains configuration of batch beans.
@@ -50,14 +46,27 @@ public class BeansBatchConfig {
   private JobExplorerFactoryBean jobExplorer;
 
   /**
-   * Datasource configuartion
+   * Datasource configuration
    */
+
   private DataSource dataSource;
 
   /**
    * Transaction manager configuration
    */
   private PlatformTransactionManager transactionManager;
+
+  /**
+   * This method is creating beanFactoryPostProcesor bean to register a bean of type 'scope' in
+   * {@link CustomBeanFactoryPostProcessor}
+   *
+   * @return {@link CustomBeanFactoryPostProcessor}
+   */
+  @Bean
+  public static BeanFactoryPostProcessor beanFactoryPostProcessor() {
+
+    return new CustomBeanFactoryPostProcessor();
+  }
 
   /**
    * Isolation level configuration

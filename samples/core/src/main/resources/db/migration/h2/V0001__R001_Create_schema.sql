@@ -129,4 +129,3 @@ CREATE TABLE REVINFO(
     timestamp BIGINT NOT NULL,
     user VARCHAR(255)
 );
-

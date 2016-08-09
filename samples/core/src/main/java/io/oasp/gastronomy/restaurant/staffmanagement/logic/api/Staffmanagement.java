@@ -1,10 +1,10 @@
 package io.oasp.gastronomy.restaurant.staffmanagement.logic.api;
 
+import java.util.List;
+
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-
-import java.util.List;
 
 /**
  * Interface for StaffManagement component.
