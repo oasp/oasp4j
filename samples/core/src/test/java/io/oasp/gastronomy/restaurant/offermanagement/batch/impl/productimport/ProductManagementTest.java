@@ -60,8 +60,8 @@ public class ProductManagementTest extends ComponentTest {
   /**
    * Tests if the {@link Product} is filtered correctly.
    */
-  @Test
 
+  @Test
   public void testFindProductsFiltered() {
 
     ProductFilter filter = new ProductFilter();
@@ -107,7 +107,7 @@ public class ProductManagementTest extends ComponentTest {
     assertEquals(products.get(1).getId(), new Long(13));
     assertEquals(products.get(2).getId(), new Long(12));
     assertEquals(products.get(3).getId(), new Long(11));
-
+    setDbNeedsReset(false);
   }
 
   /**

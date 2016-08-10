@@ -147,6 +147,7 @@ public class TablemanagementTest extends ComponentTest {
     assertThat(allTables).extracting("state").contains(table.getState());
     assertThat(allTables).extracting("waiterId").contains(table.getWaiterId());
     assertThat(allTables).extracting("number").contains(table.getNumber());
+    setDbNeedsReset(false);
 
   }
 

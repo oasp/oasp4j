@@ -124,7 +124,7 @@ public class OfferManagementTest extends ComponentTest {
     assertEquals(offerEntity.get(0).getDrinkId(), new Long(12));
     assertEquals(offerEntity.get(0).getMealId(), new Long(1));
     assertEquals(offerEntity.get(0).getSideDishId(), new Long(7));
-
+    setDbNeedsReset(false);
   }
 
   /**
