@@ -29,7 +29,7 @@ import io.oasp.module.test.common.helper.api.DbTestHelper;
 /**
  * This is the test case for the component {@link Tablemanagement}.
  *
- * @author sroeger
+ * @author sroeger, shuber
  *
  */
 
@@ -44,8 +44,7 @@ public class TablemanagementTest extends ComponentTest {
   private Tablemanagement tablemanagement;
 
   /**
-   * Provides login credentials and permissions and resets database. The database is migrated to Version 0002 in order
-   * to have a common basis for test.
+   * Logs in the credentials.
    */
   @Override
   public void doSetUp() {
@@ -54,7 +53,6 @@ public class TablemanagementTest extends ComponentTest {
     TestUtil.login("waiter", PermissionConstants.SAVE_ORDER_POSITION, PermissionConstants.SAVE_ORDER,
         PermissionConstants.FIND_TABLE, PermissionConstants.FIND_ORDER, PermissionConstants.SAVE_TABLE,
         PermissionConstants.FIND_OFFER);
-    this.dbTestHelper.resetDatabase("0002");
   }
 
   /**
@@ -219,7 +217,7 @@ public class TablemanagementTest extends ComponentTest {
   }
 
   /**
-   * @param dbTestHelper new value of {@link #getdbTestHelper}.
+   * injects {@link DbTestHelper}.
    */
   @Inject
   public void setDbTestHelper(DbTestHelper dbTestHelper) {

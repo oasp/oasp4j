@@ -3,7 +3,6 @@ package io.oasp.gastronomy.restaurant.tablemanagement.service.impl.rest;
 import java.util.List;
 
 import org.junit.Test;
-import org.springframework.test.context.TestPropertySource;
 
 import io.oasp.gastronomy.restaurant.common.builders.TableEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractRestServiceTest;
@@ -18,7 +17,7 @@ import io.oasp.module.jpa.common.api.to.PaginatedListTo;
  *
  * @author geazzi, jmolinar, sroeger
  */
-@TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement" })
+
 // , locations = {"file:src/test/resources/config" })
 
 public class TablemanagementRestServiceTest extends AbstractRestServiceTest {

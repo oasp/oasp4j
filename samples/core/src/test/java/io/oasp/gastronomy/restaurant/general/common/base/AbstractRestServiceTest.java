@@ -24,7 +24,7 @@ import io.oasp.module.test.common.helper.api.DbTestHelper;
  * <br/>
  * The local server's port is randomly assigned.
  *
- * @author jmolinar
+ * @author jmolinar, shuber
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = { RestaurantTestConfig.class, SpringBootApp.class })
@@ -111,7 +111,7 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
   }
 
   /**
-   * @param dbTestHelper new value of {@link #getdbTestHelper}.
+   * injects {@link DbTestHelper}.
    */
   @Inject
   public void setDbTestHelper(DbTestHelper dbTestHelper) {

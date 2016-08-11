@@ -1,8 +1,5 @@
 package io.oasp.module.jpa.dataaccess.base;
 
-import io.oasp.module.jpa.dataaccess.api.GenericDao;
-import io.oasp.module.test.common.base.ComponentTest;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
@@ -11,6 +8,9 @@ import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+
+import io.oasp.module.jpa.dataaccess.api.GenericDao;
+import io.oasp.module.test.common.base.ComponentTest;
 
 /**
  * Test class to test the {@link GenericDao}.

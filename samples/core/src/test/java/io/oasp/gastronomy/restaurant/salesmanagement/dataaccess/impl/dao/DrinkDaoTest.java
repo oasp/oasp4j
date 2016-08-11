@@ -25,7 +25,7 @@ import io.oasp.module.test.common.helper.api.DbTestHelper;
 /**
  * Test class to test the {@link DrinkDao}.
  *
- * @author jmetzler
+ * @author jmetzler, shuber
  */
 
 @SpringApplicationConfiguration(classes = { SpringBootApp.class })
@@ -122,6 +122,9 @@ public class DrinkDaoTest extends ComponentTest {
     }
   };
 
+  /**
+   * injects {@link DbTestHelper}.
+   */
   @Inject
   public void setDbTestHelper(DbTestHelper dbTestHelper) {
 

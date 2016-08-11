@@ -4,8 +4,6 @@ import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -27,7 +25,7 @@ import io.oasp.module.test.common.helper.api.DbTestHelper;
 /**
  * This is the test-case of {@link Salesmanagement}.
  *
- * @author hohwille, sroeger
+ * @author hohwille, sroeger, shuber
  */
 @SpringApplicationConfiguration(classes = { SpringBootApp.class })
 @WebAppConfiguration
@@ -37,23 +35,20 @@ public class SalesManagementTest extends ComponentTest {
   private Salesmanagement salesManagement;
 
   /**
-   * Initialization for the test.
+   * Log in utility for the test.
    */
   @Override
-  @Before
   public void doSetUp() {
 
     super.doSetUp();
     TestUtil.login("waiter", PermissionConstants.FIND_ORDER_POSITION, PermissionConstants.SAVE_ORDER_POSITION,
         PermissionConstants.SAVE_ORDER, PermissionConstants.FIND_OFFER);
-    this.dbTestHelper.resetDatabase("0002");
   }
 
   /**
    * Log out utility for the test.
    */
   @Override
-  @After
   public void doTearDown() {
 
     super.doTearDown();
@@ -106,7 +101,7 @@ public class SalesManagementTest extends ComponentTest {
   }
 
   /**
-   * @param dbTestHelper new value of {@link #getdbTestHelper}.
+   * injects {@link DbTestHelper}.
    */
   @Inject
   public void setDbTestHelper(DbTestHelper dbTestHelper) {

@@ -5,28 +5,40 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * TODO shuber This type ...
+ * This is the abstract base class for all tests. In most cases it will be convenient to extend this class.
  *
  * @author shuber
- * @since 2.2.0
  */
 public class BaseTest extends Assertions {
+
+  /**
+   * Suggests to use a {link@ doSetUp()} method before each tests.
+   */
   @Before
   public final void setUp() {
 
     doSetUp();
   }
 
+  /**
+   * Suggests to use a {link@ doSetUp()} method before each tests.
+   */
   @After
   public final void tearDown() {
 
     doTearDown();
   }
 
+  /**
+   * Provides initialization previous to the creation of the text fixture.
+   */
   protected void doSetUp() {
 
   }
 
+  /**
+   * Provides clean up after tests.
+   */
   protected void doTearDown() {
 
   }

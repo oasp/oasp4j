@@ -11,7 +11,7 @@ import io.oasp.module.test.common.api.category.CategoryModuleTest;
  *
  * @see CategoryModuleTest
  *
- * @author hohwille
+ * @author hohwille, shuber
  */
 @Category(CategoryModuleTest.class)
 public abstract class ModuleTest extends BaseTest {

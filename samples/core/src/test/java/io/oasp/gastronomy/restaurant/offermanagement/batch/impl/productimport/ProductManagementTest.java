@@ -26,7 +26,7 @@ import io.oasp.module.test.common.helper.api.DbTestHelper;
 /**
  * This is the test case of {@ProductDaoImpl}
  *
- * @author cmammado
+ * @author cmammado, shuber
  * @since dev
  */
 @SpringApplicationConfiguration(classes = { SpringBootApp.class })
@@ -111,7 +111,7 @@ public class ProductManagementTest extends ComponentTest {
   }
 
   /**
-   * @param dbTestHelper new value of {@link #getdbTestHelper}.
+   * injects {@link DbTestHelper}.
    */
   @Inject
   public void setDbTestHelper(DbTestHelper dbTestHelper) {

@@ -7,8 +7,6 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +18,7 @@ import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.test.AssertFile;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import io.oasp.gastronomy.restaurant.SpringBootBatchApp;
@@ -28,37 +27,33 @@ import io.oasp.gastronomy.restaurant.general.common.AbstractSpringBatchIntegrati
 /**
  * End-To-End test job "import offer management from csv"
  *
- * @author jczas
+ * @author jczas, shuber
  */
 @SpringApplicationConfiguration(classes = { SpringBootBatchApp.class }, locations = {
 "classpath:/config/app/batch/beans-billexport.xml" })
 @WebAppConfiguration
+@TestPropertySource(properties = {
+"flyway.locations=filesystem:src/test/resources/db/batch/BillExportJobTest,filesystem:src/test/resources/db/default" })
 public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
   private static final Logger LOG = LoggerFactory.getLogger(AbstractSpringBatchIntegrationTest.class);
 
   @Inject
   private Job billExportJob;
 
-  /**
-   * Clean up database before test.
-   */
-  @Before
-  public void init() {
+  @Override
+  public void doSetUp() {
 
-    this.flyway.setClean(true);
-    this.flyway.migrate();
-
+    super.doSetUp();
+    doDatabaseSetUp();
   }
 
-  /**
-   * Clean up database after test.
-   */
-  @After
-  public void clean() {
+  @Override
+  public void doDatabaseSetUp() {
 
-    this.flyway.setClean(true);
-    this.flyway.migrate();
-
+    if (dbNeedsReset()) {
+      getDbTestHelper().resetDatabase("0006");
+    }
+    setDbNeedsReset(true);
   }
 
   /**
@@ -68,8 +63,6 @@ public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
   public void testJob() throws Exception {
 
     // setup test data
-    this.flyway.importTestData("classpath:BillExportJobTest/setup/db");
-
     File targetFile = new File("./tmp/bills.csv");
     File expectedFile = new ClassPathResource("BillExportJobTest/expected/bills.csv").getFile();
 

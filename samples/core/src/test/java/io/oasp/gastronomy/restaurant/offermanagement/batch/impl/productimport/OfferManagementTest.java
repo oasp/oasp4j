@@ -128,7 +128,7 @@ public class OfferManagementTest extends ComponentTest {
   }
 
   /**
-   * @param dbTestHelper new value of {@link #getdbTestHelper}.
+   * injects {@link DbTestHelper}.
    */
   @Inject
   public void setDbTestHelper(DbTestHelper dbTestHelper) {

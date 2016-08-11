@@ -24,7 +24,7 @@ import io.oasp.module.test.common.helper.api.DbTestHelper;
 /**
  * Test of {@link BillDao}.
  *
- * @author mvielsac
+ * @author mvielsac, shuber
  */
 @Transactional
 @SpringApplicationConfiguration(classes = { SpringBootApp.class, RestaurantTestConfig.class })
@@ -63,7 +63,7 @@ public class BillDaoTest extends ComponentTest {
   }
 
   /**
-   * @param dbTestHelper new value of {@link #getdbTestHelper}.
+   * injects {@link DbTestHelper}.
    */
   @Inject
   public void setDbTestHelper(DbTestHelper dbTestHelper) {

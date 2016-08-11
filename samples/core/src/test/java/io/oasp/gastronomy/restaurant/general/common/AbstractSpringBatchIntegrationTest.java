@@ -19,15 +19,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import io.oasp.gastronomy.restaurant.general.common.api.security.UserData;
-import io.oasp.gastronomy.restaurant.general.dataaccess.base.DatabaseMigrator;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlPermission;
 import io.oasp.module.security.common.base.accesscontrol.AccessControlGrantedAuthority;
 import io.oasp.module.test.common.base.ComponentTest;
+import io.oasp.module.test.common.helper.api.DbTestHelper;
 
 /**
  * Base class for all spring batch integration tests. It helps to do End-to-End job tests.
  *
- * @author jczas
+ * @author jczas, shuber
  */
 // @DirtiesContext(classMode = ClassMode.AFTER_CLASS)
 public abstract class AbstractSpringBatchIntegrationTest extends ComponentTest {
@@ -56,12 +56,6 @@ public abstract class AbstractSpringBatchIntegrationTest extends ComponentTest {
     SecurityContextHolder.getContext().setAuthentication(null);
   }
 
-  /**
-   * database migration helper
-   */
-  @Inject
-  protected DatabaseMigrator flyway;
-
   @Inject
   private JobLauncher jobLauncher;
 
@@ -86,9 +80,6 @@ public abstract class AbstractSpringBatchIntegrationTest extends ComponentTest {
   @Override
   public void doSetUp() {
 
-    // setup test data
-    this.flyway.importTestData(ALL_TESTS_DB_SETUP_DIR);
-
     LOG.debug("Delete tmp directory");
     try {
       FileUtils.deleteDirectory(new File(TMP_DIR));
@@ -96,5 +87,14 @@ public abstract class AbstractSpringBatchIntegrationTest extends ComponentTest {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+  }
+
+  /**
+   * injects {@link DbTestHelper}.
+   */
+  @Inject
+  public void setDbTestHelper(DbTestHelper dbTestHelper) {
+
+    this.dbTestHelper = dbTestHelper;
   }
 }

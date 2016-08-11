@@ -17,7 +17,7 @@ import io.oasp.module.test.common.helper.api.DbTestHelper;
  *
  * @see CategorySubsystemTest
  *
- * @author hohwille
+ * @author hohwille, shuber
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestExecutionListeners({ TransactionalTestExecutionListener.class, DependencyInjectionTestExecutionListener.class })
@@ -40,6 +40,9 @@ public abstract class SubsystemTest extends BaseTest {
     doDatabaseTearDown();
   }
 
+  /**
+   * Provides initialization of the database.
+   */
   protected void doDatabaseSetUp() {
 
     if (dbNeedsReset()) {
@@ -48,12 +51,15 @@ public abstract class SubsystemTest extends BaseTest {
     setDbNeedsReset(true);
   }
 
+  /**
+   * Provides clean up of the database.
+   */
   protected void doDatabaseTearDown() {
 
   }
 
   /**
-   * @return isModyfyingTest
+   * @return {@link DB_NEEDS_RESET}
    */
   private static boolean dbNeedsReset() {
 
@@ -61,7 +67,7 @@ public abstract class SubsystemTest extends BaseTest {
   }
 
   /**
-   * @param IS_MODIFYING_TEST new value of {@link #getisModyfyingTest}.
+   * sets {@link DB_NEEDS_RESET}.
    */
   protected void setDbNeedsReset(boolean dbNeedsReset) {
 

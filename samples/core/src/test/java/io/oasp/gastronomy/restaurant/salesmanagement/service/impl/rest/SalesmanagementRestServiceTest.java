@@ -19,7 +19,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.TestPropertySource;
 
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractRestServiceTest;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
@@ -39,8 +38,6 @@ import io.oasp.module.jpa.common.api.to.PaginationTo;
  * @author shuber
  */
 @SpringApplicationConfiguration(classes = SalesmanagementRestTestConfiguration.class)
-@TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement" })
-
 public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
 
   private static Logger LOG = LoggerFactory.getLogger(SalesmanagementRestServiceTest.class);
