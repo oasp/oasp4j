@@ -12,7 +12,7 @@ import org.junit.Before;
 public class BaseTest extends Assertions {
 
   /**
-   * Suggests to use a {link@ doSetUp()} method before each tests.
+   * Suggests to use {@link #doSetUp()} method before each tests.
    */
   @Before
   public final void setUp() {
@@ -21,7 +21,7 @@ public class BaseTest extends Assertions {
   }
 
   /**
-   * Suggests to use a {link@ doSetUp()} method before each tests.
+   * Suggests to use {@link #doTearDown()} method before each tests.
    */
   @After
   public final void tearDown() {

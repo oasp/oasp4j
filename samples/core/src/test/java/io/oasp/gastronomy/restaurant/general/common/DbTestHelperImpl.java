@@ -9,7 +9,7 @@ import io.oasp.module.test.common.helper.api.DbTestHelper;
  * This class provides methods for handling the database during testing where resets (and other operations) may be
  * necessary.
  *
- * @author jmolinar
+ * @author jmolinar, shuber
  */
 public class DbTestHelperImpl implements DbTestHelper {
   private Flyway flyway;
@@ -28,9 +28,6 @@ public class DbTestHelperImpl implements DbTestHelper {
     this.migrationVersion = MigrationVersion.fromVersion(migrationVersion);
   }
 
-  /**
-   * Drops the whole database.
-   */
   @Override
   public void dropDatabase() {
 

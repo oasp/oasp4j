@@ -41,7 +41,7 @@ public abstract class SubsystemTest extends BaseTest {
   }
 
   /**
-   * Provides initialization of the database.
+   * Resets the database if the database was changed before indicated by {@code DB_NEEDS_RESET}.
    */
   protected void doDatabaseSetUp() {
 
@@ -67,7 +67,7 @@ public abstract class SubsystemTest extends BaseTest {
   }
 
   /**
-   * sets {@link DB_NEEDS_RESET}.
+   * Sets {@link DB_NEEDS_RESET}.
    */
   protected void setDbNeedsReset(boolean dbNeedsReset) {
 

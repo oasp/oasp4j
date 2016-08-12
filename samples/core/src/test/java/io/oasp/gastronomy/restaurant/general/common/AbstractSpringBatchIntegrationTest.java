@@ -29,7 +29,6 @@ import io.oasp.module.test.common.helper.api.DbTestHelper;
  *
  * @author jczas, shuber
  */
-// @DirtiesContext(classMode = ClassMode.AFTER_CLASS)
 public abstract class AbstractSpringBatchIntegrationTest extends ComponentTest {
   private static final Logger LOG = LoggerFactory.getLogger(AbstractSpringBatchIntegrationTest.class);
 
@@ -90,7 +89,7 @@ public abstract class AbstractSpringBatchIntegrationTest extends ComponentTest {
   }
 
   /**
-   * injects {@link DbTestHelper}.
+   * Injects {@link DbTestHelper}.
    */
   @Inject
   public void setDbTestHelper(DbTestHelper dbTestHelper) {

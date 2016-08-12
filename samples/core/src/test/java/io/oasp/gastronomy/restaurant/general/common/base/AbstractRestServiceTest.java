@@ -57,7 +57,7 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
   private SecurityTestHelper securityTestHelper;
 
   /**
-   * The {@code RestTestClientBuilder}.
+   * The {@code RestTestClientBuilder}
    */
   @Inject
   private RestTestClientBuilder restTestClientBuilder;
@@ -68,9 +68,6 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
   @Inject
   private JacksonJsonProvider jacksonJsonProvider;
 
-  /**
-   * Sets up the test.
-   */
   @Override
   protected void doSetUp() {
 
@@ -82,9 +79,6 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
 
   }
 
-  /**
-   * Cleans up the test.
-   */
   @Override
   protected void doTearDown() {
 
@@ -111,7 +105,7 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
   }
 
   /**
-   * injects {@link DbTestHelper}.
+   * Injects {@link DbTestHelper}
    */
   @Inject
   public void setDbTestHelper(DbTestHelper dbTestHelper) {

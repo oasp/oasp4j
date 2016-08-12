@@ -11,6 +11,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.general.common.SampleCreator;
 import io.oasp.gastronomy.restaurant.general.common.TestUtil;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
@@ -28,7 +29,7 @@ import io.oasp.module.test.common.helper.api.DbTestHelper;
 /**
  * This is the test-case of {@link Offermanagement}
  *
- * @author cmammado
+ * @author cmammado, shuber
  * @since dev
  */
 
@@ -116,19 +117,19 @@ public class OfferManagementTest extends ComponentTest {
     assertEquals(offerEntity.size(), 1);
     assertEquals(offerEntity.get(0).getPrice(), new Money(6.99));
 
-    filter.setSideDishId(7L);
+    filter.setSideDishId(SampleCreator.SAMPLE_OFFER_SIDEDISH_ID);
     offerEntity = this.offerManagement.findOffersFiltered(filter, sort);
     assertEquals(offerEntity.size(), 1);
-    assertEquals(offerEntity.get(0).getId(), new Long(1));
-    assertEquals(offerEntity.get(0).getDescription(), "Description of Schnitzel-Menü");
-    assertEquals(offerEntity.get(0).getDrinkId(), new Long(12));
-    assertEquals(offerEntity.get(0).getMealId(), new Long(1));
-    assertEquals(offerEntity.get(0).getSideDishId(), new Long(7));
+    assertEquals(offerEntity.get(0).getId(), new Long(SampleCreator.SAMPLE_OFFER_ID));
+    assertEquals(offerEntity.get(0).getDescription(), SampleCreator.SAMPLE_OFFER_DESCRIPTION);
+    assertEquals(offerEntity.get(0).getDrinkId(), new Long(SampleCreator.SAMPLE_OFFER_DRINK_ID));
+    assertEquals(offerEntity.get(0).getMealId(), new Long(SampleCreator.SAMPLE_MEAL_ID));
+    assertEquals(offerEntity.get(0).getSideDishId(), new Long(SampleCreator.SAMPLE_OFFER_SIDEDISH_ID));
     setDbNeedsReset(false);
   }
 
   /**
-   * injects {@link DbTestHelper}.
+   * Injects {@link DbTestHelper}.
    */
   @Inject
   public void setDbTestHelper(DbTestHelper dbTestHelper) {

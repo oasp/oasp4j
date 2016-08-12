@@ -217,7 +217,7 @@ public class TablemanagementTest extends ComponentTest {
   }
 
   /**
-   * injects {@link DbTestHelper}.
+   * Injects {@link DbTestHelper}.
    */
   @Inject
   public void setDbTestHelper(DbTestHelper dbTestHelper) {
