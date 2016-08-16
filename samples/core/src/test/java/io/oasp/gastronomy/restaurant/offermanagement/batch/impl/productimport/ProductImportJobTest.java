@@ -37,6 +37,22 @@ public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
   @Inject
   private Offermanagement offermanagement;
 
+  @Override
+  public void doSetUp() {
+
+    super.doSetUp();
+    doDatabaseSetUp();
+  }
+
+  @Override
+  public void doDatabaseSetUp() {
+
+    if (dbNeedsReset()) {
+      getDbTestHelper().resetDatabase(null);
+    }
+    setDbNeedsReset(true);
+  }
+
   /**
    * @throws Exception thrown by JobLauncherTestUtils
    */
