@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.general.common;
+package io.oasp.gastronomy.restaurant.general.common.test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

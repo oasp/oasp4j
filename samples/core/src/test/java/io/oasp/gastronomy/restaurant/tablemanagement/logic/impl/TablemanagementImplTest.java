@@ -9,7 +9,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
-import io.oasp.gastronomy.restaurant.general.common.SampleCreator;
+import io.oasp.gastronomy.restaurant.general.common.test.SampleCreator;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.Staffmanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.dataaccess.api.TableEntity;
