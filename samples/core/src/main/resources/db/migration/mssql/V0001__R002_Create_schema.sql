@@ -126,6 +126,11 @@ CREATE TABLE BINARYOBJECT (
 );
 
 -- *** RevInfo (Commit log for envers audit trail) ***
+  CREATE TABLE REVINFO(
+    id BIGINT NOT NULL IDENTITY(1,1),
+    timestamp BIGINT NOT NULL,
+    [user] VARCHAR(255)
+);
 
 
 
