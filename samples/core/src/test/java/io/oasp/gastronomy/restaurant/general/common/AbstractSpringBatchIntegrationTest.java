@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.general.common;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,7 +9,6 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
@@ -19,17 +19,16 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import io.oasp.gastronomy.restaurant.general.common.api.security.UserData;
-import io.oasp.gastronomy.restaurant.general.dataaccess.base.DatabaseMigrator;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlPermission;
 import io.oasp.module.security.common.base.accesscontrol.AccessControlGrantedAuthority;
 import io.oasp.module.test.common.base.ComponentTest;
+import io.oasp.module.test.common.helper.api.DbTestHelper;
 
 /**
  * Base class for all spring batch integration tests. It helps to do End-to-End job tests.
  *
- * @author jczas
+ * @author jczas, shuber
  */
-// @DirtiesContext(classMode = ClassMode.AFTER_CLASS)
 public abstract class AbstractSpringBatchIntegrationTest extends ComponentTest {
   private static final Logger LOG = LoggerFactory.getLogger(AbstractSpringBatchIntegrationTest.class);
 
@@ -40,9 +39,9 @@ public abstract class AbstractSpringBatchIntegrationTest extends ComponentTest {
   private static final String ALL_TESTS_DB_SETUP_DIR = "classpath:AllTests/setup/db";
 
   protected static void login(String login, String password, String... permissions) {
-  
+
     Set<String> groups = new HashSet<>(Arrays.asList(permissions));
-  
+
     Set<GrantedAuthority> authorities = new HashSet<>();
     for (String permission : groups) {
       authorities.add(new AccessControlGrantedAuthority(new AccessControlPermission(permission)));
@@ -52,15 +51,9 @@ public abstract class AbstractSpringBatchIntegrationTest extends ComponentTest {
   }
 
   public static void logout() {
-  
+
     SecurityContextHolder.getContext().setAuthentication(null);
   }
-
-  /**
-   * database migration helper
-   */
-  @Inject
-  protected DatabaseMigrator flyway;
 
   @Inject
   private JobLauncher jobLauncher;
@@ -83,13 +76,24 @@ public abstract class AbstractSpringBatchIntegrationTest extends ComponentTest {
    *
    * @throws Exception throw by FileUtils
    */
-  @Before
-  public void setup() throws Exception {
-
-    // setup test data
-    this.flyway.importTestData(ALL_TESTS_DB_SETUP_DIR);
+  @Override
+  public void doSetUp() {
 
     LOG.debug("Delete tmp directory");
-    FileUtils.deleteDirectory(new File(TMP_DIR));
+    try {
+      FileUtils.deleteDirectory(new File(TMP_DIR));
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Injects {@link DbTestHelper}.
+   */
+  @Inject
+  public void setDbTestHelper(DbTestHelper dbTestHelper) {
+
+    this.dbTestHelper = dbTestHelper;
   }
 }

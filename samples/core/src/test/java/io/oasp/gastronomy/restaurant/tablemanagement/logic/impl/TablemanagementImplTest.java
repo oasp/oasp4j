@@ -3,14 +3,13 @@ package io.oasp.gastronomy.restaurant.tablemanagement.logic.impl;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
+import io.oasp.gastronomy.restaurant.common.test.SampleCreator;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.Staffmanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.dataaccess.api.TableEntity;
@@ -23,7 +22,7 @@ import io.oasp.module.test.common.base.ModuleTest;
  * This class provides a basic implementation of a {@code ComponentTest} which employs the Mockito framework to provide
  * fake objects to the SUT.
  *
- * @author jmolinar
+ * @author jmolinar, shuber
  */
 public class TablemanagementImplTest extends ModuleTest {
 
@@ -53,8 +52,8 @@ public class TablemanagementImplTest extends ModuleTest {
   /**
    * Injection of the mocked objects into the SUT.
    */
-  @Before
-  public void setup() {
+  @Override
+  public void doSetUp() {
 
     this.tableManagementImpl = new TablemanagementImpl();
     this.tableManagementImpl.setSalesmanagement(this.salesManagement);
@@ -67,8 +66,8 @@ public class TablemanagementImplTest extends ModuleTest {
   /**
    * Delete the used mocks.
    */
-  @After
-  public void tearDown() {
+  @Override
+  public void doTearDown() {
 
     this.salesManagement = null;
     this.staffManagement = null;
@@ -87,11 +86,11 @@ public class TablemanagementImplTest extends ModuleTest {
     TableEntity entity = mock(TableEntity.class);
     TableEto eto = new TableEto();
 
-    when(this.tableDao.findOne(1L)).thenReturn(entity);
+    when(this.tableDao.findOne(SampleCreator.SAMPLE_TABLE_ID)).thenReturn(entity);
     when(this.beanMapper.map(entity, TableEto.class)).thenReturn(eto);
 
     // when
-    TableEto resultEto = this.tableManagementImpl.findTable(1L);
+    TableEto resultEto = this.tableManagementImpl.findTable(SampleCreator.SAMPLE_TABLE_ID);
 
     // then
     assertThat(resultEto).isNotNull();

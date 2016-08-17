@@ -1,9 +1,8 @@
 package io.oasp.module.test.common.base;
 
-import io.oasp.module.test.common.api.category.CategorySystemTest;
-
-import org.assertj.core.api.Assertions;
 import org.junit.experimental.categories.Category;
+
+import io.oasp.module.test.common.api.category.CategorySystemTest;
 
 /**
  * This is the abstract base class for a system test. You are free to create your system tests as you like just by
@@ -12,9 +11,9 @@ import org.junit.experimental.categories.Category;
  *
  * @see CategorySystemTest
  *
- * @author hohwille
+ * @author hohwille, shuber
  */
 @Category(CategorySystemTest.class)
-public abstract class SystemTest extends Assertions {
+public abstract class SystemTest extends BaseTest {
 
 }

@@ -15,16 +15,17 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
-import io.oasp.gastronomy.restaurant.common.builders.DrinkEntityBuilder;
+import io.oasp.gastronomy.restaurant.common.test.SampleCreator;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.DrinkEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.DrinkDao;
 import io.oasp.module.jpa.dataaccess.api.RevisionMetadata;
 import io.oasp.module.test.common.base.ComponentTest;
+import io.oasp.module.test.common.helper.api.DbTestHelper;
 
 /**
  * Test class to test the {@link DrinkDao}.
  *
- * @author jmetzler
+ * @author jmetzler, shuber
  */
 
 @SpringApplicationConfiguration(classes = { SpringBootApp.class })
@@ -72,8 +73,7 @@ public class DrinkDaoTest extends ComponentTest {
     @Transactional
     public DrinkEntity create() {
 
-      DrinkEntity drink =
-          new DrinkEntityBuilder().alcoholic(false).description(this.description).name("some name").createNew();
+      DrinkEntity drink = SampleCreator.createSampleDrinkEntity();
       assertThat(drink.getId()).isNull();
       drink = this.drinkDao.save(drink);
       return drink;
@@ -104,7 +104,7 @@ public class DrinkDaoTest extends ComponentTest {
       // get first revision
       Number rev = history.get(0).getRevision();
       DrinkEntity drink = this.drinkDao.load(id, rev);
-      assertThat(drink.getDescription()).isEqualTo(this.description);
+      assertThat(drink.getDescription()).isEqualTo(SampleCreator.NEW_DRINK_DESCRIPTION);
 
       // get second revision
       rev = history.get(1).getRevision();
@@ -120,4 +120,13 @@ public class DrinkDaoTest extends ComponentTest {
       this.entityManager = entityManager;
     }
   };
+
+  /**
+   * Injects {@link DbTestHelper}.
+   */
+  @Inject
+  public void setDbTestHelper(DbTestHelper dbTestHelper) {
+
+    this.dbTestHelper = dbTestHelper;
+  }
 }

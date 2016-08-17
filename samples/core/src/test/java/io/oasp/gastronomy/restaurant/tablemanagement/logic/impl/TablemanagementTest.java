@@ -6,8 +6,6 @@ import javax.inject.Inject;
 
 import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.security.access.AccessDeniedException;
@@ -16,7 +14,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.common.builders.OrderEtoBuilder;
 import io.oasp.gastronomy.restaurant.common.builders.OrderPositionEtoBuilder;
-import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
 import io.oasp.gastronomy.restaurant.general.common.TestUtil;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException;
@@ -27,11 +24,12 @@ import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableSt
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import io.oasp.module.test.common.base.ComponentTest;
+import io.oasp.module.test.common.helper.api.DbTestHelper;
 
 /**
  * This is the test case for the component {@link Tablemanagement}.
  *
- * @author sroeger
+ * @author sroeger, shuber
  *
  */
 
@@ -45,30 +43,25 @@ public class TablemanagementTest extends ComponentTest {
   @Inject
   private Tablemanagement tablemanagement;
 
-  @Inject
-  private DbTestHelper dbTestHelper;
-
   /**
-   * Provides login credentials and permissions and resets database. The database is migrated to Version 0002 in order
-   * to have a common basis for test.
+   * Logs in the credentials.
    */
-  @Before
-  public void setUp() {
+  @Override
+  public void doSetUp() {
 
+    super.doSetUp();
     TestUtil.login("waiter", PermissionConstants.SAVE_ORDER_POSITION, PermissionConstants.SAVE_ORDER,
         PermissionConstants.FIND_TABLE, PermissionConstants.FIND_ORDER, PermissionConstants.SAVE_TABLE,
         PermissionConstants.FIND_OFFER);
-    this.dbTestHelper.setMigrationVersion("0002");
-    this.dbTestHelper.resetDatabase();
-
   }
 
   /**
    * Logs out used credentials.
    */
-  @After
-  public void tearDown() {
+  @Override
+  public void doTearDown() {
 
+    super.doTearDown();
     TestUtil.logout();
   }
 
@@ -152,6 +145,7 @@ public class TablemanagementTest extends ComponentTest {
     assertThat(allTables).extracting("state").contains(table.getState());
     assertThat(allTables).extracting("waiterId").contains(table.getWaiterId());
     assertThat(allTables).extracting("number").contains(table.getNumber());
+    setDbNeedsReset(false);
 
   }
 
@@ -222,4 +216,12 @@ public class TablemanagementTest extends ComponentTest {
     assertThat(this.tablemanagement.findTable(tableNumber)).isNull();
   }
 
+  /**
+   * Injects {@link DbTestHelper}.
+   */
+  @Inject
+  public void setDbTestHelper(DbTestHelper dbTestHelper) {
+
+    this.dbTestHelper = dbTestHelper;
+  }
 }

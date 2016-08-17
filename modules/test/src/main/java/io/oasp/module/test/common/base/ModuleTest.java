@@ -1,9 +1,8 @@
 package io.oasp.module.test.common.base;
 
-import io.oasp.module.test.common.api.category.CategoryModuleTest;
-
-import org.assertj.core.api.Assertions;
 import org.junit.experimental.categories.Category;
+
+import io.oasp.module.test.common.api.category.CategoryModuleTest;
 
 /**
  * This is the abstract base class for a module test. You are free to create your module tests as you like just by
@@ -12,9 +11,9 @@ import org.junit.experimental.categories.Category;
  *
  * @see CategoryModuleTest
  *
- * @author hohwille
+ * @author hohwille, shuber
  */
 @Category(CategoryModuleTest.class)
-public abstract class ModuleTest extends Assertions {
+public abstract class ModuleTest extends BaseTest {
 
 }

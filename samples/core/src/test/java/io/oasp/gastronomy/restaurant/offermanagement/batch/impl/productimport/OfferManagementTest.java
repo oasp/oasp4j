@@ -6,17 +6,16 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.flywaydb.core.Flyway;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.common.test.SampleCreator;
 import io.oasp.gastronomy.restaurant.general.common.TestUtil;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
+import io.oasp.gastronomy.restaurant.general.configuration.RestaurantTestConfig;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferSortByHitEntry;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
@@ -25,41 +24,39 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSortBy;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.test.common.base.ComponentTest;
+import io.oasp.module.test.common.helper.api.DbTestHelper;
 
 /**
  * This is the test-case of {@link Offermanagement}
  *
- * @author cmammado
+ * @author cmammado, shuber
  * @since dev
  */
-@SpringApplicationConfiguration(classes = { SpringBootApp.class })
+
+@SpringApplicationConfiguration(classes = { SpringBootApp.class, RestaurantTestConfig.class })
 @WebAppConfiguration
 public class OfferManagementTest extends ComponentTest {
 
   @Inject
   private Offermanagement offerManagement;
 
-  @Inject
-  private Flyway flyway;
-
   /**
    * Login
    */
-  @Before
-  public void setUp() {
+  @Override
+  protected void doSetUp() {
 
-    this.flyway.clean();
-    this.flyway.migrate();
-
+    super.doSetUp();
     TestUtil.login("waiter", PermissionConstants.FIND_OFFER);
   }
 
   /**
    * Logout
    */
-  @After
-  public void tearDown() {
+  @Override
+  protected void doTearDown() {
 
+    super.doTearDown();
     TestUtil.logout();
   }
 
@@ -120,14 +117,23 @@ public class OfferManagementTest extends ComponentTest {
     assertEquals(offerEntity.size(), 1);
     assertEquals(offerEntity.get(0).getPrice(), new Money(6.99));
 
-    filter.setSideDishId(7L);
+    filter.setSideDishId(SampleCreator.SAMPLE_OFFER_SIDEDISH_ID);
     offerEntity = this.offerManagement.findOffersFiltered(filter, sort);
     assertEquals(offerEntity.size(), 1);
-    assertEquals(offerEntity.get(0).getId(), new Long(1));
-    assertEquals(offerEntity.get(0).getDescription(), "Description of Schnitzel-Menü");
-    assertEquals(offerEntity.get(0).getDrinkId(), new Long(12));
-    assertEquals(offerEntity.get(0).getMealId(), new Long(1));
-    assertEquals(offerEntity.get(0).getSideDishId(), new Long(7));
+    assertEquals(offerEntity.get(0).getId(), new Long(SampleCreator.SAMPLE_OFFER_ID));
+    assertEquals(offerEntity.get(0).getDescription(), SampleCreator.SAMPLE_OFFER_DESCRIPTION);
+    assertEquals(offerEntity.get(0).getDrinkId(), new Long(SampleCreator.SAMPLE_OFFER_DRINK_ID));
+    assertEquals(offerEntity.get(0).getMealId(), new Long(SampleCreator.SAMPLE_MEAL_ID));
+    assertEquals(offerEntity.get(0).getSideDishId(), new Long(SampleCreator.SAMPLE_OFFER_SIDEDISH_ID));
+    setDbNeedsReset(false);
+  }
 
+  /**
+   * Injects {@link DbTestHelper}.
+   */
+  @Inject
+  public void setDbTestHelper(DbTestHelper dbTestHelper) {
+
+    this.dbTestHelper = dbTestHelper;
   }
 }

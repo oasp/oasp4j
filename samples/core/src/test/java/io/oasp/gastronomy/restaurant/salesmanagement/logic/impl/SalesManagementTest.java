@@ -4,30 +4,26 @@ import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
-import io.oasp.gastronomy.restaurant.common.builders.OrderEtoBuilder;
-import io.oasp.gastronomy.restaurant.common.builders.OrderPositionEtoBuilder;
-import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
+import io.oasp.gastronomy.restaurant.common.test.SampleCreator;
 import io.oasp.gastronomy.restaurant.general.common.TestUtil;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
-import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 import io.oasp.module.test.common.base.ComponentTest;
+import io.oasp.module.test.common.helper.api.DbTestHelper;
 
 /**
  * This is the test-case of {@link Salesmanagement}.
  *
- * @author hohwille, sroeger
+ * @author hohwille, sroeger, shuber
  */
 @SpringApplicationConfiguration(classes = { SpringBootApp.class })
 @WebAppConfiguration
@@ -36,27 +32,24 @@ public class SalesManagementTest extends ComponentTest {
   @Inject
   private Salesmanagement salesManagement;
 
-  @Inject
-  private DbTestHelper dbTestHelper;
-
   /**
-   * Initialization for the test.
+   * Log in utility for the test.
    */
-  @Before
-  public void setUp() {
+  @Override
+  public void doSetUp() {
 
+    super.doSetUp();
     TestUtil.login("waiter", PermissionConstants.FIND_ORDER_POSITION, PermissionConstants.SAVE_ORDER_POSITION,
         PermissionConstants.SAVE_ORDER, PermissionConstants.FIND_OFFER);
-    this.dbTestHelper.setMigrationVersion("0002");
-    this.dbTestHelper.resetDatabase();
   }
 
   /**
    * Log out utility for the test.
    */
-  @After
-  public void tearDown() {
+  @Override
+  public void doTearDown() {
 
+    super.doTearDown();
     TestUtil.logout();
   }
 
@@ -70,16 +63,15 @@ public class SalesManagementTest extends ComponentTest {
 
     try {
       // given
-      OrderEto order = new OrderEtoBuilder().tableId(1L).createNew();
-      order = this.salesManagement.saveOrder(order);
-      OrderPositionEto orderPosition = new OrderPositionEtoBuilder().offerId(5L).orderId(order.getId())
-          .offerName("Cola").price(new Money(1.2)).createNew();
-      orderPosition = this.salesManagement.saveOrderPosition(orderPosition);
-      assertThat(orderPosition).isNotNull();
-      orderPosition.setState(OrderPositionState.ORDERED);
-      orderPosition.setDrinkState(ProductOrderState.ORDERED);
+      OrderEto sampleOrder = SampleCreator.createSampleOrderEto();
+      OrderEto respnseOrder = this.salesManagement.saveOrder(sampleOrder);
+      OrderPositionEto sampleOrderPosition = SampleCreator.createSampleOrderPositionEto(respnseOrder.getId());
+      OrderPositionEto responseOrderPosition = this.salesManagement.saveOrderPosition(sampleOrderPosition);
+      assertThat(responseOrderPosition).isNotNull();
+      responseOrderPosition.setState(OrderPositionState.ORDERED);
+      responseOrderPosition.setDrinkState(ProductOrderState.ORDERED);
 
-      OrderPositionEto updatedOrderPosition = this.salesManagement.saveOrderPosition(orderPosition);
+      OrderPositionEto updatedOrderPosition = this.salesManagement.saveOrderPosition(sampleOrderPosition);
       assertThat(updatedOrderPosition.getState()).isEqualTo(OrderPositionState.ORDERED);
 
       // when
@@ -105,4 +97,12 @@ public class SalesManagementTest extends ComponentTest {
 
   }
 
+  /**
+   * Injects {@link DbTestHelper}.
+   */
+  @Inject
+  public void setDbTestHelper(DbTestHelper dbTestHelper) {
+
+    this.dbTestHelper = dbTestHelper;
+  }
 }
