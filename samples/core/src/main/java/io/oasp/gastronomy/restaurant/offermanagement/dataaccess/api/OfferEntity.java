@@ -1,16 +1,17 @@
 package io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api;
 
-import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
-import io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer;
-import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferState;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+
+import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
+import io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer;
+import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferState;
 
 /**
  * The {@link io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity persistent entity} for
@@ -80,6 +81,7 @@ public class OfferEntity extends MenuItemEntity implements Offer {
    * @return Value of meal
    */
   @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "mealId")
   public MealEntity getMeal() {
 
     return this.meal;
@@ -121,6 +123,7 @@ public class OfferEntity extends MenuItemEntity implements Offer {
    * @return Value of drink
    */
   @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "drinkId")
   public DrinkEntity getDrink() {
 
     return this.drink;
@@ -164,6 +167,7 @@ public class OfferEntity extends MenuItemEntity implements Offer {
    * @return Value of sideDish
    */
   @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "sideDishId")
   public SideDishEntity getSideDish() {
 
     return this.sideDish;

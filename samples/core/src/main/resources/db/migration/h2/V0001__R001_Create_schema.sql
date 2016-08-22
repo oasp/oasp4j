@@ -13,29 +13,30 @@ CREATE TABLE StaffMember(
   firstname VARCHAR(255),
   lastname VARCHAR(255),
   login VARCHAR(255),
-  role INTEGER
+  role INTEGER,
+  CONSTRAINT PK_StaffMember PRIMARY KEY(id),
+  CONSTRAINT UC_StaffMember_login UNIQUE(login)
 );
-ALTER TABLE StaffMember ADD CONSTRAINT PK_StaffMember PRIMARY KEY(id);
-ALTER TABLE StaffMember ADD CONSTRAINT UC_StaffMember_LOGIN UNIQUE(login);
 
 -- *** Product ***
 CREATE TABLE Product(
-  dtype VARCHAR(31) NOT NULL,
+  dType VARCHAR(31) NOT NULL,
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   description VARCHAR(255),
   name VARCHAR(255),
   alcoholic BOOLEAN,
-  pictureId BIGINT
+  pictureId BIGINT,
+  CONSTRAINT PK_Product PRIMARY KEY(id)
 );
-ALTER TABLE Product ADD CONSTRAINT PK_Product PRIMARY KEY(id);
+
 CREATE TABLE Product_AUD(
-  revtype TINYINT,
+  revType TINYINT,
   description VARCHAR(255),
   name VARCHAR(255),
   pictureId BIGINT,
   alcoholic BOOLEAN,
-  dtype VARCHAR(31) NOT NULL,
+  dType VARCHAR(31) NOT NULL,
   id BIGINT NOT NULL,
   rev BIGINT NOT NULL
 );
@@ -49,53 +50,56 @@ CREATE TABLE Offer(
   price DECIMAL(19, 2),
   number BIGINT,
   state INTEGER,
-  drink_id BIGINT,
-  meal_id BIGINT,
-  sideDish_id BIGINT
+  drinkId BIGINT,
+  mealId BIGINT,
+  sideDishId BIGINT,
+  CONSTRAINT PK_Offer PRIMARY KEY(id),
+  CONSTRAINT UC_Offer_name UNIQUE(name),
+  CONSTRAINT UC_Offer_number UNIQUE(number),
+  CONSTRAINT FK_Offer_sideDishId FOREIGN KEY(sideDishId) REFERENCES Product(id) NOCHECK,
+  CONSTRAINT FK_Offer_mealId FOREIGN KEY(mealId) REFERENCES Product(id) NOCHECK,
+  CONSTRAINT FK_Offer_drinkId FOREIGN KEY(drinkId) REFERENCES Product(id) NOCHECK
+
 );
-ALTER TABLE Offer ADD CONSTRAINT PK_Offer PRIMARY KEY(id);
-ALTER TABLE Offer ADD CONSTRAINT UC_Offer_NAME UNIQUE(name);
-ALTER TABLE Offer ADD CONSTRAINT UC_Offer_NUMBER UNIQUE(number);
-ALTER TABLE Offer ADD CONSTRAINT FK_Offer2SIDEDISH FOREIGN KEY(sideDish_id) REFERENCES Product(id) NOCHECK;
-ALTER TABLE Offer ADD CONSTRAINT FK_Offer2MEAL FOREIGN KEY(meal_id) REFERENCES Product(id) NOCHECK;
-ALTER TABLE Offer ADD CONSTRAINT FK_Offer2DRINK FOREIGN KEY(drink_id) REFERENCES Product(id) NOCHECK;
 
 -- *** RestaurantTable (Table is a reserved keyword in Oracle) ***
 CREATE TABLE RestaurantTable(
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
-  number BIGINT NOT NULL CHECK (NUMBER >= 0),
+  number BIGINT NOT NULL CHECK (number >= 0),
   state INTEGER,
-  waiter_id BIGINT
+  waiterId BIGINT,
+  CONSTRAINT PK_RestaurantTable PRIMARY KEY(id),
+  CONSTRAINT UC_Table_number UNIQUE(number)
+
 );
-ALTER TABLE RestaurantTable ADD CONSTRAINT PK_RestaurantTable PRIMARY KEY(id);
-ALTER TABLE RestaurantTable ADD CONSTRAINT UC_TABLE_NUMBER UNIQUE(number);
 
 -- *** RestaurantOrder (Order is a reserved keyword in Oracle) ***
 CREATE TABLE RestaurantOrder(
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   state INTEGER,
-  table_id BIGINT NOT NULL
+  tableId BIGINT NOT NULL,
+  CONSTRAINT PK_RestaurantOrder PRIMARY KEY(id)
 );
-ALTER TABLE RestaurantOrder ADD CONSTRAINT PK_RestaurantOrder PRIMARY KEY(id);
 
 -- *** OrderPosition ***
 CREATE TABLE OrderPosition(
   id BIGINT NOT NULL AUTO_INCREMENT,
   modificationCounter INTEGER NOT NULL,
   comment VARCHAR(255),
-  cook_id BIGINT,
-  offer_id BIGINT,
+  cookId BIGINT,
+  offerId BIGINT,
   offerName VARCHAR(255),
   price DECIMAL(19, 2),
   state INTEGER,
   drinkState INTEGER,
-  order_id BIGINT
+  orderId BIGINT,
+  CONSTRAINT PK_OrderPosition PRIMARY KEY(id),
+  CONSTRAINT FK_OrderPosition_orderId FOREIGN KEY(orderId) REFERENCES RestaurantOrder(id) NOCHECK,
+  CONSTRAINT FK_OrderPosition_cookId FOREIGN KEY(cookId) REFERENCES StaffMember(id) NOCHECK
+
 );
-ALTER TABLE OrderPosition ADD CONSTRAINT PK_OrderPosition PRIMARY KEY(id);
-ALTER TABLE OrderPosition ADD CONSTRAINT FK_ORDPOS2ORDER FOREIGN KEY(order_id) REFERENCES RestaurantOrder(id) NOCHECK;
-ALTER TABLE OrderPosition ADD CONSTRAINT FK_ORDPOS2COOK FOREIGN KEY(cook_id) REFERENCES StaffMember(id) NOCHECK;
 
 -- *** Bill ***
 CREATE TABLE Bill(
@@ -103,15 +107,16 @@ CREATE TABLE Bill(
   modificationCounter INTEGER NOT NULL,
   payed BOOLEAN NOT NULL,
   tip DECIMAL(19, 2),
-  total DECIMAL(19, 2)
+  total DECIMAL(19, 2),
+  CONSTRAINT PK_Bill PRIMARY KEY(id)
 );
-ALTER TABLE Bill ADD CONSTRAINT PK_Bill PRIMARY KEY(id);
-CREATE TABLE Bill_OrderPosition(
-  bill_id BIGINT NOT NULL AUTO_INCREMENT,
-  orderpositions_id BIGINT NOT NULL
+
+CREATE TABLE BillOrderPosition(
+  billId BIGINT NOT NULL AUTO_INCREMENT,
+  orderPositionsId BIGINT NOT NULL,
+  CONSTRAINT FK_BillOrderPosition_billId FOREIGN KEY(billId) REFERENCES Bill(id) NOCHECK,
+  CONSTRAINT FK_BillOrderPosition_orderPositionsId FOREIGN KEY(orderPositionsId) REFERENCES OrderPosition(id) NOCHECK
 );
-ALTER TABLE Bill_OrderPosition ADD CONSTRAINT FK_BillORDPOS2Bill FOREIGN KEY(bill_id) REFERENCES Bill(id) NOCHECK;
-ALTER TABLE Bill_OrderPosition ADD CONSTRAINT FK_BillORDPOS2ORDPOS FOREIGN KEY(orderPositions_ID) REFERENCES OrderPosition(id) NOCHECK;
 
 -- *** BinaryObject (BLOBs) ***
 CREATE TABLE BinaryObject (
@@ -119,13 +124,13 @@ CREATE TABLE BinaryObject (
   modificationCounter INTEGER NOT NULL,
   data BLOB(2147483647),
   size BIGINT NOT NULL,
-  mimetype VARCHAR(255),
+  mimeType VARCHAR(255),
   PRIMARY KEY (ID)
 );
 
 -- *** RevInfo (Commit log for envers audit trail) ***
 CREATE TABLE RevInfo(
-  id BIGINT NOT NULL generated by default as identity (start with 1),
+  id BIGINT NOT NULL GENERATED BY DEFAULT AS IDENTITY (START WITH 1),
   timestamp BIGINT NOT NULL,
   user VARCHAR(255)
 );
