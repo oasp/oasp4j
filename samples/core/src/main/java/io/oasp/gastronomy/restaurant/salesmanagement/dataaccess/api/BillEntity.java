@@ -50,7 +50,6 @@ public class BillEntity extends ApplicationPersistenceEntity implements Bill {
   @ManyToMany(fetch = FetchType.EAGER)
   @Column(name = "orderPositionsId")
   @JoinTable(name = "BillOrderPosition", joinColumns = {
-  // TODO in issue
   @JoinColumn(name = "billId") }, inverseJoinColumns = @JoinColumn(name = "orderPositionsId")
 
   )
