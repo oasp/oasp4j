@@ -14,7 +14,7 @@ public class OrderPositionEtoBuilder {
 
   public OrderPositionEtoBuilder() {
 
-    parameterToBeApplied = new LinkedList<P<OrderPositionEto>>();
+    this.parameterToBeApplied = new LinkedList<>();
     fillMandatoryFields();
     fillMandatoryFields_custom();
   }
@@ -35,7 +35,7 @@ public class OrderPositionEtoBuilder {
 
   public OrderPositionEtoBuilder orderId(final Long orderId) {
 
-    parameterToBeApplied.add(new P<OrderPositionEto>() {
+    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -47,7 +47,7 @@ public class OrderPositionEtoBuilder {
 
   public OrderPositionEtoBuilder cookId(final Long cookId) {
 
-    parameterToBeApplied.add(new P<OrderPositionEto>() {
+    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -59,7 +59,7 @@ public class OrderPositionEtoBuilder {
 
   public OrderPositionEtoBuilder offerId(final Long offerId) {
 
-    parameterToBeApplied.add(new P<OrderPositionEto>() {
+    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -71,7 +71,7 @@ public class OrderPositionEtoBuilder {
 
   public OrderPositionEtoBuilder offerName(final String offerName) {
 
-    parameterToBeApplied.add(new P<OrderPositionEto>() {
+    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -83,7 +83,7 @@ public class OrderPositionEtoBuilder {
 
   public OrderPositionEtoBuilder state(final OrderPositionState state) {
 
-    parameterToBeApplied.add(new P<OrderPositionEto>() {
+    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -95,7 +95,7 @@ public class OrderPositionEtoBuilder {
 
   public OrderPositionEtoBuilder price(final Money price) {
 
-    parameterToBeApplied.add(new P<OrderPositionEto>() {
+    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -107,7 +107,7 @@ public class OrderPositionEtoBuilder {
 
   public OrderPositionEtoBuilder comment(final String comment) {
 
-    parameterToBeApplied.add(new P<OrderPositionEto>() {
+    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -119,7 +119,7 @@ public class OrderPositionEtoBuilder {
 
   public OrderPositionEtoBuilder drinkState(final ProductOrderState drinkState) {
 
-    parameterToBeApplied.add(new P<OrderPositionEto>() {
+    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -131,7 +131,7 @@ public class OrderPositionEtoBuilder {
 
   public OrderPositionEtoBuilder revision(final Number revision) {
 
-    parameterToBeApplied.add(new P<OrderPositionEto>() {
+    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -144,7 +144,7 @@ public class OrderPositionEtoBuilder {
   public OrderPositionEto createNew() {
 
     OrderPositionEto orderpositioneto = new OrderPositionEto();
-    for (P<OrderPositionEto> parameter : parameterToBeApplied) {
+    for (P<OrderPositionEto> parameter : this.parameterToBeApplied) {
       parameter.apply(orderpositioneto);
     }
     return orderpositioneto;

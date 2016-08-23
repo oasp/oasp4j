@@ -246,7 +246,7 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
     int numberOfOrderPositionsToSave = NUMBER_OF_SAMPLE_ORDER_POSITIONS;
 
     OrderPositionEto sampleOrderPositionEto;
-    ArrayList<OrderPositionEto> savedOrderPositionEtos = new ArrayList();
+    ArrayList<OrderPositionEto> savedOrderPositionEtos = new ArrayList<>();
     for (int i = 0; i < numberOfOrderPositionsToSave; ++i) {
       sampleOrderPositionEto = new OrderPositionEtoBuilder().orderId(responseOrderCto.getOrder().getId())
           .offerId(SAMPLE_OFFER_ID).createNew();

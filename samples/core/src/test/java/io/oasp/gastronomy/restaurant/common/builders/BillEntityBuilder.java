@@ -13,14 +13,14 @@ public class BillEntityBuilder {
 
   public BillEntityBuilder() {
 
-    parameterToBeApplied = new LinkedList<P<BillEntity>>();
+    this.parameterToBeApplied = new LinkedList<>();
     fillMandatoryFields();
     fillMandatoryFields_custom();
   }
 
   public BillEntityBuilder orderPositions(final List<OrderPositionEntity> orderPositions) {
 
-    parameterToBeApplied.add(new P<BillEntity>() {
+    this.parameterToBeApplied.add(new P<BillEntity>() {
       @Override
       public void apply(BillEntity target) {
 
@@ -32,7 +32,7 @@ public class BillEntityBuilder {
 
   public BillEntityBuilder total(final Money total) {
 
-    parameterToBeApplied.add(new P<BillEntity>() {
+    this.parameterToBeApplied.add(new P<BillEntity>() {
       @Override
       public void apply(BillEntity target) {
 
@@ -44,7 +44,7 @@ public class BillEntityBuilder {
 
   public BillEntityBuilder tip(final Money tip) {
 
-    parameterToBeApplied.add(new P<BillEntity>() {
+    this.parameterToBeApplied.add(new P<BillEntity>() {
       @Override
       public void apply(BillEntity target) {
 
@@ -56,7 +56,7 @@ public class BillEntityBuilder {
 
   public BillEntityBuilder payed(final boolean payed) {
 
-    parameterToBeApplied.add(new P<BillEntity>() {
+    this.parameterToBeApplied.add(new P<BillEntity>() {
       @Override
       public void apply(BillEntity target) {
 
@@ -68,7 +68,7 @@ public class BillEntityBuilder {
 
   public BillEntityBuilder revision(final Number revision) {
 
-    parameterToBeApplied.add(new P<BillEntity>() {
+    this.parameterToBeApplied.add(new P<BillEntity>() {
       @Override
       public void apply(BillEntity target) {
 
@@ -78,9 +78,9 @@ public class BillEntityBuilder {
     return this;
   }
 
-  public BillEntityBuilder orderPositionIds(final List orderPositionIds) {
+  public BillEntityBuilder orderPositionIds(final List<Long> orderPositionIds) {
 
-    parameterToBeApplied.add(new P<BillEntity>() {
+    this.parameterToBeApplied.add(new P<BillEntity>() {
       @Override
       public void apply(BillEntity target) {
 
@@ -93,7 +93,7 @@ public class BillEntityBuilder {
   public BillEntity createNew() {
 
     BillEntity billentity = new BillEntity();
-    for (P<BillEntity> parameter : parameterToBeApplied) {
+    for (P<BillEntity> parameter : this.parameterToBeApplied) {
       parameter.apply(billentity);
     }
     return billentity;
