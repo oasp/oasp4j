@@ -9,7 +9,6 @@
   </parent>
   <groupId>io.oasp.java.samples</groupId>
   <artifactId>oasp4j-sample-batch</artifactId>
-  <version>dev-SNAPSHOT</version>
   <name>${project.artifactId}</name>
   <packaging>pom</packaging>
   <description>Batches for the restaurant application - a simple example using the Open Application Standard Platform for Java (OASP4J).</description>
