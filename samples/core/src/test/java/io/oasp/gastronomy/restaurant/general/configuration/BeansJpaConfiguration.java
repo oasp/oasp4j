@@ -1,15 +1,14 @@
 package io.oasp.gastronomy.restaurant.general.configuration;
 
-import io.oasp.gastronomy.restaurant.general.dataaccess.base.DatabaseMigrator;
-
 import javax.annotation.PostConstruct;
-import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import io.oasp.gastronomy.restaurant.general.dataaccess.base.DatabaseMigrator;
 
 /**
  * Java configuration for JPA
@@ -19,8 +18,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 // @EnableTransactionManagement
 public class BeansJpaConfiguration {
-
-  private @Autowired EntityManagerFactory entityManagerFactory;
 
   private @Autowired DataSource appDataSource;
 
