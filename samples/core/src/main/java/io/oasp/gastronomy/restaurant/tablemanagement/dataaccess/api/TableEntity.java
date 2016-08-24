@@ -13,7 +13,6 @@ import javax.persistence.Entity;
  * and may have a {@link io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api.StaffMemberEntity waiter}
  * assigned.
  *
- * @author hohwille
  */
 @Entity
 // Table is a reserved word in SQL/RDBMS and can not be used as table name

@@ -3,7 +3,6 @@ package io.oasp.gastronomy.restaurant.general.common;
 /**
  * This class provides security related operations to facilitate testing.
  *
- * @author jmolinar
  */
 
 public class SecurityTestHelper {

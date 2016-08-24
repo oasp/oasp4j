@@ -8,7 +8,6 @@ import net.sf.mmm.util.exception.api.NlsIllegalArgumentException;
  * A {@link net.sf.mmm.util.transferobject.api.TransferObject transfer-object} containing criteria for paginating
  * queries.
  *
- * @author henning
  */
 public class PaginationTo extends AbstractTo {
 

@@ -18,7 +18,6 @@ import net.sf.mmm.util.exception.api.ObjectNotFoundException;
  * @param <ID> is the type of the {@link RevisionedEntity#getId() primary key}.
  * @param <ENTITY> is the type of the managed entity.
  *
- * @author Joerg Hohwiller (hohwille at users.sourceforge.net)
  */
 public interface GenericRevisionedDao<ID, ENTITY extends MutablePersistenceEntity<ID>> extends GenericDao<ID, ENTITY> {
 

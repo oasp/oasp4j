@@ -7,7 +7,6 @@ import javax.inject.Inject;
 /**
  * This abstract class provides {@link #getBeanMapper() access} to the {@link BeanMapper}.
  *
- * @author mbrunnli
  */
 public abstract class AbstractBeanMapperSupport {
 

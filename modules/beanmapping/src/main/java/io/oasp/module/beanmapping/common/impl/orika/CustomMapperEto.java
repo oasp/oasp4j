@@ -18,7 +18,6 @@ import net.sf.mmm.util.transferobject.api.EntityTo;
  * {@link CustomMapper} to map from {@link PersistenceEntity} to {@link EntityTo} to solve
  * {@link EntityTo#getModificationCounter() modification counter issue}.
  *
- * @author hohwille
  */
 // @Named
 @SuppressWarnings("rawtypes")

@@ -19,7 +19,6 @@ import com.mysema.query.types.path.EntityPathBase;
 /**
  * Implementation of {@link StaffMemberDao}.
  *
- * @author jozitz
  */
 @Named
 public class StaffMemberDaoImpl extends ApplicationMasterDataDaoImpl<StaffMemberEntity> implements StaffMemberDao {

@@ -12,7 +12,6 @@ import java.util.List;
  * This interface only holds the necessary settings for the pagination part of a query. For your individual search, you
  * extend {@link SearchCriteriaTo} to create a java bean with all the fields for your search.
  *
- * @author hohwille
  */
 public class SearchCriteriaTo extends AbstractTo {
 

@@ -10,7 +10,6 @@ import org.dozer.Mapper;
 /**
  * This is the implementation of {@link io.oasp.module.beanmapping.common.api.BeanMapper} using dozer {@link Mapper}.
  *
- * @author hohwille
  * @since 1.3.0
  */
 @Named

@@ -7,7 +7,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 /**
  * This is a utility for testing. It allows to simulate authentication for component testing.
  *
- * @author hohwille
  */
 public class TestUtil {
 

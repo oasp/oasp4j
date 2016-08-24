@@ -17,7 +17,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  * {@link AccessControlGroup#getPermissions() directly} or {@link AccessControlGroup#getInherits() indirectly}.<br/>
  * In order to avoid naming clashes you should use the name of the application component as prefix of the permission.
  *
- * @author hohwille
  */
 @XmlRootElement(name = "permission")
 public class AccessControlPermission extends AccessControl {

@@ -2,7 +2,6 @@ package io.oasp.gastronomy.restaurant.general.configuration;
 
 /**
  * This class contains the configuration like jobLauncher,Jobrepository etc.
- * @author ssarmoka
  */
 
 import io.oasp.module.batch.common.impl.JobLauncherWithAdditionalRestartCapabilities;

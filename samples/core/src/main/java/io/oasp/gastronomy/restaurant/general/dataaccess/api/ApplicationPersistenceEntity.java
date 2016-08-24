@@ -13,8 +13,6 @@ import io.oasp.module.jpa.dataaccess.api.MutablePersistenceEntity;
 /**
  * Abstract Entity for all Entities with an id and a version field.
  *
- * @author hohwille
- * @author rjoeris
  */
 @MappedSuperclass
 public abstract class ApplicationPersistenceEntity implements ApplicationEntity, MutablePersistenceEntity<Long> {

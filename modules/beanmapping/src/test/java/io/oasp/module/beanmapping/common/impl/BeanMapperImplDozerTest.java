@@ -17,7 +17,6 @@ import org.dozer.loader.api.FieldsMappingOptions;
 /**
  * Test of {@link BeanMapperImplDozer} based on {@link AbstractBeanMapperTest}.
  *
- * @author hohwille
  */
 public class BeanMapperImplDozerTest extends AbstractBeanMapperTest {
 

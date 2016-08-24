@@ -10,7 +10,6 @@ import io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer;
  * no {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer#getMealId() meal}, and no
  * {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer#getSideDishId() side-dish} associated.
  *
- * @author hohwille
  */
 public class OfferEmptyException extends ApplicationBusinessException {
 

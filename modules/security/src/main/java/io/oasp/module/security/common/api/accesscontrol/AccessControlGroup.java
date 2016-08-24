@@ -20,7 +20,6 @@ import javax.xml.bind.annotation.XmlSchemaType;
  * role or can only act under one role at a time. Unfortunately these terms are often mixed up what is causing
  * confusion.
  *
- * @author hohwille
  */
 @XmlRootElement(name = "group")
 public class AccessControlGroup extends AccessControl { // implements java.security.acl.Group {

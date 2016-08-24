@@ -27,7 +27,6 @@ import io.oasp.module.test.common.base.ComponentTest;
 /**
  * Base class for all spring batch integration tests. It helps to do End-to-End job tests.
  *
- * @author jczas
  */
 // @DirtiesContext(classMode = ClassMode.AFTER_CLASS)
 public abstract class AbstractSpringBatchIntegrationTest extends ComponentTest {

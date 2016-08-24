@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 /**
  * The {@link JsonDeserializer JSON deserializer} for {@link Money}.
  *
- * @author agreul
  */
 public final class MoneyJsonDeserializer extends JsonDeserializer<Money> {
 

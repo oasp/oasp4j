@@ -20,7 +20,6 @@ import javax.ws.rs.core.UriInfo;
  * and required parameters. The methods provided here throw according exceptions such as {@link BadRequestException} and
  * already support conversion of values.
  *
- * @author hohwille
  */
 public class RequestParameters {
 

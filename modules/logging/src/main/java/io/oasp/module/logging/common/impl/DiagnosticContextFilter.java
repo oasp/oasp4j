@@ -22,8 +22,6 @@ import io.oasp.module.logging.common.api.DiagnosticContextFacade;
  * Request logging filter that adds the request log message to the SLF4j mapped diagnostic context (MDC) before the
  * request is processed, removing it again after the request is processed.
  *
- * @author <a href="malte.brunnlieb@capgemini.com">Malte Brunnlieb</a>
- * @author hohwille
  */
 public class DiagnosticContextFilter implements Filter {
 

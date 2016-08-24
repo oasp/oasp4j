@@ -31,7 +31,6 @@ import javax.transaction.Transactional;
 /**
  * This is the implementation of {@link Salesmanagement}.
  *
- * @author hohwille
  */
 @Named
 @Transactional

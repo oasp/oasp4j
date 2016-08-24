@@ -13,7 +13,6 @@ import io.oasp.module.security.common.impl.accesscontrol.AccessControlSchemaProv
 /**
  * This configuration class provides factory methods for several Spring security related beans.
  *
- * @author jmolinar
  */
 @Configuration
 public class WebSecurityBeansConfig {

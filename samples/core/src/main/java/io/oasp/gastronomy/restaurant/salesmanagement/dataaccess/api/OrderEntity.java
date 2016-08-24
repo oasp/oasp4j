@@ -15,7 +15,6 @@ import javax.persistence.Table;
  * {@link ApplicationPersistenceEntity Entity} that represents an {@link Order} of a customer associated with the
  * according {@link io.oasp.gastronomy.restaurant.tablemanagement.dataaccess.api.TableEntity}.
  *
- * @author rjoeris
  */
 @Entity
 // Order is a reserved word in SQL/RDBMS and can not be used as table name

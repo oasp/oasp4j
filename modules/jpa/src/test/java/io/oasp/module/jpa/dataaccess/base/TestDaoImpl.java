@@ -5,7 +5,6 @@ import javax.inject.Named;
 /**
  * Implementation of {@link TestDao}.
  *
- * @author fawinter
  */
 @Named
 public class TestDaoImpl extends AbstractDao<TestEntity> implements TestDao {

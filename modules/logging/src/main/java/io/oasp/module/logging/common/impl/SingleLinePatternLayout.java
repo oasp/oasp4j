@@ -11,7 +11,6 @@ import ch.qos.logback.core.CoreConstants;
 /**
  * Custom {@link PatternLayout} for logging entries.
  * 
- * @author rstroh
  */
 public class SingleLinePatternLayout extends PatternLayout {
 

@@ -10,7 +10,6 @@ import org.springframework.batch.item.ItemProcessor;
 /**
  * Implementation of ItemProcessor. It finds BillCto by id and returns it.
  *
- * @author ABIELEWI
  */
 public class BillProcessor implements ItemProcessor<Long, BillCto> {
 

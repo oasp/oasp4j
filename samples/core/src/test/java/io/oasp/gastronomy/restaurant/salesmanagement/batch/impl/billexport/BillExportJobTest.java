@@ -28,7 +28,6 @@ import io.oasp.gastronomy.restaurant.general.common.AbstractSpringBatchIntegrati
 /**
  * End-To-End test job "import offer management from csv"
  *
- * @author jczas
  */
 @SpringApplicationConfiguration(classes = { SpringBootBatchApp.class }, locations = {
 "classpath:/config/app/batch/beans-billexport.xml" })

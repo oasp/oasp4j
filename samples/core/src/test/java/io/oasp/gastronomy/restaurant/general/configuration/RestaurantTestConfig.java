@@ -18,7 +18,6 @@ import io.oasp.module.basic.configuration.SpringProfileConstants;
  * <br/>
  * See {@link AbstractRestServiceTest} as an example.
  *
- * @author jmolinar
  */
 @Configuration
 @Profile(SpringProfileConstants.JUNIT)

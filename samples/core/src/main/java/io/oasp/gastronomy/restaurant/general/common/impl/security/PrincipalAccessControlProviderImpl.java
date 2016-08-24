@@ -16,7 +16,6 @@ import io.oasp.module.security.common.api.accesscontrol.PrincipalAccessControlPr
  * chosen to keep our sample application simple. Otherwise one would have to start a separate external server
  * application to make everything work what would be too complicated to get things running easily.
  *
- * @author hohwille
  */
 @Named
 public class PrincipalAccessControlProviderImpl implements PrincipalAccessControlProvider<UserProfile> {

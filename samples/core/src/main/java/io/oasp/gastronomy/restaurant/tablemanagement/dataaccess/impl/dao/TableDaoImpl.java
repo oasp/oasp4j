@@ -23,7 +23,6 @@ import com.mysema.query.types.path.EntityPathBase;
 /**
  * Implementation of {@link TableDao}.
  *
- * @author hohwille
  */
 @Named
 public class TableDaoImpl extends ApplicationMasterDataDaoImpl<TableEntity> implements TableDao {

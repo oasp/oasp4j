@@ -28,7 +28,6 @@ import io.oasp.module.test.common.base.ComponentTest;
 /**
  * This is the test case of {@ProductDaoImpl}
  *
- * @author cmammado
  * @since dev
  */
 @SpringApplicationConfiguration(classes = { SpringBootApp.class })

@@ -9,7 +9,6 @@ import java.util.Collection;
  *
  * @param <P> is the generic type of the {@link Principal} representing the user or subject.
  *
- * @author hohwille
  */
 public interface PrincipalAccessControlProvider<P extends Principal> {
 

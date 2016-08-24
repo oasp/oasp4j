@@ -24,7 +24,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 /**
  * End-To-End test job "import offer management from csv"
  *
- * @author jczas
  */
 @SpringApplicationConfiguration(classes= { SpringBootBatchApp.class }, locations = { "classpath:config/app/batch/beans-productimport.xml" })
 @WebAppConfiguration

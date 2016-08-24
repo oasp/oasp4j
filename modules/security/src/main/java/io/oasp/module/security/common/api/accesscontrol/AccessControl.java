@@ -16,7 +16,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * {@link AccessControlGroup}s and {@link AccessControlPermission}s. If a {@link java.security.Principal} "has" a
  * {@link AccessControl} he also "has" all {@link AccessControl}s with according permissions in the spanned sub-tree.
  *
- * @author hohwille
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class AccessControl implements Serializable {

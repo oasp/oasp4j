@@ -10,7 +10,6 @@ import org.springframework.beans.factory.FactoryBean;
  * ProductWriter allows to get named query from resource NamedQueries.xml.
  * It is used for example in job to get sql for JdbcCursorItemReader.
  *
- * @author ABIELEWI
  */
 public class NamedQueryFactoryBean implements FactoryBean<String> {
 

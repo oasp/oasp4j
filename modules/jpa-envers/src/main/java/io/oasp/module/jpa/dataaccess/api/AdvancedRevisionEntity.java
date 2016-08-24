@@ -20,7 +20,6 @@ import org.hibernate.envers.RevisionTimestamp;
  *
  * @see org.hibernate.envers.DefaultRevisionEntity
  *
- * @author hohwille
  */
 @Entity
 @RevisionEntity(AdvancedRevisionListener.class)

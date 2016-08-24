@@ -22,9 +22,6 @@ import io.oasp.module.security.common.base.accesscontrol.AbstractAccessControlBa
  * This class is responsible for the security aspects of authentication as well as providing user profile data and the
  * access-controls for authoriziation.
  *
- * @author mbrunnli
- * @author hohwille
- * @author agreul
  */
 @Named("ApplicationAuthenticationProvider")
 public class ApplicationAuthenticationProvider

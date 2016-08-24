@@ -6,7 +6,6 @@ import net.sf.mmm.util.nls.api.NlsMessage;
 /**
  * Abstract main exception.
  *
- * @author jozitz
  */
 public abstract class ApplicationException extends NlsRuntimeException {
 

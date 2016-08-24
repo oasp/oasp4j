@@ -8,7 +8,6 @@ import javax.inject.Named;
 /**
  * Implementation of {@link BinaryObjectDao}.
  *
- * @author sspielma
  */
 @Named
 public class BinaryObjectDaoImpl extends ApplicationDaoImpl<BinaryObjectEntity> implements BinaryObjectDao {

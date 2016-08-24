@@ -22,7 +22,6 @@ import io.oasp.module.test.common.base.ComponentTest;
 /**
  * Test of {@link BillDao}.
  *
- * @author mvielsac
  */
 @Transactional
 @SpringApplicationConfiguration(classes = { SpringBootApp.class })

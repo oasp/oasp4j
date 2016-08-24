@@ -7,7 +7,6 @@ import javax.inject.Inject;
 
 /**
  *
- * @author mbrunnli
  */
 public abstract class AbstractOrderUc extends AbstractUc {
 

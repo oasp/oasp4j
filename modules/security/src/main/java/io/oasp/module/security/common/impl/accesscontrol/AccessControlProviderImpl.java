@@ -9,7 +9,6 @@ import javax.inject.Inject;
 /**
  * This is the default implementation of {@link io.oasp.module.security.common.api.accesscontrol.AccessControlProvider}.
  *
- * @author hohwille
  */
 public class AccessControlProviderImpl extends AbstractAccessControlProvider {
 

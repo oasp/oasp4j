@@ -10,7 +10,6 @@ import ma.glasnost.orika.MapperFacade;
  * This is the implementation of {@link io.oasp.module.beanmapping.common.api.BeanMapper} using orika
  * {@link MapperFacade}.
  *
- * @author hohwille
  */
 public class BeanMapperImplOrika extends AbstractBeanMapper {
 

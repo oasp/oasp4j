@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
  * {@link TableState#isReserved() reserved}, {@link TableState#isOccupied() occupied} and may have a
  * {@link #getWaiterId() waiter} assigned.
  *
- * @author hohwille
  */
 public interface Table extends ApplicationEntity {
 

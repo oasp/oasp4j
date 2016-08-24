@@ -10,7 +10,6 @@ import io.oasp.module.jpa.dataaccess.api.RevisionedMasterDataDao;
  *
  * @param <ENTITY> is the {@link #getEntityClass() type} of the managed entity.
  *
- * @author hohwille
  */
 public abstract class ApplicationMasterDataDaoImpl<ENTITY extends MutablePersistenceEntity<Long>>
     extends ApplicationDaoImpl<ENTITY> implements RevisionedMasterDataDao<ENTITY> {

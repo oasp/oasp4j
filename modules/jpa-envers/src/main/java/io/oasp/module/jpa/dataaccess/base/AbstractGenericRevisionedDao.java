@@ -23,7 +23,6 @@ import org.hibernate.envers.AuditReaderFactory;
  *        {@link MutablePersistenceEntity entity}.
  * @param <ENTITY> is the {@link #getEntityClass() type} of the managed entity.
  *
- * @author hohwille
  */
 public abstract class AbstractGenericRevisionedDao<ID, ENTITY extends MutablePersistenceEntity<ID>> extends
     AbstractGenericDao<ID, ENTITY> implements GenericRevisionedDao<ID, ENTITY> {

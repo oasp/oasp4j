@@ -16,7 +16,6 @@ import org.springframework.core.io.Resource;
 /**
  * This is the default implementation of {@link AccessControlSchemaProvider}.
  *
- * @author hohwille
  */
 public class AccessControlSchemaProviderImpl implements AccessControlSchemaProvider {
 

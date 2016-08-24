@@ -14,7 +14,6 @@ import javax.validation.Payload;
 /**
  * Constraint for validator {@link NotNegativeMoneyValidator}.
  *
- * @author jmetzler
  */
 @Documented
 @Target({ METHOD, FIELD })

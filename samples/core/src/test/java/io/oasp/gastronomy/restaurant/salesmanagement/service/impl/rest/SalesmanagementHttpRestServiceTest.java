@@ -54,7 +54,6 @@ import io.oasp.gastronomy.restaurant.salesmanagement.service.api.rest.Salesmanag
  * This class serves as an example of how to perform a subsystem test (e.g., call a *RestService interface). The test
  * database is accessed via HTTP requests to the server running the restaurant application.
  *
- * @author shuber
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = { SpringBootApp.class, SalesmanagementRestTestConfiguration.class })

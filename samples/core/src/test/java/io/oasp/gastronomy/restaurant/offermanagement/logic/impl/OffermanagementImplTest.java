@@ -22,7 +22,6 @@ import io.oasp.module.test.common.base.ModuleTest;
  * This class tests the correct execution of the methods findOffer and findOfferCto belonging to the
  * {@link OffermanagementImpl}
  *
- * @author shuber
  */
 
 public class OffermanagementImplTest extends ModuleTest {

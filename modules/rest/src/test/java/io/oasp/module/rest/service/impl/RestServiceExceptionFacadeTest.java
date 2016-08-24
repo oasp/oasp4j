@@ -37,7 +37,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Test-case for {@link RestServiceExceptionFacade}.
  *
- * @author hohwille
  */
 public class RestServiceExceptionFacadeTest extends ModuleTest {
 

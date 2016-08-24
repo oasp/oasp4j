@@ -12,7 +12,6 @@ import net.sf.mmm.util.entity.api.PersistenceEntity;
  *
  * @see AbstractPersistenceEntity
  *
- * @author hohwille
  */
 public interface MutablePersistenceEntity<ID> extends PersistenceEntity<ID>, MutableGenericEntity<ID> {
 

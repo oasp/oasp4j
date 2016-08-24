@@ -5,7 +5,6 @@ import net.sf.mmm.util.nls.api.NlsMessage;
 /**
  * Abstract business <i>checked</i> main exception.
  *
- * @author jozitz
  */
 public abstract class ApplicationBusinessException extends ApplicationException {
 

@@ -5,7 +5,6 @@ import io.oasp.module.basic.common.api.to.AbstractCto;
 /**
  * The {@link AbstractCto CTO} for an {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer}.
  *
- * @author hohwille
  */
 public class OfferCto extends AbstractCto {
 

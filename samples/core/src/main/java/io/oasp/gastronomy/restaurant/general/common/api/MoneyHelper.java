@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * This class is a little helper to deal with {@link Money}. It provides convenience methods to get a {@link Money}.
  *
- * @author mvielsac
  */
 public final class MoneyHelper {
 

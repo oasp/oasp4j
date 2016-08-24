@@ -22,7 +22,6 @@ import org.xml.sax.SAXException;
 /**
  * Class for XML Validation Tests.
  *
- * @author jmetzler
  */
 public class AccessControlSchemaXmlValidationTest extends ModuleTest {
 

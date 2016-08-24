@@ -17,8 +17,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
  * @see #setBaseClasses(Class...)
  * @see #setSubtypes(NamedType...)
  *
- * @author hohwille
- * @author agreul
  */
 public class ObjectMapperFactory {
 

@@ -13,8 +13,6 @@ import net.sf.mmm.util.transferobject.api.TransferObject;
  * without redundancies. It typically corresponds to an {@link net.sf.mmm.util.entity.api.GenericEntity entity}. For
  * additional details and an example consult the {@link net.sf.mmm.util.transferobject.api package JavaDoc}.
  *
- * @author hohwille
- * @author erandres
  */
 public abstract class AbstractEto extends AbstractTo implements MutableRevisionedEntity<Long> {
 

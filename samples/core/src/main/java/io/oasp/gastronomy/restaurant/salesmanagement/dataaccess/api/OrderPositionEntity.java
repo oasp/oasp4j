@@ -19,7 +19,6 @@ import javax.validation.constraints.NotNull;
  * {@link ApplicationPersistenceEntity Entity} that represents a single {@link OrderPosition position} of an
  * {@link OrderEntity}.
  *
- * @author hohwille
  */
 @Entity
 @Table(name = "OrderPosition")

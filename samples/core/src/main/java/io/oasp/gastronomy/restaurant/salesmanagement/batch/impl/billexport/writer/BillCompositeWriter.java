@@ -19,7 +19,6 @@ import org.springframework.core.io.Resource;
 /**
  * Implementation of ItemWriter. It gets BillCto and writes it in csv format into file.
  *
- * @author ABIELEWI
  */
 public class BillCompositeWriter implements ResourceAwareItemWriterItemStream<BillCto>, InitializingBean {
 

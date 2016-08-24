@@ -5,8 +5,6 @@ import io.oasp.gastronomy.restaurant.offermanagement.common.api.Product;
 /**
  * The {@link io.oasp.module.basic.common.api.to.AbstractEto ETO} for a {@link Product}.
  *
- * @author hohwille
- * @author jozitz
  */
 public abstract class ProductEto extends MenuItemEto implements Product {
 

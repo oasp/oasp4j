@@ -3,7 +3,6 @@ package io.oasp.gastronomy.restaurant.general.common.api.constants;
 /**
  * Constants of the named queries defined in <code>NamedQueries.xml</code>.
  *
- * @author hohwille
  */
 public abstract class NamedQueries {
 

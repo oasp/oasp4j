@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.User;
 /**
  * Container class for the profile of a user.
  *
- * @author hohwille
  */
 public class UserData extends User implements Principal {
 

@@ -7,7 +7,6 @@ import java.util.Set;
  * This is the interface used to convert from one Java bean to another compatible bean (e.g. from a JPA entity to a
  * corresponding transfer-object).
  *
- * @author hohwille
  */
 public interface BeanMapper {
 

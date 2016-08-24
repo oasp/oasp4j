@@ -7,7 +7,6 @@ import org.dozer.Mapper;
 /**
  * This is the implementation of {@link io.oasp.module.beanmapping.common.api.BeanMapper} using dozer {@link Mapper}.
  *
- * @author hohwille
  * @deprecated - use {@link BeanMapperImplDozer} instead as this class name clashes with
  *             {@link org.dozer.DozerBeanMapper}.
  */
