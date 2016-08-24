@@ -288,6 +288,9 @@
             <goals>
               <goal>repackage</goal>
             </goals>
+            <configuration>
+              <classifier>standalone</classifier>
+            </configuration>
           </execution>
         </executions>
       </plugin>
