@@ -44,7 +44,7 @@ CREATE TABLE OFFER(
     modificationCounter INTEGER NOT NULL,
     description VARCHAR(255),
     name VARCHAR(255),
-    price DECIMAL(19, 2),
+    price NUMERIC(19, 2),
     number BIGINT,
     state INTEGER,
     drink_id BIGINT,
@@ -88,7 +88,7 @@ CREATE TABLE ORDERPOSITION(
     cook_id BIGINT,
     offer_id BIGINT,
     offerName VARCHAR(255),
-    price DECIMAL(19, 2),
+    price NUMERIC(19, 2),
     state INTEGER,
     drinkState INTEGER,
     order_id BIGINT
@@ -103,8 +103,8 @@ CREATE TABLE BILL(
     id BIGINT NOT NULL IDENTITY(1,1),
     modificationCounter INTEGER NOT NULL,
     payed BIT NOT NULL,
-    tip DECIMAL(19, 2),
-    total DECIMAL(19, 2)
+    tip NUMERIC(19, 2),
+    total NUMERIC(19, 2)
 );
 ALTER TABLE BILL ADD CONSTRAINT PK_BILL PRIMARY KEY(id);
 CREATE TABLE BILL_ORDERPOSITION(

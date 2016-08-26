@@ -31,14 +31,23 @@ INSERT INTO PRODUCT (id, modificationCounter, dtype, description, alcoholic) VAL
 SET IDENTITY_INSERT PRODUCT OFF
 
 SET IDENTITY_INSERT OFFER ON
-INSERT INTO OFFER (id, modificationCounter, name, description, state, meal_id, sidedish_id, drink_id, price) VALUES (1, 1, 'Schnitzel-Menü', 'Description of Schnitzel-Menü', 0, 1, 7, 12, 6.99);
-/*INSERT INTO OFFER (id, modificationCounter, name, description, state, meal_id, sidedish_id, drink_id, price) VALUES (2, 2, 'Goulasch-Menü', 'Description of Goulasch-Menü', 1, 2, 8, 13, 7.99);
-INSERT INTO OFFER (id, modificationCounter, name, description, state, meal_id, sidedish_id, drink_id, price) VALUES (3, 1, 'Pfifferlinge-Menü', 'Description of Pfifferlinge-Menü', 0, 3, 10, 14, 8.99);
-INSERT INTO OFFER (id, modificationCounter, name, description, state, meal_id, sidedish_id, drink_id, price) VALUES (4, 1, 'Salat-Menü', 'Description of Salat-Menü', 0, 4, 9, 11, 5.99);
-INSERT INTO OFFER (id, modificationCounter, name, description, state, meal_id, sidedish_id, drink_id, price) VALUES (5, 1, 'Cola', 'Description of Salat-Menü', 0, 5, 11, 12, 1.20);
-INSERT INTO OFFER (id, modificationCounter, name, description, state, meal_id, sidedish_id, drink_id, price) VALUES (6, 1, 'Pizza-Menü', 'Description of Pizza-Menü', 0, 6, 12, 12, 6.23);
-INSERT INTO OFFER (id, modificationCounter, name, description, state, meal_id, sidedish_id, drink_id, price) VALUES (7, 1, 'Flammkuchen-Menü', 'Description of Flammkuchen-Menü', 0, 7, 13, 12, 5.99);
+/*
+INSERT INTO OFFER (id, modificationCounter, name, description, number ,state, meal_id, sidedish_id, drink_id, price) VALUES (1, 1, 'Schnitzel-Menü', 'Description of Schnitzel-Menü', 1,0, 1, 7, 12, 6.99);
+INSERT INTO OFFER (id, modificationCounter, name, description, number ,state, meal_id, sidedish_id, drink_id, price) VALUES (2, 2, 'Goulasch-Menü', 'Description of Goulasch-Menü',2, 1, 2, 8, 13, 7.99);
+INSERT INTO OFFER (id, modificationCounter, name, description, number ,state, meal_id, sidedish_id, drink_id, price) VALUES (3, 1, 'Pfifferlinge-Menü', 'Description of Pfifferlinge-Menü', 3,0, 3, 10, 14, 8.99);
+INSERT INTO OFFER (id, modificationCounter, name, description, number ,state, meal_id, sidedish_id, drink_id, price) VALUES (4, 1, 'Salat-Menü', 'Description of Salat-Menü', 4,0, 4, 9, 11, 5.99);
+INSERT INTO OFFER (id, modificationCounter, name, description, number ,state, meal_id, sidedish_id, drink_id, price) VALUES (5, 1, 'Cola', 'Description of Salat-Menü', 5,0, 5, 11, 12, 1.20);
+INSERT INTO OFFER (id, modificationCounter, name, description, number ,state, meal_id, sidedish_id, drink_id, price) VALUES (6, 1, 'Pizza-Menü', 'Description of Pizza-Menü',6, 0, 6, 12, 12, 6.23);
+INSERT INTO OFFER (id, modificationCounter, name, description, number ,state, meal_id, sidedish_id, drink_id, price) VALUES (7, 1, 'Flammkuchen-Menü', 'Description of Flammkuchen-Menü',7, 0, 7, 13, 12, 5.99);
 */
+INSERT INTO OFFER (id, modificationCounter, name, description, number,state, meal_id, sidedish_id, drink_id, price) VALUES (1, 1, 'Schnitzel-Menü', 'Description of Schnitzel-Menü',1, 0, 1, 7, 12, 6.99);
+INSERT INTO OFFER (id, modificationCounter, name, description, number,state, meal_id, sidedish_id, drink_id, price) VALUES (2, 1, 'Goulasch-Menü', 'Description of Goulasch-Menü',2, 0, 2, 8, 13, 7.99);
+INSERT INTO OFFER (id, modificationCounter, name, description, number,state, meal_id, sidedish_id, drink_id, price) VALUES (3, 1, 'Pfifferlinge-Menü', 'Description of Pfifferlinge-Menü',3, 0, 3, 10, 14, 8.99);
+INSERT INTO OFFER (id, modificationCounter, name, description, number,state, meal_id, sidedish_id, drink_id, price) VALUES (4, 1, 'Salat-Menü', 'Description of Salat-Menü',4, 0, 4, 9, 11, 5.99);
+INSERT INTO OFFER (id, modificationCounter, name, description, number,state, meal_id, sidedish_id, drink_id, price) VALUES (5, 1, 'Cola', 'Description of Salat-Menü',5, 0, null, null, 12, 1.20);
+INSERT INTO OFFER (id, modificationCounter, name, description, number,state, meal_id, sidedish_id, drink_id, price) VALUES (6, 1, 'Pizza-Menü', 'Description of Pizza-Menü',6, 0, 5, null, 12, 6.23);
+INSERT INTO OFFER (id, modificationCounter, name, description, number,state, meal_id, sidedish_id, drink_id, price) VALUES (7, 1, 'Flammkuchen-Menü', 'Description of Flammkuchen-Menü',7, 0, 6, null, 12, 5.99);
+
 SET IDENTITY_INSERT OFFER OFF
 
 SET IDENTITY_INSERT RESTAURANTORDER ON
