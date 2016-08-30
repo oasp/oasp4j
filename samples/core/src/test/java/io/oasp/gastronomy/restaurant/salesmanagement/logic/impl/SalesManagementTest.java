@@ -17,6 +17,7 @@ import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
 import io.oasp.gastronomy.restaurant.general.common.TestUtil;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
+import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
@@ -27,7 +28,6 @@ import io.oasp.module.test.common.base.ComponentTest;
 /**
  * This is the test-case of {@link Salesmanagement}.
  *
- * @author hohwille, sroeger
  */
 @SpringApplicationConfiguration(classes = { SpringBootApp.class })
 @WebAppConfiguration
@@ -46,7 +46,7 @@ public class SalesManagementTest extends ComponentTest {
   public void setUp() {
 
     TestUtil.login("waiter", PermissionConstants.FIND_ORDER_POSITION, PermissionConstants.SAVE_ORDER_POSITION,
-        PermissionConstants.SAVE_ORDER, PermissionConstants.FIND_OFFER);
+        PermissionConstants.SAVE_ORDER, PermissionConstants.FIND_OFFER, PermissionConstants.FIND_ORDER);
     this.dbTestHelper.setMigrationVersion("0002");
     this.dbTestHelper.resetDatabase();
   }
@@ -107,6 +107,26 @@ public class SalesManagementTest extends ComponentTest {
       throw new IllegalStateException(sb.toString(), e);
     }
 
+  }
+
+  /**
+   * This test tries to change an {@link ProductOrderState} in a forbidden way.
+   */
+  @Test(expected = IllegalEntityStateException.class)
+  public void testBadOrderPositionUpdate() {
+
+    // given
+    OrderPositionEto orderPosition = this.salesManagement.findOrderPosition(1L);
+    assertThat(orderPosition.getMealState()).isEqualTo(ProductOrderState.DELIVERED);
+    orderPosition.setMealState(ProductOrderState.PREPARED);
+
+    // when
+    OrderPositionEto updatedOrderPosition = this.salesManagement.saveOrderPosition(orderPosition);
+
+    // then
+    assertThat(updatedOrderPosition).isNull();
+    OrderPositionEto orderPositionAfterUpdate = this.salesManagement.findOrderPosition(1L);
+    assertThat(orderPositionAfterUpdate.getMealState()).isEqualTo(ProductOrderState.DELIVERED);
   }
 
 }
