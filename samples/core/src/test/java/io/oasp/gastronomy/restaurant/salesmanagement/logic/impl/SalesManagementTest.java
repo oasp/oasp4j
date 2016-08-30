@@ -77,6 +77,8 @@ public class SalesManagementTest extends ComponentTest {
       orderPosition = this.salesManagement.saveOrderPosition(orderPosition);
       assertThat(orderPosition).isNotNull();
       orderPosition.setState(OrderPositionState.ORDERED);
+      orderPosition.setMealState(ProductOrderState.ORDERED);
+      orderPosition.setSidedishState(ProductOrderState.ORDERED);
       orderPosition.setDrinkState(ProductOrderState.ORDERED);
 
       OrderPositionEto updatedOrderPosition = this.salesManagement.saveOrderPosition(orderPosition);
@@ -84,6 +86,8 @@ public class SalesManagementTest extends ComponentTest {
 
       // when
       updatedOrderPosition.setState(OrderPositionState.PREPARED);
+      updatedOrderPosition.setMealState(ProductOrderState.PREPARED);
+      updatedOrderPosition.setSidedishState(ProductOrderState.PREPARED);
       updatedOrderPosition.setDrinkState(ProductOrderState.PREPARED);
       updatedOrderPosition = this.salesManagement.saveOrderPosition(updatedOrderPosition);
 
