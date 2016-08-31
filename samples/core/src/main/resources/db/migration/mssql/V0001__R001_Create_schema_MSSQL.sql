@@ -5,6 +5,9 @@
 -- Assuming that the preconfigured user exists with according credentials using the included SQLs
 
 -- *** Staffmemeber ***
+--USE TEST
+--GO
+
 CREATE TABLE STAFFMEMBER(
     id BIGINT NOT NULL IDENTITY(0,1),
     modificationCounter INTEGER NOT NULL,
@@ -119,7 +122,7 @@ ALTER TABLE BILL_ORDERPOSITION WITH NOCHECK ADD CONSTRAINT FK_BILLORDPOS2ORDPOS 
 CREATE TABLE BINARYOBJECT (
   id BIGINT NOT NULL IDENTITY(10,1),
   modificationCounter INTEGER NOT NULL,
-  data IMAGE,
+  data varbinary(MAX),
   size BIGINT NOT NULL,
   mimetype VARCHAR(255),
   PRIMARY KEY (ID)
@@ -131,8 +134,3 @@ CREATE TABLE BINARYOBJECT (
     timestamp BIGINT NOT NULL,
     [user] VARCHAR(255)
 );
-
-
-
-
-

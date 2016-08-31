@@ -5,6 +5,9 @@
 -- Assuming that the preconfigured user exists with according credentials using the included SQLs
 
 -- *** Staffmemeber ***
+--USE TEST
+--GO
+
 CREATE TABLE STAFFMEMBER(
     id BIGINT NOT NULL IDENTITY(0,1),
     modificationCounter INTEGER NOT NULL,
@@ -131,8 +134,3 @@ CREATE TABLE BINARYOBJECT (
     timestamp BIGINT NOT NULL,
     [user] VARCHAR(255)
 );
-
-
-
-
-

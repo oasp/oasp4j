@@ -1,3 +1,6 @@
+--USE TEST
+--GO
+
 SET IDENTITY_INSERT RESTAURANTTABLE ON
 
 INSERT INTO RESTAURANTTABLE (id, modificationCounter, number, state) VALUES (101, 1, 1, 2);
