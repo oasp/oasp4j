@@ -74,14 +74,8 @@ public class SalesManagementTest extends ComponentTest {
       order = this.salesManagement.saveOrder(order);
       OrderPositionEto orderPosition = new OrderPositionEtoBuilder().offerId(5L).orderId(order.getId())
           .offerName("Cola").price(new Money(1.2)).createNew();
-      orderPosition = this.salesManagement.saveOrderPosition(orderPosition);
-      assertThat(orderPosition).isNotNull();
-      orderPosition.setState(OrderPositionState.ORDERED);
-      orderPosition.setMealState(ProductOrderState.ORDERED);
-      orderPosition.setSidedishState(ProductOrderState.ORDERED);
-      orderPosition.setDrinkState(ProductOrderState.ORDERED);
-
       OrderPositionEto updatedOrderPosition = this.salesManagement.saveOrderPosition(orderPosition);
+      assertThat(updatedOrderPosition).isNotNull();
       assertThat(updatedOrderPosition.getState()).isEqualTo(OrderPositionState.ORDERED);
 
       // when
@@ -110,14 +104,21 @@ public class SalesManagementTest extends ComponentTest {
   }
 
   /**
-   * This test tries to change an {@link ProductOrderState} in a forbidden way.
+   * This test tries to change an {@link ProductOrderState} and save the appropriate orderposition in a forbidden way.
    */
   @Test(expected = IllegalEntityStateException.class)
   public void testBadOrderPositionUpdate() {
 
     // given
-    OrderPositionEto orderPosition = this.salesManagement.findOrderPosition(1L);
+    OrderEto order = new OrderEtoBuilder().tableId(1L).createNew();
+    order = this.salesManagement.saveOrder(order);
+    OrderPositionEto orderPosition = new OrderPositionEtoBuilder().offerId(5L).orderId(order.getId())
+        .mealState(ProductOrderState.DELIVERED).sidedishState(ProductOrderState.DELIVERED)
+        .drinkState(ProductOrderState.DELIVERED).state(OrderPositionState.DELIVERED).createNew();
+    orderPosition = this.salesManagement.saveOrderPosition(orderPosition);
+    assertThat(orderPosition).isNotNull();
     assertThat(orderPosition.getMealState()).isEqualTo(ProductOrderState.DELIVERED);
+
     orderPosition.setMealState(ProductOrderState.PREPARED);
 
     // when
@@ -125,7 +126,7 @@ public class SalesManagementTest extends ComponentTest {
 
     // then
     assertThat(updatedOrderPosition).isNull();
-    OrderPositionEto orderPositionAfterUpdate = this.salesManagement.findOrderPosition(1L);
+    OrderPositionEto orderPositionAfterUpdate = this.salesManagement.findOrderPosition(5L);
     assertThat(orderPositionAfterUpdate.getMealState()).isEqualTo(ProductOrderState.DELIVERED);
   }
 

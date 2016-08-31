@@ -6,20 +6,30 @@ import java.util.List;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 
+/**
+ * Test data builder for OrderEto generated with cobigen.
+ */
 public class OrderEtoBuilder {
 
   private List<P<OrderEto>> parameterToBeApplied;
 
+  /**
+   * The constructor.
+   */
   public OrderEtoBuilder() {
 
-    parameterToBeApplied = new LinkedList<P<OrderEto>>();
+    this.parameterToBeApplied = new LinkedList<>();
     fillMandatoryFields();
     fillMandatoryFields_custom();
   }
 
+  /**
+   * @param tableId the tableId to add.
+   * @return the builder for fluent population of fields.
+   */
   public OrderEtoBuilder tableId(final long tableId) {
 
-    parameterToBeApplied.add(new P<OrderEto>() {
+    this.parameterToBeApplied.add(new P<OrderEto>() {
       @Override
       public void apply(OrderEto target) {
 
@@ -29,9 +39,13 @@ public class OrderEtoBuilder {
     return this;
   }
 
+  /**
+   * @param state the state to add.
+   * @return the builder for fluent population of fields.
+   */
   public OrderEtoBuilder state(final OrderState state) {
 
-    parameterToBeApplied.add(new P<OrderEto>() {
+    this.parameterToBeApplied.add(new P<OrderEto>() {
       @Override
       public void apply(OrderEto target) {
 
@@ -41,9 +55,13 @@ public class OrderEtoBuilder {
     return this;
   }
 
+  /**
+   * @param revision the revision to add.
+   * @return the builder for fluent population of fields.
+   */
   public OrderEtoBuilder revision(final Number revision) {
 
-    parameterToBeApplied.add(new P<OrderEto>() {
+    this.parameterToBeApplied.add(new P<OrderEto>() {
       @Override
       public void apply(OrderEto target) {
 
@@ -53,6 +71,9 @@ public class OrderEtoBuilder {
     return this;
   }
 
+  /**
+   * @return the populated OrderEto.
+   */
   public OrderEto createNew() {
 
     OrderEto ordereto = new OrderEto();
@@ -70,7 +91,7 @@ public class OrderEtoBuilder {
   }
 
   /**
-   * Might be enrichted to users needs (will not be overwritten)
+   * Might be enriched to users needs (will not be overwritten)
    */
   private void fillMandatoryFields_custom() {
 

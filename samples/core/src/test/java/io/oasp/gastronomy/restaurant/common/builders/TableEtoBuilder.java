@@ -6,31 +6,27 @@ import java.util.List;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 
+/**
+ * Test data builder for TableEto generated with cobigen.
+ */
 public class TableEtoBuilder {
 
   private List<P<TableEto>> parameterToBeApplied;
 
+  /**
+   * The constructor.
+   */
   public TableEtoBuilder() {
 
-    this.parameterToBeApplied = new LinkedList<P<TableEto>>();
+    this.parameterToBeApplied = new LinkedList<>();
     fillMandatoryFields();
     fillMandatoryFields_custom();
   }
 
   /**
-   * Might be enrichted to users needs (will not be overwritten)
+   * @param number the number to add.
+   * @return the builder for fluent population of fields.
    */
-  private void fillMandatoryFields_custom() {
-
-  }
-
-  /**
-   * Fills all mandatory fields by default. (will be overwritten on re-generation)
-   */
-  private void fillMandatoryFields() {
-
-  }
-
   public TableEtoBuilder number(final Long number) {
 
     this.parameterToBeApplied.add(new P<TableEto>() {
@@ -43,6 +39,10 @@ public class TableEtoBuilder {
     return this;
   }
 
+  /**
+   * @param waiterId the waiterId to add.
+   * @return the builder for fluent population of fields.
+   */
   public TableEtoBuilder waiterId(final Long waiterId) {
 
     this.parameterToBeApplied.add(new P<TableEto>() {
@@ -55,6 +55,10 @@ public class TableEtoBuilder {
     return this;
   }
 
+  /**
+   * @param state the state to add.
+   * @return the builder for fluent population of fields.
+   */
   public TableEtoBuilder state(final TableState state) {
 
     this.parameterToBeApplied.add(new P<TableEto>() {
@@ -67,6 +71,10 @@ public class TableEtoBuilder {
     return this;
   }
 
+  /**
+   * @param revision the revision to add.
+   * @return the builder for fluent population of fields.
+   */
   public TableEtoBuilder revision(final Number revision) {
 
     this.parameterToBeApplied.add(new P<TableEto>() {
@@ -79,14 +87,30 @@ public class TableEtoBuilder {
     return this;
   }
 
+  /**
+   * @return the populated TableEto.
+   */
   public TableEto createNew() {
 
     TableEto tableeto = new TableEto();
-    tableeto.setState(TableState.FREE);
-    for (P<TableEto> parameter : this.parameterToBeApplied) {
+    for (P<TableEto> parameter : parameterToBeApplied) {
       parameter.apply(tableeto);
     }
     return tableeto;
+  }
+
+  /**
+   * Fills all mandatory fields by default. (will be overwritten on re-generation)
+   */
+  private void fillMandatoryFields() {
+
+  }
+
+  /**
+   * Might be enriched to users needs (will not be overwritten)
+   */
+  private void fillMandatoryFields_custom() {
+
   }
 
 }

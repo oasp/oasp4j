@@ -5,22 +5,21 @@ import java.util.List;
 
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.DrinkEntity;
 
+/**
+ * Test data builder for DrinkEntity generated with cobigen.
+ */
 public class DrinkEntityBuilder {
 
   private List<P<DrinkEntity>> parameterToBeApplied;
 
+  /**
+   * The constructor.
+   */
   public DrinkEntityBuilder() {
 
-    parameterToBeApplied = new LinkedList<P<DrinkEntity>>();
+    this.parameterToBeApplied = new LinkedList<>();
     fillMandatoryFields();
     fillMandatoryFields_custom();
-  }
-
-  /**
-   * Might be enrichted to users needs (will not be overwritten)
-   */
-  private void fillMandatoryFields_custom() {
-
   }
 
   /**
@@ -30,9 +29,13 @@ public class DrinkEntityBuilder {
 
   }
 
+  /**
+   * @param alcoholic the alcoholic to add.
+   * @return the builder for fluent population of fields.
+   */
   public DrinkEntityBuilder alcoholic(final boolean alcoholic) {
 
-    parameterToBeApplied.add(new P<DrinkEntity>() {
+    this.parameterToBeApplied.add(new P<DrinkEntity>() {
       @Override
       public void apply(DrinkEntity target) {
 
@@ -42,9 +45,13 @@ public class DrinkEntityBuilder {
     return this;
   }
 
+  /**
+   * @param pictureId the pictureId to add.
+   * @return the builder for fluent population of fields.
+   */
   public DrinkEntityBuilder pictureId(final Long pictureId) {
 
-    parameterToBeApplied.add(new P<DrinkEntity>() {
+    this.parameterToBeApplied.add(new P<DrinkEntity>() {
       @Override
       public void apply(DrinkEntity target) {
 
@@ -54,9 +61,13 @@ public class DrinkEntityBuilder {
     return this;
   }
 
+  /**
+   * @param name the name to add.
+   * @return the builder for fluent population of fields.
+   */
   public DrinkEntityBuilder name(final String name) {
 
-    parameterToBeApplied.add(new P<DrinkEntity>() {
+    this.parameterToBeApplied.add(new P<DrinkEntity>() {
       @Override
       public void apply(DrinkEntity target) {
 
@@ -66,9 +77,13 @@ public class DrinkEntityBuilder {
     return this;
   }
 
+  /**
+   * @param description the description to add.
+   * @return the builder for fluent population of fields.
+   */
   public DrinkEntityBuilder description(final String description) {
 
-    parameterToBeApplied.add(new P<DrinkEntity>() {
+    this.parameterToBeApplied.add(new P<DrinkEntity>() {
       @Override
       public void apply(DrinkEntity target) {
 
@@ -78,9 +93,13 @@ public class DrinkEntityBuilder {
     return this;
   }
 
+  /**
+   * @param revision the revision to add.
+   * @return the builder for fluent population of fields.
+   */
   public DrinkEntityBuilder revision(final Number revision) {
 
-    parameterToBeApplied.add(new P<DrinkEntity>() {
+    this.parameterToBeApplied.add(new P<DrinkEntity>() {
       @Override
       public void apply(DrinkEntity target) {
 
@@ -90,6 +109,9 @@ public class DrinkEntityBuilder {
     return this;
   }
 
+  /**
+   * @return the populated DrinkEntity.
+   */
   public DrinkEntity createNew() {
 
     DrinkEntity drinkentity = new DrinkEntity();
@@ -97,6 +119,13 @@ public class DrinkEntityBuilder {
       parameter.apply(drinkentity);
     }
     return drinkentity;
+  }
+
+  /**
+   * Might be enriched to users needs (will not be overwritten)
+   */
+  private void fillMandatoryFields_custom() {
+
   }
 
 }

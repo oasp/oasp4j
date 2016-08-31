@@ -8,34 +8,37 @@ import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPo
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 
+/**
+ * Test data builder for OrderPositionEto generated with cobigen.
+ */
 public class OrderPositionEtoBuilder {
 
   private List<P<OrderPositionEto>> parameterToBeApplied;
 
+  /**
+   * The constructor.
+   */
   public OrderPositionEtoBuilder() {
 
-    parameterToBeApplied = new LinkedList<P<OrderPositionEto>>();
+    this.parameterToBeApplied = new LinkedList<>();
     fillMandatoryFields();
     fillMandatoryFields_custom();
   }
 
   /**
-   * Fills all mandatory fields by default. (will be overwritten on re-generation)
-   */
-  private void fillMandatoryFields() {
-
-  }
-
-  /**
-   * Might be enrichted to users needs (will not be overwritten)
+   * Might be enriched to users needs (will not be overwritten)
    */
   private void fillMandatoryFields_custom() {
 
   }
 
+  /**
+   * @param orderId the orderId to add.
+   * @return the builder for fluent population of fields.
+   */
   public OrderPositionEtoBuilder orderId(final Long orderId) {
 
-    parameterToBeApplied.add(new P<OrderPositionEto>() {
+    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -45,9 +48,13 @@ public class OrderPositionEtoBuilder {
     return this;
   }
 
+  /**
+   * @param cookId the cookId to add.
+   * @return the builder for fluent population of fields.
+   */
   public OrderPositionEtoBuilder cookId(final Long cookId) {
 
-    parameterToBeApplied.add(new P<OrderPositionEto>() {
+    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -57,9 +64,13 @@ public class OrderPositionEtoBuilder {
     return this;
   }
 
+  /**
+   * @param offerId the offerId to add.
+   * @return the builder for fluent population of fields.
+   */
   public OrderPositionEtoBuilder offerId(final Long offerId) {
 
-    parameterToBeApplied.add(new P<OrderPositionEto>() {
+    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -69,9 +80,13 @@ public class OrderPositionEtoBuilder {
     return this;
   }
 
+  /**
+   * @param offerName the offerName to add.
+   * @return the builder for fluent population of fields.
+   */
   public OrderPositionEtoBuilder offerName(final String offerName) {
 
-    parameterToBeApplied.add(new P<OrderPositionEto>() {
+    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -81,9 +96,13 @@ public class OrderPositionEtoBuilder {
     return this;
   }
 
+  /**
+   * @param state the state to add.
+   * @return the builder for fluent population of fields.
+   */
   public OrderPositionEtoBuilder state(final OrderPositionState state) {
 
-    parameterToBeApplied.add(new P<OrderPositionEto>() {
+    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -93,9 +112,13 @@ public class OrderPositionEtoBuilder {
     return this;
   }
 
+  /**
+   * @param price the price to add.
+   * @return the builder for fluent population of fields.
+   */
   public OrderPositionEtoBuilder price(final Money price) {
 
-    parameterToBeApplied.add(new P<OrderPositionEto>() {
+    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -105,9 +128,13 @@ public class OrderPositionEtoBuilder {
     return this;
   }
 
+  /**
+   * @param comment the comment to add.
+   * @return the builder for fluent population of fields.
+   */
   public OrderPositionEtoBuilder comment(final String comment) {
 
-    parameterToBeApplied.add(new P<OrderPositionEto>() {
+    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -117,9 +144,13 @@ public class OrderPositionEtoBuilder {
     return this;
   }
 
+  /**
+   * @param drinkState the drinkState to add.
+   * @return the builder for fluent population of fields.
+   */
   public OrderPositionEtoBuilder drinkState(final ProductOrderState drinkState) {
 
-    parameterToBeApplied.add(new P<OrderPositionEto>() {
+    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -129,9 +160,45 @@ public class OrderPositionEtoBuilder {
     return this;
   }
 
+  /**
+   * @param mealState the mealState to add.
+   * @return the builder for fluent population of fields.
+   */
+  public OrderPositionEtoBuilder mealState(final ProductOrderState mealState) {
+
+    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
+      @Override
+      public void apply(OrderPositionEto target) {
+
+        target.setMealState(mealState);
+      }
+    });
+    return this;
+  }
+
+  /**
+   * @param sidedishState the sidedishState to add.
+   * @return the builder for fluent population of fields.
+   */
+  public OrderPositionEtoBuilder sidedishState(final ProductOrderState sidedishState) {
+
+    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
+      @Override
+      public void apply(OrderPositionEto target) {
+
+        target.setSidedishState(sidedishState);
+      }
+    });
+    return this;
+  }
+
+  /**
+   * @param revision the revision to add.
+   * @return the builder for fluent population of fields.
+   */
   public OrderPositionEtoBuilder revision(final Number revision) {
 
-    parameterToBeApplied.add(new P<OrderPositionEto>() {
+    this.parameterToBeApplied.add(new P<OrderPositionEto>() {
       @Override
       public void apply(OrderPositionEto target) {
 
@@ -141,13 +208,28 @@ public class OrderPositionEtoBuilder {
     return this;
   }
 
+  /**
+   * @return the populated OrderPositionEto.
+   */
   public OrderPositionEto createNew() {
 
     OrderPositionEto orderpositioneto = new OrderPositionEto();
-    for (P<OrderPositionEto> parameter : parameterToBeApplied) {
+    // default values
+    orderpositioneto.setState(OrderPositionState.ORDERED);
+    orderpositioneto.setMealState(ProductOrderState.ORDERED);
+    orderpositioneto.setSidedishState(ProductOrderState.ORDERED);
+    orderpositioneto.setDrinkState(ProductOrderState.ORDERED);
+    for (P<OrderPositionEto> parameter : this.parameterToBeApplied) {
       parameter.apply(orderpositioneto);
     }
     return orderpositioneto;
+  }
+
+  /**
+   * Fills all mandatory fields by default. (will be overwritten on re-generation)
+   */
+  private void fillMandatoryFields() {
+
   }
 
 }
