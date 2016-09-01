@@ -50,13 +50,15 @@ public class ToggleFilterWrapper implements Filter {
 
   }
 
+  /**
+   * Initialization, for development mode only.
+   */
   @PostConstruct
   public void initialize() {
 
     if (!this.enabled) {
-      String message =
-          "****** FILTER " + this.delegateFilter
-              + " HAS BEEN DISABLED! THIS FEATURE SHOULD ONLY BE USED IN DEVELOPMENT MODE ******";
+      String message = "****** FILTER " + this.delegateFilter
+          + " HAS BEEN DISABLED! THIS FEATURE SHOULD ONLY BE USED IN DEVELOPMENT MODE ******";
       LOG.warn(message);
       // CHECKSTYLE:OFF (for development only)
       System.err.println(message);
@@ -65,8 +67,8 @@ public class ToggleFilterWrapper implements Filter {
   }
 
   @Override
-  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
-      ServletException {
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+      throws IOException, ServletException {
 
     if (this.enabled) {
       this.delegateFilter.doFilter(request, response, chain);

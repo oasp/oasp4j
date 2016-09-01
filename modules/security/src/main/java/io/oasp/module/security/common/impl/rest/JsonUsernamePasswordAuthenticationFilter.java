@@ -63,8 +63,6 @@ public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthentica
 
   private boolean postOnly = true;
 
-  // REVIEW may-bee (hohwille) We have a centralized and custom-configured object mapper as spring bean. IMHO we should
-  // inject that instance here.
   private ObjectMapper objectMapper = new ObjectMapper();
 
   /**
@@ -88,9 +86,8 @@ public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthentica
 
     final UsernameAndPasswordParser usernameAndPasswordParser = new UsernameAndPasswordParser(request);
     usernameAndPasswordParser.parse();
-    UsernamePasswordAuthenticationToken authRequest =
-        new UsernamePasswordAuthenticationToken(usernameAndPasswordParser.getTrimmedUsername(),
-            usernameAndPasswordParser.getPassword());
+    UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
+        usernameAndPasswordParser.getTrimmedUsername(), usernameAndPasswordParser.getPassword());
     // authRequest.setDetails(this.authenticationDetailsSource.buildDetails(request));
     return getAuthenticationManager().authenticate(authRequest);
   }
