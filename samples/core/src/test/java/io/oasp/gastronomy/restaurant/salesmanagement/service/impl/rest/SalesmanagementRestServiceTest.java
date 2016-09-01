@@ -111,7 +111,7 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
     OrderCto sampleOrderCto;
     OrderCto responseOrderCto;
 
-    ArrayList<OrderCto> savedOrderCtos = new ArrayList();
+    ArrayList<OrderCto> savedOrderCtos = new ArrayList<>();
     for (int i = 0; i < NUMBER_OF_SAMPLE_ORDERS; ++i) {
 
       sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID);
@@ -231,7 +231,7 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
     OrderPositionEto sampleOrderPositionEto;
     OrderPositionEto responseOrderPositionEto;
 
-    ArrayList<OrderPositionEto> savedOrderPositionEtos = new ArrayList();
+    ArrayList<OrderPositionEto> savedOrderPositionEtos = new ArrayList<>();
     for (int i = 0; i < NUMBER_OF_SAMPLE_ORDER_POSITIONS; ++i) {
       sampleOrderPositionEto = new OrderPositionEto();
       sampleOrderPositionEto.setOrderId(responseOrderCto.getOrder().getId());
