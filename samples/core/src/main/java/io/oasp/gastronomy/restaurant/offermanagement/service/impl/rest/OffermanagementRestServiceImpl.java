@@ -181,8 +181,7 @@ public class OffermanagementRestServiceImpl implements OffermanagementRestServic
   public MultipartBody getProductPicture(long productId) throws SQLException, IOException {
 
     Blob blob = this.offermanagement.findProductPictureBlob(productId);
-    // REVIEW arturk88 (hohwille) we need to find another way to stream the blob without loading into heap.
-    // https://github.com/oasp/oasp4j-sample/pull/45
+
     // byte[] data = IOUtils.readBytesFromStream(blob.getBinaryStream());
     InputStream data = blob.getBinaryStream();
 

@@ -122,7 +122,7 @@ public class BillEntityBuilder {
    * @param orderPositionIds the orderPositionIds to add.
    * @return the builder for fluent population of fields.
    */
-  public BillEntityBuilder orderPositionIds(final List orderPositionIds) {
+  public BillEntityBuilder orderPositionIds(final List<Long> orderPositionIds) {
 
     this.parameterToBeApplied.add(new P<BillEntity>() {
       @Override
@@ -140,7 +140,7 @@ public class BillEntityBuilder {
   public BillEntity createNew() {
 
     BillEntity billentity = new BillEntity();
-    for (P<BillEntity> parameter : parameterToBeApplied) {
+    for (P<BillEntity> parameter : this.parameterToBeApplied) {
       parameter.apply(billentity);
     }
     return billentity;

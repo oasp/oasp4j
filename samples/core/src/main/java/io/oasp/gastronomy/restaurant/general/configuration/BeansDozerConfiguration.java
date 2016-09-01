@@ -20,6 +20,9 @@ public class BeansDozerConfiguration {
 
   private static final String DOZER_MAPPING_XML = "config/app/common/dozer-mapping.xml";
 
+  /**
+   * @return an instance of {@link DozerBeanMapper}.
+   */
   @Bean
   public Mapper getDozer() {
 

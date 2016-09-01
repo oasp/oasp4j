@@ -38,9 +38,15 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @Value("${security.cors.enabled}")
   boolean corsEnabled = false;
 
+  /**
+   * The {@link AuthenticationManagerBuilder} to inject.
+   */
   @Inject
   protected AuthenticationManagerBuilder authenticationManagerBuilder;
 
+  /**
+   * The {@link ApplicationAuthenticationProvider} to inject.
+   */
   @Inject
   protected ApplicationAuthenticationProvider authenticationProvider;
 
@@ -124,7 +130,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
    * status 200 instead of redirect after login.
    *
    * @return the AuthenticationFilter
-   * @throws Exception
+   * @throws Exception to pass over.
    */
   protected JsonUsernamePasswordAuthenticationFilter getSimpleRestAuthenticationFilter() throws Exception {
 
@@ -143,7 +149,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   /**
    * Init the authenticationManager and simply set users and roles here (to keep things as simplistic as possible).
    *
-   * @throws Exception
+   * @throws Exception to pass over.
    */
   @PostConstruct
   public void init() throws Exception {
