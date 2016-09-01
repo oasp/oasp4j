@@ -14,12 +14,18 @@ import org.springframework.batch.core.SkipListener;
  * occurred.
  *
  * @author Ludger Overbeck
+ * @param <T> generic item.
+ * @param <S> generic item.
  */
-public class ChunkLoggingListener<T, S> implements SkipListener<T, S>, ItemReadListener<T>, ItemProcessListener<T, S>,
-    ItemWriteListener<S> {
+public class ChunkLoggingListener<T, S>
+    implements SkipListener<T, S>, ItemReadListener<T>, ItemProcessListener<T, S>, ItemWriteListener<S> {
 
   private static final Logger LOG = LoggerFactory.getLogger(ChunkLoggingListener.class);
 
+  /**
+   * @param item the object to use.
+   * @return the string representation of the input.
+   */
   protected String itemToString(Object item) {
 
     return item.toString();

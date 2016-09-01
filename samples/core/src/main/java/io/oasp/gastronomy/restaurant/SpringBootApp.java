@@ -9,13 +9,16 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import io.oasp.module.jpa.dataaccess.api.AdvancedRevisionEntity;
 
 //@SpringBootApplication(exclude = { SecurityAutoConfiguration.class, SecurityFilterAutoConfiguration.class })
+/**
+ * Class containing main method as an entry point for spring-boot based app.
+ */
 @SpringBootApplication(exclude = { EndpointAutoConfiguration.class })
 @EntityScan(basePackages = { "io.oasp.gastronomy.restaurant" }, basePackageClasses = { AdvancedRevisionEntity.class })
 @EnableGlobalMethodSecurity(jsr250Enabled = true)
 public class SpringBootApp {
 
   /**
-   * Entry point for spring-boot based app
+   * Entry point for spring-boot based app.
    *
    * @param args - arguments
    */

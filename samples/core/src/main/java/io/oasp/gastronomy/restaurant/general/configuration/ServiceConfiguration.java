@@ -32,6 +32,9 @@ import io.oasp.gastronomy.restaurant.tablemanagement.service.impl.ws.v1_0.Tablem
 import io.oasp.module.rest.service.impl.RestServiceExceptionFacade;
 import io.oasp.module.rest.service.impl.json.ObjectMapperFactory;
 
+/**
+ * This configuration type registers various beans related to rest and web services.
+ */
 @Configuration
 @EnableWs
 @ImportResource({ "classpath:META-INF/cxf/cxf.xml" /* , "classpath:META-INF/cxf/cxf-servlet.xml" */ })
@@ -40,14 +43,19 @@ public class ServiceConfiguration extends WsConfigurerAdapter {
   /** Logger instance. */
   private static final Logger LOG = LoggerFactory.getLogger(ServiceConfiguration.class);
 
+  @SuppressWarnings("javadoc")
   public static final String URL_PATH_SERVICES = "/services";
 
+  @SuppressWarnings("javadoc")
   public static final String URL_FOLDER_REST = "/rest";
 
+  @SuppressWarnings("javadoc")
   public static final String URL_FOLDER_WEB_SERVICES = "/ws";
 
+  @SuppressWarnings("javadoc")
   public static final String URL_PATH_REST_SERVICES = URL_PATH_SERVICES + URL_FOLDER_REST;
 
+  @SuppressWarnings("javadoc")
   public static final String URL_PATH_WEB_SERVICES = URL_PATH_SERVICES + URL_FOLDER_WEB_SERVICES;
 
   @Value("${security.expose.error.details}")
@@ -59,18 +67,27 @@ public class ServiceConfiguration extends WsConfigurerAdapter {
   @Inject
   private ObjectMapperFactory objectMapperFactory;
 
+  /**
+   * @return a {@link SpringBus} instance as bean with name "cxf".
+   */
   @Bean(name = "cxf")
   public SpringBus springBus() {
 
     return new SpringBus();
   }
 
+  /**
+   * @return the {@link JacksonJsonProvider}.
+   */
   @Bean
   public JacksonJsonProvider jacksonJsonProvider() {
 
     return new JacksonJsonProvider(this.objectMapperFactory.createInstance());
   }
 
+  /**
+   * @return the configured {@link ServletRegistrationBean}.
+   */
   @Bean
   public ServletRegistrationBean servletRegistrationBean() {
 
@@ -79,6 +96,9 @@ public class ServiceConfiguration extends WsConfigurerAdapter {
     return servletRegistration;
   }
 
+  /**
+   * @return a configured JAX RS {@link Server}.
+   */
   @Bean
   public Server jaxRsServer() {
 
@@ -106,6 +126,9 @@ public class ServiceConfiguration extends WsConfigurerAdapter {
     return this.applicationContext.getBeansWithAnnotation(Path.class).values();
   }
 
+  /**
+   * @return the {@link RestServiceExceptionFacade}.
+   */
   @Bean
   public RestServiceExceptionFacade restServiceExceptionFacade() {
 
@@ -115,6 +138,9 @@ public class ServiceConfiguration extends WsConfigurerAdapter {
   }
 
   // BEGIN ARCHETYPE SKIP
+  /**
+   * @return an {@link Endpoint} at /TablemanagementWebService.
+   */
   @Bean
   public Endpoint tableManagement() {
 

@@ -133,12 +133,14 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
     OrderPositionState currentState = currentOrderPosition.getState();
     OrderPositionState newState = updateOrderPosition.getState();
     ProductOrderState newDrinkState = updateOrderPosition.getDrinkState();
+    ProductOrderState newMealState = updateOrderPosition.getMealState();
+    ProductOrderState newSidedishState = updateOrderPosition.getSidedishState();
 
     verifyOrderPositionStateChange(updateOrderPosition, currentState, newState);
 
-    // TODO add verification methods of other sub-states of OrderPosition (i.e. Meal and SideDish)
+    verifyMealStateChange(updateOrderPosition, currentState, newState, newMealState);
+    verifySidedishStateChange(updateOrderPosition, currentState, newState, newSidedishState);
     verifyDrinkStateChange(updateOrderPosition, currentState, newState, newDrinkState);
-
   }
 
   /**
@@ -184,8 +186,101 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
   }
 
   /**
-   * Verifies if an update of the {@link DrinkState} is legal. This verification is based on both the states of
-   * {@link DrinkState} and {@link OrderPositionState}.
+   * Verifies if an update of the {@link ProductOrderState} is legal. This verification is based on both the states of
+   * {@link ProductOrderState} and {@link OrderPositionState}.
+   *
+   * @param updateOrderPosition the new {@link OrderPosition} to update to.
+   * @param currentState the old/current {@link OrderPositionState} of the {@link OrderPosition}.
+   * @param newState new {@link OrderPositionState} of the {@link OrderPosition} to be updated to.
+   * @param newMealState new {@link ProductOrderState} of the meal of the {@link OrderPosition} to be updated to.
+   */
+  private void verifyMealStateChange(OrderPosition updateOrderPosition, OrderPositionState currentState,
+      OrderPositionState newState, ProductOrderState newMealState) {
+
+    switch (currentState) {
+    case CANCELLED:
+      if ((newState != OrderPositionState.CANCELLED) && (newState != OrderPositionState.ORDERED)) {
+        throw new IllegalEntityStateException(updateOrderPosition, currentState, newMealState);
+      }
+      break;
+    case ORDERED:
+      if ((newState != OrderPositionState.ORDERED) && (newState != OrderPositionState.CANCELLED)
+          && (newState != OrderPositionState.PREPARED) && (newMealState != ProductOrderState.ORDERED)
+          && (newMealState != ProductOrderState.PREPARED)) {
+        throw new IllegalEntityStateException(updateOrderPosition, currentState, newMealState);
+      }
+      break;
+    case PREPARED:
+      // from here we can go to any other state (back to ORDERED in case that the kitchen has to rework)
+      break;
+    case DELIVERED:
+      if ((newState == OrderPositionState.PREPARED) || (newState == OrderPositionState.ORDERED)
+          || (newMealState == ProductOrderState.PREPARED) || (newMealState == ProductOrderState.ORDERED)) {
+        throw new IllegalEntityStateException(updateOrderPosition, currentState, newMealState);
+      }
+      break;
+    case PAYED:
+      if (newState != OrderPositionState.PAYED) {
+        throw new IllegalEntityStateException(updateOrderPosition, currentState, newMealState);
+      }
+      break;
+    default:
+      LOG.error("Illegal state {}", currentState);
+      break;
+    }
+
+  }
+
+  /**
+   * Verifies if an update of the {@link ProductOrderState} is legal. This verification is based on both the states of
+   * {@link ProductOrderState} and {@link OrderPositionState}.
+   *
+   * @param updateOrderPosition the new {@link OrderPosition} to update to.
+   * @param currentState the old/current {@link OrderPositionState} of the {@link OrderPosition}.
+   * @param newState new {@link OrderPositionState} of the {@link OrderPosition} to be updated to.
+   * @param newSidedishState new {@link ProductOrderState} of the sidedish of the {@link OrderPosition} to be updated
+   *        to.
+   */
+  private void verifySidedishStateChange(OrderPosition updateOrderPosition, OrderPositionState currentState,
+      OrderPositionState newState, ProductOrderState newSidedishState) {
+
+    switch (currentState) {
+    case CANCELLED:
+      if ((newState != OrderPositionState.CANCELLED) && (newState != OrderPositionState.ORDERED)) {
+        throw new IllegalEntityStateException(updateOrderPosition, currentState, newSidedishState);
+      }
+      break;
+    case ORDERED:
+      if ((newState != OrderPositionState.ORDERED) && (newState != OrderPositionState.CANCELLED)
+          && (newState != OrderPositionState.PREPARED) && (newSidedishState != ProductOrderState.ORDERED)
+          && (newSidedishState != ProductOrderState.PREPARED)) {
+        throw new IllegalEntityStateException(updateOrderPosition, currentState, newSidedishState);
+      }
+      break;
+    case PREPARED:
+      // from here we can go to any other state (back to ORDERED in case that the kitchen has to rework)
+      break;
+    case DELIVERED:
+      if ((newState == OrderPositionState.PREPARED) || (newState == OrderPositionState.ORDERED)
+          || (newSidedishState == ProductOrderState.PREPARED) || (newSidedishState == ProductOrderState.ORDERED)) {
+        throw new IllegalEntityStateException(updateOrderPosition, currentState, newSidedishState);
+      }
+      break;
+    case PAYED:
+      if (newState != OrderPositionState.PAYED) {
+        throw new IllegalEntityStateException(updateOrderPosition, currentState, newSidedishState);
+      }
+      break;
+    default:
+      LOG.error("Illegal state {}", currentState);
+      break;
+    }
+
+  }
+
+  /**
+   * Verifies if an update of the {@link ProductOrderState} is legal. This verification is based on both the states of
+   * {@link ProductOrderState} and {@link OrderPositionState}.
    *
    * @param updateOrderPosition the new {@link OrderPosition} to update to.
    * @param currentState the old/current {@link OrderPositionState} of the {@link OrderPosition}.

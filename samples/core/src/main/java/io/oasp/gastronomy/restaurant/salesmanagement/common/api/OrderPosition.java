@@ -75,12 +75,32 @@ public interface OrderPosition extends ApplicationEntity {
   /**
    * @return the current {@link ProductOrderState state}.
    */
+  ProductOrderState getMealState();
+
+  /**
+   * @return the current {@link ProductOrderState state}.
+   */
+  ProductOrderState getSidedishState();
+
+  /**
+   * @return the current {@link ProductOrderState state}.
+   */
   ProductOrderState getDrinkState();
 
   /**
    * @param state the new {@link #getState() state}.
    */
   void setState(OrderPositionState state);
+
+  /**
+   * @param mealState the new {@link #getMealState() state}.
+   */
+  void setMealState(ProductOrderState mealState);
+
+  /**
+   * @param sidedishState the new {@link #getSidedishState() state}.
+   */
+  void setSidedishState(ProductOrderState sidedishState);
 
   /**
    * @param drinkState the new {@link #getDrinkState() state}.

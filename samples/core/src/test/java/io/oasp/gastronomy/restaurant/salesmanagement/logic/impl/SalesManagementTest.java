@@ -17,6 +17,7 @@ import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
 import io.oasp.gastronomy.restaurant.general.common.TestUtil;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
+import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
@@ -27,7 +28,6 @@ import io.oasp.module.test.common.base.ComponentTest;
 /**
  * This is the test-case of {@link Salesmanagement}.
  *
- * @author hohwille, sroeger
  */
 @SpringApplicationConfiguration(classes = { SpringBootApp.class })
 @WebAppConfiguration
@@ -46,7 +46,7 @@ public class SalesManagementTest extends ComponentTest {
   public void setUp() {
 
     TestUtil.login("waiter", PermissionConstants.FIND_ORDER_POSITION, PermissionConstants.SAVE_ORDER_POSITION,
-        PermissionConstants.SAVE_ORDER, PermissionConstants.FIND_OFFER);
+        PermissionConstants.SAVE_ORDER, PermissionConstants.FIND_OFFER, PermissionConstants.FIND_ORDER);
     this.dbTestHelper.setMigrationVersion("0002");
     this.dbTestHelper.resetDatabase();
   }
@@ -74,16 +74,14 @@ public class SalesManagementTest extends ComponentTest {
       order = this.salesManagement.saveOrder(order);
       OrderPositionEto orderPosition = new OrderPositionEtoBuilder().offerId(5L).orderId(order.getId())
           .offerName("Cola").price(new Money(1.2)).createNew();
-      orderPosition = this.salesManagement.saveOrderPosition(orderPosition);
-      assertThat(orderPosition).isNotNull();
-      orderPosition.setState(OrderPositionState.ORDERED);
-      orderPosition.setDrinkState(ProductOrderState.ORDERED);
-
       OrderPositionEto updatedOrderPosition = this.salesManagement.saveOrderPosition(orderPosition);
+      assertThat(updatedOrderPosition).isNotNull();
       assertThat(updatedOrderPosition.getState()).isEqualTo(OrderPositionState.ORDERED);
 
       // when
       updatedOrderPosition.setState(OrderPositionState.PREPARED);
+      updatedOrderPosition.setMealState(ProductOrderState.PREPARED);
+      updatedOrderPosition.setSidedishState(ProductOrderState.PREPARED);
       updatedOrderPosition.setDrinkState(ProductOrderState.PREPARED);
       updatedOrderPosition = this.salesManagement.saveOrderPosition(updatedOrderPosition);
 
@@ -103,6 +101,33 @@ public class SalesManagementTest extends ComponentTest {
       throw new IllegalStateException(sb.toString(), e);
     }
 
+  }
+
+  /**
+   * This test tries to change an {@link ProductOrderState} and save the appropriate orderposition in a forbidden way.
+   */
+  @Test(expected = IllegalEntityStateException.class)
+  public void testBadOrderPositionUpdate() {
+
+    // given
+    OrderEto order = new OrderEtoBuilder().tableId(1L).createNew();
+    order = this.salesManagement.saveOrder(order);
+    OrderPositionEto orderPosition = new OrderPositionEtoBuilder().offerId(5L).orderId(order.getId())
+        .mealState(ProductOrderState.DELIVERED).sidedishState(ProductOrderState.DELIVERED)
+        .drinkState(ProductOrderState.DELIVERED).state(OrderPositionState.DELIVERED).createNew();
+    orderPosition = this.salesManagement.saveOrderPosition(orderPosition);
+    assertThat(orderPosition).isNotNull();
+    assertThat(orderPosition.getMealState()).isEqualTo(ProductOrderState.DELIVERED);
+
+    orderPosition.setMealState(ProductOrderState.PREPARED);
+
+    // when
+    OrderPositionEto updatedOrderPosition = this.salesManagement.saveOrderPosition(orderPosition);
+
+    // then
+    assertThat(updatedOrderPosition).isNull();
+    OrderPositionEto orderPositionAfterUpdate = this.salesManagement.findOrderPosition(5L);
+    assertThat(orderPositionAfterUpdate.getMealState()).isEqualTo(ProductOrderState.DELIVERED);
   }
 
 }

@@ -25,6 +25,10 @@ public class OrderPositionEto extends AbstractEto implements OrderPosition {
 
   private OrderPositionState state;
 
+  private ProductOrderState mealState;
+
+  private ProductOrderState sidedishState;
+
   private ProductOrderState drinkState;
 
   private Money price;
@@ -134,23 +138,40 @@ public class OrderPositionEto extends AbstractEto implements OrderPosition {
     this.comment = comment;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public ProductOrderState getDrinkState() {
 
     return this.drinkState;
-
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setDrinkState(ProductOrderState drinkState) {
 
     this.drinkState = drinkState;
+  }
+
+  @Override
+  public ProductOrderState getMealState() {
+
+    return this.mealState;
+  }
+
+  @Override
+  public void setMealState(ProductOrderState mealState) {
+
+    this.mealState = mealState;
+  }
+
+  @Override
+  public ProductOrderState getSidedishState() {
+
+    return this.sidedishState;
+  }
+
+  @Override
+  public void setSidedishState(ProductOrderState sidedishState) {
+
+    this.sidedishState = sidedishState;
 
   }
 

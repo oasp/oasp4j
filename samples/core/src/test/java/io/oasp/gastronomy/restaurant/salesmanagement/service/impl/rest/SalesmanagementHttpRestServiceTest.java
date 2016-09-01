@@ -29,8 +29,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -63,8 +61,6 @@ import io.oasp.gastronomy.restaurant.salesmanagement.service.api.rest.Salesmanag
 public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest {
 
   private final HttpHeaders AUTHENTIFICATED_HEADERS = getAuthentificatedHeaders();
-
-  private static Logger LOG = LoggerFactory.getLogger(SalesmanagementHttpRestServiceTest.class);
 
   private SalesmanagementRestService service;
 
@@ -246,7 +242,7 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
     int numberOfOrderPositionsToSave = NUMBER_OF_SAMPLE_ORDER_POSITIONS;
 
     OrderPositionEto sampleOrderPositionEto;
-    ArrayList<OrderPositionEto> savedOrderPositionEtos = new ArrayList();
+    ArrayList<OrderPositionEto> savedOrderPositionEtos = new ArrayList<>();
     for (int i = 0; i < numberOfOrderPositionsToSave; ++i) {
       sampleOrderPositionEto = new OrderPositionEtoBuilder().orderId(responseOrderCto.getOrder().getId())
           .offerId(SAMPLE_OFFER_ID).createNew();

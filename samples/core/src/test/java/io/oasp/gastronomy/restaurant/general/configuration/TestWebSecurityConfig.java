@@ -42,6 +42,10 @@ public class TestWebSecurityConfig extends BaseWebSecurityConfig {
     LOG.debug("used non static class");
   }
 
+  /**
+   * @return the {@link BasicAuthenticationFilter}.
+   * @throws Exception to pass over.
+   */
   @Bean
   protected BasicAuthenticationFilter basicAuthenticationFilter() throws Exception {
 

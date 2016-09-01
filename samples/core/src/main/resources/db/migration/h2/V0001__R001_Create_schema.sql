@@ -90,6 +90,8 @@ CREATE TABLE ORDERPOSITION(
     offerName VARCHAR(255),
     price DECIMAL(19, 2),
     state INTEGER,
+    mealState INTEGER,
+    sidedishState INTEGER,
     drinkState INTEGER,
     order_id BIGINT
 );

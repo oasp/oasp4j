@@ -35,6 +35,9 @@ public class OffermanagementImplTest extends ModuleTest {
 
   private OffermanagementImpl offerManagementImpl;
 
+  /**
+   * Mockito rule to enable mockito features.
+   */
   @Rule
   public MockitoRule rule = MockitoJUnit.rule();
 

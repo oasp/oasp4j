@@ -1,40 +1,46 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype;
 
 /**
- * 
+ *
  * @author etomety
  */
 public enum PaymentStatus {
 
-    /**
-     * This status describes a successful payment transaction.
-     */
-    SUCCESS,
+  /**
+   * This status describes a successful payment transaction.
+   */
+  SUCCESS,
 
-    /**
-     * This status describes a unsuccessful payment transaction. The input data is not correct.
-     */
-    INPUT_DATA_ERROR,
+  /**
+   * This status describes a unsuccessful payment transaction. The input data is not correct.
+   */
+  INPUT_DATA_ERROR,
 
-    /**
-     * This status describes a unsuccessful payment transaction. The connection timed out.
-     */
-    TIME_OUT_ERROR;
+  /**
+   * This status describes a unsuccessful payment transaction. The connection timed out.
+   */
+  TIME_OUT_ERROR,
 
-    /**
-     * @return {@code true}, if the {@link PaymentStatus} equals {@link PaymentStatus#SUCCESS}.
-     *         {@code false} otherwise.
-     */
-    public boolean isSuccessful() {
-        return this == SUCCESS;
-    }
+  /**
+   * This status describes an unfinished payment transaction.
+   */
+  UNFINISHED;
 
-    /**
-     * 
-     * @return {@code true}, if the {@link PaymentStatus} equals {@link PaymentStatus#INPUT_DATA_ERROR}
-     *         or {@link PaymentStatus#TIME_OUT_ERROR}. {@code false} otherwise.
-     */
-    public boolean isUnsuccessful() {
-        return (this == INPUT_DATA_ERROR || this == TIME_OUT_ERROR);
-    }
+  /**
+   * @return {@code true}, if the {@link PaymentStatus} equals {@link PaymentStatus#SUCCESS}. {@code false} otherwise.
+   */
+  public boolean isSuccessful() {
+
+    return this == SUCCESS;
+  }
+
+  /**
+   *
+   * @return {@code true}, if the {@link PaymentStatus} equals {@link PaymentStatus#INPUT_DATA_ERROR} or
+   *         {@link PaymentStatus#TIME_OUT_ERROR} or {@link PaymentStatus#UNFINISHED}. {@code false} otherwise.
+   */
+  public boolean isUnsuccessful() {
+
+    return (this == INPUT_DATA_ERROR || this == TIME_OUT_ERROR || this == UNFINISHED);
+  }
 }

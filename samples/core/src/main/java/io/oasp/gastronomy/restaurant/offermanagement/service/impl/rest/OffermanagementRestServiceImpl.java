@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.offermanagement.service.impl.rest;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -180,14 +181,14 @@ public class OffermanagementRestServiceImpl implements OffermanagementRestServic
   public MultipartBody getProductPicture(long productId) throws SQLException, IOException {
 
     Blob blob = this.offermanagement.findProductPictureBlob(productId);
-    // REVIEW arturk88 (hohwille) we need to find another way to stream the blob without loading into heap.
-    // https://github.com/oasp/oasp4j-sample/pull/45
-    byte[] data = IOUtils.readBytesFromStream(blob.getBinaryStream());
+
+    // byte[] data = IOUtils.readBytesFromStream(blob.getBinaryStream());
+    InputStream data = blob.getBinaryStream();
 
     List<Attachment> atts = new LinkedList<>();
     atts.add(new Attachment("binaryObjectEto", MediaType.APPLICATION_JSON,
         this.offermanagement.findProductPicture(productId)));
-    atts.add(new Attachment("blob", MediaType.APPLICATION_OCTET_STREAM, new ByteArrayInputStream(data)));
+    atts.add(new Attachment("blob", MediaType.APPLICATION_OCTET_STREAM, new BufferedInputStream(data)));
     return new MultipartBody(atts, true);
 
   }

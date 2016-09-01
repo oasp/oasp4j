@@ -9,18 +9,17 @@ import org.springframework.security.web.access.expression.DefaultWebSecurityExpr
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 
 /**
- * TODO hohwille This type ...
- *
- * @author hohwille
+ * By default Spring-Security is setting the prefix "ROLE_" for all permissions/authorities. This class offers the
+ * possibility to change this behavior to a wanted prefix using the constructor with a string parameter.
  */
 public class DefaultRolesPrefixPostProcessor implements BeanPostProcessor, PriorityOrdered {
 
   private final String rolePrefix;
 
   /**
-   * Der Konstruktor.
+   * The constructor.
    *
-   * @param rolePrefix das gewünschte Rollen-Präfix (z.B. der leere String).
+   * @param rolePrefix the role prefix to set (e.g. an empty string).
    */
   public DefaultRolesPrefixPostProcessor(String rolePrefix) {
     super();
