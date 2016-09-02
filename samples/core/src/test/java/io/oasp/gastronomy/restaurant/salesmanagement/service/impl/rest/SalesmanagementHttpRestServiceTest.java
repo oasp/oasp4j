@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest;
 
+import static io.oasp.gastronomy.restaurant.offermanagement.common.OffermanagementTestDataConstants.ID_OFFER_SCHNITZEL;
 import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.BASE_URL_PRAEFIX;
 import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.BASE_URL_SUFFIX_1;
 import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.BASE_URL_SUFFIX_2;
@@ -12,6 +13,7 @@ import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.Sa
 import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.SAMPLE_ORDER_POSITION_STATE;
 import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.SAMPLE_PRICE;
 import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.SAMPLE_TABLE_ID;
+import static io.oasp.gastronomy.restaurant.tablemanagement.common.TablemanagementTestDataConstants.ID_TABLE;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -118,7 +120,7 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
     String getResponseJson = getResponse.getBody();
     assertThat(getResponseJson).isNotNull();
     JSONAssert.assertEquals("{id:" + responseOrderCto.getOrder().getId() + "}", getResponseJson, false);
-    JSONAssert.assertEquals("{tableId:" + Long.toString(SAMPLE_TABLE_ID) + "}", getResponseJson, false);
+    JSONAssert.assertEquals("{tableId:" + Long.toString(ID_TABLE) + "}", getResponseJson, false);
   }
 
   /**
@@ -137,12 +139,12 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
     JSONObject postRequest = new JSONObject();
 
     JSONObject order = new JSONObject();
-    order.put("tableId", SAMPLE_TABLE_ID);
+    order.put("tableId", ID_TABLE);
     postRequest.put("order", order);
 
     JSONArray orderPositions = new JSONArray();
     JSONObject orderPosition = new JSONObject();
-    orderPosition.put("offerId", SAMPLE_OFFER_ID);
+    orderPosition.put("offerId", ID_OFFER_SCHNITZEL);
     orderPosition.put("state", SAMPLE_ORDER_POSITION_STATE);
     orderPosition.put("drinkState", SAMPLE_DRINK_STATE);
     orderPosition.put("comment", SAMPLE_COMMENT);
@@ -170,7 +172,7 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
     OrderEto responseOrderEto = this.service.findOrder(responseOrderId);
     assertThat(responseOrderEto).isNotNull();
     assertThat(responseOrderEto.getId()).isEqualTo(responseOrderId);
-    assertThat(responseOrderEto.getTableId()).isEqualTo(SAMPLE_TABLE_ID);
+    assertThat(responseOrderEto.getTableId()).isEqualTo(ID_TABLE);
 
     OrderPositionEto responseOrderPositionEto = this.service.findOrderPosition(responseOrderPositionEtoId);
     assertThat(responseOrderPositionEto).isNotNull();
@@ -219,7 +221,7 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
     JSONAssert.assertEquals("{id:" + Long.toString(responseOrderPositionEto.getId()) + "}", getResponseJson, false);
     JSONAssert.assertEquals("{orderId:" + Long.toString(responseOrderCto.getOrder().getId()) + "}", getResponseJson,
         false);
-    JSONAssert.assertEquals("{offerId:" + Long.toString(SAMPLE_OFFER_ID) + "}", getResponseJson, false);
+    JSONAssert.assertEquals("{offerId:" + Long.toString(ID_OFFER_SCHNITZEL) + "}", getResponseJson, false);
     JSONAssert.assertEquals("{offerName:" + SAMPLE_OFFER_NAME + "}", getResponseJson, false);
     JSONAssert.assertEquals("{state:" + SAMPLE_ORDER_POSITION_STATE.toString() + "}", getResponseJson, false);
     JSONAssert.assertEquals("{drinkState:" + SAMPLE_DRINK_STATE.toString() + "}", getResponseJson, false);
@@ -314,7 +316,7 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
     JSONObject postRequest = new JSONObject();
 
     postRequest.put("orderId", responseOrderCto.getOrder().getId());
-    postRequest.put("offerId", SAMPLE_OFFER_ID);
+    postRequest.put("offerId", ID_OFFER_SCHNITZEL);
     postRequest.put("state", SAMPLE_ORDER_POSITION_STATE);
     postRequest.put("drinkState", SAMPLE_DRINK_STATE);
     postRequest.put("comment", SAMPLE_COMMENT);
@@ -341,7 +343,7 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
     assertThat(responseOrderPositionEto).isNotNull();
     assertThat(responseOrderPositionEto.getId()).isEqualTo(postResponseJson.getInt("id"));
     assertThat(responseOrderPositionEto.getOrderId()).isEqualTo(responseOrderCto.getOrder().getId());
-    assertThat(responseOrderPositionEto.getOfferId()).isEqualTo(SAMPLE_OFFER_ID);
+    assertThat(responseOrderPositionEto.getOfferId()).isEqualTo(ID_OFFER_SCHNITZEL);
     assertThat(responseOrderPositionEto.getOfferName()).isEqualTo(SAMPLE_OFFER_NAME);
     assertThat(responseOrderPositionEto.getState()).isEqualTo(SAMPLE_ORDER_POSITION_STATE);
     assertThat(responseOrderPositionEto.getDrinkState()).isEqualTo(SAMPLE_DRINK_STATE);

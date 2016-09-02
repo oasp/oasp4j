@@ -1,5 +1,9 @@
 package io.oasp.gastronomy.restaurant.offermanagement.batch.impl.productimport;
 
+import static io.oasp.gastronomy.restaurant.offermanagement.common.OffermanagementTestDataConstants.ID_PRODUCT_MEAL_SCHNITZEL;
+import static io.oasp.gastronomy.restaurant.offermanagement.common.OffermanagementTestDataConstants.NUMBER_PRODUCT_DRINK;
+import static io.oasp.gastronomy.restaurant.offermanagement.common.OffermanagementTestDataConstants.NUMBER_PRODUCT_MEAL;
+import static io.oasp.gastronomy.restaurant.offermanagement.common.OffermanagementTestDataConstants.NUMBER_PRODUCT_SIDEDISH;
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
@@ -73,13 +77,13 @@ public class ProductManagementTest extends ComponentTest {
     ProductSortBy sort = new ProductSortBy();
 
     List<ProductEto> products = this.offerManagement.findProductsFiltered(filter, sort);
-    assertEquals(products.size(), 6);
+    assertEquals(products.size(), NUMBER_PRODUCT_MEAL);
 
     filter.setFetchDrinks(true);
     filter.setFetchMeals(false);
     sort.setSortByEntry(ProductSortByHitEntry.DESCRIPTION);
     products = this.offerManagement.findProductsFiltered(filter, sort);
-    assertEquals(products.size(), 4);
+    assertEquals(products.size(), NUMBER_PRODUCT_DRINK);
     assertEquals(products.get(0).getId(), new Long(13));
     assertEquals(products.get(1).getId(), new Long(12));
     assertEquals(products.get(2).getId(), new Long(11));
@@ -88,7 +92,7 @@ public class ProductManagementTest extends ComponentTest {
     filter.setFetchSideDishes(true);
     filter.setFetchDrinks(false);
     products = this.offerManagement.findProductsFiltered(filter, sort);
-    assertEquals(products.size(), 4);
+    assertEquals(products.size(), NUMBER_PRODUCT_SIDEDISH);
     assertEquals(products.get(0).getId(), new Long(9));
     assertEquals(products.get(1).getId(), new Long(10));
     assertEquals(products.get(2).getId(), new Long(7));
@@ -96,14 +100,14 @@ public class ProductManagementTest extends ComponentTest {
 
     filter.setFetchMeals(true);
     products = this.offerManagement.findProductsFiltered(filter, sort);
-    assertEquals(products.size(), 10);
+    assertEquals(products.size(), NUMBER_PRODUCT_MEAL + NUMBER_PRODUCT_SIDEDISH);
 
     filter.setFetchMeals(true);
     filter.setFetchDrinks(true);
     sort.setSortByEntry(ProductSortByHitEntry.ID);
     products = this.offerManagement.findProductsFiltered(filter, sort);
-    assertEquals(products.size(), 14);
-    assertEquals(products.get(5).getDescription(), "Flammkuchen");
+    assertEquals(products.size(), NUMBER_PRODUCT_MEAL + NUMBER_PRODUCT_SIDEDISH + NUMBER_PRODUCT_DRINK);
+    assertEquals(products.get((int) (ID_PRODUCT_MEAL_SCHNITZEL - 1)).getDescription(), "Schnitzel");
     sort.setOrderBy(OrderDirection.DESC);
     products = this.offerManagement.findProductsFiltered(filter, sort);
     assertEquals(products.get(5).getDescription(), "Brot");
