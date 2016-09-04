@@ -1,7 +1,7 @@
 package io.oasp.gastronomy.restaurant.tablemanagement.common;
 
 /**
- * Encapsulates IDs and numbers of datasets saved in the database according to the standard test migration.
+ * Encapsulates IDs and numbers of datasets saved in the database according to the default test migration.
  *
  */
 public interface TablemanagementTestDataConstants {

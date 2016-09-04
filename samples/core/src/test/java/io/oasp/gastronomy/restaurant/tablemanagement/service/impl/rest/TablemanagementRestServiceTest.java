@@ -106,11 +106,10 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
   public void testSaveTable() {
 
     // given
-    long waiterId = 2L;
     getRestTestClientBuilder().setUser("chief");
     getRestTestClientBuilder().setPassword("chief");
     this.service = getRestTestClientBuilder().build(TablemanagementRestService.class);
-    TableEto table = new TableEtoBuilder().number(NUMBER_TABLE_NEW).waiterId(ID_WAITER).createNew();
+    TableEto table = new TableEtoBuilder().createNew();
     assertThat(table.getId()).isNull();
 
     // when
@@ -132,10 +131,7 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
   public void testFindTablesByPost() {
 
     // given
-    long waiterId = 2L;
-    TableEto table =
-        new TableEtoBuilder().number(NUMBER_TABLE_NEW).waiterId(waiterId).state(TableState.RESERVED).createNew();
-    assertThat(table).isNotNull();
+    TableEto table = new TableEtoBuilder().state(TableState.RESERVED).createNew();
     TableEto savedTable = this.service.saveTable(table);
     assertThat(savedTable).isNotNull();
     TableSearchCriteriaTo criteria = new TableSearchCriteriaTo();
@@ -151,7 +147,7 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
     assertThat(result).hasAtLeastOneElementOfType(TableEto.class).extracting("state").contains(TableState.RESERVED);
     assertThat(result).extracting("state").doesNotContain(TableState.FREE);
     assertThat(result).extracting("state").doesNotContain(TableState.OCCUPIED);
-    assertThat(result).extracting("waiterId").contains(waiterId);
+    assertThat(result).extracting("waiterId").contains(ID_WAITER);
     assertThat(result).extracting("number").contains(NUMBER_TABLE_NEW);
   }
 

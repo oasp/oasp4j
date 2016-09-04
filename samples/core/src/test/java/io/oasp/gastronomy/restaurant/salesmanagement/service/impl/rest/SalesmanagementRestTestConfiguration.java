@@ -11,19 +11,6 @@ import org.springframework.web.client.RestTemplate;
 public class SalesmanagementRestTestConfiguration {
 
   /**
-   * This method is creating {@link SalesmanagementRestServiceTestHelper} bean
-   *
-   * @return {@link SalesmanagementRestServiceTestHelper}
-   */
-  @Bean
-  public SalesmanagementRestServiceTestHelper salesmanagementRestServiceTestHelper() {
-
-    SalesmanagementRestServiceTestHelper salesmanagementRestServiceTestHelper =
-        new SalesmanagementRestServiceTestHelper();
-    return salesmanagementRestServiceTestHelper;
-  }
-
-  /**
    * This method is creating {@link RestTemplate} bean
    *
    * @return {@link RestTemplate}

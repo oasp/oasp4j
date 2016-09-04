@@ -1,21 +1,15 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest;
 
-import static io.oasp.gastronomy.restaurant.offermanagement.common.OffermanagementTestDataConstants.ID_OFFER_SCHNITZEL;
-import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.NUMBER_OF_SAMPLE_ORDERS;
-import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.NUMBER_OF_SAMPLE_ORDER_POSITIONS;
-import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.SAMPLE_DRINK_STATE;
-import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.SAMPLE_OFFER_ID;
-import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.SAMPLE_OFFER_NAME;
-import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.SAMPLE_ORDER_POSITION_STATE;
-import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.SAMPLE_ORDER_STATE;
-import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.SAMPLE_PRICE;
-import static io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest.SalesmanagementRestServiceTestHelper.SAMPLE_TABLE_ID;
+import static io.oasp.gastronomy.restaurant.common.builders.OrderEtoBuilder.STATE_ORDER;
+import static io.oasp.gastronomy.restaurant.common.builders.OrderPositionEtoBuilder.NAME_OFFER_SCHNITZELMENUE;
+import static io.oasp.gastronomy.restaurant.common.builders.OrderPositionEtoBuilder.PRICE_OFFER_SCHNITZELMENUE_AS_MONEY;
+import static io.oasp.gastronomy.restaurant.common.builders.OrderPositionEtoBuilder.STATE_ORDERPOSITION;
+import static io.oasp.gastronomy.restaurant.common.builders.OrderPositionEtoBuilder.STATE_PRODUCT_DRINK;
+import static io.oasp.gastronomy.restaurant.offermanagement.common.OffermanagementTestDataConstants.ID_OFFER_SCHNITZELMENUE;
 import static io.oasp.gastronomy.restaurant.tablemanagement.common.TablemanagementTestDataConstants.ID_TABLE;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import org.junit.After;
 import org.junit.Before;
@@ -28,6 +22,8 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.common.builders.OrderCtoBuilder;
+import io.oasp.gastronomy.restaurant.common.builders.OrderPositionEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractRestServiceTest;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
@@ -54,9 +50,6 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
   private static Logger LOG = LoggerFactory.getLogger(SalesmanagementRestServiceTest.class);
 
   private SalesmanagementRestService service;
-
-  @Inject
-  private SalesmanagementRestServiceTestHelper helper;
 
   /**
    * Provides initialization previous to the creation of the text fixture.
@@ -86,7 +79,7 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
   public void findOrder() {
 
     // given
-    OrderCto sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID);
+    OrderCto sampleOrderCto = new OrderCtoBuilder().createNew();
     OrderCto responseOrderCto = this.service.saveOrder(sampleOrderCto);
     assertThat(responseOrderCto).isNotNull();
 
@@ -113,10 +106,12 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
     OrderCto sampleOrderCto;
     OrderCto responseOrderCto;
 
-    ArrayList<OrderCto> savedOrderCtos = new ArrayList();
-    for (int i = 0; i < NUMBER_OF_SAMPLE_ORDERS; ++i) {
+    int numberOfSampleOrders = 2;
 
-      sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID);
+    ArrayList<OrderCto> savedOrderCtos = new ArrayList();
+    for (int i = 0; i < numberOfSampleOrders; ++i) {
+
+      sampleOrderCto = new OrderCtoBuilder().createNew();
       responseOrderCto = this.service.saveOrder(sampleOrderCto);
       assertThat(responseOrderCto).isNotNull();
       savedOrderCtos.add(responseOrderCto);
@@ -131,7 +126,7 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
     // then
     assertThat(responseOrderCtos).isNotNull();
 
-    assertThat(oldNumberOfOrders + NUMBER_OF_SAMPLE_ORDERS).isEqualTo(newNumberOfOrders);
+    assertThat(oldNumberOfOrders + numberOfSampleOrders).isEqualTo(newNumberOfOrders);
     assertThat(responseOrderCtos.getResult().size()).isEqualTo(newNumberOfOrders);
 
     int countNumberOfSavedOrders = 0;
@@ -144,7 +139,7 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
         }
       }
     }
-    assertThat(countNumberOfSavedOrders).isEqualTo(NUMBER_OF_SAMPLE_ORDERS);
+    assertThat(countNumberOfSavedOrders).isEqualTo(numberOfSampleOrders);
 
   }
 
@@ -158,13 +153,13 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
   public void findOrderByPost() {
 
     // given
-    OrderCto sampleOrderCto = this.helper.createSampleOrderCto(ID_TABLE);
+    OrderCto sampleOrderCto = new OrderCtoBuilder().createNew();
     OrderCto responseOrderCto = this.service.saveOrder(sampleOrderCto);
     assertThat(responseOrderCto).isNotNull();
 
     OrderSearchCriteriaTo criteria = new OrderSearchCriteriaTo();
-    criteria.setTableId(SAMPLE_TABLE_ID);
-    criteria.setState(SAMPLE_ORDER_STATE);
+    criteria.setTableId(ID_TABLE);
+    criteria.setState(STATE_ORDER);
     PaginationTo pagination = PaginationTo.NO_PAGINATION;
     criteria.setPagination(pagination);
 
@@ -176,7 +171,7 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
     assertThat(orderCtoList.getResult().size()).isEqualTo(1);
     assertThat(orderCtoList.getResult().get(0).getOrder().getId()).isEqualTo(responseOrderCto.getOrder().getId());
     assertThat(orderCtoList.getResult().get(0).getOrder().getTableId()).isEqualTo(ID_TABLE);
-    assertThat(orderCtoList.getResult().get(0).getOrder().getState()).isEqualTo(SAMPLE_ORDER_STATE);
+    assertThat(orderCtoList.getResult().get(0).getOrder().getState()).isEqualTo(STATE_ORDER);
 
   }
 
@@ -190,12 +185,12 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
   public void findOrderPosition() {
 
     // given
-    OrderCto sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID);
+    OrderCto sampleOrderCto = new OrderCtoBuilder().createNew();
     OrderCto responseOrderCto = this.service.saveOrder(sampleOrderCto);
     assertThat(responseOrderCto).isNotNull();
 
     OrderPositionEto sampleOrderPositionEto =
-        this.helper.createSampleOrderPositionEto(responseOrderCto.getOrder().getId());
+        new OrderPositionEtoBuilder().orderId(responseOrderCto.getOrder().getId()).createNew();
     assertThat(sampleOrderPositionEto).isNotNull();
     OrderPositionEto responseSaveOrderPositionEto = this.service.saveOrderPosition(sampleOrderPositionEto);
     assertThat(responseSaveOrderPositionEto).isNotNull();
@@ -208,11 +203,11 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
     assertThat(responseFindOrderPositionEto).isNotNull();
     assertThat(responseFindOrderPositionEto.getId()).isEqualTo(responseSaveOrderPositionEto.getId());
     assertThat(responseFindOrderPositionEto.getOrderId()).isEqualTo(responseSaveOrderPositionEto.getOrderId());
-    assertThat(responseFindOrderPositionEto.getOfferId()).isEqualTo(ID_OFFER_SCHNITZEL);
-    assertThat(responseFindOrderPositionEto.getOfferName()).isEqualTo(SAMPLE_OFFER_NAME);
-    assertThat(responseFindOrderPositionEto.getState()).isEqualTo(SAMPLE_ORDER_POSITION_STATE);
-    assertThat(responseFindOrderPositionEto.getDrinkState()).isEqualTo(SAMPLE_DRINK_STATE);
-    assertThat(responseFindOrderPositionEto.getPrice()).isEqualTo(SAMPLE_PRICE);
+    assertThat(responseFindOrderPositionEto.getOfferId()).isEqualTo(ID_OFFER_SCHNITZELMENUE);
+    assertThat(responseFindOrderPositionEto.getOfferName()).isEqualTo(NAME_OFFER_SCHNITZELMENUE);
+    assertThat(responseFindOrderPositionEto.getState()).isEqualTo(STATE_ORDERPOSITION);
+    assertThat(responseFindOrderPositionEto.getDrinkState()).isEqualTo(STATE_PRODUCT_DRINK);
+    assertThat(responseFindOrderPositionEto.getPrice()).isEqualTo(PRICE_OFFER_SCHNITZELMENUE_AS_MONEY);
   }
 
   /**
@@ -225,7 +220,7 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
   public void findAllOrderPositions() {
 
     // given
-    OrderCto sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID);
+    OrderCto sampleOrderCto = new OrderCtoBuilder().createNew();
     OrderCto responseOrderCto = this.service.saveOrder(sampleOrderCto);
     assertThat(responseOrderCto).isNotNull();
 
@@ -234,10 +229,11 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
     OrderPositionEto responseOrderPositionEto;
 
     ArrayList<OrderPositionEto> savedOrderPositionEtos = new ArrayList();
-    for (int i = 0; i < NUMBER_OF_SAMPLE_ORDER_POSITIONS; ++i) {
-      sampleOrderPositionEto = new OrderPositionEto();
-      sampleOrderPositionEto.setOrderId(responseOrderCto.getOrder().getId());
-      sampleOrderPositionEto.setOfferId(SAMPLE_OFFER_ID);
+
+    int numberOfSampleOrderpositions = 2;
+
+    for (int i = 0; i < numberOfSampleOrderpositions; ++i) {
+      sampleOrderPositionEto = new OrderPositionEtoBuilder().orderId(responseOrderCto.getOrder().getId()).createNew();
       responseOrderPositionEto = this.service.saveOrderPosition(sampleOrderPositionEto);
       assertThat(responseOrderPositionEto).isNotNull();
       savedOrderPositionEtos.add(responseOrderPositionEto);
@@ -251,7 +247,7 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
     // then
     assertThat(responseOrderPositionEtos).isNotNull();
 
-    assertThat(oldNumberOfOrderPositions + NUMBER_OF_SAMPLE_ORDER_POSITIONS).isEqualTo(newNumberOfOrderPositions);
+    assertThat(oldNumberOfOrderPositions + numberOfSampleOrderpositions).isEqualTo(newNumberOfOrderPositions);
     assertThat(responseOrderPositionEtos.size()).isEqualTo(newNumberOfOrderPositions);
 
     int countNumberOfSavedOrderPositions = 0;
@@ -269,7 +265,7 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
         }
       }
     }
-    assertThat(countNumberOfSavedOrderPositions).isEqualTo(NUMBER_OF_SAMPLE_ORDER_POSITIONS);
+    assertThat(countNumberOfSavedOrderPositions).isEqualTo(numberOfSampleOrderpositions);
   }
 
   /**
@@ -283,12 +279,12 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
   public void cancelOrderPosition() {
 
     // given
-    OrderCto sampleOrderCto = this.helper.createSampleOrderCto(SAMPLE_TABLE_ID);
+    OrderCto sampleOrderCto = new OrderCtoBuilder().createNew();
     OrderCto responseOrderCto = this.service.saveOrder(sampleOrderCto);
     assertThat(responseOrderCto).isNotNull();
 
     OrderPositionEto sampleOrderPositionEto =
-        this.helper.createSampleOrderPositionEto(responseOrderCto.getOrder().getId());
+        new OrderPositionEtoBuilder().orderId(responseOrderCto.getOrder().getId()).createNew();
     OrderPositionEto responseOrderPositionEto = this.service.saveOrderPosition(sampleOrderPositionEto);
     assertThat(responseOrderPositionEto).isNotNull();
 

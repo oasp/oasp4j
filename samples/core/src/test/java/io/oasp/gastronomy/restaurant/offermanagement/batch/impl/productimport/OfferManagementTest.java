@@ -1,6 +1,6 @@
 package io.oasp.gastronomy.restaurant.offermanagement.batch.impl.productimport;
 
-import static io.oasp.gastronomy.restaurant.offermanagement.common.OffermanagementTestDataConstants.ID_OFFER_SCHNITZEL;
+import static io.oasp.gastronomy.restaurant.offermanagement.common.OffermanagementTestDataConstants.ID_OFFER_SCHNITZELMENUE;
 import static io.oasp.gastronomy.restaurant.offermanagement.common.OffermanagementTestDataConstants.ID_PRODUCT_DRINK_COLA;
 import static io.oasp.gastronomy.restaurant.offermanagement.common.OffermanagementTestDataConstants.ID_PRODUCT_MEAL_SCHNITZEL;
 import static io.oasp.gastronomy.restaurant.offermanagement.common.OffermanagementTestDataConstants.ID_PRODUCT_SIDEDISH_POMMES;
@@ -127,7 +127,7 @@ public class OfferManagementTest extends ComponentTest {
     filter.setSideDishId(ID_PRODUCT_SIDEDISH_POMMES);
     offerEntity = this.offerManagement.findOffersFiltered(filter, sort);
     assertEquals(offerEntity.size(), 1);
-    assertEquals(offerEntity.get(0).getId(), new Long(ID_OFFER_SCHNITZEL));
+    assertEquals(offerEntity.get(0).getId(), new Long(ID_OFFER_SCHNITZELMENUE));
     assertEquals(offerEntity.get(0).getDescription(), "Description of Schnitzel-Menü");
     assertEquals(offerEntity.get(0).getDrinkId(), new Long(ID_PRODUCT_DRINK_COLA));
     assertEquals(offerEntity.get(0).getMealId(), new Long(ID_PRODUCT_MEAL_SCHNITZEL));
