@@ -96,7 +96,7 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
     if (orderPositionId == null) {
       action = "saved";
       Long offerId = orderPosition.getOfferId();
-      Objects.requireNonNull(offerId, "offerId cannot be null");
+      Objects.requireNonNull(offerId, "offerId");
       OfferEto offer = this.offerManagement.findOffer(offerId);
       Objects.requireNonNull(offer, "Offer@" + offerId);
       orderPosition.setPrice(offer.getPrice());
