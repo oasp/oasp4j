@@ -1,12 +1,10 @@
--- This is the SQL script for setting up the DDL for the h2 database
+-- This is the SQL script for setting up the DDL for the MS SQL Server 2008 database
 -- In a typical project you would only distinguish between main and test for flyway SQLs
 -- However, in this sample application we provde support for multiple databases in parallel
 -- You can simply choose the DB of your choice by setting spring.profiles.active=XXX in config/application.properties
 -- Assuming that the preconfigured user exists with according credentials using the included SQLs
 
 -- *** Staffmemeber ***
---USE TEST
---GO
 
 CREATE TABLE STAFFMEMBER(
     id BIGINT NOT NULL IDENTITY(0,1),
@@ -122,7 +120,7 @@ ALTER TABLE BILL_ORDERPOSITION WITH NOCHECK ADD CONSTRAINT FK_BILLORDPOS2ORDPOS 
 CREATE TABLE BINARYOBJECT (
   id BIGINT NOT NULL IDENTITY(10,1),
   modificationCounter INTEGER NOT NULL,
-  data IMAGE,
+  data varbinary(max),
   size BIGINT NOT NULL,
   mimetype VARCHAR(255),
   PRIMARY KEY (ID)
