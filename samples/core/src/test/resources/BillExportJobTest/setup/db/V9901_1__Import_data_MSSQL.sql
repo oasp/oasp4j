@@ -1,3 +1,4 @@
+--Rename this file to V9001_1__Delete_data_MSSQL.sql.mssql if the database used is not MS SQL Server 2008
 SET IDENTITY_INSERT RESTAURANTTABLE ON
 
 INSERT INTO RESTAURANTTABLE (id, modificationCounter, number, state) VALUES (101, 1, 1, 2);
