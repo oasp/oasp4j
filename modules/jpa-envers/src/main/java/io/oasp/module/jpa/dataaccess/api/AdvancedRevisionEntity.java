@@ -24,7 +24,7 @@ import org.hibernate.envers.RevisionTimestamp;
  */
 @Entity
 @RevisionEntity(AdvancedRevisionListener.class)
-@Table(name = "REVINFO")
+@Table(name = "RevInfo")
 public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
 
   /** UID for serialization. */

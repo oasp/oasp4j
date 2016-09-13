@@ -1,11 +1,5 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api;
 
-import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
-import io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity;
-import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
-import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
-import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +8,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
+import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
+import io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
 
 /**
  * {@link ApplicationPersistenceEntity Entity} that represents a single {@link OrderPosition position} of an
@@ -56,7 +56,7 @@ public class OrderPositionEntity extends ApplicationPersistenceEntity implements
    * @return the {@link OrderEntity order} this {@link OrderPositionEntity} is associated with.
    */
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "order_id")
+  @JoinColumn(name = "orderId")
   @NotNull
   public OrderEntity getOrder() {
 
@@ -93,7 +93,7 @@ public class OrderPositionEntity extends ApplicationPersistenceEntity implements
   }
 
   @Override
-  @Column(name = "cook_id")
+  @Column(name = "cookId")
   public Long getCookId() {
 
     return this.cookId;
@@ -106,7 +106,7 @@ public class OrderPositionEntity extends ApplicationPersistenceEntity implements
   }
 
   @Override
-  @Column(name = "offer_id")
+  @Column(name = "offerId")
   public Long getOfferId() {
 
     return this.offerId;

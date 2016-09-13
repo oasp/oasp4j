@@ -20,7 +20,7 @@ import org.hibernate.envers.Audited;
 @Entity
 @Table(name = "Product")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "dType", discriminatorType = DiscriminatorType.STRING)
 @Audited
 public abstract class ProductEntity extends MenuItemEntity implements Product {
 
