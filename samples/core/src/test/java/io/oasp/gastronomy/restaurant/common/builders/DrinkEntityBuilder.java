@@ -9,9 +9,15 @@ public class DrinkEntityBuilder {
 
   private List<P<DrinkEntity>> parameterToBeApplied;
 
+  public static final String NAME_DRINK = "Spring Paradise";
+
+  public static final String DESCRIPTION_DRINK = "without alcohol";
+
+  public static final boolean FLAG_DRINK_ALCOHOLIC = false;
+
   public DrinkEntityBuilder() {
 
-    parameterToBeApplied = new LinkedList<P<DrinkEntity>>();
+    this.parameterToBeApplied = new LinkedList<P<DrinkEntity>>();
     fillMandatoryFields();
     fillMandatoryFields_custom();
   }
@@ -32,7 +38,7 @@ public class DrinkEntityBuilder {
 
   public DrinkEntityBuilder alcoholic(final boolean alcoholic) {
 
-    parameterToBeApplied.add(new P<DrinkEntity>() {
+    this.parameterToBeApplied.add(new P<DrinkEntity>() {
       @Override
       public void apply(DrinkEntity target) {
 
@@ -44,7 +50,7 @@ public class DrinkEntityBuilder {
 
   public DrinkEntityBuilder pictureId(final Long pictureId) {
 
-    parameterToBeApplied.add(new P<DrinkEntity>() {
+    this.parameterToBeApplied.add(new P<DrinkEntity>() {
       @Override
       public void apply(DrinkEntity target) {
 
@@ -56,7 +62,7 @@ public class DrinkEntityBuilder {
 
   public DrinkEntityBuilder name(final String name) {
 
-    parameterToBeApplied.add(new P<DrinkEntity>() {
+    this.parameterToBeApplied.add(new P<DrinkEntity>() {
       @Override
       public void apply(DrinkEntity target) {
 
@@ -68,7 +74,7 @@ public class DrinkEntityBuilder {
 
   public DrinkEntityBuilder description(final String description) {
 
-    parameterToBeApplied.add(new P<DrinkEntity>() {
+    this.parameterToBeApplied.add(new P<DrinkEntity>() {
       @Override
       public void apply(DrinkEntity target) {
 
@@ -80,7 +86,7 @@ public class DrinkEntityBuilder {
 
   public DrinkEntityBuilder revision(final Number revision) {
 
-    parameterToBeApplied.add(new P<DrinkEntity>() {
+    this.parameterToBeApplied.add(new P<DrinkEntity>() {
       @Override
       public void apply(DrinkEntity target) {
 
@@ -93,7 +99,12 @@ public class DrinkEntityBuilder {
   public DrinkEntity createNew() {
 
     DrinkEntity drinkentity = new DrinkEntity();
-    for (P<DrinkEntity> parameter : parameterToBeApplied) {
+
+    name(NAME_DRINK);
+    description(DESCRIPTION_DRINK);
+    alcoholic(FLAG_DRINK_ALCOHOLIC);
+
+    for (P<DrinkEntity> parameter : this.parameterToBeApplied) {
       parameter.apply(drinkentity);
     }
     return drinkentity;

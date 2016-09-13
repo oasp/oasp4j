@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.tablemanagement.logic.impl;
 
+import static io.oasp.gastronomy.restaurant.tablemanagement.common.TablemanagementTestDataConstants.ID_TABLE;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -87,11 +88,11 @@ public class TablemanagementImplTest extends ModuleTest {
     TableEntity entity = mock(TableEntity.class);
     TableEto eto = new TableEto();
 
-    when(this.tableDao.findOne(1L)).thenReturn(entity);
+    when(this.tableDao.findOne(ID_TABLE)).thenReturn(entity);
     when(this.beanMapper.map(entity, TableEto.class)).thenReturn(eto);
 
     // when
-    TableEto resultEto = this.tableManagementImpl.findTable(1L);
+    TableEto resultEto = this.tableManagementImpl.findTable(ID_TABLE);
 
     // then
     assertThat(resultEto).isNotNull();

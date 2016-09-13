@@ -1,5 +1,7 @@
 package io.oasp.gastronomy.restaurant.common.builders;
 
+import static io.oasp.gastronomy.restaurant.tablemanagement.common.TablemanagementTestDataConstants.ID_TABLE;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,18 +10,20 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 
 public class OrderEtoBuilder {
 
+  public static final OrderState STATE_ORDER = OrderState.OPEN;
+
   private List<P<OrderEto>> parameterToBeApplied;
 
   public OrderEtoBuilder() {
 
-    parameterToBeApplied = new LinkedList<P<OrderEto>>();
+    this.parameterToBeApplied = new LinkedList<P<OrderEto>>();
     fillMandatoryFields();
     fillMandatoryFields_custom();
   }
 
   public OrderEtoBuilder tableId(final long tableId) {
 
-    parameterToBeApplied.add(new P<OrderEto>() {
+    this.parameterToBeApplied.add(new P<OrderEto>() {
       @Override
       public void apply(OrderEto target) {
 
@@ -31,7 +35,7 @@ public class OrderEtoBuilder {
 
   public OrderEtoBuilder state(final OrderState state) {
 
-    parameterToBeApplied.add(new P<OrderEto>() {
+    this.parameterToBeApplied.add(new P<OrderEto>() {
       @Override
       public void apply(OrderEto target) {
 
@@ -43,7 +47,7 @@ public class OrderEtoBuilder {
 
   public OrderEtoBuilder revision(final Number revision) {
 
-    parameterToBeApplied.add(new P<OrderEto>() {
+    this.parameterToBeApplied.add(new P<OrderEto>() {
       @Override
       public void apply(OrderEto target) {
 
@@ -56,7 +60,11 @@ public class OrderEtoBuilder {
   public OrderEto createNew() {
 
     OrderEto ordereto = new OrderEto();
-    for (P<OrderEto> parameter : parameterToBeApplied) {
+
+    ordereto.setState(STATE_ORDER);
+    ordereto.setTableId(ID_TABLE);
+
+    for (P<OrderEto> parameter : this.parameterToBeApplied) {
       parameter.apply(ordereto);
     }
     return ordereto;

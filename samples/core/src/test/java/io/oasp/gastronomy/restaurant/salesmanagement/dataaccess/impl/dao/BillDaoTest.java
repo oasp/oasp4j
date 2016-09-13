@@ -1,5 +1,7 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.impl.dao;
 
+import static io.oasp.gastronomy.restaurant.common.builders.BillEntityBuilder.TOTAL_BILL;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -42,19 +44,20 @@ public class BillDaoTest extends ComponentTest {
   @Test
   public void testPersist() {
 
-    BillEntity bill = new BillEntityBuilder().total(new Money(42.42)).tip(new Money(1.0)).payed(true).createNew();
+    BillEntity bill = new BillEntityBuilder().createNew();
     assertThat(bill.getId()).isNull();
     this.billDao.save(bill);
     assertThat(bill.getId()).isNotNull();
     BillEntity loadedBill = this.billDao.findOne(bill.getId());
     assertThat(bill).isEqualTo(loadedBill);
 
-    TypedQuery<BillEntity> query =
-        this.entityManager.createQuery("SELECT b from BillEntity b where b.total > 43", BillEntity.class);
+    TypedQuery<BillEntity> query = this.entityManager.createQuery(
+        "SELECT b from BillEntity b where b.total > " + Integer.toString((int) (TOTAL_BILL) + 1), BillEntity.class);
     List<BillEntity> resultList = query.getResultList();
     assertThat(resultList.isEmpty()).isTrue();
 
-    query = this.entityManager.createQuery("SELECT b from BillEntity b where b.total < 43", BillEntity.class);
+    query = this.entityManager.createQuery(
+        "SELECT b from BillEntity b where b.total < 43" + Integer.toString((int) (TOTAL_BILL) + 1), BillEntity.class);
     resultList = query.getResultList();
     assertThat(!resultList.isEmpty()).isTrue();
 
