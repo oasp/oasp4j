@@ -47,6 +47,7 @@ public class DiagnosticContextFilter implements Filter {
   public DiagnosticContextFilter() {
 
     super();
+    this.correlationIdHttpHeaderName = CORRELATION_ID_HEADER_NAME_DEFAULT;
   }
 
   /**
@@ -128,10 +129,10 @@ public class DiagnosticContextFilter implements Filter {
 
     String headerName = config.getInitParameter(CORRELATION_ID_HEADER_NAME_PARAM);
     if (headerName == null) {
-      headerName = CORRELATION_ID_HEADER_NAME_DEFAULT;
-      LOG.info("Parameter {} not configured using default.", CORRELATION_ID_HEADER_NAME_PARAM);
+      LOG.debug("Parameter {} not configured via filter config.", CORRELATION_ID_HEADER_NAME_PARAM);
+    } else {
+      this.correlationIdHttpHeaderName = headerName;
     }
-    this.correlationIdHttpHeaderName = headerName;
     LOG.info("Correlation ID header initialized to: {}", this.correlationIdHttpHeaderName);
     if (this.diagnosticContextFacade == null) {
       try {
