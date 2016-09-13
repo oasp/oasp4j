@@ -15,7 +15,6 @@ import net.sf.mmm.util.entity.api.PersistenceEntity;
  *
  * @param <E> is the generic type of the {@link PersistenceEntity}.
  *
- * @author hohwille
  */
 public interface RevisionedMasterDataDao<E extends MutablePersistenceEntity<Long>> extends GenericRevisionedDao<Long, E> {
 

@@ -7,7 +7,6 @@ import org.flywaydb.core.api.MigrationVersion;
  * This class provides methods for handling the database during testing where resets (and other operations) may be
  * necessary.
  *
- * @author jmolinar
  */
 public class DbTestHelper {
   private Flyway flyway;

@@ -38,7 +38,6 @@ import io.oasp.module.jpa.common.api.to.PaginatedListTo;
  *
  * The service class for REST calls in order to execute the methods in {@link Salesmanagement}.
  *
- * @author agreul, geazzi, jmolinar
  */
 
 @Path("/salesmanagement/v1")

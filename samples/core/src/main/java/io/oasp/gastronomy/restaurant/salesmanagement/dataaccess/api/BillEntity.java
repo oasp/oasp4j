@@ -20,7 +20,6 @@ import io.oasp.gastronomy.restaurant.salesmanagement.common.api.Bill;
  * {@link ApplicationPersistenceEntity Entity} that represents the {@link Bill} related to one or multiple
  * {@OrderPosition order positions}.
  *
- * @author etomety
  */
 @Entity
 @Table(name = "Bill")

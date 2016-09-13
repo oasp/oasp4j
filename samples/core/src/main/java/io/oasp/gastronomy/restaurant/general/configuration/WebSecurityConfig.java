@@ -12,7 +12,6 @@ import io.oasp.module.basic.configuration.SpringProfileConstants;
  * simple for two channels of authentication: simple login form and rest-url. (Copied from
  * {@link io.oasp.gastronomy.restaurant.general.configuration.BaseWebSecurityConfig}
  *
- * @author hohwille, marcorose, jmolinar
  */
 @Configuration
 @EnableWebSecurity

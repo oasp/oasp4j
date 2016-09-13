@@ -20,7 +20,6 @@ import io.oasp.module.test.common.base.ModuleTest;
  * fake objects to the SUT. For a limited number of test cases per class it can be convenient to use the annotation
  * {@code @InjectMocks} to inject all needed mocks in the class under test.
  *
- * @author sroeger
  */
 
 public class StaffmanagementImplTest extends ModuleTest {

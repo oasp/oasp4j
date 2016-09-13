@@ -14,7 +14,6 @@ import javax.inject.Named;
 /**
  * Implementation of the {@link UcManageBinaryObject} intreface.
  *
- * @author sspielma
  */
 @Named
 public class UcManageBinaryObjectImpl extends AbstractUc implements UcManageBinaryObject {

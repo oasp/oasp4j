@@ -7,7 +7,6 @@ import org.flywaydb.core.Flyway;
 /**
  * Type to migrate the database. Gets initialized before hibernate.
  *
- * @author jmetzler
  */
 public class DatabaseMigrator {
 

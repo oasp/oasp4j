@@ -9,7 +9,6 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionE
 /**
  * Interface of UcManageOrderPosition to centralize documentation and signatures of methods.
  *
- * @author mvielsac
  */
 public interface UcManageOrderPosition {
 

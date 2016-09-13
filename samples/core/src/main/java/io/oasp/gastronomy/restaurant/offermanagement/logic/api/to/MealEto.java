@@ -5,7 +5,6 @@ import io.oasp.gastronomy.restaurant.offermanagement.common.api.Meal;
 /**
  * The {@link io.oasp.module.basic.common.api.to.AbstractEto ETO} for a {@link Meal}.
  *
- * @author jozitz
  */
 public class MealEto extends ProductEto implements Meal {
 

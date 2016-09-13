@@ -21,7 +21,6 @@ import org.springframework.batch.core.repository.JobRestartException;
  * the 'run.id' parameter). It is actually just a convenience functionality so that the one starting batches does not
  * have to change the parameters manually.
  *
- * @author Ludger Overbeck
  */
 public class JobLauncherWithAdditionalRestartCapabilities extends SimpleJobLauncher {
 

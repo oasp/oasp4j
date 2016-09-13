@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * {@link AbstractEto ETO} for {@link Bill}.
  *
- * @author etomety
  */
 public class BillEto extends AbstractEto implements Bill {
 

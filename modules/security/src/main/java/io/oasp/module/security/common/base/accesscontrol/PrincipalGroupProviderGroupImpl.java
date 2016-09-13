@@ -14,7 +14,6 @@ import java.util.Set;
  * {@link Group} that mixes a {@link Principal} with permissions and permission groups it is not commonly used even
  * though it is available in the Java standard edition.
  *
- * @author hohwille
  */
 public class PrincipalGroupProviderGroupImpl implements PrincipalAccessControlProvider<Group> {
 

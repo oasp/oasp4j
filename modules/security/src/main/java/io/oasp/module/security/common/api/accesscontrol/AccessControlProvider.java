@@ -14,7 +14,6 @@ import java.util.Set;
  *
  * @see PrincipalAccessControlProvider
  *
- * @author hohwille
  */
 public interface AccessControlProvider {
 

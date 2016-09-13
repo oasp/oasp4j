@@ -11,7 +11,6 @@ import net.sf.mmm.util.lang.api.AbstractSimpleDatatype;
  * We recommend to use JSR354 (<code>javax.money.MonetaryAmount</code>) instead. However, we created this when the JSR
  * was still in progress and the API had a licensing model that incompatible with ASL 2.0.
  *
- * @author hohwille
  */
 public class Money extends AbstractSimpleDatatype<BigDecimal> implements Comparable<Object> {
 

@@ -29,7 +29,6 @@ import javax.servlet.http.HttpServletResponse;
  * }
  * </pre>
  *
- * @author hohwille
  */
 public class HttpEchoServlet extends HttpServlet {
 

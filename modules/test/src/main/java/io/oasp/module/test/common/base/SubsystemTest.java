@@ -17,7 +17,6 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
  *
  * @see CategorySubsystemTest
  *
- * @author hohwille
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestExecutionListeners({ TransactionalTestExecutionListener.class, DependencyInjectionTestExecutionListener.class })

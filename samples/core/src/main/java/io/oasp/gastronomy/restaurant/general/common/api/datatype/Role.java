@@ -8,8 +8,6 @@ import java.security.Principal;
  *
  * @see io.oasp.gastronomy.restaurant.staffmanagement.common.api.StaffMember#getRole()
  *
- * @author hohwille
- * @author loverbec
  */
 // END ARCHETYPE SKIP
 public enum Role implements Principal {

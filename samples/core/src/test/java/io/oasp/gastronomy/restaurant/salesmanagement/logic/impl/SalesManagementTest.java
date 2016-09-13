@@ -27,7 +27,6 @@ import io.oasp.module.test.common.base.ComponentTest;
 /**
  * This is the test-case of {@link Salesmanagement}.
  *
- * @author hohwille, sroeger
  */
 @SpringApplicationConfiguration(classes = { SpringBootApp.class })
 @WebAppConfiguration

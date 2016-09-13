@@ -4,7 +4,6 @@ package io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype;
  * Represents the {@link io.oasp.gastronomy.restaurant.tablemanagement.common.api.Table#getState() state} of a
  * {@link io.oasp.gastronomy.restaurant.tablemanagement.common.api.Table}.
  *
- * @author etomety
  */
 public enum TableState {
   /** The state of a free {@link io.oasp.gastronomy.restaurant.tablemanagement.common.api.Table}. */

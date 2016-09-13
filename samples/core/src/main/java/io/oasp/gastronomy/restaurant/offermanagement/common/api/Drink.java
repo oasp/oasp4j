@@ -3,7 +3,6 @@ package io.oasp.gastronomy.restaurant.offermanagement.common.api;
 /**
  * This is the interface for a {@link Product} that represents a {@link Drink}.
  *
- * @author hohwille
  */
 public interface Drink extends Product {
 

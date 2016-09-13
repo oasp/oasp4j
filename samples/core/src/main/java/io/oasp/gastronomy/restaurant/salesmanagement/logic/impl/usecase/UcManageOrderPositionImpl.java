@@ -34,7 +34,6 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.base.usecase.Abstract
 /**
  * Implementation of {@link UcManageOrderPosition}.
  *
- * @author jozitz
  */
 @Named
 @UseCase

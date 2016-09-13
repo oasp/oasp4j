@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.User;
 /**
  * This is a simple implementation of {@link AbstractAccessControlBasedAuthenticationProvider}.
  *
- * @author hohwille
  */
 public class SimpleAccessControlBasedAuthenticationProvider extends
     AbstractAccessControlBasedAuthenticationProvider<User, Principal> {

@@ -31,7 +31,6 @@ import io.oasp.module.security.common.impl.rest.LogoutSuccessHandlerReturningOkH
  * Security configuration is based on {@link WebSecurityConfigurerAdapter}. This configuration is by purpose designed
  * most simple for two channels of authentication: simple login form and rest-url.
  *
- * @author jmolinar
  */
 public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter {
 

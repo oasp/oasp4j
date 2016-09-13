@@ -24,7 +24,6 @@ import org.springframework.core.io.ClassPathResource;
 /**
  * This is the test-case for {@link AccessControlSchema} and {@link AccessControlSchemaXmlMapper}.
  *
- * @author hohwille
  */
 public class AccessControlSchemaTest extends ModuleTest {
 

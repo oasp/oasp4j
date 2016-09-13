@@ -12,7 +12,6 @@ import org.junit.Test;
 /**
  * This class tests the {@link MoneyHelper}. Especially summing a List of @Link {@link Money}s.
  *
- * @author mvielsac
  */
 public class MoneyHelperTest extends ModuleTest {
 

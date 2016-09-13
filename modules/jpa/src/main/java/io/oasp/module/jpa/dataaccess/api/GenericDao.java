@@ -25,7 +25,6 @@ import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
  * @param <ID> is the generic type if the {@link PersistenceEntity#getId() primary key}.
  * @param <E> is the generic type of the {@link PersistenceEntity}.
  *
- * @author hohwille
  */
 public interface GenericDao<ID, E extends PersistenceEntity<ID>> {
 

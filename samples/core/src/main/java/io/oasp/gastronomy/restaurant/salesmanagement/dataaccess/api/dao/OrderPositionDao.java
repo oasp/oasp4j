@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * {@link ApplicationDao Data Access Object} for {@link OrderPositionEntity} entity.
  *
- * @author hohwille
  */
 public interface OrderPositionDao extends ApplicationDao<OrderPositionEntity> {
 

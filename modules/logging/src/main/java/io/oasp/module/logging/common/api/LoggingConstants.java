@@ -3,7 +3,6 @@ package io.oasp.module.logging.common.api;
 /**
  * Central constants for logging.
  *
- * @author rstroh
  */
 public final class LoggingConstants {
 

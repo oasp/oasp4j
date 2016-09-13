@@ -18,8 +18,6 @@ import javax.persistence.Version;
  *             OASP in an earlier version you can simply update `ApplicationPersistenceEntity` from our current sample
  *             on github to get rid of the dependency to this class.
  *
- * @author hohwille
- * @author rjoeris
  */
 @MappedSuperclass
 @Deprecated

@@ -36,7 +36,6 @@ import io.oasp.gastronomy.restaurant.offermanagement.service.api.rest.Offermanag
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
- * @author agreul, geazzi, jmolinar
  */
 @Named("OffermanagementRestService")
 public class OffermanagementRestServiceImpl implements OffermanagementRestService {

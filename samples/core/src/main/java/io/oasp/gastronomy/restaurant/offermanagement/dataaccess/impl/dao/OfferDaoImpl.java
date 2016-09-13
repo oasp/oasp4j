@@ -29,7 +29,6 @@ import com.mysema.query.types.path.EntityPathBase;
 /**
  * Implementation of {@link OfferDao}.
  *
- * @author loverbec
  */
 @Named
 public class OfferDaoImpl extends ApplicationMasterDataDaoImpl<OfferEntity> implements OfferDao {

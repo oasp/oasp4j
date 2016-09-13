@@ -10,7 +10,6 @@ import net.sf.mmm.util.transferobject.api.TransferObject;
  * values}. <br>
  * Classes extending this class should carry the suffix <code>Cto</code>.
  *
- * @author hohwille
  */
 public abstract class AbstractCto extends AbstractTo {
 

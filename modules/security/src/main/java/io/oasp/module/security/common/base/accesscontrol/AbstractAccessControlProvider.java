@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * ATTENTION:<br/>
  * You need to call {@link #initialize(AccessControlSchema)} from the derived implementation.
  *
- * @author hohwille
  */
 public abstract class AbstractAccessControlProvider implements AccessControlProvider {
 

@@ -41,7 +41,6 @@ import io.oasp.module.jpa.common.api.to.PaginationTo;
  * This class serves as an example of how to perform a subsystem test (e.g., call a *RestService interface). The test
  * database is accessed via an instance of the class {@link SalesmanagementRestService}.
  *
- * @author shuber
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = { SpringBootApp.class, SalesmanagementRestTestConfiguration.class })

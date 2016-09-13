@@ -9,7 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 /**
  * Implementation of {@link GrantedAuthority} for a {@link AccessControl}.
  *
- * @author hohwille
  */
 public class AccessControlGrantedAuthority implements GrantedAuthority {
 

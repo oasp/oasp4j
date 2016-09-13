@@ -39,7 +39,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * the exception handling class for all upcoming exceptions thrown at REST requests. Each type of possible thrown
  * exception will be fetched within the method "toResponse".
  *
- * @author agreul
  */
 @Provider
 public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {

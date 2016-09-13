@@ -9,7 +9,6 @@ import net.sf.mmm.util.nls.api.NlsMessage;
 /**
  * This is the {@link NlsBundle} for this application.
  *
- * @author hohwille
  */
 public interface NlsBundleApplicationRoot extends NlsBundle {
 

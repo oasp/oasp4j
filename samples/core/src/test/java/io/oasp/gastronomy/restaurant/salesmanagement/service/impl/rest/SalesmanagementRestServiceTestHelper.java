@@ -16,7 +16,6 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionE
  * classes. Moreover it provides two methods to create sample {@link OrderCto} and {@link OrderPositionEto} objects
  * using the sample attributes defined by this class.
  *
- * @author shuber
  */
 public class SalesmanagementRestServiceTestHelper {
 

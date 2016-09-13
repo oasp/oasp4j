@@ -7,7 +7,6 @@ import io.oasp.module.security.common.api.accesscontrol.AccessControlSchema;
  * default implementation will load it from an XML file. You could create your own implementation to read from database
  * or wherever if default is not suitable.
  *
- * @author hohwille
  */
 public interface AccessControlSchemaProvider {
 

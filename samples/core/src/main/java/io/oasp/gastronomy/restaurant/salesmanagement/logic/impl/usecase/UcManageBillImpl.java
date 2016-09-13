@@ -33,7 +33,6 @@ import org.slf4j.LoggerFactory;
 /**
  * Implementation of {@link UcManageBill}.
  *
- * @author jozitz
  */
 @Named
 @UseCase

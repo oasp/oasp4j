@@ -10,8 +10,6 @@ import java.util.List;
 /**
  * {@link ApplicationDao Data Access Object} for {@link OrderEntity} entity.
  *
- * @author hohwille
- * @author rjoeris
  */
 public interface OrderDao extends ApplicationDao<OrderEntity> {
 

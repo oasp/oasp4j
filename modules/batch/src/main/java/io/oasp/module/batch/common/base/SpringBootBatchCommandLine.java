@@ -50,7 +50,6 @@ import org.springframework.util.StringUtils;
  * io.oasp.gastronomy.restaurant.SpringBootBatchApp
  * classpath:config/app/batch/beans-productimport.xml productImportJob -stop
  *
- * @author Ludger Overbeck
  *
  */
 public class SpringBootBatchCommandLine {

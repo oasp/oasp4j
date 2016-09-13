@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 /**
  * Implementation of {@link UcFindOrderPosition}.
  *
- * @author jozitz
  */
 @Named
 @UseCase

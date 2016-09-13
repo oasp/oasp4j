@@ -54,7 +54,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * makes the login/logout API fully RESTful.
  * </p>
  *
- * @author Marek Matczak
  */
 public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
   private String usernameParameter = UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY;

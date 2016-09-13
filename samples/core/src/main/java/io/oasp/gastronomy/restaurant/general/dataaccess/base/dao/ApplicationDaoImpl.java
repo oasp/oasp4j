@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
  *
  * @param <ENTITY> is the {@link #getEntityClass() type} of the managed entity.
  *
- * @author hohwille
  */
 @Repository
 public abstract class ApplicationDaoImpl<ENTITY extends MutablePersistenceEntity<Long>> extends

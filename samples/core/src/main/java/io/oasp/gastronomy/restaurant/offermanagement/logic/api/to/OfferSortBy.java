@@ -5,7 +5,6 @@ import io.oasp.module.jpa.common.api.to.OrderDirection;
 
 /**
  *
- * @author jozitz
  */
 public class OfferSortBy {
 

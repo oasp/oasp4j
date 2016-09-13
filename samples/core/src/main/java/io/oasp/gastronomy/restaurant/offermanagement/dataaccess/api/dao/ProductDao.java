@@ -13,7 +13,6 @@ import java.util.List;
 /**
  * {@link ApplicationRevisionedDao Data Access Object} for {@link ProductEntity} entity.
  *
- * @author loverbec
  */
 public interface ProductDao extends ApplicationRevisionedDao<ProductEntity>, MasterDataDao<ProductEntity> {
 

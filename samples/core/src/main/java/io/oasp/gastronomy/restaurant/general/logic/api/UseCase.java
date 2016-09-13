@@ -11,7 +11,6 @@ import javax.inject.Qualifier;
  * {@link javax.inject.Named} and {@link UseCase}. In your component facade implementation add the annotations
  * {@link javax.inject.Inject} and {@link UseCase} to the setters in order to inject your use case implementations.
  *
- * @author hohwille
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

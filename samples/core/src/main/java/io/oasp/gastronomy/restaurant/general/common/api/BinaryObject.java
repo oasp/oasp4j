@@ -3,7 +3,6 @@ package io.oasp.gastronomy.restaurant.general.common.api;
 /**
  * This is the interface for a {@link BinaryObject} of the restaurant.
  *
- * @author sspielma
  */
 public interface BinaryObject extends ApplicationEntity {
 

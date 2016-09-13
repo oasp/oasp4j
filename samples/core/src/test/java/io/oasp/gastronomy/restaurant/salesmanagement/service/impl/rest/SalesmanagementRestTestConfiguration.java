@@ -6,7 +6,6 @@ import org.springframework.web.client.RestTemplate;
 /**
  * This configuration class provides a {@link SalesmanagementRestServiceTestHelper} and a {@link RestTemplate} bean
  *
- * @author shuber
  */
 public class SalesmanagementRestTestConfiguration {
 

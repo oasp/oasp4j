@@ -11,7 +11,6 @@ import javax.persistence.Converter;
  * This is the {@link AttributeConverter} to allow that JPA vendors can persist instances of {@link Money} if used in
  * {@link io.oasp.gastronomy.restaurant.general.common.api.ApplicationEntity entities}.
  *
- * @author hohwille
  */
 @Converter(autoApply = true)
 public class MoneyAttributeConverter implements AttributeConverter<Money, BigDecimal> {

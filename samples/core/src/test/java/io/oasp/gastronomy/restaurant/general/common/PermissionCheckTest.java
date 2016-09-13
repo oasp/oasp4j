@@ -19,7 +19,6 @@ import org.junit.Test;
 /**
  * Tests the permission check in logic layer.
  *
- * @author jmetzler
  */
 public class PermissionCheckTest extends ModuleTest {
 

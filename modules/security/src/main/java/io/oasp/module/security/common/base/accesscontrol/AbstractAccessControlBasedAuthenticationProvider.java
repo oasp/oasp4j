@@ -33,7 +33,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * @param <P> is the generic type of the {@link Principal} for internal user representation to bridge with
  *        {@link PrincipalAccessControlProvider}.
  *
- * @author hohwille
  */
 public abstract class AbstractAccessControlBasedAuthenticationProvider<U extends UserDetails, P extends Principal>
     extends AbstractUserDetailsAuthenticationProvider {

@@ -11,7 +11,6 @@ import javax.persistence.Table;
 /**
  * {@link ApplicationPersistenceEntity Entity} for {@link BinaryObject}. Contains the actual {@link Blob}.
  *
- * @author sspielma
  */
 @Entity
 @Table(name = "BinaryObject")

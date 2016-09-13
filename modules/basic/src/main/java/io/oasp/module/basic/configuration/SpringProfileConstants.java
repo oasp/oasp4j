@@ -6,7 +6,6 @@ package io.oasp.module.basic.configuration;
  * within annotations).<br/>
  * In test scenarios, these constants should be used in conjunction with the {@code @ActiveProfile} annotation.
  *
- * @author jmolinar
  * @since 2.1.0
  */
 public class SpringProfileConstants {

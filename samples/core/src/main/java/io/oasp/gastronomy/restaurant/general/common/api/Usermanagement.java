@@ -3,7 +3,6 @@ package io.oasp.gastronomy.restaurant.general.common.api;
 /**
  * Interface to get a user from its login.
  *
- * @author jmetzler
  */
 public interface Usermanagement {
 

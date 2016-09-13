@@ -13,7 +13,6 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
  * Sends the OK status code upon successful logout.
  *
  * @see JsonUsernamePasswordAuthenticationFilter
- * @author Marek Matczak
  */
 public class LogoutSuccessHandlerReturningOkHttpStatusCode implements LogoutSuccessHandler {
   /**

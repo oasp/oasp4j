@@ -13,7 +13,6 @@ import java.util.List;
 /**
  * {@link ApplicationDao Data Access Object} for {@link OfferEntity} entity.
  *
- * @author loverbec
  */
 public interface OfferDao extends ApplicationDao<OfferEntity>, MasterDataDao<OfferEntity> {
 

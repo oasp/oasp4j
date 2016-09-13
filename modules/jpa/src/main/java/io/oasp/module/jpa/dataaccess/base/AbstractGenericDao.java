@@ -34,7 +34,6 @@ import com.mysema.query.types.Expression;
  * @param <ID> is the generic type if the {@link PersistenceEntity#getId() primary key}.
  * @param <E> is the generic type of the managed {@link PersistenceEntity}.
  *
- * @author hohwille
  */
 // @Repository
 public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> implements GenericDao<ID, E> {

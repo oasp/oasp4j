@@ -6,7 +6,6 @@ import java.io.File;
  * This is a simple programm to generate (create or update) the XSD for the
  * {@link io.oasp.module.security.common.api.accesscontrol.AccessControlSchema}.
  *
- * @author hohwille
  */
 public class AccessControlSchemaXsdWriter extends AccessControlSchemaXmlMapper {
 

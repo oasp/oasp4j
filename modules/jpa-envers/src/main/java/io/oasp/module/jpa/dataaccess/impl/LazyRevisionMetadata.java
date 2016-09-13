@@ -12,7 +12,6 @@ import javax.persistence.EntityManager;
 /**
  * This is a lazy implementation of the {@link RevisionMetadata} interface.
  *
- * @author hohwille
  */
 public class LazyRevisionMetadata implements RevisionMetadata {
 

@@ -19,7 +19,6 @@ import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.Product
  * {@link ApplicationPersistenceEntity Entity} that represents a single {@link OrderPosition position} of an
  * {@link OrderEntity}.
  *
- * @author hohwille
  */
 @Entity
 @Table(name = "OrderPosition")

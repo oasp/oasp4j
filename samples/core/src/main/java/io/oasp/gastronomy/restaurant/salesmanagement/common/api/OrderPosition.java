@@ -11,7 +11,6 @@ import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.Product
 /**
  * This is the interface for an {@link OrderPosition}.
  *
- * @author hohwille
  */
 public interface OrderPosition extends ApplicationEntity {
 

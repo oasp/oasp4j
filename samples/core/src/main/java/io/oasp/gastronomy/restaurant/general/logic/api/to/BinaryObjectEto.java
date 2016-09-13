@@ -6,7 +6,6 @@ import io.oasp.module.basic.common.api.to.AbstractEto;
 /**
  * The {@link io.oasp.module.basic.common.api.to.AbstractEto ETO} for a {@link BinaryObject}.
  *
- * @author sspielma
  */
 public class BinaryObjectEto extends AbstractEto implements BinaryObject {
 

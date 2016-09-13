@@ -17,7 +17,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 /**
  * The MappingFactory class to resolve polymorphic conflicts within the restaurant application.
  *
- * @author agreul
  */
 @Named("ApplicationObjectMapperFactory")
 public class ApplicationObjectMapperFactory extends ObjectMapperFactory {

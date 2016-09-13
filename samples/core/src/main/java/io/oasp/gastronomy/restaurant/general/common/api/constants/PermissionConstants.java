@@ -4,7 +4,6 @@ package io.oasp.gastronomy.restaurant.general.common.api.constants;
  * Contains constants for the keys of all
  * {@link io.oasp.module.security.common.api.accesscontrol.AccessControlPermission}s.
  *
- * @author jmetzler
  */
 public abstract class PermissionConstants {
 
