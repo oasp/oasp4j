@@ -45,8 +45,9 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
   private transient Date date;
 
   /** @see #getUser() */
-  /** Remove the following line completely (Column Annotation) in case of database other than MS SQL Server 2008 */
-  @Column(name = "[user]")
+  /** UnComment the following line completely (Column Annotation) in case MS SQL Server 2008 
+	is the database else comment it */
+  //@Column(name = "[user]")
   private String user;
 
   /**
