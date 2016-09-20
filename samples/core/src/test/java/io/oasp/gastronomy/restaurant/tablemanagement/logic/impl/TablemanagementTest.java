@@ -13,7 +13,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.SpringBootTestApp;
 import io.oasp.gastronomy.restaurant.common.builders.OrderEtoBuilder;
 import io.oasp.gastronomy.restaurant.common.builders.OrderPositionEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
@@ -34,7 +34,7 @@ import io.oasp.module.test.common.base.ComponentTest;
  *
  */
 
-@SpringApplicationConfiguration(classes = { SpringBootApp.class })
+@SpringApplicationConfiguration(classes = { SpringBootTestApp.class })
 @WebAppConfiguration
 public class TablemanagementTest extends ComponentTest {
 
