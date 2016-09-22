@@ -3,7 +3,6 @@ package io.oasp.module.logging.common.impl;
 import static org.mockito.Mockito.when;
 
 import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -71,7 +70,7 @@ public class DiagnosticContextFilterTest extends ModuleTest {
   }
 
   @Test
-  public void testInitWithNonDefaultParameter() {
+  public void testInitWithNonDefaultParameter() throws Exception {
 
     // setup
     DiagnosticContextFilter filter = new DiagnosticContextFilter();
@@ -82,11 +81,7 @@ public class DiagnosticContextFilterTest extends ModuleTest {
     when(this.config.getInitParameter(field)).thenReturn(nonDefaultParameter);
 
     // exercise
-    try {
-      filter.init(this.config);
-    } catch (ServletException e) {
-      e.printStackTrace();
-    }
+    filter.init(this.config);
     // verify
     String correlationIdHttpHeaderName =
         (String) ReflectionTestUtils.getField(filter, CORRELATION_ID_HEADER_NAME_PARAM);
