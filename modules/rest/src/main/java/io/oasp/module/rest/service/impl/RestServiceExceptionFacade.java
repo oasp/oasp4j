@@ -108,15 +108,25 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
    */
   protected void registerToplevelSecurityExceptions(String className) {
 
+    Class<? extends Throwable> securityException = loadException(className);
+    if (securityException != null) {
+      registerToplevelSecurityException(securityException);
+    }
+  }
+
+  private Class<? extends Throwable> loadException(String className) {
+
     try {
       @SuppressWarnings("unchecked")
-      Class<? extends Throwable> securityException = (Class<? extends Throwable>) Class.forName(className);
-      registerToplevelSecurityException(securityException);
+      Class<? extends Throwable> exception = (Class<? extends Throwable>) Class.forName(className);
+      return exception;
     } catch (ClassNotFoundException e) {
-      LOG.info(
-          "Spring security was not found on classpath. Spring security exceptions will not be handled as such by {}",
+      LOG.info("Exception {} was not found on classpath and can not be handled by this {}.", className,
           getClass().getSimpleName());
+    } catch (Exception e) {
+      LOG.error("Exception {} is invalid and can not be handled by this {}.", className, getClass().getSimpleName(), e);
     }
+    return null;
   }
 
   @Override
