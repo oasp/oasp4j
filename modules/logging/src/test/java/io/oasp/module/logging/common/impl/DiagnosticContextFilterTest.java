@@ -51,7 +51,7 @@ public class DiagnosticContextFilterTest extends ModuleTest {
   }
 
   @Test
-  public void testInitWithNullInitParameter() {
+  public void testInitWithNullInitParameter() throws Exception {
 
     // setup
     DiagnosticContextFilter filter = new DiagnosticContextFilter();
@@ -61,11 +61,7 @@ public class DiagnosticContextFilterTest extends ModuleTest {
     when(this.config.getInitParameter(field)).thenReturn(null);
 
     // exercise
-    try {
-      filter.init(this.config);
-    } catch (ServletException e) {
-      e.printStackTrace();
-    }
+    filter.init(this.config);
 
     // verify
     String correlationIdHttpHeaderName =
