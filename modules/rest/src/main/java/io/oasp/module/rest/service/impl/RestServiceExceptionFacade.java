@@ -23,9 +23,9 @@ import javax.ws.rs.ext.Provider;
 
 import net.sf.mmm.util.exception.api.NlsRuntimeException;
 import net.sf.mmm.util.exception.api.TechnicalErrorUserException;
+import net.sf.mmm.util.exception.api.ValidationErrorUserException;
 import net.sf.mmm.util.lang.api.StringUtil;
 import net.sf.mmm.util.security.api.SecurityErrorUserException;
-import net.sf.mmm.util.validation.api.ValidationErrorUserException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
