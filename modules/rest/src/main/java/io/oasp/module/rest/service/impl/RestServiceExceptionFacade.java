@@ -201,7 +201,7 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     if (userError.isTechnical()) {
       LOG.error("Service failed on server", userError);
     } else {
-      LOG.warn("Service failed due to business error: {}", exception.getMessage());
+      LOG.warn("Service failed due to business error: {}", userError.getMessage());
     }
     return createResponse(userError);
   }
