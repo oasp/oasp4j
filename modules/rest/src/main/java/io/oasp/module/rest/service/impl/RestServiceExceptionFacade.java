@@ -22,6 +22,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 import net.sf.mmm.util.exception.api.NlsRuntimeException;
+import net.sf.mmm.util.exception.api.NlsThrowable;
 import net.sf.mmm.util.exception.api.TechnicalErrorUserException;
 import net.sf.mmm.util.exception.api.ValidationErrorUserException;
 import net.sf.mmm.util.lang.api.StringUtil;
@@ -132,21 +133,22 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
   @Override
   public Response toResponse(Throwable exception) {
 
+    Throwable catched = exception;
     // business exceptions
     if (exception instanceof WebApplicationException) {
       return createResponse((WebApplicationException) exception);
     } else if (exception instanceof ValidationException) {
-      return handleValidationException(exception);
+      return handleValidationException(exception, catched);
     } else if (exception instanceof ValidationErrorUserException) {
       return createResponse(exception, (ValidationErrorUserException) exception, null);
     } else {
       Class<?> exceptionClass = exception.getClass();
       for (Class<?> securityError : this.securityExceptions) {
         if (securityError.isAssignableFrom(exceptionClass)) {
-          return handleSecurityError(exception);
+          return handleSecurityError(exception, catched);
         }
       }
-      return handleGenericError(exception);
+      return handleGenericError(exception, catched);
     }
   }
 
@@ -173,15 +175,26 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
    * Exception handling for generic exception (fallback).
    *
    * @param exception the exception to handle
+   * @param catched the original exception that was cached. Either same as {@code error} or a (child-)
+   *        {@link Throwable#getCause() cause} of it.
    * @return the response build from the exception
    */
-  protected Response handleGenericError(Throwable exception) {
+  protected Response handleGenericError(Throwable exception, Throwable catched) {
 
-    NlsRuntimeException userError = TechnicalErrorUserException.getOrCreateUserException(exception);
-    if (userError.isTechnical()) {
-      LOG.error("Service failed on server", userError);
+    NlsRuntimeException userError;
+    boolean logged = false;
+    if (exception instanceof NlsThrowable) {
+      NlsThrowable nlsError = (NlsThrowable) exception;
+      if (!nlsError.isTechnical()) {
+        LOG.warn("Service failed due to business error: {}", nlsError.getMessage());
+        logged = true;
+      }
+      userError = TechnicalErrorUserException.getOrCreateUserException(exception);
     } else {
-      LOG.warn("Service failed due to business error: {}", userError.getMessage());
+      userError = TechnicalErrorUserException.getOrCreateUserException(catched);
+    }
+    if (!logged) {
+      LOG.error("Service failed on server", userError);
     }
     return createResponse(userError);
   }
@@ -190,15 +203,17 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
    * Exception handling for security exception.
    *
    * @param exception the exception to handle
+   * @param catched the original exception that was cached. Either same as {@code error} or a (child-)
+   *        {@link Throwable#getCause() cause} of it.
    * @return the response build from exception
    */
-  protected Response handleSecurityError(Throwable exception) {
+  protected Response handleSecurityError(Throwable exception, Throwable catched) {
 
     NlsRuntimeException error;
-    if (exception instanceof NlsRuntimeException) {
+    if ((exception == catched) && (exception instanceof NlsRuntimeException)) {
       error = (NlsRuntimeException) exception;
     } else {
-      error = new SecurityErrorUserException(exception);
+      error = new SecurityErrorUserException(catched);
     }
     LOG.error("Service failed due to security error", error);
     // NOTE: for security reasons we do not send any details about the error to the client!
@@ -216,11 +231,13 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
    * Exception handling for validation exception.
    *
    * @param exception the exception to handle
+   * @param catched the original exception that was cached. Either same as {@code error} or a (child-)
+   *        {@link Throwable#getCause() cause} of it.
    * @return the response build from the exception.
    */
-  protected Response handleValidationException(Throwable exception) {
+  protected Response handleValidationException(Throwable exception, Throwable catched) {
 
-    Throwable t = exception;
+    Throwable t = catched;
     Map<String, List<String>> errorsMap = null;
     if (exception instanceof ConstraintViolationException) {
       ConstraintViolationException constraintViolationException = (ConstraintViolationException) exception;
@@ -247,7 +264,7 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
 
       }
 
-      t = new ValidationException(errorsMap.toString());
+      t = new ValidationException(errorsMap.toString(), catched);
     }
     ValidationErrorUserException error = new ValidationErrorUserException(t);
     return createResponse(t, error, errorsMap);
