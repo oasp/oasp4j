@@ -77,8 +77,8 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
   /**
    * Registers a {@link Class} as a top-level security {@link Throwable exception}. Instances of this class and all its
    * subclasses will be handled as security errors. Therefore an according HTTP error code is used and no further
-   * details about the exception is send to the client to prevent <a
-   * href="https://www.owasp.org/index.php/Top_10_2013-A6-Sensitive_Data_Exposure">sensitive data exposure</a>.
+   * details about the exception is send to the client to prevent
+   * <a href="https://www.owasp.org/index.php/Top_10_2013-A6-Sensitive_Data_Exposure">sensitive data exposure</a>.
    *
    * @param securityException is the {@link Class} reflecting the security error.
    */
@@ -97,7 +97,8 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     this.securityExceptions.add(SecurityErrorUserException.class);
     registerToplevelSecurityExceptions("org.springframework.security.access.AccessDeniedException");
     registerToplevelSecurityExceptions("org.springframework.security.authentication.AuthenticationServiceException");
-    registerToplevelSecurityExceptions("org.springframework.security.authentication.AuthenticationCredentialsNotFoundException");
+    registerToplevelSecurityExceptions(
+        "org.springframework.security.authentication.AuthenticationCredentialsNotFoundException");
     registerToplevelSecurityExceptions("org.springframework.security.authentication.BadCredentialsException");
     registerToplevelSecurityExceptions("org.springframework.security.authentication.AccountExpiredException");
   }
@@ -198,7 +199,7 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
 
     NlsRuntimeException userError = TechnicalErrorUserException.getOrCreateUserException(exception);
     if (userError.isTechnical()) {
-      LOG.error("Service failed on server", exception);
+      LOG.error("Service failed on server", userError);
     } else {
       LOG.warn("Service failed due to business error: {}", exception.getMessage());
     }
@@ -421,9 +422,9 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
   }
 
   /**
-   * @param exposeInternalErrorDetails - {@code true} if internal exception details shall be exposed to clients
-   *        (useful for debugging and testing), {@code false} if such details are hidden to prevent <a
-   *        href="https://www.owasp.org/index.php/Top_10_2013-A6-Sensitive_Data_Exposure">Sensitive Data Exposure</a>
+   * @param exposeInternalErrorDetails - {@code true} if internal exception details shall be exposed to clients (useful
+   *        for debugging and testing), {@code false} if such details are hidden to prevent
+   *        <a href="https://www.owasp.org/index.php/Top_10_2013-A6-Sensitive_Data_Exposure">Sensitive Data Exposure</a>
    *        (default, has to be used in production environment).
    */
   public void setExposeInternalErrorDetails(boolean exposeInternalErrorDetails) {
