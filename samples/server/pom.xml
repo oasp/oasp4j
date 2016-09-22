@@ -53,20 +53,6 @@
                 </configuration>
               </execution>
               <execution>
-                <id>tsd-install</id>
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>exec</goal>
-                </goals>
-                <configuration>
-                  <executable>tsd</executable>
-                  <arguments>
-                    <argument>install</argument>
-                  </arguments>
-                  <workingDirectory>${js.client.dir}</workingDirectory>
-                </configuration>
-              </execution>
-              <execution>
                 <id>gulp-clean</id>
                 <phase>generate-sources</phase>
                 <goals>
