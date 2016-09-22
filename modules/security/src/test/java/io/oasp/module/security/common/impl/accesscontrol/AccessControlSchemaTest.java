@@ -1,12 +1,5 @@
 package io.oasp.module.security.common.impl.accesscontrol;
 
-import io.oasp.module.security.common.api.accesscontrol.AccessControl;
-import io.oasp.module.security.common.api.accesscontrol.AccessControlGroup;
-import io.oasp.module.security.common.api.accesscontrol.AccessControlPermission;
-import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
-import io.oasp.module.security.common.api.accesscontrol.AccessControlSchema;
-import io.oasp.module.test.common.base.ModuleTest;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,9 +10,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sf.mmm.util.collection.base.NodeCycleException;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
+
+import io.oasp.module.security.common.api.accesscontrol.AccessControl;
+import io.oasp.module.security.common.api.accesscontrol.AccessControlGroup;
+import io.oasp.module.security.common.api.accesscontrol.AccessControlPermission;
+import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
+import io.oasp.module.security.common.api.accesscontrol.AccessControlSchema;
+import io.oasp.module.test.common.base.ModuleTest;
 
 /**
  * This is the test-case for {@link AccessControlSchema} and {@link AccessControlSchemaXmlMapper}.
@@ -93,19 +95,26 @@ public class AccessControlSchemaTest extends ModuleTest {
    * Tests that {@link AccessControlProviderImpl} properly detects cyclic inheritance of {@link AccessControlGroup}s.
    */
   @Test
+  public void testProviderValid() {
+
+    createProvider(SCHEMA_XML);
+  }
+
+  /**
+   * Tests that {@link AccessControlProviderImpl} properly detects cyclic inheritance of {@link AccessControlGroup}s.
+   */
+  @Test
   public void testProviderCyclic() {
 
     try {
       createProvider(SCHEMA_XML_CYCLIC);
       fail("Exception expected!");
-    } catch (IllegalStateException e) {
-      assertThat(e.getMessage()).startsWith("Cyclic inheritance ");
+    } catch (NodeCycleException e) {
+      assertThat(e).hasMessageContaining("[Cook-->Chief-->Barkeeper]");
     }
   }
 
-  /**
-   * Tests that {@link AccessControlProviderImpl} with corrupted XML (not well-formed).
-   */
+  /** Tests that {@link AccessControlProviderImpl} with corrupted XML (not well-formed). */
   @Test
   public void testProviderCorrupted() {
 
@@ -120,9 +129,7 @@ public class AccessControlSchemaTest extends ModuleTest {
     }
   }
 
-  /**
-   * Tests that {@link AccessControlProviderImpl} with illegal XML (undefined group reference).
-   */
+  /** Tests that {@link AccessControlProviderImpl} with illegal XML (undefined group reference). */
   @Test
   public void testProviderIllegal() {
 
@@ -163,9 +170,7 @@ public class AccessControlSchemaTest extends ModuleTest {
 
   }
 
-  /**
-   * Tests the correct extraction of group types
-   */
+  /** Tests the correct extraction of group types */
   @Test
   public void testGroupTypes() {
 
@@ -227,19 +232,31 @@ public class AccessControlSchemaTest extends ModuleTest {
     readWrite.getPermissions().add(new AccessControlPermission("Customer_UpdateAddress"));
     readWrite.getPermissions().add(new AccessControlPermission("Contract_UpdateContract"));
     readWrite.getPermissions().add(new AccessControlPermission("Contract_UpdateContractAsset"));
+    AccessControlGroup customerAdmin = new AccessControlGroup("CustomerAdmin");
+    customerAdmin.getInherits().add(readWrite);
+    customerAdmin.getPermissions().add(new AccessControlPermission("Customer_DeleteCustomer"));
+    customerAdmin.getPermissions().add(new AccessControlPermission("Customer_DeleteProfile"));
+    customerAdmin.getPermissions().add(new AccessControlPermission("Customer_DeleteAddress"));
+    AccessControlGroup contractAdmin = new AccessControlGroup("ContractAdmin");
+    contractAdmin.getInherits().add(readWrite);
+    contractAdmin.getPermissions().add(new AccessControlPermission("Contract_DeleteContract"));
+    contractAdmin.getPermissions().add(new AccessControlPermission("Contract_DeleteContractAsset"));
+    AccessControlGroup systemAdmin = new AccessControlGroup("SystemAdmin");
+    systemAdmin.getInherits().add(readWrite);
+    systemAdmin.getPermissions().add(new AccessControlPermission("System_ReadUser"));
+    systemAdmin.getPermissions().add(new AccessControlPermission("System_CreateUser"));
+    systemAdmin.getPermissions().add(new AccessControlPermission("System_UpdateUser"));
+    systemAdmin.getPermissions().add(new AccessControlPermission("System_DeleteUser"));
     AccessControlGroup admin = new AccessControlGroup("Admin");
-    admin.getInherits().add(readWrite);
-    admin.getPermissions().add(new AccessControlPermission("Customer_DeleteCustomer"));
-    admin.getPermissions().add(new AccessControlPermission("Customer_DeleteProfile"));
-    admin.getPermissions().add(new AccessControlPermission("Customer_DeleteAddress"));
-    admin.getPermissions().add(new AccessControlPermission("Contract_DeleteContract"));
-    admin.getPermissions().add(new AccessControlPermission("Contract_DeleteContractAsset"));
-    admin.getPermissions().add(new AccessControlPermission("System_ReadUser"));
-    admin.getPermissions().add(new AccessControlPermission("System_CreateUser"));
-    admin.getPermissions().add(new AccessControlPermission("System_UpdateUser"));
-    admin.getPermissions().add(new AccessControlPermission("System_DeleteUser"));
+    admin.getInherits().add(customerAdmin);
+    admin.getInherits().add(contractAdmin);
+    admin.getInherits().add(systemAdmin);
+    admin.getPermissions();
     conf.getGroups().add(readOnly);
     conf.getGroups().add(readWrite);
+    conf.getGroups().add(customerAdmin);
+    conf.getGroups().add(contractAdmin);
+    conf.getGroups().add(systemAdmin);
     conf.getGroups().add(admin);
     return conf;
   }

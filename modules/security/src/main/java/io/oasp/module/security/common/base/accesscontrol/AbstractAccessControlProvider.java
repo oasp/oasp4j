@@ -1,19 +1,22 @@
 package io.oasp.module.security.common.base.accesscontrol;
 
-import io.oasp.module.security.common.api.accesscontrol.AccessControl;
-import io.oasp.module.security.common.api.accesscontrol.AccessControlGroup;
-import io.oasp.module.security.common.api.accesscontrol.AccessControlPermission;
-import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
-import io.oasp.module.security.common.api.accesscontrol.AccessControlSchema;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.sf.mmm.util.collection.base.NodeCycle;
+import net.sf.mmm.util.collection.base.NodeCycleException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import io.oasp.module.security.common.api.accesscontrol.AccessControl;
+import io.oasp.module.security.common.api.accesscontrol.AccessControlGroup;
+import io.oasp.module.security.common.api.accesscontrol.AccessControlPermission;
+import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
+import io.oasp.module.security.common.api.accesscontrol.AccessControlSchema;
 
 /**
  * This is the abstract base implementation of {@link AccessControlProvider}.<br/>
@@ -53,7 +56,8 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
     Set<AccessControlGroup> toplevelGroups = new HashSet<>(groups);
     for (AccessControlGroup group : groups) {
       collectAccessControls(group, toplevelGroups);
-      checkForCyclicDependencies(group, new HashSet<AccessControlGroup>());
+      NodeCycle<AccessControlGroup> nodeCycle = new NodeCycle<>(group);
+      checkForCyclicDependencies(group, nodeCycle);
     }
   }
 
@@ -62,17 +66,19 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
    * graph}.
    *
    * @param group is the {@link AccessControlGroup} to check.
-   * @param visitedGroups is where the {@link AccessControlGroup} are collected to detect cycles.
+   * @param nodeCycle the {@link NodeCycle} used to detect cycles.
    */
-  protected void checkForCyclicDependencies(AccessControlGroup group, Set<AccessControlGroup> visitedGroups) {
+  protected void checkForCyclicDependencies(AccessControlGroup group, NodeCycle<AccessControlGroup> nodeCycle) {
 
-    boolean added = visitedGroups.add(group);
-    if (!added) {
-      // mmm NodeCycleException would be very helpful here...
-      throw new IllegalStateException("Cyclic inheritance of access control groups detected for " + group);
-    }
     for (AccessControlGroup inheritedGroup : group.getInherits()) {
-      checkForCyclicDependencies(inheritedGroup, visitedGroups);
+      List<AccessControlGroup> inverseCycle = nodeCycle.getInverseCycle();
+      if (inverseCycle.contains(inheritedGroup)) {
+        throw new NodeCycleException(nodeCycle);
+      }
+      inverseCycle.add(inheritedGroup);
+      checkForCyclicDependencies(inheritedGroup, nodeCycle);
+      AccessControlGroup removed = inverseCycle.remove(inverseCycle.size() - 1);
+      assert (removed == inheritedGroup);
     }
   }
 
@@ -85,16 +91,15 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
    */
   protected void collectAccessControls(AccessControlGroup group, Set<AccessControlGroup> toplevelGroups) {
 
-    // TODO hohwille Java HashMap buggy???
-    // if (!toplevelGroups.contains(group)) {
-    // throw new IllegalStateException("Invalid group not declared as top-level group in schema: " + group);
-    // }
+    if (!toplevelGroups.contains(group)) {
+      throw new IllegalStateException("Invalid group not declared as top-level group in schema: " + group);
+    }
     AccessControl old = this.id2nodeMap.put(group.getId(), group);
     if (old != null) {
       LOG.debug("Already visited access control group {}", group);
       if (old != group) {
-        throw new IllegalStateException("Invalid security configuration: duplicate groups with id " + group.getId()
-            + "!");
+        throw new IllegalStateException(
+            "Invalid security configuration: duplicate groups with id " + group.getId() + "!");
       }
       // group has already been visited, stop recursion...
       return;

@@ -26,7 +26,7 @@
       <permission id="Contract_UpdateContractAsset"/>
     </permissions>
   </group>
-  <group id="Admin">
+  <group id="CustomerAdmin">
     <inherits>
       <group-ref>ReadWrite</group-ref>
     </inherits>
@@ -34,12 +34,34 @@
       <permission id="Customer_DeleteCustomer"/>
       <permission id="Customer_DeleteProfile"/>
       <permission id="Customer_DeleteAddress"/>
+    </permissions>
+  </group>
+  <group id="ContractAdmin">
+    <inherits>
+      <group-ref>ReadWrite</group-ref>
+    </inherits>
+    <permissions>
       <permission id="Contract_DeleteContract"/>
       <permission id="Contract_DeleteContractAsset"/>
+    </permissions>
+  </group>
+  <group id="SystemAdmin">
+    <inherits>
+      <group-ref>ReadWrite</group-ref>
+    </inherits>
+    <permissions>
       <permission id="System_ReadUser"/>
       <permission id="System_CreateUser"/>
       <permission id="System_UpdateUser"/>
       <permission id="System_DeleteUser"/>
     </permissions>
+  </group>
+  <group id="Admin">
+    <inherits>
+      <group-ref>CustomerAdmin</group-ref>
+      <group-ref>ContractAdmin</group-ref>
+      <group-ref>SystemAdmin</group-ref>
+    </inherits>
+    <permissions/>
   </group>
 </access-control-schema>

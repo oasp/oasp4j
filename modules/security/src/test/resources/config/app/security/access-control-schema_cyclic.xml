@@ -18,7 +18,6 @@
   <group id="Chief">
     <inherits>
       <group-ref>Waiter</group-ref>
-      <group-ref>Barkeeper</group-ref>
       <group-ref>Cook</group-ref>
     </inherits>
     <permissions>
