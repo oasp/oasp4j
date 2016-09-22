@@ -61,6 +61,10 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
 
   private final List<Class<? extends Throwable>> securityExceptions;
 
+  private final Class<? extends Throwable> transactionSystemException;
+
+  private final Class<? extends Throwable> rollbackException;
+
   private ObjectMapper mapper;
 
   private boolean exposeInternalErrorDetails;
@@ -73,6 +77,8 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     super();
     this.securityExceptions = new ArrayList<>();
     registerToplevelSecurityExceptions();
+    this.transactionSystemException = loadException("org.springframework.transaction.TransactionSystemException");
+    this.rollbackException = loadException("javax.persistence.RollbackException");
   }
 
   /**
@@ -133,11 +139,70 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
   @Override
   public Response toResponse(Throwable exception) {
 
-    Throwable catched = exception;
-    // business exceptions
     if (exception instanceof WebApplicationException) {
       return createResponse((WebApplicationException) exception);
-    } else if (exception instanceof ValidationException) {
+    } else if (exception instanceof NlsRuntimeException) {
+      return toResponse(exception, exception);
+    } else {
+      Throwable error = exception;
+      Throwable catched = exception;
+      error = getRollbackCause(exception);
+      if (error == null) {
+        error = unwrapNlsUserError(exception);
+      }
+      if (error == null) {
+        error = exception;
+      }
+      return toResponse(error, catched);
+    }
+  }
+
+  /**
+   * Unwraps potential NLS user error from a wrapper exception such as {@code JsonMappingException} or
+   * {@code PersistenceException}.
+   *
+   * @param exception the exception to unwrap.
+   * @return the unwrapped {@link NlsRuntimeException} exception or {@code null} if no
+   *         {@link NlsRuntimeException#isForUser() use error}.
+   */
+  private NlsRuntimeException unwrapNlsUserError(Throwable exception) {
+
+    Throwable cause = exception.getCause();
+    if (cause instanceof NlsRuntimeException) {
+      NlsRuntimeException nlsError = (NlsRuntimeException) cause;
+      if (nlsError.isForUser()) {
+        return nlsError;
+      }
+    }
+    return null;
+  }
+
+  private Throwable getRollbackCause(Throwable exception) {
+
+    Class<?> exceptionClass = exception.getClass();
+    if (exceptionClass == this.transactionSystemException) {
+      Throwable cause = exception.getCause();
+      if (cause != null) {
+        exceptionClass = cause.getClass();
+        if (exceptionClass == this.rollbackException) {
+          return cause.getCause();
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @see #toResponse(Throwable)
+   *
+   * @param exception the exception to handle
+   * @param catched the original exception that was cached. Either same as {@code error} or a (child-)
+   *        {@link Throwable#getCause() cause} of it.
+   * @return the response build from the exception.
+   */
+  protected Response toResponse(Throwable exception, Throwable catched) {
+
+    if (exception instanceof ValidationException) {
       return handleValidationException(exception, catched);
     } else if (exception instanceof ValidationErrorUserException) {
       return createResponse(exception, (ValidationErrorUserException) exception, null);
