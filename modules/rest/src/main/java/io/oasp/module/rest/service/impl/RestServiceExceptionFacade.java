@@ -126,37 +126,7 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     if (exception instanceof WebApplicationException) {
       return createResponse((WebApplicationException) exception);
     } else if (exception instanceof ValidationException) {
-      Throwable t = exception;
-      Map<String, List<String>> errorsMap = null;
-      if (exception instanceof ConstraintViolationException) {
-        ConstraintViolationException constraintViolationException = (ConstraintViolationException) exception;
-        Set<ConstraintViolation<?>> violations = constraintViolationException.getConstraintViolations();
-        errorsMap = new HashMap<>();
-
-        for (ConstraintViolation<?> violation : violations) {
-          Iterator<Node> it = violation.getPropertyPath().iterator();
-          String fieldName = null;
-
-          // Getting fieldname from the exception
-          while (it.hasNext()) {
-            fieldName = it.next().toString();
-          }
-
-          List<String> errorsList = errorsMap.get(fieldName);
-
-          if (errorsList == null) {
-            errorsList = new ArrayList<>();
-            errorsMap.put(fieldName, errorsList);
-          }
-
-          errorsList.add(violation.getMessage());
-
-        }
-
-        t = new ValidationException(errorsMap.toString());
-      }
-      ValidationErrorUserException error = new ValidationErrorUserException(t);
-      return createResponse(t, error, errorsMap);
+      return handleValidationException(exception);
     } else if (exception instanceof ValidationErrorUserException) {
       return createResponse(exception, (ValidationErrorUserException) exception, null);
     } else {
@@ -190,10 +160,10 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
   }
 
   /**
-   * Exception handling depending on technical Exception or not.
+   * Exception handling for generic exception (fallback).
    *
-   * @param exception the exception thrown
-   * @return the response build from error status
+   * @param exception the exception to handle
+   * @return the response build from the exception
    */
   protected Response handleGenericError(Throwable exception) {
 
@@ -207,14 +177,13 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
   }
 
   /**
-   * Exception handling for security exceptions.
+   * Exception handling for security exception.
    *
-   * @param exception the exception thrown
-   * @return the response build from error status
+   * @param exception the exception to handle
+   * @return the response build from exception
    */
   protected Response handleSecurityError(Throwable exception) {
 
-    // *** security error ***
     NlsRuntimeException error;
     if (exception instanceof NlsRuntimeException) {
       error = (NlsRuntimeException) exception;
@@ -222,8 +191,7 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
       error = new SecurityErrorUserException(exception);
     }
     LOG.error("Service failed due to security error", error);
-    // NOTE: for security reasons we do not send any details about the error
-    // to the client!
+    // NOTE: for security reasons we do not send any details about the error to the client!
     String message;
     String code = null;
     if (this.exposeInternalErrorDetails) {
@@ -232,6 +200,47 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
       message = "forbidden";
     }
     return createResponse(Status.FORBIDDEN, message, code, error.getUuid(), null);
+  }
+
+  /**
+   * Exception handling for validation exception.
+   *
+   * @param exception the exception to handle
+   * @return the response build from the exception.
+   */
+  protected Response handleValidationException(Throwable exception) {
+
+    Throwable t = exception;
+    Map<String, List<String>> errorsMap = null;
+    if (exception instanceof ConstraintViolationException) {
+      ConstraintViolationException constraintViolationException = (ConstraintViolationException) exception;
+      Set<ConstraintViolation<?>> violations = constraintViolationException.getConstraintViolations();
+      errorsMap = new HashMap<>();
+
+      for (ConstraintViolation<?> violation : violations) {
+        Iterator<Node> it = violation.getPropertyPath().iterator();
+        String fieldName = null;
+
+        // Getting fieldname from the exception
+        while (it.hasNext()) {
+          fieldName = it.next().toString();
+        }
+
+        List<String> errorsList = errorsMap.get(fieldName);
+
+        if (errorsList == null) {
+          errorsList = new ArrayList<>();
+          errorsMap.put(fieldName, errorsList);
+        }
+
+        errorsList.add(violation.getMessage());
+
+      }
+
+      t = new ValidationException(errorsMap.toString());
+    }
+    ValidationErrorUserException error = new ValidationErrorUserException(t);
+    return createResponse(t, error, errorsMap);
   }
 
   /**
