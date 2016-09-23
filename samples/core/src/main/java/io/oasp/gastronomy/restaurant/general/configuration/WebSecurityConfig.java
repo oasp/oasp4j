@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import io.oasp.module.basic.configuration.SpringProfileConstants;
+import io.oasp.module.basic.common.api.config.SpringProfileConstants;
 
 /**
  * Security configuration based on {@link WebSecurityConfigurerAdapter}. This configuration is by purpose designed most

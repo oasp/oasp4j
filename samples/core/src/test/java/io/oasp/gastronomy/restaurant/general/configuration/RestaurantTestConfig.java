@@ -9,7 +9,7 @@ import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
 import io.oasp.gastronomy.restaurant.general.common.RestTestClientBuilder;
 import io.oasp.gastronomy.restaurant.general.common.SecurityTestHelper;
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractRestServiceTest;
-import io.oasp.module.basic.configuration.SpringProfileConstants;
+import io.oasp.module.basic.common.api.config.SpringProfileConstants;
 
 /**
  * This configuration class provides {@code @Bean} annotated methods. It is applied to a test class by using the

@@ -11,7 +11,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import io.oasp.module.basic.configuration.SpringProfileConstants;
+import io.oasp.module.basic.common.api.config.SpringProfileConstants;
 
 /**
  * This type provides web security configuration for testing purposes.
