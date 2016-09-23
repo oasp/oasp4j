@@ -66,7 +66,7 @@ public final class OaspPackage {
 
   private final String[] segments;
 
-  private final int scope;
+  private final int scopeIndex;
 
   private Boolean valid;
 
@@ -94,7 +94,7 @@ public final class OaspPackage {
     this.root = root;
     this.detail = detail;
     this.segments = segments;
-    this.scope = scope;
+    this.scopeIndex = scope;
   }
 
   private static boolean isValidSegment(String segment) {
@@ -150,13 +150,32 @@ public final class OaspPackage {
     if (this.segments.length < 4) {
       return false;
     }
-    if (!LAYERS.contains(getLayer())) {
+    if (!isValidLayer()) {
       return false;
     }
-    if (!SCOPES.contains(getScope())) {
+    if (!isValidScope()) {
       return false;
     }
     return true;
+  }
+
+  /**
+   * @return {@code true} if the {@link #getScope() scope} is valid (one of the predefined scopes {@link #isScopeApi()
+   *         api}, {@link #isScopeBase() base}, or {@link #isScopeImpl() impl}).
+   */
+  public boolean isValidScope() {
+
+    return SCOPES.contains(getScope());
+  }
+
+  /**
+   * @return {@code true} if the {@link #getLayer() layer} is valid (one of the predefined scopes {@link #isLayerBatch()
+   *         batch}, {@link #isLayerClient() client}, {@link #isLayerCommon() common}, {@link #isLayerDataAccess()
+   *         dataaccess}, {@link #isLayerLogic() logic}, or {@link #isLayerService() service}).
+   */
+  public boolean isValidLayer() {
+
+    return LAYERS.contains(getLayer());
   }
 
   /**
@@ -165,10 +184,10 @@ public final class OaspPackage {
   public String getRoot() {
 
     if (this.root == null) {
-      if (this.scope == 0) {
+      if (this.scopeIndex == -1) {
         return this.pkg;
       }
-      int appIndex = this.scope - 3;
+      int appIndex = this.scopeIndex - 3;
       if (appIndex <= 0) {
         return null;
       }
@@ -189,7 +208,7 @@ public final class OaspPackage {
    */
   public String getApplication() {
 
-    return getSegment(this.scope - 3);
+    return getSegment(this.scopeIndex - 3);
   }
 
   /**
@@ -197,7 +216,7 @@ public final class OaspPackage {
    */
   public String getComponent() {
 
-    return getSegment(this.scope - 2);
+    return getSegment(this.scopeIndex - 2);
   }
 
   /**
@@ -205,7 +224,7 @@ public final class OaspPackage {
    */
   public String getLayer() {
 
-    return getSegment(this.scope - 1);
+    return getSegment(this.scopeIndex - 1);
   }
 
   /**
@@ -261,7 +280,7 @@ public final class OaspPackage {
    */
   public String getScope() {
 
-    return getSegment(this.scope);
+    return getSegment(this.scopeIndex);
   }
 
   /**
@@ -294,10 +313,10 @@ public final class OaspPackage {
   public String getDetail() {
 
     if (this.detail == null) {
-      if (this.scope < 3) {
+      if (this.scopeIndex < 3) {
         return null;
       }
-      this.detail = joinPackage(this.scope + 1);
+      this.detail = joinPackage(this.scopeIndex + 1);
     }
     return this.detail;
   }
@@ -305,7 +324,7 @@ public final class OaspPackage {
   @Override
   public int hashCode() {
 
-    return Objects.hash(this.segments, this.scope);
+    return Objects.hash(this.segments, this.scopeIndex);
   }
 
   @Override
@@ -321,7 +340,7 @@ public final class OaspPackage {
     if (!Arrays.deepEquals(this.segments, other.segments)) {
       return false;
     }
-    if (this.scope != other.scope) {
+    if (this.scopeIndex != other.scopeIndex) {
       return false;
     }
     return true;
@@ -398,7 +417,7 @@ public final class OaspPackage {
   public static OaspPackage of(String packageName) {
 
     String[] segments = packageName.split(REGEX_PKG_SEPARATOR);
-    int scopeIndex = 0;
+    int scopeIndex = -1;
     for (int i = 2; i < segments.length; i++) {
       if (SCOPES.contains(segments[i])) {
         scopeIndex = i;

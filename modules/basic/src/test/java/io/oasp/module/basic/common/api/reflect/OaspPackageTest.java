@@ -145,9 +145,10 @@ public class OaspPackageTest extends ModuleTest {
   /**
    * Test of {@link OaspPackage#of(String)} with an invalid package.
    */
+  @Test
   public void testOfStringInvalid() {
 
-    String packageName = "java.lang.reflect";
+    String packageName = "java.nio.channels.spi";
     OaspPackage pkg = OaspPackage.of(packageName);
     assertThat(pkg.getRoot()).isEqualTo(packageName);
     assertThat(pkg.getApplication()).isNull();
