@@ -42,7 +42,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
-import io.oasp.gastronomy.restaurant.common.builders.OrderPositionEtoBuilder;
+import io.oasp.gastronomy.restaurant.general.common.api.builders.OrderPositionEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractRestServiceTest;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;

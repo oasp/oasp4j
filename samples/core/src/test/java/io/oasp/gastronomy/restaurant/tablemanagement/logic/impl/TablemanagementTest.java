@@ -14,10 +14,10 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
-import io.oasp.gastronomy.restaurant.common.builders.OrderEtoBuilder;
-import io.oasp.gastronomy.restaurant.common.builders.OrderPositionEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
 import io.oasp.gastronomy.restaurant.general.common.TestUtil;
+import io.oasp.gastronomy.restaurant.general.common.api.builders.OrderEtoBuilder;
+import io.oasp.gastronomy.restaurant.general.common.api.builders.OrderPositionEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
