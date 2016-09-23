@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.salesmanagement.websocket;
+package io.oasp.gastronomy.restaurant.salesmanagement.service.api.websocket;
 
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 

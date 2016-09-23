@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.salesmanagement.websocket.config;
+package io.oasp.gastronomy.restaurant.salesmanagement.service.impl.websocket.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
