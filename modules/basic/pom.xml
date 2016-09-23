@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>io.oasp.java.dev</groupId>
@@ -11,12 +12,17 @@
   <version>${oasp4j.version}</version>
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
-  <description>mmm-util-core based infrastructure for entities of the Open Application Standard Platform for Java (OASP4J).</description>
+  <description>Basic code for common usage (such as base classes for transfer objects) of the Open Application Standard Platform for Java (OASP4J).</description>
 
   <dependencies>
     <dependency>
       <groupId>net.sf.m-m-m</groupId>
       <artifactId>mmm-util-entity</artifactId>
-      </dependency>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>oasp4j-test</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>
