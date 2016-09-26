@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.general.configuration;
+package io.oasp.gastronomy.restaurant.general.service.impl.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -10,7 +10,7 @@ import io.oasp.module.basic.common.api.config.SpringProfileConstants;
 /**
  * Security configuration based on {@link WebSecurityConfigurerAdapter}. This configuration is by purpose designed most
  * simple for two channels of authentication: simple login form and rest-url. (Copied from
- * {@link io.oasp.gastronomy.restaurant.general.configuration.BaseWebSecurityConfig}
+ * {@link io.oasp.gastronomy.restaurant.general.service.impl.config.BaseWebSecurityConfig}
  *
  */
 @Configuration

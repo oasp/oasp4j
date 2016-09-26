@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.general.configuration;
+package io.oasp.gastronomy.restaurant.general.logic.impl.config;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -9,8 +9,9 @@ import org.springframework.security.web.access.expression.DefaultWebSecurityExpr
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 
 /**
- * TODO hohwille This type ...
- *
+ * This is an implementation of {@link BeanPostProcessor} that allows to change the role prefix of spring-security. By
+ * default spring-security is magically adding a strange prefix called "ROLE_" to your granted authorities. In order to
+ * prevent this we use this class with an empty prefix.
  */
 public class DefaultRolesPrefixPostProcessor implements BeanPostProcessor, PriorityOrdered {
 

@@ -1,10 +1,11 @@
-package io.oasp.gastronomy.restaurant.general.configuration;
+package io.oasp.gastronomy.restaurant.general.service.impl.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
+import io.oasp.gastronomy.restaurant.general.logic.impl.config.DefaultRolesPrefixPostProcessor;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
 import io.oasp.module.security.common.base.accesscontrol.AccessControlSchemaProvider;
 import io.oasp.module.security.common.impl.accesscontrol.AccessControlProviderImpl;

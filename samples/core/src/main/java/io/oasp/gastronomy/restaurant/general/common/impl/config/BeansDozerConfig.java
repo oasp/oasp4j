@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.general.configuration;
+package io.oasp.gastronomy.restaurant.general.common.impl.config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +15,13 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan(basePackages = { "io.oasp.module.beanmapping" })
-public class BeansDozerConfiguration {
+public class BeansDozerConfig {
 
   private static final String DOZER_MAPPING_XML = "config/app/common/dozer-mapping.xml";
 
+  /**
+   * @return the {@link DozerBeanMapper}.
+   */
   @Bean
   public Mapper getDozer() {
 

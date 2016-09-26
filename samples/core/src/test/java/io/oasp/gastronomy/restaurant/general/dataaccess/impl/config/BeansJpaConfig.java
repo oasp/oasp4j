@@ -1,27 +1,27 @@
-package io.oasp.gastronomy.restaurant.general.configuration;
-
-import io.oasp.gastronomy.restaurant.general.dataaccess.base.DatabaseMigrator;
+package io.oasp.gastronomy.restaurant.general.dataaccess.impl.config;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import io.oasp.gastronomy.restaurant.general.dataaccess.base.DatabaseMigrator;
+
 /**
  * Java configuration for JPA
- *
  */
 @Configuration
-// @EnableTransactionManagement
-public class BeansJpaConfiguration {
+public class BeansJpaConfig {
 
-  private @Autowired EntityManagerFactory entityManagerFactory;
+  @Inject
+  private EntityManagerFactory entityManagerFactory;
 
-  private @Autowired DataSource appDataSource;
+  @Inject
+  private DataSource appDataSource;
 
   @Value("${database.migration.auto}")
   private Boolean enabled;
@@ -50,18 +50,4 @@ public class BeansJpaConfiguration {
     getFlyway().migrate();
   }
 
-  // @Bean
-  // public PersistenceExceptionTranslationPostProcessor getPersistenceExceptionTranslationPostProcessor() {
-  //
-  // return new PersistenceExceptionTranslationPostProcessor();
-  // }
-  //
-  // @Bean
-  // public SharedEntityManagerBean getEntityManagerFactoryBean() {
-  //
-  // SharedEntityManagerBean bean = new SharedEntityManagerBean();
-  // bean.setEntityManagerFactory(this.entityManagerFactory);
-  // return bean;
-  // }
-  //
 }

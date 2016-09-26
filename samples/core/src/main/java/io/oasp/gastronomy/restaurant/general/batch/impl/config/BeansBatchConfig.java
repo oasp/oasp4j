@@ -1,10 +1,4 @@
-package io.oasp.gastronomy.restaurant.general.configuration;
-
-/**
- * This class contains the configuration like jobLauncher,Jobrepository etc.
- */
-
-import io.oasp.module.batch.common.impl.JobLauncherWithAdditionalRestartCapabilities;
+package io.oasp.gastronomy.restaurant.general.batch.impl.config;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
@@ -23,44 +17,29 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.transaction.PlatformTransactionManager;
 
 /**
+ * This class contains the configuration like jobLauncher,Jobrepository etc.
+ */
+
+import io.oasp.module.batch.common.impl.JobLauncherWithAdditionalRestartCapabilities;
+
+/**
  * This class contains configuration of batch beans.
  */
 @Configuration
 public class BeansBatchConfig {
 
-  /**
-   * JobRepository configuration
-   */
   private JobRepositoryFactoryBean jobRepository;
 
-  /**
-   * JobRegistry configuration
-   */
   private MapJobRegistry jobRegistry;
 
-  /**
-   * JobLauncher configuration
-   */
   private JobLauncherWithAdditionalRestartCapabilities jobLauncher;
 
-  /**
-   * JobExplorer configuration
-   */
   private JobExplorerFactoryBean jobExplorer;
 
-  /**
-   * Datasource configuartion
-   */
   private DataSource dataSource;
 
-  /**
-   * Transaction manager configuration
-   */
   private PlatformTransactionManager transactionManager;
 
-  /**
-   * Isolation level configuration
-   */
   @Value("ISOLATION_DEFAULT")
   private String isolationLevelForCreate;
 

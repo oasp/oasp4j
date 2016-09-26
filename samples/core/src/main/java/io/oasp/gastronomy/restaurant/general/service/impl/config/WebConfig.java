@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.general.configuration;
+package io.oasp.gastronomy.restaurant.general.service.impl.config;
 
 import io.oasp.module.logging.common.api.DiagnosticContextFacade;
 import io.oasp.module.logging.common.impl.DiagnosticContextFacadeImpl;

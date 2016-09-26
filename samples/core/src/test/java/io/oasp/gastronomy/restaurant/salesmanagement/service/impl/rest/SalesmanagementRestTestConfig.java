@@ -1,13 +1,14 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 /**
  * This configuration class provides a {@link SalesmanagementRestServiceTestHelper} and a {@link RestTemplate} bean
- *
  */
-public class SalesmanagementRestTestConfiguration {
+@Configuration
+public class SalesmanagementRestTestConfig {
 
   /**
    * This method is creating {@link SalesmanagementRestServiceTestHelper} bean

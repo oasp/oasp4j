@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.general.configuration;
+package io.oasp.gastronomy.restaurant.general.service.impl.config;
 
 import org.flywaydb.core.Flyway;
 import org.springframework.context.annotation.Bean;

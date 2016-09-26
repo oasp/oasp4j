@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.general.configuration;
+package io.oasp.gastronomy.restaurant.general.service.impl.config;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,23 +32,29 @@ import io.oasp.gastronomy.restaurant.tablemanagement.service.impl.ws.v1_0.Tablem
 import io.oasp.module.rest.service.impl.RestServiceExceptionFacade;
 import io.oasp.module.rest.service.impl.json.ObjectMapperFactory;
 
+/**
+ * {@link Configuration} for (REST or SOAP) services using CXF.
+ */
 @Configuration
 @EnableWs
-@ImportResource({ "classpath:META-INF/cxf/cxf.xml" /* , "classpath:META-INF/cxf/cxf-servlet.xml" */ })
-public class ServiceConfiguration extends WsConfigurerAdapter {
+@ImportResource({ "classpath:META-INF/cxf/cxf.xml" })
+public class ServiceConfig extends WsConfigurerAdapter {
 
   /** Logger instance. */
-  private static final Logger LOG = LoggerFactory.getLogger(ServiceConfiguration.class);
+  private static final Logger LOG = LoggerFactory.getLogger(ServiceConfig.class);
 
-  public static final String URL_PATH_SERVICES = "/services";
+  /** The services "folder" of an URL. */
+  public static final String URL_FOLDER_SERVICES = "services";
 
-  public static final String URL_FOLDER_REST = "/rest";
+  public static final String URL_PATH_SERVICES = "/" + URL_FOLDER_SERVICES;
 
-  public static final String URL_FOLDER_WEB_SERVICES = "/ws";
+  public static final String URL_FOLDER_REST = "rest";
 
-  public static final String URL_PATH_REST_SERVICES = URL_PATH_SERVICES + URL_FOLDER_REST;
+  public static final String URL_FOLDER_WEB_SERVICES = "ws";
 
-  public static final String URL_PATH_WEB_SERVICES = URL_PATH_SERVICES + URL_FOLDER_WEB_SERVICES;
+  public static final String URL_PATH_REST_SERVICES = URL_PATH_SERVICES + "/" + URL_FOLDER_REST;
+
+  public static final String URL_PATH_WEB_SERVICES = URL_PATH_SERVICES + "/" + URL_FOLDER_WEB_SERVICES;
 
   @Value("${security.expose.error.details}")
   boolean exposeInternalErrorDetails;
