@@ -22,10 +22,11 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 import net.sf.mmm.util.exception.api.NlsRuntimeException;
+import net.sf.mmm.util.exception.api.NlsThrowable;
 import net.sf.mmm.util.exception.api.TechnicalErrorUserException;
+import net.sf.mmm.util.exception.api.ValidationErrorUserException;
 import net.sf.mmm.util.lang.api.StringUtil;
 import net.sf.mmm.util.security.api.SecurityErrorUserException;
-import net.sf.mmm.util.validation.api.ValidationErrorUserException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,6 +61,10 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
 
   private final List<Class<? extends Throwable>> securityExceptions;
 
+  private final Class<? extends Throwable> transactionSystemException;
+
+  private final Class<? extends Throwable> rollbackException;
+
   private ObjectMapper mapper;
 
   private boolean exposeInternalErrorDetails;
@@ -72,13 +77,15 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     super();
     this.securityExceptions = new ArrayList<>();
     registerToplevelSecurityExceptions();
+    this.transactionSystemException = loadException("org.springframework.transaction.TransactionSystemException");
+    this.rollbackException = loadException("javax.persistence.RollbackException");
   }
 
   /**
    * Registers a {@link Class} as a top-level security {@link Throwable exception}. Instances of this class and all its
    * subclasses will be handled as security errors. Therefore an according HTTP error code is used and no further
-   * details about the exception is send to the client to prevent <a
-   * href="https://www.owasp.org/index.php/Top_10_2013-A6-Sensitive_Data_Exposure">sensitive data exposure</a>.
+   * details about the exception is send to the client to prevent
+   * <a href="https://www.owasp.org/index.php/Top_10_2013-A6-Sensitive_Data_Exposure">sensitive data exposure</a>.
    *
    * @param securityException is the {@link Class} reflecting the security error.
    */
@@ -97,7 +104,8 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
     this.securityExceptions.add(SecurityErrorUserException.class);
     registerToplevelSecurityExceptions("org.springframework.security.access.AccessDeniedException");
     registerToplevelSecurityExceptions("org.springframework.security.authentication.AuthenticationServiceException");
-    registerToplevelSecurityExceptions("org.springframework.security.authentication.AuthenticationCredentialsNotFoundException");
+    registerToplevelSecurityExceptions(
+        "org.springframework.security.authentication.AuthenticationCredentialsNotFoundException");
     registerToplevelSecurityExceptions("org.springframework.security.authentication.BadCredentialsException");
     registerToplevelSecurityExceptions("org.springframework.security.authentication.AccountExpiredException");
   }
@@ -107,65 +115,105 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
    */
   protected void registerToplevelSecurityExceptions(String className) {
 
+    Class<? extends Throwable> securityException = loadException(className);
+    if (securityException != null) {
+      registerToplevelSecurityException(securityException);
+    }
+  }
+
+  private Class<? extends Throwable> loadException(String className) {
+
     try {
       @SuppressWarnings("unchecked")
-      Class<? extends Throwable> securityException = (Class<? extends Throwable>) Class.forName(className);
-      registerToplevelSecurityException(securityException);
+      Class<? extends Throwable> exception = (Class<? extends Throwable>) Class.forName(className);
+      return exception;
     } catch (ClassNotFoundException e) {
-      LOG.info(
-          "Spring security was not found on classpath. Spring security exceptions will not be handled as such by {}",
+      LOG.info("Exception {} was not found on classpath and can not be handled by this {}.", className,
           getClass().getSimpleName());
+    } catch (Exception e) {
+      LOG.error("Exception {} is invalid and can not be handled by this {}.", className, getClass().getSimpleName(), e);
     }
+    return null;
   }
 
   @Override
   public Response toResponse(Throwable exception) {
 
-    // business exceptions
     if (exception instanceof WebApplicationException) {
       return createResponse((WebApplicationException) exception);
-    } else if (exception instanceof ValidationException) {
-      Throwable t = exception;
-      Map<String, List<String>> errorsMap = null;
-      if (exception instanceof ConstraintViolationException) {
-        ConstraintViolationException constraintViolationException = (ConstraintViolationException) exception;
-        Set<ConstraintViolation<?>> violations = constraintViolationException.getConstraintViolations();
-        errorsMap = new HashMap<>();
-
-        for (ConstraintViolation<?> violation : violations) {
-          Iterator<Node> it = violation.getPropertyPath().iterator();
-          String fieldName = null;
-
-          // Getting fieldname from the exception
-          while (it.hasNext()) {
-            fieldName = it.next().toString();
-          }
-
-          List<String> errorsList = errorsMap.get(fieldName);
-
-          if (errorsList == null) {
-            errorsList = new ArrayList<>();
-            errorsMap.put(fieldName, errorsList);
-          }
-
-          errorsList.add(violation.getMessage());
-
-        }
-
-        t = new ValidationException(errorsMap.toString());
+    } else if (exception instanceof NlsRuntimeException) {
+      return toResponse(exception, exception);
+    } else {
+      Throwable error = exception;
+      Throwable catched = exception;
+      error = getRollbackCause(exception);
+      if (error == null) {
+        error = unwrapNlsUserError(exception);
       }
-      ValidationErrorUserException error = new ValidationErrorUserException(t);
-      return createResponse(t, error, errorsMap);
+      if (error == null) {
+        error = exception;
+      }
+      return toResponse(error, catched);
+    }
+  }
+
+  /**
+   * Unwraps potential NLS user error from a wrapper exception such as {@code JsonMappingException} or
+   * {@code PersistenceException}.
+   *
+   * @param exception the exception to unwrap.
+   * @return the unwrapped {@link NlsRuntimeException} exception or {@code null} if no
+   *         {@link NlsRuntimeException#isForUser() use error}.
+   */
+  private NlsRuntimeException unwrapNlsUserError(Throwable exception) {
+
+    Throwable cause = exception.getCause();
+    if (cause instanceof NlsRuntimeException) {
+      NlsRuntimeException nlsError = (NlsRuntimeException) cause;
+      if (nlsError.isForUser()) {
+        return nlsError;
+      }
+    }
+    return null;
+  }
+
+  private Throwable getRollbackCause(Throwable exception) {
+
+    Class<?> exceptionClass = exception.getClass();
+    if (exceptionClass == this.transactionSystemException) {
+      Throwable cause = exception.getCause();
+      if (cause != null) {
+        exceptionClass = cause.getClass();
+        if (exceptionClass == this.rollbackException) {
+          return cause.getCause();
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @see #toResponse(Throwable)
+   *
+   * @param exception the exception to handle
+   * @param catched the original exception that was cached. Either same as {@code error} or a (child-)
+   *        {@link Throwable#getCause() cause} of it.
+   * @return the response build from the exception.
+   */
+  protected Response toResponse(Throwable exception, Throwable catched) {
+
+    if (exception instanceof ValidationException) {
+      return handleValidationException(exception, catched);
     } else if (exception instanceof ValidationErrorUserException) {
       return createResponse(exception, (ValidationErrorUserException) exception, null);
     } else {
       Class<?> exceptionClass = exception.getClass();
       for (Class<?> securityError : this.securityExceptions) {
         if (securityError.isAssignableFrom(exceptionClass)) {
-          return handleSecurityError(exception);
+          return handleSecurityError(exception, catched);
         }
       }
-      return handleGenericError(exception);
+      return handleGenericError(exception, catched);
     }
   }
 
@@ -189,40 +237,51 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
   }
 
   /**
-   * Exception handling depending on technical Exception or not.
+   * Exception handling for generic exception (fallback).
    *
-   * @param exception the exception thrown
-   * @return the response build from error status
+   * @param exception the exception to handle
+   * @param catched the original exception that was cached. Either same as {@code error} or a (child-)
+   *        {@link Throwable#getCause() cause} of it.
+   * @return the response build from the exception
    */
-  protected Response handleGenericError(Throwable exception) {
+  protected Response handleGenericError(Throwable exception, Throwable catched) {
 
-    NlsRuntimeException userError = TechnicalErrorUserException.getOrCreateUserException(exception);
-    if (userError.isTechnical()) {
-      LOG.error("Service failed on server", exception);
+    NlsRuntimeException userError;
+    boolean logged = false;
+    if (exception instanceof NlsThrowable) {
+      NlsThrowable nlsError = (NlsThrowable) exception;
+      if (!nlsError.isTechnical()) {
+        LOG.warn("Service failed due to business error: {}", nlsError.getMessage());
+        logged = true;
+      }
+      userError = TechnicalErrorUserException.getOrCreateUserException(exception);
     } else {
-      LOG.warn("Service failed due to business error: {}", exception.getMessage());
+      userError = TechnicalErrorUserException.getOrCreateUserException(catched);
+    }
+    if (!logged) {
+      LOG.error("Service failed on server", userError);
     }
     return createResponse(userError);
   }
 
   /**
-   * Exception handling for security exceptions.
+   * Exception handling for security exception.
    *
-   * @param exception the exception thrown
-   * @return the response build from error status
+   * @param exception the exception to handle
+   * @param catched the original exception that was cached. Either same as {@code error} or a (child-)
+   *        {@link Throwable#getCause() cause} of it.
+   * @return the response build from exception
    */
-  protected Response handleSecurityError(Throwable exception) {
+  protected Response handleSecurityError(Throwable exception, Throwable catched) {
 
-    // *** security error ***
     NlsRuntimeException error;
-    if (exception instanceof NlsRuntimeException) {
+    if ((exception == catched) && (exception instanceof NlsRuntimeException)) {
       error = (NlsRuntimeException) exception;
     } else {
-      error = new SecurityErrorUserException(exception);
+      error = new SecurityErrorUserException(catched);
     }
     LOG.error("Service failed due to security error", error);
-    // NOTE: for security reasons we do not send any details about the error
-    // to the client!
+    // NOTE: for security reasons we do not send any details about the error to the client!
     String message;
     String code = null;
     if (this.exposeInternalErrorDetails) {
@@ -231,6 +290,49 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
       message = "forbidden";
     }
     return createResponse(Status.FORBIDDEN, message, code, error.getUuid(), null);
+  }
+
+  /**
+   * Exception handling for validation exception.
+   *
+   * @param exception the exception to handle
+   * @param catched the original exception that was cached. Either same as {@code error} or a (child-)
+   *        {@link Throwable#getCause() cause} of it.
+   * @return the response build from the exception.
+   */
+  protected Response handleValidationException(Throwable exception, Throwable catched) {
+
+    Throwable t = catched;
+    Map<String, List<String>> errorsMap = null;
+    if (exception instanceof ConstraintViolationException) {
+      ConstraintViolationException constraintViolationException = (ConstraintViolationException) exception;
+      Set<ConstraintViolation<?>> violations = constraintViolationException.getConstraintViolations();
+      errorsMap = new HashMap<>();
+
+      for (ConstraintViolation<?> violation : violations) {
+        Iterator<Node> it = violation.getPropertyPath().iterator();
+        String fieldName = null;
+
+        // Getting fieldname from the exception
+        while (it.hasNext()) {
+          fieldName = it.next().toString();
+        }
+
+        List<String> errorsList = errorsMap.get(fieldName);
+
+        if (errorsList == null) {
+          errorsList = new ArrayList<>();
+          errorsMap.put(fieldName, errorsList);
+        }
+
+        errorsList.add(violation.getMessage());
+
+      }
+
+      t = new ValidationException(errorsMap.toString(), catched);
+    }
+    ValidationErrorUserException error = new ValidationErrorUserException(t);
+    return createResponse(t, error, errorsMap);
   }
 
   /**
@@ -421,9 +523,9 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
   }
 
   /**
-   * @param exposeInternalErrorDetails - {@code true} if internal exception details shall be exposed to clients
-   *        (useful for debugging and testing), {@code false} if such details are hidden to prevent <a
-   *        href="https://www.owasp.org/index.php/Top_10_2013-A6-Sensitive_Data_Exposure">Sensitive Data Exposure</a>
+   * @param exposeInternalErrorDetails - {@code true} if internal exception details shall be exposed to clients (useful
+   *        for debugging and testing), {@code false} if such details are hidden to prevent
+   *        <a href="https://www.owasp.org/index.php/Top_10_2013-A6-Sensitive_Data_Exposure">Sensitive Data Exposure</a>
    *        (default, has to be used in production environment).
    */
   public void setExposeInternalErrorDetails(boolean exposeInternalErrorDetails) {
