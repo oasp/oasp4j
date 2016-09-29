@@ -1,12 +1,13 @@
 package io.oasp.gastronomy.restaurant.general.dataaccess.api;
 
-import io.oasp.gastronomy.restaurant.general.common.api.BinaryObject;
-
 import java.sql.Blob;
 
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
+
+import io.oasp.gastronomy.restaurant.general.common.api.BinaryObject;
 
 /**
  * {@link ApplicationPersistenceEntity Entity} for {@link BinaryObject}. Contains the actual {@link Blob}.
@@ -49,7 +50,7 @@ public class BinaryObjectEntity extends ApplicationPersistenceEntity implements 
   /**
    * @return data
    */
-  @Lob
+  @Type(type = "org.hibernate.type.BinaryType")
   public Blob getData() {
 
     return this.data;
