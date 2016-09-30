@@ -1,12 +1,12 @@
 package io.oasp.gastronomy.restaurant.general.configuration;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.servlet.Filter;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -19,7 +19,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import io.oasp.gastronomy.restaurant.general.common.impl.security.ApplicationAuthenticationProvider;
 import io.oasp.gastronomy.restaurant.general.common.impl.security.CsrfRequestMatcher;
 import io.oasp.module.security.common.impl.rest.AuthenticationSuccessHandlerSendingOkHttpStatusCode;
 import io.oasp.module.security.common.impl.rest.JsonUsernamePasswordAuthenticationFilter;
@@ -36,12 +35,6 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
 
   @Value("${security.cors.enabled}")
   boolean corsEnabled = false;
-
-  @Inject
-  protected AuthenticationManagerBuilder authenticationManagerBuilder;
-
-  @Inject
-  protected ApplicationAuthenticationProvider authenticationProvider;
 
   // // By default Spring-Security is setting the prefix "ROLE_" for all permissions/authorities.
   // // We disable this undesired behavior here...
@@ -77,7 +70,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
 
     http
         //
-        .authenticationProvider(this.authenticationProvider)
+        .userDetailsService(userDetailsService())
         // define all urls that are not to be secured
         .authorizeRequests().antMatchers(unsecuredResources).permitAll().anyRequest().authenticated().and()
 
@@ -133,28 +126,20 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
     jsonFilter.setUsernameParameter("j_username");
     jsonFilter.setAuthenticationManager(authenticationManager());
     // set failurehandler that uses no redirect in case of login failure; just HTTP-status: 401
+    jsonFilter.setAuthenticationManager(authenticationManagerBean());
     jsonFilter.setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler());
     // set successhandler that uses no redirect in case of login success; just HTTP-status: 200
     jsonFilter.setAuthenticationSuccessHandler(new AuthenticationSuccessHandlerSendingOkHttpStatusCode());
     return jsonFilter;
   }
 
-  /**
-   * Init the authenticationManager and simply set users and roles here (to keep things as simplistic as possible).
-   *
-   * @throws Exception
-   */
-  @PostConstruct
-  public void init() throws Exception {
+  @SuppressWarnings("javadoc")
+  @Inject
+  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
-    this.authenticationManagerBuilder.inMemoryAuthentication() //
-        .withUser("waiter").password("waiter").roles("Waiter").and() //
-        .withUser("cook").password("cook").roles("Cook").and() //
-        .withUser("barkeeper").password("barkeeper").roles("Barkeeeper") //
-        .and().withUser("chief").password("chief").roles("Chief");
-
-    // add our own authenticatonProvider that has add on functionality compared to spring security
-    this.authenticationManagerBuilder.authenticationProvider(this.authenticationProvider);
+    auth.inMemoryAuthentication().withUser("waiter").password("waiter").roles("Waiter").and().withUser("cook")
+        .password("cook").roles("Cook").and().withUser("barkeeper").password("barkeeper").roles("Barkeeper").and()
+        .withUser("chief").password("chief").roles("Chief");
   }
 
 }
