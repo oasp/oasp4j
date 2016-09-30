@@ -27,6 +27,13 @@
     <oasp.flatten.mode>oss</oasp.flatten.mode>
     <spring.boot.version>1.3.3.RELEASE</spring.boot.version>
     <js.client.dir>src/main/client</js.client.dir>
+    <servicedoc.info.title>OASP ${project.name} - Service Documentation</servicedoc.info.title>
+    <servicedoc.info.description>This is the documentation of the REST-Services of ${project.name}.</servicedoc.info.description>
+    <servicedoc.host>oasp-ci.cloudapp.net</servicedoc.host>
+    <servicedoc.port>80</servicedoc.port>
+    <!-- oasp4j-sample should actually be restaurant -->
+    <servicedoc.basePath>oasp4j-sample/services/rest</servicedoc.basePath>
+    <servicedocgen.version>1.0.0-beta-2</servicedocgen.version>    
   </properties>
 
   <build>
@@ -278,6 +285,11 @@
           <version>1.0.0</version>
         </plugin>
         <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>servicedocgen-maven-plugin</artifactId>
+          <version>${servicedocgen.version}</version>
+        </plugin>
+        <plugin>
           <groupId>org.owasp</groupId>
           <artifactId>dependency-check-maven</artifactId>
           <version>1.3.6</version>
@@ -343,6 +355,29 @@
             </reports>
           </reportSet>
         </reportSets>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>servicedocgen-maven-plugin</artifactId>
+        <configuration>
+          <descriptor>
+            <info>
+              <title>${servicedoc.info.title}</title>
+              <description>${servicedoc.info.description}</description>
+            </info>
+            <host>${servicedoc.host}</host>
+            <port>${servicedoc.port}</port>
+            <basePath>${servicedoc.basePath}</basePath>
+            <schemes>
+              <scheme>http</scheme>
+            </schemes>
+            <javadocs>
+              <javadoc>
+                <url>https://seu.sdm.de/pu/lfuadamas/build/maven/site/apidocs</url>
+              </javadoc>
+            </javadocs>
+          </descriptor>
+        </configuration>
       </plugin>
     </plugins>
   </reporting>
