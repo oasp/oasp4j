@@ -11,8 +11,8 @@ import org.springframework.security.core.userdetails.User;
  * This is a simple implementation of {@link AbstractAccessControlBasedAuthenticationProvider}.
  *
  */
-public class SimpleAccessControlBasedAuthenticationProvider extends
-    AbstractAccessControlBasedAuthenticationProvider<User, Principal> {
+public class SimpleAccessControlBasedAuthenticationProvider
+    extends AbstractAccessControlBasedAuthenticationProvider<User, Principal> {
 
   /**
    * The constructor.
@@ -33,6 +33,15 @@ public class SimpleAccessControlBasedAuthenticationProvider extends
   protected Principal retrievePrincipal(String username, UsernamePasswordAuthenticationToken authentication) {
 
     return authentication;
+  }
+
+  /*
+   * Leave empty on purpose. Not used in this version.
+   */
+  @Override
+  protected Principal retrievePrincipal(String username) {
+
+    return null;
   }
 
 }

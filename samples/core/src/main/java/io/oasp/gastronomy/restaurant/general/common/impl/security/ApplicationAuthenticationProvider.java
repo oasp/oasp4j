@@ -78,4 +78,13 @@ public class ApplicationAuthenticationProvider
     return user;
   }
 
+  /*
+   * Leave empty on purpose. Not used in this version.
+   */
+  @Override
+  protected UserProfile retrievePrincipal(String username) {
+
+    return null;
+  }
+
 }
