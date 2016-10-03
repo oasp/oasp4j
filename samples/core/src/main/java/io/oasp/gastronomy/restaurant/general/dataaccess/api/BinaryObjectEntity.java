@@ -50,6 +50,7 @@ public class BinaryObjectEntity extends ApplicationPersistenceEntity implements 
   /**
    * @return data
    */
+  /** Remove the following line completely (Type Annotation) in case of database other than PostGres */
   @Type(type = "org.hibernate.type.BinaryType")
   public Blob getData() {
 

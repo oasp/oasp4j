@@ -1,3 +1,4 @@
+--Rename this file to 'V9901_1__Import_data.sql', if the database that is used is h2.
 SET FOREIGN_KEY_CHECKS=0;
 
 DELETE FROM RESTAURANTTABLE;

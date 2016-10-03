@@ -1,3 +1,5 @@
+--Rename this file to 'V0001__R001_Create_schema.sql.h2' , if the database used is not h2.
+
 -- This is the SQL script for setting up the DDL for the h2 database
 -- In a typical project you would only distinguish between main and test for flyway SQLs
 -- However, in this sample application we provde support for multiple databases in parallel

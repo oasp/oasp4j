@@ -1,3 +1,4 @@
+--Rename this file to V0002__R001_Master_data_pg.sql.pg if the database used is not PostGres 9.5.4
 INSERT INTO RESTAURANTTABLE (id, modificationCounter, number, state) VALUES (101, 1, 1, 2);
 INSERT INTO RESTAURANTTABLE (id, modificationCounter, number, state) VALUES (102, 1, 2, 0);
 INSERT INTO RESTAURANTTABLE (id, modificationCounter, number, state) VALUES (103, 1, 3, 0);
@@ -34,6 +35,7 @@ INSERT INTO ORDERPOSITION (id, modificationCounter, offer_id, offername, comment
 INSERT INTO ORDERPOSITION (id, modificationCounter, offer_id, offername, comment, state, drinkState, order_id, price) VALUES (5, 1, 5, 'Cola', '', 2, 2, 1, 5.99);
 
 INSERT INTO BILL (id, modificationCounter, payed, total, tip) VALUES (1, 1, true, 14.98, 1.3);
+
 INSERT INTO BILL_ORDERPOSITION (bill_id, orderpositions_id) VALUES (1,1);
 INSERT INTO BILL_ORDERPOSITION (bill_id, orderpositions_id) VALUES (1,2);
 

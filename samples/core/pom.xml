@@ -260,6 +260,7 @@
 
     </dependency>
 
+    <!-- Comment the following dependency if the database that is used is not PostGres 9.5.5 -->
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
