@@ -30,7 +30,7 @@ CREATE TABLE PRODUCT(
 );
 ALTER TABLE PRODUCT ADD CONSTRAINT PK_PRODUCT PRIMARY KEY(id);
 CREATE TABLE PRODUCT_AUD(
-    revtype smallint,
+    revtype TINYINT,
     description VARCHAR(255),
     name VARCHAR(255),
     pictureId BIGINT,

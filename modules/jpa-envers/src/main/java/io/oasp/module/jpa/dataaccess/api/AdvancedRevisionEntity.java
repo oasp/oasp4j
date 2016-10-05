@@ -4,7 +4,6 @@ package io.oasp.module.jpa.dataaccess.api;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -45,8 +44,8 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
   private transient Date date;
 
   /** @see #getUser() */
-  /** Remove the following line completely (Column Annotation) in case of database other than PostGres */
-  @Column(name = "`user`")
+  /** Remove or Comment the following line completely (Column Annotation) in case of database other than PostGres */
+  // @Column(name = "`user`")
   private String user;
 
   /**
