@@ -1,13 +1,6 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.impl.dao;
 
 import static com.mysema.query.alias.Alias.$;
-import io.oasp.gastronomy.restaurant.general.common.api.constants.NamedQueries;
-import io.oasp.gastronomy.restaurant.general.dataaccess.base.dao.ApplicationDaoImpl;
-import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
-import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderEntity;
-import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.OrderDao;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.List;
 
@@ -20,9 +13,18 @@ import com.mysema.query.alias.Alias;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.path.EntityPathBase;
 
+import io.oasp.gastronomy.restaurant.general.common.api.constants.NamedQueries;
+import io.oasp.gastronomy.restaurant.general.dataaccess.base.dao.ApplicationDaoImpl;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
+import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderEntity;
+import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.OrderDao;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+
 /**
  * Implementation of {@link OrderDao}.
  *
+ * @author rjoeris
  */
 @Named
 public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements OrderDao {

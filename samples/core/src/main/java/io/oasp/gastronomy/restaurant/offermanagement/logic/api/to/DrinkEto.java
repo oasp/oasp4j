@@ -5,6 +5,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.common.api.Drink;
 /**
  * The {@link io.oasp.module.basic.common.api.to.AbstractEto ETO} for a {@link Drink}.
  *
+ * @author jozitz
  */
 public class DrinkEto extends ProductEto implements Drink {
 

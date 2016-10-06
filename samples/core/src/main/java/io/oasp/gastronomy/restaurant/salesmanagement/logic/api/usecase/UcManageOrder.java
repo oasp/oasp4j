@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 /**
  * Interface of UcMangeOrder to centralize documentation and signatures of methods.
  *
+ * @author mvielsac
  */
 public interface UcManageOrder {
 

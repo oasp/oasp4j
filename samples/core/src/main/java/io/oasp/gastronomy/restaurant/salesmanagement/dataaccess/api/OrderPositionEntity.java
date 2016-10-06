@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity;
+import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.ProductOrderState;
@@ -19,6 +20,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.Product
  * {@link ApplicationPersistenceEntity Entity} that represents a single {@link OrderPosition position} of an
  * {@link OrderEntity}.
  *
+ * @author hohwille
  */
 @Entity
 @Table(name = "OrderPosition")
@@ -27,6 +29,8 @@ public class OrderPositionEntity extends ApplicationPersistenceEntity implements
   private static final long serialVersionUID = 1L;
 
   private OrderEntity order;
+
+  private OfferEntity offer;
 
   private Long cookId;
 
@@ -55,7 +59,7 @@ public class OrderPositionEntity extends ApplicationPersistenceEntity implements
    * @return the {@link OrderEntity order} this {@link OrderPositionEntity} is associated with.
    */
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "orderId")
+  @JoinColumn(name = "order_id")
   @NotNull
   public OrderEntity getOrder() {
 
@@ -68,6 +72,25 @@ public class OrderPositionEntity extends ApplicationPersistenceEntity implements
   public void setOrder(OrderEntity order) {
 
     this.order = order;
+  }
+
+  /**
+   * @return the {@link OrderEntity order} this {@link OrderPositionEntity} is associated with.
+   */
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "offer_id")
+  @NotNull
+  public OfferEntity getOffer() {
+
+    return this.offer;
+  }
+
+  /**
+   * @param order the new value of {@link #getOrder()}.
+   */
+  public void setOffer(OfferEntity offer) {
+
+    this.offer = offer;
   }
 
   @Override
@@ -92,29 +115,24 @@ public class OrderPositionEntity extends ApplicationPersistenceEntity implements
   }
 
   @Override
-  @Column(name = "cookId")
-  public Long getCookId() {
-
-    return this.cookId;
-  }
-
-  @Override
-  public void setCookId(Long cookId) {
-
-    this.cookId = cookId;
-  }
-
-  @Override
-  @Column(name = "offerId")
+  @Transient
   public Long getOfferId() {
 
-    return this.offerId;
+    if (this.offer == null) {
+      return null;
+    }
+    return this.offer.getId();
   }
 
   @Override
   public void setOfferId(Long offerId) {
 
-    this.offerId = offerId;
+    if (offerId == null) {
+      this.offer = null;
+    }
+    OfferEntity offerEntity = new OfferEntity();
+    offerEntity.setId(offerId);
+    this.offer = offerEntity;
   }
 
   @Override
@@ -127,6 +145,19 @@ public class OrderPositionEntity extends ApplicationPersistenceEntity implements
   public void setOfferName(String offerName) {
 
     this.offerName = offerName;
+  }
+
+  @Override
+  @Column(name = "cook_id")
+  public Long getCookId() {
+
+    return this.cookId;
+  }
+
+  @Override
+  public void setCookId(Long cookId) {
+
+    this.cookId = cookId;
   }
 
   @Override

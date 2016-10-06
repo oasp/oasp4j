@@ -15,6 +15,7 @@ import io.oasp.gastronomy.restaurant.tablemanagement.service.api.rest.Tablemanag
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
+ * @author agreul, gazzi, jmolinar
  */
 @Named("TablemanagementRestService")
 public class TablemanagementRestServiceImpl implements TablemanagementRestService {

@@ -10,6 +10,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderSt
  * {@link io.oasp.gastronomy.restaurant.tablemanagement.common.api.Table} and consists of multiple {@link OrderPosition
  * positions}.
  *
+ * @author hohwille
  */
 public interface Order extends ApplicationEntity {
 

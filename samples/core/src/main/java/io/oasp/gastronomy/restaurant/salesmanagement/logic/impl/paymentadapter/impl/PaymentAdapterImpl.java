@@ -10,6 +10,7 @@ import javax.inject.Named;
 /**
  * Implementation of the external payment functionalities.
  *
+ * @author etomety
  */
 @Named
 public class PaymentAdapterImpl extends AbstractBeanMapperSupport implements PaymentAdapter {

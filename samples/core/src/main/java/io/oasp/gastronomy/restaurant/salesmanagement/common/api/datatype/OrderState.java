@@ -3,6 +3,7 @@ package io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype;
 /**
  * Represents the state of an {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.Order}.
  *
+ * @author rjoeris
  */
 public enum OrderState {
 

@@ -6,6 +6,7 @@ import io.oasp.module.basic.common.api.to.AbstractEto;
 /**
  * The {@link AbstractEto ETO} for a {@link MenuItem}.
  *
+ * @author jozitz
  */
 public abstract class MenuItemEto extends AbstractEto implements MenuItem {
 

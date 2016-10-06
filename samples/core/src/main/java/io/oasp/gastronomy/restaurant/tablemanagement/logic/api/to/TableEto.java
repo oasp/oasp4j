@@ -9,6 +9,7 @@ import javax.validation.constraints.Max;
 /**
  * {@link AbstractEto ETO} for {@link Table}.
  *
+ * @author etomety
  */
 public class TableEto extends AbstractEto implements Table {
 

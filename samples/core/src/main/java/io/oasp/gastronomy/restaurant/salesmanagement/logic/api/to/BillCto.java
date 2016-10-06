@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * {@link AbstractCto CTO} for an {@link #getBill() bill} with its {@link #getPositions() positions}.
  *
+ * @author jmetzler
  */
 public class BillCto extends AbstractCto {
 

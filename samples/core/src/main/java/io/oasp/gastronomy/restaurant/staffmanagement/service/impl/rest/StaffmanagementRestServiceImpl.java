@@ -12,6 +12,7 @@ import io.oasp.gastronomy.restaurant.staffmanagement.service.api.rest.Staffmanag
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 /**
+ * @author agreul, geazzi, jmolinar
  */
 @Named("StaffmanagementRestService")
 public class StaffmanagementRestServiceImpl implements StaffmanagementRestService {

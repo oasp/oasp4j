@@ -23,6 +23,7 @@ import javax.validation.Valid;
 /**
  * Interface for OfferManagement.
  *
+ * @author loverbec
  */
 public interface Offermanagement {
 

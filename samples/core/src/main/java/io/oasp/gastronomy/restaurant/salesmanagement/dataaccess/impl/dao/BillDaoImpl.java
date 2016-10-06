@@ -9,6 +9,7 @@ import javax.inject.Named;
 /**
  * Implementation of {@link BillDao}.
  *
+ * @author jozitz
  */
 @Named
 public class BillDaoImpl extends ApplicationDaoImpl<BillEntity> implements BillDao {

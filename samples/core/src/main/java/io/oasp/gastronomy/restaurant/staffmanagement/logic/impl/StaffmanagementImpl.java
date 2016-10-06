@@ -27,6 +27,7 @@ import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 /**
  * Implementation of {@link Staffmanagement}.
  *
+ * @author etomety
  */
 @Named
 @Component

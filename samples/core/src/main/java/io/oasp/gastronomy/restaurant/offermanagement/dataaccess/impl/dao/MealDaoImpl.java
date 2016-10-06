@@ -9,6 +9,7 @@ import javax.inject.Named;
 /**
  * Implementation of {@link MealDao}.
  *
+ * @author hohwille
  */
 @Named
 public class MealDaoImpl extends ApplicationMasterDataDaoImpl<MealEntity> implements MealDao {

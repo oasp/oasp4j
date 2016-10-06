@@ -9,6 +9,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.PaymentData;
 /**
  * Interface of UcManageBill to centralize documentation and signatures of methods.
  *
+ * @author mvielsac
  */
 public interface UcManageBill {
 

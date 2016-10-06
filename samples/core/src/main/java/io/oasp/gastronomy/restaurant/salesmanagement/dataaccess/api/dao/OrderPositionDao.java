@@ -1,14 +1,15 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao;
 
+import java.util.List;
+
 import io.oasp.gastronomy.restaurant.general.dataaccess.api.dao.ApplicationDao;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderPositionEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionSearchCriteriaTo;
 
-import java.util.List;
-
 /**
  * {@link ApplicationDao Data Access Object} for {@link OrderPositionEntity} entity.
  *
+ * @author hohwille
  */
 public interface OrderPositionDao extends ApplicationDao<OrderPositionEntity> {
 
@@ -18,7 +19,8 @@ public interface OrderPositionDao extends ApplicationDao<OrderPositionEntity> {
    * @return the {@link List} of all {@link OrderPositionEntity}s {@link OrderPositionEntity#getOrderId() associated}
    *         with the given <code>orderId</code>.
    */
-  List<OrderPositionEntity> findOrderPositionsByOrder(Long orderId);
+  // Modified RobertoGm
+  List<OrderPositionEntity> findOrderPositionsByOrder(Long orderId, OrderPositionSearchCriteriaTo criteria);
 
   /**
    * @param orderId is the {@link io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto#getId() table ID}

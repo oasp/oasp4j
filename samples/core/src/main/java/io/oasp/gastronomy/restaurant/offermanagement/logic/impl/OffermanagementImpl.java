@@ -49,6 +49,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implementation class for {@link Offermanagement}.
  *
+ * @author loverbec
  */
 @Named
 @Transactional

@@ -6,6 +6,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.BillEntity;
 /**
  * {@link ApplicationDao Data Access Object} for {@link BillEntity} entity.
  *
+ * @author jozitz
  */
 public interface BillDao extends ApplicationDao<BillEntity> {
 

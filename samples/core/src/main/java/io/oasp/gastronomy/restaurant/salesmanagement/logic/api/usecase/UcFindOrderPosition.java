@@ -1,14 +1,15 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase;
 
+import java.util.List;
+
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionSearchCriteriaTo;
-
-import java.util.List;
 
 /**
  * Interface of {@link io.oasp.gastronomy.restaurant.general.logic.base.AbstractUc use case} to get or find specific
  * {@link OrderPositionEto order position}s.
  *
+ * @author mvielsac
  */
 public interface UcFindOrderPosition {
 
@@ -21,12 +22,12 @@ public interface UcFindOrderPosition {
 
   /**
    * @param orderId is the {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.Order#getId() ID} of the
-   *        {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.Order} for which the
-   *        {@link OrderPositionEto positions} are requested.
+   *        {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.Order} for which the {@link OrderPositionEto
+   *        positions} are requested.
    * @return the {@link List} of {@link OrderPositionEto}s {@link OrderPositionEto#getOrderId() associated} with the
    *         given <code>orderId</code>.
    */
-  List<OrderPositionEto> findOrderPositionsByOrderId(long orderId);
+  List<OrderPositionEto> findOrderPositionsByOrderId(long orderId, OrderPositionSearchCriteriaTo criteria);
 
   /**
    * @param criteria the {@link OrderPositionSearchCriteriaTo}.

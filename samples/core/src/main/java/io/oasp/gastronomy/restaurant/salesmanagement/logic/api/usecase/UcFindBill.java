@@ -7,6 +7,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BillEto;
  * Interface of {@link io.oasp.gastronomy.restaurant.general.logic.base.AbstractUc use case} to get specific or all
  * {@link BillEto bills}.
  *
+ * @author mvielsac
  */
 public interface UcFindBill {
 

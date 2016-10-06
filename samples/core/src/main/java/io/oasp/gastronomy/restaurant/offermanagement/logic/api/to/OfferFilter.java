@@ -8,6 +8,7 @@ import net.sf.mmm.util.transferobject.api.AbstractTransferObject;
 /**
  * {@link AbstractTransferObject TO} to filter {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer}s.
  *
+ * @author etomety
  */
 public class OfferFilter extends AbstractTo {
 

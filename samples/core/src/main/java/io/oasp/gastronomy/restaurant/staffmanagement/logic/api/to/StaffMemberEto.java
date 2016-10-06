@@ -9,6 +9,8 @@ import java.util.Locale;
 /**
  * The {@link AbstractEto ETO} for a {@link StaffMember}.
  *
+ * @author hohwille
+ * @author etomety
  */
 public class StaffMemberEto extends AbstractEto implements StaffMember {
 

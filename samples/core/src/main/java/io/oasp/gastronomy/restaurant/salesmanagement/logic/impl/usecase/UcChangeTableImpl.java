@@ -18,6 +18,7 @@ import javax.inject.Named;
 /**
  * UseCase: The guests can change a table to get a better table.
  *
+ * @author rjoeris
  */
 @Named
 @UseCase

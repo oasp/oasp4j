@@ -7,6 +7,7 @@ import io.oasp.gastronomy.restaurant.general.common.api.datatype.Role;
 /**
  * This is the interface for a {@link StaffMember} that is an employee of the restaurant.
  *
+ * @author hohwille
  */
 public interface StaffMember extends ApplicationEntity, UserProfile {
 

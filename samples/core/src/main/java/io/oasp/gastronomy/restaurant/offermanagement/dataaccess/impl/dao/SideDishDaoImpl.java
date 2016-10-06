@@ -9,6 +9,7 @@ import javax.inject.Named;
 /**
  * Implementation of {@link SideDishDao}.
  *
+ * @author hohwille
  */
 @Named
 public class SideDishDaoImpl extends ApplicationMasterDataDaoImpl<SideDishEntity> implements SideDishDao {

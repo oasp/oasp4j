@@ -4,6 +4,7 @@ package io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype;
  * Represents the {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition#getDrinkState() state}
  * of an {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition}.
  *
+ * @author oelsabba
  */
 public enum ProductOrderState {
 

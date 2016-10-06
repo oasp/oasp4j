@@ -12,6 +12,7 @@ import javax.persistence.Table;
  * The {@link io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity persistent entity} for
  * {@link StaffMember}.
  *
+ * @author loverbec
  */
 @Entity
 @Table(name = "StaffMember")

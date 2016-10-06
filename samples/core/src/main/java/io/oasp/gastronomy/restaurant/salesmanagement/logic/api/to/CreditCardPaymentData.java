@@ -5,6 +5,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.CreditC
 /**
  * This class acts as a POJO.
  *
+ * @author jozitz
  */
 public class CreditCardPaymentData extends PaymentData {
 

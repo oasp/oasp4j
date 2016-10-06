@@ -8,6 +8,7 @@ import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
  * This is the {@link SearchCriteriaTo search criteria} {@link net.sf.mmm.util.transferobject.api.TransferObject TO}
  * used to find {@link io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition}s.
  *
+ * @author hohwille
  */
 public class OrderPositionSearchCriteriaTo extends SearchCriteriaTo {
 
@@ -15,6 +16,12 @@ public class OrderPositionSearchCriteriaTo extends SearchCriteriaTo {
   private static final long serialVersionUID = 1L;
 
   private OrderPositionState state;
+
+  private String offerName; // added by Roberto García 19/09/2016
+
+  private String mealName; // added by Roberto García 19/09/2016
+
+  private String sideDishName; // added by Roberto García 19/09/2016
 
   private ProductOrderState drinkState;
 
@@ -116,6 +123,54 @@ public class OrderPositionSearchCriteriaTo extends SearchCriteriaTo {
   public void setMealOrSideDish(boolean mealOrSideDish) {
 
     this.mealOrSideDish = mealOrSideDish;
+  }
+
+  /**
+   * @return offerName
+   */
+  public String getOfferName() {
+
+    return this.offerName;
+  }
+
+  /**
+   * @param offerName the offerName to set
+   */
+  public void setOfferName(String offerName) {
+
+    this.offerName = offerName;
+  }
+
+  /**
+   * @return mealName
+   */
+  public String getMealName() {
+
+    return this.mealName;
+  }
+
+  /**
+   * @param mealName the mealName to set
+   */
+  public void setMealName(String mealName) {
+
+    this.mealName = mealName;
+  }
+
+  /**
+   * @return sideDishName
+   */
+  public String getSideDishName() {
+
+    return this.sideDishName;
+  }
+
+  /**
+   * @param sideDishName the sideDishName to set
+   */
+  public void setSideDishName(String sideDishName) {
+
+    this.sideDishName = sideDishName;
   }
 
 }
