@@ -16,10 +16,11 @@ public interface OrderPositionDao extends ApplicationDao<OrderPositionEntity> {
   /**
    * @param orderId is the {@link io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto#getId() ID} for
    *        which the {@link OrderPositionEntity}s are requested.
+   * @param criteria is the {@link io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionSearchCriteriaTo criteria} for
+   *        which the {@link OrderPositionEntity}s are requested.
    * @return the {@link List} of all {@link OrderPositionEntity}s {@link OrderPositionEntity#getOrderId() associated}
-   *         with the given <code>orderId</code>.
+   *         with the given <code>orderId</code> which corresponds with the criteria.
    */
-  // Modified RobertoGm
   List<OrderPositionEntity> findOrderPositionsByOrder(Long orderId, OrderPositionSearchCriteriaTo criteria);
 
   /**

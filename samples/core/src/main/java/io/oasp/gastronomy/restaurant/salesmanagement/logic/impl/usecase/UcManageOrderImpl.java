@@ -141,7 +141,6 @@ public class UcManageOrderImpl extends AbstractOrderUc implements UcManageOrder 
       currentOrderPositionList = Collections.emptyList();
     } else {
       // we could add a relation OrderEntity.positions of type List<OrderPositionEntity>...
-      // Modified RobertoGm
       currentOrderPositionList = this.salesmanagement.findOrderPositionsByOrderId(orderId, null);
     }
     List<OrderPositionEto> positions = order.getPositions();

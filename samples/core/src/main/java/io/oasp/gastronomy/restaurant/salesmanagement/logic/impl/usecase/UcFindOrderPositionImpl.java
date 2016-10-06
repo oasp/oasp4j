@@ -39,10 +39,8 @@ public class UcFindOrderPositionImpl extends AbstractOrderPositionUc implements 
 
   @Override
   @RolesAllowed(PermissionConstants.FIND_ORDER_POSITION)
-  // Modified RobertoGm
   public List<OrderPositionEto> findOrderPositionsByOrderId(long orderId, OrderPositionSearchCriteriaTo criteria) {
 
-    // Modified RobertoGm
     List<OrderPositionEntity> positions = getOrderPositionDao().findOrderPositionsByOrder(orderId, criteria);
     return getBeanMapper().mapList(positions, OrderPositionEto.class);
   }

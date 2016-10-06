@@ -186,7 +186,6 @@ public class SalesmanagementImpl extends AbstractComponentFacade implements Sale
   }
 
   @Override
-  // Modified RobertoGm
   public List<OrderPositionEto> findOrderPositionsByOrderId(long orderId, OrderPositionSearchCriteriaTo criteria2) {
 
     return this.ucFindOrderPosition.findOrderPositionsByOrderId(orderId, criteria2);

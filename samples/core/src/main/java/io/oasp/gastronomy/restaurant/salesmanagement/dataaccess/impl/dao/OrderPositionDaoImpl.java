@@ -38,14 +38,12 @@ public class OrderPositionDaoImpl extends ApplicationDaoImpl<OrderPositionEntity
   }
 
   @Override
-  // Modified RobertoGm
   public List<OrderPositionEntity> findOrderPositionsByOrder(Long orderId, OrderPositionSearchCriteriaTo criteria) {
 
     OrderPositionEntity orderPosition = Alias.alias(OrderPositionEntity.class);
     EntityPathBase<OrderPositionEntity> alias = Alias.$(orderPosition);
     JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
     query.where(Alias.$(orderPosition.getOrder().getId()).eq(orderId));
-    // Modified RobertoGm
     if (criteria != null) {
       addOrderBy(query, alias, orderPosition, criteria.getSort());
     }
@@ -79,21 +77,16 @@ public class OrderPositionDaoImpl extends ApplicationDaoImpl<OrderPositionEntity
     if (state != null) {
       query.where(Alias.$(orderPosition.getState()).eq(state));
     }
-
-    // modified RobertoGm
     String offerName = criteria.getOfferName();
     if (offerName != null) {
       if (!offerName.isEmpty()) {
         query.where(Alias.$(orderPosition.getOfferName()).eq(offerName));
       }
     }
-    //
-
     ProductOrderState drinkState = criteria.getDrinkState();
     if (drinkState != null) {
       query.where(Alias.$(orderPosition.getDrinkState()).eq(drinkState));
     }
-
     if (criteria.isMealOrSideDish()) {
       OfferEntity offer = Alias.alias(OfferEntity.class);
       EntityPathBase<OfferEntity> offerAlias = Alias.$(offer);
@@ -107,8 +100,6 @@ public class OrderPositionDaoImpl extends ApplicationDaoImpl<OrderPositionEntity
       // query.innerJoin(offer.).on(Alias.$(orderPosition.getOfferId()).eq(Alias.$(offer.getId())))
       // .where(Alias.$(offer.getMealId()).isNotNull().or(Alias.$(offer.getSideDishId()).isNotNull()));
     }
-
-    // Modified RobertoGm
     String mealName = criteria.getMealName();
     if (mealName != null) {
       if (!mealName.isEmpty()) {
@@ -120,8 +111,6 @@ public class OrderPositionDaoImpl extends ApplicationDaoImpl<OrderPositionEntity
         query.where(Alias.$(orderPosition.getOffer().getId()).in(listSubQuery));
       }
     }
-
-    // Modified RobertoGm
     String sideDishName = criteria.getSideDishName();
     if (sideDishName != null) {
       if (!sideDishName.isEmpty()) {
@@ -135,14 +124,12 @@ public class OrderPositionDaoImpl extends ApplicationDaoImpl<OrderPositionEntity
     }
 
     // Add order by fields
-    // Modified RobertoGm
     addOrderBy(query, alias, orderPosition, criteria.getSort());
 
     applyPagination(criteria.getPagination(), query);
     return query.list(alias);
   }
 
-  // Modified RobertoGm
   private void addOrderBy(JPAQuery query, EntityPathBase<OrderPositionEntity> alias, OrderPositionEntity orderPosition,
       List<OrderByTo> sort) {
 
@@ -211,7 +198,6 @@ public class OrderPositionDaoImpl extends ApplicationDaoImpl<OrderPositionEntity
           } else {
             query.orderBy($(orderPosition.getComment()).desc());
           }
-
         }
       }
     }

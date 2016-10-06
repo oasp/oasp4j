@@ -84,14 +84,12 @@ public class SalesmanagementRestServiceImpl implements SalesmanagementRestServic
     criteria.setSideDishName(parameters.get("sideDishName", String.class, false));
     criteria.setMealOrSideDish(parameters.get("mealOrSideDish", boolean.class, false));
 
-    // modified RobertoGm
     // build List<OrderByTo> object with data retrieved from the URI
     OrderByTo obt = new OrderByTo();
-    // set name
+    // set properties name and OrderDirection
     obt.setName(parameters.get("name", String.class, false));
-    // set OrderDirection
     obt.setDirection(parameters.get("direction", OrderDirection.class, false));
-    // set List and add OrderByTo object
+    // create List and add OrderByTo object
     List<OrderByTo> lobt = new ArrayList<>();
     lobt.add(obt);
     // set List into criteria

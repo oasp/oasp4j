@@ -56,7 +56,6 @@ public class UcFindOrderImpl extends AbstractOrderUc implements UcFindOrder {
 
   @Override
   @RolesAllowed(PermissionConstants.FIND_ORDER)
-  // Modified RobertoGm
   public PaginatedListTo<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria,
       OrderPositionSearchCriteriaTo criteria2) {
 
@@ -65,7 +64,6 @@ public class UcFindOrderImpl extends AbstractOrderUc implements UcFindOrder {
     List<OrderCto> page = new ArrayList<>(orderEtos.getResult().size());
     for (OrderEto order : orderEtos.getResult()) {
       // REVIEW <who> (hohwille) N+1 problem. Find a better and more efficient way to load the order positions.
-      // Modified RobertoGm
       page.add(findOrderCto(order, criteria2));
     }
 

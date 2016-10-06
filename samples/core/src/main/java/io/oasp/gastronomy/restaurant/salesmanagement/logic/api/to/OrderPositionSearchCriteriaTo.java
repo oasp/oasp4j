@@ -17,11 +17,11 @@ public class OrderPositionSearchCriteriaTo extends SearchCriteriaTo {
 
   private OrderPositionState state;
 
-  private String offerName; // added by Roberto García 19/09/2016
+  private String offerName;
 
-  private String mealName; // added by Roberto García 19/09/2016
+  private String mealName;
 
-  private String sideDishName; // added by Roberto García 19/09/2016
+  private String sideDishName;
 
   private ProductOrderState drinkState;
 
