@@ -29,7 +29,6 @@ import io.oasp.module.security.common.impl.rest.LogoutSuccessHandlerReturningOkH
  * configuration. <br/>
  * Security configuration is based on {@link WebSecurityConfigurerAdapter}. This configuration is by purpose designed
  * most simple for two channels of authentication: simple login form and rest-url.
- *
  */
 public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -37,12 +36,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   boolean corsEnabled = false;
 
   @Inject
-  private UserDetailsService buds;
-
-  // // By default Spring-Security is setting the prefix "ROLE_" for all permissions/authorities.
-  // // We disable this undesired behavior here...
-  // return new DefaultRolesPrefixPostProcessor("");
-  // }
+  private UserDetailsService userDetailsService;
 
   private CorsFilter getCorsFilter() {
 
@@ -73,7 +67,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
 
     http
         //
-        .userDetailsService(this.buds)
+        .userDetailsService(this.userDetailsService)
         // define all urls that are not to be secured
         .authorizeRequests().antMatchers(unsecuredResources).permitAll().anyRequest().authenticated().and()
 
@@ -88,7 +82,6 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
         .logout().logoutSuccessUrl("/login.html").and()
 
         // register login and logout filter that handles rest logins
-        // .addFilterBefore(basicAuthenticationFilter(), BasicAuthenticationFilter.class)
         .addFilterAfter(getSimpleRestAuthenticationFilter(), BasicAuthenticationFilter.class)
         .addFilterAfter(getSimpleRestLogoutFilter(), LogoutFilter.class);
 
@@ -118,8 +111,8 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
    * Create a simple authentication filter for REST logins that reads user-credentials from a json-parameter and returns
    * status 200 instead of redirect after login.
    *
-   * @return the AuthenticationFilter
-   * @throws Exception
+   * @return the {@link JsonUsernamePasswordAuthenticationFilter}.
+   * @throws Exception if something goes wrong.
    */
   protected JsonUsernamePasswordAuthenticationFilter getSimpleRestAuthenticationFilter() throws Exception {
 

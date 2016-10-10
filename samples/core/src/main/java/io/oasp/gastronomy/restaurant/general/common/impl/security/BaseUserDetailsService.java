@@ -55,8 +55,6 @@ import io.oasp.module.security.common.base.accesscontrol.AccessControlGrantedAut
  *
  * <br/>
  * For another example, have a look at {@link BaseWebSecurityConfig}.
- *
- * @author jmolinar,sroeger
  */
 @Named
 public class BaseUserDetailsService implements UserDetailsService {

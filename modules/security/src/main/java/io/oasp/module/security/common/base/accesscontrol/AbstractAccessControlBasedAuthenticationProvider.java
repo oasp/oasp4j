@@ -28,12 +28,12 @@ import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
 import io.oasp.module.security.common.api.accesscontrol.PrincipalAccessControlProvider;
 
 /**
+ * This is an implementation of {@link AbstractUserDetailsAuthenticationProvider} based on
+ * {@link PrincipalAccessControlProvider} and {@link AccessControlProvider}.
  * @deprecated As of bug-fix release 2.1.2 the authentication mechanism changes. It is now based upon custom
  *             implementations of {@link UserDetailsService} in combination with {@link WebSecurityConfigurerAdapter}.
  *             For further information have a look at the sample application. <br/>
  *             <br/>
- *             This is an implementation of {@link AbstractUserDetailsAuthenticationProvider} based on
- *             {@link PrincipalAccessControlProvider} and {@link AccessControlProvider}.
  *
  * @param <U> is the generic type of the {@link UserDetails} implementation used to bridge with spring-security.
  * @param
