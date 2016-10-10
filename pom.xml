@@ -33,7 +33,7 @@
     <servicedoc.port>80</servicedoc.port>
     <!-- oasp4j-sample should actually be restaurant -->
     <servicedoc.basePath>oasp4j-sample/services/rest</servicedoc.basePath>
-    <servicedocgen.version>1.0.0-beta-2</servicedocgen.version>    
+    <servicedocgen.version>1.0.0-beta-3</servicedocgen.version>    
   </properties>
 
   <build>
@@ -211,7 +211,7 @@
             <encoding>${project.reporting.outputEncoding}</encoding>
             <charset>${project.build.sourceEncoding}</charset>
             <docfilessubdirs>true</docfilessubdirs>
-            <!--<additionalparam>-Xdoclint:none</additionalparam>-->
+            <additionalparam>-Xdoclint:none</additionalparam>
             <links>
               <link>http://docs.oracle.com/javase/7/docs/api/</link>
               <link>http://m-m-m.sourceforge.net/apidocs/</link>
@@ -321,7 +321,7 @@
           <charset>${project.build.sourceEncoding}</charset>
           <docfilessubdirs>true</docfilessubdirs>
           <stylesheetfile>${user.dir}/src/main/javadoc/stylesheet.css</stylesheetfile>
-          <!--<additionalparam>-Xdoclint:none -source ${java.version}</additionalparam>-->
+          <additionalparam>-Xdoclint:none</additionalparam>
           <links>
             <link>http://docs.oracle.com/javase/7/docs/api/</link>
             <!--<link>http://oasp.github.io/oasp4j/maven/apidocs/</link>-->
