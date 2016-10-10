@@ -46,7 +46,7 @@ public class TestWebSecurityConfig extends BaseWebSecurityConfig {
 
     AuthenticationEntryPoint authenticationEntryPoint = new BasicAuthenticationEntryPoint();
     BasicAuthenticationFilter basicAuthenticationFilter =
-        new BasicAuthenticationFilter(authenticationManager(), authenticationEntryPoint);
+        new BasicAuthenticationFilter(authenticationManagerBean(), authenticationEntryPoint);
     LOG.debug("created basicAuthenticationFilter");
     return basicAuthenticationFilter;
   }
