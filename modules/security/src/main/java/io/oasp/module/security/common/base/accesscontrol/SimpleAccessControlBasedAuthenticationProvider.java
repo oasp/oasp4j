@@ -4,13 +4,26 @@ import java.security.Principal;
 import java.util.Set;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
+import io.oasp.module.security.common.api.accesscontrol.PrincipalAccessControlProvider;
 
 /**
- * This is a simple implementation of {@link AbstractAccessControlBasedAuthenticationProvider}.
+ * @deprecated As of bug-fix release 2.1.2 the authentication mechanism changes. It is now based upon custom
+ *             implementations of {@link UserDetailsService} in combination with {@link WebSecurityConfigurerAdapter}.
+ *             For further information have a look at the sample application. <br/>
+ *             This is an implementation of {@link AbstractUserDetailsAuthenticationProvider} based on
+ *             {@link PrincipalAccessControlProvider} and {@link AccessControlProvider}. <br/>
+ *             <br/>
+ *             This is a simple implementation of {@link AbstractAccessControlBasedAuthenticationProvider}.
  *
  */
+@Deprecated
 public class SimpleAccessControlBasedAuthenticationProvider
     extends AbstractAccessControlBasedAuthenticationProvider<User, Principal> {
 

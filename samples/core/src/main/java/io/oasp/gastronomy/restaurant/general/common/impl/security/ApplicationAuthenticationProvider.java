@@ -8,9 +8,11 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import io.oasp.gastronomy.restaurant.general.common.api.UserProfile;
@@ -19,10 +21,15 @@ import io.oasp.gastronomy.restaurant.general.common.api.security.UserData;
 import io.oasp.module.security.common.base.accesscontrol.AbstractAccessControlBasedAuthenticationProvider;
 
 /**
- * This class is responsible for the security aspects of authentication as well as providing user profile data and the
- * access-controls for authoriziation.
+ * @deprecated As of bug-fix release 2.1.2 the authentication mechanism changes. It is now based upon custom
+ *             implementations of {@link UserDetailsService} in combination with {@link WebSecurityConfigurerAdapter}.
+ *             For further information have a look at the sample application. <br/>
+ *             <br/>
+ *             This class is responsible for the security aspects of authentication as well as providing user profile
+ *             data and the access-controls for authoriziation.
  *
  */
+@Deprecated
 @Named("ApplicationAuthenticationProvider")
 public class ApplicationAuthenticationProvider
     extends AbstractAccessControlBasedAuthenticationProvider<UserData, UserProfile> {
