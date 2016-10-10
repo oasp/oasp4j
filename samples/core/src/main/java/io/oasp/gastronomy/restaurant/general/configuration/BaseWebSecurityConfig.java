@@ -6,8 +6,8 @@ import javax.servlet.Filter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
@@ -35,6 +35,9 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
 
   @Value("${security.cors.enabled}")
   boolean corsEnabled = false;
+
+  @Inject
+  private UserDetailsService buds;
 
   // // By default Spring-Security is setting the prefix "ROLE_" for all permissions/authorities.
   // // We disable this undesired behavior here...
@@ -70,7 +73,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
 
     http
         //
-        .userDetailsService(userDetailsService())
+        .userDetailsService(this.buds)
         // define all urls that are not to be secured
         .authorizeRequests().antMatchers(unsecuredResources).permitAll().anyRequest().authenticated().and()
 
