@@ -10,6 +10,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -19,12 +20,41 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import io.oasp.gastronomy.restaurant.general.common.api.UserProfile;
 import io.oasp.gastronomy.restaurant.general.common.api.Usermanagement;
+import io.oasp.gastronomy.restaurant.general.configuration.BaseWebSecurityConfig;
 import io.oasp.module.security.common.api.accesscontrol.AccessControl;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
 import io.oasp.module.security.common.api.accesscontrol.PrincipalAccessControlProvider;
 import io.oasp.module.security.common.base.accesscontrol.AccessControlGrantedAuthority;
 
 /**
+ * This class represents a customized implementation of the {@link UserDetailsService} interface.<br/>
+ * <br/>
+ * It should be used in custom subclasses of {@link WebSecurityConfigurerAdapter} in the following way:
+ * <ul>
+ * <li>Inject a fully configured instance of {@link BaseUserDetailsService} into the subclass of
+ * {@link WebSecurityConfigurerAdapter}</li>
+ * <li>Override method {@code configure(HttpSecurity)} of {@link WebSecurityConfigurerAdapter}</li>
+ * <li>Add the {@link BaseUserDetailsService} to the {@code HttpSecurity} object.</li>
+ * </ul>
+ * The following code snippet shows the above steps:<br/>
+ *
+ * <pre>
+ * &#64;Configuration
+ * &#64;EnableWebSecurity
+ * public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
+ *   // ...
+ *   &#64;Inject
+ *   private UserDetailsService userDetailsService;
+ *   // ...
+ *   &#64;Override
+ *   public void configure(HttpSecurity http) throws Exception {
+ *      http.userDetailsService(this.userDetailsService)... //add matchers and other stuff
+ *   }
+ * }
+ * </pre>
+ *
+ * <br/>
+ * For another example, have a look at {@link BaseWebSecurityConfig}.
  *
  * @author jmolinar,sroeger
  */
@@ -63,7 +93,7 @@ public class BaseUserDetailsService implements UserDetailsService {
    *
    * @param username the name of the user
    * @return the associated {@link GrantedAuthority}s
-   * @throws AuthenticationException if not principal is retrievable for the given {@code username}
+   * @throws AuthenticationException if no principal is retrievable for the given {@code username}
    */
   protected Set<GrantedAuthority> getAuthorities(String username) throws AuthenticationException {
 
