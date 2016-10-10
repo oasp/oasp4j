@@ -1,6 +1,5 @@
 package io.oasp.gastronomy.restaurant.general.common.impl.security;
 
-import java.security.Principal;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,7 +29,7 @@ import io.oasp.module.security.common.base.accesscontrol.AccessControlGrantedAut
  * @author jmolinar,sroeger
  */
 @Named
-public class BaseUserDetailsService<U extends UserDetails, P extends Principal> implements UserDetailsService {
+public class BaseUserDetailsService implements UserDetailsService {
 
   /** Logger instance. */
   private static final Logger LOG = LoggerFactory.getLogger(BaseUserDetailsService.class);
@@ -90,6 +89,10 @@ public class BaseUserDetailsService<U extends UserDetails, P extends Principal> 
     return authorities;
   }
 
+  /**
+   * @param username The {@code username} for which the {@code UserProfile} will be queried.
+   * @return An instance of type {@link UserProfile} obtained by querying the {@code username}.
+   */
   protected UserProfile retrievePrincipal(String username) {
 
     try {
@@ -111,7 +114,7 @@ public class BaseUserDetailsService<U extends UserDetails, P extends Principal> 
   }
 
   /**
-   * @param usermanagement new value of {@link #getusermanagement}.
+   * @param usermanagement new value of {@link #getUsermanagement}.
    */
   @Inject
   public void setUsermanagement(Usermanagement usermanagement) {
@@ -128,7 +131,7 @@ public class BaseUserDetailsService<U extends UserDetails, P extends Principal> 
   }
 
   /**
-   * @param amBuilder new value of {@link #getamBuilder}.
+   * @param amBuilder new value of {@link #getAmBuilder}.
    */
   @Inject
   public void setAmBuilder(AuthenticationManagerBuilder amBuilder) {
@@ -145,7 +148,7 @@ public class BaseUserDetailsService<U extends UserDetails, P extends Principal> 
   }
 
   /**
-   * @param accessControlProvider new value of {@link #getaccessControlProvider}.
+   * @param accessControlProvider new value of {@link #getAccessControlProvider}.
    */
   @Inject
   public void setAccessControlProvider(AccessControlProvider accessControlProvider) {
@@ -162,7 +165,7 @@ public class BaseUserDetailsService<U extends UserDetails, P extends Principal> 
   }
 
   /**
-   * @param principalAccessControlProvider new value of {@link #getprincipalAccessControlProvider}.
+   * @param principalAccessControlProvider new value of {@link #getPrincipalAccessControlProvider}.
    */
   @Inject
   public void setPrincipalAccessControlProvider(
