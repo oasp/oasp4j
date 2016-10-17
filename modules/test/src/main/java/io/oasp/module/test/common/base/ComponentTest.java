@@ -1,14 +1,13 @@
 package io.oasp.module.test.common.base;
 
-import io.oasp.module.test.common.api.category.CategoryComponentTest;
-
-import org.assertj.core.api.Assertions;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+
+import io.oasp.module.test.common.api.category.CategoryComponentTest;
 
 /**
  * This is the abstract base class for a component test. You are free to create your component tests as you like just by
@@ -21,6 +20,6 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestExecutionListeners({ TransactionalTestExecutionListener.class, DependencyInjectionTestExecutionListener.class })
 @Category(CategoryComponentTest.class)
-public abstract class ComponentTest extends Assertions {
+public abstract class ComponentTest extends BaseTest {
 
 }
