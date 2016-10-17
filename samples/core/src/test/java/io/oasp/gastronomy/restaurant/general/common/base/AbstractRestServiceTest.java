@@ -3,8 +3,6 @@ package io.oasp.gastronomy.restaurant.general.common.base;
 import javax.inject.Inject;
 
 import org.flywaydb.core.Flyway;
-import org.junit.After;
-import org.junit.Before;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
@@ -82,28 +80,12 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
   private JacksonJsonProvider jacksonJsonProvider;
 
   /**
-   * Calls {@link #doSetUp()}.
-   */
-  @Before
-  public final void setUp() {
-
-    doSetUp();
-  }
-
-  /**
-   * Calls {@link #doTearDown()}.
-   */
-  @After
-  public final void tearDown() {
-
-    doTearDown();
-  }
-
-  /**
    * Sets up the test.
    */
+  @Override
   protected void doSetUp() {
 
+    super.doSetUp();
     this.restTestClientBuilder.setLocalServerPort(this.port);
     this.restTestClientBuilder.setUser(this.user);
     this.restTestClientBuilder.setPassword(this.password);
@@ -118,9 +100,10 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
   /**
    * Cleans up the test.
    */
+  @Override
   protected void doTearDown() {
 
-    // empty implementation which may be overridden by a subclass.
+    super.doTearDown();
   }
 
   /**

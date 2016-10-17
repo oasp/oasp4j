@@ -6,8 +6,6 @@ import javax.inject.Inject;
 
 import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.security.access.AccessDeniedException;
@@ -51,9 +49,10 @@ public class TablemanagementTest extends ComponentTest {
    * Provides login credentials and permissions and resets database. The database is migrated to Version 0002 in order
    * to have a common basis for test.
    */
-  @Before
-  public void setUp() {
+  @Override
+  public void doSetUp() {
 
+    super.doSetUp();
     TestUtil.login("waiter", PermissionConstants.SAVE_ORDER_POSITION, PermissionConstants.SAVE_ORDER,
         PermissionConstants.FIND_TABLE, PermissionConstants.FIND_ORDER, PermissionConstants.SAVE_TABLE,
         PermissionConstants.FIND_OFFER);
@@ -65,9 +64,10 @@ public class TablemanagementTest extends ComponentTest {
   /**
    * Logs out used credentials.
    */
-  @After
-  public void tearDown() {
+  @Override
+  public void doTearDown() {
 
+    super.doTearDown();
     TestUtil.logout();
   }
 

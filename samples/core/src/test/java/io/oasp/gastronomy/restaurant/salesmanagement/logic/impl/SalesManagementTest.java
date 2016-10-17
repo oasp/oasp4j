@@ -4,8 +4,6 @@ import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -41,8 +39,8 @@ public class SalesManagementTest extends ComponentTest {
   /**
    * Initialization for the test.
    */
-  @Before
-  public void setUp() {
+  @Override
+  public void doSetUp() {
 
     TestUtil.login("waiter", PermissionConstants.FIND_ORDER_POSITION, PermissionConstants.SAVE_ORDER_POSITION,
         PermissionConstants.SAVE_ORDER, PermissionConstants.FIND_OFFER);
@@ -53,8 +51,8 @@ public class SalesManagementTest extends ComponentTest {
   /**
    * Log out utility for the test.
    */
-  @After
-  public void tearDown() {
+  @Override
+  public void doTearDown() {
 
     TestUtil.logout();
   }
