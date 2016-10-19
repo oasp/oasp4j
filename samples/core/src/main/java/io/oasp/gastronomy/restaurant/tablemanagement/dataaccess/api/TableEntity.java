@@ -1,11 +1,11 @@
 package io.oasp.gastronomy.restaurant.tablemanagement.dataaccess.api;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
 import io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.Table;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
 
 /**
  * {@link ApplicationPersistenceEntity Entity} representing a {@link Table} of the restaurant. A table has a unique
@@ -29,7 +29,7 @@ public class TableEntity extends ApplicationPersistenceEntity implements Table {
   private TableState state;
 
   @Override
-  @Column(unique = true)
+  @Column(name = "\"number\"", unique = true)
   public Long getNumber() {
 
     return this.number;

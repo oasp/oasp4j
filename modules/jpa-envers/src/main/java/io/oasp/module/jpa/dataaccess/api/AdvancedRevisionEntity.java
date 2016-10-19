@@ -4,6 +4,7 @@ package io.oasp.module.jpa.dataaccess.api;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -44,6 +45,9 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
   private transient Date date;
 
   /** @see #getUser() */
+
+  // @Column(name = "`user`")
+  @Column(name = "\"user\"")
   private String user;
 
   /**
@@ -98,6 +102,7 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
   /**
    * @return the login or id of the user that has created this revision.
    */
+
   public String getUser() {
 
     return this.user;

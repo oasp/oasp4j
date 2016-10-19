@@ -1,9 +1,5 @@
 package io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api;
 
-import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
-import io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer;
-import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferState;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +7,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+
+import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
+import io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer;
+import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferState;
 
 /**
  * The {@link io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity persistent entity} for
@@ -44,7 +44,7 @@ public class OfferEntity extends MenuItemEntity implements Offer {
     super();
   }
 
-  @Column(name = "number", unique = true)
+  @Column(name = "\"number\"", unique = true)
   @Override
   public Long getNumber() {
 
