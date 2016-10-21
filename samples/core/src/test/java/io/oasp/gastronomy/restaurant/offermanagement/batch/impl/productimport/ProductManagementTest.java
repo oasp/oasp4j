@@ -18,6 +18,7 @@ import io.oasp.gastronomy.restaurant.general.common.TestUtil;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.Product;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.ProductSortByHitEntry;
+import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.impl.dao.ProductDaoImpl;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
@@ -26,7 +27,7 @@ import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.test.common.base.ComponentTest;
 
 /**
- * This is the test case of {@ProductDaoImpl}
+ * This is the test case of {@link ProductDaoImpl}
  *
  * @since dev
  */
