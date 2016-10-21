@@ -15,10 +15,11 @@ import javax.persistence.Transient;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.Bill;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
 
 /**
  * {@link ApplicationPersistenceEntity Entity} that represents the {@link Bill} related to one or multiple
- * {@OrderPosition order positions}.
+ * {@link OrderPosition order positions}.
  *
  */
 @Entity

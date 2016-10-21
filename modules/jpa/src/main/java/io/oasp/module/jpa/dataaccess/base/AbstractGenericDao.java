@@ -1,11 +1,5 @@
 package io.oasp.module.jpa.dataaccess.base;
 
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-import io.oasp.module.jpa.common.api.to.PaginationResultTo;
-import io.oasp.module.jpa.common.api.to.PaginationTo;
-import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
-import io.oasp.module.jpa.dataaccess.api.GenericDao;
-
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -27,6 +21,12 @@ import org.slf4j.LoggerFactory;
 
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.Expression;
+
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.jpa.common.api.to.PaginationResultTo;
+import io.oasp.module.jpa.common.api.to.PaginationTo;
+import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
+import io.oasp.module.jpa.dataaccess.api.GenericDao;
 
 /**
  * This is the abstract base-implementation of the {@link GenericDao} interface.
@@ -216,7 +216,7 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
   /**
    * Returns a paginated list of entities according to the supplied {@link SearchCriteriaTo criteria}.
    * <p>
-   * Applies {@code limit} and {@code offset} values to the supplied {@query} according to the supplied
+   * Applies {@code limit} and {@code offset} values to the supplied {@code query} according to the supplied
    * {@link PaginationTo pagination} information inside {@code criteria}.
    * <p>
    * If a {@link PaginationTo#isTotal() total count} of available entities is requested, will also execute a second
