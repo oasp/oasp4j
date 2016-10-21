@@ -155,7 +155,10 @@ public class OrderPositionEntity extends ApplicationPersistenceEntity implements
   }
 
   @Override
-  @Column(name = "\"comment\"")
+  /*
+   * Uncomment the following Column annotation if the database used is Oracle 11g
+   */
+  // @Column(name = "\"comment\"")
   public String getComment() {
 
     return this.comment;

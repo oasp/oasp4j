@@ -4,7 +4,6 @@ package io.oasp.module.jpa.dataaccess.api;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -46,8 +45,10 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
 
   /** @see #getUser() */
 
-  // @Column(name = "`user`")
-  @Column(name = "\"user\"")
+  /*
+   * Uncomment the following Column annotation if the database used is Oracle 11g
+   */
+  // @Column(name = "\"user\"")
   private String user;
 
   /**

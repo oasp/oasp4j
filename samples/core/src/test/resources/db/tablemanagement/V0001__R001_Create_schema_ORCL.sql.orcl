@@ -1,3 +1,5 @@
+--Rename this file to V0001__R001_Create_schema_ORCL.sql.orcl if the database used is not Oracle 11g
+
 -- This is the SQL script for setting up the DDL for the h2 database
 -- In a typical project you would only distinguish between main and test for flyway SQLs
 -- However, in this sample application we provde support for multiple databases in parallel
@@ -6,6 +8,7 @@
 
 CREATE SEQUENCE HIBERNATE_SEQUENCE START WITH 1000000;
 
+-- *** Staffmemeber ***
 CREATE TABLE STAFFMEMBER(
     id NUMBER(19),
     modificationCounter INTEGER NOT NULL,
@@ -18,6 +21,7 @@ CREATE TABLE STAFFMEMBER(
 ALTER TABLE STAFFMEMBER ADD CONSTRAINT PK_STAFFMEMEBER PRIMARY KEY(id);
 ALTER TABLE STAFFMEMBER ADD CONSTRAINT UC_STAFFMEMBER_LOGIN UNIQUE(login);
 
+-- *** Product ***
 CREATE TABLE PRODUCT(
     dtype VARCHAR(31) NOT NULL,
     id NUMBER(19),
@@ -45,7 +49,7 @@ CREATE TABLE OFFER(
     modificationCounter INTEGER NOT NULL,
     description VARCHAR(255),
     name VARCHAR(255),
-    price DECIMAL(19, 2),
+    price DECIMAL(19, 3),
     "number" NUMBER(19),
     state INTEGER,
     drink_id NUMBER(19),
@@ -88,7 +92,7 @@ CREATE TABLE ORDERPOSITION(
     cook_id NUMBER(19),
     offer_id NUMBER(19),
     offerName VARCHAR(255),
-    price DECIMAL(19, 2),
+    price DECIMAL(19, 3),
     state INTEGER,
     drinkState INTEGER,
     order_id NUMBER(19)
@@ -103,8 +107,8 @@ CREATE TABLE BILL(
     modificationCounter INTEGER NOT NULL,
     --Changed type of the column payed from CHAR(1) to NUMBER(1,0)
     payed NUMBER(1,0),
-    tip DECIMAL(19, 2),
-    total DECIMAL(19, 2)
+    tip DECIMAL(19, 3),
+    total DECIMAL(19, 3)
 );
 ALTER TABLE BILL ADD CONSTRAINT PK_BILL PRIMARY KEY(id);
 CREATE TABLE BILL_ORDERPOSITION(

@@ -22,8 +22,15 @@
   <named-query name="get.open.order.for.table">
     <query><![CDATA[SELECT o FROM OrderEntity o WHERE o.state = io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState.OPEN and o.tableId = :tableId]]></query>
   </named-query>
+
   <named-native-query name="get.all.ids.of.payed.bills">
-    <query><![CDATA[SELECT id FROM Bill WHERE payed = 1]]></query>
+    <query><![CDATA[SELECT id FROM Bill WHERE payed = true]]></query>
   </named-native-query>
 
+  <!-- Uncomment the following if the database used is Oracle 11g -->
+  <!--
+    <named-native-query name="get.all.ids.of.payed.bills">
+      <query><![CDATA[SELECT id FROM Bill WHERE payed = 1]]></query>
+    </named-native-query>
+   -->
 </entity-mappings>

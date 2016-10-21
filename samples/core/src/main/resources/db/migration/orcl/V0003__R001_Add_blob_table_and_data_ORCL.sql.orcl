@@ -1,3 +1,5 @@
+--Rename this file to V0003__R001_Add_blob_table_and_data_ORCL.sql.orcl if the database used is not Oracle 11g
+
 DECLARE
   buf BLOB;
 BEGIN

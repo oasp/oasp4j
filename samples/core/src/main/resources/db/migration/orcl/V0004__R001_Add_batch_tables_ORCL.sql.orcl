@@ -1,3 +1,4 @@
+--Rename this file to V0004__R001_Add_batch_tables_ORCL.sql.orcl if the database used is not Oracle 11g
 CREATE TABLE BATCH_JOB_INSTANCE  (
   JOB_INSTANCE_ID NUMBER(19,0)  NOT NULL PRIMARY KEY ,
   VERSION NUMBER(19,0) ,
