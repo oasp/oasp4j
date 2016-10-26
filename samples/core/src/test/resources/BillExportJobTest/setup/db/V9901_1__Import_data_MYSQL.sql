@@ -1,3 +1,5 @@
+-- Rename this file to V9901_1__Import_data_MYSQL.sql.mysql if the database used is not MariaDB 10.0.27
+
 INSERT INTO RESTAURANTTABLE (id, modificationCounter, number, state) VALUES (101, 1, 1, 2);
 INSERT INTO RESTAURANTTABLE (id, modificationCounter, number, state) VALUES (102, 1, 2, 0);
 INSERT INTO RESTAURANTTABLE (id, modificationCounter, number, state) VALUES (103, 1, 3, 0);
@@ -33,14 +35,15 @@ INSERT INTO ORDERPOSITION (id, modificationCounter, offer_id, offername, comment
 INSERT INTO ORDERPOSITION (id, modificationCounter, offer_id, offername, comment, state, drinkState, order_id, price) VALUES (4, 1, 4, 'Salat-Menü', '', 2, 2, 1, 5.99);
 INSERT INTO ORDERPOSITION (id, modificationCounter, offer_id, offername, comment, state, drinkState, order_id, price) VALUES (5, 1, 5, 'Cola', '', 2, 2, 1, 5.99);
 
-INSERT INTO BILL (id, modificationCounter, payed, total, tip) VALUES (1, 1, true, 14.98, 1.3);
+INSERT INTO BILL (id, modificationCounter, payed, total, tip) VALUES (1, 1, TRUE, 14.98, 1.3);
 INSERT INTO BILL_ORDERPOSITION (bill_id, orderpositions_id) VALUES (1,1);
 INSERT INTO BILL_ORDERPOSITION (bill_id, orderpositions_id) VALUES (1,2);
 
-INSERT INTO BILL (id, modificationCounter, payed, total,tip) VALUES (2, 1, true, 14.98, 1.4);
+INSERT INTO BILL (id, modificationCounter, payed, total,tip) VALUES (2, 1, TRUE, 14.98, 1.4);
 INSERT INTO BILL_ORDERPOSITION (bill_id, orderpositions_id) VALUES (2,3);
 INSERT INTO BILL_ORDERPOSITION (bill_id, orderpositions_id) VALUES (2,4);
 
-INSERT INTO BILL (id, modificationCounter, payed, total,tip) VALUES (3, 1, true, 15.98, 1.5);
+INSERT INTO BILL (id, modificationCounter, payed, total,tip) VALUES (3, 1, TRUE, 15.98, 1.5);
 INSERT INTO BILL_ORDERPOSITION (bill_id, orderpositions_id) VALUES (2,3);
 INSERT INTO BILL_ORDERPOSITION (bill_id, orderpositions_id) VALUES (2,4);
+

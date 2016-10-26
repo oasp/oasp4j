@@ -1,4 +1,4 @@
--- Rename this file to V0001__R001_Create_schema_MYSQL.sql.mysql if the database used is not Oracle 11g
+-- Rename this file to V0001__R001_Create_schema_MYSQL.sql.mysql if the database used is not MariaDB 10.0.27
 
 -- This is the SQL script for setting up the DDL for the h2 database
 -- In a typical project you would only distinguish between main and test for flyway SQLs
@@ -24,12 +24,12 @@ ALTER TABLE STAFFMEMBER ADD CONSTRAINT UC_STAFFMEMBER_LOGIN UNIQUE(login);
 
 -- *** Product ***
 CREATE TABLE PRODUCT(
-    dtype VARCHAR(31) NOT NULL,
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    dtype VARCHAR(31) NOT NULL,
     modificationCounter INT NOT NULL,
     description VARCHAR(255),
     name VARCHAR(255),
-    alcoholic TINYINT,
+    alcoholic BIT,
     pictureId BIGINT
 );
 
@@ -38,7 +38,7 @@ CREATE TABLE PRODUCT_AUD(
     description VARCHAR(255),
     name VARCHAR(255),
     pictureId BIGINT,
-    alcoholic TINYINT,
+    alcoholic BIT,
     dtype VARCHAR(31) NOT NULL,
     id BIGINT NOT NULL,
     rev BIGINT NOT NULL
@@ -78,7 +78,7 @@ ALTER TABLE RESTAURANTTABLE ADD CONSTRAINT UC_TABLE_NUMBER UNIQUE(number);
 
 -- *** RestaurantOrder (Order is a reserved keyword in Oracle) ***
 CREATE TABLE RESTAURANTORDER(
-    id BIGINT PRIMARY KEY,
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     modificationCounter INTEGER NOT NULL,
     state INT,
     table_id BIGINT NOT NULL
@@ -86,13 +86,13 @@ CREATE TABLE RESTAURANTORDER(
 
 -- *** OrderPosition ***
 CREATE TABLE ORDERPOSITION(
-    id BIGINT PRIMARY KEY,
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     modificationCounter INT NOT NULL,
     comment VARCHAR(255),
     cook_id BIGINT,
     offer_id BIGINT,
     offerName VARCHAR(255),
-    price DECIMAL(19, 3),
+    price DECIMAL(19, 2),
     state INT,
     drinkState INT,
     order_id BIGINT
@@ -105,13 +105,13 @@ ALTER TABLE ORDERPOSITION ADD CONSTRAINT FK_ORDPOS2COOK FOREIGN KEY(cook_id) REF
 CREATE TABLE BILL(
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     modificationCounter INT NOT NULL,
-    payed TINYINT NOT NULL,
+    payed BIT NOT NULL,
     tip DECIMAL(19, 2),
     total DECIMAL(19, 2)
 );
 
 CREATE TABLE BILL_ORDERPOSITION(
-    bill_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    bill_id BIGINT NOT NULL,
     orderpositions_id BIGINT NOT NULL
 );
 
@@ -133,3 +133,5 @@ CREATE TABLE REVINFO(
     timestamp BIGINT NOT NULL,
     user VARCHAR(255)
 );
+
+SET FOREIGN_KEY_CHECKS = 1;

@@ -267,6 +267,7 @@
     </dependency>
 
     <!-- Uncomment the following dependency if the database used is MariaDB 10.0.27 -->
+
     <dependency>
       <groupId>org.mariadb.jdbc</groupId>
       <artifactId>mariadb-java-client</artifactId>
