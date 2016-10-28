@@ -50,9 +50,9 @@ public class TablemanagementTest extends ComponentTest {
    * to have a common basis for test.
    */
   @Override
-  public void doSetUp() {
+  public void doSetUp(boolean initialized) {
 
-    super.doSetUp();
+    super.doSetUp(initialized);
     TestUtil.login("waiter", PermissionConstants.SAVE_ORDER_POSITION, PermissionConstants.SAVE_ORDER,
         PermissionConstants.FIND_TABLE, PermissionConstants.FIND_ORDER, PermissionConstants.SAVE_TABLE,
         PermissionConstants.FIND_OFFER);

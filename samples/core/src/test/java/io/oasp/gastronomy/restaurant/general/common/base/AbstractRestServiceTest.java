@@ -83,9 +83,9 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
    * Sets up the test.
    */
   @Override
-  protected void doSetUp() {
+  protected void doSetUp(boolean initialized) {
 
-    super.doSetUp();
+    super.doSetUp(initialized);
     this.restTestClientBuilder.setLocalServerPort(this.port);
     this.restTestClientBuilder.setUser(this.user);
     this.restTestClientBuilder.setPassword(this.password);
