@@ -47,10 +47,10 @@ public abstract class BaseTest extends Assertions {
   public final void setUp() {
 
     // Simply sets INITIALIZED to true when setUp is called for the first time.
+    doSetUp(INITIALIZED);
     if (!INITIALIZED) {
       INITIALIZED = true;
     }
-    doSetUp(INITIALIZED);
   }
 
   /**
