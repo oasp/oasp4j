@@ -21,7 +21,7 @@ public class SearchCriteriaTo extends AbstractTo {
   /** @see #getPagination() */
   private PaginationTo pagination;
 
-  /** @see #getSearchTimeout */
+  /** @see #getSearchTimeout() */
   private Integer searchTimeout;
 
   /** @see #getSort() */
