@@ -35,13 +35,7 @@
     <servicedoc.basePath>oasp4j-sample/services/rest</servicedoc.basePath>
     <servicedocgen.version>1.0.0-beta-3</servicedocgen.version>
   </properties>
-  <dependencies>
-    <dependency>
-      <groupId>javax.interceptor</groupId>
-      <artifactId>javax.interceptor-api</artifactId>
-      <version>1.2</version>
-    </dependency>
-  </dependencies>
+
   <build>
     <plugins>
       <plugin>
@@ -217,7 +211,7 @@
             <encoding>${project.reporting.outputEncoding}</encoding>
             <charset>${project.build.sourceEncoding}</charset>
             <docfilessubdirs>true</docfilessubdirs>
-            <additionalparam>-Xdoclint:none</additionalparam>
+            <additionalparam>${javadoc.params}</additionalparam>
             <links>
               <link>http://docs.oracle.com/javase/7/docs/api/</link>
               <link>http://m-m-m.sourceforge.net/apidocs/</link>
@@ -327,7 +321,7 @@
           <charset>${project.build.sourceEncoding}</charset>
           <docfilessubdirs>true</docfilessubdirs>
           <stylesheetfile>${user.dir}/src/main/javadoc/stylesheet.css</stylesheetfile>
-          <additionalparam>-Xdoclint:none</additionalparam>
+          <additionalparam>${javadoc.params}</additionalparam>
           <links>
             <link>http://docs.oracle.com/javase/7/docs/api/</link>
             <!--<link>http://oasp.github.io/oasp4j/maven/apidocs/</link> -->
@@ -389,6 +383,15 @@
   </reporting>
 
   <profiles>
+    <profile>
+      <id>doclint-disabled</id>
+      <activation>
+        <jdk>[1.8,)</jdk>
+      </activation>
+      <properties>
+        <javadoc.params>-Xdoclint:none</javadoc.params>
+      </properties>
+    </profile>
     <profile>
       <id>all</id>
       <activation>
