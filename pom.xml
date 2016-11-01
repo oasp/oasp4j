@@ -34,6 +34,7 @@
     <!-- oasp4j-sample should actually be restaurant -->
     <servicedoc.basePath>oasp4j-sample/services/rest</servicedoc.basePath>
     <servicedocgen.version>1.0.0-beta-3</servicedocgen.version>
+    <javadoc.params></javadoc.params>
   </properties>
 
   <build>
