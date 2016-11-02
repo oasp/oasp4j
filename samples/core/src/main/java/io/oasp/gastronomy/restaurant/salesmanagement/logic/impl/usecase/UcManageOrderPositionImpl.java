@@ -183,8 +183,8 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
   }
 
   /**
-   * Verifies if an update of the {@link DrinkState} is legal. This verification is based on both the states of
-   * {@link DrinkState} and {@link OrderPositionState}.
+   * Verifies if an update of the {@link ProductOrderState} is legal. This verification is based on both the states of
+   * {@link ProductOrderState} and {@link OrderPositionState}.
    *
    * @param updateOrderPosition the new {@link OrderPosition} to update to.
    * @param currentState the old/current {@link OrderPositionState} of the {@link OrderPosition}.

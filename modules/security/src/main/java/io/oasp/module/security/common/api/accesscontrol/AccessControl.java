@@ -23,7 +23,7 @@ public abstract class AccessControl implements Serializable {
   /** UID for serialization. */
   private static final long serialVersionUID = 1L;
 
-  /** @see #getName() */
+  /** @see #getId() */
   @XmlID
   @XmlAttribute(name = "id", required = true)
   @XmlJavaTypeAdapter(CollapsedStringAdapter.class)

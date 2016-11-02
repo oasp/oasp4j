@@ -33,7 +33,8 @@
     <servicedoc.port>80</servicedoc.port>
     <!-- oasp4j-sample should actually be restaurant -->
     <servicedoc.basePath>oasp4j-sample/services/rest</servicedoc.basePath>
-    <servicedocgen.version>1.0.0-beta-3</servicedocgen.version>    
+    <servicedocgen.version>1.0.0-beta-3</servicedocgen.version>
+    <javadoc.params></javadoc.params>
   </properties>
 
   <build>
@@ -145,9 +146,9 @@
           <version>2.7</version>
         </plugin>
         <plugin>
-           <groupId>org.apache.maven.plugins</groupId>
-           <artifactId>maven-compiler-plugin</artifactId>
-           <version>3.2</version>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.2</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -205,13 +206,13 @@
           <version>2.9.1</version>
           <configuration>
             <!-- http://jira.codehaus.org/browse/MJAVADOC-308 -->
-            <!--<maxmemory>5048m</maxmemory>-->
+            <!--<maxmemory>5048m</maxmemory> -->
             <notree>true</notree>
             <show>private</show>
             <encoding>${project.reporting.outputEncoding}</encoding>
             <charset>${project.build.sourceEncoding}</charset>
             <docfilessubdirs>true</docfilessubdirs>
-            <additionalparam>-Xdoclint:none</additionalparam>
+            <additionalparam>${javadoc.params}</additionalparam>
             <links>
               <link>http://docs.oracle.com/javase/7/docs/api/</link>
               <link>http://m-m-m.sourceforge.net/apidocs/</link>
@@ -315,16 +316,16 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
-          <!--<notree>true</notree>-->
+          <!--<notree>true</notree> -->
           <show>private</show>
           <encoding>${project.reporting.outputEncoding}</encoding>
           <charset>${project.build.sourceEncoding}</charset>
           <docfilessubdirs>true</docfilessubdirs>
           <stylesheetfile>${user.dir}/src/main/javadoc/stylesheet.css</stylesheetfile>
-          <additionalparam>-Xdoclint:none</additionalparam>
+          <additionalparam>${javadoc.params}</additionalparam>
           <links>
             <link>http://docs.oracle.com/javase/7/docs/api/</link>
-            <!--<link>http://oasp.github.io/oasp4j/maven/apidocs/</link>-->
+            <!--<link>http://oasp.github.io/oasp4j/maven/apidocs/</link> -->
           </links>
           <doctitle>JavaDocs for ${project.name}</doctitle>
           <windowtitle>JavaDocs for ${project.name}</windowtitle>
@@ -349,7 +350,7 @@
         <reportSets>
           <reportSet>
             <reports>
-              <!-- https://github.com/jeremylong/DependencyCheck/issues/386-->
+              <!-- https://github.com/jeremylong/DependencyCheck/issues/386 -->
               <!-- <report>aggregate</report> -->
               <report>check</report>
             </reports>
@@ -383,6 +384,15 @@
   </reporting>
 
   <profiles>
+    <profile>
+      <id>doclint-disabled</id>
+      <activation>
+        <jdk>[1.8,)</jdk>
+      </activation>
+      <properties>
+        <javadoc.params>-Xdoclint:none</javadoc.params>
+      </properties>
+    </profile>
     <profile>
       <id>all</id>
       <activation>
@@ -437,7 +447,7 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
             <configuration>
-            	<keyname>${oasp.gpg.keyname}</keyname>
+              <keyname>${oasp.gpg.keyname}</keyname>
             </configuration>
             <executions>
               <execution>

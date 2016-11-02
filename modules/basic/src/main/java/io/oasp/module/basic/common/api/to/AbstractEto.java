@@ -11,7 +11,7 @@ import net.sf.mmm.util.transferobject.api.TransferObject;
  * {@link net.sf.mmm.util.lang.api.Datatype} and potentially for relations the ID (as {@link Long}). For actual
  * relations you will use {@link AbstractCto CTO}s to express what set of entities to transfer, load, save, update, etc.
  * without redundancies. It typically corresponds to an {@link net.sf.mmm.util.entity.api.GenericEntity entity}. For
- * additional details and an example consult the {@link net.sf.mmm.util.transferobject.api package JavaDoc}.
+ * additional details and an example consult the.
  *
  */
 public abstract class AbstractEto extends AbstractTo implements MutableRevisionedEntity<Long> {
