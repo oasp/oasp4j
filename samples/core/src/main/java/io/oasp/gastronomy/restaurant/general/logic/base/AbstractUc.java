@@ -18,7 +18,6 @@ import net.sf.mmm.util.transferobject.api.TransferObject;
  * Abstract base class for any <em>use case</em> in this application. Actual implementations need to be annotated with
  * {@link javax.inject.Named} and {@link io.oasp.gastronomy.restaurant.general.logic.api.UseCase}.
  *
- * @author jozitz
  */
 public abstract class AbstractUc extends AbstractBeanMapperSupport {
 

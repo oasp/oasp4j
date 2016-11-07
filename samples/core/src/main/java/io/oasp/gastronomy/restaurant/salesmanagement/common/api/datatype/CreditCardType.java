@@ -3,7 +3,6 @@ package io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype;
 /**
  * Enum with the types of a credit card.
  *
- * @author etomety
  */
 public enum CreditCardType {
 

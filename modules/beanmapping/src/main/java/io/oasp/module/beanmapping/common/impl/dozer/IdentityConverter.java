@@ -5,7 +5,6 @@ import org.dozer.CustomConverter;
 /**
  * Dozer {@link CustomConverter} that returns the original source object reference (identity conversion).
  *
- * @author hohwille
  */
 public class IdentityConverter implements CustomConverter {
 

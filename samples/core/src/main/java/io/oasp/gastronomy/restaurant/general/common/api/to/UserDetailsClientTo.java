@@ -7,7 +7,6 @@ import io.oasp.module.basic.common.api.to.AbstractTo;
 /**
  * This is the {@link AbstractTo TO} for the client view on the user details.
  *
- * @author hohwille
  */
 public class UserDetailsClientTo extends AbstractTo implements UserProfile {
 

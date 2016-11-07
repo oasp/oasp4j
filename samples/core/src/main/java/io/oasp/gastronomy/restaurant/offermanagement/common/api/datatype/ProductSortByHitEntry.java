@@ -3,7 +3,6 @@ package io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype;
 /**
  * This enum identifies the entity, on which the sorting should be executed.
  *
- * @author erandres
  */
 public enum ProductSortByHitEntry {
 
@@ -18,8 +17,9 @@ public enum ProductSortByHitEntry {
   DESCRIPTION("description"),
 
   /**
-   * Sort by {@link javax.persistence.DiscriminatorValue} (
-   * {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product#getClass()}).
+   * Sort by {@link javax.persistence.DiscriminatorValue}
+   *
+   * @see Object#getClass()
    */
   DTYPE("dtype");
 

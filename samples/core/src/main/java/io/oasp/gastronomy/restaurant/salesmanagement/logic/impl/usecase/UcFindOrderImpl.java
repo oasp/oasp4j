@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
 /**
  * Use Case to find an order.
  *
- * @author rjoeris
  */
 @Named
 @UseCase

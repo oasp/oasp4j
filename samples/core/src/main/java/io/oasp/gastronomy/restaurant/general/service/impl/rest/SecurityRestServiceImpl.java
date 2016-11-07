@@ -25,7 +25,6 @@ import org.springframework.security.web.csrf.CsrfTokenRepository;
  * The security REST service provides access to the csrf token, the authenticated user's meta-data. Furthermore, it
  * provides functionality to check permissions and roles of the authenticated user.
  *
- * @author <a href="malte.brunnlieb@capgemini.com">Malte Brunnlieb</a>
  */
 @Path("/security/v1")
 @Named("SecurityRestService")

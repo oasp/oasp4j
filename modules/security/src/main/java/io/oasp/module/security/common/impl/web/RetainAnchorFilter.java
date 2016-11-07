@@ -23,7 +23,6 @@ import org.springframework.web.filter.GenericFilterBean;
  * <code>restoreUrlPattern</code>) with a Javascript page that restores the URL anchor from that cookie. The cookie name
  * can be set via the attribute <code>cookieName</code>.
  *
- * @author mbrunnli (contributed by guidow08 & mpickell)
  * @see <a href=
  *      "http://forum.spring.io/forum/spring-projects/security/94197-preserving-url-anchor-when-redirecting?p=550750#post550750"
  *      >Forum post of guidow08</a>
@@ -131,8 +130,7 @@ public class RetainAnchorFilter extends GenericFilterBean {
     }
 
     /**
-     * @author mbrunnli (Bugfix of mpickell)
-     * @see <a
+         * @see <a
      *      href="http://forum.spring.io/forum/spring-projects/security/94197-preserving-url-anchor-when-redirecting?p=603929#post603929">Forum
      *      post</a>
      */

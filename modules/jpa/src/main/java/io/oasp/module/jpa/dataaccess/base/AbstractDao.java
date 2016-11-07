@@ -10,7 +10,6 @@ import net.sf.mmm.util.entity.api.PersistenceEntity;
  * @param <E> is the generic type of the {@link PersistenceEntity}. Should be derived from
  *        {@link io.oasp.module.jpa.dataaccess.api.AbstractPersistenceEntity}.
  *
- * @author hohwille
  */
 public abstract class AbstractDao<E extends PersistenceEntity<Long>> extends AbstractGenericDao<Long, E> implements
     Dao<E> {

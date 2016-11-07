@@ -5,7 +5,6 @@ import java.io.Serializable;
 /**
  * This class describes the abstract data type {@link PaymentData}.
  *
- * @author jozitz
  */
 public abstract class PaymentData implements Serializable {
 

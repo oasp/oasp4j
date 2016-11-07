@@ -16,7 +16,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * {@link AccessControlGroup}s and {@link AccessControlPermission}s. If a {@link java.security.Principal} "has" a
  * {@link AccessControl} he also "has" all {@link AccessControl}s with according permissions in the spanned sub-tree.
  *
- * @author hohwille
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class AccessControl implements Serializable {
@@ -24,7 +23,7 @@ public abstract class AccessControl implements Serializable {
   /** UID for serialization. */
   private static final long serialVersionUID = 1L;
 
-  /** @see #getName() */
+  /** @see #getId() */
   @XmlID
   @XmlAttribute(name = "id", required = true)
   @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
@@ -70,10 +69,7 @@ public abstract class AccessControl implements Serializable {
   @Override
   public int hashCode() {
 
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
-    return result;
+    return Objects.hash(this.id);
   }
 
   @Override

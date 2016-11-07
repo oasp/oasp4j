@@ -22,8 +22,6 @@ import io.oasp.module.logging.common.api.DiagnosticContextFacade;
  * Request logging filter that adds the request log message to the SLF4j mapped diagnostic context (MDC) before the
  * request is processed, removing it again after the request is processed.
  *
- * @author <a href="malte.brunnlieb@capgemini.com">Malte Brunnlieb</a>
- * @author hohwille
  */
 public class DiagnosticContextFilter implements Filter {
 
@@ -49,6 +47,7 @@ public class DiagnosticContextFilter implements Filter {
   public DiagnosticContextFilter() {
 
     super();
+    this.correlationIdHttpHeaderName = CORRELATION_ID_HEADER_NAME_DEFAULT;
   }
 
   /**
@@ -130,10 +129,10 @@ public class DiagnosticContextFilter implements Filter {
 
     String headerName = config.getInitParameter(CORRELATION_ID_HEADER_NAME_PARAM);
     if (headerName == null) {
-      headerName = CORRELATION_ID_HEADER_NAME_DEFAULT;
-      LOG.info("Parameter {} not configured using default.", CORRELATION_ID_HEADER_NAME_PARAM);
+      LOG.debug("Parameter {} not configured via filter config.", CORRELATION_ID_HEADER_NAME_PARAM);
+    } else {
+      this.correlationIdHttpHeaderName = headerName;
     }
-    this.correlationIdHttpHeaderName = headerName;
     LOG.info("Correlation ID header initialized to: {}", this.correlationIdHttpHeaderName);
     if (this.diagnosticContextFacade == null) {
       try {

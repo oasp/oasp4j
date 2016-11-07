@@ -8,7 +8,6 @@ import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferSt
 /**
  * The {@link io.oasp.module.basic.common.api.to.AbstractEto ETO} for an {@link Offer}.
  *
- * @author jozitz
  */
 public class OfferEto extends MenuItemEto implements Offer {
 

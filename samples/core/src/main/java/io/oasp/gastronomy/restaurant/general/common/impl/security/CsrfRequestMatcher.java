@@ -12,7 +12,6 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
  *
  * @see <a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery">Cross-site request forgery</a>
  *
- * @author hohwille
  */
 public class CsrfRequestMatcher implements RequestMatcher {
 

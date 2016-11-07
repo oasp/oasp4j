@@ -7,7 +7,6 @@ import net.sf.mmm.util.transferobject.api.TransferObject;
  * {@link AbstractEto ETO} nor a {@link AbstractCto CTO}. Classes extending this class should carry the suffix
  * <code>Cto</code>. <br>
  *
- * @author hohwille
  */
 public abstract class AbstractTo implements TransferObject {
 

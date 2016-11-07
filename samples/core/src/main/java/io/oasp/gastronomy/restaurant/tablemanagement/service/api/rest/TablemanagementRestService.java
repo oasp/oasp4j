@@ -21,7 +21,6 @@ import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 /**
  * The service class for REST calls in order to execute the methods in {@link Tablemanagement}.
  *
- * @author agreul, gazzi, jmolinar
  */
 @Path("/tablemanagement/v1")
 @Named("TablemanagementRestService")

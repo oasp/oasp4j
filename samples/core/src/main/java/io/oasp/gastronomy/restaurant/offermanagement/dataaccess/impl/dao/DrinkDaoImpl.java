@@ -9,7 +9,6 @@ import javax.inject.Named;
 /**
  * Implementation of {@link DrinkDao}.
  *
- * @author hohwille
  */
 @Named
 public class DrinkDaoImpl extends ApplicationMasterDataDaoImpl<DrinkEntity> implements DrinkDao {

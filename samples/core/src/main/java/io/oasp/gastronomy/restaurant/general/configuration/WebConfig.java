@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Registers a number of filters for web requests.
  *
- * @author rose
  */
 @Configuration
 public class WebConfig {

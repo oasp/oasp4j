@@ -12,7 +12,6 @@ import org.junit.experimental.categories.Category;
  *
  * @see CategoryModuleTest
  *
- * @author hohwille
  */
 @Category(CategoryModuleTest.class)
 public abstract class ModuleTest extends Assertions {

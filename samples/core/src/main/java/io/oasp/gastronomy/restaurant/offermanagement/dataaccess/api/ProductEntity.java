@@ -15,12 +15,11 @@ import org.hibernate.envers.Audited;
  * The {@link io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity persistent entity} for
  * {@link Product}.
  *
- * @author loverbec
  */
 @Entity
 @Table(name = "Product")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "dType", discriminatorType = DiscriminatorType.STRING)
 @Audited
 public abstract class ProductEntity extends MenuItemEntity implements Product {
 

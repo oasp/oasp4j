@@ -2,7 +2,6 @@ package io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype;
 
 /**
  * 
- * @author etomety
  */
 public enum PaymentStatus {
 

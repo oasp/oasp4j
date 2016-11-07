@@ -42,7 +42,6 @@ import io.oasp.module.jpa.common.api.to.PaginatedListTo;
  * This class contains methods for REST calls. Some URI structures may seem deprecated, but in fact are not. See the
  * correspondent comments on top.
  *
- * @author agreul, geazzi, jmolinar
  */
 
 @Path("/offermanagement/v1")

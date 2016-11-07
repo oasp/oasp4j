@@ -15,7 +15,6 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 /**
  * Test class to test the {@link GenericDao}.
  *
- * @author fawinter
  */
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class })
 @ContextConfiguration({ "classpath:config/app/dataaccess/beans-dataaccess.xml" })

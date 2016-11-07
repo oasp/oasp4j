@@ -13,7 +13,6 @@ import net.sf.mmm.util.transferobject.api.EntityTo;
 /**
  * Test of {@link BeanMapperImplOrika} based on {@link AbstractBeanMapperTest}.
  *
- * @author hohwille
  */
 public class BeanMapperImplOrikaTest extends AbstractBeanMapperTest {
 

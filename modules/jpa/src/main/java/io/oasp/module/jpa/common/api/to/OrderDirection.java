@@ -3,7 +3,6 @@ package io.oasp.module.jpa.common.api.to;
 /**
  * {@link Enum} for sort order.
  *
- * @author jozitz
  */
 public enum OrderDirection {
 

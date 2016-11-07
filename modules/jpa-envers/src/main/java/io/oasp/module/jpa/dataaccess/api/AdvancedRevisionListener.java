@@ -10,7 +10,6 @@ import org.hibernate.envers.RevisionListener;
  * This is the implementation of {@link RevisionListener} that enriches {@link AdvancedRevisionEntity} with additional
  * information.
  *
- * @author hohwille
  */
 public class AdvancedRevisionListener implements RevisionListener {
 

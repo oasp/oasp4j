@@ -7,7 +7,6 @@ import java.sql.Blob;
 /**
  * Use case for managing BinaryObject.
  *
- * @author sspielma
  */
 public interface UcManageBinaryObject {
 

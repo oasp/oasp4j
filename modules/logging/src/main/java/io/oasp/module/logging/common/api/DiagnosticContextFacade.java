@@ -7,7 +7,6 @@ package io.oasp.module.logging.common.api;
  * Therefore setting diagnostic information from OASP code is always indirected via this interface so the implementation
  * can be extended or replaced (what is not as easy for {@link org.slf4j.MDC#put(String, String) static methods}).
  *
- * @author hohwille
  */
 public interface DiagnosticContextFacade {
 

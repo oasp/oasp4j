@@ -13,7 +13,6 @@ import io.oasp.gastronomy.restaurant.general.common.api.RestService;
 /**
  * This class contains a method to aid simulating a REST client.
  *
- * @author jmolinar
  */
 public class RestTestClientBuilder {
 

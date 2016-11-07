@@ -5,7 +5,6 @@ import org.dozer.CustomConverter;
 /**
  * Dozer {@link CustomConverter} that returns the original source object reference (identity conversion).
  *
- * @author hohwille
  * @deprecated - use {@link io.oasp.module.beanmapping.common.impl.dozer.IdentityConverter}
  */
 @Deprecated

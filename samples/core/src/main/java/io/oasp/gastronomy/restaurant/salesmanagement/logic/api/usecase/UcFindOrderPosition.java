@@ -9,7 +9,6 @@ import java.util.List;
  * Interface of {@link io.oasp.gastronomy.restaurant.general.logic.base.AbstractUc use case} to get or find specific
  * {@link OrderPositionEto order position}s.
  *
- * @author mvielsac
  */
 public interface UcFindOrderPosition {
 

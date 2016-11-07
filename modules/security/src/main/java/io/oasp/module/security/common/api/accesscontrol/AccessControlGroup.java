@@ -20,7 +20,6 @@ import javax.xml.bind.annotation.XmlSchemaType;
  * role or can only act under one role at a time. Unfortunately these terms are often mixed up what is causing
  * confusion.
  *
- * @author hohwille
  */
 @XmlRootElement(name = "group")
 public class AccessControlGroup extends AccessControl { // implements java.security.acl.Group {
@@ -123,13 +122,7 @@ public class AccessControlGroup extends AccessControl { // implements java.secur
   @Override
   public int hashCode() {
 
-    final int prime = 31;
-    int result = super.hashCode();
-    // prevent infinity loops or other sick effects
-    // result = prime * result + ((this.inherits == null) ? 0 : this.inherits.hashCode());
-    result = prime * result + ((this.permissions == null) ? 0 : this.permissions.hashCode());
-    result = prime * result + ((this.type == null) ? 0 : this.type.hashCode());
-    return result;
+    return Objects.hash(super.hashCode(), this.type);
   }
 
   @Override
@@ -141,20 +134,11 @@ public class AccessControlGroup extends AccessControl { // implements java.secur
     if (!super.equals(obj)) {
       return false;
     }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
     AccessControlGroup other = (AccessControlGroup) obj;
-    // prevent infinity loops or other sick effects...
-    // if (!Objects.equal(this.inherits, other.inherits)) {
-    // return false;
-    // }
-    if (!Objects.equals(this.permissions, other.permissions)) {
-      return false;
-    }
     if (!Objects.equals(this.type, other.type)) {
       return false;
     }
+    // other attributes may be mutable and id should already be unique...
     return true;
   }
 

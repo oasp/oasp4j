@@ -12,7 +12,6 @@ import org.junit.experimental.categories.Category;
  *
  * @see CategorySystemTest
  *
- * @author hohwille
  */
 @Category(CategorySystemTest.class)
 public abstract class SystemTest extends Assertions {

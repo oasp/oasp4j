@@ -5,7 +5,6 @@ import io.oasp.gastronomy.restaurant.general.common.api.NlsBundleApplicationRoot
 /**
  * Thrown when an operation is requested that requires a user to be logged in, but no such user exists.
  *
- * @author drihoet
  */
 public class NoActiveUserException extends ApplicationBusinessException {
 

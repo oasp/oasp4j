@@ -11,7 +11,6 @@ import io.oasp.gastronomy.restaurant.tablemanagement.service.api.ws.v1_0.Tablema
 /**
  * Implementation of {@link TablemanagmentWebService}.
  *
- * @author jmetzler
  */
 @Named("TablemanagementWebService")
 @WebService(endpointInterface = "io.oasp.gastronomy.restaurant.tablemanagement.service.api.ws.v1_0.TablemanagmentWebService")

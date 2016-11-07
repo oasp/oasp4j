@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Java configuration for JPA
  *
- * @author tkuzynow
  */
 @Configuration
 // @EnableTransactionManagement

@@ -8,8 +8,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 /**
  * A {@link SimpleModule} to extend Jackson to mixin annotations for polymorphic types.
  *
- * @author hohwille
- * @author agreul
  */
 public class MixInAnnotationsModule extends SimpleModule {
 
@@ -38,8 +36,7 @@ public class MixInAnnotationsModule extends SimpleModule {
   /**
    * The blueprint class for the following JSON-annotation allowing to convert from JSON to POJO and vice versa
    *
-   * @author agreul
-   */
+     */
   @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.PROPERTY, property = "@type")
   public static class JacksonPolymorphicAnnotation {
 

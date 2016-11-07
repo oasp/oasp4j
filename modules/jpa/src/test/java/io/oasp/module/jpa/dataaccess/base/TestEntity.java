@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 /**
  * This is a test entity for {@link AbstractGenericDaoTest}.
  *
- * @author fawinter
  */
 @Entity
 public class TestEntity extends AbstractPersistenceEntity {

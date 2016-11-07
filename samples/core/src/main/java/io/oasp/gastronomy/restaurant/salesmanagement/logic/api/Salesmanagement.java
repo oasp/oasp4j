@@ -11,7 +11,6 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageO
 /**
  * This is the interface for the {@link Salesmanagement} component of the application core.
  *
- * @author hohwille
  */
 public interface Salesmanagement extends UcChangeTable, UcFindBill, UcFindOrder, UcFindOrderPosition, UcManageBill,
     UcManageOrder, UcManageOrderPosition {
