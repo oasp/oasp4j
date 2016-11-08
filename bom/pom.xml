@@ -19,7 +19,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <cxf.version>3.1.7</cxf.version>
+    <cxf.version>3.1.8</cxf.version>
     <mmm.util.version>7.3.0</mmm.util.version>
     <oasp.gpg.keyname>joerg.hohwiller@capgemini.com</oasp.gpg.keyname>
     <oasp.flatten.mode>bom</oasp.flatten.mode>
