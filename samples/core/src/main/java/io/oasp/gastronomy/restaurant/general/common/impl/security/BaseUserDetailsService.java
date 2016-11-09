@@ -13,13 +13,13 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import io.oasp.gastronomy.restaurant.general.common.api.UserProfile;
 import io.oasp.gastronomy.restaurant.general.common.api.Usermanagement;
+import io.oasp.gastronomy.restaurant.general.common.api.security.UserData;
 import io.oasp.gastronomy.restaurant.general.configuration.BaseWebSecurityConfig;
 import io.oasp.module.security.common.api.accesscontrol.AccessControl;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
@@ -73,11 +73,15 @@ public class BaseUserDetailsService implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-    Set<GrantedAuthority> authorities = getAuthorities(username);
+    UserProfile principal = retrievePrincipal(username);
+    Set<GrantedAuthority> authorities = getAuthorities(principal);
     UserDetails user;
     try {
-      user = this.amBuilder.getDefaultUserDetailsService().loadUserByUsername(username);
-      return new User(user.getUsername(), user.getPassword(), authorities);
+      // amBuilder uses the InMemoryUserDetailsManager, because it is configured in BaseWebSecurityConfig
+      user = getAmBuilder().getDefaultUserDetailsService().loadUserByUsername(username);
+      UserData userData = new UserData(user.getUsername(), user.getPassword(), authorities);
+      userData.setUserProfile(principal);
+      return userData;
     } catch (Exception e) {
       e.printStackTrace();
       UsernameNotFoundException exception = new UsernameNotFoundException("Authentication failed.", e);
@@ -87,20 +91,18 @@ public class BaseUserDetailsService implements UserDetailsService {
   }
 
   /**
-   * Returns the {@link GrantedAuthority}s of the provided user identified by the {@code username}.
+   * Returns the {@link GrantedAuthority}s of the user associated with the provided {@link UserProfile}.
    *
-   * @param username the name of the user
+   * @param principal the {@link UserProfile} of the user
    * @return the associated {@link GrantedAuthority}s
    * @throws AuthenticationException if no principal is retrievable for the given {@code username}
    */
-  protected Set<GrantedAuthority> getAuthorities(String username) throws AuthenticationException {
+  protected Set<GrantedAuthority> getAuthorities(UserProfile principal) throws AuthenticationException {
 
-    UserProfile principal = retrievePrincipal(username);
     if (principal == null) {
-      LOG.warn("Failed to retrieve user for login {}.", username);
-      throw new UsernameNotFoundException(username);
+      LOG.warn("Principal must not be null.");
+      throw new IllegalArgumentException();
     }
-
     // determine granted authorities for spring-security...
     Set<GrantedAuthority> authorities = new HashSet<>();
     Collection<String> accessControlIds = this.principalAccessControlProvider.getAccessControlIds(principal);
