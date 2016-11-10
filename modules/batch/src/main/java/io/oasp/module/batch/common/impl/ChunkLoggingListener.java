@@ -13,7 +13,6 @@ import org.springframework.batch.core.SkipListener;
  * Spring Batch listener that logs exceptions together with the item(s) being processed at the time the exceptions
  * occurred.
  *
- * @author Ludger Overbeck
  */
 public class ChunkLoggingListener<T, S> implements SkipListener<T, S>, ItemReadListener<T>, ItemProcessListener<T, S>,
     ItemWriteListener<S> {

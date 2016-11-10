@@ -8,7 +8,6 @@ import org.slf4j.MDC;
 /**
  * This is the simple and straight forward implementation of {@link DiagnosticContextFacade}.
  *
- * @author hohwille
  */
 public class DiagnosticContextFacadeImpl implements DiagnosticContextFacade {
 

@@ -7,7 +7,6 @@ import io.oasp.module.jpa.dataaccess.api.MutablePersistenceEntity;
 /**
  * Interface for all {@link GenericRevisionedDao DAOs} (Data Access Object) of this application.
  *
- * @author etomety
  *
  * @param <ENTITY> is the type of the managed entity.
  */

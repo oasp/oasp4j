@@ -7,7 +7,6 @@ import io.oasp.module.basic.common.api.to.AbstractTo;
 /**
  * Pagination information about a paginated query.
  *
- * @author henning
  */
 public class PaginationResultTo extends AbstractTo {
 

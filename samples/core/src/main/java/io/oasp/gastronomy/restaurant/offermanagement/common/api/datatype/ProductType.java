@@ -4,7 +4,6 @@ package io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype;
 /**
  * This enum contains the available types of a {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product}.
  *
- * @author jozitz
  */
 public enum ProductType {
 

@@ -1,5 +1,16 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException;
@@ -19,21 +30,9 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.base.usecase.Abstract
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.paymentadapter.PaymentAdapter;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.paymentadapter.PaymentTransactionData;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-import javax.annotation.security.RolesAllowed;
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Implementation of {@link UcManageBill}.
  *
- * @author jozitz
  */
 @Named
 @UseCase
@@ -97,7 +96,7 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
   /**
    * This method updates a {@link BillEntity} by checking the existence of a bill with that {@link BillEntity#getId()
    * id} in the database. If no such {@link BillEntity} exists, a new bill will be created by calling
-   * {@link UcManageBillImpl#create(List, Money)}. Otherwise, the existing {@link BillEntity} will be updated by
+   * {@link UcManageBillImpl#createBill(BillEto)}. Otherwise, the existing {@link BillEntity} will be updated by
    * overriding the set {@link BillEntity#getOrderPositions() order positions}, {@link BillEntity#getTip() tip} and the
    * {@link BillEntity#getTotal() total amount}.
    *

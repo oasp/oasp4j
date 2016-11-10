@@ -3,7 +3,6 @@ package io.oasp.module.security.common.api.exception;
 /**
  * Signals an exception during reading the security configuration
  *
- * @author mbrunnli
  */
 public class InvalidConfigurationException extends RuntimeException {
 

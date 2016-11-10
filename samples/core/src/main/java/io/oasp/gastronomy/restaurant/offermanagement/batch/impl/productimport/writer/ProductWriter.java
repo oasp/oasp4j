@@ -14,7 +14,6 @@ import org.springframework.batch.item.ItemWriter;
 /**
  * ProductWriter is responsible for writing ProductEto to database.
  *
- * @author abielewi
  */
 public class ProductWriter implements ItemWriter<ProductEto> {
 

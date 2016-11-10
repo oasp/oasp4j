@@ -28,7 +28,6 @@ import io.oasp.gastronomy.restaurant.general.common.AbstractSpringBatchIntegrati
 /**
  * End-To-End test job "import offer management from csv"
  *
- * @author jczas
  */
 @SpringApplicationConfiguration(classes = { SpringBootBatchApp.class }, locations = {
 "classpath:/config/app/batch/beans-billexport.xml" })
@@ -39,6 +38,9 @@ public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
   @Inject
   private Job billExportJob;
 
+  /**
+   * Clean up database before test.
+   */
   @Before
   public void init() {
 
@@ -47,6 +49,9 @@ public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
 
   }
 
+  /**
+   * Clean up database after test.
+   */
   @After
   public void clean() {
 

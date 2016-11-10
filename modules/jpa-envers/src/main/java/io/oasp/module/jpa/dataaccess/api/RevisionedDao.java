@@ -5,7 +5,6 @@ package io.oasp.module.jpa.dataaccess.api;
  * {@link Long} as {@link MutablePersistenceEntity#getId() primary key}.
  *
  * @param <ENTITY> is the type of the managed {@link MutablePersistenceEntity entity}.
- * @author hohwille
  */
 public interface RevisionedDao<ENTITY extends MutablePersistenceEntity<Long>> extends
     GenericRevisionedDao<Long, ENTITY> {

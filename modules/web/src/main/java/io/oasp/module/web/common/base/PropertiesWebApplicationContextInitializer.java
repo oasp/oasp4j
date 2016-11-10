@@ -21,7 +21,6 @@ import org.springframework.web.context.ConfigurableWebApplicationContext;
  *             application.properties. Profile activation can be done via the SpringApplication API or the
  *             spring.profiles.active file. If several profiles are specified, a last wins strategy applies. See Spring
  *             Boot features: Externalized Configuration for more information.
- * @author sspielma
  */
 @Deprecated
 public class PropertiesWebApplicationContextInitializer

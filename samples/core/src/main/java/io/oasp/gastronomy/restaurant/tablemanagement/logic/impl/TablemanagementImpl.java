@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
 /**
  * Implementation of {@link Tablemanagement}.
  *
- * @author etomety
  */
 @Named
 @Transactional

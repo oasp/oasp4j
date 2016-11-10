@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
  *
  * Request logging filter that measures the execution time of a request.
  *
- * @author trippl
  * @since 1.5.0
  */
 public class PerformanceLogFilter implements Filter {

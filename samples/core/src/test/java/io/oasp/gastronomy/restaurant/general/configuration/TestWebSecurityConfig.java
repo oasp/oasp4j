@@ -16,7 +16,6 @@ import io.oasp.module.basic.configuration.SpringProfileConstants;
 /**
  * This type provides web security configuration for testing purposes.
  *
- * @author jmolinar
  */
 @Configuration
 @EnableWebSecurity
@@ -47,7 +46,7 @@ public class TestWebSecurityConfig extends BaseWebSecurityConfig {
 
     AuthenticationEntryPoint authenticationEntryPoint = new BasicAuthenticationEntryPoint();
     BasicAuthenticationFilter basicAuthenticationFilter =
-        new BasicAuthenticationFilter(authenticationManager(), authenticationEntryPoint);
+        new BasicAuthenticationFilter(authenticationManagerBean(), authenticationEntryPoint);
     LOG.debug("created basicAuthenticationFilter");
     return basicAuthenticationFilter;
   }

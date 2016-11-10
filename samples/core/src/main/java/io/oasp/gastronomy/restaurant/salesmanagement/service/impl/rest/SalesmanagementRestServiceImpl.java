@@ -27,7 +27,6 @@ import io.oasp.module.jpa.common.api.to.PaginationTo;
 import io.oasp.module.rest.service.api.RequestParameters;
 
 /**
- * @author agreul, geazzi, jmolinar
  */
 @Named("SalesmanagementRestService")
 public class SalesmanagementRestServiceImpl implements SalesmanagementRestService {

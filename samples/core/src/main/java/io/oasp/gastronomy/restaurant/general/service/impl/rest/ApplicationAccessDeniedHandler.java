@@ -16,7 +16,6 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 /**
  *
- * @author agreul
  */
 @Named("ApplicationAccessDeniedHandler")
 public class ApplicationAccessDeniedHandler implements AccessDeniedHandler {

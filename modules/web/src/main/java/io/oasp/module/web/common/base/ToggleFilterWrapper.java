@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * &lt;/bean>
  * </pre>
  *
- * @author hohwille
  */
 public class ToggleFilterWrapper implements Filter {
 

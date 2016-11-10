@@ -11,7 +11,6 @@ import java.util.List;
  * Interface of {@link io.oasp.gastronomy.restaurant.general.logic.base.AbstractUc use case} to get specific or all
  * {@link OrderEto orders}.
  *
- * @author mvielsac
  */
 public interface UcFindOrder {
 

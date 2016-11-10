@@ -10,7 +10,6 @@ import java.util.Set;
 /**
  * The abstract base implementation of {@link BeanMapper}.
  *
- * @author hohwille
  */
 public abstract class AbstractBeanMapper implements BeanMapper {
 

@@ -1,8 +1,8 @@
 package io.oasp.module.jpa.common.api.to;
 
-import io.oasp.module.basic.common.api.to.AbstractTo;
-
 import java.util.List;
+
+import io.oasp.module.basic.common.api.to.AbstractTo;
 
 /**
  * This is the interface for a {@link net.sf.mmm.util.transferobject.api.TransferObject transfer-object } with the
@@ -12,7 +12,6 @@ import java.util.List;
  * This interface only holds the necessary settings for the pagination part of a query. For your individual search, you
  * extend {@link SearchCriteriaTo} to create a java bean with all the fields for your search.
  *
- * @author hohwille
  */
 public class SearchCriteriaTo extends AbstractTo {
 
@@ -22,7 +21,7 @@ public class SearchCriteriaTo extends AbstractTo {
   /** @see #getPagination() */
   private PaginationTo pagination;
 
-  /** @see getSearchTimeout */
+  /** @see #getSearchTimeout() */
   private Integer searchTimeout;
 
   /** @see #getSort() */

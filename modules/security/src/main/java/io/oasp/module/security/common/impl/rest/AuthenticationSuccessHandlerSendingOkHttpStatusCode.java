@@ -15,7 +15,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
  * Sends the OK status code upon successful authentication.
  *
  * @see JsonUsernamePasswordAuthenticationFilter
- * @author Marek Matczak
  */
 public class AuthenticationSuccessHandlerSendingOkHttpStatusCode implements AuthenticationSuccessHandler {
   @Override

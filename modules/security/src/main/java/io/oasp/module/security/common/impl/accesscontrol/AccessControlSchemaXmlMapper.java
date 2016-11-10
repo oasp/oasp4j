@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * This class is a simple wrapper for {@link #read(InputStream) reading} and
  * {@link #write(AccessControlSchema, OutputStream) writing} the {@link AccessControlSchema} from/to XML.
  *
- * @author hohwille
  */
 public class AccessControlSchemaXmlMapper implements AccessControlSchemaMapper {
 

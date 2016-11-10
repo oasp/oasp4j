@@ -31,7 +31,6 @@ import org.springframework.validation.annotation.Validated;
 /**
  * Implementation of {@link UcManageOrder}.
  *
- * @author rjoeris
  */
 @Named
 @UseCase

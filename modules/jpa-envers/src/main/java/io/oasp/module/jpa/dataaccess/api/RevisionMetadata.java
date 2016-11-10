@@ -9,7 +9,6 @@ import java.util.Date;
  * {@link net.sf.mmm.util.entity.api.RevisionedEntity#getRevision() historic revision} of an
  * {@link net.sf.mmm.util.entity.api.RevisionedEntity entity}.
  *
- * @author hohwille
  */
 public interface RevisionMetadata {
 

@@ -24,7 +24,6 @@ import io.oasp.module.test.common.base.SubsystemTest;
  * <br/>
  * The local server's port is randomly assigned.
  *
- * @author jmolinar
  */
 @SpringApplicationConfiguration(classes = RestaurantTestConfig.class)
 @WebIntegrationTest

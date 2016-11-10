@@ -11,7 +11,6 @@ import java.security.Principal;
  * TODO: Also an external system may access the application via some service. Then there would be no user profile or it
  * would be empty...
  *
- * @author agreul
  */
 public interface UserProfile extends Principal {
   /**

@@ -10,7 +10,6 @@ import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 /**
  * Validates that an instance of Money must not have a negative price.
  *
- * @author jmetzler
  */
 public class NotNegativeMoneyValidator implements ConstraintValidator<NotNegativeMoney, Money> {
 

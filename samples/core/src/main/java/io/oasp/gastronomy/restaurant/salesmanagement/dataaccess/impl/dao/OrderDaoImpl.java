@@ -23,7 +23,6 @@ import com.mysema.query.types.path.EntityPathBase;
 /**
  * Implementation of {@link OrderDao}.
  *
- * @author rjoeris
  */
 @Named
 public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements OrderDao {

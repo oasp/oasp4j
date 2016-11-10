@@ -11,7 +11,6 @@ import org.springframework.security.web.servletapi.SecurityContextHolderAwareReq
 /**
  * TODO hohwille This type ...
  *
- * @author hohwille
  */
 public class DefaultRolesPrefixPostProcessor implements BeanPostProcessor, PriorityOrdered {
 

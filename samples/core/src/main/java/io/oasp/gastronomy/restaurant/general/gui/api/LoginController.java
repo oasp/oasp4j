@@ -11,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * Controller for Login-Page.
  *
- * @author mbrunnli
  */
 @Controller
 public class LoginController {

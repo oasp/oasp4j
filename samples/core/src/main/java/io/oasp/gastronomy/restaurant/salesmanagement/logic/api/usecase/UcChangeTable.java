@@ -9,7 +9,6 @@ import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
  *
  * Interface of UcChangeTable to centralize documentation and signatures of methods.
  *
- * @author mvielsac
  */
 public interface UcChangeTable {
 

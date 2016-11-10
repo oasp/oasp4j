@@ -13,7 +13,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  * This class represents the security configuration for the mapping of {@link AccessControlGroup}s to
  * {@link AccessControlPermission}s. Everything is properly annotated for JAXB (de)serialization from/to XML.
  *
- * @author hohwille
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "access-control-schema")

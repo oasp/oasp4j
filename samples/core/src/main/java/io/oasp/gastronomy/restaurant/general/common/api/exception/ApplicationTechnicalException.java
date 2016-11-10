@@ -5,7 +5,6 @@ import net.sf.mmm.util.nls.api.NlsMessage;
 /**
  * Abstract technical <i>checked</i> main exception.
  *
- * @author jozitz
  */
 public abstract class ApplicationTechnicalException extends ApplicationException {
 

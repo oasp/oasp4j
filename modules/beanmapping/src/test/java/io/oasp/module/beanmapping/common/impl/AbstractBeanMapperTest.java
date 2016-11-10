@@ -13,7 +13,6 @@ import org.junit.Test;
 /**
  * The abstract test-case for testing {@link BeanMapper} via its interface.
  *
- * @author hohwille
  */
 public abstract class AbstractBeanMapperTest extends ModuleTest {
 

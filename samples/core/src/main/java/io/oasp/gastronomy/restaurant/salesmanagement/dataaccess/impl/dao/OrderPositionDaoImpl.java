@@ -22,7 +22,6 @@ import com.mysema.query.types.query.ListSubQuery;
 /**
  * Implementation of {@link OrderPositionDao}.
  *
- * @author hohwille
  */
 @Named
 public class OrderPositionDaoImpl extends ApplicationDaoImpl<OrderPositionEntity> implements OrderPositionDao {

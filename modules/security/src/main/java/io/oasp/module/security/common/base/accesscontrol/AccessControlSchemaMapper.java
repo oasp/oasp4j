@@ -9,7 +9,6 @@ import java.io.OutputStream;
  * This is the interface to {@link #read(InputStream)} and {@link #write(AccessControlSchema, OutputStream)} the
  * {@link AccessControlSchema}.
  *
- * @author hohwille
  */
 public interface AccessControlSchemaMapper {
 

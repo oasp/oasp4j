@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
 /**
  * Implementation of {@link UcFindBill}.
  *
- * @author jozitz
  */
 @Named
 @UseCase

@@ -10,7 +10,6 @@ import io.oasp.module.basic.common.api.to.AbstractEto;
 /**
  * {@link AbstractEto ETO} for an {@link Order}.
  *
- * @author rjoeris
  */
 public class OrderEto extends AbstractEto implements Order {
 
