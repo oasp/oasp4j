@@ -4,7 +4,6 @@ package io.oasp.module.jpa.dataaccess.api;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -45,9 +44,11 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
   private transient Date date;
 
   /** @see #getUser() */
-  /** UnComment the following line completely (Column Annotation) in case MS SQL Server 2008 
-	is the database else comment it */
-  //@Column(name = "[user]")
+  /**
+   * UnComment the following line completely (Column Annotation) in case MS SQL Server 2008 is the database else comment
+   * it
+   */
+  // @Column(name = "[user]")
   private String user;
 
   /**

@@ -266,7 +266,8 @@
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>sqljdbc</artifactId>
       <version>4.0</version>
-    </dependency> -->
+    </dependency>
+     -->
     <dependency>
       <groupId>org.skyscreamer</groupId>
       <artifactId>jsonassert</artifactId>
