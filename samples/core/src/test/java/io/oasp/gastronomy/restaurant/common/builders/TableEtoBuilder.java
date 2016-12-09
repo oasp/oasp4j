@@ -12,7 +12,7 @@ public class TableEtoBuilder {
 
   public TableEtoBuilder() {
 
-    this.parameterToBeApplied = new LinkedList<P<TableEto>>();
+    this.parameterToBeApplied = new LinkedList<>();
     fillMandatoryFields();
     fillMandatoryFields_custom();
   }

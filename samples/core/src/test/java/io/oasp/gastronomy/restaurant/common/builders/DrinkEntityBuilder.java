@@ -11,7 +11,7 @@ public class DrinkEntityBuilder {
 
   public DrinkEntityBuilder() {
 
-    parameterToBeApplied = new LinkedList<P<DrinkEntity>>();
+    this.parameterToBeApplied = new LinkedList<>();
     fillMandatoryFields();
     fillMandatoryFields_custom();
   }
@@ -32,7 +32,7 @@ public class DrinkEntityBuilder {
 
   public DrinkEntityBuilder alcoholic(final boolean alcoholic) {
 
-    parameterToBeApplied.add(new P<DrinkEntity>() {
+    this.parameterToBeApplied.add(new P<DrinkEntity>() {
       @Override
       public void apply(DrinkEntity target) {
 
@@ -44,7 +44,7 @@ public class DrinkEntityBuilder {
 
   public DrinkEntityBuilder pictureId(final Long pictureId) {
 
-    parameterToBeApplied.add(new P<DrinkEntity>() {
+    this.parameterToBeApplied.add(new P<DrinkEntity>() {
       @Override
       public void apply(DrinkEntity target) {
 
@@ -56,7 +56,7 @@ public class DrinkEntityBuilder {
 
   public DrinkEntityBuilder name(final String name) {
 
-    parameterToBeApplied.add(new P<DrinkEntity>() {
+    this.parameterToBeApplied.add(new P<DrinkEntity>() {
       @Override
       public void apply(DrinkEntity target) {
 
@@ -68,7 +68,7 @@ public class DrinkEntityBuilder {
 
   public DrinkEntityBuilder description(final String description) {
 
-    parameterToBeApplied.add(new P<DrinkEntity>() {
+    this.parameterToBeApplied.add(new P<DrinkEntity>() {
       @Override
       public void apply(DrinkEntity target) {
 
@@ -80,7 +80,7 @@ public class DrinkEntityBuilder {
 
   public DrinkEntityBuilder revision(final Number revision) {
 
-    parameterToBeApplied.add(new P<DrinkEntity>() {
+    this.parameterToBeApplied.add(new P<DrinkEntity>() {
       @Override
       public void apply(DrinkEntity target) {
 
@@ -93,7 +93,7 @@ public class DrinkEntityBuilder {
   public DrinkEntity createNew() {
 
     DrinkEntity drinkentity = new DrinkEntity();
-    for (P<DrinkEntity> parameter : parameterToBeApplied) {
+    for (P<DrinkEntity> parameter : this.parameterToBeApplied) {
       parameter.apply(drinkentity);
     }
     return drinkentity;
