@@ -43,6 +43,11 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
   private transient Date date;
 
   /** @see #getUser() */
+
+  /*
+   * Uncomment the following Column annotation if the database used is Oracle 11g
+   */
+  // @Column(name = "\"user\"")
   private String user;
 
   /**
@@ -97,6 +102,7 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
   /**
    * @return the login or id of the user that has created this revision.
    */
+
   public String getUser() {
 
     return this.user;

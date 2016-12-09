@@ -44,6 +44,12 @@ public class OfferEntity extends MenuItemEntity implements Offer {
     super();
   }
 
+  /*
+   * Uncomment the following Column annotation if the database used is Oracle 11g and comment the Column annotation just
+   * before @Override annotation
+   */
+  // @Column(name = "\"number\"", unique = true)
+
   @Column(name = "number", unique = true)
   @Override
   public Long getNumber() {
