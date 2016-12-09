@@ -15,8 +15,8 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
 import io.oasp.gastronomy.restaurant.general.common.RestTestClientBuilder;
 import io.oasp.gastronomy.restaurant.general.common.SecurityTestHelper;
-import io.oasp.gastronomy.restaurant.general.configuration.RestaurantTestConfig;
-import io.oasp.module.basic.configuration.SpringProfileConstants;
+import io.oasp.gastronomy.restaurant.general.service.impl.config.RestaurantTestConfig;
+import io.oasp.module.basic.common.api.config.SpringProfileConstants;
 import io.oasp.module.test.common.base.SubsystemTest;
 
 /**
