@@ -104,7 +104,7 @@
         <exclude name="*management"/>
         <exclude name="*management/*"/>
         <exclude name="*management/**/*"/>
-        <exclude name="*common/builders/*"/>
+        <exclude name="**/common/api/builders/*"/>
         <!-- exclude application specific Money class and related classes -->
         <exclude name="**/*Money*.java"/>
       </fileset>
