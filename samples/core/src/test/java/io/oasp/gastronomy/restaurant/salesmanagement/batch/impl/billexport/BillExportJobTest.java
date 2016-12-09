@@ -22,14 +22,14 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import io.oasp.gastronomy.restaurant.SpringBootBatchApp;
+import io.oasp.gastronomy.restaurant.SpringBootBatchTestApp;
 import io.oasp.gastronomy.restaurant.general.common.AbstractSpringBatchIntegrationTest;
 
 /**
  * End-To-End test job "import offer management from csv"
  *
  */
-@SpringApplicationConfiguration(classes = { SpringBootBatchApp.class }, locations = {
+@SpringApplicationConfiguration(classes = { SpringBootBatchTestApp.class }, locations = {
 "classpath:/config/app/batch/beans-billexport.xml" })
 @WebAppConfiguration
 public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {

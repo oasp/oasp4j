@@ -13,7 +13,7 @@ import org.junit.Test;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.SpringBootTestApp;
 import io.oasp.gastronomy.restaurant.general.common.TestUtil;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
@@ -31,7 +31,7 @@ import io.oasp.module.test.common.base.ComponentTest;
  *
  * @since dev
  */
-@SpringApplicationConfiguration(classes = { SpringBootApp.class })
+@SpringApplicationConfiguration(classes = { SpringBootTestApp.class })
 @WebAppConfiguration
 public class OfferManagementTest extends ComponentTest {
 

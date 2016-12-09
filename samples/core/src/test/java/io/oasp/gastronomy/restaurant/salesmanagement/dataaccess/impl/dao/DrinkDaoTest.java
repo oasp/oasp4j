@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.SpringBootTestApp;
 import io.oasp.gastronomy.restaurant.common.builders.DrinkEntityBuilder;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.DrinkEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.DrinkDao;
@@ -26,7 +26,7 @@ import io.oasp.module.test.common.base.ComponentTest;
  *
  */
 
-@SpringApplicationConfiguration(classes = { SpringBootApp.class })
+@SpringApplicationConfiguration(classes = { SpringBootTestApp.class })
 @WebAppConfiguration
 public class DrinkDaoTest extends ComponentTest {
 

@@ -1,6 +1,6 @@
 package io.oasp.gastronomy.restaurant.offermanagement.batch.impl.productimport;
 
-import io.oasp.gastronomy.restaurant.SpringBootBatchApp;
+import io.oasp.gastronomy.restaurant.SpringBootBatchTestApp;
 import io.oasp.gastronomy.restaurant.general.common.AbstractSpringBatchIntegrationTest;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
@@ -25,7 +25,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
  * End-To-End test job "import offer management from csv"
  *
  */
-@SpringApplicationConfiguration(classes= { SpringBootBatchApp.class }, locations = { "classpath:config/app/batch/beans-productimport.xml" })
+@SpringApplicationConfiguration(classes= { SpringBootBatchTestApp.class }, locations = { "classpath:config/app/batch/beans-productimport.xml" })
 @WebAppConfiguration
 public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
 

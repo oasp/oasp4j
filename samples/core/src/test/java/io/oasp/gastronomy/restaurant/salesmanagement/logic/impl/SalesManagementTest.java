@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.SpringBootTestApp;
 import io.oasp.gastronomy.restaurant.common.builders.OrderEtoBuilder;
 import io.oasp.gastronomy.restaurant.common.builders.OrderPositionEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
@@ -28,7 +28,7 @@ import io.oasp.module.test.common.base.ComponentTest;
  * This is the test-case of {@link Salesmanagement}.
  *
  */
-@SpringApplicationConfiguration(classes = { SpringBootApp.class })
+@SpringApplicationConfiguration(classes = { SpringBootTestApp.class })
 @WebAppConfiguration
 public class SalesManagementTest extends ComponentTest {
 
