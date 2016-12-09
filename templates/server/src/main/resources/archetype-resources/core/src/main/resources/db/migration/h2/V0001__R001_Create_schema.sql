@@ -57,7 +57,7 @@ CREATE TABLE Offer(
   CONSTRAINT UC_Offer_name UNIQUE(name),
   CONSTRAINT UC_Offer_number UNIQUE(number),
   CONSTRAINT FK_Offer_sideDishId FOREIGN KEY(sideDishId) REFERENCES Product(id) NOCHECK,
-  CONSTRAFK_Offer_mealIdmeal FOREIGN KEY(mealId) REFERENCES Product(id) NOCHECK,
+  CONSTRAINT FK_Offer_mealIdmeal FOREIGN KEY(mealId) REFERENCES Product(id) NOCHECK,
   CONSTRAINT FK_Offer_drinkId FOREIGN KEY(drinkId) REFERENCES Product(id) NOCHECK
 
 );

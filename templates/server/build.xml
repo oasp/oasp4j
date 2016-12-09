@@ -143,6 +143,7 @@
       <filterchain>
         <tokenfilter>
           <linetokenizer/>
+        	<replaceregex pattern="io.oasp.gastronomy.restaurant.SpringBootApp" replace="${package}.SpringBootApp" flags="g"/>
           <replaceregex pattern="dev-SNAPSHOT" replace="${version}" flags="g"/>
           <replaceregex pattern="io.oasp.java.samples" replace="${groupId}" flags="g"/>
           <replaceregex pattern="io.oasp.java.dev" replace="${groupId}" flags="g"/>
