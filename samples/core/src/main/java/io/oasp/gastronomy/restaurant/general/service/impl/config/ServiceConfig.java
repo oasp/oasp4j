@@ -48,9 +48,9 @@ public class ServiceConfig extends WsConfigurerAdapter {
 
   public static final String URL_PATH_SERVICES = "/" + URL_FOLDER_SERVICES;
 
-  public static final String URL_FOLDER_REST = "rest";
+  public static final String URL_FOLDER_REST = "/rest";
 
-  public static final String URL_FOLDER_WEB_SERVICES = "ws";
+  public static final String URL_FOLDER_WEB_SERVICES = "/ws";
 
   public static final String URL_PATH_REST_SERVICES = URL_PATH_SERVICES + "/" + URL_FOLDER_REST;
 
