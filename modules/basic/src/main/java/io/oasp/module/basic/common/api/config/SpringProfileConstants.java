@@ -1,4 +1,4 @@
-package io.oasp.module.basic.configuration;
+package io.oasp.module.basic.common.api.config;
 
 /**
  * This class provides {@code String} constants which allow to distinguish several bean definition profiles. The
@@ -6,10 +6,8 @@ package io.oasp.module.basic.configuration;
  * within annotations).<br/>
  * In test scenarios, these constants should be used in conjunction with the {@code @ActiveProfile} annotation.
  *
- * @since 2.1.0
- * @deprecated please use {@link io.oasp.module.basic.common.api.config.SpringProfileConstants} instead.
+ * @since 2.2.0
  */
-@Deprecated
 public class SpringProfileConstants {
 
   /**
