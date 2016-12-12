@@ -252,13 +252,7 @@
       <artifactId>querydsl-jpa</artifactId>
       <version>3.7.1</version>
     </dependency>
-
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>1.6.1</version>
-
-    </dependency>
+	
     <dependency>
       <groupId>org.skyscreamer</groupId>
       <artifactId>jsonassert</artifactId>
