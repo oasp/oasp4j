@@ -1,0 +1,136 @@
+-- Rename this file to V0001__R001_Create_schema_ORCL.sql.orcl if the database used is not Oracle 11g
+
+-- This is the SQL script for setting up the DDL for the h2 database
+-- In a typical project you would only distinguish between main and test for flyway SQLs
+-- However, in this sample application we provde support for multiple databases in parallel
+-- You can simply choose the DB of your choice by setting spring.profiles.active=XXX in config/application.properties
+-- Assuming that the preconfigured user exists with according credentials using the included SQLs
+
+CREATE SEQUENCE HIBERNATE_SEQUENCE START WITH 1000000;
+
+-- *** Staffmemeber ***
+CREATE TABLE STAFFMEMBER(
+    id NUMBER(19),
+    modificationCounter INTEGER NOT NULL,
+    firstname VARCHAR(255),
+    lastname VARCHAR(255),
+    login VARCHAR(255),
+    role INTEGER
+);
+
+ALTER TABLE STAFFMEMBER ADD CONSTRAINT PK_STAFFMEMEBER PRIMARY KEY(id);
+ALTER TABLE STAFFMEMBER ADD CONSTRAINT UC_STAFFMEMBER_LOGIN UNIQUE(login);
+
+-- *** Product ***
+CREATE TABLE PRODUCT(
+    dtype VARCHAR(31) NOT NULL,
+    id NUMBER(19),
+    modificationCounter INTEGER NOT NULL,
+    description VARCHAR(255),
+    name VARCHAR(255),
+    alcoholic NUMBER(1,0),
+    pictureId NUMBER(19)
+);
+
+ALTER TABLE PRODUCT ADD CONSTRAINT PK_PRODUCT PRIMARY KEY(id);
+CREATE TABLE PRODUCT_AUD(
+    revtype NUMBER(3),
+    description VARCHAR(255),
+    name VARCHAR(255),
+    pictureId NUMBER(19),
+    alcoholic NUMBER(1,0),
+    dtype VARCHAR(31) NOT NULL,
+    id NUMBER(19) NOT NULL,
+    rev NUMBER(19) NOT NULL
+);
+-- *** Offer ***
+CREATE TABLE OFFER(
+    id NUMBER(19),
+    modificationCounter INTEGER NOT NULL,
+    description VARCHAR(255),
+    name VARCHAR(255),
+    price DECIMAL(19, 3),
+    "number" NUMBER(19),
+    state INTEGER,
+    drink_id NUMBER(19),
+    meal_id NUMBER(19),
+    sideDish_id NUMBER(19)
+);
+ALTER TABLE OFFER ADD CONSTRAINT PK_OFFER PRIMARY KEY(id);
+ALTER TABLE OFFER ADD CONSTRAINT UC_OFFER_NAME UNIQUE(name);
+ALTER TABLE OFFER ADD CONSTRAINT UC_OFFER_NUMBER UNIQUE("number");
+ALTER TABLE OFFER ADD CONSTRAINT FK_OFFER2SIDEDISH FOREIGN KEY(sideDish_id) REFERENCES PRODUCT(id) ENABLE NOVALIDATE;
+ALTER TABLE OFFER ADD CONSTRAINT FK_OFFER2MEAL FOREIGN KEY(meal_id) REFERENCES PRODUCT(id) ENABLE NOVALIDATE;
+ALTER TABLE OFFER ADD CONSTRAINT FK_OFFER2DRINK FOREIGN KEY(drink_id) REFERENCES PRODUCT(id) ENABLE NOVALIDATE;
+
+-- *** RestaurantTable (Table is a reserved keyword in Oracle) ***
+CREATE TABLE RESTAURANTTABLE(
+    id NUMBER(19),
+    modificationCounter INTEGER NOT NULL,
+    "number" NUMBER(19), --NOT NULL CHECK (NUMBER >= 0),
+    state INTEGER,
+    waiter_id NUMBER(19)
+);
+
+ALTER TABLE RESTAURANTTABLE ADD CONSTRAINT PK_RESTAURANTTABLE PRIMARY KEY(id);
+ALTER TABLE RESTAURANTTABLE ADD CONSTRAINT UC_TABLE_NUMBER UNIQUE("number");
+
+-- *** RestaurantOrder (Order is a reserved keyword in Oracle) ***
+CREATE TABLE RESTAURANTORDER(
+    id NUMBER(19),
+    modificationCounter INTEGER NOT NULL,
+    state INTEGER,
+    table_id NUMBER(19) NOT NULL
+);
+ALTER TABLE RESTAURANTORDER ADD CONSTRAINT PK_RESTAURANTORDER PRIMARY KEY(id);
+
+-- *** OrderPosition ***
+CREATE TABLE ORDERPOSITION(
+    id NUMBER(19),
+    modificationCounter INTEGER NOT NULL,
+    "comment" VARCHAR(255),
+    cook_id NUMBER(19),
+    offer_id NUMBER(19),
+    offerName VARCHAR(255),
+    price DECIMAL(19, 3),
+    state INTEGER,
+    drinkState INTEGER,
+    order_id NUMBER(19)
+);
+ALTER TABLE ORDERPOSITION ADD CONSTRAINT PK_ORDERPOSITON PRIMARY KEY(id);
+ALTER TABLE ORDERPOSITION ADD CONSTRAINT FK_ORDPOS2ORDER FOREIGN KEY(order_id) REFERENCES RESTAURANTORDER(id) ENABLE NOVALIDATE;
+ALTER TABLE ORDERPOSITION ADD CONSTRAINT FK_ORDPOS2COOK FOREIGN KEY(cook_id) REFERENCES STAFFMEMBER(id) ENABLE NOVALIDATE;
+
+-- *** Bill ***
+CREATE TABLE BILL(
+    id NUMBER(19),
+    modificationCounter INTEGER NOT NULL,
+    --Changed type of the column payed from CHAR(1) to NUMBER(1,0)
+    payed NUMBER(1,0),
+    tip DECIMAL(19, 3),
+    total DECIMAL(19, 3)
+);
+ALTER TABLE BILL ADD CONSTRAINT PK_BILL PRIMARY KEY(id);
+CREATE TABLE BILL_ORDERPOSITION(
+    bill_id NUMBER(19),
+    orderpositions_id NUMBER(19) NOT NULL
+);
+ALTER TABLE BILL_ORDERPOSITION ADD CONSTRAINT FK_BILLORDPOS2BILL FOREIGN KEY(bill_id) REFERENCES BILL(id) ENABLE NOVALIDATE;
+ALTER TABLE BILL_ORDERPOSITION ADD CONSTRAINT FK_BILLORDPOS2ORDPOS FOREIGN KEY(orderPositions_ID) REFERENCES ORDERPOSITION(id) ENABLE NOVALIDATE;
+
+-- *** BinaryObject (BLOBs) ***
+CREATE TABLE BINARYOBJECT (
+  id NUMBER(19),
+  modificationCounter INTEGER NOT NULL,
+  data BLOB,
+  "size" NUMBER(19) NOT NULL,
+  mimetype VARCHAR(255),
+  PRIMARY KEY (ID)
+);
+
+-- *** RevInfo (Commit log for envers audit trail) ***
+CREATE TABLE REVINFO(
+    id NUMBER(19),
+    timestamp NUMBER(19) NOT NULL,
+    "user" VARCHAR(255)
+);
