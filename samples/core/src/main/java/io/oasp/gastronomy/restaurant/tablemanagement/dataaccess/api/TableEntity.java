@@ -28,6 +28,11 @@ public class TableEntity extends ApplicationPersistenceEntity implements Table {
   private TableState state;
 
   @Override
+  /*
+   * Uncomment the following Column annotation if the database used is Oracle 11g and comment the Column annotation just
+   * before @Override annotation
+   */
+  // @Column(name = "\"number\"", unique = true)
   @Column(unique = true)
   public Long getNumber() {
 
