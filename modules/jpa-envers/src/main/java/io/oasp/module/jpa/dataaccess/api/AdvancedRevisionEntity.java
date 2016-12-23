@@ -44,6 +44,8 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
   private transient Date date;
 
   /** @see #getUser() */
+  /** Remove or Comment the following line completely (Column Annotation) in case of database other than PostGres */
+  // @Column(name = "`user`")
   private String user;
 
   /**
