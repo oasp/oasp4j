@@ -45,8 +45,8 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
 
   /** @see #getUser() */
   /** Remove or Comment the following line completely (Column Annotation) in case of database other than PostGres */
-  // @Column(name = "`user`")
-  private String user;
+  // @Column(name = "userName")
+  private String userName;
 
   /**
    * The constructor.
@@ -102,7 +102,7 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
    */
   public String getUser() {
 
-    return this.user;
+    return this.userName;
   }
 
   /**
@@ -110,7 +110,7 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
    */
   public void setUser(String user) {
 
-    this.user = user;
+    this.userName = user;
   }
 
   @Override
