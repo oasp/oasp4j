@@ -252,7 +252,7 @@
       <artifactId>querydsl-jpa</artifactId>
       <version>3.7.1</version>
     </dependency>
-	
+
     <dependency>
       <groupId>org.skyscreamer</groupId>
       <artifactId>jsonassert</artifactId>
@@ -267,6 +267,15 @@
         <artifactId>ojdbc6</artifactId>
         <version>11.2.0</version>
       </dependency>
+     -->
+
+	<!-- Comment the following dependency if the database that is used is not PostGres 9.5.4 -->
+    <!--
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>9.4.1211.jre7</version>
+    </dependency>
      -->
   </dependencies>
 
