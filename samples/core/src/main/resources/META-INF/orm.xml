@@ -27,10 +27,18 @@
     <named-native-query name="get.all.ids.of.payed.bills">
       <query><![CDATA[SELECT id FROM Bill WHERE payed = true]]></query>
     </named-native-query>
+
   <!-- Uncomment the following if the database used is Oracle 11g -->
   <!--
     <named-native-query name="get.all.ids.of.payed.bills">
       <query><![CDATA[SELECT id FROM Bill WHERE payed = 1]]></query>
     </named-native-query>
    -->
+
+  <!-- UnComment the following if database used is MS SQL Server 2008 -->
+    <!--
+    <named-native-query name="get.all.ids.of.payed.bills">
+      <query><![CDATA[SELECT id FROM Bill WHERE payed = 1]]></query>
+    </named-native-query>
+     -->
 </entity-mappings>

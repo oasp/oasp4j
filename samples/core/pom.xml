@@ -252,7 +252,7 @@
       <artifactId>querydsl-jpa</artifactId>
       <version>3.7.1</version>
     </dependency>
-	
+
     <dependency>
       <groupId>org.skyscreamer</groupId>
       <artifactId>jsonassert</artifactId>
@@ -268,6 +268,16 @@
         <version>11.2.0</version>
       </dependency>
      -->
+
+	<!-- UnComment the following dependency if MS SQL Server 2008 database is used -->
+    <!--
+    <dependency>
+      <groupId>com.microsoft.sqlserver</groupId>
+      <artifactId>sqljdbc</artifactId>
+      <version>4.0</version>
+    </dependency>
+    -->
+
   </dependencies>
 
   <build>

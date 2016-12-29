@@ -48,6 +48,12 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
    * Uncomment the following Column annotation if the database used is Oracle 11g
    */
   // @Column(name = "\"user\"")
+
+  /*
+   * UnComment the following line completely (Column Annotation) in case MS SQL Server 2008 is the database else comment
+   * it
+   */
+  // @Column(name = "[user]")
   private String user;
 
   /**
