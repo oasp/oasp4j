@@ -42,16 +42,9 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
   /** @see #getDate() */
   private transient Date date;
 
-  /** @see #getUser() */
+  /** @see #getUserName() */
 
-  /*
-   * Uncomment the following Column annotation if the database used is Oracle 11g
-   */
-  // @Column(name = "\"user\"")
-
-  /** Remove or Comment the following line completely (Column Annotation) in case of database other than PostGres */
-  // @Column(name = "`user`")
-  private String user;
+  private String userName;
 
   /**
    * The constructor.
@@ -106,17 +99,17 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
    * @return the login or id of the user that has created this revision.
    */
 
-  public String getUser() {
+  public String getUserName() {
 
-    return this.user;
+    return this.userName;
   }
 
   /**
-   * @param user is the new value of {@link #getUser()}.
+   * @param userName is the new value of {@link #getUserName()}.
    */
-  public void setUser(String user) {
+  public void setUserName(String userName) {
 
-    this.user = user;
+    this.userName = userName;
   }
 
   @Override
@@ -130,5 +123,4 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
 
     return null;
   }
-
 }

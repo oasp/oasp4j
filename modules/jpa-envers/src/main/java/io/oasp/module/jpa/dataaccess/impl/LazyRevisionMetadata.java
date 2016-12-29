@@ -2,12 +2,12 @@
  * http://www.apache.org/licenses/LICENSE-2.0 */
 package io.oasp.module.jpa.dataaccess.impl;
 
-import io.oasp.module.jpa.dataaccess.api.AdvancedRevisionEntity;
-import io.oasp.module.jpa.dataaccess.api.RevisionMetadata;
-
 import java.util.Date;
 
 import javax.persistence.EntityManager;
+
+import io.oasp.module.jpa.dataaccess.api.AdvancedRevisionEntity;
+import io.oasp.module.jpa.dataaccess.api.RevisionMetadata;
 
 /**
  * This is a lazy implementation of the {@link RevisionMetadata} interface.
@@ -52,7 +52,7 @@ public class LazyRevisionMetadata implements RevisionMetadata {
   @Override
   public String getAuthor() {
 
-    return getRevisionEntity().getUser();
+    return getRevisionEntity().getUserName();
   }
 
   @Override
