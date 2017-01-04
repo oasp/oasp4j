@@ -27,7 +27,7 @@ public class AdvancedRevisionListener implements RevisionListener {
   public void newRevision(Object revisionEntity) {
 
     AdvancedRevisionEntity revision = (AdvancedRevisionEntity) revisionEntity;
-    revision.setUserName(UserSessionAccess.getUserLogin());
+    revision.setUserLogin(UserSessionAccess.getUserLogin());
   }
 
 }

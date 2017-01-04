@@ -44,9 +44,9 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
   /** @see #getDate() */
   private transient Date date;
 
-  /** @see #getUserName() */
+  /** @see #getUserLogin() */
 
-  private String userName;
+  private String userLogin;
 
   /**
    * The constructor.
@@ -101,17 +101,17 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
    * @return the login or id of the user that has created this revision.
    */
 
-  public String getUserName() {
+  public String getUserLogin() {
 
-    return this.userName;
+    return this.userLogin;
   }
 
   /**
-   * @param userName is the new value of {@link #getUserName()}.
+   * @param userLogin is the new value of {@link #getUserLogin()}.
    */
-  public void setUserName(String userName) {
+  public void setUserLogin(String userLogin) {
 
-    this.userName = userName;
+    this.userLogin = userLogin;
   }
 
   @Override

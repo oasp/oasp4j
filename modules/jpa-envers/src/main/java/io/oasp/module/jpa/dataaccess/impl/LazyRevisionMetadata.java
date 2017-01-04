@@ -52,7 +52,7 @@ public class LazyRevisionMetadata implements RevisionMetadata {
   @Override
   public String getAuthor() {
 
-    return getRevisionEntity().getUserName();
+    return getRevisionEntity().getUserLogin();
   }
 
   @Override
