@@ -1,6 +1,6 @@
 /* Copyright (c) The m-m-m Team, Licensed under the Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0 */
-package io.oasp.module.jpa.dataaccess.api;
+package io.oasp.module.jpa.dataaccess.api.common;
 
 import java.util.Date;
 
@@ -15,16 +15,17 @@ import org.hibernate.envers.RevisionEntity;
 import org.hibernate.envers.RevisionNumber;
 import org.hibernate.envers.RevisionTimestamp;
 
+import io.oasp.module.jpa.dataaccess.api.AdvancedRevisionListener;
+
 /**
  * This is a custom {@link org.hibernate.envers.DefaultRevisionEntity revision entity} also containing the actual user.
  *
  * @see org.hibernate.envers.DefaultRevisionEntity
- * @deprecated please use {@link io.oasp.module.jpa.dataaccess.api.common.AdvancedRevisionEntity} instead.
+ *
  */
 @Entity
 @RevisionEntity(AdvancedRevisionListener.class)
 @Table(name = "RevInfo")
-@Deprecated
 public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
 
   /** UID for serialization. */
@@ -43,9 +44,9 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
   /** @see #getDate() */
   private transient Date date;
 
-  /** @see #getUser() */
+  /** @see #getUserName() */
 
-  private String user;
+  private String userName;
 
   /**
    * The constructor.
@@ -100,17 +101,17 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
    * @return the login or id of the user that has created this revision.
    */
 
-  public String getUser() {
+  public String getUserName() {
 
-    return this.user;
+    return this.userName;
   }
 
   /**
-   * @param user is the new value of {@link #getUser()}.
+   * @param userName is the new value of {@link #getUserName()}.
    */
-  public void setUser(String user) {
+  public void setUserName(String userName) {
 
-    this.user = user;
+    this.userName = userName;
   }
 
   @Override

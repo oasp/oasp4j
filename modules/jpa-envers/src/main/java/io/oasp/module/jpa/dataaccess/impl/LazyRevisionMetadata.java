@@ -6,8 +6,8 @@ import java.util.Date;
 
 import javax.persistence.EntityManager;
 
-import io.oasp.module.jpa.dataaccess.api.AdvancedRevisionEntity;
 import io.oasp.module.jpa.dataaccess.api.RevisionMetadata;
+import io.oasp.module.jpa.dataaccess.api.common.AdvancedRevisionEntity;
 
 /**
  * This is a lazy implementation of the {@link RevisionMetadata} interface.
