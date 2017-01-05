@@ -1,5 +1,7 @@
 package io.oasp.gastronomy.restaurant.general.common.api.builders;
 
+import static io.oasp.gastronomy.restaurant.tablemanagement.common.constants.TablemanagementTestDataConstants.ID_TABLE;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -7,6 +9,8 @@ import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderSt
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 
 public class OrderEtoBuilder {
+
+  public static final OrderState STATE_ORDER = OrderState.OPEN;
 
   private List<P<OrderEto>> parameterToBeApplied;
 
@@ -56,6 +60,10 @@ public class OrderEtoBuilder {
   public OrderEto createNew() {
 
     OrderEto ordereto = new OrderEto();
+
+    ordereto.setState(STATE_ORDER);
+    ordereto.setTableId(ID_TABLE);
+
     for (P<OrderEto> parameter : this.parameterToBeApplied) {
       parameter.apply(ordereto);
     }

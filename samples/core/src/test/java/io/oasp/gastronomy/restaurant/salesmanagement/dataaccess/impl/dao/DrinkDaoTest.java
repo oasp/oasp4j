@@ -1,5 +1,7 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.impl.dao;
 
+import static io.oasp.gastronomy.restaurant.general.common.api.builders.DrinkEntityBuilder.DESCRIPTION_DRINK;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -53,7 +55,7 @@ public class DrinkDaoTest extends ComponentTest {
    * with the {@link Transactional} annotation, are executed in separate transaction, thus one test case can execute
    * multiple transactions.
    *
-     */
+   */
   @Named
   static class DrinkDaoTestBean {
 
@@ -70,8 +72,8 @@ public class DrinkDaoTest extends ComponentTest {
     @Transactional
     public DrinkEntity create() {
 
-      DrinkEntity drink =
-          new DrinkEntityBuilder().alcoholic(false).description(this.description).name("some name").createNew();
+      DrinkEntity drink = new DrinkEntityBuilder().createNew();
+
       assertThat(drink.getId()).isNull();
       drink = this.drinkDao.save(drink);
       return drink;
@@ -102,7 +104,7 @@ public class DrinkDaoTest extends ComponentTest {
       // get first revision
       Number rev = history.get(0).getRevision();
       DrinkEntity drink = this.drinkDao.load(id, rev);
-      assertThat(drink.getDescription()).isEqualTo(this.description);
+      assertThat(drink.getDescription()).isEqualTo(DESCRIPTION_DRINK);
 
       // get second revision
       rev = history.get(1).getRevision();
