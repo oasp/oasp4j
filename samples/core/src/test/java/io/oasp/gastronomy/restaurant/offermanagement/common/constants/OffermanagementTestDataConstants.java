@@ -1,10 +1,11 @@
 package io.oasp.gastronomy.restaurant.offermanagement.common.constants;
 
 /**
- * @author vkiran
+ * This class serves as constants file for the sample values with respect to offermanagement
  *
  */
 public class OffermanagementTestDataConstants {
+
   public static final long ID_OFFER_SCHNITZELMENUE = 1L;
 
   public static final long ID_PRODUCT_MEAL_SCHNITZEL = 1L;
