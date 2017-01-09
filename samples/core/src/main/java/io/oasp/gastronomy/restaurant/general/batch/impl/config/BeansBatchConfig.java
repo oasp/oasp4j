@@ -11,10 +11,13 @@ import org.springframework.batch.core.launch.support.SimpleJobOperator;
 import org.springframework.batch.core.repository.support.JobRepositoryFactoryBean;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.transaction.PlatformTransactionManager;
+
+import io.oasp.gastronomy.restaurant.general.configuration.CustomBeanFactoryPostProcessor;
 
 /**
  * This class contains the configuration like jobLauncher,Jobrepository etc.
@@ -36,10 +39,28 @@ public class BeansBatchConfig {
 
   private JobExplorerFactoryBean jobExplorer;
 
+  /**
+   * Datasource configuration
+   */
   private DataSource dataSource;
 
   private PlatformTransactionManager transactionManager;
 
+  /**
+   * This method is creating beanFactoryPostProcesor bean to register a bean of type 'scope' in
+   * {@link CustomBeanFactoryPostProcessor}
+   *
+   * @return {@link CustomBeanFactoryPostProcessor}
+   */
+  @Bean
+  public static BeanFactoryPostProcessor beanFactoryPostProcessor() {
+
+    return new CustomBeanFactoryPostProcessor();
+  }
+
+  /**
+   * Isolation level configuration
+   */
   @Value("ISOLATION_DEFAULT")
   private String isolationLevelForCreate;
 
