@@ -135,7 +135,6 @@ public class UcManageOrderPositionImpl extends AbstractOrderPositionUc implement
 
     verifyOrderPositionStateChange(updateOrderPosition, currentState, newState);
 
-    // TODO add verification methods of other sub-states of OrderPosition (i.e. Meal and SideDish)
     verifyDrinkStateChange(updateOrderPosition, currentState, newState, newDrinkState);
 
   }

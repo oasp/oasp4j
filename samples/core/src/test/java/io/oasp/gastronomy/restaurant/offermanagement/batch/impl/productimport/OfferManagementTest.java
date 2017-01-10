@@ -1,5 +1,7 @@
 package io.oasp.gastronomy.restaurant.offermanagement.batch.impl.productimport;
 
+import static io.oasp.gastronomy.restaurant.offermanagement.common.constants.OffermanagementTestDataConstants.ID_OFFER_SCHNITZELMENUE;
+import static io.oasp.gastronomy.restaurant.offermanagement.common.constants.OffermanagementTestDataConstants.ID_PRODUCT_SIDEDISH_POMMES;
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
@@ -119,10 +121,10 @@ public class OfferManagementTest extends ComponentTest {
     assertEquals(offerEntity.size(), 1);
     assertEquals(offerEntity.get(0).getPrice(), new Money(6.99));
 
-    filter.setSideDishId(7L);
+    filter.setSideDishId(ID_PRODUCT_SIDEDISH_POMMES);
     offerEntity = this.offerManagement.findOffersFiltered(filter, sort);
     assertEquals(offerEntity.size(), 1);
-    assertEquals(offerEntity.get(0).getId(), new Long(1));
+    assertEquals(offerEntity.get(0).getId(), new Long(ID_OFFER_SCHNITZELMENUE));
     assertEquals(offerEntity.get(0).getDescription(), "Description of Schnitzel-Menü");
     assertEquals(offerEntity.get(0).getDrinkId(), new Long(12));
     assertEquals(offerEntity.get(0).getMealId(), new Long(1));

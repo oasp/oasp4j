@@ -1,5 +1,9 @@
 package io.oasp.gastronomy.restaurant.general.common.api.builders;
 
+import static io.oasp.gastronomy.restaurant.salesmanagement.common.constants.SalesmanagementTestDataConstants.ID_ORDERPOSITION_SCHNITZELMENUE;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,6 +14,16 @@ import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderPositio
 public class BillEntityBuilder {
 
   private List<P<BillEntity>> parameterToBeApplied;
+
+  private static final boolean FLAG_BILL_PAYED = true;
+
+  public static final double TOTAL_BILL = 42.42;
+
+  private static final Money TOTAL_BILL_AS_MONEY = new Money(new BigDecimal(Double.toString(TOTAL_BILL)));
+
+  private static final double TIP_BILL = 1.0;
+
+  private static final Money TIP_BILL_AS_MONEY = new Money(new BigDecimal(Double.toString(TIP_BILL)));
 
   public BillEntityBuilder() {
 
@@ -93,6 +107,14 @@ public class BillEntityBuilder {
   public BillEntity createNew() {
 
     BillEntity billentity = new BillEntity();
+
+    ArrayList<Long> sampleOrderPositionIdList = new ArrayList<>();
+    sampleOrderPositionIdList.add(ID_ORDERPOSITION_SCHNITZELMENUE);
+    billentity.setTotal(TOTAL_BILL_AS_MONEY);
+    billentity.setTip(TIP_BILL_AS_MONEY);
+    billentity.setPayed(FLAG_BILL_PAYED);
+    billentity.setOrderPositionIds(sampleOrderPositionIdList);
+
     for (P<BillEntity> parameter : this.parameterToBeApplied) {
       parameter.apply(billentity);
     }
