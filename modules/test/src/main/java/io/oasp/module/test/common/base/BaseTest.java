@@ -47,7 +47,7 @@ public abstract class BaseTest extends Assertions {
   public final void setUp() {
 
     // Simply sets INITIALIZED to true when setUp is called for the first time.
-    doSetUp(INITIALIZED);
+    doSetUp();
     if (!INITIALIZED) {
       INITIALIZED = true;
     }
@@ -63,9 +63,18 @@ public abstract class BaseTest extends Assertions {
   }
 
   /**
+   * @return {@code true} if this JUnit class is invoked for the first time (first test method is called), {@code false}
+   *         otherwise (if this is a subsequent invocation).
+   */
+  protected boolean isInitialSetup() {
+
+    return INITIALIZED;
+  }
+
+  /**
    * Provides initialization previous to the creation of the text fixture.
    */
-  protected void doSetUp(boolean initialized) {
+  protected void doSetUp() {
 
   }
 
