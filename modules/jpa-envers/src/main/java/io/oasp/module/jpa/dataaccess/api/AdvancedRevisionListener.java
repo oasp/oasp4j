@@ -6,6 +6,8 @@ import net.sf.mmm.util.session.api.UserSessionAccess;
 
 import org.hibernate.envers.RevisionListener;
 
+import io.oasp.module.jpa.dataaccess.api.common.AdvancedRevisionEntity;
+
 /**
  * This is the implementation of {@link RevisionListener} that enriches {@link AdvancedRevisionEntity} with additional
  * information.
@@ -25,7 +27,7 @@ public class AdvancedRevisionListener implements RevisionListener {
   public void newRevision(Object revisionEntity) {
 
     AdvancedRevisionEntity revision = (AdvancedRevisionEntity) revisionEntity;
-    revision.setUser(UserSessionAccess.getUserLogin());
+    revision.setUserLogin(UserSessionAccess.getUserLogin());
   }
 
 }
