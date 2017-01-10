@@ -42,9 +42,9 @@ public class ProductManagementTest extends ComponentTest {
    * Login
    */
   @Override
-  public void doSetUp(boolean initialized) {
+  public void doSetUp() {
 
-    super.doSetUp(initialized);
+    super.doSetUp();
     this.flyway.clean();
     this.flyway.migrate();
     TestUtil.login("waiter", PermissionConstants.FIND_OFFER);

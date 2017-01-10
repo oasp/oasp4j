@@ -51,9 +51,9 @@ public class TablemanagementImplTest extends ModuleTest {
    * Injection of the mocked objects into the SUT.
    */
   @Override
-  public void doSetUp(boolean initialized) {
+  public void doSetUp() {
 
-    super.doSetUp(initialized);
+    super.doSetUp();
     this.tableManagementImpl = new TablemanagementImpl();
     this.tableManagementImpl.setSalesmanagement(this.salesManagement);
     this.tableManagementImpl.setStaffmanagement(this.staffManagement);

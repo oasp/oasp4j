@@ -40,9 +40,9 @@ public class SalesManagementTest extends ComponentTest {
    * Initialization for the test.
    */
   @Override
-  public void doSetUp(boolean initialized) {
+  public void doSetUp() {
 
-    super.doSetUp(initialized);
+    super.doSetUp();
     TestUtil.login("waiter", PermissionConstants.FIND_ORDER_POSITION, PermissionConstants.SAVE_ORDER_POSITION,
         PermissionConstants.SAVE_ORDER, PermissionConstants.FIND_OFFER);
     this.dbTestHelper.setMigrationVersion("0002");

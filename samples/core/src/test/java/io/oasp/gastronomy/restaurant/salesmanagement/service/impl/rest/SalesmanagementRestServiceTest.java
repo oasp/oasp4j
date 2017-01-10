@@ -15,12 +15,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -48,8 +44,6 @@ import io.oasp.module.jpa.common.api.to.PaginationTo;
 
 public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
 
-  private static Logger LOG = LoggerFactory.getLogger(SalesmanagementRestServiceTest.class);
-
   private SalesmanagementRestService service;
 
   @Inject
@@ -58,9 +52,10 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
   /**
    * Provides initialization previous to the creation of the text fixture.
    */
-  @Before
-  public void init() {
+  @Override
+  public void doSetUp() {
 
+    super.doSetUp();
     getDbTestHelper().resetDatabase();
     this.service = getRestTestClientBuilder().build(SalesmanagementRestService.class);
   }
@@ -68,10 +63,11 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
   /**
    * Provides clean up after tests.
    */
-  @After
-  public void clean() {
+  @Override
+  public void doTearDown() {
 
     this.service = null;
+    super.tearDown();
   }
 
   /**
