@@ -77,8 +77,8 @@ public class OfferImportJobTest extends AbstractSpringBatchIntegrationTest {
 
     // - exemplary offer
     OfferEto offer = allOffers.get(0);
-    assertThat(offer.getName()).isEqualTo("Leckeres-MenÃ¼");
-    assertThat(offer.getDescription()).isEqualTo("Description of Leckeres-MenÃ¼");
+    assertThat(offer.getName()).isEqualTo("Leckeres-Menü");
+    assertThat(offer.getDescription()).isEqualTo("Description of Leckeres-Menü");
     assertThat(offer.getPrice()).isEqualTo(new Money(15.99));
     assertThat(offer.getState()).isEqualTo(OfferState.NORMAL);
   }
