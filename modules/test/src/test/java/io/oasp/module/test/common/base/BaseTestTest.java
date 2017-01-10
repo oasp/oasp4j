@@ -16,9 +16,9 @@ public class BaseTestTest extends Assertions {
   class MyTest extends BaseTest {
 
     @Override
-    protected void doSetUp(boolean initialized) {
+    protected void doSetUp() {
 
-      assertThat(initialized).isEqualTo(EXPECTED_RESULT);
+      assertThat(INITIALIZED).isEqualTo(EXPECTED_RESULT);
     }
   }
 
