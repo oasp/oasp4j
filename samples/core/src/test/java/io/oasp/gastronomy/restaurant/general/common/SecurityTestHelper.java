@@ -16,12 +16,10 @@ public class SecurityTestHelper {
 
   public void login(String name) {
 
-    // TODO implement in later iteration
   }
 
   public void logout() {
 
-    // TODO implement in later iteration
   }
 
 }

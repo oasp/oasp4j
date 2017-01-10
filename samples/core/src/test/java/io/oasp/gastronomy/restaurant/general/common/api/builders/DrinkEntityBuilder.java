@@ -9,6 +9,12 @@ public class DrinkEntityBuilder {
 
   private List<P<DrinkEntity>> parameterToBeApplied;
 
+  private static final String NAME_DRINK = "Spring Paradise";
+
+  public static final String DESCRIPTION_DRINK = "without alcohol";
+
+  private static final boolean FLAG_DRINK_ALCOHOLIC = false;
+
   public DrinkEntityBuilder() {
 
     this.parameterToBeApplied = new LinkedList<>();
@@ -93,6 +99,11 @@ public class DrinkEntityBuilder {
   public DrinkEntity createNew() {
 
     DrinkEntity drinkentity = new DrinkEntity();
+
+    name(NAME_DRINK);
+    description(DESCRIPTION_DRINK);
+    alcoholic(FLAG_DRINK_ALCOHOLIC);
+
     for (P<DrinkEntity> parameter : this.parameterToBeApplied) {
       parameter.apply(drinkentity);
     }
