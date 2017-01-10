@@ -2,8 +2,6 @@ package io.oasp.gastronomy.restaurant.tablemanagement.service.impl.rest;
 
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -35,9 +33,10 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
   /**
    * Provides initialization previous to the creation of the text fixture.
    */
-  @Before
-  public void init() {
+  @Override
+  public void doSetUp() {
 
+    super.doSetUp();
     getDbTestHelper().resetDatabase();
     this.service = getRestTestClientBuilder().build(TablemanagementRestService.class);
 
@@ -46,11 +45,11 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
   /**
    * Provides clean up after tests.
    */
-  @After
-  public void clean() {
+  @Override
+  public void doTearDown() {
 
     this.service = null;
-
+    super.doTearDown();
   }
 
   /**

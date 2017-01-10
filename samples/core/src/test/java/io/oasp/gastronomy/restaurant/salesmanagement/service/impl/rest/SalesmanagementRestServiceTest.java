@@ -15,8 +15,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -54,9 +52,10 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
   /**
    * Provides initialization previous to the creation of the text fixture.
    */
-  @Before
-  public void init() {
+  @Override
+  public void doSetUp() {
 
+    super.doSetUp();
     getDbTestHelper().resetDatabase();
     this.service = getRestTestClientBuilder().build(SalesmanagementRestService.class);
   }
@@ -64,10 +63,11 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
   /**
    * Provides clean up after tests.
    */
-  @After
-  public void clean() {
+  @Override
+  public void doTearDown() {
 
     this.service = null;
+    super.tearDown();
   }
 
   /**

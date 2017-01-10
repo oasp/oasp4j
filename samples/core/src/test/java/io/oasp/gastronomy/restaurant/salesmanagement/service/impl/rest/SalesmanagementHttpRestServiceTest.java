@@ -24,8 +24,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -72,9 +70,10 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
   /**
    * Provides initialization previous to the creation of the text fixture.
    */
-  @Before
-  public void init() {
+  @Override
+  public void doSetUp() {
 
+    super.doSetUp();
     getDbTestHelper().resetDatabase();
     this.service = getRestTestClientBuilder().build(SalesmanagementRestService.class);
   }
@@ -82,10 +81,11 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
   /**
    * Provides clean up after tests.
    */
-  @After
-  public void clean() {
+  @Override
+  public void doTearDown() {
 
     this.service = null;
+    super.doTearDown();
   }
 
   /**
