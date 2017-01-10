@@ -134,4 +134,3 @@ CREATE TABLE RevInfo(
   timestamp BIGINT NOT NULL,
   user VARCHAR(255)
 );
-

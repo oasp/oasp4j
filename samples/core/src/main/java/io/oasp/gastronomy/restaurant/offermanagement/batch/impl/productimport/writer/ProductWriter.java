@@ -1,8 +1,5 @@
 package io.oasp.gastronomy.restaurant.offermanagement.batch.impl.productimport.writer;
 
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -10,6 +7,9 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemWriter;
+
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
 
 /**
  * ProductWriter is responsible for writing ProductEto to database.
@@ -21,9 +21,6 @@ public class ProductWriter implements ItemWriter<ProductEto> {
 
   private Offermanagement offerManagement;
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void write(List<? extends ProductEto> items) throws Exception {
 
