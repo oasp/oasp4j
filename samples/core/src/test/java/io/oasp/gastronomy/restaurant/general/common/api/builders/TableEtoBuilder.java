@@ -1,5 +1,8 @@
 package io.oasp.gastronomy.restaurant.general.common.api.builders;
 
+import static io.oasp.gastronomy.restaurant.staffmanagement.common.constants.StaffmanagementTestDataConstants.ID_WAITER;
+import static io.oasp.gastronomy.restaurant.tablemanagement.common.constants.TablemanagementTestDataConstants.NUMBER_TABLE_NEW;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,6 +12,8 @@ import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 public class TableEtoBuilder {
 
   private List<P<TableEto>> parameterToBeApplied;
+
+  public static final TableState STATE_TABLE = TableState.FREE;
 
   public TableEtoBuilder() {
 
@@ -22,6 +27,7 @@ public class TableEtoBuilder {
    */
   private void fillMandatoryFields_custom() {
 
+    number(NUMBER_TABLE_NEW);
   }
 
   /**
@@ -83,6 +89,9 @@ public class TableEtoBuilder {
 
     TableEto tableeto = new TableEto();
     tableeto.setState(TableState.FREE);
+    tableeto.setState(STATE_TABLE);
+    tableeto.setWaiterId(ID_WAITER);
+
     for (P<TableEto> parameter : this.parameterToBeApplied) {
       parameter.apply(tableeto);
     }

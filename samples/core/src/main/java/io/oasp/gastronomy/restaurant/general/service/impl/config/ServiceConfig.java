@@ -86,6 +86,14 @@ public class ServiceConfig extends WsConfigurerAdapter {
   }
 
   @Bean
+  public ServletRegistrationBean servletWSRegistrationBean() {
+
+    CXFServlet cxfServlet = new CXFServlet();
+    ServletRegistrationBean servletRegistration = new ServletRegistrationBean(cxfServlet, URL_PATH_WEB_SERVICES + "/*");
+    return servletRegistration;
+  }
+
+  @Bean
   public Server jaxRsServer() {
 
     // List<Object> restServiceBeans = new

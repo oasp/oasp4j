@@ -1,5 +1,9 @@
 package io.oasp.gastronomy.restaurant.general.common.api.builders;
 
+import static io.oasp.gastronomy.restaurant.offermanagement.common.constants.OffermanagementTestDataConstants.ID_OFFER_SCHNITZELMENUE;
+import static io.oasp.gastronomy.restaurant.salesmanagement.common.constants.SalesmanagementTestDataConstants.ID_ORDER;
+
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,6 +15,19 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionE
 public class OrderPositionEtoBuilder {
 
   private List<P<OrderPositionEto>> parameterToBeApplied;
+
+  public static final String COMMENT_ORDERPOSITION = "mit Ketchup";
+
+  public static final OrderPositionState STATE_ORDERPOSITION = OrderPositionState.ORDERED;
+
+  public static final ProductOrderState STATE_PRODUCT_DRINK = ProductOrderState.DELIVERED;
+
+  public static final String NAME_OFFER_SCHNITZELMENUE = "Schnitzel-Menü";
+
+  public static final double PRICE_OFFER_SCHNITZELMENUE = 6.99;
+
+  public static final Money PRICE_OFFER_SCHNITZELMENUE_AS_MONEY =
+      new Money(new BigDecimal(Double.toString(PRICE_OFFER_SCHNITZELMENUE)));
 
   public OrderPositionEtoBuilder() {
 
@@ -24,6 +41,8 @@ public class OrderPositionEtoBuilder {
    */
   private void fillMandatoryFields() {
 
+    orderId(ID_ORDER);
+    offerId(ID_OFFER_SCHNITZELMENUE);
   }
 
   /**
@@ -144,6 +163,11 @@ public class OrderPositionEtoBuilder {
   public OrderPositionEto createNew() {
 
     OrderPositionEto orderpositioneto = new OrderPositionEto();
+
+    orderpositioneto.setComment(COMMENT_ORDERPOSITION);
+    orderpositioneto.setState(STATE_ORDERPOSITION);
+    orderpositioneto.setDrinkState(STATE_PRODUCT_DRINK);
+
     for (P<OrderPositionEto> parameter : this.parameterToBeApplied) {
       parameter.apply(orderpositioneto);
     }
