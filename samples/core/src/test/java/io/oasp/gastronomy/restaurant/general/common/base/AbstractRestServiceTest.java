@@ -37,7 +37,6 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
   /**
    * The user name used during the test.
    */
-  @Value("${server.rest.test.user}")
   private String user;
 
   /**
@@ -81,7 +80,7 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
 
     super.doSetUp();
     this.restTestClientBuilder.setLocalServerPort(this.port);
-    this.restTestClientBuilder.setUser(this.user);
+    this.restTestClientBuilder.setLogin(this.user);
     this.restTestClientBuilder.setJacksonJsonProvider(this.jacksonJsonProvider);
 
     if (this.migration != null && !"".equals(this.migration)) {

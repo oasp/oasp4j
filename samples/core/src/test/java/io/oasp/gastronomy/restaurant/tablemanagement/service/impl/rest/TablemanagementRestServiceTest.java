@@ -80,7 +80,7 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
   public void testDeleteTable() {
 
     // setup
-    getRestTestClientBuilder().setUser("chief");
+    getRestTestClientBuilder().setLogin("chief");
     this.service = getRestTestClientBuilder().build(TablemanagementRestService.class);
 
     // given
@@ -106,7 +106,7 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
     // given
     long tableNumber = 7L;
     long waiterId = 2L;
-    getRestTestClientBuilder().setUser("chief");
+    getRestTestClientBuilder().setLogin("chief");
     this.service = getRestTestClientBuilder().build(TablemanagementRestService.class);
     TableEto table = new TableEtoBuilder().number(tableNumber).waiterId(waiterId).createNew();
     assertThat(table.getId()).isNull();

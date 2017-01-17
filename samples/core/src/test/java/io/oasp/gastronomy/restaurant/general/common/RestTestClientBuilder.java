@@ -26,11 +26,11 @@ public class RestTestClientBuilder {
   /*
    * The user used for authentication during testing.
    */
-  private String user;
+  private String login;
 
   /**
-   * This method creates a proxy for the specified {@code RestService} interface. Properties
-   * {@code server.rest.test.user} and {@code server.rest.test.password} are used by default for authentication.
+   * This method creates a proxy for the specified {@code RestService} interface. Use {@code #setLogin(String)} to set
+   * login ID which will be used as both user name and pasword for authentication.
    *
    * @param <T> The generic type for which a proxy must be created.
    * @param clazz The interface specifying the generic type.
@@ -38,12 +38,15 @@ public class RestTestClientBuilder {
    */
   public <T extends RestService> T build(Class<T> clazz) {
 
-    return this.build(clazz, this.user, this.user, createRestServiceUrl());
+    if (this.login == null) {
+      throw new IllegalStateException("RestTestClientBuilder not properly initialized. No login provided.");
+    }
+    return this.build(clazz, this.login, this.login, createRestServiceUrl());
   }
 
   /**
    * This method creates a proxy for the specified {@code RestService} interface. The provided {@code String login} is
-   * used as both username and password for authentication. The method {@code setLocalServerPort} MUST be called in
+   * used as both user name and password for authentication. The method {@code setLocalServerPort} MUST be called in
    * advance. The method {@code setLocalServerPort} MUST be called in advance.
    *
    * @param <T> The generic type for which a proxy must be created.
@@ -114,13 +117,13 @@ public class RestTestClientBuilder {
   }
 
   /**
-   * Sets the {@code user}.
+   * Sets the {@code login}.
    *
-   * @param user Used for authentication.
+   * @param login Used for authentication.
    */
-  public void setUser(String user) {
+  public void setLogin(String login) {
 
-    this.user = user;
+    this.login = login;
   }
 
 }
