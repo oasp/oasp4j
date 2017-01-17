@@ -28,11 +28,6 @@ public class RestTestClientBuilder {
    */
   private String user;
 
-  /*
-   * The password used for authentication during testing.
-   */
-  private String password;
-
   /**
    * This method creates a proxy for the specified {@code RestService} interface. Properties
    * {@code server.rest.test.user} and {@code server.rest.test.password} are used by default for authentication.
@@ -43,7 +38,7 @@ public class RestTestClientBuilder {
    */
   public <T extends RestService> T build(Class<T> clazz) {
 
-    return this.build(clazz, this.user, this.password, createRestServiceUrl());
+    return this.build(clazz, this.user, this.user, createRestServiceUrl());
   }
 
   /**
@@ -128,13 +123,4 @@ public class RestTestClientBuilder {
     this.user = user;
   }
 
-  /**
-   * Sets the {@code password}.
-   *
-   * @param password Used for authentication.
-   */
-  public void setPassword(String password) {
-
-    this.password = password;
-  }
 }

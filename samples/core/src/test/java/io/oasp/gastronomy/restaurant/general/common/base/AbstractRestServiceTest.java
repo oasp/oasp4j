@@ -41,12 +41,6 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
   private String user;
 
   /**
-   * The password used during the test.
-   */
-  @Value("${server.rest.test.password}")
-  private String password;
-
-  /**
    * The baseline to be used by {@link Flyway}
    */
   @Value("${server.rest.test.flyway.baseline}")
@@ -88,7 +82,6 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
     super.doSetUp();
     this.restTestClientBuilder.setLocalServerPort(this.port);
     this.restTestClientBuilder.setUser(this.user);
-    this.restTestClientBuilder.setPassword(this.password);
     this.restTestClientBuilder.setJacksonJsonProvider(this.jacksonJsonProvider);
 
     if (this.migration != null && !"".equals(this.migration)) {

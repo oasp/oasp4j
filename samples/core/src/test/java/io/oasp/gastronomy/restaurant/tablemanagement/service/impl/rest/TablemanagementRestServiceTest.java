@@ -81,7 +81,6 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
 
     // setup
     getRestTestClientBuilder().setUser("chief");
-    getRestTestClientBuilder().setPassword("chief");
     this.service = getRestTestClientBuilder().build(TablemanagementRestService.class);
 
     // given
@@ -108,7 +107,6 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
     long tableNumber = 7L;
     long waiterId = 2L;
     getRestTestClientBuilder().setUser("chief");
-    getRestTestClientBuilder().setPassword("chief");
     this.service = getRestTestClientBuilder().build(TablemanagementRestService.class);
     TableEto table = new TableEtoBuilder().number(tableNumber).waiterId(waiterId).createNew();
     assertThat(table.getId()).isNull();
