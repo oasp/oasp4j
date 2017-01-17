@@ -35,11 +35,6 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
   protected int port;
 
   /**
-   * The user name used during the test.
-   */
-  private String user;
-
-  /**
    * The baseline to be used by {@link Flyway}
    */
   @Value("${server.rest.test.flyway.baseline}")
@@ -80,7 +75,6 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
 
     super.doSetUp();
     this.restTestClientBuilder.setLocalServerPort(this.port);
-    this.restTestClientBuilder.setLogin(this.user);
     this.restTestClientBuilder.setJacksonJsonProvider(this.jacksonJsonProvider);
 
     if (this.migration != null && !"".equals(this.migration)) {
