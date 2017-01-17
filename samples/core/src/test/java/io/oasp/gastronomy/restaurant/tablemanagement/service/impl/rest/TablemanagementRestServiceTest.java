@@ -38,7 +38,7 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
 
     super.doSetUp();
     getDbTestHelper().resetDatabase();
-    this.service = getRestTestClientBuilder().build(TablemanagementRestService.class);
+    this.service = getRestTestClientBuilder().build(TablemanagementRestService.class, "waiter");
 
   }
 
