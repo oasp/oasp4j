@@ -1,6 +1,6 @@
 /* Copyright (c) The m-m-m Team, Licensed under the Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0 */
-package io.oasp.module.jpa.dataaccess.api;
+package io.oasp.module.jpa.dataaccess.api.common;
 
 import java.util.Date;
 
@@ -15,6 +15,8 @@ import org.hibernate.envers.RevisionEntity;
 import org.hibernate.envers.RevisionNumber;
 import org.hibernate.envers.RevisionTimestamp;
 
+import io.oasp.module.jpa.dataaccess.api.AdvancedRevisionListener;
+
 /**
  * This is a custom {@link org.hibernate.envers.DefaultRevisionEntity revision entity} also containing the actual user.
  *
@@ -24,7 +26,6 @@ import org.hibernate.envers.RevisionTimestamp;
 @Entity
 @RevisionEntity(AdvancedRevisionListener.class)
 @Table(name = "RevInfo")
-@Deprecated
 public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
 
   /** UID for serialization. */
@@ -43,7 +44,7 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
   /** @see #getDate() */
   private transient Date date;
 
-  /** @see #userLogin() */
+  /** @see #getUserLogin() */
 
   private String userLogin;
 
@@ -124,5 +125,4 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
 
     return null;
   }
-
 }
