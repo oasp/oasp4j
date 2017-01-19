@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Column;
 
 import net.sf.mmm.util.entity.api.PersistenceEntity;
 
@@ -47,7 +48,7 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
   /*
    * Uncomment the following Column annotation if the database used is Oracle 11g
    */
-  // @Column(name = "\"user\"")
+  @Column(name = "\"user\"")
   private String user;
 
   /**
