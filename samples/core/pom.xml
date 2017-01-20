@@ -252,15 +252,6 @@
       <artifactId>querydsl-jpa</artifactId>
       <version>3.7.1</version>
     </dependency>
-	
-	<!-- UnComment the following dependency if MS SQL Server 2008 database is used -->
-    <!--
-    <dependency>
-      <groupId>com.microsoft.sqlserver</groupId>
-      <artifactId>sqljdbc</artifactId>
-      <version>4.0</version>
-    </dependency>
-    -->
 
     <dependency>
       <groupId>org.skyscreamer</groupId>
@@ -284,6 +275,14 @@
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>9.4.1211.jre7</version>
+    </dependency>
+    -->
+	<!-- UnComment the following dependency if MS SQL Server 2008 database is used -->
+    <!--
+    <dependency>
+      <groupId>com.microsoft.sqlserver</groupId>
+      <artifactId>sqljdbc</artifactId>
+      <version>4.0</version>
     </dependency>
     -->
   </dependencies>
