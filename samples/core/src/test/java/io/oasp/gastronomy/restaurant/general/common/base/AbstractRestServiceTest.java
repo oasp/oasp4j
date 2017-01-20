@@ -2,7 +2,6 @@ package io.oasp.gastronomy.restaurant.general.common.base;
 
 import javax.inject.Inject;
 
-import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
@@ -35,18 +34,6 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
   protected int port;
 
   /**
-   * The baseline to be used by {@link Flyway}
-   */
-  @Value("${server.rest.test.flyway.baseline}")
-  private String baseline;
-
-  /**
-   * The migration to be used by {@link Flyway}
-   */
-  @Value("${server.rest.test.flyway.migration}")
-  private String migration;
-
-  /**
    * The {@code RestaurantTestHelper}.
    */
   @Inject
@@ -76,10 +63,6 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
     super.doSetUp();
     this.restTestClientBuilder.setLocalServerPort(this.port);
     this.restTestClientBuilder.setJacksonJsonProvider(this.jacksonJsonProvider);
-
-    if (this.migration != null && !"".equals(this.migration)) {
-      this.dbTestHelper.setMigrationVersion(this.migration);
-    }
 
   }
 
