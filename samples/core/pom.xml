@@ -269,6 +269,15 @@
       </dependency>
      -->
 
+	<!-- Comment the following dependency if the database that is used is not PostGres 9.5.4 -->
+    <!--
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>9.4.1211.jre7</version>
+    </dependency>
+    -->
+	
 	<!-- UnComment the following dependency if MS SQL Server 2008 database is used -->
     <!--
     <dependency>

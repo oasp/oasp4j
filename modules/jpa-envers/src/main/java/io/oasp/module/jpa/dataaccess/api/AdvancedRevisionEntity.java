@@ -19,7 +19,7 @@ import org.hibernate.envers.RevisionTimestamp;
  * This is a custom {@link org.hibernate.envers.DefaultRevisionEntity revision entity} also containing the actual user.
  *
  * @see org.hibernate.envers.DefaultRevisionEntity
- *
+ * @deprecated please use {@link io.oasp.module.jpa.dataaccess.api.common.AdvancedRevisionEntity} instead.
  */
 @Entity
 @RevisionEntity(AdvancedRevisionListener.class)
@@ -43,9 +43,9 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
   /** @see #getDate() */
   private transient Date date;
 
-  /** @see #userLogin() */
+  /** @see #getUser() */
 
-  private String userLogin;
+  private String user;
 
   /**
    * The constructor.
@@ -100,17 +100,17 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
    * @return the login or id of the user that has created this revision.
    */
 
-  public String getUserLogin() {
+  public String getUser() {
 
-    return this.userLogin;
+    return this.user;
   }
 
   /**
-   * @param userLogin is the new value of {@link #getUserLogin()}.
+   * @param user is the new value of {@link #getUser()}.
    */
-  public void setUserLogin(String userLogin) {
+  public void setUser(String user) {
 
-    this.userLogin = userLogin;
+    this.user = user;
   }
 
   @Override
@@ -124,5 +124,4 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
 
     return null;
   }
-
 }
