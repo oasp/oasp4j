@@ -277,7 +277,6 @@
       <version>9.4.1211.jre7</version>
     </dependency>
     -->
-
 	<!-- UnComment the following dependency if MS SQL Server 2008 database is used -->
     <!--
     <dependency>
@@ -286,7 +285,6 @@
       <version>4.0</version>
     </dependency>
     -->
-
   </dependencies>
 
   <build>
