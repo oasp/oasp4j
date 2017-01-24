@@ -64,6 +64,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <excludedGroups>${oasp.test.excluded.groups}</excludedGroups>
+          <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
         </configuration>
       </plugin>
     </plugins>
