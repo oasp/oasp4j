@@ -67,7 +67,7 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
   public void doTearDown() {
 
     this.service = null;
-    super.tearDown();
+    super.doTearDown();
   }
 
   /**
