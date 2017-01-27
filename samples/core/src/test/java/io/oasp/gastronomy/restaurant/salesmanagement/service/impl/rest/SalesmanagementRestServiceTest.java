@@ -57,7 +57,7 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
 
     super.doSetUp();
     getDbTestHelper().resetDatabase();
-    this.service = getRestTestClientBuilder().build(SalesmanagementRestService.class);
+    this.service = getRestTestClientBuilder().build(SalesmanagementRestService.class, "waiter");
   }
 
   /**
