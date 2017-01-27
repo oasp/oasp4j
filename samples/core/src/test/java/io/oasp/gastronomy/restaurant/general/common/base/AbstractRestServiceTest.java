@@ -34,18 +34,6 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
   protected int port;
 
   /**
-   * The user name used during the test.
-   */
-  @Value("${server.rest.test.user}")
-  private String user;
-
-  /**
-   * The password used during the test.
-   */
-  @Value("${server.rest.test.password}")
-  private String password;
-
-  /**
    * The {@code RestaurantTestHelper}.
    */
   @Inject
@@ -74,8 +62,6 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
 
     super.doSetUp();
     this.restTestClientBuilder.setLocalServerPort(this.port);
-    this.restTestClientBuilder.setUser(this.user);
-    this.restTestClientBuilder.setPassword(this.password);
     this.restTestClientBuilder.setJacksonJsonProvider(this.jacksonJsonProvider);
 
   }
