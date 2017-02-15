@@ -9,7 +9,7 @@
   </parent>
   <groupId>io.oasp.java.modules</groupId>
   <artifactId>oasp4j-jpa-envers</artifactId>
-  <version>2.2.0-patched-traducteur</version>
+  <version>${oasp4j.version}</version>
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
   <description>JPA-based persistence infrastructure of the Open Application Standard Platform for Java (OASP4J).</description>
