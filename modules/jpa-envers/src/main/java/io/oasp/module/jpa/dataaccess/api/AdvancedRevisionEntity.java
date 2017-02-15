@@ -48,7 +48,7 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
   /*
    * Uncomment the following Column annotation if the database used is Oracle 11g
    */
-  @Column(name = "\"user\"")
+  // @Column(name = "\"user\"")
   private String user;
 
   /**
