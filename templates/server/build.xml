@@ -67,6 +67,10 @@
       <filterchain>
         <tokenfilter>
           <filetokenizer/>
+          <!-- Replace special characters -->
+          <replaceregex pattern="\$" replace="${symbol_dollar}" flags="g"/>
+          <replaceregex pattern="#" replace="${symbol_pound}" flags="g"/>
+          <replaceregex pattern="\\" replace="${symbol_escape}" flags="g"/>
           <!-- Replace packages -->
           <replaceregex pattern="package ${sample.package}" replace="${prefix}package ${package}" flags="g"/>
           <!-- Replace base package -->
@@ -90,6 +94,10 @@
       <filterchain>
         <tokenfilter>
           <filetokenizer/>
+          <!-- Replace special characters -->
+          <replaceregex pattern="\$" replace="${symbol_dollar}" flags="g"/>
+          <replaceregex pattern="#" replace="${symbol_pound}" flags="g"/>
+          <replaceregex pattern="\\" replace="${symbol_escape}" flags="g"/>
           <!-- remove application specific logic -->
           <replaceregex pattern="${xml.begin.pattern}.*?${xml.end.pattern}" replace="" flags="gs"/>
           <!-- comment out application specific logic -->
@@ -111,6 +119,10 @@
       <filterchain>
         <tokenfilter>
           <linetokenizer/>
+          <!-- Replace special characters -->
+          <replaceregex pattern="\$" replace="${symbol_dollar}" flags="g"/>
+          <replaceregex pattern="#" replace="${symbol_pound}" flags="g"/>
+          <replaceregex pattern="\\" replace="${symbol_escape}" flags="g"/>
           <!-- Replace packages -->
           <replaceregex pattern="package ${sample.package}" replace="${prefix}package ${package}" flags="g"/>
           <!-- Replace base package -->
@@ -129,6 +141,10 @@
       <filterchain>
         <tokenfilter>
           <filetokenizer/>
+          <!-- Replace special characters -->
+          <replaceregex pattern="\$" replace="${symbol_dollar}" flags="g"/>
+          <replaceregex pattern="#" replace="${symbol_pound}" flags="g"/>
+          <replaceregex pattern="\\" replace="${symbol_escape}" flags="g"/>
           <!-- remove application specific logic -->
           <replaceregex pattern="${xml.begin.pattern}.*?${xml.end.pattern}" replace="" flags="gs"/>
           <!-- comment out application specific logic -->
