@@ -85,12 +85,12 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
   public E save(E entity) {
 
     if (isNew(entity)) {
-      getEntityManager().persist(entity);
+      this.entityManager.persist(entity);
       LOG.debug("Saved new {} with id {}.", getEntityName(), entity.getId());
       return entity;
     } else {
-      if (getEntityManager().find(entity.getClass(), entity.getId()) != null) {
-        E update = getEntityManager().merge(entity);
+      if (this.entityManager.find(entity.getClass(), entity.getId()) != null) {
+        E update = this.entityManager.merge(entity);
         LOG.debug("Updated {} with id {}.", getEntityName(), entity.getId());
         return update;
       } else {
@@ -128,7 +128,7 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
   @Override
   public E findOne(ID id) {
 
-    E entity = getEntityManager().find(getEntityClass(), id);
+    E entity = this.entityManager.find(getEntityClass(), id);
     return entity;
   }
 
@@ -153,12 +153,12 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
    * @return an {@link Iterable} to find ALL {@link #getEntityClass() managed entities} from the persistent store. Not
    *         exposed to API by default as this might not make sense for all kind of entities.
    */
-  public List<E> findAll() {
+  protected List<E> findAll() {
 
-    CriteriaQuery<E> query = getEntityManager().getCriteriaBuilder().createQuery(getEntityClass());
+    CriteriaQuery<E> query = this.entityManager.getCriteriaBuilder().createQuery(getEntityClass());
     Root<E> root = query.from(getEntityClass());
     query.select(root);
-    TypedQuery<E> typedQuery = getEntityManager().createQuery(query);
+    TypedQuery<E> typedQuery = this.entityManager.createQuery(query);
     List<E> resultList = typedQuery.getResultList();
     LOG.debug("Query for all {} objects returned {} hit(s).", getEntityName(), resultList.size());
     return resultList;
@@ -167,12 +167,12 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
   @Override
   public List<E> findAll(Iterable<ID> ids) {
 
-    CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
+    CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
     CriteriaQuery<E> query = builder.createQuery(getEntityClass());
     Root<E> root = query.from(getEntityClass());
     query.select(root);
     query.where(root.get("id").in(ids));
-    TypedQuery<E> typedQuery = getEntityManager().createQuery(query);
+    TypedQuery<E> typedQuery = this.entityManager.createQuery(query);
     List<E> resultList = typedQuery.getResultList();
     LOG.debug("Query for selection of {} objects returned {} hit(s).", getEntityName(), resultList.size());
     return resultList;
@@ -181,8 +181,8 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
   @Override
   public void delete(ID id) {
 
-    E entity = getEntityManager().getReference(getEntityClass(), id);
-    getEntityManager().remove(entity);
+    E entity = this.entityManager.getReference(getEntityClass(), id);
+    this.entityManager.remove(entity);
     LOG.debug("Deleted {} with ID {}.", getEntityName(), id);
   }
 
@@ -190,8 +190,8 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
   public void delete(E entity) {
 
     // entity might be detached and could cause trouble in entityManager on remove
-    if (getEntityManager().contains(entity)) {
-      getEntityManager().remove(entity);
+    if (this.entityManager.contains(entity)) {
+      this.entityManager.remove(entity);
       LOG.debug("Deleted {} with ID {}.", getEntityName(), entity.getId());
     } else {
       delete(entity.getId());
