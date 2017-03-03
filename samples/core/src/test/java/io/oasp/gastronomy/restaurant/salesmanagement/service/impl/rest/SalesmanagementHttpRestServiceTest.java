@@ -39,7 +39,7 @@ import org.springframework.web.client.RestTemplate;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.general.common.api.builders.OrderPositionEtoBuilder;
-import io.oasp.gastronomy.restaurant.general.common.base.AbstractRestServiceTest;
+import io.oasp.gastronomy.restaurant.general.common.base.RestServiceTest;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
@@ -55,7 +55,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.service.api.rest.Salesmanag
 @SpringApplicationConfiguration(classes = { SpringBootApp.class, SalesmanagementRestTestConfig.class })
 @TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement" })
 
-public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest {
+public class SalesmanagementHttpRestServiceTest extends RestServiceTest {
 
   private final HttpHeaders AUTHENTIFICATED_HEADERS = getAuthentificatedHeaders();
 
