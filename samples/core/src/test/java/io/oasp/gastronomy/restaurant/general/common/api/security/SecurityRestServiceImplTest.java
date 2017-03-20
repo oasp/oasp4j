@@ -22,7 +22,7 @@ import org.springframework.web.client.RestTemplate;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.general.common.api.to.UserDetailsClientTo;
-import io.oasp.gastronomy.restaurant.general.common.base.AbstractRestServiceTest;
+import io.oasp.gastronomy.restaurant.general.common.base.RestServiceTest;
 import io.oasp.gastronomy.restaurant.general.service.impl.rest.SecurityRestServiceImpl;
 
 /**
@@ -31,7 +31,7 @@ import io.oasp.gastronomy.restaurant.general.service.impl.rest.SecurityRestServi
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = SpringBootApp.class)
 @TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement" })
-public class SecurityRestServiceImplTest extends AbstractRestServiceTest {
+public class SecurityRestServiceImplTest extends RestServiceTest {
 
   /** Logger instance. */
   private static final Logger LOG = LoggerFactory.getLogger(SecurityRestServiceImplTest.class);
