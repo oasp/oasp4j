@@ -25,7 +25,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.HttpEntity;
@@ -34,7 +33,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
@@ -51,10 +49,8 @@ import io.oasp.gastronomy.restaurant.salesmanagement.service.api.rest.Salesmanag
  * database is accessed via HTTP requests to the server running the restaurant application.
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = { SpringBootApp.class, SalesmanagementRestTestConfig.class })
 @TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement" })
-
 public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest {
 
   private final HttpHeaders AUTHENTIFICATED_HEADERS = getAuthentificatedHeaders();
