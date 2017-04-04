@@ -122,8 +122,8 @@
           <warName>${project.artifactId}</warName>
           <overlays>
             <overlay>
-              <groupId>com.capgemini.devonfw</groupId>
-              <artifactId>extjs-sample</artifactId>
+              <groupId>io.oasp.js</groupId>
+              <artifactId>oasp4js-sample</artifactId>
               <type>zip</type>
               <classifier>web</classifier>
               <targetPath>jsclient</targetPath>
