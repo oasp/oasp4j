@@ -120,6 +120,15 @@
         <configuration>
           <packagingExcludes>WEB-INF/classes/config/application.properties</packagingExcludes>
           <warName>${project.artifactId}</warName>
+          <overlays>
+            <overlay>
+              <groupId>com.capgemini.devonfw</groupId>
+              <artifactId>extjs-sample</artifactId>
+              <type>zip</type>
+              <classifier>web</classifier>
+              <targetPath>jsclient</targetPath>
+            </overlay>
+          </overlays>
         </configuration>
       </plugin>
 
