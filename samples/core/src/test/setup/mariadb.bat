@@ -14,3 +14,10 @@ move ..\..\test\resources\db\tablemanagement\V0001__R001_Create_schema.sql ..\..
 move ..\..\test\resources\db\tablemanagement\V0001__R001_Create_schema_MYSQL.sql.mysql ..\..\test\resources\db\tablemanagement\V0001__R001_Create_schema_MYSQL.sql
 move ..\..\test\resources\db\tablemanagement\V0002__R001_Master_data.sql ..\..\test\resources\db\tablemanagement\V0002__R001_Master_data.sql.h2
 move ..\..\test\resources\db\tablemanagement\V0002__R001_Master_data_MYSQL.sql.mysql ..\..\test\resources\db\tablemanagement\V0002__R001_Master_data_MYSQL.sql
+move ..\..\test\resources\db\tablemanagement\V0003__R001_Add_blob_table_and_data.sql ..\..\test\resources\db\tablemanagement\V0003__R001_Add_blob_table_and_data.sql.h2
+move ..\..\test\resources\db\tablemanagement\V0003__R001_Add_blob_table_and_data_MYSQL.sql.mysql ..\..\test\resources\db\tablemanagement\V0003__R001_Add_blob_table_and_data_MYSQL.sql
+move ..\..\test\resources\db\tablemanagement\V0004__R001_Add_batch_tables.sql ..\..\test\resources\db\tablemanagement\V0004__R001_Add_batch_tables.sql.h2
+move ..\..\test\resources\db\tablemanagement\V0004__R001_Add_batch_tables_MYSQL.sql.mysql ..\..\test\resources\db\tablemanagement\V0004__R001_Add_batch_tables_MYSQL.sql
+
+
+
