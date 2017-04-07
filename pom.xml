@@ -122,8 +122,12 @@
           <warName>${project.artifactId}</warName>
           <overlays>
             <overlay>
+              <!--
               <groupId>io.oasp.js</groupId>
               <artifactId>oasp4js-sample</artifactId>
+              -->
+              <groupId>${client.groupId}</groupId>
+              <artifactId>${client.artifactId}</artifactId>
               <type>zip</type>
               <classifier>web</classifier>
               <targetPath>jsclient</targetPath>
