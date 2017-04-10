@@ -120,6 +120,17 @@
         <configuration>
           <packagingExcludes>WEB-INF/classes/config/application.properties</packagingExcludes>
           <warName>${project.artifactId}</warName>
+          <!-- PRODUCTION LINE -->
+          <overlays>
+            <overlay>
+              <groupId>${client.groupId}</groupId>
+              <artifactId>${client.artifactId}</artifactId>
+              <type>zip</type>
+              <classifier>web</classifier>
+              <targetPath>jsclient</targetPath>
+            </overlay>
+          </overlays>
+          <!-- /PRODUCTION LINE -->
         </configuration>
       </plugin>
 

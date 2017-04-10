@@ -23,6 +23,16 @@
       <artifactId>oasp4j-sample-core</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <!-- PRODUCTION LINE -->
+    <dependency>
+      <groupId>${client.groupId}</groupId>
+      <artifactId>${client.artifactId}</artifactId>
+      <version>${client.version}</version>
+      <type>zip</type>
+      <classifier>web</classifier>
+      <scope>runtime</scope>
+    </dependency>
+    <!-- /PRODUCTION LINE -->
  </dependencies>
 
   <profiles>

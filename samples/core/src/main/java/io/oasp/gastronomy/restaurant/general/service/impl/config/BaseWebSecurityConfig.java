@@ -62,8 +62,14 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @Override
   public void configure(HttpSecurity http) throws Exception {
 
+    /**
+     * PRODUCTION LINE {
+     */
     String[] unsecuredResources =
-        new String[] { "/login", "/security/**", "/services/rest/login", "/services/rest/logout" };
+        new String[] { "/login", "/security/**", "/services/rest/login", "/services/rest/logout", "/jsclient/**" };
+    /**
+     * } PRODUCTION LINE 
+     */
 
     http
         //
