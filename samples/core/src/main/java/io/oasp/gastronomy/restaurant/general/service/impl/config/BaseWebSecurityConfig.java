@@ -66,7 +66,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
      * PRODUCTION LINE {
      */
     String[] unsecuredResources =
-        new String[] { "/login", "/security/**", "/services/rest/login", "/services/rest/logout", "/jsclient/**" };
+        new String[] { "/login", "/security/**", "/services/rest/login", "/services/rest/logout", /* "/jsclient/**" */ };
     /**
      * } PRODUCTION LINE 
      */

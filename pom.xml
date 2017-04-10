@@ -120,7 +120,7 @@
         <configuration>
           <packagingExcludes>WEB-INF/classes/config/application.properties</packagingExcludes>
           <warName>${project.artifactId}</warName>
-          <!-- PRODUCTION LINE -->
+          <!-- PRODUCTION LINE
           <overlays>
             <overlay>
               <groupId>${client.groupId}</groupId>

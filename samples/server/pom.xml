@@ -23,7 +23,7 @@
       <artifactId>oasp4j-sample-core</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <!-- PRODUCTION LINE -->
+    <!-- PRODUCTION LINE
     <dependency>
       <groupId>${client.groupId}</groupId>
       <artifactId>${client.artifactId}</artifactId>
