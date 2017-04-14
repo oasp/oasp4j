@@ -19,11 +19,12 @@ import org.hibernate.envers.RevisionTimestamp;
  * This is a custom {@link org.hibernate.envers.DefaultRevisionEntity revision entity} also containing the actual user.
  *
  * @see org.hibernate.envers.DefaultRevisionEntity
- *
+ * @deprecated please use {@link io.oasp.module.jpa.dataaccess.api.common.AdvancedRevisionEntity} instead.
  */
 @Entity
 @RevisionEntity(AdvancedRevisionListener.class)
 @Table(name = "RevInfo")
+@Deprecated
 public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
 
   /** UID for serialization. */
@@ -44,10 +45,6 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
 
   /** @see #getUser() */
 
-  /*
-   * Uncomment the following Column annotation if the database used is Oracle 11g
-   */
-  // @Column(name = "\"user\"")
   private String user;
 
   /**
@@ -127,5 +124,4 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
 
     return null;
   }
-
 }

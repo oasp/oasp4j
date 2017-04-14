@@ -24,10 +24,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.HttpEntity;
@@ -36,7 +33,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
@@ -53,10 +49,8 @@ import io.oasp.gastronomy.restaurant.salesmanagement.service.api.rest.Salesmanag
  * database is accessed via HTTP requests to the server running the restaurant application.
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = { SpringBootApp.class, SalesmanagementRestTestConfig.class })
 @TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement" })
-
 public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest {
 
   private final HttpHeaders AUTHENTIFICATED_HEADERS = getAuthentificatedHeaders();
@@ -72,20 +66,22 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
   /**
    * Provides initialization previous to the creation of the text fixture.
    */
-  @Before
-  public void init() {
+  @Override
+  public void doSetUp() {
 
+    super.doSetUp();
     getDbTestHelper().resetDatabase();
-    this.service = getRestTestClientBuilder().build(SalesmanagementRestService.class);
+    this.service = getRestTestClientBuilder().build(SalesmanagementRestService.class, "waiter");
   }
 
   /**
    * Provides clean up after tests.
    */
-  @After
-  public void clean() {
+  @Override
+  public void doTearDown() {
 
     this.service = null;
+    super.doTearDown();
   }
 
   /**

@@ -2,9 +2,6 @@ package io.oasp.gastronomy.restaurant.general.common.base;
 
 import javax.inject.Inject;
 
-import org.flywaydb.core.Flyway;
-import org.junit.After;
-import org.junit.Before;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
@@ -37,30 +34,6 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
   protected int port;
 
   /**
-   * The user name used during the test.
-   */
-  @Value("${server.rest.test.user}")
-  private String user;
-
-  /**
-   * The password used during the test.
-   */
-  @Value("${server.rest.test.password}")
-  private String password;
-
-  /**
-   * The baseline to be used by {@link Flyway}
-   */
-  @Value("${server.rest.test.flyway.baseline}")
-  private String baseline;
-
-  /**
-   * The migration to be used by {@link Flyway}
-   */
-  @Value("${server.rest.test.flyway.migration}")
-  private String migration;
-
-  /**
    * The {@code RestaurantTestHelper}.
    */
   @Inject
@@ -82,45 +55,24 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
   private JacksonJsonProvider jacksonJsonProvider;
 
   /**
-   * Calls {@link #doSetUp()}.
-   */
-  @Before
-  public final void setUp() {
-
-    doSetUp();
-  }
-
-  /**
-   * Calls {@link #doTearDown()}.
-   */
-  @After
-  public final void tearDown() {
-
-    doTearDown();
-  }
-
-  /**
    * Sets up the test.
    */
+  @Override
   protected void doSetUp() {
 
+    super.doSetUp();
     this.restTestClientBuilder.setLocalServerPort(this.port);
-    this.restTestClientBuilder.setUser(this.user);
-    this.restTestClientBuilder.setPassword(this.password);
     this.restTestClientBuilder.setJacksonJsonProvider(this.jacksonJsonProvider);
-
-    if (this.migration != null && !"".equals(this.migration)) {
-      this.dbTestHelper.setMigrationVersion(this.migration);
-    }
 
   }
 
   /**
    * Cleans up the test.
    */
+  @Override
   protected void doTearDown() {
 
-    // empty implementation which may be overridden by a subclass.
+    super.doTearDown();
   }
 
   /**

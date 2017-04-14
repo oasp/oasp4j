@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup:Project
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:git="http://www.eclipse.org/oomph/setup/git/1.0"
+    xmlns:maven="http://www.eclipse.org/oomph/setup/maven/1.0"
+    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://de-mucevolve02/oomph/tasks/models/Git.ecore http://www.eclipse.org/oomph/setup/maven/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Maven.ecore"
+    name="oasp4j.ide.git"
+    label="OASP4J">
+  <setupTask
+      xsi:type="setup:VariableTask"
+      name="github.remoteURIs.oasp4j"
+      storageURI="scope://Workspace"
+      label="Github repository for OASP4J">
+    <choice
+        value="git@github.com:oasp/oasp4j.git"
+        label="Git (read-write)"/>
+    <choice
+        value="https://${github.user.id}@github.com/oasp/oasp4j.git"
+        label="HTTPS (read-write)"/>
+    <choice
+        value="https://github.com/oasp/oasp4j.git"
+        label="HTTPS (read-only, anonymous)"/>
+    <description>Choose from the available Github URIs</description>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:VariableTask"
+      id="mvn.root.oasp4j"
+      name="mvn.root.oasp4j"
+      value="${workspace.location/oasp4j}"
+      storageURI="scope://Workspace"/>
+  <setupTask
+      xsi:type="git:GitCloneTask"
+      id="git.oasp"
+      location="${mvn.root.oasp4j}"
+      remoteURI="${github.remoteURIs.oasp4j}"
+      pushURI="https://github.com/oasp/oasp4j"/>
+  <setupTask
+      xsi:type="maven:MavenImportTask"
+      id="mvn.import.oasp4j">
+    <sourceLocator
+        rootFolder="${mvn.root.oasp4j}"
+        locateNestedProjects="true"/>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:CompoundTask"
+      name="Github">
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="github.user.id"
+        storageURI="scope://Workspace"
+        label="Github user ID">
+      <description>The Github user ID</description>
+    </setupTask>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:EclipseIniTask"
+      excludedTriggers="STARTUP MANUAL"
+      option="-Doomph.redirection.oaspProjects="
+      value="index:/redirectable.projects.setup->https://raw.githubusercontent.com/oasp/oasp4j-ide/dev_oomph/oasp4j-ide-oomph-setups/com.github.projects.oasp4j.setup"
+      vm="true">
+    <description></description>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:CompoundTask"
+      id="cmp.workspaces"
+      name="Workspace Ini">
+    <setupTask
+        xsi:type="setup:WorkspaceTask"
+        excludedTriggers="STARTUP MANUAL"
+        location="${workspace.location}"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        excludedTriggers="STARTUP MANUAL"
+        name="installation.workspace"
+        defaultValue="main"
+        label="Workspace name for chosen projects">
+      <description>The name of the workspace folder to be created for checked out projects during installation</description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        excludedTriggers="STARTUP MANUAL"
+        name="workspace.location"
+        value="${workspaces.location/}${installation.workspace}"/>
+  </setupTask>
+  <stream name="master"/>
+  <stream name="develop"/>
+  <logicalProjectContainer
+      xsi:type="setup:ProjectCatalog"
+      href="index:/org.eclipse.setup#//@projectCatalogs[name='org.eclipse']"/>
+  <description>The OASP4J github project</description>
+</setup:Project>
