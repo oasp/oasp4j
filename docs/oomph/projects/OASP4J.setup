@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup:Project
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:git="http://www.eclipse.org/oomph/setup/git/1.0"
+    xmlns:maven="http://www.eclipse.org/oomph/setup/maven/1.0"
+    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://de-mucevolve02/oomph/tasks/models/Git.ecore http://www.eclipse.org/oomph/setup/maven/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Maven.ecore"
+    name="oasp4j.ide.git"
+    label="OASP4J">
+  <setupTask
+      xsi:type="setup:VariableTask"
+      id="mvn.root.oasp4j"
+      name="mvn.root.oasp4j"
+      value="${workspace.location/oasp4j}"
+      storageURI="scope://Workspace"/>
+  <setupTask
+      xsi:type="setup:CompoundTask"
+      name="Github">
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="github.fork.name"
+        storageURI="scope://Workspace"
+        label="${scope.project.label} fork">
+      <description>The Github user ID</description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="github.remoteURIs.oasp4j"
+        storageURI="scope://Workspace"
+        label="${scope.project.label} remote uri">
+      <choice
+          value="ssh://git@github.com:${github.fork.name}/oasp4j.git"
+          label="SSH"/>
+      <choice
+          value="https://github.com/${github.fork.name}/oasp4j.git"
+          label="HTTPS"/>
+      <description>Choose from the available Github URIs</description>
+    </setupTask>
+    <setupTask
+        xsi:type="git:GitCloneTask"
+        id="git.oasp"
+        location="${mvn.root.oasp4j}"
+        remoteURI="${github.remoteURIs.oasp4j}"
+        pushURI="https://github.com/oasp/oasp4j"/>
+  </setupTask>
+  <setupTask
+      xsi:type="maven:MavenImportTask"
+      id="mvn.import.oasp4j">
+    <sourceLocator
+        rootFolder="${mvn.root.oasp4j}"
+        locateNestedProjects="true"/>
+  </setupTask>
+  <stream name="master"/>
+  <stream name="develop"/>
+  <logicalProjectContainer
+      xsi:type="setup:ProjectCatalog"
+      href="index:/org.eclipse.setup#//@projectCatalogs[name='org.eclipse']"/>
+  <description>The OASP4J github project</description>
+</setup:Project>
