@@ -115,7 +115,6 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
             <configuration>
-              <!-- <excludeArtifactIds>antlr</excludeArtifactIds>-->
               <mainClass>io.oasp.gastronomy.restaurant.SpringBootApp</mainClass>
               <classifier>bootified</classifier>
               <finalName>${project.artifactId}</finalName>
