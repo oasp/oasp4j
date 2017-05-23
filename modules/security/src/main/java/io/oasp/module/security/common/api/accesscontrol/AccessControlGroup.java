@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
  *
  */
 @XmlRootElement(name = "group")
-public class AccessControlGroup extends AccessControl { // implements java.security.acl.Group {
+public class AccessControlGroup extends AbstractAccessControl { // implements java.security.acl.Group {
 
   /** UID for serialization. */
   private static final long serialVersionUID = 1L;

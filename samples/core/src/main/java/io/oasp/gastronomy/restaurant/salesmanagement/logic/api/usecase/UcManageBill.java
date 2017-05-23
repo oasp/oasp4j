@@ -4,7 +4,7 @@ import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.PaymentStatus;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BillEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.PaymentData;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.AbstractPaymentData;
 
 /**
  * Interface of UcManageBill to centralize documentation and signatures of methods.
@@ -31,7 +31,7 @@ public interface UcManageBill {
 
   /**
    * This method provides the payment process. It provides the cash-only functionality without any additional
-   * {@link PaymentData}.
+   * {@link AbstractPaymentData}.
    *
    * @param bill is the identifier of the {@link BillEto} on which the payment process takes place.
    * @return the {@link PaymentStatus status code} of the payment process.
@@ -41,10 +41,10 @@ public interface UcManageBill {
   /**
    * This method provides the payment process.
    *
-   * @param paymentDataDebitor is the {@link PaymentData} which holds special data for the payment process.
+   * @param paymentDataDebitor is the {@link AbstractPaymentData} which holds special data for the payment process.
    * @param bill is the identifier of the {@link BillEto} on which the payment process takes place.
    * @return the {@link PaymentStatus status code} of the payment process.
    */
-  PaymentStatus doPayment(BillEto bill, PaymentData paymentDataDebitor);
+  PaymentStatus doPayment(BillEto bill, AbstractPaymentData paymentDataDebitor);
 
 }

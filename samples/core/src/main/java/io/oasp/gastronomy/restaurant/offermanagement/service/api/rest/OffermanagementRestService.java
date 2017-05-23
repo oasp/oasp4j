@@ -29,7 +29,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSortBy;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.AbstractProductEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
@@ -97,12 +97,12 @@ public interface OffermanagementRestService extends RestService {
   /**
    * Delegates to {@link Offermanagement#findAllProducts}.
    *
-   * @return all {@link ProductEto}s as list
+   * @return all {@link AbstractProductEto}s as list
    */
   @GET
   @Path("/product/")
   @Deprecated
-  List<ProductEto> getAllProducts();
+  List<AbstractProductEto> getAllProducts();
 
   /**
    * Delegates to {@link Offermanagement#saveProduct}.
@@ -112,7 +112,7 @@ public interface OffermanagementRestService extends RestService {
    */
   @POST
   @Path("/product/")
-  ProductEto saveProduct(ProductEto product);
+  AbstractProductEto saveProduct(AbstractProductEto product);
 
   /**
    * Delegates to {@link Offermanagement#findAllMeals}.
@@ -162,23 +162,23 @@ public interface OffermanagementRestService extends RestService {
   /**
    * Delegates to {@link Offermanagement#findProductByRevision}.
    *
-   * @param id ID of the {@link ProductEto}
-   * @param revision revision of the {@link ProductEto}
-   * @return the {@link ProductEto}
+   * @param id ID of the {@link AbstractProductEto}
+   * @param revision revision of the {@link AbstractProductEto}
+   * @return the {@link AbstractProductEto}
    */
   @GET
   @Path("/product/{id}/{revision}")
-  ProductEto findProductByRevision(@PathParam("id") long id, @PathParam("revision") Long revision);
+  AbstractProductEto findProductByRevision(@PathParam("id") long id, @PathParam("revision") Long revision);
 
   /**
    * Delegates to {@link Offermanagement#findProduct}.
    *
-   * @param id ID of the {@link ProductEto}
-   * @return the {@link ProductEto}
+   * @param id ID of the {@link AbstractProductEto}
+   * @return the {@link AbstractProductEto}
    */
   @GET
   @Path("/product/{id}")
-  ProductEto findProduct(@PathParam("id") long id);
+  AbstractProductEto findProduct(@PathParam("id") long id);
 
   // although id in path is redundant, this structure is intentionally chosen
   // for further reasons behind this decision see one of the other
@@ -186,17 +186,17 @@ public interface OffermanagementRestService extends RestService {
   /**
    * Delegates to {@link Offermanagement#saveProduct}.
    *
-   * @param product the {@link ProductEto} to be updated
+   * @param product the {@link AbstractProductEto} to be updated
    */
   @PUT
   @Path("/product/{id}")
   @Deprecated
-  void updateProduct(ProductEto product);
+  void updateProduct(AbstractProductEto product);
 
   /**
    * Delegates to {@link Offermanagement#isProductInUseByOffer}.
    *
-   * @param id ID of the {@link ProductEto}
+   * @param id ID of the {@link AbstractProductEto}
    * @return true, if there are no offers, that use the given ProductEto. false otherwise.
    */
   @GET
@@ -229,12 +229,12 @@ public interface OffermanagementRestService extends RestService {
    *
    * @param productFilter filter specification
    * @param sortBy sorting specification
-   * @return list with all {@link ProductEto}s that match the {@link ProductFilter} criteria
+   * @return list with all {@link AbstractProductEto}s that match the {@link ProductFilter} criteria
    */
   @GET
   @Path("/product/sortby/{sortBy}")
   @Deprecated
-  List<ProductEto> getFilteredProducts(ProductFilter productFilter, @PathParam("sortBy") ProductSortBy sortBy);
+  List<AbstractProductEto> getFilteredProducts(ProductFilter productFilter, @PathParam("sortBy") ProductSortBy sortBy);
 
   @SuppressWarnings("javadoc")
   @Consumes("multipart/mixed")
@@ -277,9 +277,9 @@ public interface OffermanagementRestService extends RestService {
    * Delegates to {@link Offermanagement#findProductEtos}.
    *
    * @param searchCriteriaTo the pagination and search criteria to be used for finding products.
-   * @return the {@link PaginatedListTo list} of matching {@link ProductEto}s.
+   * @return the {@link PaginatedListTo list} of matching {@link AbstractProductEto}s.
    */
   @Path("/product/search")
   @POST
-  public PaginatedListTo<ProductEto> findProductEtosByPost(ProductSearchCriteriaTo searchCriteriaTo);
+  public PaginatedListTo<AbstractProductEto> findProductEtosByPost(ProductSearchCriteriaTo searchCriteriaTo);
 }

@@ -20,7 +20,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.PaymentData;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.AbstractPaymentData;
 import io.oasp.gastronomy.restaurant.salesmanagement.service.api.rest.SalesmanagementRestService;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 import io.oasp.module.jpa.common.api.to.PaginationTo;
@@ -131,7 +131,7 @@ public class SalesmanagementRestServiceImpl implements SalesmanagementRestServic
   }
 
   @Override
-  public PaymentStatus doPayment(long billId, PaymentData paymentData) {
+  public PaymentStatus doPayment(long billId, AbstractPaymentData paymentData) {
 
     return this.salesmanagement.doPayment(findBill(billId).getBill(), paymentData);
   }

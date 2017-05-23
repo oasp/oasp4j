@@ -15,7 +15,7 @@ import org.hibernate.envers.Audited;
  */
 @MappedSuperclass
 @Audited
-public abstract class MenuItemEntity extends ApplicationPersistenceEntity implements MenuItem {
+public abstract class AbstractMenuItemEntity extends ApplicationPersistenceEntity implements MenuItem {
 
   private static final long serialVersionUID = 1L;
 
@@ -26,7 +26,7 @@ public abstract class MenuItemEntity extends ApplicationPersistenceEntity implem
   /**
    * The constructor.
    */
-  public MenuItemEntity() {
+  public AbstractMenuItemEntity() {
 
     super();
   }

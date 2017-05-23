@@ -16,7 +16,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.OfferDao
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferCto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.module.beanmapping.common.api.BeanMapper;
-import io.oasp.module.test.common.base.ModuleTest;
+import io.oasp.module.test.common.base.AbstractModuleTest;
 
 /**
  * This class tests the correct execution of the methods findOffer and findOfferCto belonging to the
@@ -24,7 +24,7 @@ import io.oasp.module.test.common.base.ModuleTest;
  *
  */
 
-public class OffermanagementImplTest extends ModuleTest {
+public class OffermanagementImplTest extends AbstractModuleTest {
 
   private static final long ID = 1;
 
