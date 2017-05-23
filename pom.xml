@@ -205,6 +205,13 @@
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>2.9.1</version>
           <configuration>
+          <additionalDependencies> 
+            <additionalDependency> 
+              <groupId>javax.interceptor</groupId> 
+              <artifactId>javax.interceptor-api</artifactId> 
+              <version>1.2</version> 
+            </additionalDependency> 
+          </additionalDependencies>
             <!-- http://jira.codehaus.org/browse/MJAVADOC-308 -->
             <!--<maxmemory>5048m</maxmemory> -->
             <notree>true</notree>
@@ -316,6 +323,13 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
+          <additionalDependencies> 
+            <additionalDependency> 
+              <groupId>javax.interceptor</groupId> 
+              <artifactId>javax.interceptor-api</artifactId> 
+              <version>1.2</version> 
+            </additionalDependency> 
+          </additionalDependencies>
           <!--<notree>true</notree> -->
           <show>private</show>
           <encoding>${project.reporting.outputEncoding}</encoding>
@@ -433,6 +447,15 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
+            <configuration>
+              <additionalDependencies> 
+                  <additionalDependency> 
+                    <groupId>javax.interceptor</groupId> 
+                    <artifactId>javax.interceptor-api</artifactId> 
+                    <version>1.2</version> 
+                  </additionalDependency> 
+                </additionalDependencies>
+            </configuration>
             <executions>
               <execution>
                 <id>attach-javadocs</id>
