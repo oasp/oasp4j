@@ -1,7 +1,7 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.paymentadapter;
 
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.PaymentData;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.AbstractPaymentData;
 
 import java.io.Serializable;
 
@@ -15,10 +15,10 @@ public class PaymentTransactionData implements Serializable {
   private static final long serialVersionUID = 1L;
 
   /** The creditor and his payment data of that payment transaction. */
-  private PaymentData creditor;
+  private AbstractPaymentData creditor;
 
   /** The debitor and his payment data of that payment transaction. */
-  private PaymentData debitor;
+  private AbstractPaymentData debitor;
 
   /** The total amount to transfer. */
   private Money totalAmount;
@@ -28,7 +28,7 @@ public class PaymentTransactionData implements Serializable {
    *
    * @return Value of creditor
    */
-  public PaymentData getCreditor() {
+  public AbstractPaymentData getCreditor() {
 
     return this.creditor;
   }
@@ -38,7 +38,7 @@ public class PaymentTransactionData implements Serializable {
    *
    * @param creditor New value for creditor
    */
-  public void setCreditor(PaymentData creditor) {
+  public void setCreditor(AbstractPaymentData creditor) {
 
     this.creditor = creditor;
   }
@@ -48,7 +48,7 @@ public class PaymentTransactionData implements Serializable {
    *
    * @return Value of debitor
    */
-  public PaymentData getDebitor() {
+  public AbstractPaymentData getDebitor() {
 
     return this.debitor;
   }
@@ -58,7 +58,7 @@ public class PaymentTransactionData implements Serializable {
    *
    * @param debitor New value for debitor
    */
-  public void setDebitor(PaymentData debitor) {
+  public void setDebitor(AbstractPaymentData debitor) {
 
     this.debitor = debitor;
   }

@@ -1,7 +1,7 @@
 package io.oasp.gastronomy.restaurant.offermanagement.batch.impl.productimport.writer;
 
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.AbstractProductEto;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import org.springframework.batch.item.ItemWriter;
  * ProductWriter is responsible for writing ProductEto to database.
  *
  */
-public class ProductWriter implements ItemWriter<ProductEto> {
+public class ProductWriter implements ItemWriter<AbstractProductEto> {
 
   private static final Logger LOG = LoggerFactory.getLogger(ProductWriter.class);
 
@@ -25,11 +25,11 @@ public class ProductWriter implements ItemWriter<ProductEto> {
    * {@inheritDoc}
    */
   @Override
-  public void write(List<? extends ProductEto> items) throws Exception {
+  public void write(List<? extends AbstractProductEto> items) throws Exception {
 
     LOG.debug("Writing " + items.size() + " products");
 
-    for (ProductEto item : items) {
+    for (AbstractProductEto item : items) {
       LOG.debug("Saving product: " + item.getName());
       this.offerManagement.saveProduct(item);
     }

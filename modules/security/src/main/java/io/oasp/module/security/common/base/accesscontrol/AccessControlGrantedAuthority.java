@@ -1,13 +1,13 @@
 package io.oasp.module.security.common.base.accesscontrol;
 
-import io.oasp.module.security.common.api.accesscontrol.AccessControl;
+import io.oasp.module.security.common.api.accesscontrol.AbstractAccessControl;
 
 import java.util.Objects;
 
 import org.springframework.security.core.GrantedAuthority;
 
 /**
- * Implementation of {@link GrantedAuthority} for a {@link AccessControl}.
+ * Implementation of {@link GrantedAuthority} for a {@link AbstractAccessControl}.
  *
  */
 public class AccessControlGrantedAuthority implements GrantedAuthority {
@@ -15,24 +15,24 @@ public class AccessControlGrantedAuthority implements GrantedAuthority {
   /** UID for serialization. */
   private static final long serialVersionUID = 1L;
 
-  private final AccessControl accessControl;
+  private final AbstractAccessControl accessControl;
 
   /**
    * The constructor.
    *
    * @param accessControl the {@link #getAccessControl() access control}.
    */
-  public AccessControlGrantedAuthority(AccessControl accessControl) {
+  public AccessControlGrantedAuthority(AbstractAccessControl accessControl) {
 
     super();
-    Objects.requireNonNull(accessControl, AccessControl.class.getSimpleName());
+    Objects.requireNonNull(accessControl, AbstractAccessControl.class.getSimpleName());
     this.accessControl = accessControl;
   }
 
   /**
-   * @return the contained {@link AccessControl}.
+   * @return the contained {@link AbstractAccessControl}.
    */
-  public AccessControl getAccessControl() {
+  public AbstractAccessControl getAccessControl() {
 
     return this.accessControl;
   }

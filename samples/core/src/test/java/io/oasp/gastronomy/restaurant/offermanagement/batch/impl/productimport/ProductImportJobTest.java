@@ -6,7 +6,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.AbstractProductEto;
 
 import java.util.List;
 
@@ -57,7 +57,7 @@ public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
     assertThat(jobExecution.getStatus()).isEqualTo(BatchStatus.COMPLETED);
 
     // - imported data (there is 7 products in setup data)
-    List<ProductEto> allProducts = this.offermanagement.findAllProducts();
+    List<AbstractProductEto> allProducts = this.offermanagement.findAllProducts();
     assertThat(allProducts).hasSize(7);
 
     // - exemplary drink
@@ -80,7 +80,7 @@ public class ProductImportJobTest extends AbstractSpringBatchIntegrationTest {
       this.offermanagement.deleteOffer(offer.getId());
     }
 
-    for (ProductEto product : this.offermanagement.findAllProducts()) {
+    for (AbstractProductEto product : this.offermanagement.findAllProducts()) {
       this.offermanagement.deleteProduct(product.getId());
     }
   }

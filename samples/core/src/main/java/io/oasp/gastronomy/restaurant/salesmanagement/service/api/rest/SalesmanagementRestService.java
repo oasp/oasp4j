@@ -24,7 +24,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.PaymentData;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.AbstractPaymentData;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcChangeTable;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcFindBill;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcFindOrder;
@@ -163,15 +163,15 @@ public interface SalesmanagementRestService extends RestService {
   PaymentStatus doPayment(@PathParam("billId") long billId);
 
   /**
-   * Delegates to {@link UcManageBill#doPayment(BillEto bill, PaymentData paymentDataDebitor)}.
+   * Delegates to {@link UcManageBill#doPayment(BillEto bill, AbstractPaymentData paymentDataDebitor)}.
    *
    * @param billId id of the {@link BillEto}
-   * @param paymentData the {@link PaymentData}
+   * @param paymentData the {@link AbstractPaymentData}
    * @return the {@link PaymentStatus}
    */
   @Path("/bill/{billId}/payment")
   @POST
-  PaymentStatus doPayment(@PathParam("billId") long billId, PaymentData paymentData);
+  PaymentStatus doPayment(@PathParam("billId") long billId, AbstractPaymentData paymentData);
 
   /**
    * Delegates to {@link UcManageBill#createBill}.

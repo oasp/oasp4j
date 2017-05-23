@@ -4,7 +4,7 @@ package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to;
  * This class acts as a POJO.
  *
  */
-public class BankPaymentData extends PaymentData {
+public class BankPaymentData extends AbstractPaymentData {
 
   private static final long serialVersionUID = 1L;
 

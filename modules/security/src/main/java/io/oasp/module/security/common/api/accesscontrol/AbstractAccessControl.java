@@ -14,11 +14,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 /**
  * This is the abstract base class for a node of the {@link AccessControlSchema} that represents a tree of
  * {@link AccessControlGroup}s and {@link AccessControlPermission}s. If a {@link java.security.Principal} "has" a
- * {@link AccessControl} he also "has" all {@link AccessControl}s with according permissions in the spanned sub-tree.
+ * {@link AbstractAccessControl} he also "has" all {@link AbstractAccessControl}s with according permissions in the spanned sub-tree.
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-public abstract class AccessControl implements Serializable {
+public abstract class AbstractAccessControl implements Serializable {
 
   /** UID for serialization. */
   private static final long serialVersionUID = 1L;
@@ -33,7 +33,7 @@ public abstract class AccessControl implements Serializable {
   /**
    * The constructor.
    */
-  public AccessControl() {
+  public AbstractAccessControl() {
 
     super();
   }
@@ -43,14 +43,14 @@ public abstract class AccessControl implements Serializable {
    *
    * @param id the {@link #getId() ID}.
    */
-  public AccessControl(String id) {
+  public AbstractAccessControl(String id) {
 
     super();
     this.id = id;
   }
 
   /**
-   * @return the unique identifier of this {@link AccessControl}. Has to be unique for all {@link AccessControl} in a
+   * @return the unique identifier of this {@link AbstractAccessControl}. Has to be unique for all {@link AbstractAccessControl} in a
    *         {@link AccessControlSchema}.
    */
   public String getId() {
@@ -84,7 +84,7 @@ public abstract class AccessControl implements Serializable {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    AccessControl other = (AccessControl) obj;
+    AbstractAccessControl other = (AbstractAccessControl) obj;
     if (!Objects.equals(this.id, other.id)) {
       return false;
     }

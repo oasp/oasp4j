@@ -20,8 +20,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import io.oasp.gastronomy.restaurant.general.common.api.UserProfile;
 import io.oasp.gastronomy.restaurant.general.common.api.Usermanagement;
 import io.oasp.gastronomy.restaurant.general.common.api.security.UserData;
-import io.oasp.gastronomy.restaurant.general.service.impl.config.BaseWebSecurityConfig;
-import io.oasp.module.security.common.api.accesscontrol.AccessControl;
+import io.oasp.gastronomy.restaurant.general.service.impl.config.AbstractWebSecurityConfig;
+import io.oasp.module.security.common.api.accesscontrol.AbstractAccessControl;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
 import io.oasp.module.security.common.api.accesscontrol.PrincipalAccessControlProvider;
 import io.oasp.module.security.common.base.accesscontrol.AccessControlGrantedAuthority;
@@ -54,7 +54,7 @@ import io.oasp.module.security.common.base.accesscontrol.AccessControlGrantedAut
  * </pre>
  *
  * <br/>
- * For another example, have a look at {@link BaseWebSecurityConfig}.
+ * For another example, have a look at {@link AbstractWebSecurityConfig}.
  */
 @Named
 public class BaseUserDetailsService implements UserDetailsService {
@@ -77,7 +77,7 @@ public class BaseUserDetailsService implements UserDetailsService {
     Set<GrantedAuthority> authorities = getAuthorities(principal);
     UserDetails user;
     try {
-      // amBuilder uses the InMemoryUserDetailsManager, because it is configured in BaseWebSecurityConfig
+      // amBuilder uses the InMemoryUserDetailsManager, because it is configured in AbstractWebSecurityConfig
       user = getAmBuilder().getDefaultUserDetailsService().loadUserByUsername(username);
       UserData userData = new UserData(user.getUsername(), user.getPassword(), authorities);
       userData.setUserProfile(principal);
@@ -106,14 +106,14 @@ public class BaseUserDetailsService implements UserDetailsService {
     // determine granted authorities for spring-security...
     Set<GrantedAuthority> authorities = new HashSet<>();
     Collection<String> accessControlIds = this.principalAccessControlProvider.getAccessControlIds(principal);
-    Set<AccessControl> accessControlSet = new HashSet<>();
+    Set<AbstractAccessControl> accessControlSet = new HashSet<>();
     for (String id : accessControlIds) {
       boolean success = this.accessControlProvider.collectAccessControls(id, accessControlSet);
       if (!success) {
         LOG.warn("Undefined access control {}.", id);
       }
     }
-    for (AccessControl accessControl : accessControlSet) {
+    for (AbstractAccessControl accessControl : accessControlSet) {
       authorities.add(new AccessControlGrantedAuthority(accessControl));
     }
     return authorities;
