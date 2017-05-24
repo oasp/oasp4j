@@ -16,10 +16,12 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.junit.Test;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractRestServiceTest;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
@@ -36,8 +38,10 @@ import io.oasp.module.jpa.common.api.to.PaginationTo;
  * database is accessed via an instance of the class {@link SalesmanagementRestService}.
  *
  */
-@SpringApplicationConfiguration(classes = { SpringBootApp.class, SalesmanagementRestTestConfig.class })
+@RunWith(SpringRunner.class)
+@ContextConfiguration(classes = { SalesmanagementRestTestConfig.class })
 @TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement" })
+
 public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
 
   private SalesmanagementRestService service;
@@ -227,6 +231,8 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
       sampleOrderPositionEto = new OrderPositionEto();
       sampleOrderPositionEto.setOrderId(responseOrderCto.getOrder().getId());
       sampleOrderPositionEto.setOfferId(SAMPLE_OFFER_ID);
+      sampleOrderPositionEto.setPrice(new Money(2.99));
+      sampleOrderPositionEto.setOfferName("dummy");
       responseOrderPositionEto = this.service.saveOrderPosition(sampleOrderPositionEto);
       assertThat(responseOrderPositionEto).isNotNull();
       savedOrderPositionEtos.add(responseOrderPositionEto);

@@ -3,7 +3,7 @@ package io.oasp.module.test.common.base;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
@@ -17,7 +17,7 @@ import io.oasp.module.test.common.api.category.CategoryComponentTest;
  * @see CategoryComponentTest
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @TestExecutionListeners({ TransactionalTestExecutionListener.class, DependencyInjectionTestExecutionListener.class })
 @Category(CategoryComponentTest.class)
 public abstract class ComponentTest extends BaseTest {

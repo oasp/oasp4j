@@ -1,18 +1,18 @@
 package io.oasp.gastronomy.restaurant.general.service.impl.config;
 
-import io.oasp.module.logging.common.api.DiagnosticContextFacade;
-import io.oasp.module.logging.common.impl.DiagnosticContextFacadeImpl;
-import io.oasp.module.logging.common.impl.DiagnosticContextFilter;
-import io.oasp.module.logging.common.impl.PerformanceLogFilter;
-
 import javax.servlet.Filter;
 
 import org.apache.catalina.filters.SetCharacterEncodingFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.boot.context.embedded.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import io.oasp.module.logging.common.api.DiagnosticContextFacade;
+import io.oasp.module.logging.common.impl.DiagnosticContextFacadeImpl;
+import io.oasp.module.logging.common.impl.DiagnosticContextFilter;
+import io.oasp.module.logging.common.impl.PerformanceLogFilter;
 
 /**
  * Registers a number of filters for web requests.

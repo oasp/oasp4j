@@ -18,9 +18,11 @@ import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.test.AssertFile;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import io.oasp.gastronomy.restaurant.SpringBootBatchApp;
 import io.oasp.gastronomy.restaurant.general.common.AbstractSpringBatchIntegrationTest;
@@ -29,9 +31,9 @@ import io.oasp.gastronomy.restaurant.general.common.AbstractSpringBatchIntegrati
  * End-To-End test job "import offer management from csv"
  *
  */
-@SpringApplicationConfiguration(classes = { SpringBootBatchApp.class }, locations = {
-"classpath:/config/app/batch/beans-billexport.xml" })
-@WebAppConfiguration
+@SpringBootTest(classes = { SpringBootBatchApp.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
+@ImportResource("classpath:/config/app/batch/beans-billexport.xml")
+@EnableAutoConfiguration
 public class BillExportJobTest extends AbstractSpringBatchIntegrationTest {
   private static final Logger LOG = LoggerFactory.getLogger(AbstractSpringBatchIntegrationTest.class);
 
