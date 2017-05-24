@@ -22,8 +22,8 @@ INSERT INTO PRODUCT (id, modificationCounter, alcoholic, dType, description) VAL
 
 INSERT INTO OFFER (id, modificationCounter, state, price, mealId, sideDishId, drinkId, name, description) VALUES (1, 1, 0, 6.99, 1, 7, 12, 'Schnitzel-Menü', 'Description of Schnitzel-Menü');
 INSERT INTO OFFER (id, modificationCounter, state, price, mealId, sideDishId, drinkId, name, description) VALUES (2, 1, 0, 7.99, 2, 8, 13, 'Goulasch-Menü', 'Description of Goulasch-Menü');
-INSERT INTO OFFER (id, modificationCounter, state, price, mealId, sideDishId, drinkId, name, description) VALUES (3, 1, 0, 8.99, 3, 10, 14, 'Pfifferlinge-Menü', 'Description of Pfifferlinge-Menü');
-INSERT INTO OFFER (id, modificationCounter, state, price, mealId, sideDishId, drinkId, name, description) VALUES (4, 1, 0, 5.99, 4, 9, 11, 'Salat-Menü', 'Description of Salat-Menü');
+INSERT INTO OFFER (id, modificationCounter, state, price, mealId, sideDishId, drinkId, name, description) VALUES (3, 1, 0, 8.99, 3, 5, 14, 'Pfifferlinge-Menü', 'Description of Pfifferlinge-Menü');
+INSERT INTO OFFER (id, modificationCounter, state, price, mealId, sideDishId, drinkId, name, description) VALUES (4, 1, 0, 5.99, 4, 6, 11, 'Salat-Menü', 'Description of Salat-Menü');
 INSERT INTO OFFER (id, modificationCounter, state, price, mealId, sideDishId, drinkId, name, description) VALUES (5, 1, 0, 1.20, null, null, 12, 'Cola', 'Description of Salat-Menü');
 
 INSERT INTO RESTAURANTORDER (id, modificationCounter, tableId, state) VALUES (1, 1, 101, 1);

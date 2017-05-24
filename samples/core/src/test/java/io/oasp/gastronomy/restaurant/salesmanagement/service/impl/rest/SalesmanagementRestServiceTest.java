@@ -131,7 +131,7 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
 
     for (OrderCto responseOrder : responseOrderCtos.getResult()) {
       for (OrderCto savedOrder : savedOrderCtos) {
-        if (responseOrder.getOrder().getId() == savedOrder.getOrder().getId()) {
+        if (responseOrder.getOrder().getId().equals(savedOrder.getOrder().getId())) {
           assertThat(responseOrder.getOrder().getTableId()).isEqualTo(savedOrder.getOrder().getTableId());
           countNumberOfSavedOrders++;
         }
@@ -253,7 +253,7 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
 
     for (OrderPositionEto responseOrderPosition : responseOrderPositionEtos) {
       for (OrderPositionEto savedOrderPosition : savedOrderPositionEtos) {
-        if (responseOrderPosition.getId() == savedOrderPosition.getId()) {
+        if (responseOrderPosition.getId().equals(savedOrderPosition.getId())) {
 
           assertThat(responseOrderPosition.getOrderId()).isEqualTo(savedOrderPosition.getOrderId());
           assertThat(responseOrderPosition.getOfferId()).isEqualTo(savedOrderPosition.getOfferId());
