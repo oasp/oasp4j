@@ -6,7 +6,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.common.api.Product;
  * The {@link io.oasp.module.basic.common.api.to.AbstractEto ETO} for a {@link Product}.
  *
  */
-public abstract class AbstractProductEto extends AbstractMenuItemEto implements Product {
+public abstract class ProductEto extends MenuItemEto implements Product {
 
   private static final long serialVersionUID = 1L;
 
@@ -15,7 +15,7 @@ public abstract class AbstractProductEto extends AbstractMenuItemEto implements 
   /**
    * Constructor.
    */
-  public AbstractProductEto() {
+  public ProductEto() {
 
     super();
   }

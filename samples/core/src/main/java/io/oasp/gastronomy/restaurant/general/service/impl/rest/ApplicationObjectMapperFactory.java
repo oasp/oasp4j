@@ -4,7 +4,7 @@ package io.oasp.gastronomy.restaurant.general.service.impl.rest;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.DrinkEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.MealEto;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.AbstractProductEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SideDishEto;
 // END ARCHETYPE SKIP
 import io.oasp.module.rest.service.impl.json.ObjectMapperFactory;
@@ -29,7 +29,7 @@ public class ApplicationObjectMapperFactory extends ObjectMapperFactory {
     super();
     // register polymorphic base classes
     // BEGIN ARCHETYPE SKIP
-    setBaseClasses(AbstractProductEto.class);
+    setBaseClasses(ProductEto.class);
     // END ARCHETYPE SKIP
 
     NamedType[] subtypes;

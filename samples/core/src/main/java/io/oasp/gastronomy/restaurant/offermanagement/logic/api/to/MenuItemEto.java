@@ -7,7 +7,7 @@ import io.oasp.module.basic.common.api.to.AbstractEto;
  * The {@link AbstractEto ETO} for a {@link MenuItem}.
  *
  */
-public abstract class AbstractMenuItemEto extends AbstractEto implements MenuItem {
+public abstract class MenuItemEto extends AbstractEto implements MenuItem {
 
   private static final long serialVersionUID = 1L;
 
@@ -18,7 +18,7 @@ public abstract class AbstractMenuItemEto extends AbstractEto implements MenuIte
   /**
    * The constructor.
    */
-  public AbstractMenuItemEto() {
+  public MenuItemEto() {
 
     super();
   }

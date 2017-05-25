@@ -6,7 +6,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.common.api.SideDish;
  * The {@link io.oasp.module.basic.common.api.to.AbstractEto ETO} for a {@link SideDish}.
  *
  */
-public class SideDishEto extends AbstractProductEto implements SideDish {
+public class SideDishEto extends ProductEto implements SideDish {
 
   /** UID for serialization. */
   private static final long serialVersionUID = 1L;

@@ -9,7 +9,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferSt
  * The {@link io.oasp.module.basic.common.api.to.AbstractEto ETO} for an {@link Offer}.
  *
  */
-public class OfferEto extends AbstractMenuItemEto implements Offer {
+public class OfferEto extends MenuItemEto implements Offer {
 
   private static final long serialVersionUID = 1L;
 

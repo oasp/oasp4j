@@ -18,7 +18,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.common.api.Product;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.ProductSortByHitEntry;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.impl.dao.ProductDaoImpl;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.AbstractProductEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
@@ -72,7 +72,7 @@ public class ProductManagementTest extends AbstractComponentTest {
     filter.setFetchMeals(true);
     ProductSortBy sort = new ProductSortBy();
 
-    List<AbstractProductEto> products = this.offerManagement.findProductsFiltered(filter, sort);
+    List<ProductEto> products = this.offerManagement.findProductsFiltered(filter, sort);
     assertEquals(products.size(), 6);
 
     filter.setFetchDrinks(true);

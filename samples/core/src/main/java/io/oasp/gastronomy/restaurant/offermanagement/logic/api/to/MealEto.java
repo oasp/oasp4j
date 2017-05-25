@@ -6,7 +6,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.common.api.Meal;
  * The {@link io.oasp.module.basic.common.api.to.AbstractEto ETO} for a {@link Meal}.
  *
  */
-public class MealEto extends AbstractProductEto implements Meal {
+public class MealEto extends ProductEto implements Meal {
 
   /** UID for serialization. */
   private static final long serialVersionUID = 1L;

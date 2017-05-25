@@ -5,7 +5,7 @@ import io.oasp.gastronomy.restaurant.general.dataaccess.base.dao.ApplicationMast
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.ProductSortByHitEntry;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.DrinkEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.MealEntity;
-import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.AbstractProductEntity;
+import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.ProductEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.SideDishEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.ProductDao;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
@@ -31,7 +31,7 @@ import com.mysema.query.types.path.EntityPathBase;
  *
  */
 @Named
-public class ProductDaoImpl extends ApplicationMasterDataDaoImpl<AbstractProductEntity> implements ProductDao {
+public class ProductDaoImpl extends ApplicationMasterDataDaoImpl<ProductEntity> implements ProductDao {
 
   /**
    * The constructor.
@@ -42,14 +42,14 @@ public class ProductDaoImpl extends ApplicationMasterDataDaoImpl<AbstractProduct
   }
 
   @Override
-  public Class<AbstractProductEntity> getEntityClass() {
+  public Class<ProductEntity> getEntityClass() {
 
-    return AbstractProductEntity.class;
+    return ProductEntity.class;
   }
 
   @Override
   @Deprecated
-  public List<AbstractProductEntity> findProductsFiltered(ProductFilter productFilterBo, ProductSortBy sortBy) {
+  public List<ProductEntity> findProductsFiltered(ProductFilter productFilterBo, ProductSortBy sortBy) {
 
     /*
      * Basic error handling
@@ -58,7 +58,7 @@ public class ProductDaoImpl extends ApplicationMasterDataDaoImpl<AbstractProduct
       return new ArrayList<>();
     }
 
-    AbstractProductEntity product = Alias.alias(AbstractProductEntity.class);
+    ProductEntity product = Alias.alias(ProductEntity.class);
     JPQLQuery query = new JPAQuery(getEntityManager()).from($(product));
     BooleanBuilder builder = new BooleanBuilder();
 
@@ -98,15 +98,15 @@ public class ProductDaoImpl extends ApplicationMasterDataDaoImpl<AbstractProduct
 
     }
 
-    List<AbstractProductEntity> result = query.list($(product));
+    List<ProductEntity> result = query.list($(product));
     return result;
   }
 
   @Override
-  public PaginatedListTo<AbstractProductEntity> findProducts(ProductSearchCriteriaTo criteria) {
+  public PaginatedListTo<ProductEntity> findProducts(ProductSearchCriteriaTo criteria) {
 
-    AbstractProductEntity product = Alias.alias(AbstractProductEntity.class);
-    EntityPathBase<AbstractProductEntity> alias = $(product);
+    ProductEntity product = Alias.alias(ProductEntity.class);
+    EntityPathBase<ProductEntity> alias = $(product);
     JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
 
     String name = criteria.getName();
@@ -126,7 +126,7 @@ public class ProductDaoImpl extends ApplicationMasterDataDaoImpl<AbstractProduct
       PaginationTo pagination = criteria.getPagination();
 
       PaginationResultTo paginationResult = new PaginationResultTo(pagination, 0L);
-      List<AbstractProductEntity> paginatedList = new ArrayList<>();
+      List<ProductEntity> paginatedList = new ArrayList<>();
 
       return new PaginatedListTo<>(paginatedList, paginationResult);
     }

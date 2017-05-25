@@ -27,7 +27,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSortBy;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.AbstractProductEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
@@ -79,13 +79,13 @@ public class OffermanagementRestServiceImpl implements OffermanagementRestServic
 
   @Override
   @Deprecated
-  public List<AbstractProductEto> getAllProducts() {
+  public List<ProductEto> getAllProducts() {
 
     return this.offermanagement.findAllProducts();
   }
 
   @Override
-  public AbstractProductEto saveProduct(AbstractProductEto product) {
+  public ProductEto saveProduct(ProductEto product) {
 
     return this.offermanagement.saveProduct(product);
   }
@@ -118,7 +118,7 @@ public class OffermanagementRestServiceImpl implements OffermanagementRestServic
   }
 
   @Override
-  public AbstractProductEto findProductByRevision(long id, Long revision) {
+  public ProductEto findProductByRevision(long id, Long revision) {
 
     if (revision != null) {
       return this.offermanagement.findProductByRevision(id, revision);
@@ -128,14 +128,14 @@ public class OffermanagementRestServiceImpl implements OffermanagementRestServic
   }
 
   @Override
-  public AbstractProductEto findProduct(long id) {
+  public ProductEto findProduct(long id) {
 
     return this.offermanagement.findProduct(id);
   }
 
   @Override
   @Deprecated
-  public void updateProduct(AbstractProductEto product) {
+  public void updateProduct(ProductEto product) {
 
     this.offermanagement.saveProduct(product);
   }
@@ -161,7 +161,7 @@ public class OffermanagementRestServiceImpl implements OffermanagementRestServic
 
   @Override
   @Deprecated
-  public List<AbstractProductEto> getFilteredProducts(ProductFilter productFilter, ProductSortBy sortBy) {
+  public List<ProductEto> getFilteredProducts(ProductFilter productFilter, ProductSortBy sortBy) {
 
     return this.offermanagement.findProductsFiltered(productFilter, sortBy);
   }
@@ -218,7 +218,7 @@ public class OffermanagementRestServiceImpl implements OffermanagementRestServic
   }
 
   @Override
-  public PaginatedListTo<AbstractProductEto> findProductEtosByPost(ProductSearchCriteriaTo searchCriteriaTo) {
+  public PaginatedListTo<ProductEto> findProductEtosByPost(ProductSearchCriteriaTo searchCriteriaTo) {
 
     return this.offermanagement.findProductEtos(searchCriteriaTo);
   }

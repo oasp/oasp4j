@@ -15,7 +15,7 @@ import org.hibernate.envers.Audited;
 @Entity
 @DiscriminatorValue("Drink")
 @Audited
-public class DrinkEntity extends AbstractProductEntity implements Drink {
+public class DrinkEntity extends ProductEntity implements Drink {
 
   private static final long serialVersionUID = 1L;
 

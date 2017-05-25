@@ -62,8 +62,8 @@ public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAda
   @Override
   public void configure(HttpSecurity http) throws Exception {
 
-    String[] unsecuredResources =
-        new String[] { "/login", "/security/**", "/services/rest/login", "/services/rest/logout" };
+    String[] unsecuredResources = new String[] { "/login", "/security/**", "/websocket/**", "/jsclient/**",
+    "/services/rest/login", "/services/rest/logout" };
 
     http
         //

@@ -8,7 +8,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSortBy;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.AbstractProductEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
@@ -58,13 +58,13 @@ public interface Offermanagement {
   PaginatedListTo<OfferEto> findOfferEtos(OfferSearchCriteriaTo criteria);
 
   /**
-   * Checks, whether a given {@link AbstractProductEto} is in use by at least one {@link OfferEto}.
+   * Checks, whether a given {@link ProductEto} is in use by at least one {@link OfferEto}.
    *
    * @param product product to check if it is in use
-   * @return {@code true}, if there are no {@link OfferEto offers}, that use the given {@link AbstractProductEto}. {@code false}
+   * @return {@code true}, if there are no {@link OfferEto offers}, that use the given {@link ProductEto}. {@code false}
    *         otherwise.
    */
-  boolean isProductInUseByOffer(AbstractProductEto product);
+  boolean isProductInUseByOffer(ProductEto product);
 
   /**
    * @param offerFilterBo is the {@link OfferFilter offers filter criteria}
@@ -97,7 +97,7 @@ public interface Offermanagement {
    * @return the requested {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product} or {@code null} if
    *         no such {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product} exists.
    */
-  AbstractProductEto findProduct(Long id);
+  ProductEto findProduct(Long id);
 
   /**
    * Gets a {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product} with a specific revision using its
@@ -109,7 +109,7 @@ public interface Offermanagement {
    * @return the requested {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product} or {@code null} if
    *         no such {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product} exists.
    */
-  AbstractProductEto findProductByRevision(Long id, Number revision);
+  ProductEto findProductByRevision(Long id, Number revision);
 
   /**
    * Gets a {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Meal} using its entity identifier.
@@ -141,7 +141,7 @@ public interface Offermanagement {
   /**
    * @return the {@link List} with all {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product}s.
    */
-  List<AbstractProductEto> findAllProducts();
+  List<ProductEto> findAllProducts();
 
   /**
    * @return the {@link List} with all {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Meal meals}.
@@ -166,10 +166,10 @@ public interface Offermanagement {
    * @param sortBy sorting specification
    * @return a {@link List} of filtered products
    */
-  List<AbstractProductEto> findProductsFiltered(ProductFilter productFilterBo, ProductSortBy sortBy);
+  List<ProductEto> findProductsFiltered(ProductFilter productFilterBo, ProductSortBy sortBy);
 
   /**
-   * @param productId the ID of the {@link AbstractProductEto} to get the picture
+   * @param productId the ID of the {@link ProductEto} to get the picture
    * @return the {@link BinaryObjectEto} that contains meta data about the picture
    */
   BinaryObjectEto findProductPicture(Long productId);
@@ -178,45 +178,45 @@ public interface Offermanagement {
    * Returns a list of products matching the search criteria.
    *
    * @param criteria the {@link ProductSearchCriteriaTo}.
-   * @return the {@link List} of matching {@link AbstractProductEto}s.
+   * @return the {@link List} of matching {@link ProductEto}s.
    */
-  PaginatedListTo<AbstractProductEto> findProductEtos(ProductSearchCriteriaTo criteria);
+  PaginatedListTo<ProductEto> findProductEtos(ProductSearchCriteriaTo criteria);
 
   /**
-   * @param productId the ID of the {@link AbstractProductEto} to get the picture data
+   * @param productId the ID of the {@link ProductEto} to get the picture data
    * @return the {@link Blob} that contains the data
    */
   Blob findProductPictureBlob(Long productId);
 
   /**
-   * If no ID is contained creates the {@link AbstractProductEto} for the first time. Else it updates the {@link AbstractProductEto}
-   * with given ID. If no {@link AbstractProductEto} with given ID is present, an exception will be thrown.
+   * If no ID is contained creates the {@link ProductEto} for the first time. Else it updates the {@link ProductEto}
+   * with given ID. If no {@link ProductEto} with given ID is present, an exception will be thrown.
    *
-   * @param product the {@link AbstractProductEto} to persist.
-   * @return the persisted {@link AbstractProductEto}.
+   * @param product the {@link ProductEto} to persist.
+   * @return the persisted {@link ProductEto}.
    */
-  AbstractProductEto saveProduct(AbstractProductEto product);
+  ProductEto saveProduct(ProductEto product);
 
   /**
-   * Deletes a {@link AbstractProductEto}.
+   * Deletes a {@link ProductEto}.
    *
-   * @param productId is the ID of the {@link AbstractProductEto} to delete
+   * @param productId is the ID of the {@link ProductEto} to delete
    */
   void deleteProduct(Long productId);
 
   /**
    * Updates the picture of the product.
    *
-   * @param productId is the ID of the {@link AbstractProductEto} to update the picture
+   * @param productId is the ID of the {@link ProductEto} to update the picture
    * @param blob is the binary representation of the picture
    * @param binaryObjectEto is the mimeType of the blob
    */
   void updateProductPicture(Long productId, Blob blob, BinaryObjectEto binaryObjectEto);
 
   /**
-   * Deletes the Picture of the {@link AbstractProductEto}.
+   * Deletes the Picture of the {@link ProductEto}.
    *
-   * @param productId is the ID of the {@link AbstractProductEto} to delte the picture
+   * @param productId is the ID of the {@link ProductEto} to delte the picture
    */
   void deleteProductPicture(Long productId);
 

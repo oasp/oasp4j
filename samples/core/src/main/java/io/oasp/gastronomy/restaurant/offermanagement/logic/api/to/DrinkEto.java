@@ -6,7 +6,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.common.api.Drink;
  * The {@link io.oasp.module.basic.common.api.to.AbstractEto ETO} for a {@link Drink}.
  *
  */
-public class DrinkEto extends AbstractProductEto implements Drink {
+public class DrinkEto extends ProductEto implements Drink {
 
   private static final long serialVersionUID = 1L;
 

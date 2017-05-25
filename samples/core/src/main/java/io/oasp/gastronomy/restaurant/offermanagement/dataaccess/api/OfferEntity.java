@@ -20,7 +20,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferSt
  */
 @Entity
 @Table(name = "Offer", uniqueConstraints = { @UniqueConstraint(columnNames = { "description" }) })
-public class OfferEntity extends AbstractMenuItemEntity implements Offer {
+public class OfferEntity extends MenuItemEntity implements Offer {
 
   private static final long serialVersionUID = 1L;
 

@@ -8,7 +8,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.common.api.Product;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.ProductType;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.exception.OfferEmptyException;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity;
-import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.AbstractProductEntity;
+import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.ProductEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.DrinkDao;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.MealDao;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.OfferDao;
@@ -22,7 +22,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSortBy;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.AbstractProductEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
@@ -130,7 +130,7 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
 
   @Override
   @RolesAllowed({ PermissionConstants.FIND_OFFER, PermissionConstants.FIND_PRODUCT })
-  public boolean isProductInUseByOffer(AbstractProductEto product) {
+  public boolean isProductInUseByOffer(ProductEto product) {
 
     LOG.debug("Get all offers from database for the given product with id '" + product.getId() + "'.");
 
@@ -233,14 +233,14 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
 
   @Override
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
-  public AbstractProductEto findProduct(Long id) {
+  public ProductEto findProduct(Long id) {
 
     LOG.debug("Get Product with id '" + id + "' from database.");
-    AbstractProductEntity product = getProductDao().findOne(id);
+    ProductEntity product = getProductDao().findOne(id);
     if (product == null) {
       return null;
     } else {
-      return getBeanMapper().map(product, AbstractProductEto.class);
+      return getBeanMapper().map(product, ProductEto.class);
     }
   }
 
@@ -248,7 +248,7 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public MealEto findMeal(Long id) {
 
-    AbstractProductEto product = findProduct(id);
+    ProductEto product = findProduct(id);
     try {
       return (MealEto) product;
     } catch (ClassCastException e) {
@@ -260,7 +260,7 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public DrinkEto findDrink(Long id) {
 
-    AbstractProductEto product = findProduct(id);
+    ProductEto product = findProduct(id);
     try {
       return (DrinkEto) product;
     } catch (ClassCastException e) {
@@ -272,7 +272,7 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public SideDishEto findSideDish(Long id) {
 
-    AbstractProductEto product = findProduct(id);
+    ProductEto product = findProduct(id);
     try {
       return (SideDishEto) product;
     } catch (ClassCastException e) {
@@ -282,10 +282,10 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
 
   @Override
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
-  public List<AbstractProductEto> findAllProducts() {
+  public List<ProductEto> findAllProducts() {
 
     LOG.debug("Get all products from database.");
-    return getBeanMapper().mapList(getProductDao().findAll(), AbstractProductEto.class);
+    return getBeanMapper().mapList(getProductDao().findAll(), ProductEto.class);
   }
 
   @Override
@@ -314,17 +314,17 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
 
   @Override
   @RolesAllowed(PermissionConstants.FIND_OFFER)
-  public List<AbstractProductEto> findProductsFiltered(ProductFilter productFilterBo, ProductSortBy sortBy) {
+  public List<ProductEto> findProductsFiltered(ProductFilter productFilterBo, ProductSortBy sortBy) {
 
     LOG.debug("Fetch filtered offers.");
-    return getBeanMapper().mapList(getProductDao().findProductsFiltered(productFilterBo, sortBy), AbstractProductEto.class);
+    return getBeanMapper().mapList(getProductDao().findProductsFiltered(productFilterBo, sortBy), ProductEto.class);
   }
 
   @Override
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
   public BinaryObjectEto findProductPicture(Long productId) {
 
-    AbstractProductEto product = findProduct(productId);
+    ProductEto product = findProduct(productId);
     if (product != null) {
       return getUcManageBinaryObject().findBinaryObject(product.getPictureId());
     } else {
@@ -336,7 +336,7 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
   @RolesAllowed(PermissionConstants.FIND_PRODUCT_PICTURE)
   public Blob findProductPictureBlob(Long productId) {
 
-    AbstractProductEto product = findProduct(productId);
+    ProductEto product = findProduct(productId);
     if (product != null) {
       return getUcManageBinaryObject().getBinaryObjectBlob(product.getPictureId());
     } else {
@@ -346,25 +346,25 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
 
   @Override
   @RolesAllowed(PermissionConstants.FIND_PRODUCT_PICTURE)
-  public AbstractProductEto findProductByRevision(Long id, Number revision) {
+  public ProductEto findProductByRevision(Long id, Number revision) {
 
     LOG.debug("Get Product with id '" + id + "' and revision '" + revision + "' from database.");
-    AbstractProductEntity product = getProductDao().load(id, revision);
+    ProductEntity product = getProductDao().load(id, revision);
     if (product == null) {
       return null;
     } else {
-      return getBeanMapper().map(product, AbstractProductEto.class);
+      return getBeanMapper().map(product, ProductEto.class);
     }
   }
 
   @Override
   @RolesAllowed(PermissionConstants.SAVE_PRODUCT)
-  public AbstractProductEto saveProduct(AbstractProductEto product) {
+  public ProductEto saveProduct(ProductEto product) {
 
     Objects.requireNonNull(product, "product");
 
-    AbstractProductEntity persistedProduct = getProductDao().save(getBeanMapper().map(product, AbstractProductEntity.class));
-    return getBeanMapper().map(persistedProduct, AbstractProductEto.class);
+    ProductEntity persistedProduct = getProductDao().save(getBeanMapper().map(product, ProductEntity.class));
+    return getBeanMapper().map(persistedProduct, ProductEto.class);
   }
 
   @Override
@@ -378,7 +378,7 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
   @RolesAllowed(PermissionConstants.SAVE_PRODUCT_PICTURE)
   public void updateProductPicture(Long productId, Blob blob, BinaryObjectEto binaryObjectEto) {
 
-    AbstractProductEntity product = getProductDao().findOne(productId);
+    ProductEntity product = getProductDao().findOne(productId);
     if (product != null) {
       binaryObjectEto = getUcManageBinaryObject().saveBinaryObject(blob, binaryObjectEto);
       product.setPictureId(binaryObjectEto.getId());
@@ -393,7 +393,7 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
   @RolesAllowed(PermissionConstants.DELETE_PRODUCT_PICTURE)
   public void deleteProductPicture(Long productId) {
 
-    AbstractProductEntity product = getProductDao().findOne(productId);
+    ProductEntity product = getProductDao().findOne(productId);
     if (product != null) {
       getUcManageBinaryObject().deleteBinaryObject(product.getPictureId());
     }
@@ -410,11 +410,11 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
 
   @Override
   @RolesAllowed(PermissionConstants.FIND_PRODUCT)
-  public PaginatedListTo<AbstractProductEto> findProductEtos(ProductSearchCriteriaTo criteria) {
+  public PaginatedListTo<ProductEto> findProductEtos(ProductSearchCriteriaTo criteria) {
 
     criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
-    PaginatedListTo<AbstractProductEntity> products = getProductDao().findProducts(criteria);
-    return mapPaginatedEntityList(products, AbstractProductEto.class);
+    PaginatedListTo<ProductEntity> products = getProductDao().findProducts(criteria);
+    return mapPaginatedEntityList(products, ProductEto.class);
   }
 
   /**
