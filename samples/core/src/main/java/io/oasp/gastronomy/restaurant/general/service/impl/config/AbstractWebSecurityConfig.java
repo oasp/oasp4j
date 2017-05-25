@@ -30,7 +30,7 @@ import io.oasp.module.security.common.impl.rest.LogoutSuccessHandlerReturningOkH
  * Security configuration is based on {@link WebSecurityConfigurerAdapter}. This configuration is by purpose designed
  * most simple for two channels of authentication: simple login form and rest-url.
  */
-public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter {
+public abstract class AbstractWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Value("${security.cors.enabled}")
   boolean corsEnabled = false;

@@ -24,7 +24,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BankPaymentData;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.BillEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.PaymentData;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.AbstractPaymentData;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageBill;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.base.usecase.AbstractBillUc;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.paymentadapter.PaymentAdapter;
@@ -157,7 +157,7 @@ public class UcManageBillImpl extends AbstractBillUc implements UcManageBill {
 
   @Override
   @RolesAllowed(PermissionConstants.SAVE_BILL)
-  public PaymentStatus doPayment(BillEto bill, PaymentData paymentDataDebitor) {
+  public PaymentStatus doPayment(BillEto bill, AbstractPaymentData paymentDataDebitor) {
 
     // REVIEW <who> (hohwille) Remove this hack or replace with something reasonable.
     PaymentStatus status = null;

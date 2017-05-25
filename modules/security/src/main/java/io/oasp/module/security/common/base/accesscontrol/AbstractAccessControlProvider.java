@@ -12,7 +12,7 @@ import net.sf.mmm.util.collection.base.NodeCycleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.oasp.module.security.common.api.accesscontrol.AccessControl;
+import io.oasp.module.security.common.api.accesscontrol.AbstractAccessControl;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlGroup;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlPermission;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
@@ -30,7 +30,7 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
   private static final Logger LOG = LoggerFactory.getLogger(AbstractAccessControlProvider.class);
 
   /** @see #getAccessControl(String) */
-  private final Map<String, AccessControl> id2nodeMap;
+  private final Map<String, AbstractAccessControl> id2nodeMap;
 
   /**
    * The constructor.
@@ -83,7 +83,7 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
   }
 
   /**
-   * Called from {@link #initialize(AccessControlSchema)} to collect all {@link AccessControl}s recursively.
+   * Called from {@link #initialize(AccessControlSchema)} to collect all {@link AbstractAccessControl}s recursively.
    *
    * @param group the {@link AccessControlGroup} to traverse.
    * @param toplevelGroups is the {@link Set} of all {@link AccessControlGroup}s from
@@ -94,7 +94,7 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
     if (!toplevelGroups.contains(group)) {
       throw new IllegalStateException("Invalid group not declared as top-level group in schema: " + group);
     }
-    AccessControl old = this.id2nodeMap.put(group.getId(), group);
+    AbstractAccessControl old = this.id2nodeMap.put(group.getId(), group);
     if (old != null) {
       LOG.debug("Already visited access control group {}", group);
       if (old != group) {
@@ -122,7 +122,7 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
   }
 
   @Override
-  public AccessControl getAccessControl(String nodeId) {
+  public AbstractAccessControl getAccessControl(String nodeId) {
 
     return this.id2nodeMap.get(nodeId);
   }
@@ -130,7 +130,7 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
   @Override
   public boolean collectAccessControlIds(String groupId, Set<String> permissions) {
 
-    AccessControl node = getAccessControl(groupId);
+    AbstractAccessControl node = getAccessControl(groupId);
     if (node instanceof AccessControlGroup) {
       collectPermissionIds((AccessControlGroup) node, permissions);
     } else {
@@ -162,9 +162,9 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
   }
 
   @Override
-  public boolean collectAccessControls(String groupId, Set<AccessControl> permissions) {
+  public boolean collectAccessControls(String groupId, Set<AbstractAccessControl> permissions) {
 
-    AccessControl node = getAccessControl(groupId);
+    AbstractAccessControl node = getAccessControl(groupId);
     if (node == null) {
       return false;
     }
@@ -183,7 +183,7 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
    * @param group is the {@link AccessControlGroup} to traverse.
    * @param permissions is the {@link Set} used to collect.
    */
-  public void collectPermissionNodes(AccessControlGroup group, Set<AccessControl> permissions) {
+  public void collectPermissionNodes(AccessControlGroup group, Set<AbstractAccessControl> permissions) {
 
     boolean added = permissions.add(group);
     if (!added) {

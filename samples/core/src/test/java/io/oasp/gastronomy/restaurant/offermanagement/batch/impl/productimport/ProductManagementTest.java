@@ -18,11 +18,11 @@ import io.oasp.gastronomy.restaurant.offermanagement.common.api.Product;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.ProductSortByHitEntry;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.impl.dao.ProductDaoImpl;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
-import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.AbstractProductEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
-import io.oasp.module.test.common.base.ComponentTest;
+import io.oasp.module.test.common.base.AbstractComponentTest;
 
 /**
  * This is the test case of {@link ProductDaoImpl}
@@ -31,7 +31,7 @@ import io.oasp.module.test.common.base.ComponentTest;
  */
 @SpringApplicationConfiguration(classes = { SpringBootApp.class })
 @WebAppConfiguration
-public class ProductManagementTest extends ComponentTest {
+public class ProductManagementTest extends AbstractComponentTest {
 
   @Inject
   private Offermanagement offerManagement;
@@ -72,7 +72,7 @@ public class ProductManagementTest extends ComponentTest {
     filter.setFetchMeals(true);
     ProductSortBy sort = new ProductSortBy();
 
-    List<ProductEto> products = this.offerManagement.findProductsFiltered(filter, sort);
+    List<AbstractProductEto> products = this.offerManagement.findProductsFiltered(filter, sort);
     assertEquals(products.size(), 6);
 
     filter.setFetchDrinks(true);

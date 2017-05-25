@@ -23,7 +23,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import io.oasp.module.security.common.api.accesscontrol.AccessControl;
+import io.oasp.module.security.common.api.accesscontrol.AbstractAccessControl;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
 import io.oasp.module.security.common.api.accesscontrol.PrincipalAccessControlProvider;
 
@@ -125,7 +125,7 @@ public abstract class AbstractAccessControlBasedAuthenticationProvider<U extends
     // determine granted authorities for spring-security...
     Set<GrantedAuthority> authorities = new HashSet<>();
     Collection<String> accessControlIds = this.principalAccessControlProvider.getAccessControlIds(principal);
-    Set<AccessControl> accessControlSet = new HashSet<>();
+    Set<AbstractAccessControl> accessControlSet = new HashSet<>();
     for (String id : accessControlIds) {
       boolean success = this.accessControlProvider.collectAccessControls(id, accessControlSet);
       if (!success) {
@@ -133,7 +133,7 @@ public abstract class AbstractAccessControlBasedAuthenticationProvider<U extends
         // authorities.add(new SimpleGrantedAuthority(id));
       }
     }
-    for (AccessControl accessControl : accessControlSet) {
+    for (AbstractAccessControl accessControl : accessControlSet) {
       authorities.add(new AccessControlGrantedAuthority(accessControl));
     }
     return authorities;
@@ -158,7 +158,7 @@ public abstract class AbstractAccessControlBasedAuthenticationProvider<U extends
    * Retrieves the internal {@link Principal} object representing the user. This can be any object implementing
    * {@link Principal} and can contain additional user details such as profile data. This object is used to
    * {@link PrincipalAccessControlProvider#getAccessControlIds(Principal) retrieve} the (top-level)
-   * {@link AccessControl}s that have been granted to the user.
+   * {@link AbstractAccessControl}s that have been granted to the user.
    *
    * @param username is the login of the user.
    * @param authentication is the {@link UsernamePasswordAuthenticationToken}.
@@ -171,7 +171,7 @@ public abstract class AbstractAccessControlBasedAuthenticationProvider<U extends
    * Retrieves the internal {@link Principal} object representing the user. This can be any object implementing
    * {@link Principal} and can contain additional user details such as profile data. This object is used to
    * {@link PrincipalAccessControlProvider#getAccessControlIds(Principal) retrieve} the (top-level)
-   * {@link AccessControl}s that have been granted to the user.
+   * {@link AbstractAccessControl}s that have been granted to the user.
    *
    * @param username is the login of the user.
    * @return the {@link Principal}.
@@ -191,7 +191,7 @@ public abstract class AbstractAccessControlBasedAuthenticationProvider<U extends
     // determine granted authorities for spring-security...
     Set<GrantedAuthority> authorities = new HashSet<>();
     Collection<String> accessControlIds = this.principalAccessControlProvider.getAccessControlIds(principal);
-    Set<AccessControl> accessControlSet = new HashSet<>();
+    Set<AbstractAccessControl> accessControlSet = new HashSet<>();
     for (String id : accessControlIds) {
       boolean success = this.accessControlProvider.collectAccessControls(id, accessControlSet);
       if (!success) {
@@ -199,7 +199,7 @@ public abstract class AbstractAccessControlBasedAuthenticationProvider<U extends
         // authorities.add(new SimpleGrantedAuthority(id));
       }
     }
-    for (AccessControl accessControl : accessControlSet) {
+    for (AbstractAccessControl accessControl : accessControlSet) {
       authorities.add(new AccessControlGrantedAuthority(accessControl));
     }
 

@@ -2,14 +2,14 @@ package io.oasp.module.basic.common.api.reflect;
 
 import org.junit.Test;
 
-import io.oasp.module.test.common.base.ModuleTest;
+import io.oasp.module.test.common.base.AbstractModuleTest;
 
 /**
  * Test-case for {@link OaspPackage}.
  *
  * @author hohwille
  */
-public class OaspPackageTest extends ModuleTest {
+public class OaspPackageTest extends AbstractModuleTest {
 
   /** Test of {@link OaspPackage#of(Class)} with {@link OaspPackage}. */
   @Test

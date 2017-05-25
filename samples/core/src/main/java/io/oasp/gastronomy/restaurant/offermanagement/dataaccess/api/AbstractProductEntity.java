@@ -21,7 +21,7 @@ import org.hibernate.envers.Audited;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dType", discriminatorType = DiscriminatorType.STRING)
 @Audited
-public abstract class ProductEntity extends MenuItemEntity implements Product {
+public abstract class AbstractProductEntity extends AbstractMenuItemEntity implements Product {
 
   private static final long serialVersionUID = 1L;
 
@@ -30,7 +30,7 @@ public abstract class ProductEntity extends MenuItemEntity implements Product {
   /**
    * The constructor.
    */
-  public ProductEntity() {
+  public AbstractProductEntity() {
 
     super();
   }
