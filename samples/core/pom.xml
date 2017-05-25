@@ -207,6 +207,16 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+      <exclusions>
+        <exclusion>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </exclusion>
+        <exclusion>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
          
     <dependency>
@@ -267,7 +277,22 @@
     </dependency>
     -->
   </dependencies>
-
+  
+  <profiles>
+    <profile>
+      <id>embedded</id>
+      <activation>
+       <activeByDefault>true</activeByDefault>
+      </activation>
+      <dependencies>
+         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId> 
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
+  
   <build>
     <resources>
       <resource>
