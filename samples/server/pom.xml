@@ -23,16 +23,6 @@
       <artifactId>oasp4j-sample-core</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <!-- CLIENT JAR DEPENDENCY -->
-    <dependency>
-      <groupId>com.capgemini.devonfw</groupId>
-      <artifactId>extjs-sample</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
-      <type>zip</type>
-      <classifier>web</classifier>
-      <scope>runtime</scope>
-    </dependency>
-    <!-- END CLIENT JAR DEPENDENCY -->
  </dependencies>
 
   <profiles>
@@ -48,7 +38,6 @@
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
             <executions>
-            <!-- 
               <execution>
                 <id>npm-install</id>
                 <phase>generate-sources</phase>
@@ -105,7 +94,6 @@
                   <workingDirectory>${js.client.dir}</workingDirectory>
                 </configuration>
               </execution>
-               -->
             </executions>
           </plugin>
         </plugins>
@@ -140,23 +128,8 @@
           </execution>
         </executions>
       </plugin>
-      <!-- CLIENT PLUGIN -->
-     <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <configuration>
-          <overlays>
-            <overlay>
-              <groupId>com.capgemini.devonfw</groupId>
-              <artifactId>extjs-sample</artifactId>
-              <type>zip</type>
-              <classifier>web</classifier>
-              <targetPath>jsclient</targetPath>
-            </overlay>
-          </overlays>
-        </configuration>
-      </plugin>
-      <!-- END CLIENT PLUGIN -->
+
     </plugins>
   </build>
+
 </project>
