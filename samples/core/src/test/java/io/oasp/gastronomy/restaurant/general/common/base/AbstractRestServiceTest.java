@@ -23,7 +23,6 @@ import io.oasp.module.test.common.base.SubsystemTest;
  */
 @SpringBootTest(classes = { RestaurantTestConfig.class,
 SpringBootApp.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
-// @ActiveProfiles(profiles = { SpringProfileConstants.JUNIT })
 public abstract class AbstractRestServiceTest extends SubsystemTest {
 
   /**

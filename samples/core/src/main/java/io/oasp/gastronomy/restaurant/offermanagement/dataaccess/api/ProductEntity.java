@@ -1,5 +1,7 @@
 package io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api;
 
+import io.oasp.gastronomy.restaurant.offermanagement.common.api.Product;
+
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -8,8 +10,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
-
-import io.oasp.gastronomy.restaurant.offermanagement.common.api.Product;
 
 /**
  * The {@link io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity persistent entity} for

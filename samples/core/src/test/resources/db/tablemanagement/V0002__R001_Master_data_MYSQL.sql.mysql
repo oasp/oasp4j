@@ -50,6 +50,6 @@ INSERT INTO BILLORDERPOSITION (billId, orderPositionsId) VALUES (2,4);
 
 
 INSERT INTO STAFFMEMBER (id, modificationCounter, role, login, firstname, lastname) VALUES (1, 0, 3, 'chief', 'Charly', 'Chief');
-INSERT INTO STAFFMEMBER (id, modificationCounter, role, login, firstname, lastname) VALUES (2, 0, 1, 'cook', 'Carl', 'Cook');
+INSERT INTO STAFFMEMBER (id, modificationCounter, role, login, firstname, lastname) VALUES (2, 0, 0, 'cook', 'Carl', 'Cook');
 INSERT INTO STAFFMEMBER (id, modificationCounter, role, login, firstname, lastname) VALUES (3, 0, 1, 'waiter', 'Willy', 'Waiter');
 INSERT INTO STAFFMEMBER (id, modificationCounter, role, login, firstname, lastname) VALUES (4, 0, 2, 'barkeeper', 'Bianca', 'Barkeeper');

@@ -24,7 +24,6 @@ import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
  */
 @Entity
 @Table(name = "Bill")
-// @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class BillEntity extends ApplicationPersistenceEntity implements Bill {
 
   private static final long serialVersionUID = 1L;
