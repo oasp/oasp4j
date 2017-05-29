@@ -25,7 +25,7 @@ public class BaseTestTest extends Assertions {
   @Test
   public void testInitialization() {
 
-    AbstractTest test = new MyTest();
+    MyTest test = new MyTest();
     // Set the expected result before running setUp()-
     // Setup calls assertThat to test the expected result
     EXPECTED_RESULT = false;
