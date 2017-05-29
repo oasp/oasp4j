@@ -14,7 +14,7 @@ public interface PrincipalAccessControlProvider<P extends Principal> {
 
   /**
    * @param principal is the {@link Principal} (user).
-   * @return the {@link Collection} of {@link AccessControl#getId() IDs} with the groups of the given {@link Principal}.
+   * @return the {@link Collection} of {@link AbstractAccessControl#getId() IDs} with the groups of the given {@link Principal}.
    */
   Collection<String> getAccessControlIds(P principal);
 

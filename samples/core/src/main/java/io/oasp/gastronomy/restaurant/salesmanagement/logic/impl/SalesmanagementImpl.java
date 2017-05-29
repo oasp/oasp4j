@@ -12,7 +12,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.PaymentData;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.AbstractPaymentData;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcChangeTable;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcFindBill;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcFindOrder;
@@ -202,7 +202,7 @@ public class SalesmanagementImpl extends AbstractComponentFacade implements Sale
   }
 
   @Override
-  public PaymentStatus doPayment(BillEto bill, PaymentData paymentData) {
+  public PaymentStatus doPayment(BillEto bill, AbstractPaymentData paymentData) {
 
     return this.ucManageBill.doPayment(bill, paymentData);
   }

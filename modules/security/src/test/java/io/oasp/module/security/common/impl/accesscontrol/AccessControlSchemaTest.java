@@ -16,18 +16,18 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 
-import io.oasp.module.security.common.api.accesscontrol.AccessControl;
+import io.oasp.module.security.common.api.accesscontrol.AbstractAccessControl;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlGroup;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlPermission;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlSchema;
-import io.oasp.module.test.common.base.ModuleTest;
+import io.oasp.module.test.common.base.AbstractModuleTest;
 
 /**
  * This is the test-case for {@link AccessControlSchema} and {@link AccessControlSchemaXmlMapper}.
  *
  */
-public class AccessControlSchemaTest extends ModuleTest {
+public class AccessControlSchemaTest extends AbstractModuleTest {
 
   /** The location of the reference configuration for regression tests. */
   private static final String SCHEMA_XML = "config/app/security/access-control-schema.xml";
@@ -150,7 +150,7 @@ public class AccessControlSchemaTest extends ModuleTest {
   public void testProvider() {
 
     AccessControlProvider provider = createProvider(SCHEMA_XML);
-    Set<AccessControl> permissions = new HashSet<>();
+    Set<AbstractAccessControl> permissions = new HashSet<>();
     boolean success;
     success = provider.collectAccessControls("", permissions);
     assertThat(success).isFalse();
