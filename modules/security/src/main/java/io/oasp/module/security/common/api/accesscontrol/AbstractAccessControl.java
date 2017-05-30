@@ -14,8 +14,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 /**
  * This is the abstract base class for a node of the {@link AccessControlSchema} that represents a tree of
  * {@link AccessControlGroup}s and {@link AccessControlPermission}s. If a {@link java.security.Principal} "has" a
- * {@link AbstractAccessControl} he also "has" all {@link AbstractAccessControl}s with according permissions in the
- * spanned sub-tree.
+ * {@link AccessControl} he also "has" all {@link AccessControl}s with according permissions in the spanned sub-tree.
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -51,8 +50,8 @@ public abstract class AbstractAccessControl implements AccessControl, Serializab
   }
 
   /**
-   * @return the unique identifier of this {@link AbstractAccessControl}. Has to be unique for all
-   *         {@link AbstractAccessControl} in a {@link AccessControlSchema}.
+   * @return the unique identifier of this {@link AccessControl}. Has to be unique for all {@link AccessControl} in a
+   *         {@link AccessControlSchema}.
    */
   public String getId() {
 

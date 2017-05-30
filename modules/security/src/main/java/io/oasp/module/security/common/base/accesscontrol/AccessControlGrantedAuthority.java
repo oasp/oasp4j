@@ -4,11 +4,10 @@ import java.util.Objects;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import io.oasp.module.security.common.api.accesscontrol.AbstractAccessControl;
 import io.oasp.module.security.common.api.accesscontrol.AccessControl;
 
 /**
- * Implementation of {@link GrantedAuthority} for a {@link AbstractAccessControl}.
+ * Implementation of {@link GrantedAuthority} for a {@link AccessControl}.
  *
  */
 public class AccessControlGrantedAuthority implements GrantedAuthority {
@@ -31,7 +30,7 @@ public class AccessControlGrantedAuthority implements GrantedAuthority {
   }
 
   /**
-   * @return the contained {@link AbstractAccessControl}.
+   * @return the contained {@link AccessControl}.
    */
   public AccessControl getAccessControl() {
 
