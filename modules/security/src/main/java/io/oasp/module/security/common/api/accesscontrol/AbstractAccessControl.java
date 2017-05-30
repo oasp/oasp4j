@@ -85,8 +85,8 @@ public abstract class AbstractAccessControl implements AccessControl, Serializab
     if (getClass() != obj.getClass()) {
       return false;
     }
-    AbstractAccessControl other = (AbstractAccessControl) obj;
-    if (!Objects.equals(this.id, other.id)) {
+    AccessControl other = (AccessControl) obj;
+    if (!Objects.equals(this.id, other.getId())) {
       return false;
     }
     return true;
