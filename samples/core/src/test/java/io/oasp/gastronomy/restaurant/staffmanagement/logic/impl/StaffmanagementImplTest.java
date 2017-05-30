@@ -13,7 +13,7 @@ import io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api.StaffMemberE
 import io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api.dao.StaffMemberDao;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto;
 import io.oasp.module.beanmapping.common.api.BeanMapper;
-import io.oasp.module.test.common.base.ModuleTest;
+import io.oasp.module.test.common.base.AbstractModuleTest;
 
 /**
  * This class provides a basic implementation of a {@code ModuleTest} which employs the Mockito framework to provide
@@ -22,7 +22,7 @@ import io.oasp.module.test.common.base.ModuleTest;
  *
  */
 
-public class StaffmanagementImplTest extends ModuleTest {
+public class StaffmanagementImplTest extends AbstractModuleTest {
 
   /**
    * Initializes mocks before each test method.

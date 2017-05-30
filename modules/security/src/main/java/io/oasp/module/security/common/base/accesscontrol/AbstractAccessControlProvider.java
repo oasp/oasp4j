@@ -12,6 +12,7 @@ import net.sf.mmm.util.collection.base.NodeCycleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.oasp.module.security.common.api.accesscontrol.AbstractAccessControl;
 import io.oasp.module.security.common.api.accesscontrol.AccessControl;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlGroup;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlPermission;
@@ -83,7 +84,7 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
   }
 
   /**
-   * Called from {@link #initialize(AccessControlSchema)} to collect all {@link AccessControl}s recursively.
+   * Called from {@link #initialize(AccessControlSchema)} to collect all {@link AbstractAccessControl}s recursively.
    *
    * @param group the {@link AccessControlGroup} to traverse.
    * @param toplevelGroups is the {@link Set} of all {@link AccessControlGroup}s from

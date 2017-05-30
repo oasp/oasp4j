@@ -20,12 +20,12 @@ import io.oasp.module.security.common.api.accesscontrol.PrincipalAccessControlPr
  *             This is an implementation of {@link AbstractUserDetailsAuthenticationProvider} based on
  *             {@link PrincipalAccessControlProvider} and {@link AccessControlProvider}. <br/>
  *             <br/>
- *             This is a simple implementation of {@link AbstractAccessControlBasedAuthenticationProvider}.
+ *             This is a simple implementation of {@link AccessControlBasedAuthenticationProvider}.
  *
  */
 @Deprecated
 public class SimpleAccessControlBasedAuthenticationProvider
-    extends AbstractAccessControlBasedAuthenticationProvider<User, Principal> {
+    extends AccessControlBasedAuthenticationProvider<User, Principal> {
 
   /**
    * The constructor.

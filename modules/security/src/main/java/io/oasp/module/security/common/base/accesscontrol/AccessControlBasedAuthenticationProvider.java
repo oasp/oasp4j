@@ -23,6 +23,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import io.oasp.module.security.common.api.accesscontrol.AbstractAccessControl;
 import io.oasp.module.security.common.api.accesscontrol.AccessControl;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
 import io.oasp.module.security.common.api.accesscontrol.PrincipalAccessControlProvider;
@@ -30,24 +31,23 @@ import io.oasp.module.security.common.api.accesscontrol.PrincipalAccessControlPr
 /**
  * This is an implementation of {@link AbstractUserDetailsAuthenticationProvider} based on
  * {@link PrincipalAccessControlProvider} and {@link AccessControlProvider}.
+ *
  * @deprecated As of bug-fix release 2.1.2 the authentication mechanism changes. It is now based upon custom
  *             implementations of {@link UserDetailsService} in combination with {@link WebSecurityConfigurerAdapter}.
  *             For further information have a look at the sample application. <br/>
  *             <br/>
  *
  * @param <U> is the generic type of the {@link UserDetails} implementation used to bridge with spring-security.
- * @param
- *        <P>
- *        is the generic type of the {@link Principal} for internal user representation to bridge with
+ * @param <P> is the generic type of the {@link Principal} for internal user representation to bridge with
  *        {@link PrincipalAccessControlProvider}.
  *
  */
 @Deprecated
-public abstract class AbstractAccessControlBasedAuthenticationProvider<U extends UserDetails, P extends Principal>
+public abstract class AccessControlBasedAuthenticationProvider<U extends UserDetails, P extends Principal>
     extends AbstractUserDetailsAuthenticationProvider {
 
   /** The {@link Logger} instance. */
-  private static final Logger LOG = LoggerFactory.getLogger(AbstractAccessControlBasedAuthenticationProvider.class);
+  private static final Logger LOG = LoggerFactory.getLogger(AccessControlBasedAuthenticationProvider.class);
 
   private PrincipalAccessControlProvider<P> principalAccessControlProvider;
 
@@ -56,7 +56,7 @@ public abstract class AbstractAccessControlBasedAuthenticationProvider<U extends
   /**
    * The constructor.
    */
-  public AbstractAccessControlBasedAuthenticationProvider() {
+  public AccessControlBasedAuthenticationProvider() {
 
   }
 
@@ -158,7 +158,7 @@ public abstract class AbstractAccessControlBasedAuthenticationProvider<U extends
    * Retrieves the internal {@link Principal} object representing the user. This can be any object implementing
    * {@link Principal} and can contain additional user details such as profile data. This object is used to
    * {@link PrincipalAccessControlProvider#getAccessControlIds(Principal) retrieve} the (top-level)
-   * {@link AccessControl}s that have been granted to the user.
+   * {@link AbstractAccessControl}s that have been granted to the user.
    *
    * @param username is the login of the user.
    * @param authentication is the {@link UsernamePasswordAuthenticationToken}.
@@ -171,7 +171,7 @@ public abstract class AbstractAccessControlBasedAuthenticationProvider<U extends
    * Retrieves the internal {@link Principal} object representing the user. This can be any object implementing
    * {@link Principal} and can contain additional user details such as profile data. This object is used to
    * {@link PrincipalAccessControlProvider#getAccessControlIds(Principal) retrieve} the (top-level)
-   * {@link AccessControl}s that have been granted to the user.
+   * {@link AbstractAccessControl}s that have been granted to the user.
    *
    * @param username is the login of the user.
    * @return the {@link Principal}.

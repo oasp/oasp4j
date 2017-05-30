@@ -18,7 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import io.oasp.gastronomy.restaurant.general.common.api.UserProfile;
 import io.oasp.gastronomy.restaurant.general.common.api.Usermanagement;
 import io.oasp.gastronomy.restaurant.general.common.api.security.UserData;
-import io.oasp.module.security.common.base.accesscontrol.AbstractAccessControlBasedAuthenticationProvider;
+import io.oasp.module.security.common.base.accesscontrol.AccessControlBasedAuthenticationProvider;
 
 /**
  * This class is responsible for the security aspects of authentication as well as providing user profile
@@ -32,7 +32,7 @@ import io.oasp.module.security.common.base.accesscontrol.AbstractAccessControlBa
 @Deprecated
 @Named("ApplicationAuthenticationProvider")
 public class ApplicationAuthenticationProvider
-    extends AbstractAccessControlBasedAuthenticationProvider<UserData, UserProfile> {
+    extends AccessControlBasedAuthenticationProvider<UserData, UserProfile> {
 
   /** Logger instance. */
   private static final Logger LOG = LoggerFactory.getLogger(ApplicationAuthenticationProvider.class);
