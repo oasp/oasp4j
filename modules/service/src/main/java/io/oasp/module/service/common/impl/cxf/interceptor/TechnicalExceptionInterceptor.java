@@ -1,0 +1,40 @@
+package io.oasp.module.service.common.impl.cxf.interceptor;
+
+import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.message.Message;
+import org.apache.cxf.phase.AbstractPhaseInterceptor;
+import org.apache.cxf.phase.Phase;
+
+import io.oasp.module.service.common.api.exception.ServiceInvocationFailedException;
+
+/**
+ * Implementation of {@link AbstractPhaseInterceptor} to handle technical errors like {@link java.net.ConnectException}
+ * or {@link java.net.SocketTimeoutException}.
+ */
+public class TechnicalExceptionInterceptor extends AbstractPhaseInterceptor<Message> {
+
+  private final String service;
+
+  /**
+   * The constructor.
+   *
+   * @param service the name (e.g. {@link Class#getName() qualified name}) of the
+   *        {@link io.oasp.module.service.common.api.Service} that failed.
+   */
+  public TechnicalExceptionInterceptor(String service) {
+    super(Phase.PRE_PROTOCOL);
+    this.service = service;
+  }
+
+  @Override
+  public void handleMessage(Message message) throws Fault {
+
+    Throwable exception = message.getContent(Exception.class);
+    if (exception != null) {
+      message.getExchange().put("wrap.in.processing.exception", Boolean.FALSE);
+      throw new ServiceInvocationFailedException(exception, exception.getClass().getSimpleName(), "ServiceInvoke", null,
+          this.service);
+    }
+  }
+
+}

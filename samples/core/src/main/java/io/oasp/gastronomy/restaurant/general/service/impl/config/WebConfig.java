@@ -1,10 +1,5 @@
 package io.oasp.gastronomy.restaurant.general.service.impl.config;
 
-import io.oasp.module.logging.common.api.DiagnosticContextFacade;
-import io.oasp.module.logging.common.impl.DiagnosticContextFacadeImpl;
-import io.oasp.module.logging.common.impl.DiagnosticContextFilter;
-import io.oasp.module.logging.common.impl.PerformanceLogFilter;
-
 import javax.servlet.Filter;
 
 import org.apache.catalina.filters.SetCharacterEncodingFilter;
@@ -13,6 +8,12 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import io.oasp.module.logging.common.api.DiagnosticContextFacade;
+import io.oasp.module.logging.common.impl.DiagnosticContextFacadeImpl;
+import io.oasp.module.logging.common.impl.DiagnosticContextFilter;
+import io.oasp.module.logging.common.impl.PerformanceLogFilter;
+import io.oasp.module.service.common.api.constants.ServiceConstants;
 
 /**
  * Registers a number of filters for web requests.
@@ -62,7 +63,7 @@ public class WebConfig {
     Filter diagnosticContextFilter = new DiagnosticContextFilter();
     this.beanFactory.autowireBean(diagnosticContextFilter);
     registration.setFilter(diagnosticContextFilter);
-    registration.addUrlPatterns("/services/*");
+    registration.addUrlPatterns(ServiceConstants.URL_PATH_SERVICES + "/*");
     return registration;
   }
 

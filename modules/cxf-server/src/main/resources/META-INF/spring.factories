@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+io.oasp.module.cxf.common.impl.server.CxfCoreAutoConfiguration,\
+io.oasp.module.cxf.common.impl.server.CxfRestAutoConfiguration,\
+io.oasp.module.cxf.common.impl.server.CxfSoapAutoConfiguration

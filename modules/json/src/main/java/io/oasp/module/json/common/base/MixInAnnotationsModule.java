@@ -1,4 +1,4 @@
-package io.oasp.module.rest.service.impl.json;
+package io.oasp.module.json.common.base;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
