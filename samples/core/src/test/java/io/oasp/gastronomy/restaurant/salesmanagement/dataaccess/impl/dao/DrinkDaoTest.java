@@ -48,6 +48,13 @@ public class DrinkDaoTest extends AbstractComponentTest {
 
   }
 
+  /**
+   *
+   * This type provides methods in a transactional environment for the containing test class. All methods, annotated
+   * with the {@link Transactional} annotation, are executed in separate transaction, thus one test case can execute
+   * multiple transactions.
+   *
+   */
   @Named
   static class DrinkDaoTestBean {
 

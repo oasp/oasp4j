@@ -14,11 +14,6 @@ import io.oasp.module.logging.common.impl.DiagnosticContextFacadeImpl;
 import io.oasp.module.logging.common.impl.DiagnosticContextFilter;
 import io.oasp.module.logging.common.impl.PerformanceLogFilter;
 
-import io.oasp.module.logging.common.api.DiagnosticContextFacade;
-import io.oasp.module.logging.common.impl.DiagnosticContextFacadeImpl;
-import io.oasp.module.logging.common.impl.DiagnosticContextFilter;
-import io.oasp.module.logging.common.impl.PerformanceLogFilter;
-
 /**
  * Registers a number of filters for web requests.
  *
