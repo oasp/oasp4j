@@ -54,7 +54,6 @@ import io.oasp.gastronomy.restaurant.salesmanagement.service.api.rest.Salesmanag
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = { SalesmanagementRestTestConfig.class })
 @TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement" })
-
 public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest {
 
   private final HttpHeaders AUTHENTIFICATED_HEADERS = getAuthentificatedHeaders();
@@ -149,9 +148,6 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
     HttpEntity<String> postRequestEntity = new HttpEntity<>(postRequest.toString(), postRequestHeaders);
 
     // when
-    // ResponseEntity<String> postResponse =
-    // this.template.exchange(generateBaseUrl() + "order/", HttpMethod.POST, postRequestEntity, String.class);
-
     ResponseEntity<String> postResponse =
         this.template.exchange(generateBaseUrl() + "order/", HttpMethod.POST, postRequestEntity, String.class);
 
