@@ -13,6 +13,6 @@ import io.oasp.module.test.common.api.category.CategorySystemTest;
  *
  */
 @Category(CategorySystemTest.class)
-public abstract class SystemTest extends BaseTest {
+public abstract class AbstractSystemTest extends AbstractTest {
 
 }

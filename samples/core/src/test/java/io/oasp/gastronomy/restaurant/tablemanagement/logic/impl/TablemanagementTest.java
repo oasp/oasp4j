@@ -25,7 +25,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionE
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
-import io.oasp.module.test.common.base.ComponentTest;
+import io.oasp.module.test.common.base.AbstractComponentTest;
 
 /**
  * This is the test case for the component {@link Tablemanagement}.
@@ -35,7 +35,7 @@ import io.oasp.module.test.common.base.ComponentTest;
 
 @SpringBootTest(classes = { SpringBootApp.class })
 @WebAppConfiguration
-public class TablemanagementTest extends ComponentTest {
+public class TablemanagementTest extends AbstractComponentTest {
 
   @Inject
   private Salesmanagement salesmanagement;

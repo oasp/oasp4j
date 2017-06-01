@@ -19,7 +19,7 @@ import io.oasp.gastronomy.restaurant.general.common.api.builders.BillEntityBuild
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.BillEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.BillDao;
-import io.oasp.module.test.common.base.ComponentTest;
+import io.oasp.module.test.common.base.AbstractComponentTest;
 
 /**
  * Test of {@link BillDao}.
@@ -27,7 +27,7 @@ import io.oasp.module.test.common.base.ComponentTest;
  */
 @Transactional
 @SpringBootTest(classes = { SpringBootApp.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
-public class BillDaoTest extends ComponentTest {
+public class BillDaoTest extends AbstractComponentTest {
 
   @Inject
   private BillDao billDao;
