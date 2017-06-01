@@ -2,13 +2,13 @@ package io.oasp.gastronomy.restaurant.general.common.base;
 
 import javax.inject.Inject;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.boot.context.embedded.LocalServerPort;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
+import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
 import io.oasp.gastronomy.restaurant.general.common.RestTestClientBuilder;
 import io.oasp.gastronomy.restaurant.general.common.SecurityTestHelper;
@@ -22,15 +22,16 @@ import io.oasp.module.test.common.base.AbstractSubsystemTest;
  * The local server's port is randomly assigned.
  *
  */
-@SpringApplicationConfiguration(classes = RestaurantTestConfig.class)
-@WebIntegrationTest
-@ActiveProfiles(profiles = { SpringProfileConstants.JUNIT })
+
+@SpringBootTest(classes = { RestaurantTestConfig.class,
+SpringBootApp.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 public abstract class AbstractRestServiceTest extends AbstractSubsystemTest {
+
 
   /**
    * The port of the web server during the test.
    */
-  @Value("${local.server.port}")
+  @LocalServerPort
   protected int port;
 
   /**

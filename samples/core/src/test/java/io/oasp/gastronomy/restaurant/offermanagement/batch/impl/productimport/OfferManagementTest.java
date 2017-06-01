@@ -8,7 +8,7 @@ import javax.inject.Inject;
 
 import org.flywaydb.core.Flyway;
 import org.junit.Test;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
@@ -29,7 +29,7 @@ import io.oasp.module.test.common.base.AbstractComponentTest;
  *
  * @since dev
  */
-@SpringApplicationConfiguration(classes = { SpringBootApp.class })
+@SpringBootTest(classes = { SpringBootApp.class })
 @WebAppConfiguration
 public class OfferManagementTest extends AbstractComponentTest {
 

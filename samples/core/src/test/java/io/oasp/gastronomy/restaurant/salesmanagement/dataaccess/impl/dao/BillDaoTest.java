@@ -1,16 +1,18 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.impl.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.persistence.AttributeConverter;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import org.junit.Test;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.general.common.api.builders.BillEntityBuilder;
@@ -24,8 +26,7 @@ import io.oasp.module.test.common.base.AbstractComponentTest;
  *
  */
 @Transactional
-@SpringApplicationConfiguration(classes = { SpringBootApp.class })
-@WebAppConfiguration
+@SpringBootTest(classes = { SpringBootApp.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 public class BillDaoTest extends AbstractComponentTest {
 
   @Inject
@@ -48,15 +49,33 @@ public class BillDaoTest extends AbstractComponentTest {
     BillEntity loadedBill = this.billDao.findOne(bill.getId());
     assertThat(bill).isEqualTo(loadedBill);
 
+    MoneyConverter moneyConverter = new MoneyConverter();
     TypedQuery<BillEntity> query =
-        this.entityManager.createQuery("SELECT b from BillEntity b where b.total > 43", BillEntity.class);
+        this.entityManager.createQuery("SELECT b from BillEntity b where b.total > :param", BillEntity.class);
+    query.setParameter("param", moneyConverter.convertToEntityAttribute(BigDecimal.valueOf(43)));
     List<BillEntity> resultList = query.getResultList();
     assertThat(resultList.isEmpty()).isTrue();
 
-    query = this.entityManager.createQuery("SELECT b from BillEntity b where b.total < 43", BillEntity.class);
+    query = this.entityManager.createQuery("SELECT b from BillEntity b where b.total < :param", BillEntity.class);
+    query.setParameter("param", moneyConverter.convertToEntityAttribute(BigDecimal.valueOf(43)));
     resultList = query.getResultList();
     assertThat(!resultList.isEmpty()).isTrue();
 
+  }
+
+  class MoneyConverter implements AttributeConverter<Money, BigDecimal> {
+
+    @Override
+    public BigDecimal convertToDatabaseColumn(Money money) {
+
+      return money.getValue();
+    }
+
+    @Override
+    public Money convertToEntityAttribute(BigDecimal dbData) {
+
+      return new Money(dbData);
+    }
   }
 
 }

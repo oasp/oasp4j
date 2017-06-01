@@ -5,7 +5,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
 import org.junit.Test;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
@@ -26,7 +26,7 @@ import io.oasp.module.test.common.base.AbstractComponentTest;
  * This is the test-case of {@link Salesmanagement}.
  *
  */
-@SpringApplicationConfiguration(classes = { SpringBootApp.class })
+@SpringBootTest(classes = { SpringBootApp.class })
 @WebAppConfiguration
 public class SalesManagementTest extends AbstractComponentTest {
 
