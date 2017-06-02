@@ -5,7 +5,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
 import org.junit.Test;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
@@ -20,15 +20,15 @@ import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.Product
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
-import io.oasp.module.test.common.base.ComponentTest;
+import io.oasp.module.test.common.base.AbstractComponentTest;
 
 /**
  * This is the test-case of {@link Salesmanagement}.
  *
  */
-@SpringApplicationConfiguration(classes = { SpringBootApp.class })
+@SpringBootTest(classes = { SpringBootApp.class })
 @WebAppConfiguration
-public class SalesManagementTest extends ComponentTest {
+public class SalesManagementTest extends AbstractComponentTest {
 
   @Inject
   private Salesmanagement salesManagement;

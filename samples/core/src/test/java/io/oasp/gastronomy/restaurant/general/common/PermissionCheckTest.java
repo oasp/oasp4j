@@ -1,6 +1,6 @@
 package io.oasp.gastronomy.restaurant.general.common;
 
-import io.oasp.module.test.common.base.ModuleTest;
+import io.oasp.module.test.common.base.AbstractModuleTest;
 
 import java.lang.reflect.Method;
 import java.util.Set;
@@ -20,7 +20,7 @@ import org.junit.Test;
  * Tests the permission check in logic layer.
  *
  */
-public class PermissionCheckTest extends ModuleTest {
+public class PermissionCheckTest extends AbstractModuleTest {
 
   /**
    * Check if all relevant methods in use case implementations have permission checks i.e. {@link RolesAllowed},

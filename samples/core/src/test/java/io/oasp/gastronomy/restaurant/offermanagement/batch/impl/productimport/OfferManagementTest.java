@@ -8,7 +8,7 @@ import javax.inject.Inject;
 
 import org.flywaydb.core.Flyway;
 import org.junit.Test;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
@@ -22,16 +22,16 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSortBy;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
-import io.oasp.module.test.common.base.ComponentTest;
+import io.oasp.module.test.common.base.AbstractComponentTest;
 
 /**
  * This is the test-case of {@link Offermanagement}
  *
  * @since dev
  */
-@SpringApplicationConfiguration(classes = { SpringBootApp.class })
+@SpringBootTest(classes = { SpringBootApp.class })
 @WebAppConfiguration
-public class OfferManagementTest extends ComponentTest {
+public class OfferManagementTest extends AbstractComponentTest {
 
   @Inject
   private Offermanagement offerManagement;

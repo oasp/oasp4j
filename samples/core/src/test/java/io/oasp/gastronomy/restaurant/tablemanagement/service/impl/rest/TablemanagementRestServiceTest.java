@@ -3,10 +3,10 @@ package io.oasp.gastronomy.restaurant.tablemanagement.service.impl.rest;
 import java.util.List;
 
 import org.junit.Test;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.junit.runner.RunWith;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.general.common.api.builders.TableEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractRestServiceTest;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
@@ -19,8 +19,10 @@ import io.oasp.module.jpa.common.api.to.PaginatedListTo;
  * This class serves as an example of how to perform a subsystem test (e.g., call a *RestService interface).
  *
  */
-@SpringApplicationConfiguration(classes = SpringBootApp.class)
+@RunWith(SpringRunner.class)
 @TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement" })
+// , locations = {"file:src/test/resources/config" })
+
 public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
 
   private TablemanagementRestService service;

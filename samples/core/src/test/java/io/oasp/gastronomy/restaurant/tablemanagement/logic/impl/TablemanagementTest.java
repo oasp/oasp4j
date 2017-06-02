@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
 
 import org.junit.Test;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.web.WebAppConfiguration;
 
@@ -17,6 +17,7 @@ import io.oasp.gastronomy.restaurant.general.common.TestUtil;
 import io.oasp.gastronomy.restaurant.general.common.api.builders.OrderEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.api.builders.OrderPositionEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
+import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
@@ -24,7 +25,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionE
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
-import io.oasp.module.test.common.base.ComponentTest;
+import io.oasp.module.test.common.base.AbstractComponentTest;
 
 /**
  * This is the test case for the component {@link Tablemanagement}.
@@ -32,9 +33,9 @@ import io.oasp.module.test.common.base.ComponentTest;
  *
  */
 
-@SpringApplicationConfiguration(classes = { SpringBootApp.class })
+@SpringBootTest(classes = { SpringBootApp.class })
 @WebAppConfiguration
-public class TablemanagementTest extends ComponentTest {
+public class TablemanagementTest extends AbstractComponentTest {
 
   @Inject
   private Salesmanagement salesmanagement;
@@ -91,6 +92,8 @@ public class TablemanagementTest extends ComponentTest {
     OrderEto order = this.salesmanagement.saveOrder(newOrder);
     long orderId = order.getId();
     OrderPositionEto newOrderPosition = new OrderPositionEtoBuilder().orderId(orderId).offerId(offerId).createNew();
+    newOrderPosition.setPrice(new Money(2.99));
+    newOrderPosition.setOfferName("dummy");
     OrderPositionEto orderPosition = this.salesmanagement.saveOrderPosition(newOrderPosition);
 
     // then
