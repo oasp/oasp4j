@@ -1,20 +1,20 @@
 package io.oasp.module.service.common.api.sync;
 
 import io.oasp.module.service.common.api.Service;
-import io.oasp.module.service.common.api.context.ServiceContext;
+import io.oasp.module.service.common.api.client.context.ServiceContext;
 
 /**
- * The interface for a partial implementation of {@link io.oasp.module.service.common.api.ServiceClientFactory} used to
+ * The interface for a partial implementation of {@link io.oasp.module.service.common.api.client.ServiceClientFactory} used to
  * {@link #create(ServiceContext) create} client stubs for a {@link Service}.
  *
- * @see io.oasp.module.service.common.api.ServiceClientFactory
+ * @see io.oasp.module.service.common.api.client.ServiceClientFactory
  *
  * @since 3.0.0
  */
 public interface SyncServiceClientFactory {
 
   /**
-   * @see io.oasp.module.service.common.api.ServiceClientFactory#create(Class)
+   * @see io.oasp.module.service.common.api.client.ServiceClientFactory#create(Class)
    *
    * @param <S> the generic type of the {@code serviceInterface}. For flexibility and being not invasive this generic is
    *        not bound to {@link Service} ({@code S extends Service}).

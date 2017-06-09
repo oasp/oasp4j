@@ -5,7 +5,7 @@ import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.AbstractPhaseInterceptor;
 import org.apache.cxf.phase.Phase;
 
-import io.oasp.module.service.common.api.exception.ServiceInvocationFailedException;
+import io.oasp.module.service.common.api.client.exception.ServiceInvocationFailedException;
 
 /**
  * Implementation of {@link AbstractPhaseInterceptor} to handle technical errors like {@link java.net.ConnectException}

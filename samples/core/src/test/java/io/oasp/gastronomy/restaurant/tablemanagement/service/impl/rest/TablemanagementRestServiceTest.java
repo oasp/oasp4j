@@ -2,6 +2,8 @@ package io.oasp.gastronomy.restaurant.tablemanagement.service.impl.rest;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.junit.Test;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.TestPropertySource;
@@ -14,6 +16,8 @@ import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.tablemanagement.service.api.rest.TablemanagementRestService;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.service.common.api.client.ServiceClientFactory;
+import io.oasp.module.service.common.api.client.config.ServiceClientConfigBuilder;
 
 /**
  * This class serves as an example of how to perform a subsystem test (e.g., call a *RestService interface).
@@ -23,7 +27,12 @@ import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 @TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement" })
 public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
 
-  private TablemanagementRestService service;
+  private static final String LOGIN_WAITER = "waiter";
+
+  private static final String LOGIN_CHIEF = "chief";
+
+  @Inject
+  private ServiceClientFactory serviceClientFactory;
 
   /**
    * Provides initialization previous to the creation of the text fixture.
@@ -33,18 +42,12 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
 
     super.doSetUp();
     getDbTestHelper().resetDatabase();
-    this.service = getRestTestClientBuilder().build(TablemanagementRestService.class, "waiter");
-
   }
 
-  /**
-   * Provides clean up after tests.
-   */
-  @Override
-  public void doTearDown() {
+  private TablemanagementRestService createService(String login) {
 
-    this.service = null;
-    super.doTearDown();
+    return this.serviceClientFactory.create(TablemanagementRestService.class,
+        new ServiceClientConfigBuilder().userLogin(login).buildMap());
   }
 
   /**
@@ -58,7 +61,7 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
 
     // when
 
-    TableEto table = this.service.getTable(id);
+    TableEto table = createService(LOGIN_WAITER).getTable(id);
 
     // then
     assertThat(table).isNotNull();
@@ -75,19 +78,17 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
   public void testDeleteTable() {
 
     // setup
-    getRestTestClientBuilder().setLogin("chief");
-    this.service = getRestTestClientBuilder().build(TablemanagementRestService.class);
+    TablemanagementRestService service = createService(LOGIN_CHIEF);
 
     // given
     int deleteTableNumber = 102;
-    assertThat(this.service.getTable(deleteTableNumber)).isNotNull();
+    assertThat(service.getTable(deleteTableNumber)).isNotNull();
 
     // when
-    this.service.deleteTable(deleteTableNumber);
+    service.deleteTable(deleteTableNumber);
 
     // then
-    assertThat(this.service.getTable(deleteTableNumber)).isNull();
-
+    assertThat(service.getTable(deleteTableNumber)).isNull();
   }
 
   /**
@@ -101,13 +102,11 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
     // given
     long tableNumber = 7L;
     long waiterId = 2L;
-    getRestTestClientBuilder().setLogin("chief");
-    this.service = getRestTestClientBuilder().build(TablemanagementRestService.class);
     TableEto table = new TableEtoBuilder().number(tableNumber).waiterId(waiterId).createNew();
     assertThat(table.getId()).isNull();
 
     // when
-    TableEto savedTable = this.service.saveTable(table);
+    TableEto savedTable = createService(LOGIN_CHIEF).saveTable(table);
 
     // then
     assertThat(savedTable).isNotNull();
@@ -130,14 +129,15 @@ public class TablemanagementRestServiceTest extends AbstractRestServiceTest {
     TableEto table =
         new TableEtoBuilder().number(tableNumber).waiterId(waiterId).state(TableState.RESERVED).createNew();
     assertThat(table).isNotNull();
-    TableEto savedTable = this.service.saveTable(table);
+    TablemanagementRestService service = createService(LOGIN_WAITER);
+    TableEto savedTable = service.saveTable(table);
     assertThat(savedTable).isNotNull();
     TableSearchCriteriaTo criteria = new TableSearchCriteriaTo();
     assertThat(criteria).isNotNull();
     criteria.setState(TableState.RESERVED);
 
     // when
-    PaginatedListTo<TableEto> tables = this.service.findTablesByPost(criteria);
+    PaginatedListTo<TableEto> tables = service.findTablesByPost(criteria);
     List<TableEto> result = tables.getResult();
 
     // then

@@ -20,7 +20,7 @@ import org.springframework.ws.config.annotation.WsConfigurerAdapter;
 import io.oasp.module.service.common.api.constants.ServiceConstants;
 
 /**
- * {@link Configuration} for (REST or SOAP) services using CXF.<br>
+ * {@link Configuration} for (REST or SOAP) services server using CXF.<br>
  *
  * Scans for spring beans that represent a SOAP service (JAX-WS web service) by checking for {@link WebService}
  * annotation. It will register all these {@link WebService}s to CXF using their spring bean name as URL path. Hence you
@@ -38,10 +38,10 @@ import io.oasp.module.service.common.api.constants.ServiceConstants;
  */
 @Configuration
 @EnableWs
-public class CxfSoapAutoConfiguration extends WsConfigurerAdapter {
+public class CxfServerSoapAutoConfiguration extends WsConfigurerAdapter {
 
   /** Logger instance. */
-  private static final Logger LOG = LoggerFactory.getLogger(CxfSoapAutoConfiguration.class);
+  private static final Logger LOG = LoggerFactory.getLogger(CxfServerSoapAutoConfiguration.class);
 
   @Inject
   private SpringBus springBus;
@@ -50,7 +50,7 @@ public class CxfSoapAutoConfiguration extends WsConfigurerAdapter {
   private ConfigurableApplicationContext applicationContext;
 
   /**
-   * @see CxfSoapAutoConfiguration
+   * @see CxfServerSoapAutoConfiguration
    * @return will always return {@code null}.
    */
   @Bean

@@ -1,6 +1,6 @@
 package io.oasp.module.service.common.base.context;
 
-import io.oasp.module.service.common.api.context.ServiceContext;
+import io.oasp.module.service.common.api.client.context.ServiceContext;
 
 /**
  * The abstract base implementation of {@link ServiceContext}.
@@ -27,24 +27,6 @@ public abstract class AbstractServiceContext<S> implements ServiceContext<S> {
   public Class<S> getApi() {
 
     return this.api;
-  }
-
-  @Override
-  public String getValue(String name) {
-
-    return getValue(name, String.class);
-  }
-
-  @Override
-  public <T> T getValue(Class<T> type) {
-
-    return getValue(type.getName(), type);
-  }
-
-  @Override
-  public <T> T getValue(String name, Class<T> type) {
-
-    return getValue(name, type, null);
   }
 
 }

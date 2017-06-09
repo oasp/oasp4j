@@ -24,15 +24,15 @@ import io.oasp.module.rest.service.impl.RestServiceExceptionFacade;
 import io.oasp.module.service.common.api.constants.ServiceConstants;
 
 /**
- * {@link Configuration} for REST (JAX-RS) services using Apache CXF.
+ * {@link Configuration} for REST (JAX-RS) services server using Apache CXF.
  *
  * @since 3.0.0
  */
 @Configuration
-public class CxfRestAutoConfiguration {
+public class CxfServerRestAutoConfiguration {
 
   /** Logger instance. */
-  private static final Logger LOG = LoggerFactory.getLogger(CxfRestAutoConfiguration.class);
+  private static final Logger LOG = LoggerFactory.getLogger(CxfServerRestAutoConfiguration.class);
 
   @Value("${security.expose.error.details:false}")
   private boolean exposeInternalErrorDetails;

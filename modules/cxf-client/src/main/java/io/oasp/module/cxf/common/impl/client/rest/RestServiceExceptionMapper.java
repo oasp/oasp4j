@@ -11,8 +11,8 @@ import org.apache.cxf.jaxrs.client.ResponseExceptionMapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.oasp.module.service.common.api.client.exception.ServiceInvocationFailedException;
 import io.oasp.module.service.common.api.constants.ServiceConstants;
-import io.oasp.module.service.common.api.exception.ServiceInvocationFailedException;
 
 /**
  * An Implementation of {@link ResponseExceptionMapper} that converts a REST failure {@link Response} compliant with

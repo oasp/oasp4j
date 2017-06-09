@@ -1,4 +1,4 @@
-package io.oasp.module.service.common.api.exception;
+package io.oasp.module.service.common.api.client.exception;
 
 import java.util.Locale;
 import java.util.UUID;

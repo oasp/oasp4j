@@ -6,21 +6,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 
-import io.oasp.module.cxf.common.impl.server.rest.CxfRestAutoConfiguration;
-import io.oasp.module.cxf.common.impl.server.soap.CxfSoapAutoConfiguration;
+import io.oasp.module.cxf.common.impl.server.rest.CxfServerRestAutoConfiguration;
+import io.oasp.module.cxf.common.impl.server.soap.CxfServerSoapAutoConfiguration;
 import io.oasp.module.service.common.api.constants.ServiceConstants;
 
 /**
- * Core {@link Configuration} for Apache CXF.
+ * Basic {@link Configuration} for Apache CXF server.
  *
- * @see CxfRestAutoConfiguration
- * @see CxfSoapAutoConfiguration
+ * @see CxfServerRestAutoConfiguration
+ * @see CxfServerSoapAutoConfiguration
  *
  * @since 3.0.0
  */
 @Configuration
 @ImportResource({ "classpath:META-INF/cxf/cxf.xml" })
-public class CxfCoreAutoConfiguration {
+public class CxfServerAutoConfiguration {
 
   /**
    * @return the {@link ServletRegistrationBean} to register {@link CXFServlet} according to OASP conventions at

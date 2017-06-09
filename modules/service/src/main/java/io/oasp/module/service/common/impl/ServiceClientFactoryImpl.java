@@ -1,11 +1,14 @@
 package io.oasp.module.service.common.impl;
 
 import java.util.Collection;
+import java.util.Map;
 
 import javax.inject.Inject;
 
-import io.oasp.module.service.common.api.ServiceClientFactory;
-import io.oasp.module.service.common.api.discovery.ServiceDiscoverer;
+import io.oasp.module.basic.common.api.config.ConfigProperties;
+import io.oasp.module.basic.common.api.config.SimpleConfigProperties;
+import io.oasp.module.service.common.api.client.ServiceClientFactory;
+import io.oasp.module.service.common.api.client.discovery.ServiceDiscoverer;
 import io.oasp.module.service.common.api.header.ServiceHeaderCustomizer;
 import io.oasp.module.service.common.api.sync.SyncServiceClientFactory;
 import io.oasp.module.service.common.base.context.ServiceContextImpl;
@@ -54,8 +57,18 @@ public class ServiceClientFactoryImpl implements ServiceClientFactory {
   @Override
   public <S> S create(Class<S> serviceInterface) {
 
-    ServiceContextImpl<S> context = new ServiceContextImpl<>(serviceInterface);
-    discovery(serviceInterface, context);
+    return create(serviceInterface, null);
+  }
+
+  @Override
+  public <S> S create(Class<S> serviceInterface, Map<String, String> properties) {
+
+    ConfigProperties configPropreties = ConfigProperties.EMPTY;
+    if ((properties != null) && !properties.isEmpty()) {
+      configPropreties = SimpleConfigProperties.ofFlatMap(properties);
+    }
+    ServiceContextImpl<S> context = new ServiceContextImpl<>(serviceInterface, configPropreties);
+    discovery(context);
     customizeHeaders(context);
     S serviceClient = createClient(serviceInterface, context);
     return serviceClient;
@@ -83,8 +96,11 @@ public class ServiceClientFactoryImpl implements ServiceClientFactory {
     }
   }
 
-  private <S> void discovery(Class<S> serviceInterface, ServiceContextImpl<S> context) {
+  private <S> void discovery(ServiceContextImpl<S> context) {
 
+    if (context.getUrl() != null) {
+      return;
+    }
     for (ServiceDiscoverer discoverer : this.serviceDiscoverers) {
       discoverer.discover(context);
       if (context.getUrl() != null) {
@@ -92,7 +108,7 @@ public class ServiceClientFactoryImpl implements ServiceClientFactory {
       }
     }
     if (context.getUrl() == null) {
-      throw new IllegalStateException("Service discovery failed for " + serviceInterface);
+      throw new IllegalStateException("Service discovery failed for " + context.getApi());
     }
   }
 

@@ -11,13 +11,18 @@ import org.apache.cxf.jaxrs.client.Client;
 import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.client.WebClient;
+import org.apache.cxf.transport.http.HTTPConduit;
+import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
+import io.oasp.module.basic.common.api.config.ConfigProperties;
 import io.oasp.module.cxf.common.impl.client.interceptor.PerformanceStartInterceptor;
 import io.oasp.module.cxf.common.impl.client.interceptor.PerformanceStopInterceptor;
 import io.oasp.module.cxf.common.impl.client.interceptor.TechnicalExceptionInterceptor;
-import io.oasp.module.service.common.api.context.ServiceContext;
+import io.oasp.module.service.common.api.client.context.ServiceContext;
+import io.oasp.module.service.common.api.config.ServiceConfig;
+import io.oasp.module.service.common.api.constants.ServiceConstants;
 import io.oasp.module.service.common.api.sync.SyncServiceClientFactory;
 
 /**
@@ -48,11 +53,55 @@ public class SyncServiceClientFactoryCxfRest implements SyncServiceClientFactory
     String serviceName = createServiceName(context);
     List<Object> providers = createProviderList(context, serviceName);
 
-    S serviceClient = JAXRSClientFactory.create(context.getUrl(), context.getApi(), providers);
+    String url = context.getUrl();
+    if (url.endsWith(ServiceConstants.URL_PATH_SERVICES)) {
+      url = url + "/" + ServiceConstants.URL_FOLDER_REST;
+    }
+    S serviceClient = JAXRSClientFactory.create(url, context.getApi(), providers);
 
-    applyInterceptors(context, serviceClient, serviceName);
+    ClientConfiguration clientConfig = WebClient.getConfig(serviceClient);
+    applyInterceptors(context, clientConfig, serviceName);
+    applyClientPolicy(context, clientConfig);
     applyHeaders(context, serviceClient);
     return serviceClient;
+  }
+
+  /**
+   * @param context the {@link ServiceContext}.
+   * @param clientConfig the {@link ClientConfiguration} where to apply the {@link HTTPClientPolicy} to.
+   */
+  protected void applyClientPolicy(ServiceContext<?> context, ClientConfiguration clientConfig) {
+
+    HTTPClientPolicy clientPolicy = createClientPolicy(context);
+    if (clientPolicy != null) {
+      HTTPConduit httpConduit = clientConfig.getHttpConduit();
+      httpConduit.setClient(clientPolicy);
+    }
+  }
+
+  /**
+   * @param context the {@link ServiceContext}.
+   * @return the {@link HTTPClientPolicy} for the {@link ServiceContext#getConfig() configuration} or {@code null} to
+   *         use defaults.
+   */
+  protected HTTPClientPolicy createClientPolicy(ServiceContext<?> context) {
+
+    ConfigProperties timeoutConfig = context.getConfig().getChild(ServiceConfig.KEY_SEGMENT_TIMEOUT);
+    if (!timeoutConfig.isEmpty()) {
+      HTTPClientPolicy policy = new HTTPClientPolicy();
+      Long connectionTimeout =
+          timeoutConfig.getChild(ServiceConfig.KEY_SEGMENT_TIMEOUT_CONNECTION).getValue(Long.class);
+      if (connectionTimeout != null) {
+        policy.setConnectionTimeout(connectionTimeout.longValue());
+      }
+      Long responseTimeout =
+          timeoutConfig.getChild(ServiceConfig.KEY_SEGMENT_TIMEOUT_RESPONSE).getValue(Long.class);
+      if (responseTimeout != null) {
+        policy.setReceiveTimeout(responseTimeout.longValue());
+      }
+      return policy;
+    }
+    return null;
   }
 
   /**
@@ -68,12 +117,11 @@ public class SyncServiceClientFactoryCxfRest implements SyncServiceClientFactory
    * Applies CXF interceptors to the given {@code serviceClient}.
    *
    * @param context the {@link ServiceContext}.
-   * @param serviceClient the service client instance.
+   * @param clientConfig the {@link ClientConfiguration}.
    * @param serviceName the {@link #createServiceName(ServiceContext) service name}.
    */
-  protected void applyInterceptors(ServiceContext<?> context, Object serviceClient, String serviceName) {
+  protected void applyInterceptors(ServiceContext<?> context, ClientConfiguration clientConfig, String serviceName) {
 
-    ClientConfiguration clientConfig = WebClient.getConfig(serviceClient);
     clientConfig.getOutInterceptors().add(new PerformanceStartInterceptor());
     clientConfig.getInInterceptors().add(new PerformanceStopInterceptor());
     clientConfig.getInFaultInterceptors().add(new TechnicalExceptionInterceptor(serviceName));
