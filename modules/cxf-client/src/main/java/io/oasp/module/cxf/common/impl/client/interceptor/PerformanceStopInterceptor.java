@@ -1,4 +1,4 @@
-package io.oasp.module.service.common.impl.cxf.interceptor;
+package io.oasp.module.cxf.common.impl.client.interceptor;
 
 import net.sf.mmm.util.date.api.TimeMeasure;
 
@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of {@link AbstractPhaseInterceptor} that logs the duration time of a service client invocation.
+ *
+ * @since 3.0.0
  */
 public class PerformanceStopInterceptor extends AbstractPhaseInterceptor<Message> {
 

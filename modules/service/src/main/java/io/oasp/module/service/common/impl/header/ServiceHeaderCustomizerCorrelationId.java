@@ -10,6 +10,8 @@ import io.oasp.module.service.common.api.header.ServiceHeaderCustomizer;
 /**
  * Implementation of {@link ServiceHeaderCustomizer} that passes the {@link LoggingConstants#CORRELATION_ID} to a
  * subsequent {@link io.oasp.module.service.common.api.Service} invocation.
+ *
+ * @since 3.0.0
  */
 public class ServiceHeaderCustomizerCorrelationId implements ServiceHeaderCustomizer {
 

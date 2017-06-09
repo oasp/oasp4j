@@ -4,8 +4,10 @@ import io.oasp.module.service.common.api.context.ServiceContext;
 
 /**
  * The abstract base implementation of {@link ServiceContext}.
- * 
+ *
  * @param <S> the generic type of the {@link #getApi() service API}.
+ *
+ * @since 3.0.0
  */
 public abstract class AbstractServiceContext<S> implements ServiceContext<S> {
 

@@ -4,6 +4,8 @@ import net.sf.mmm.util.exception.api.NlsRuntimeException;
 
 /**
  * Constants for {@link io.oasp.module.service.common.api.Service}s.
+ *
+ * @since 3.0.0
  */
 public class ServiceConstants {
 

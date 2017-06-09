@@ -1,4 +1,4 @@
-package io.oasp.module.rest.common.impl.client;
+package io.oasp.module.cxf.common.impl.client.rest;
 
 import java.io.IOException;
 import java.util.Map;
@@ -18,6 +18,8 @@ import io.oasp.module.service.common.api.exception.ServiceInvocationFailedExcept
  * An Implementation of {@link ResponseExceptionMapper} that converts a REST failure {@link Response} compliant with
  * <a href="https://github.com/oasp-forge/oasp4j-wiki/wiki/guide-rest#error-results">OASP REST error specification</a>
  * to a {@link ServiceInvocationFailedException}.
+ *
+ * @since 3.0.0
  */
 @Provider
 public class RestServiceExceptionMapper implements ResponseExceptionMapper<Throwable> {

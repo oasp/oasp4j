@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 
+import io.oasp.module.cxf.common.impl.server.rest.CxfRestAutoConfiguration;
+import io.oasp.module.cxf.common.impl.server.soap.CxfSoapAutoConfiguration;
 import io.oasp.module.service.common.api.constants.ServiceConstants;
 
 /**
@@ -13,6 +15,8 @@ import io.oasp.module.service.common.api.constants.ServiceConstants;
  *
  * @see CxfRestAutoConfiguration
  * @see CxfSoapAutoConfiguration
+ *
+ * @since 3.0.0
  */
 @Configuration
 @ImportResource({ "classpath:META-INF/cxf/cxf.xml" })

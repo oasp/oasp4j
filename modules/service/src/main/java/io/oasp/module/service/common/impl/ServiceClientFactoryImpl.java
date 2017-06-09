@@ -12,6 +12,8 @@ import io.oasp.module.service.common.base.context.ServiceContextImpl;
 
 /**
  * This is the implementation of {@link ServiceClientFactory}.
+ *
+ * @since 3.0.0
  */
 public class ServiceClientFactoryImpl implements ServiceClientFactory {
 

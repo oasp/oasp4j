@@ -1,4 +1,4 @@
-package io.oasp.module.cxf.common.impl.server;
+package io.oasp.module.cxf.common.impl.server.soap;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -20,7 +20,21 @@ import org.springframework.ws.config.annotation.WsConfigurerAdapter;
 import io.oasp.module.service.common.api.constants.ServiceConstants;
 
 /**
- * {@link Configuration} for (REST or SOAP) services using CXF.
+ * {@link Configuration} for (REST or SOAP) services using CXF.<br>
+ *
+ * Scans for spring beans that represent a SOAP service (JAX-WS web service) by checking for {@link WebService}
+ * annotation. It will register all these {@link WebService}s to CXF using their spring bean name as URL path. Hence you
+ * should annotate your {@link WebService} implementation using {@link javax.inject.Named} providing a reasonable name:
+ *
+ * <pre>
+ * &#64;{@link javax.inject.Named}("MyWebService")
+ * &#64;{@link WebService}(endpointInterface = "my.package.MyWebService")
+ * public class MyWebServiceImpl implements MyWebService {
+ *   ...
+ * }
+ * </pre>
+ *
+ * @since 3.0.0
  */
 @Configuration
 @EnableWs
@@ -36,19 +50,7 @@ public class CxfSoapAutoConfiguration extends WsConfigurerAdapter {
   private ConfigurableApplicationContext applicationContext;
 
   /**
-   * Scans for spring beans that represent a SOAP service (JAX-WS web service) by checking for {@link WebService}
-   * annotation. It will register all these {@link WebService}s to CXF using their spring bean name as URL path. Hence
-   * you should annotate your {@link WebService} implementation using {@link javax.inject.Named} providing a reasonable
-   * name:
-   *
-   * <pre>
-   * &#64;{@link javax.inject.Named}("MyWebService")
-   * &#64;{@link WebService}(endpointInterface = "my.package.MyWebService")
-   * public class MyWebServiceImpl implements MyWebService {
-   *   ...
-   * }
-   * </pre>
-   *
+   * @see CxfSoapAutoConfiguration
    * @return will always return {@code null}.
    */
   @Bean

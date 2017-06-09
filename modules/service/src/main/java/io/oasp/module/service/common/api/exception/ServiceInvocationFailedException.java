@@ -13,6 +13,8 @@ import io.oasp.module.basic.common.api.NlsBundleOaspRoot;
 
 /**
  * {@link NlsThrowable NLS}-{@link RuntimeException} thrown if a service invocation failed.
+ *
+ * @since 3.0.0
  */
 public class ServiceInvocationFailedException extends RuntimeException implements NlsThrowable {
 

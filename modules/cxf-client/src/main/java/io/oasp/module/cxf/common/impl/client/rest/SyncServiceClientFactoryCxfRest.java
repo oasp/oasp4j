@@ -1,4 +1,4 @@
-package io.oasp.module.rest.common.impl.client;
+package io.oasp.module.cxf.common.impl.client.rest;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,14 +14,16 @@ import org.apache.cxf.jaxrs.client.WebClient;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
+import io.oasp.module.cxf.common.impl.client.interceptor.PerformanceStartInterceptor;
+import io.oasp.module.cxf.common.impl.client.interceptor.PerformanceStopInterceptor;
+import io.oasp.module.cxf.common.impl.client.interceptor.TechnicalExceptionInterceptor;
 import io.oasp.module.service.common.api.context.ServiceContext;
 import io.oasp.module.service.common.api.sync.SyncServiceClientFactory;
-import io.oasp.module.service.common.impl.cxf.interceptor.PerformanceStartInterceptor;
-import io.oasp.module.service.common.impl.cxf.interceptor.PerformanceStopInterceptor;
-import io.oasp.module.service.common.impl.cxf.interceptor.TechnicalExceptionInterceptor;
 
 /**
  * Implementation of {@link SyncServiceClientFactory} for JAX-RS REST service clients using Apache CXF.
+ *
+ * @since 3.0.0
  */
 public class SyncServiceClientFactoryCxfRest implements SyncServiceClientFactory {
 

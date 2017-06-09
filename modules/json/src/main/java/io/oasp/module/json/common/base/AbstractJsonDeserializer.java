@@ -18,6 +18,8 @@ import com.fasterxml.jackson.databind.JsonNode;
  * Helper class to simplify implementation of {@link JsonDeserializer}.
  *
  * @param <T> the class to be deserialized
+ *
+ * @since 3.0.0
  */
 public abstract class AbstractJsonDeserializer<T> extends JsonDeserializer<T> {
 

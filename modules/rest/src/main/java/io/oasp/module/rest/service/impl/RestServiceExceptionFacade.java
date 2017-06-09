@@ -41,6 +41,8 @@ import io.oasp.module.service.common.api.constants.ServiceConstants;
  * {@link #toResponse(Throwable) maps} {@link Throwable exceptions} to an according HTTP status code and JSON result as
  * defined by <a href="https://github.com/oasp-forge/oasp4j-wiki/wiki/guide-rest#error-results">OASP REST error
  * specification</a>.
+ *
+ * @since 2.0.0
  */
 @Provider
 public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {

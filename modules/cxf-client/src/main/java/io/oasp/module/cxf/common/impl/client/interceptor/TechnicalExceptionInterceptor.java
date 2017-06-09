@@ -1,4 +1,4 @@
-package io.oasp.module.service.common.impl.cxf.interceptor;
+package io.oasp.module.cxf.common.impl.client.interceptor;
 
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.message.Message;
@@ -10,6 +10,8 @@ import io.oasp.module.service.common.api.exception.ServiceInvocationFailedExcept
 /**
  * Implementation of {@link AbstractPhaseInterceptor} to handle technical errors like {@link java.net.ConnectException}
  * or {@link java.net.SocketTimeoutException}.
+ *
+ * @since 3.0.0
  */
 public class TechnicalExceptionInterceptor extends AbstractPhaseInterceptor<Message> {
 

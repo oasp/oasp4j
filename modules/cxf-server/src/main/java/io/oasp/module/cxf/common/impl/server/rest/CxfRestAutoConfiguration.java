@@ -1,4 +1,4 @@
-package io.oasp.module.cxf.common.impl.server;
+package io.oasp.module.cxf.common.impl.server.rest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +25,8 @@ import io.oasp.module.service.common.api.constants.ServiceConstants;
 
 /**
  * {@link Configuration} for REST (JAX-RS) services using Apache CXF.
+ *
+ * @since 3.0.0
  */
 @Configuration
 public class CxfRestAutoConfiguration {

@@ -16,6 +16,8 @@ import io.oasp.module.service.common.api.header.ServiceHeaderContext;
  * Implementation of {@link ServiceContext}.
  *
  * @param <S> the generic type of the {@link #getApi() service API}.
+ *
+ * @since 3.0.0
  */
 public class ServiceContextImpl<S> extends AbstractServiceContext<S>
     implements ServiceHeaderContext<S>, ServiceDiscoveryContext<S> {

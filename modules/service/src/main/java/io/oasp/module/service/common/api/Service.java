@@ -8,6 +8,8 @@ package io.oasp.module.service.common.api;
  * by your service API interface but doing so gives you some advantages like auto-registration of your services when
  * using the according spring-boot-starter with zero configuration. If you want to decouple your code as much as
  * possible you are free to ignore this interface or simply copy it to your own project and package.
+ *
+ * @since 3.0.0
  */
 public interface Service {
 

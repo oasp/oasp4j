@@ -8,6 +8,8 @@ import io.oasp.module.service.common.api.context.ServiceContext;
  * {@link #create(ServiceContext) create} client stubs for a {@link Service}.
  *
  * @see io.oasp.module.service.common.api.ServiceClientFactory
+ *
+ * @since 3.0.0
  */
 public interface SyncServiceClientFactory {
 

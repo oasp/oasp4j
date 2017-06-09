@@ -5,8 +5,10 @@ import io.oasp.module.service.common.api.context.ServiceContext;
 /**
  * Extends {@link ServiceContext} and allows to {@link #setHeader(String, String) set headers} to the underlying network
  * protocol.
- * 
+ *
  * @param <S> the generic type of the {@link #getApi() service API}.
+ *
+ * @since 3.0.0
  */
 public interface ServiceHeaderContext<S> extends ServiceContext<S> {
 

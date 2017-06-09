@@ -4,8 +4,10 @@ import java.util.Collection;
 
 /**
  * This interface gives read access to contextual information of a {@link io.oasp.module.service.common.api.Service}.
- * 
+ *
  * @param <S> the generic type of the {@link #getApi() service API}.
+ *
+ * @since 3.0.0
  */
 public interface ServiceContext<S> {
 

@@ -4,8 +4,10 @@ import io.oasp.module.service.common.api.context.ServiceContext;
 
 /**
  * Extends {@link ServiceContext} and allows to {@link #setUrl(String) set URL}.
- * 
+ *
  * @param <S> the generic type of the {@link #getApi() service API}.
+ *
+ * @since 3.0.0
  */
 public interface ServiceDiscoveryContext<S> extends ServiceContext<S> {
 

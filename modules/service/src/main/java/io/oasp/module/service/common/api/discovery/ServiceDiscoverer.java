@@ -5,6 +5,8 @@ package io.oasp.module.service.common.api.discovery;
  * {@link io.oasp.module.service.common.api.Service}. You may choose an exiting implementation or write your own to
  * customize the {@link #discover(ServiceDiscoveryContext) discovery} of your
  * {@link io.oasp.module.service.common.api.Service}s.
+ *
+ * @since 3.0.0
  */
 public interface ServiceDiscoverer {
 

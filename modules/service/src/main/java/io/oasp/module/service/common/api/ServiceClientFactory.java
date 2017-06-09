@@ -29,6 +29,8 @@ package io.oasp.module.service.common.api;
  * <li>exception mapping (exception facade)</li>
  * </ul>
  * All these aspects can be configured via spring and customized with own implementations.
+ *
+ * @since 3.0.0
  */
 public interface ServiceClientFactory {
 
