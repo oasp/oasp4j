@@ -25,18 +25,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.general.common.api.builders.OrderPositionEtoBuilder;
+import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractRestServiceTest;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
@@ -49,7 +51,8 @@ import io.oasp.gastronomy.restaurant.salesmanagement.service.api.rest.Salesmanag
  * database is accessed via HTTP requests to the server running the restaurant application.
  *
  */
-@SpringApplicationConfiguration(classes = { SpringBootApp.class, SalesmanagementRestTestConfig.class })
+@RunWith(SpringRunner.class)
+@ContextConfiguration(classes = { SalesmanagementRestTestConfig.class })
 @TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement" })
 public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest {
 
@@ -61,7 +64,7 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
   private SalesmanagementRestServiceTestHelper helper;
 
   @Inject
-  private RestTemplate template;
+  private TestRestTemplate template;
 
   /**
    * Provides initialization previous to the creation of the text fixture.
@@ -136,6 +139,8 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
     orderPosition.put("offerId", SAMPLE_OFFER_ID);
     orderPosition.put("state", SAMPLE_ORDER_POSITION_STATE);
     orderPosition.put("drinkState", SAMPLE_DRINK_STATE);
+    orderPosition.put("offerName", "dummy");
+    orderPosition.put("price", "2.99");
     orderPosition.put("comment", SAMPLE_COMMENT);
     orderPositions.put(orderPosition);
     postRequest.put("positions", orderPositions);
@@ -241,6 +246,8 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
     for (int i = 0; i < numberOfOrderPositionsToSave; ++i) {
       sampleOrderPositionEto = new OrderPositionEtoBuilder().orderId(responseOrderCto.getOrder().getId())
           .offerId(SAMPLE_OFFER_ID).createNew();
+      sampleOrderPositionEto.setPrice(new Money(2.99));
+      sampleOrderPositionEto.setOfferName("dummy");
       savedOrderPositionEtos.add(this.service.saveOrderPosition(sampleOrderPositionEto));
     }
 
