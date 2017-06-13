@@ -22,14 +22,14 @@ import io.oasp.gastronomy.restaurant.general.common.api.security.UserData;
 import io.oasp.gastronomy.restaurant.general.dataaccess.base.DatabaseMigrator;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlPermission;
 import io.oasp.module.security.common.base.accesscontrol.AccessControlGrantedAuthority;
-import io.oasp.module.test.common.base.ComponentTest;
+import io.oasp.module.test.common.base.AbstractComponentTest;
 
 /**
  * Base class for all spring batch integration tests. It helps to do End-to-End job tests.
  *
  */
 // @DirtiesContext(classMode = ClassMode.AFTER_CLASS)
-public abstract class AbstractSpringBatchIntegrationTest extends ComponentTest {
+public abstract class AbstractSpringBatchIntegrationTest extends AbstractComponentTest {
   private static final Logger LOG = LoggerFactory.getLogger(AbstractSpringBatchIntegrationTest.class);
 
   /** directory for temporary test files */

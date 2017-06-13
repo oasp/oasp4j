@@ -1,10 +1,10 @@
 package io.oasp.module.security.common.base.accesscontrol;
 
-import io.oasp.module.security.common.api.accesscontrol.AccessControl;
-
 import java.util.Objects;
 
 import org.springframework.security.core.GrantedAuthority;
+
+import io.oasp.module.security.common.api.accesscontrol.AccessControl;
 
 /**
  * Implementation of {@link GrantedAuthority} for a {@link AccessControl}.
