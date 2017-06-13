@@ -7,10 +7,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-
 import io.oasp.gastronomy.restaurant.general.common.DbTestHelper;
-import io.oasp.gastronomy.restaurant.general.common.RestTestClientBuilder;
 import io.oasp.gastronomy.restaurant.general.common.SecurityTestHelper;
 import io.oasp.gastronomy.restaurant.general.service.impl.config.RestaurantTestConfig;
 import io.oasp.module.basic.common.api.config.SpringProfileConstants;
@@ -43,27 +40,12 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
   private DbTestHelper dbTestHelper;
 
   /**
-   * The {@code RestTestClientBuilder}.
-   */
-  @Inject
-  private RestTestClientBuilder restTestClientBuilder;
-
-  /**
-   * The {@code JacksonJsonProvider}
-   */
-  @Inject
-  private JacksonJsonProvider jacksonJsonProvider;
-
-  /**
    * Sets up the test.
    */
   @Override
   protected void doSetUp() {
 
     super.doSetUp();
-    this.restTestClientBuilder.setLocalServerPort(this.port);
-    this.restTestClientBuilder.setJacksonJsonProvider(this.jacksonJsonProvider);
-
   }
 
   /**
@@ -73,6 +55,7 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
   protected void doTearDown() {
 
     super.doTearDown();
+    this.securityTestHelper.logout();
   }
 
   /**
@@ -89,14 +72,6 @@ public abstract class AbstractRestServiceTest extends SubsystemTest {
   public DbTestHelper getDbTestHelper() {
 
     return this.dbTestHelper;
-  }
-
-  /**
-   * @return the {@link RestTestClientBuilder}
-   */
-  public RestTestClientBuilder getRestTestClientBuilder() {
-
-    return this.restTestClientBuilder;
   }
 
 }

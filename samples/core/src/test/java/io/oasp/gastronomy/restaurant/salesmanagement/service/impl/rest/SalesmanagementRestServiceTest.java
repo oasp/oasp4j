@@ -30,6 +30,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCri
 import io.oasp.gastronomy.restaurant.salesmanagement.service.api.rest.SalesmanagementRestService;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 import io.oasp.module.jpa.common.api.to.PaginationTo;
+import io.oasp.module.service.common.api.client.ServiceClientFactory;
 
 /**
  * This class serves as an example of how to perform a subsystem test (e.g., call a *RestService interface). The test
@@ -37,10 +38,14 @@ import io.oasp.module.jpa.common.api.to.PaginationTo;
  *
  */
 @SpringApplicationConfiguration(classes = { SpringBootApp.class, SalesmanagementRestTestConfig.class })
-@TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement" })
+@TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement",
+"service.client.app.restaurant.user.login=waiter" })
 public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
 
   private SalesmanagementRestService service;
+
+  @Inject
+  private ServiceClientFactory serviceClientFactory;
 
   @Inject
   private SalesmanagementRestServiceTestHelper helper;
@@ -53,7 +58,7 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
 
     super.doSetUp();
     getDbTestHelper().resetDatabase();
-    this.service = getRestTestClientBuilder().build(SalesmanagementRestService.class, "waiter");
+    this.service = this.serviceClientFactory.create(SalesmanagementRestService.class);
   }
 
   /**
