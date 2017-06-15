@@ -14,10 +14,10 @@ import io.oasp.gastronomy.restaurant.general.common.RestTestClientBuilder;
 import io.oasp.gastronomy.restaurant.general.common.SecurityTestHelper;
 import io.oasp.gastronomy.restaurant.general.service.impl.config.RestaurantTestConfig;
 import io.oasp.module.basic.common.api.config.SpringProfileConstants;
-import io.oasp.module.test.common.base.AbstractSubsystemTest;
+import io.oasp.module.test.common.base.SubsystemTest;
 
 /**
- * Abstract base class for {@link AbstractSubsystemTest}s which runs the tests within a local server. <br/>
+ * Abstract base class for {@link SubsystemTest}s which runs the tests within a local server. <br/>
  * <br/>
  * The local server's port is randomly assigned.
  *
@@ -25,7 +25,7 @@ import io.oasp.module.test.common.base.AbstractSubsystemTest;
 
 @SpringBootTest(classes = { RestaurantTestConfig.class,
 SpringBootApp.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
-public abstract class AbstractRestServiceTest extends AbstractSubsystemTest {
+public abstract class AbstractRestServiceTest extends SubsystemTest {
 
 
   /**

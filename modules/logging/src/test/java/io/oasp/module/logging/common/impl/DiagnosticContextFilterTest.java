@@ -11,13 +11,13 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import io.oasp.module.test.common.base.AbstractModuleTest;
+import io.oasp.module.test.common.base.ModuleTest;
 
 /**
  *
  * @author jmolinar
  */
-public class DiagnosticContextFilterTest extends AbstractModuleTest {
+public class DiagnosticContextFilterTest extends ModuleTest {
 
   /**
    *

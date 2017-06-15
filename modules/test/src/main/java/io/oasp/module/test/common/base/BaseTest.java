@@ -33,7 +33,7 @@ import org.junit.Before;
  *
  * @author shuber, jmolinar
  */
-public abstract class AbstractTest extends Assertions {
+public abstract class BaseTest extends Assertions {
   /**
    * Indicates if the test class is to be set up for the first time. {@code true} indicates that the class has already
    * been set up (e.g., database setup) for the execution of an preceding test method.

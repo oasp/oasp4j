@@ -7,7 +7,7 @@ import io.oasp.gastronomy.restaurant.general.common.api.NlsBundleApplicationRoot
  * a specific state that is illegal for the current operation and caused it to fail.
  *
  */
-public class IllegalEntityStateException extends AbstractApplicationBusinessException {
+public class IllegalEntityStateException extends ApplicationBusinessException {
 
   /** UID for serialization. */
   private static final long serialVersionUID = 1L;

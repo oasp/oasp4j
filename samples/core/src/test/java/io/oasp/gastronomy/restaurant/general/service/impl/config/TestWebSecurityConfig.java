@@ -11,7 +11,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import io.oasp.gastronomy.restaurant.general.service.impl.config.AbstractWebSecurityConfig;
+import io.oasp.gastronomy.restaurant.general.service.impl.config.BaseWebSecurityConfig;
 import io.oasp.module.basic.common.api.config.SpringProfileConstants;
 
 /**
@@ -21,7 +21,7 @@ import io.oasp.module.basic.common.api.config.SpringProfileConstants;
 @Configuration
 @EnableWebSecurity
 @Profile(SpringProfileConstants.JUNIT)
-public class TestWebSecurityConfig extends AbstractWebSecurityConfig {
+public class TestWebSecurityConfig extends BaseWebSecurityConfig {
   private static Logger LOG = LoggerFactory.getLogger(TestWebSecurityConfig.class);
 
   /**

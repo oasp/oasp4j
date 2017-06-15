@@ -5,7 +5,7 @@ import org.junit.After;
 import org.junit.Test;
 
 /**
- * This test verifies the proper working of the {@link AbstractTest} class.
+ * This test verifies the proper working of the {@link BaseTest} class.
  *
  * @author jmolinar
  */
@@ -13,7 +13,7 @@ public class BaseTestTest extends Assertions {
 
   private static boolean EXPECTED_RESULT;
 
-  class MyTest extends AbstractTest {
+  class MyTest extends BaseTest {
 
     @Override
     protected void doSetUp() {
@@ -25,7 +25,7 @@ public class BaseTestTest extends Assertions {
   @Test
   public void testInitialization() {
 
-    MyTest test = new MyTest();
+    BaseTest test = new MyTest();
     // Set the expected result before running setUp()-
     // Setup calls assertThat to test the expected result
     EXPECTED_RESULT = false;

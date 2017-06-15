@@ -1,7 +1,7 @@
 package io.oasp.module.beanmapping.common.impl;
 
 import io.oasp.module.beanmapping.common.api.BeanMapper;
-import io.oasp.module.test.common.base.AbstractModuleTest;
+import io.oasp.module.test.common.base.ModuleTest;
 
 import net.sf.mmm.util.entity.api.PersistenceEntity;
 import net.sf.mmm.util.entity.api.RevisionedEntity;
@@ -14,7 +14,7 @@ import org.junit.Test;
  * The abstract test-case for testing {@link BeanMapper} via its interface.
  *
  */
-public abstract class AbstractBeanMapperTest extends AbstractModuleTest {
+public abstract class AbstractBeanMapperTest extends ModuleTest {
 
   /**
    * @return the {@link BeanMapper} instance to test.
