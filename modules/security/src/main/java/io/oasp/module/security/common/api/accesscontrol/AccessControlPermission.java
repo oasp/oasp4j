@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  */
 @XmlRootElement(name = "permission")
-public class AccessControlPermission extends AbstractAccessControl {
+public class AccessControlPermission extends AccessControl {
 
   /** UID for serialization. */
   private static final long serialVersionUID = 1L;

@@ -10,12 +10,12 @@ import io.oasp.module.basic.common.api.config.SpringProfileConstants;
 /**
  * Security configuration based on {@link WebSecurityConfigurerAdapter}. This configuration is by purpose designed most
  * simple for two channels of authentication: simple login form and rest-url. (Copied from
- * {@link io.oasp.gastronomy.restaurant.general.service.impl.config.AbstractWebSecurityConfig}
+ * {@link io.oasp.gastronomy.restaurant.general.service.impl.config.BaseWebSecurityConfig}
  *
  */
 @Configuration
 @EnableWebSecurity
 @Profile(SpringProfileConstants.NOT_JUNIT)
-public class WebSecurityConfig extends AbstractWebSecurityConfig {
+public class WebSecurityConfig extends BaseWebSecurityConfig {
 
 }

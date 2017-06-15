@@ -2,7 +2,7 @@ package io.oasp.gastronomy.restaurant.general.common;
 
 import io.oasp.gastronomy.restaurant.general.common.api.MoneyHelper;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
-import io.oasp.module.test.common.base.AbstractModuleTest;
+import io.oasp.module.test.common.base.ModuleTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import org.junit.Test;
  * This class tests the {@link MoneyHelper}. Especially summing a List of @Link {@link Money}s.
  *
  */
-public class MoneyHelperTest extends AbstractModuleTest {
+public class MoneyHelperTest extends ModuleTest {
 
   // /**
   // * Test for summing up {@link Money}s with other currency (USD) then default (EUR).

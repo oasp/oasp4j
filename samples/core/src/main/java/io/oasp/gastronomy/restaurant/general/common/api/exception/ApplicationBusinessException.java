@@ -1,20 +1,19 @@
 package io.oasp.gastronomy.restaurant.general.common.api.exception;
 
-import net.sf.mmm.util.exception.api.NlsRuntimeException;
 import net.sf.mmm.util.nls.api.NlsMessage;
 
 /**
- * Abstract main exception.
+ * Abstract business <i>checked</i> main exception.
  *
  */
-public abstract class AbstractApplicationException extends NlsRuntimeException {
+public abstract class ApplicationBusinessException extends ApplicationException {
 
   private static final long serialVersionUID = 1L;
 
   /**
    * @param message the error {@link #getNlsMessage() message}.
    */
-  public AbstractApplicationException(NlsMessage message) {
+  public ApplicationBusinessException(NlsMessage message) {
 
     super(message);
   }
@@ -23,9 +22,15 @@ public abstract class AbstractApplicationException extends NlsRuntimeException {
    * @param cause the error {@link #getCause() cause}.
    * @param message the error {@link #getNlsMessage() message}.
    */
-  public AbstractApplicationException(Throwable cause, NlsMessage message) {
+  public ApplicationBusinessException(Throwable cause, NlsMessage message) {
 
     super(cause, message);
+  }
+
+  @Override
+  public boolean isTechnical() {
+
+    return false;
   }
 
 }

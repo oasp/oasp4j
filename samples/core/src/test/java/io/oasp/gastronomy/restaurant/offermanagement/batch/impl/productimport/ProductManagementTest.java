@@ -22,7 +22,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
-import io.oasp.module.test.common.base.AbstractComponentTest;
+import io.oasp.module.test.common.base.ComponentTest;
 
 /**
  * This is the test case of {@link ProductDaoImpl}
@@ -31,7 +31,7 @@ import io.oasp.module.test.common.base.AbstractComponentTest;
  */
 @SpringBootTest(classes = { SpringBootApp.class })
 @WebAppConfiguration
-public class ProductManagementTest extends AbstractComponentTest {
+public class ProductManagementTest extends ComponentTest {
 
   @Inject
   private Offermanagement offerManagement;

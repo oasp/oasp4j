@@ -21,13 +21,13 @@ import io.oasp.module.security.common.api.accesscontrol.AccessControlGroup;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlPermission;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlSchema;
-import io.oasp.module.test.common.base.AbstractModuleTest;
+import io.oasp.module.test.common.base.ModuleTest;
 
 /**
  * This is the test-case for {@link AccessControlSchema} and {@link AccessControlSchemaXmlMapper}.
  *
  */
-public class AccessControlSchemaTest extends AbstractModuleTest {
+public class AccessControlSchemaTest extends ModuleTest {
 
   /** The location of the reference configuration for regression tests. */
   private static final String SCHEMA_XML = "config/app/security/access-control-schema.xml";
