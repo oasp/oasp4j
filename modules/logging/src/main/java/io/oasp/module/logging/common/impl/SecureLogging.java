@@ -8,16 +8,25 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
 /**
- * Class which provides {@link Marker}s and "MultiMarker"s (if dependency org.owasp available) for logging.
+ * Class which provides {@link Marker}s for differential logging. Implements "MultiMarker"s for optimal filtering (if
+ * dependency org.owasp available), or corresponding conventional Markers as a fall back solution.
+ * <P>
+ * Example usage:
  *
- * example usage:
- * <code> LOG.info(SecureLogging.SECURITY_FAILURE_CONFIDENTIAL, "Confidential Security Failure message."); </code>
+ * <pre>
+ * {@code
+ * LOG.info(SecureLogging.SECURITY_FAILURE_CONFIDENTIAL, "Confidential Security Failure message.");
+ * }
+ * </pre>
  *
- * example filters for appenders in logback.xml:
- * <code> class="org.owasp.security.logging.filter.SecurityMarkerFilter"</code>
- * <code> class="org.owasp.security.logging.filter.ExcludeClassifiedMarkerFilter" </code>
+ * Example filters for appenders in logback.xml:
  *
- * @author preichel-cg
+ * <pre>
+ * {@code
+ * class="org.owasp.security.logging.filter.SecurityMarkerFilter"
+ * class="org.owasp.security.logging.filter.ExcludeClassifiedMarkerFilter"
+ * }
+ * </pre>
  */
 public class SecureLogging {
 
@@ -36,7 +45,13 @@ public class SecureLogging {
 
   private static Marker markerSecurAuditConfid = null;
 
+  private static final String RESTRICTED_MARKER_NAME = "RESTRICTED";
+
   private static final String CONFIDENTIAL_MARKER_NAME = "CONFIDENTIAL";
+
+  private static final String SECRET_MARKER_NAME = "SECRET";
+
+  private static final String TOP_SECRET_MARKER_NAME = "TOPSECRET";
 
   private static final String SECURITY_SUCCESS_MARKER_NAME = "SECURITY SUCCESS";
 
@@ -44,16 +59,32 @@ public class SecureLogging {
 
   private static final String SECURITY_AUDIT_MARKER_NAME = "SECURITY AUDIT";
 
-  private static final String SECURITY_SUCCESS_CONFIDENTIAL_MARKER_NAME = "SECURITY SUCCESS CONFIDENTIAL";
+  // MultiMarkers by OWASP do not contain a space between the individual names, so we stick to this behavior.
+  private static final String SECURITY_SUCCESS_CONFIDENTIAL_MARKER_NAME = "SECURITY SUCCESSCONFIDENTIAL";
 
-  private static final String SECURITY_FAILURE_CONFIDENTIAL_MARKER_NAME = "SECURITY FAILURE CONFIDENTIAL";
+  private static final String SECURITY_FAILURE_CONFIDENTIAL_MARKER_NAME = "SECURITY FAILURECONFIDENTIAL";
 
-  private static final String SECURITY_AUDIT_CONFIDENTIAL_MARKER_NAME = "SECURITY AUDIT CONFIDENTIAL";
+  private static final String SECURITY_AUDIT_CONFIDENTIAL_MARKER_NAME = "SECURITY AUDITCONFIDENTIAL";
 
   /**
-   * Marker for Confidential log events.
+   * Marker for Restricted log events.
+   */
+  public static final Marker RESTRICTED = MarkerFactory.getDetachedMarker(RESTRICTED_MARKER_NAME);
+
+  /**
+   * Marker for Confidential log events. Usage with OWASP provides possibility for masking, e.g. of passwords.
    */
   public static final Marker CONFIDENTIAL = MarkerFactory.getDetachedMarker(CONFIDENTIAL_MARKER_NAME);
+
+  /**
+   * Marker for Secret log events.
+   */
+  public static final Marker SECRET = MarkerFactory.getDetachedMarker(SECRET_MARKER_NAME);
+
+  /**
+   * Marker for Top Secret log events.
+   */
+  public static final Marker TOP_SECRET = MarkerFactory.getDetachedMarker(TOP_SECRET_MARKER_NAME);
 
   /**
    * Marker for Security Success log events.
@@ -171,7 +202,6 @@ public class SecureLogging {
       return cExtClass;
     } catch (Exception e) {
       LOG.debug("Class '{}' or one of its dependencies is not present.", className);
-      // LOG.debug("Exception occured.", e);
       cExtClass = String.class;
       return cExtClass;
     }
