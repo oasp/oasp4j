@@ -1,7 +1,7 @@
 package io.oasp.gastronomy.restaurant.offermanagement.common.api.exception;
 
 import io.oasp.gastronomy.restaurant.general.common.api.NlsBundleApplicationRoot;
-import io.oasp.gastronomy.restaurant.general.common.api.exception.AbstractApplicationBusinessException;
+import io.oasp.gastronomy.restaurant.general.common.api.exception.ApplicationBusinessException;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer;
 
 /**
@@ -11,7 +11,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer;
  * {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer#getSideDishId() side-dish} associated.
  *
  */
-public class OfferEmptyException extends AbstractApplicationBusinessException {
+public class OfferEmptyException extends ApplicationBusinessException {
 
   /** UID for serialization. */
   private static final long serialVersionUID = 1L;

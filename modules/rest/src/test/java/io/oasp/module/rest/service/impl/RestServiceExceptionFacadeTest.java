@@ -1,6 +1,6 @@
 package io.oasp.module.rest.service.impl;
 
-import io.oasp.module.test.common.base.AbstractModuleTest;
+import io.oasp.module.test.common.base.ModuleTest;
 
 import java.util.List;
 import java.util.Map;
@@ -38,7 +38,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * Test-case for {@link RestServiceExceptionFacade}.
  *
  */
-public class RestServiceExceptionFacadeTest extends AbstractModuleTest {
+public class RestServiceExceptionFacadeTest extends ModuleTest {
 
   /** Value of {@link TechnicalErrorUserException#getCode()}. */
   private static final String CODE_TECHNICAL_ERROR = "TechnicalError";

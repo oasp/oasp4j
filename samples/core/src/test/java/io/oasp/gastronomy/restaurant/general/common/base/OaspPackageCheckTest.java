@@ -11,14 +11,14 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import io.oasp.module.basic.common.api.reflect.OaspPackage;
-import io.oasp.module.test.common.base.AbstractModuleTest;
+import io.oasp.module.test.common.base.ModuleTest;
 
 /**
  * This test verifies that the entire code of your code-base is located in {@link OaspPackage#isValid() valid OASP
  * packages}.
  */
 @Ignore("Currently fails, see #498")
-public class OaspPackageCheckTest extends AbstractModuleTest {
+public class OaspPackageCheckTest extends ModuleTest {
 
   /**
    * Scans all the packages of this application root pacakge namespace. Will verify that these are

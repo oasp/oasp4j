@@ -1,6 +1,7 @@
 package io.oasp.gastronomy.restaurant.general.common;
 
 import java.io.File;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,14 +23,14 @@ import io.oasp.gastronomy.restaurant.general.common.api.security.UserData;
 import io.oasp.gastronomy.restaurant.general.dataaccess.base.DatabaseMigrator;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlPermission;
 import io.oasp.module.security.common.base.accesscontrol.AccessControlGrantedAuthority;
-import io.oasp.module.test.common.base.AbstractComponentTest;
+import io.oasp.module.test.common.base.ComponentTest;
 
 /**
  * Base class for all spring batch integration tests. It helps to do End-to-End job tests.
  *
  */
 // @DirtiesContext(classMode = ClassMode.AFTER_CLASS)
-public abstract class AbstractSpringBatchIntegrationTest extends AbstractComponentTest {
+public abstract class AbstractSpringBatchIntegrationTest extends ComponentTest {
   private static final Logger LOG = LoggerFactory.getLogger(AbstractSpringBatchIntegrationTest.class);
 
   /** directory for temporary test files */

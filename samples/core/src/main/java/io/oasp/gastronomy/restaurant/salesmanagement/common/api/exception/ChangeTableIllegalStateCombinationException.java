@@ -1,7 +1,7 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.common.api.exception;
 
 import io.oasp.gastronomy.restaurant.general.common.api.NlsBundleApplicationRoot;
-import io.oasp.gastronomy.restaurant.general.common.api.exception.AbstractApplicationBusinessException;
+import io.oasp.gastronomy.restaurant.general.common.api.exception.ApplicationBusinessException;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 
@@ -10,7 +10,7 @@ import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
  * caused it to fail.
  *
  */
-public class ChangeTableIllegalStateCombinationException extends AbstractApplicationBusinessException {
+public class ChangeTableIllegalStateCombinationException extends ApplicationBusinessException {
 
   /**
    * UID for serialization.

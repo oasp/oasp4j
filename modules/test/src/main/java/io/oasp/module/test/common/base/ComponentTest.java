@@ -20,6 +20,6 @@ import io.oasp.module.test.common.api.category.CategoryComponentTest;
 @RunWith(SpringRunner.class)
 @TestExecutionListeners({ TransactionalTestExecutionListener.class, DependencyInjectionTestExecutionListener.class })
 @Category(CategoryComponentTest.class)
-public abstract class AbstractComponentTest extends AbstractTest {
+public abstract class ComponentTest extends BaseTest {
 
 }

@@ -20,7 +20,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import io.oasp.gastronomy.restaurant.general.common.api.UserProfile;
 import io.oasp.gastronomy.restaurant.general.common.api.Usermanagement;
 import io.oasp.gastronomy.restaurant.general.common.api.security.UserData;
-import io.oasp.gastronomy.restaurant.general.service.impl.config.AbstractWebSecurityConfig;
 import io.oasp.module.security.common.api.accesscontrol.AccessControl;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
 import io.oasp.module.security.common.api.accesscontrol.PrincipalAccessControlProvider;
@@ -54,7 +53,7 @@ import io.oasp.module.security.common.base.accesscontrol.AccessControlGrantedAut
  * </pre>
  *
  * <br/>
- * For another example, have a look at {@link AbstractWebSecurityConfig}.
+ * For another example, have a look at {@link BaseWebSecurityConfig}.
  */
 @Named
 public class BaseUserDetailsService implements UserDetailsService {
