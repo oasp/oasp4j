@@ -19,8 +19,9 @@ import org.hibernate.envers.RevisionTimestamp;
 /**
  * This is a custom {@link org.hibernate.envers.DefaultRevisionEntity revision entity} also containing the actual user.
  *
- * @see org.hibernate.envers.DefaultRevisionEntity
- *
+ * @see org.hibernate.envers.DefaultRevisionEntity If you are starting the development of your application from scratch
+ *      , please use this class or else if you have an application developed and needs backward compatibility , please
+ *      use the deprecated class {@link io.oasp.module.jpa.dataaccess.base.AdvancedRevisionEntity}
  */
 @Entity
 @RevisionEntity(AdvancedRevisionListener.class)
