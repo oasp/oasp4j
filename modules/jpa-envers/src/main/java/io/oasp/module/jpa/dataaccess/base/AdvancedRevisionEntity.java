@@ -1,6 +1,6 @@
 /* Copyright (c) The m-m-m Team, Licensed under the Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0 */
-package io.oasp.module.jpa.dataaccess.api.common;
+package io.oasp.module.jpa.dataaccess.base;
 
 import java.util.Date;
 
@@ -21,11 +21,14 @@ import io.oasp.module.jpa.dataaccess.api.AdvancedRevisionListener;
  * This is a custom {@link org.hibernate.envers.DefaultRevisionEntity revision entity} also containing the actual user.
  *
  * @see org.hibernate.envers.DefaultRevisionEntity
- *
+ * @deprecated If you want to have the backward compatibility with your existing code , please use this class else if
+ *             you are starting the development of application from scratch, please use
+ *             {@link io.oasp.module.jpa.dataaccess.api.AdvancedRevisionEntity}
  */
 @Entity
 @RevisionEntity(AdvancedRevisionListener.class)
 @Table(name = "RevInfo")
+@Deprecated
 public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
 
   /** UID for serialization. */
@@ -44,9 +47,9 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
   /** @see #getDate() */
   private transient Date date;
 
-  /** @see #getUserLogin() */
+  /** @see #getUser() */
 
-  private String userLogin;
+  private String user;
 
   /**
    * The constructor.
@@ -101,17 +104,17 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
    * @return the login or id of the user that has created this revision.
    */
 
-  public String getUserLogin() {
+  public String getUser() {
 
-    return this.userLogin;
+    return this.user;
   }
 
   /**
-   * @param userLogin is the new value of {@link #getUserLogin()}.
+   * @param user is the new value of {@link #getUser()}.
    */
-  public void setUserLogin(String userLogin) {
+  public void setUser(String user) {
 
-    this.userLogin = userLogin;
+    this.user = user;
   }
 
   @Override
