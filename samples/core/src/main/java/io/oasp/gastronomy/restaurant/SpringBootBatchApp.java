@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration
 import org.springframework.boot.autoconfigure.security.SecurityFilterAutoConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
-import io.oasp.module.jpa.dataaccess.api.common.AdvancedRevisionEntity;
+import io.oasp.module.jpa.dataaccess.api.AdvancedRevisionEntity;
 
 @SpringBootApplication(exclude = { EndpointAutoConfiguration.class, SecurityAutoConfiguration.class,
 SecurityFilterAutoConfiguration.class, })
