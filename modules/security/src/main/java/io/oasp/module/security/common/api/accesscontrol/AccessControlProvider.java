@@ -39,7 +39,7 @@ public interface AccessControlProvider {
   boolean collectAccessControlIds(String id, Set<String> permissions);
 
   /**
-   * This method collects the {@link AccessControl}s contained in the {@link AccessControl}
+   * This method collects the {@link AccessControl}s contained in the {@link AccessControl} 
    * {@link AccessControl#getId() identified} by the given <code>groupId</code>.
    *
    * @param id is the {@link AccessControl#getId() ID} of the {@link AccessControl} (typically an
