@@ -85,4 +85,17 @@
     </profile>
   </profiles>
 
+  <distributionManagement>
+    <repository>
+      <id>devon.releases</id>
+      <name>devon Releases</name>
+      <url>https://devon.s2-eu.capgemini.com/nexus/content/repositories/releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>devon.snapshots</id>
+      <name>devon Snapshots</name>
+      <url>https://devon.s2-eu.capgemini.com/nexus/content/repositories/snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
+
 </project>
