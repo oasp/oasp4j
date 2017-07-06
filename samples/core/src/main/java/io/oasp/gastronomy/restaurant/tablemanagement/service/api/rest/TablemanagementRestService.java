@@ -23,7 +23,6 @@ import io.oasp.module.jpa.common.api.to.PaginatedListTo;
  *
  */
 @Path("/tablemanagement/v1")
-@Named("TablemanagementRestService")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public interface TablemanagementRestService extends RestService {
