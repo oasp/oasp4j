@@ -9,10 +9,9 @@
     </encoder>
   </appender>
 
-  <!-- This converter masks all arguments of a confidential message with ***. Based on OWASP, fixed for MultiMarkers. -->
+  <!-- This converter masks all arguments of a confidential message with ***. -->
   <!-- It overwrites the message field %m, so the log pattern can stay unchanged. -->
-  <conversionRule conversionWord="m"
-                  converterClass="io.oasp.module.logging.common.impl.MaskingConverter" />
+  <conversionRule conversionWord="m" converterClass="org.owasp.security.logging.mask.MaskingConverter"/>
 
   <!-- This appender only logs security events, independent of any potential classification marker. -->
   <!-- If the MaskingConverter is used, it masks arguments of confidential events, logged via {}, with ***. -->
