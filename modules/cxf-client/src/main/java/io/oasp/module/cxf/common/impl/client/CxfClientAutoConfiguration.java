@@ -1,5 +1,7 @@
 package io.oasp.module.cxf.common.impl.client;
 
+import javax.inject.Inject;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,6 +11,7 @@ import io.oasp.module.service.common.api.config.ServiceConfig;
 import io.oasp.module.service.common.api.header.ServiceHeaderCustomizer;
 import io.oasp.module.service.common.base.config.ServiceConfigProperties;
 import io.oasp.module.service.common.impl.ServiceClientFactoryImpl;
+import io.oasp.module.service.common.impl.ServiceClientSpringFactory;
 import io.oasp.module.service.common.impl.discovery.ServiceDiscovererImplConfig;
 import io.oasp.module.service.common.impl.header.ServiceHeaderCustomizerBasicAuth;
 import io.oasp.module.service.common.impl.header.ServiceHeaderCustomizerCorrelationId;
@@ -20,6 +23,7 @@ import io.oasp.module.service.common.impl.header.ServiceHeaderCustomizerOAuth;
  * @since 3.0.0
  */
 @Configuration
+// @Import(ServiceClientSpringFactory.class)
 public class CxfClientAutoConfiguration {
 
   /**
@@ -74,6 +78,15 @@ public class CxfClientAutoConfiguration {
   public ServiceHeaderCustomizer serviceHeaderCustomizerOAuth() {
 
     return new ServiceHeaderCustomizerOAuth();
+  }
+
+  /**
+   * @return the {@link ServiceClientSpringFactory} that allows to {@link Inject} service clients via service interface.
+   */
+  @Bean
+  public ServiceClientSpringFactory serviceClientSpringFactory() {
+
+    return new ServiceClientSpringFactory();
   }
 
 }

@@ -2,12 +2,17 @@ package io.oasp.gastronomy.restaurant.general.service.impl.config;
 
 import javax.servlet.Filter;
 
-import org.apache.catalina.filters.SetCharacterEncodingFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.boot.context.embedded.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.CharacterEncodingFilter;
+
+import io.oasp.module.logging.common.api.DiagnosticContextFacade;
+import io.oasp.module.logging.common.impl.DiagnosticContextFacadeImpl;
+import io.oasp.module.logging.common.impl.DiagnosticContextFilter;
+import io.oasp.module.logging.common.impl.PerformanceLogFilter;
 
 import io.oasp.module.logging.common.api.DiagnosticContextFacade;
 import io.oasp.module.logging.common.impl.DiagnosticContextFacadeImpl;
@@ -76,11 +81,11 @@ public class WebConfig {
   public FilterRegistrationBean setCharacterEncodingFilter() {
 
     FilterRegistrationBean registration = new FilterRegistrationBean();
-    SetCharacterEncodingFilter setCharacterEncodingFilter = new SetCharacterEncodingFilter();
-    setCharacterEncodingFilter.setEncoding("UTF-8");
-    setCharacterEncodingFilter.setIgnore(false);
-    this.beanFactory.autowireBean(setCharacterEncodingFilter);
-    registration.setFilter(setCharacterEncodingFilter);
+    CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+    characterEncodingFilter.setEncoding("UTF-8");
+    characterEncodingFilter.setForceEncoding(false);
+    this.beanFactory.autowireBean(characterEncodingFilter);
+    registration.setFilter(characterEncodingFilter);
     registration.addUrlPatterns("/*");
     return registration;
   }

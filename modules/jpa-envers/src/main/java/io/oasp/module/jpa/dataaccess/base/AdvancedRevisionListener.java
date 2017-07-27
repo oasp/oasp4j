@@ -1,6 +1,6 @@
 /* Copyright (c) The m-m-m Team, Licensed under the Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0 */
-package io.oasp.module.jpa.dataaccess.api;
+package io.oasp.module.jpa.dataaccess.base;
 
 import net.sf.mmm.util.session.api.UserSessionAccess;
 
@@ -10,10 +10,11 @@ import org.hibernate.envers.RevisionListener;
  * This is the implementation of {@link RevisionListener} that enriches {@link AdvancedRevisionEntity} with additional
  * information.
  *
- * If you are starting the development of your application from scratch , please use this class or else if you have an
- * application developed and needs backward compatibility , please use the deprecated class
- * {@link io.oasp.module.jpa.dataaccess.base.AdvancedRevisionListener}
+ * @deprecated If you want to have the backward compatibility with your existing code , please use this class else if
+ *             you are starting the development of application from scratch, please use
+ *             {@link io.oasp.module.jpa.dataaccess.api.AdvancedRevisionListener}
  */
+@Deprecated
 public class AdvancedRevisionListener implements RevisionListener {
 
   /**
@@ -28,7 +29,7 @@ public class AdvancedRevisionListener implements RevisionListener {
   public void newRevision(Object revisionEntity) {
 
     AdvancedRevisionEntity revision = (AdvancedRevisionEntity) revisionEntity;
-    revision.setUserLogin(UserSessionAccess.getUserLogin());
+    revision.setUser(UserSessionAccess.getUserLogin());
   }
 
 }

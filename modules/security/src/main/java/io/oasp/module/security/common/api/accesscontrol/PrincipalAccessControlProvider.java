@@ -4,8 +4,8 @@ import java.security.Principal;
 import java.util.Collection;
 
 /**
- * This is the interface for a provide that allows to {@link #getAccessControlIds(Principal) get the permission groups} for a
- * {@link Principal}.
+ * This is the interface for a provide that allows to {@link #getAccessControlIds(Principal) get the permission groups}
+ * for a {@link Principal}.
  *
  * @param <P> is the generic type of the {@link Principal} representing the user or subject.
  *
