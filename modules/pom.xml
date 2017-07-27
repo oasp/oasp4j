@@ -20,8 +20,8 @@
     <module>service</module>
     <module>json</module>
     <module>rest</module>
-    <module>cxf-client</module>
-    <module>cxf-server</module>
+    <module>starter-cxf-client</module>
+    <module>starter-cxf-server</module>
     <module>security</module>
     <module>jpa</module>
     <module>jpa-envers</module>
