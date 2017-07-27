@@ -54,9 +54,7 @@ public class SyncServiceClientFactoryCxfRest implements SyncServiceClientFactory
     List<Object> providers = createProviderList(context, serviceName);
 
     String url = context.getUrl();
-    if (url.endsWith(ServiceConstants.URL_PATH_SERVICES)) {
-      url = url + "/" + ServiceConstants.URL_FOLDER_REST;
-    }
+    url = url.replace(ServiceConstants.VARIABLE_TYPE, ServiceConstants.URL_FOLDER_REST);
     S serviceClient = JAXRSClientFactory.create(url, context.getApi(), providers);
 
     ClientConfiguration clientConfig = WebClient.getConfig(serviceClient);
@@ -94,8 +92,7 @@ public class SyncServiceClientFactoryCxfRest implements SyncServiceClientFactory
       if (connectionTimeout != null) {
         policy.setConnectionTimeout(connectionTimeout.longValue());
       }
-      Long responseTimeout =
-          timeoutConfig.getChild(ServiceConfig.KEY_SEGMENT_TIMEOUT_RESPONSE).getValue(Long.class);
+      Long responseTimeout = timeoutConfig.getChild(ServiceConfig.KEY_SEGMENT_TIMEOUT_RESPONSE).getValue(Long.class);
       if (responseTimeout != null) {
         policy.setReceiveTimeout(responseTimeout.longValue());
       }

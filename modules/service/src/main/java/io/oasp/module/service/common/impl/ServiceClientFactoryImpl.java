@@ -27,6 +27,13 @@ public class ServiceClientFactoryImpl implements ServiceClientFactory {
   private Collection<ServiceHeaderCustomizer> serviceHeaderCustomizers;
 
   /**
+   * The constructor.
+   */
+  public ServiceClientFactoryImpl() {
+    super();
+  }
+
+  /**
    * @param syncServiceClientFactories the {@link Collection} of {@link SyncServiceClientFactory factories} to
    *        {@link Inject}.
    */
@@ -101,10 +108,12 @@ public class ServiceClientFactoryImpl implements ServiceClientFactory {
     if (context.getUrl() != null) {
       return;
     }
-    for (ServiceDiscoverer discoverer : this.serviceDiscoverers) {
-      discoverer.discover(context);
-      if (context.getUrl() != null) {
-        break;
+    if (this.serviceDiscoverers != null) {
+      for (ServiceDiscoverer discoverer : this.serviceDiscoverers) {
+        discoverer.discover(context);
+        if (context.getUrl() != null) {
+          break;
+        }
       }
     }
     if (context.getUrl() == null) {

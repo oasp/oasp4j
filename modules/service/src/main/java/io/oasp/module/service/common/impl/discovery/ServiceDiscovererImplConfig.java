@@ -2,6 +2,7 @@ package io.oasp.module.service.common.impl.discovery;
 
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerInitializedEvent;
 import org.springframework.context.ApplicationListener;
 
@@ -29,6 +30,9 @@ public class ServiceDiscovererImplConfig
   // @Value("${local.server.port}")
   private int localServerPort;
 
+  @Value("${server.context-path:}")
+  private String contextPath;
+
   private ServiceConfig config;
 
   /**
@@ -52,6 +56,9 @@ public class ServiceDiscovererImplConfig
     Class<?> api = context.getApi();
     OaspPackage oaspPackage = OaspPackage.of(api);
     String application = oaspPackage.getApplication();
+    if (application == null) {
+      application = api.getName();
+    }
     ConfigProperties clientNode = this.config.asClientConfig();
     ConfigProperties appNode = clientNode.getChild(ServiceConfig.KEY_SEGMENT_APP, application);
     ConfigProperties defaultNode = clientNode.getChild(ServiceConfig.KEY_SEGMENT_DEFAULT);
@@ -82,11 +89,27 @@ public class ServiceDiscovererImplConfig
         buffer.append(':');
         buffer.append(port);
       }
+      if (!this.contextPath.isEmpty()) {
+        buffer.append(this.contextPath);
+        buffer.append('/');
+      }
       buffer.append(ServiceConstants.URL_PATH_SERVICES);
+      buffer.append('/');
+      buffer.append(ServiceConstants.VARIABLE_TYPE);
       url = buffer.toString();
-      configNode.setChildValue(ServiceConfig.KEY_SEGMENT_URL, url);
     }
+    url = resolveVariables(url, application);
+    configNode.setChildValue(ServiceConfig.KEY_SEGMENT_URL, url);
     context.setConfig(configNode);
+  }
+
+  private String resolveVariables(String url2, String application) {
+
+    String resolvedUrl = url2;
+    resolvedUrl = resolvedUrl.replace(ServiceConstants.VARIABLE_APP, application);
+    resolvedUrl =
+        resolvedUrl.replace(ServiceConstants.VARIABLE_LOCAL_SERVER_PORT, Integer.toString(this.localServerPort));
+    return resolvedUrl;
   }
 
   private boolean isLocalhost(String host) {

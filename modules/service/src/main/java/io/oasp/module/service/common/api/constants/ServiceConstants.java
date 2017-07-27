@@ -39,4 +39,20 @@ public class ServiceConstants {
   /** The web-service URL path. */
   public static final String URL_PATH_WEB_SERVICES = URL_PATH_SERVICES + "/" + URL_FOLDER_WEB_SERVICE;
 
+  /**
+   * The variable that resolves to the {@link io.oasp.module.basic.common.api.reflect.OaspPackage#getApplication()
+   * technical name of the application}.
+   */
+  public static final String VARIABLE_APP = "${app}";
+
+  /**
+   * The variable that resolves to the {@link io.oasp.module.basic.common.api.reflect.OaspPackage#getApplication()
+   * technical name of the application}.
+   */
+  public static final String VARIABLE_LOCAL_SERVER_PORT = "${local.server.port}";
+
+  /**
+   * The variable that resolves to type of the service (e.g. "rest" for REST service and "ws" for SOAP service).
+   */
+  public static final String VARIABLE_TYPE = "${type}";
 }
