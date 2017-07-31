@@ -13,7 +13,7 @@ import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
  *
  */
 @WebService
-public interface TablemanagmentWebService {
+public interface TablemanagementWebService {
 
   /**
    * @see io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement#findTable(Long)

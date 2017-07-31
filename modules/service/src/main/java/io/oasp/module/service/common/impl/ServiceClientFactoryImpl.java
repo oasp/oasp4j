@@ -91,7 +91,8 @@ public class ServiceClientFactoryImpl implements ServiceClientFactory {
       }
     }
     if (serviceClient == null) {
-      throw new IllegalStateException("Service client could not be created by any factory for " + serviceInterface);
+      throw new IllegalStateException(
+          "Unsuppoerted service type - client could not be created by any factory for " + serviceInterface);
     }
     return serviceClient;
   }

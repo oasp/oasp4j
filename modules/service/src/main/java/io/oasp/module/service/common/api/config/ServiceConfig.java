@@ -28,6 +28,12 @@ public interface ServiceConfig {
   /** The key segment for the protocol of a {@link io.oasp.module.service.common.api.Service}. */
   String KEY_SEGMENT_PROTOCOL = "protocol";
 
+  /** The key segment for the WSDL settings of a SOAP {@link javax.jws.WebService}. */
+  String KEY_SEGMENT_WSDL = "wsdl";
+
+  /** The key segment for the boolean property to disable download (e.g. of {@link #KEY_SEGMENT_WSDL WSDL}). */
+  String KEY_SEGMENT_DISABLE_DOWNLOAD = "disable-download";
+
   /** The key segment for the application specific configuration sub-tree. */
   String KEY_SEGMENT_APP = "app";
 

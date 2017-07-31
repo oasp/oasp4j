@@ -172,6 +172,12 @@ public class SimpleConfigProperties implements ConfigProperties {
     }
   }
 
+  @Override
+  public boolean getValueAsBoolean() {
+
+    return "true".equalsIgnoreCase(getValue());
+  }
+
   /**
    * @param value new value of {@link #getValue()}.
    */

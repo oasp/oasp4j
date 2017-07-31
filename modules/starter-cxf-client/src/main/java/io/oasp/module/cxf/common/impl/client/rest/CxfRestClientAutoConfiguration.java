@@ -3,6 +3,7 @@ package io.oasp.module.cxf.common.impl.client.rest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import io.oasp.module.cxf.common.impl.client.ws.SyncServiceClientFactoryCxfWs;
 import io.oasp.module.service.common.api.sync.SyncServiceClientFactory;
 
 /**
@@ -20,6 +21,15 @@ public class CxfRestClientAutoConfiguration {
   public SyncServiceClientFactory syncServiceClientFactoryCxfRest() {
 
     return new SyncServiceClientFactoryCxfRest();
+  }
+
+  /**
+   * @return an implemenation of {@link SyncServiceClientFactory} based on CXF for SOAP Services (JAX-WS).
+   */
+  @Bean
+  public SyncServiceClientFactory syncServiceClientFactoryCxfWs() {
+
+    return new SyncServiceClientFactoryCxfWs();
   }
 
 }

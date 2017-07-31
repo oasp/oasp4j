@@ -79,6 +79,11 @@ public interface ConfigProperties {
   <T> T getValue(Class<T> type, T defaultValue);
 
   /**
+   * @return the {@link #getValue(Class, Object)} as {@code boolean} with {@code false} as default.
+   */
+  boolean getValueAsBoolean();
+
+  /**
    * @return {@code true} if this is an empty {@link ConfigProperties}-node that neither has a {@link #getValue() value}
    *         nor {@link #getChildKeys() any} {@link #getChild(String) child}.
    */

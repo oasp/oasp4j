@@ -60,6 +60,12 @@ class EmptyConfigProperties implements ConfigProperties {
   }
 
   @Override
+  public boolean getValueAsBoolean() {
+
+    return false;
+  }
+
+  @Override
   public boolean isEmpty() {
 
     return true;
