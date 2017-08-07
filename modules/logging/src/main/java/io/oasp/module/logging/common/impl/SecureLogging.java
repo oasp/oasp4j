@@ -8,24 +8,23 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
 /**
- * Class which provides {@link Marker}s for differential logging. Implements "MultiMarker"s for optimal filtering (if
- * dependency org.owasp available), or corresponding conventional Markers as a fall back solution.
+ * Class which provides {@link Marker}s for differential logging. Implements "MultiMarker"s
+ * ({@link org.owasp.security.logging.MultiMarker}) for optimal filtering if the dependency org.owasp is available, or
+ * corresponding conventional Markers as a fall back solution.
  * <P>
  * Example usage:
  *
  * <pre>
- * {@code
- * LOG.info(SecureLogging.SECURITY_FAILURE_CONFIDENTIAL, "Confidential Security Failure message.");
- * }
+ * <code>
+ * LOG.info({@link SecureLogging}.{@link #SECURITY_FAILURE_CONFIDENTIAL}, "Confidential Security Failure message.");
+ * </code>
  * </pre>
  *
- * Example filters for appenders in logback.xml:
+ * Example filters for appenders in logback.xml to accept or reject the above log event:
  *
  * <pre>
- * {@code
- * class="org.owasp.security.logging.filter.SecurityMarkerFilter"
- * class="org.owasp.security.logging.filter.ExcludeClassifiedMarkerFilter"
- * }
+ * {@code <}filter class="{@link org.owasp.security.logging.filter.SecurityMarkerFilter}"{@code />}
+ * {@code <}filter class="{@link org.owasp.security.logging.filter.ExcludeClassifiedMarkerFilter}"{@code />}
  * </pre>
  */
 public class SecureLogging {
@@ -33,9 +32,9 @@ public class SecureLogging {
   /** Logger instance. */
   private static final Logger LOG = LoggerFactory.getLogger(SecureLogging.class);
 
-  private static String extClass = "org.owasp.security.logging.SecurityMarkers";
+  private static final String extClass = "org.owasp.security.logging.SecurityMarkers";
 
-  private static String methodName = "getMarker";
+  private static final String methodName = "getMarker";
 
   private static boolean initialized = false;
 
@@ -49,9 +48,7 @@ public class SecureLogging {
 
   private static final String CONFIDENTIAL_MARKER_NAME = "CONFIDENTIAL";
 
-  private static final String SECRET_MARKER_NAME = "SECRET";
-
-  private static final String TOP_SECRET_MARKER_NAME = "TOPSECRET";
+  // private static final String SECRET_MARKER_NAME = "SECRET"; // see below.
 
   private static final String SECURITY_SUCCESS_MARKER_NAME = "SECURITY SUCCESS";
 
@@ -77,14 +74,10 @@ public class SecureLogging {
   public static final Marker CONFIDENTIAL = MarkerFactory.getDetachedMarker(CONFIDENTIAL_MARKER_NAME);
 
   /**
-   * Marker for Secret log events.
+   * Marker for Secret log events. This shall not be used until a clear use-case is defined and corresponding measures
+   * are implemented in the logging chain. By default, secret information shall not be logged.
    */
-  public static final Marker SECRET = MarkerFactory.getDetachedMarker(SECRET_MARKER_NAME);
-
-  /**
-   * Marker for Top Secret log events.
-   */
-  public static final Marker TOP_SECRET = MarkerFactory.getDetachedMarker(TOP_SECRET_MARKER_NAME);
+  // public static final Marker SECRET = MarkerFactory.getDetachedMarker(SECRET_MARKER_NAME);
 
   /**
    * Marker for Security Success log events.
@@ -133,14 +126,14 @@ public class SecureLogging {
   }
 
   /**
-   * Main method to initialize the {@link Marker}s provided by this class.
+   * Main method to initialize the combined {@link Marker}s provided by this class.
    */
   private static void initMarkers() {
 
     if (initialized)
       return;
 
-    Class<?> cExtClass = hasExtClass(extClass);
+    Class<?> cExtClass = findExtClass(extClass);
 
     if (cExtClass.isAssignableFrom(String.class)) {
       createDefaultMarkers();
@@ -192,9 +185,18 @@ public class SecureLogging {
   }
 
   /**
+   * @return True if the dependency is available.
+   */
+  public static boolean hasExtClass() {
+
+    Class<?> cExtClass = findExtClass(extClass);
+    return (!cExtClass.isAssignableFrom(String.class));
+  }
+
+  /**
    * @return The given {@link Class} if parameter 'className' can be resolved, otherwise {@link String}.class.
    */
-  private static Class<?> hasExtClass(String className) {
+  private static Class<?> findExtClass(String className) {
 
     Class<?> cExtClass;
     try {
@@ -205,38 +207,6 @@ public class SecureLogging {
       cExtClass = String.class;
       return cExtClass;
     }
-  }
-
-  /**
-   * @return extClass
-   */
-  public static String getExtClass() {
-
-    return extClass;
-  }
-
-  /**
-   * @param extClass new value of {@link #getExtClass}.
-   */
-  public static void setExtClass(String extClass) {
-
-    SecureLogging.extClass = extClass;
-  }
-
-  /**
-   * @return methodName
-   */
-  public static String getMethodName() {
-
-    return methodName;
-  }
-
-  /**
-   * @param methodName new value of {@link #getMethodName}.
-   */
-  public static void setMethodName(String methodName) {
-
-    SecureLogging.methodName = methodName;
   }
 
 }

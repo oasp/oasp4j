@@ -265,6 +265,13 @@
         <version>2.2.6</version>
       </dependency>
 
+      <!-- Optional logging dependency -->
+      <dependency>
+        <groupId>org.owasp</groupId>
+        <artifactId>security-logging-logback</artifactId>
+        <version>1.1.3</version>
+      </dependency>
+
       <!-- *** INTERNAL DEPENDENCIES *** -->
       <dependency>
         <groupId>io.oasp.java.modules</groupId>
