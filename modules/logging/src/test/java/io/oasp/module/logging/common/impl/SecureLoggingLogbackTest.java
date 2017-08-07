@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -27,7 +28,7 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.LoggingEvent;
 import ch.qos.logback.core.rolling.RollingFileAppender;
 import ch.qos.logback.core.spi.FilterReply;
-import io.oasp.module.test.common.base.ModuleTest;
+import io.oasp.module.test.common.api.category.CategoryModuleTest;
 
 /**
  * Test class for {@link SecureLogging}, when used with logback. <br>
@@ -38,7 +39,10 @@ import io.oasp.module.test.common.base.ModuleTest;
  * ../filter/ExcludeClassifiedMarkerFilterTest
  */
 @RunWith(MockitoJUnitRunner.class)
-public class SecureLoggingLogbackTest extends ModuleTest {
+@Category(CategoryModuleTest.class)
+public class SecureLoggingLogbackTest {
+  // This class does "@Category(CategoryModuleTest.class)" instead of "extends ModuleTest", because the setUp() method
+  // is declared final in io.oasp.module.test.common.base.BaseTest.
 
   LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
 
@@ -109,7 +113,7 @@ public class SecureLoggingLogbackTest extends ModuleTest {
     final LoggingEvent loggingEvent = this.captorLoggingEvent.getValue();
 
     // Check log level is correct
-    assertThat(loggingEvent.getLevel()).isEqualTo(Level.INFO);
+    assertEquals(Level.INFO, loggingEvent.getLevel());
 
     // Check the message being logged is reasonable
     String layoutMessage = this.encoder.getLayout().doLayout(loggingEvent);
@@ -134,11 +138,11 @@ public class SecureLoggingLogbackTest extends ModuleTest {
     final LoggingEvent loggingEvent = this.captorLoggingEvent.getValue();
 
     // Check log level is correct
-    assertThat(loggingEvent.getLevel()).isEqualTo(Level.INFO);
+    assertEquals(Level.INFO, loggingEvent.getLevel());
 
     // Check the message being logged is reasonable
     String layoutMessage = this.encoder.getLayout().doLayout(loggingEvent);
-    System.out.println("test(): layoutMessage = " + layoutMessage);
+    System.out.println("Test: formatted message = " + layoutMessage);
     assertTrue("formatted log message must contain the original message.", layoutMessage.contains(logmsg));
     assertTrue("formatted log message must contain the name of its marker.", layoutMessage.contains(marker.getName()));
     // assertTrue("this pops up at the end of this test (with marker).", false);
@@ -151,7 +155,7 @@ public class SecureLoggingLogbackTest extends ModuleTest {
   @Test
   public void testLogEventWithMasking() {
 
-    System.out.println("Note: the console will show the 'password' content when running this test.");
+    System.out.println("Note: the default console log will show the 'password' content when running this test.");
 
     Marker marker = SecureLogging.CONFIDENTIAL;
     String password = "classified!";
@@ -164,11 +168,11 @@ public class SecureLoggingLogbackTest extends ModuleTest {
     final LoggingEvent loggingEvent = this.captorLoggingEvent.getValue();
 
     // Check log level is correct
-    assertThat(loggingEvent.getLevel()).isEqualTo(Level.INFO);
+    assertEquals(Level.INFO, loggingEvent.getLevel());
 
     // Check the message being logged is reasonable
     String layoutMessage = this.encoder.getLayout().doLayout(loggingEvent);
-    System.out.println("test(): layoutMessage = " + layoutMessage);
+    System.out.println("Test: formatted message = " + layoutMessage);
     assertFalse("formatted log message must not contain any classified information.", layoutMessage.contains(password));
     assertTrue("formatted log message must contain the name of its marker.", layoutMessage.contains(marker.getName()));
     // assertTrue("this pops up at the end of this test (with masking).", false);
@@ -191,7 +195,7 @@ public class SecureLoggingLogbackTest extends ModuleTest {
     final LoggingEvent loggingEvent = this.captorLoggingEvent.getValue();
 
     // Check log level is correct
-    assertThat(loggingEvent.getLevel()).isEqualTo(Level.INFO);
+    assertEquals(Level.INFO, loggingEvent.getLevel());
 
     // Check the stand-alone filter decision for this event
     assertEquals(FilterReply.DENY, this.filterExclClassif.decide(loggingEvent));
