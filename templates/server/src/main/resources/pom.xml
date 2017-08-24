@@ -11,6 +11,8 @@
   <properties>
     <spring.boot.version>^spring.boot.version^</spring.boot.version>
     <java.version>^template.java.version^</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <oasp.port.range>81</oasp.port.range>
     <oasp.http.port>${oasp.port.range}81</oasp.http.port>
     <oasp.db.port>${oasp.port.range}43</oasp.db.port>
@@ -27,6 +29,14 @@
 
   <dependencyManagement>
     <dependencies>
+      <!-- BOM of OASP4J to be declared before Spring boot, allowing to override some Spring deps (flyway...) -->
+      <dependency>
+        <groupId>io.oasp.java</groupId>
+        <artifactId>oasp4j-bom-before-spring-boot</artifactId>
+        <version>${oasp4j.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
       <!-- BOM of spring-boot -->
       <dependency>
         <groupId>org.springframework.boot</groupId>

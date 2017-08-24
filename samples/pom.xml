@@ -2,21 +2,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>io.oasp.java.dev</groupId>
-    <artifactId>oasp4j</artifactId>
-    <version>dev-SNAPSHOT</version>
-  </parent>
+  <groupId>io.oasp.java.dev</groupId>
   <artifactId>oasp4j-samples</artifactId>
+  <version>dev-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
   <description>Sample application of the Open Application Standard Platform for Java (OASP4J).</description>
 
   <properties>
+    <java.version>1.7</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <oasp.port.range>81</oasp.port.range>
     <oasp.http.port>${oasp.port.range}81</oasp.http.port>
     <oasp.db.port>${oasp.port.range}43</oasp.db.port>
     <oasp.test.excluded.groups>io.oasp.module.test.common.api.category.CategorySystemTest</oasp.test.excluded.groups>
+    <oasp4j.version>2.4.1-SNAPSHOT</oasp4j.version>
+    <spring.boot.version>1.5.3.RELEASE</spring.boot.version>
   </properties>
 
   <modules>
@@ -27,6 +29,14 @@
 
   <dependencyManagement>
     <dependencies>
+      <!-- BOM of OASP4J to be declared before Spring boot, allowing to override some Spring deps (flyway...) -->
+      <dependency>
+        <groupId>io.oasp.java</groupId>
+        <artifactId>oasp4j-bom-before-spring-boot</artifactId>
+        <version>${oasp4j.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
       <!-- BOM of spring-boot -->
       <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -59,6 +69,7 @@
   </dependencies>
 
   <build>
+
     <plugins>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -67,7 +78,37 @@
           <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
         </configuration>
       </plugin>
+      <!-- configure java compiler -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <encoding>${project.build.sourceEncoding}</encoding>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
+      </plugin>
     </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.17</version>
+          <configuration>
+            <!-- force locale to en_EN or tests will fail in other locales -->
+            <argLine>-Duser.language=en -Duser.region=EN</argLine>
+            <!-- Surefire changed the default to the project.build.directory causing trouble with file paths to test resources -->
+            <workingDirectory>${basedir}</workingDirectory>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 
   <profiles>
