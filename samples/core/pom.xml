@@ -40,12 +40,20 @@
 
     <dependency>
       <groupId>io.oasp.java.modules</groupId>
-      <artifactId>oasp4j-starter-cxf-client</artifactId>
+      <artifactId>oasp4j-starter-cxf-client-rest</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.oasp.java.modules</groupId>
+      <artifactId>oasp4j-starter-cxf-client-ws</artifactId>
     </dependency>
 
     <dependency>
       <groupId>io.oasp.java.modules</groupId>
-      <artifactId>oasp4j-starter-cxf-server</artifactId>
+      <artifactId>oasp4j-starter-cxf-server-rest</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.oasp.java.modules</groupId>
+      <artifactId>oasp4j-starter-cxf-server-ws</artifactId>
     </dependency>
 
     <dependency>

@@ -1,3 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-io.oasp.module.cxf.common.impl.client.CxfClientAutoConfiguration,\
-io.oasp.module.cxf.common.impl.client.rest.CxfRestClientAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=io.oasp.module.cxf.common.impl.client.CxfClientAutoConfiguration

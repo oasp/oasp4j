@@ -8,16 +8,20 @@
     <version>dev-SNAPSHOT</version>
   </parent>
   <groupId>io.oasp.java.modules</groupId>
-  <artifactId>oasp4j-starter-cxf-server</artifactId>
+  <artifactId>oasp4j-starter-cxf-client-ws</artifactId>
   <version>${oasp4j.version}</version>
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
-  <description>Support for service server based on Apache CXF.</description>
+  <description>Support for service clients based on Apache CXF.</description>
 
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>oasp4j-cxf-server</artifactId>
+      <artifactId>oasp4j-starter-cxf-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>oasp4j-cxf-client-ws</artifactId>
     </dependency>
     <dependency>
       <groupId>io.oasp.java.modules</groupId>

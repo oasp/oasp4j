@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.Servlet;
 
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONArray;
@@ -61,6 +62,8 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
   private final HttpHeaders AUTHENTIFICATED_HEADERS = getAuthentificatedHeaders();
 
   private SalesmanagementRestService service;
+
+  private Servlet servlet;
 
   @Inject
   private SalesmanagementRestServiceTestHelper helper;

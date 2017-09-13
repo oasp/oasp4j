@@ -8,7 +8,7 @@
     <version>dev-SNAPSHOT</version>
   </parent>
   <groupId>io.oasp.java.modules</groupId>
-  <artifactId>oasp4j-starter-cxf-server</artifactId>
+  <artifactId>oasp4j-starter-cxf-server-ws</artifactId>
   <version>${oasp4j.version}</version>
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
@@ -17,7 +17,11 @@
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>oasp4j-cxf-server</artifactId>
+      <artifactId>oasp4j-starter-cxf-server</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>oasp4j-cxf-server-ws</artifactId>
     </dependency>
     <dependency>
       <groupId>io.oasp.java.modules</groupId>
