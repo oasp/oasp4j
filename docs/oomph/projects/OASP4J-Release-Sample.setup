@@ -8,7 +8,7 @@
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/maven/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Maven.ecore"
     name="oasp4j.ide.git"
-    label="OASP4J">
+    label="OASP4J Sample Only">
   <setupTask
       xsi:type="setup:VariableTask"
       id="mvn.root.oasp4j"
@@ -49,16 +49,12 @@
       xsi:type="maven:MavenImportTask"
       id="mvn.import.oasp4j">
     <sourceLocator
-        rootFolder="${git.oasp.location}"
-        locateNestedProjects="true"/>
-    <sourceLocator
-        rootFolder="${git.oasp.location/modules}"
+        rootFolder="${git.oasp.location/samples}"
         locateNestedProjects="true"/>
   </setupTask>
   <stream name="master"/>
-  <stream name="develop"/>
   <logicalProjectContainer
       xsi:type="setup:ProjectCatalog"
       href="index:/org.eclipse.setup#//@projectCatalogs[name='org.eclipse']"/>
-  <description>The OASP4J github project</description>
+  <description>The released OASP4J sample application only</description>
 </setup:Project>
