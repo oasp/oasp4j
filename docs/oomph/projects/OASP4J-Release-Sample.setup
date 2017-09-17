@@ -11,9 +11,9 @@
     label="OASP4J Sample Only">
   <setupTask
       xsi:type="setup:VariableTask"
-      id="mvn.root.oasp4j"
+      id="mvn.root.oasp4j.release"
       name="mvn.root.oasp4j"
-      value="${workspace.location/oasp4j}"
+      value="${workspace.location/oasp4j-release}"
       storageURI="scope://Workspace"/>
   <setupTask
       xsi:type="setup:CompoundTask"
@@ -41,7 +41,7 @@
     <setupTask
         xsi:type="git:GitCloneTask"
         id="git.oasp"
-        location="${mvn.root.oasp4j}"
+        location="${mvn.root.oasp4j.release}"
         remoteURI="${github.remoteURIs.oasp4j}"
         pushURI="https://github.com/oasp/oasp4j"/>
   </setupTask>
@@ -49,7 +49,7 @@
       xsi:type="maven:MavenImportTask"
       id="mvn.import.oasp4j">
     <sourceLocator
-        rootFolder="${git.oasp.location/samples}"
+        rootFolder="${mvn.root.oasp4j.release/samples}"
         locateNestedProjects="true"/>
   </setupTask>
   <stream name="master"/>
