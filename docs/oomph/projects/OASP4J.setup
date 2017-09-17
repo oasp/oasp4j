@@ -45,18 +45,27 @@
         remoteURI="${github.remoteURIs.oasp4j}"
         pushURI="https://github.com/oasp/oasp4j"/>
   </setupTask>
-  <setupTask
-      xsi:type="maven:MavenImportTask"
-      id="mvn.import.oasp4j">
-    <sourceLocator
-        rootFolder="${git.oasp.location}"
-        locateNestedProjects="true"/>
-    <sourceLocator
-        rootFolder="${git.oasp.location/modules}"
-        locateNestedProjects="true"/>
-  </setupTask>
-  <stream name="master"/>
-  <stream name="develop"/>
+  <stream name="master">
+    <setupTask
+        xsi:type="maven:MavenImportTask"
+        id="mvn.import.oasp4j">
+      <sourceLocator
+          rootFolder="${git.oasp.location/samples}"
+          locateNestedProjects="true"/>
+    </setupTask>
+  </stream>
+  <stream name="develop">
+    <setupTask
+        xsi:type="maven:MavenImportTask"
+        id="mvn.import.oasp4j">
+      <sourceLocator
+          rootFolder="${git.oasp.location}"
+          locateNestedProjects="true"/>
+      <sourceLocator
+          rootFolder="${git.oasp.location/modules}"
+          locateNestedProjects="true"/>
+    </setupTask>
+  </stream>
   <logicalProjectContainer
       xsi:type="setup:ProjectCatalog"
       href="index:/org.eclipse.setup#//@projectCatalogs[name='org.eclipse']"/>
