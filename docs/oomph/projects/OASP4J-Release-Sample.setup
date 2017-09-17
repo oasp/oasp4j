@@ -12,7 +12,7 @@
   <setupTask
       xsi:type="setup:VariableTask"
       id="mvn.root.oasp4j.release"
-      name="mvn.root.oasp4j"
+      name="mvn.root.oasp4j.release"
       value="${workspace.location/oasp4j-release}"
       storageURI="scope://Workspace"/>
   <setupTask
