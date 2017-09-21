@@ -38,9 +38,11 @@ import io.oasp.module.test.common.api.category.CategoryModuleTest;
  */
 @RunWith(MockitoJUnitRunner.class)
 @Category(CategoryModuleTest.class)
-public class SecureLoggingLogbackTest {
-  // This class does "@Category(CategoryModuleTest.class)" instead of "extends ModuleTest", because the setUp() method
-  // is declared final in io.oasp.module.test.common.base.BaseTest.
+public class SecureLoggingLogbackTest /* extends ModuleTest */ {
+  // "extends ModuleTest" will work after merge, because then ModuleTest will extend BaseTest instead of Assertions.
+  // Then @Category(CategoryModuleTest.class) can be removed.
+  // Methods doSetUp() and doTearDown() can become protected and @Override + super.do... have to be activated.
+  // @Before + @After can probably be removed as it will be called from BaseTest setUp() + tearDown() automatically.
 
   private static final LoggerContext LOGGER_CONTEXT = (LoggerContext) LoggerFactory.getILoggerFactory();
 
@@ -60,8 +62,11 @@ public class SecureLoggingLogbackTest {
   /**
    *
    */
+  // @Override
   @Before
-  public void doSetup() {
+  public void doSetUp() {
+
+    // super.doSetUp(); // from BaseTest Javadoc.
 
     // This converter masks all arguments of a confidential message with ***.
     // It overwrites the message field %m, so the log pattern can stay unchanged.
@@ -87,8 +92,11 @@ public class SecureLoggingLogbackTest {
   /**
    *
    */
+  // @Override
   @After
-  public void teardown() {
+  public void doTearDown() {
+
+    // super.doTearDown(); // from BaseTest Javadoc.
 
     LOGGER_LOGBACK.detachAppender(this.mockAppender);
   }
