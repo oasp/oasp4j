@@ -1,8 +1,6 @@
 package io.oasp.module.logging.common.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
 import org.junit.After;
@@ -44,13 +42,13 @@ public class SecureLoggingLogbackTest {
   // This class does "@Category(CategoryModuleTest.class)" instead of "extends ModuleTest", because the setUp() method
   // is declared final in io.oasp.module.test.common.base.BaseTest.
 
-  LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
+  private static final LoggerContext LOGGER_CONTEXT = (LoggerContext) LoggerFactory.getILoggerFactory();
 
-  Logger loggerLogback = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+  private static final Logger LOGGER_LOGBACK = (Logger) LoggerFactory.getLogger(SecureLoggingLogbackTest.class);
 
-  PatternLayoutEncoder encoder;
+  private PatternLayoutEncoder encoder;
 
-  ExcludeClassifiedMarkerFilter filterExclClassif;
+  private ExcludeClassifiedMarkerFilter filterExclClassif;
 
   @Mock
   private RollingFileAppender<ILoggingEvent> mockAppender = new RollingFileAppender<>();
@@ -63,29 +61,27 @@ public class SecureLoggingLogbackTest {
    *
    */
   @Before
-  public void setUp() {
+  public void doSetup() {
 
     // This converter masks all arguments of a confidential message with ***.
     // It overwrites the message field %m, so the log pattern can stay unchanged.
     PatternLayout.defaultConverterMap.put("m", MaskingConverter.class.getName());
 
     this.encoder = new PatternLayoutEncoder();
-    this.encoder.setContext(this.loggerContext);
+    this.encoder.setContext(LOGGER_CONTEXT);
     this.encoder.setPattern("[%marker] %-4relative [%thread] %-5level %logger{35} - %m%n");
     this.encoder.start();
 
     this.filterExclClassif = new ExcludeClassifiedMarkerFilter();
-    this.filterExclClassif.setContext(this.loggerContext);
+    this.filterExclClassif.setContext(LOGGER_CONTEXT);
     this.filterExclClassif.start();
-    assertTrue("filter must be started.", this.filterExclClassif.isStarted());
+    assertThat(this.filterExclClassif.isStarted()).isTrue();
 
-    this.mockAppender.setContext(this.loggerContext);
+    this.mockAppender.setContext(LOGGER_CONTEXT);
     this.mockAppender.setEncoder(this.encoder);
-    // this.mockAppender.addFilter(this.filterExclClassif); // for some reason this does not work.
     this.mockAppender.start();
-    // assertTrue("appender must be running.", this.mockAppender.isStarted()); // this fails, but the appender works.
 
-    this.loggerLogback.addAppender(this.mockAppender);
+    LOGGER_LOGBACK.addAppender(this.mockAppender);
   }
 
   /**
@@ -94,7 +90,15 @@ public class SecureLoggingLogbackTest {
   @After
   public void teardown() {
 
-    this.loggerLogback.detachAppender(this.mockAppender);
+    LOGGER_LOGBACK.detachAppender(this.mockAppender);
+  }
+
+  private LoggingEvent getLastLogEvent() {
+
+    // Verify our logging interactions
+    verify(this.mockAppender).doAppend(this.captorLoggingEvent.capture());
+    // Get the logging event from the captor
+    return this.captorLoggingEvent.getValue();
   }
 
   /**
@@ -103,22 +107,22 @@ public class SecureLoggingLogbackTest {
   @Test
   public void testDefaultLogEvent() {
 
+    // given
     String logmsg = "simple log message";
-    this.loggerLogback.info(logmsg);
 
-    // Now verify our logging interactions
-    verify(this.mockAppender).doAppend(this.captorLoggingEvent.capture());
+    // when
+    LOGGER_LOGBACK.info(logmsg);
 
-    // Get the logging event from the captor
-    final LoggingEvent loggingEvent = this.captorLoggingEvent.getValue();
-
+    // then
+    // Retrieve log event
+    final LoggingEvent loggingEvent = getLastLogEvent();
     // Check log level is correct
-    assertEquals(Level.INFO, loggingEvent.getLevel());
+    assertThat(loggingEvent.getLevel()).isEqualTo(Level.INFO);
 
     // Check the message being logged is reasonable
     String layoutMessage = this.encoder.getLayout().doLayout(loggingEvent);
-    assertFalse("formatted log message must not be empty.", layoutMessage.isEmpty());
-    assertTrue("formatted log message must contain the original message.", layoutMessage.contains(logmsg));
+    assertThat(layoutMessage.isEmpty()).as("formatted log message is empty").isFalse();
+    assertThat(layoutMessage.contains(logmsg)).as("formatted log message contains original message.").isTrue();
   }
 
   /**
@@ -127,25 +131,23 @@ public class SecureLoggingLogbackTest {
   @Test
   public void testLogEventWithMarker() {
 
+    // given
     Marker marker = SecureLogging.SECURITY_SUCCESS;
     String logmsg = "security log message";
-    this.loggerLogback.info(marker, logmsg);
 
-    // Now verify our logging interactions
-    verify(this.mockAppender).doAppend(this.captorLoggingEvent.capture());
+    // when
+    LOGGER_LOGBACK.info(marker, logmsg);
 
-    // Get the logging event from the captor
-    final LoggingEvent loggingEvent = this.captorLoggingEvent.getValue();
-
+    // then
+    // Retrieve log event
+    final LoggingEvent loggingEvent = getLastLogEvent();
     // Check log level is correct
-    assertEquals(Level.INFO, loggingEvent.getLevel());
+    assertThat(loggingEvent.getLevel()).isEqualTo(Level.INFO);
 
     // Check the message being logged is reasonable
     String layoutMessage = this.encoder.getLayout().doLayout(loggingEvent);
-    System.out.println("Test: formatted message = " + layoutMessage);
-    assertTrue("formatted log message must contain the original message.", layoutMessage.contains(logmsg));
-    assertTrue("formatted log message must contain the name of its marker.", layoutMessage.contains(marker.getName()));
-    // assertTrue("this pops up at the end of this test (with marker).", false);
+    assertThat(layoutMessage.contains(logmsg)).as("formatted log message contains original message.").isTrue();
+    assertThat(layoutMessage.contains(marker.getName())).as("log message contains name of marker.").isTrue();
   }
 
   /**
@@ -155,27 +157,23 @@ public class SecureLoggingLogbackTest {
   @Test
   public void testLogEventWithMasking() {
 
-    System.out.println("Note: the default console log will show the 'password' content when running this test.");
-
+    // given
     Marker marker = SecureLogging.CONFIDENTIAL;
     String password = "classified!";
-    this.loggerLogback.info(marker, "confidential message with password = '{}'", password);
 
-    // Now verify our logging interactions
-    verify(this.mockAppender).doAppend(this.captorLoggingEvent.capture());
+    // when
+    LOGGER_LOGBACK.info(marker, "confidential message with password = '{}'", password);
 
-    // Get the logging event from the captor
-    final LoggingEvent loggingEvent = this.captorLoggingEvent.getValue();
-
+    // then
+    // Retrieve log event
+    final LoggingEvent loggingEvent = getLastLogEvent();
     // Check log level is correct
-    assertEquals(Level.INFO, loggingEvent.getLevel());
+    assertThat(loggingEvent.getLevel()).isEqualTo(Level.INFO);
 
     // Check the message being logged is reasonable
     String layoutMessage = this.encoder.getLayout().doLayout(loggingEvent);
-    System.out.println("Test: formatted message = " + layoutMessage);
-    assertFalse("formatted log message must not contain any classified information.", layoutMessage.contains(password));
-    assertTrue("formatted log message must contain the name of its marker.", layoutMessage.contains(marker.getName()));
-    // assertTrue("this pops up at the end of this test (with masking).", false);
+    assertThat(layoutMessage.contains(password)).as("formatted log message contains classified information.").isFalse();
+    assertThat(layoutMessage.contains(marker.getName())).as("log message contains name of marker.").isTrue();
   }
 
   /**
@@ -184,21 +182,20 @@ public class SecureLoggingLogbackTest {
   @Test
   public void testExclClassifMarkerFilter() {
 
+    // given
     Marker marker = SecureLogging.SECURITY_SUCCESS_CONFIDENTIAL;
 
-    this.loggerLogback.info(marker, "confidential security message with MultiMarker.");
+    // when
+    LOGGER_LOGBACK.info(marker, "confidential security message with MultiMarker.");
 
-    // Now verify our logging interactions
-    verify(this.mockAppender).doAppend(this.captorLoggingEvent.capture());
-
-    // Get the logging event from the captor
-    final LoggingEvent loggingEvent = this.captorLoggingEvent.getValue();
-
+    // then
+    // Retrieve log event
+    final LoggingEvent loggingEvent = getLastLogEvent();
     // Check log level is correct
-    assertEquals(Level.INFO, loggingEvent.getLevel());
+    assertThat(loggingEvent.getLevel()).isEqualTo(Level.INFO);
 
     // Check the stand-alone filter decision for this event
-    assertEquals(FilterReply.DENY, this.filterExclClassif.decide(loggingEvent));
+    assertThat(this.filterExclClassif.decide(loggingEvent)).isEqualTo(FilterReply.DENY);
 
     // Check the filter chain decision for this event (does not work)
     // assertEquals(FilterReply.DENY, this.mockAppender.getFilterChainDecision(loggingEvent));
@@ -212,17 +209,17 @@ public class SecureLoggingLogbackTest {
   @Test
   public void testInitMarkersByName() {
 
+    // given & when
     // setup: SecureLogging.initMarkers() is called by the loc below.
     Marker multiMarker = SecureLogging.SECURITY_SUCCESS_CONFIDENTIAL;
     Marker securMarker = SecureLogging.SECURITY_SUCCESS;
     Marker confidMarker = SecureLogging.CONFIDENTIAL;
 
+    // then
     // verify that the combined Marker or MultiMarker contains the names of its constituent Markers.
-    assertFalse("name of combined marker must not be empty.", multiMarker.getName().isEmpty());
-    assertTrue("name of combined marker must contain the names of its constituent Markers.",
-        multiMarker.getName().contains(securMarker.getName()));
-    assertTrue("name of combined marker must contain the names of its constituent Markers.",
-        multiMarker.getName().contains(confidMarker.getName()));
+    assertThat(multiMarker.getName().isEmpty()).isFalse();
+    assertThat(multiMarker.getName().contains(securMarker.getName())).isTrue();
+    assertThat(multiMarker.getName().contains(confidMarker.getName())).isTrue();
   }
 
   /**
@@ -233,20 +230,22 @@ public class SecureLoggingLogbackTest {
   public void testInitWithMultiMarkerClass() {
 
     // skip test if the dependency is not available.
-    if (!SecureLogging.hasExtClass())
+    if (!SecureLogging.hasExtClass()) {
       return;
-    assertTrue("this test fails if the dependency org.owasp is not available.", SecureLogging.hasExtClass());
+    }
+    assertThat(SecureLogging.hasExtClass()).as("dependency org.owasp is available.").isTrue();
 
-    // setup
+    // given & when
     // SecureLogging.initMarkers() is called by the loc below:
     Marker multiMarker = SecureLogging.SECURITY_SUCCESS_CONFIDENTIAL;
     Marker securMarker = SecureLogging.SECURITY_SUCCESS;
     Marker confidMarker = SecureLogging.CONFIDENTIAL;
 
+    // then
     // verify that the MultiMarker contains both simple Markers.
-    assertTrue("MultiMarker must have references.", multiMarker.hasReferences());
-    assertTrue("MultiMarker must contain both of its constituent Markers.", multiMarker.contains(securMarker));
-    assertTrue("MultiMarker must contain both of its constituent Markers.", multiMarker.contains(confidMarker));
+    assertThat(multiMarker.hasReferences()).as("MultiMarker has references.").isTrue();
+    assertThat(multiMarker.contains(securMarker)).as("MultiMarker contains Security Marker.").isTrue();
+    assertThat(multiMarker.contains(confidMarker)).as("MultiMarker contains Confidential Marker.").isTrue();
   }
 
 }

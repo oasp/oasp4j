@@ -32,9 +32,9 @@ public class SecureLogging {
   /** Logger instance. */
   private static final Logger LOG = LoggerFactory.getLogger(SecureLogging.class);
 
-  private static final String extClass = "org.owasp.security.logging.SecurityMarkers";
+  private static final String EXT_CLASS = "org.owasp.security.logging.SecurityMarkers";
 
-  private static final String methodName = "getMarker";
+  private static final String METHOD_NAME = "getMarker";
 
   private static boolean initialized = false;
 
@@ -133,7 +133,7 @@ public class SecureLogging {
     if (initialized)
       return;
 
-    Class<?> cExtClass = findExtClass(extClass);
+    Class<?> cExtClass = findExtClass(EXT_CLASS);
 
     if (cExtClass.isAssignableFrom(String.class)) {
       createDefaultMarkers();
@@ -165,7 +165,7 @@ public class SecureLogging {
     try {
       objExtClass = cExtClass.newInstance();
       Class<?>[] paramTypes = { Marker[].class }; // the method to invoke is "getMarker(Marker... markers)".
-      Method method = cExtClass.getMethod(methodName, paramTypes);
+      Method method = cExtClass.getMethod(METHOD_NAME, paramTypes);
 
       Marker[] markerArray = { MarkerFactory.getDetachedMarker(SECURITY_SUCCESS_MARKER_NAME),
       MarkerFactory.getDetachedMarker(CONFIDENTIAL_MARKER_NAME) };
@@ -177,7 +177,7 @@ public class SecureLogging {
       initialized = true;
 
     } catch (Exception e) {
-      LOG.warn("Error getting Method '{}' of Class '{}'. Falling back to default.", methodName, cExtClass.getName());
+      LOG.warn("Error getting Method '{}' of Class '{}'. Falling back to default.", METHOD_NAME, cExtClass.getName());
       LOG.warn("Exception occurred.", e);
       e.printStackTrace();
       createDefaultMarkers();
@@ -189,7 +189,7 @@ public class SecureLogging {
    */
   public static boolean hasExtClass() {
 
-    Class<?> cExtClass = findExtClass(extClass);
+    Class<?> cExtClass = findExtClass(EXT_CLASS);
     return (!cExtClass.isAssignableFrom(String.class));
   }
 
