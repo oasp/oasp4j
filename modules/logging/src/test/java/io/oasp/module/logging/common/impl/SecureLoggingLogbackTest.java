@@ -1,12 +1,8 @@
 package io.oasp.module.logging.common.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -26,7 +22,8 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.LoggingEvent;
 import ch.qos.logback.core.rolling.RollingFileAppender;
 import ch.qos.logback.core.spi.FilterReply;
-import io.oasp.module.test.common.api.category.CategoryModuleTest;
+import io.oasp.module.test.common.base.BaseTest;
+import io.oasp.module.test.common.base.ModuleTest;
 
 /**
  * Test class for {@link SecureLogging}, when used with logback. <br>
@@ -37,12 +34,7 @@ import io.oasp.module.test.common.api.category.CategoryModuleTest;
  * ../filter/ExcludeClassifiedMarkerFilterTest
  */
 @RunWith(MockitoJUnitRunner.class)
-@Category(CategoryModuleTest.class)
-public class SecureLoggingLogbackTest /* extends ModuleTest */ {
-  // "extends ModuleTest" will work after merge, because then ModuleTest will extend BaseTest instead of Assertions.
-  // Then @Category(CategoryModuleTest.class) can be removed.
-  // Methods doSetUp() and doTearDown() can become protected and @Override + super.do... have to be activated.
-  // @Before + @After can probably be removed as it will be called from BaseTest setUp() + tearDown() automatically.
+public class SecureLoggingLogbackTest extends ModuleTest {
 
   private static final LoggerContext LOGGER_CONTEXT = (LoggerContext) LoggerFactory.getILoggerFactory();
 
@@ -60,13 +52,14 @@ public class SecureLoggingLogbackTest /* extends ModuleTest */ {
   private ArgumentCaptor<LoggingEvent> captorLoggingEvent;
 
   /**
-   *
+   * {@inheritDoc}
+   * <p>
+   * Called by {@code final} method {@link BaseTest#setUp()}.
    */
-  // @Override
-  @Before
-  public void doSetUp() {
+  @Override
+  protected void doSetUp() {
 
-    // super.doSetUp(); // from BaseTest Javadoc.
+    super.doSetUp();
 
     // This converter masks all arguments of a confidential message with ***.
     // It overwrites the message field %m, so the log pattern can stay unchanged.
@@ -90,13 +83,14 @@ public class SecureLoggingLogbackTest /* extends ModuleTest */ {
   }
 
   /**
-   *
+   * {@inheritDoc}
+   * <p>
+   * Called by {@code final} method {@link BaseTest#tearDown()}.
    */
-  // @Override
-  @After
-  public void doTearDown() {
+  @Override
+  protected void doTearDown() {
 
-    // super.doTearDown(); // from BaseTest Javadoc.
+    super.doTearDown();
 
     LOGGER_LOGBACK.detachAppender(this.mockAppender);
   }
@@ -129,7 +123,7 @@ public class SecureLoggingLogbackTest /* extends ModuleTest */ {
 
     // Check the message being logged is reasonable
     String layoutMessage = this.encoder.getLayout().doLayout(loggingEvent);
-    assertThat(layoutMessage.isEmpty()).as("formatted log message is empty").isFalse();
+    assertThat(layoutMessage.isEmpty()).as("formatted log message is empty.").isFalse();
     assertThat(layoutMessage.contains(logmsg)).as("formatted log message contains original message.").isTrue();
   }
 
@@ -205,8 +199,8 @@ public class SecureLoggingLogbackTest /* extends ModuleTest */ {
     // Check the stand-alone filter decision for this event
     assertThat(this.filterExclClassif.decide(loggingEvent)).isEqualTo(FilterReply.DENY);
 
-    // Check the filter chain decision for this event (does not work)
-    // assertEquals(FilterReply.DENY, this.mockAppender.getFilterChainDecision(loggingEvent));
+    // Check the filter chain decision for this event
+    // (does not work) assertThat(this.mockAppender.getFilterChainDecision(loggingEvent)).isEqualTo(FilterReply.DENY);
   }
 
   /**
