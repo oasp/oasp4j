@@ -6,10 +6,8 @@ import javax.inject.Inject;
 
 import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.web.WebAppConfiguration;
 
@@ -19,6 +17,7 @@ import io.oasp.gastronomy.restaurant.general.common.TestUtil;
 import io.oasp.gastronomy.restaurant.general.common.api.builders.OrderEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.api.builders.OrderPositionEtoBuilder;
 import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
+import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
@@ -34,7 +33,7 @@ import io.oasp.module.test.common.base.ComponentTest;
  *
  */
 
-@SpringApplicationConfiguration(classes = { SpringBootApp.class })
+@SpringBootTest(classes = { SpringBootApp.class })
 @WebAppConfiguration
 public class TablemanagementTest extends ComponentTest {
 
@@ -51,9 +50,10 @@ public class TablemanagementTest extends ComponentTest {
    * Provides login credentials and permissions and resets database. The database is migrated to Version 0002 in order
    * to have a common basis for test.
    */
-  @Before
-  public void setUp() {
+  @Override
+  public void doSetUp() {
 
+    super.doSetUp();
     TestUtil.login("waiter", PermissionConstants.SAVE_ORDER_POSITION, PermissionConstants.SAVE_ORDER,
         PermissionConstants.FIND_TABLE, PermissionConstants.FIND_ORDER, PermissionConstants.SAVE_TABLE,
         PermissionConstants.FIND_OFFER);
@@ -65,9 +65,10 @@ public class TablemanagementTest extends ComponentTest {
   /**
    * Logs out used credentials.
    */
-  @After
-  public void tearDown() {
+  @Override
+  public void doTearDown() {
 
+    super.doTearDown();
     TestUtil.logout();
   }
 
@@ -91,6 +92,8 @@ public class TablemanagementTest extends ComponentTest {
     OrderEto order = this.salesmanagement.saveOrder(newOrder);
     long orderId = order.getId();
     OrderPositionEto newOrderPosition = new OrderPositionEtoBuilder().orderId(orderId).offerId(offerId).createNew();
+    newOrderPosition.setPrice(new Money(2.99));
+    newOrderPosition.setOfferName("dummy");
     OrderPositionEto orderPosition = this.salesmanagement.saveOrderPosition(newOrderPosition);
 
     // then

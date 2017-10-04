@@ -15,15 +15,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import io.oasp.gastronomy.restaurant.SpringBootApp;
+import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractRestServiceTest;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
 import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
@@ -40,8 +38,8 @@ import io.oasp.module.jpa.common.api.to.PaginationTo;
  * database is accessed via an instance of the class {@link SalesmanagementRestService}.
  *
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = { SpringBootApp.class, SalesmanagementRestTestConfig.class })
+@RunWith(SpringRunner.class)
+@ContextConfiguration(classes = { SalesmanagementRestTestConfig.class })
 @TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement" })
 
 public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
@@ -54,20 +52,22 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
   /**
    * Provides initialization previous to the creation of the text fixture.
    */
-  @Before
-  public void init() {
+  @Override
+  public void doSetUp() {
 
+    super.doSetUp();
     getDbTestHelper().resetDatabase();
-    this.service = getRestTestClientBuilder().build(SalesmanagementRestService.class);
+    this.service = getRestTestClientBuilder().build(SalesmanagementRestService.class, "waiter");
   }
 
   /**
    * Provides clean up after tests.
    */
-  @After
-  public void clean() {
+  @Override
+  public void doTearDown() {
 
     this.service = null;
+    super.doTearDown();
   }
 
   /**
@@ -131,7 +131,7 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
 
     for (OrderCto responseOrder : responseOrderCtos.getResult()) {
       for (OrderCto savedOrder : savedOrderCtos) {
-        if (responseOrder.getOrder().getId() == savedOrder.getOrder().getId()) {
+        if (responseOrder.getOrder().getId().equals(savedOrder.getOrder().getId())) {
           assertThat(responseOrder.getOrder().getTableId()).isEqualTo(savedOrder.getOrder().getTableId());
           countNumberOfSavedOrders++;
         }
@@ -231,6 +231,8 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
       sampleOrderPositionEto = new OrderPositionEto();
       sampleOrderPositionEto.setOrderId(responseOrderCto.getOrder().getId());
       sampleOrderPositionEto.setOfferId(SAMPLE_OFFER_ID);
+      sampleOrderPositionEto.setPrice(new Money(2.99));
+      sampleOrderPositionEto.setOfferName("dummy");
       responseOrderPositionEto = this.service.saveOrderPosition(sampleOrderPositionEto);
       assertThat(responseOrderPositionEto).isNotNull();
       savedOrderPositionEtos.add(responseOrderPositionEto);
@@ -251,7 +253,7 @@ public class SalesmanagementRestServiceTest extends AbstractRestServiceTest {
 
     for (OrderPositionEto responseOrderPosition : responseOrderPositionEtos) {
       for (OrderPositionEto savedOrderPosition : savedOrderPositionEtos) {
-        if (responseOrderPosition.getId() == savedOrderPosition.getId()) {
+        if (responseOrderPosition.getId().equals(savedOrderPosition.getId())) {
 
           assertThat(responseOrderPosition.getOrderId()).isEqualTo(savedOrderPosition.getOrderId());
           assertThat(responseOrderPosition.getOfferId()).isEqualTo(savedOrderPosition.getOfferId());

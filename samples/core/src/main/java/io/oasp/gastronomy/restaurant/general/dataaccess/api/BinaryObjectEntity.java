@@ -1,12 +1,12 @@
 package io.oasp.gastronomy.restaurant.general.dataaccess.api;
 
-import io.oasp.gastronomy.restaurant.general.common.api.BinaryObject;
-
 import java.sql.Blob;
 
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+
+import io.oasp.gastronomy.restaurant.general.common.api.BinaryObject;
 
 /**
  * {@link ApplicationPersistenceEntity Entity} for {@link BinaryObject}. Contains the actual {@link Blob}.
@@ -48,6 +48,12 @@ public class BinaryObjectEntity extends ApplicationPersistenceEntity implements 
   /**
    * @return data
    */
+
+  /**
+   * Remove the following line completely (Type Annotation) in case of database other than PostGres and Uncomment the
+   * annotation for @Lob
+   */
+  // @Type(type = "org.hibernate.type.BinaryType")
   @Lob
   public Blob getData() {
 

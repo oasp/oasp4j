@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -18,8 +19,9 @@ import org.hibernate.envers.RevisionTimestamp;
 /**
  * This is a custom {@link org.hibernate.envers.DefaultRevisionEntity revision entity} also containing the actual user.
  *
- * @see org.hibernate.envers.DefaultRevisionEntity
- *
+ * @see org.hibernate.envers.DefaultRevisionEntity If you are starting the development of your application from scratch
+ *      , please use this class or else if you have an application developed and needs backward compatibility , please
+ *      use the deprecated class {@link io.oasp.module.jpa.dataaccess.base.AdvancedRevisionEntity}
  */
 @Entity
 @RevisionEntity(AdvancedRevisionListener.class)
@@ -42,13 +44,9 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
   /** @see #getDate() */
   private transient Date date;
 
-  /** @see #getUser() */
+  /** @see #getUserLogin() */
 
-  /*
-   * Uncomment the following Column annotation if the database used is Oracle 11g
-   */
-  // @Column(name = "\"user\"")
-  private String user;
+  private String userLogin;
 
   /**
    * The constructor.
@@ -103,20 +101,21 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
    * @return the login or id of the user that has created this revision.
    */
 
-  public String getUser() {
+  public String getUserLogin() {
 
-    return this.user;
+    return this.userLogin;
   }
 
   /**
-   * @param user is the new value of {@link #getUser()}.
+   * @param userLogin is the new value of {@link #getUserLogin()}.
    */
-  public void setUser(String user) {
+  public void setUserLogin(String userLogin) {
 
-    this.user = user;
+    this.userLogin = userLogin;
   }
 
   @Override
+  @GeneratedValue(strategy = GenerationType.TABLE)
   public int getModificationCounter() {
 
     return 0;
@@ -127,5 +126,4 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
 
     return null;
   }
-
 }

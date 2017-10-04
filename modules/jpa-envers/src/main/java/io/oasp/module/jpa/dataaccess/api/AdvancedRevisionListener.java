@@ -10,6 +10,9 @@ import org.hibernate.envers.RevisionListener;
  * This is the implementation of {@link RevisionListener} that enriches {@link AdvancedRevisionEntity} with additional
  * information.
  *
+ * If you are starting the development of your application from scratch , please use this class or else if you have an
+ * application developed and needs backward compatibility , please use the deprecated class
+ * {@link io.oasp.module.jpa.dataaccess.base.AdvancedRevisionListener}
  */
 public class AdvancedRevisionListener implements RevisionListener {
 
@@ -25,7 +28,7 @@ public class AdvancedRevisionListener implements RevisionListener {
   public void newRevision(Object revisionEntity) {
 
     AdvancedRevisionEntity revision = (AdvancedRevisionEntity) revisionEntity;
-    revision.setUser(UserSessionAccess.getUserLogin());
+    revision.setUserLogin(UserSessionAccess.getUserLogin());
   }
 
 }

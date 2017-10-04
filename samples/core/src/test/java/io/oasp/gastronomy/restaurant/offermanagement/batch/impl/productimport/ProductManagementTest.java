@@ -7,10 +7,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.flywaydb.core.Flyway;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
@@ -31,7 +29,7 @@ import io.oasp.module.test.common.base.ComponentTest;
  *
  * @since dev
  */
-@SpringApplicationConfiguration(classes = { SpringBootApp.class })
+@SpringBootTest(classes = { SpringBootApp.class })
 @WebAppConfiguration
 public class ProductManagementTest extends ComponentTest {
 
@@ -44,9 +42,10 @@ public class ProductManagementTest extends ComponentTest {
   /**
    * Login
    */
-  @Before
-  public void setUp() {
+  @Override
+  public void doSetUp() {
 
+    super.doSetUp();
     this.flyway.clean();
     this.flyway.migrate();
     TestUtil.login("waiter", PermissionConstants.FIND_OFFER);
@@ -55,9 +54,10 @@ public class ProductManagementTest extends ComponentTest {
   /**
    * Logout
    */
-  @After
-  public void tearDown() {
+  @Override
+  public void doTearDown() {
 
+    super.doTearDown();
     TestUtil.logout();
   }
 
