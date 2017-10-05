@@ -10,11 +10,11 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.owasp.security.logging.filter.ExcludeClassifiedMarkerFilter;
 import org.owasp.security.logging.mask.MaskingConverter;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 
 import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.PatternLayout;
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
@@ -38,7 +38,7 @@ public class SecureLoggingLogbackTest extends ModuleTest {
 
   private static final LoggerContext LOGGER_CONTEXT = (LoggerContext) LoggerFactory.getILoggerFactory();
 
-  private static final Logger LOGGER_LOGBACK = (Logger) LoggerFactory.getLogger(SecureLoggingLogbackTest.class);
+  private static final Logger LOG = LoggerFactory.getLogger(SecureLoggingLogbackTest.class);
 
   private PatternLayoutEncoder encoder;
 
@@ -79,7 +79,7 @@ public class SecureLoggingLogbackTest extends ModuleTest {
     this.mockAppender.setEncoder(this.encoder);
     this.mockAppender.start();
 
-    LOGGER_LOGBACK.addAppender(this.mockAppender);
+    ((ch.qos.logback.classic.Logger) LOG).addAppender(this.mockAppender);
   }
 
   /**
@@ -92,7 +92,7 @@ public class SecureLoggingLogbackTest extends ModuleTest {
 
     super.doTearDown();
 
-    LOGGER_LOGBACK.detachAppender(this.mockAppender);
+    ((ch.qos.logback.classic.Logger) LOG).detachAppender(this.mockAppender);
   }
 
   private LoggingEvent getLastLogEvent() {
@@ -113,7 +113,7 @@ public class SecureLoggingLogbackTest extends ModuleTest {
     String logmsg = "simple log message";
 
     // when
-    LOGGER_LOGBACK.info(logmsg);
+    LOG.info(logmsg);
 
     // then
     // Retrieve log event
@@ -138,7 +138,7 @@ public class SecureLoggingLogbackTest extends ModuleTest {
     String logmsg = "security log message";
 
     // when
-    LOGGER_LOGBACK.info(marker, logmsg);
+    LOG.info(marker, logmsg);
 
     // then
     // Retrieve log event
@@ -164,7 +164,7 @@ public class SecureLoggingLogbackTest extends ModuleTest {
     String password = "classified!";
 
     // when
-    LOGGER_LOGBACK.info(marker, "confidential message with password = '{}'", password);
+    LOG.info(marker, "confidential message with password = '{}'", password);
 
     // then
     // Retrieve log event
@@ -188,7 +188,7 @@ public class SecureLoggingLogbackTest extends ModuleTest {
     Marker marker = SecureLogging.SECURITY_SUCCESS_CONFIDENTIAL;
 
     // when
-    LOGGER_LOGBACK.info(marker, "confidential security message with MultiMarker.");
+    LOG.info(marker, "confidential security message with MultiMarker.");
 
     // then
     // Retrieve log event
