@@ -1,5 +1,6 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.service.impl.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,11 +23,14 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionS
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.PaymentData;
 import io.oasp.gastronomy.restaurant.salesmanagement.service.api.rest.SalesmanagementRestService;
+import io.oasp.module.jpa.common.api.to.OrderByTo;
+import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 import io.oasp.module.jpa.common.api.to.PaginationTo;
 import io.oasp.module.rest.service.api.RequestParameters;
 
 /**
+ * @author agreul, geazzi, jmolinar
  */
 @Named("SalesmanagementRestService")
 public class SalesmanagementRestServiceImpl implements SalesmanagementRestService {
@@ -55,13 +59,16 @@ public class SalesmanagementRestServiceImpl implements SalesmanagementRestServic
       criteria.setPagination(pagination);
     }
 
-    return this.salesmanagement.findOrderCtos(criteria);
+    return this.salesmanagement.findOrderCtos(criteria, null);
   }
 
   @Override
   public PaginatedListTo<OrderCto> findOrdersByPost(OrderSearchCriteriaTo searchCriteriaTo) {
 
-    return this.salesmanagement.findOrderCtos(searchCriteriaTo);
+    OrderPositionSearchCriteriaTo criteria = new OrderPositionSearchCriteriaTo();
+    criteria.setSort(searchCriteriaTo.getSort());
+
+    return this.salesmanagement.findOrderCtos(searchCriteriaTo, criteria);
   }
 
   @Override
@@ -71,8 +78,22 @@ public class SalesmanagementRestServiceImpl implements SalesmanagementRestServic
     OrderPositionSearchCriteriaTo criteria = new OrderPositionSearchCriteriaTo();
     criteria.setOrderId(parameters.get("orderId", Long.class, false));
     criteria.setCookId(parameters.get("cookId", Long.class, false));
+    criteria.setOfferName(parameters.get("offerName", String.class, false));
     criteria.setState(parameters.get("state", OrderPositionState.class, false));
+    criteria.setMealName(parameters.get("mealName", String.class, false));
+    criteria.setSideDishName(parameters.get("sideDishName", String.class, false));
     criteria.setMealOrSideDish(parameters.get("mealOrSideDish", boolean.class, false));
+
+    // build List<OrderByTo> object with data retrieved from the URI
+    OrderByTo obt = new OrderByTo();
+    // set properties name and OrderDirection
+    obt.setName(parameters.get("name", String.class, false));
+    obt.setDirection(parameters.get("direction", OrderDirection.class, false));
+    // create List and add OrderByTo object
+    List<OrderByTo> lobt = new ArrayList<>();
+    lobt.add(obt);
+    // set List into criteria
+    criteria.setSort(lobt);
     return this.salesmanagement.findOrderPositions(criteria);
   }
 

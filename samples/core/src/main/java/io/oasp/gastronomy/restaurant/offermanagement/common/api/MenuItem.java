@@ -5,6 +5,7 @@ import io.oasp.gastronomy.restaurant.general.common.api.ApplicationEntity;
 /**
  * This is the interface for a {@link MenuItem} what is either a {@link Product} or an {@link Offer}.
  *
+ * @author hohwille
  */
 public interface MenuItem extends ApplicationEntity {
 

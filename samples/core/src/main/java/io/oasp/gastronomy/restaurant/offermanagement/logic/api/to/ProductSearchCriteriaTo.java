@@ -9,6 +9,7 @@ import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
  *
  * If no boolean is set to true, no {@link Product}s will be found.
  *
+ * @author lgoerlac
  */
 public class ProductSearchCriteriaTo extends SearchCriteriaTo {
 

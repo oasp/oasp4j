@@ -1,5 +1,11 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl;
 
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.transaction.Transactional;
+
 import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
 import io.oasp.gastronomy.restaurant.general.logic.base.AbstractComponentFacade;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto;
@@ -22,15 +28,10 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageO
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrderPosition;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
-import java.util.List;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.transaction.Transactional;
-
 /**
  * This is the implementation of {@link Salesmanagement}.
  *
+ * @author hohwille
  */
 @Named
 @Transactional
@@ -141,15 +142,16 @@ public class SalesmanagementImpl extends AbstractComponentFacade implements Sale
   }
 
   @Override
-  public PaginatedListTo<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria) {
+  public PaginatedListTo<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria,
+      OrderPositionSearchCriteriaTo criteria2) {
 
-    return this.ucFindOrder.findOrderCtos(criteria);
+    return this.ucFindOrder.findOrderCtos(criteria, criteria2);
   }
 
   @Override
-  public OrderCto findOrderCto(OrderEto order) {
+  public OrderCto findOrderCto(OrderEto order, OrderPositionSearchCriteriaTo criteria2) {
 
-    return this.ucFindOrder.findOrderCto(order);
+    return this.ucFindOrder.findOrderCto(order, criteria2);
   }
 
   @Override
@@ -184,9 +186,9 @@ public class SalesmanagementImpl extends AbstractComponentFacade implements Sale
   }
 
   @Override
-  public List<OrderPositionEto> findOrderPositionsByOrderId(long orderId) {
+  public List<OrderPositionEto> findOrderPositionsByOrderId(long orderId, OrderPositionSearchCriteriaTo criteria2) {
 
-    return this.ucFindOrderPosition.findOrderPositionsByOrderId(orderId);
+    return this.ucFindOrderPosition.findOrderPositionsByOrderId(orderId, criteria2);
   }
 
   @Override

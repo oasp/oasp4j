@@ -1,19 +1,5 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 
-import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
-import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException;
-import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
-import io.oasp.gastronomy.restaurant.salesmanagement.common.api.Order;
-import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
-import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
-import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderEntity;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrder;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.base.usecase.AbstractOrderUc;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -28,9 +14,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.annotation.Validated;
 
+import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
+import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalEntityStateException;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.Order;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderPositionState;
+import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.OrderState;
+import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderEntity;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrder;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.base.usecase.AbstractOrderUc;
+
 /**
  * Implementation of {@link UcManageOrder}.
  *
+ * @author rjoeris
  */
 @Named
 @UseCase
@@ -140,7 +141,7 @@ public class UcManageOrderImpl extends AbstractOrderUc implements UcManageOrder 
       currentOrderPositionList = Collections.emptyList();
     } else {
       // we could add a relation OrderEntity.positions of type List<OrderPositionEntity>...
-      currentOrderPositionList = this.salesmanagement.findOrderPositionsByOrderId(orderId);
+      currentOrderPositionList = this.salesmanagement.findOrderPositionsByOrderId(orderId, null);
     }
     List<OrderPositionEto> positions = order.getPositions();
     orderEto = saveOrder(orderEto, positions);

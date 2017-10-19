@@ -4,6 +4,7 @@ package io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype;
  * Represents the {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer#getState() state} of an
  * {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer}.
  *
+ * @author etomety
  */
 public enum OfferState {
 

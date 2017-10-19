@@ -5,6 +5,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.Payment
 /**
  * Interface of the adapter for external payment.
  * 
+ * @author etomety
  */
 public interface PaymentAdapter {
 

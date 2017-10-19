@@ -3,6 +3,7 @@ package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to;
 /**
  * This class acts as a POJO.
  *
+ * @author jozitz
  */
 public class BankPaymentData extends PaymentData {
 

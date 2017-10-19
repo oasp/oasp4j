@@ -1,17 +1,5 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.usecase;
 
-import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
-import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
-import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderEntity;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcFindOrder;
-import io.oasp.gastronomy.restaurant.salesmanagement.logic.base.usecase.AbstractOrderUc;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +10,23 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
+import io.oasp.gastronomy.restaurant.general.logic.api.UseCase;
+import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderEntity;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.Salesmanagement;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionSearchCriteriaTo;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcFindOrder;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.base.usecase.AbstractOrderUc;
+import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+
 /**
  * Use Case to find an order.
  *
+ * @author rjoeris
  */
 @Named
 @UseCase
@@ -54,14 +56,15 @@ public class UcFindOrderImpl extends AbstractOrderUc implements UcFindOrder {
 
   @Override
   @RolesAllowed(PermissionConstants.FIND_ORDER)
-  public PaginatedListTo<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria) {
+  public PaginatedListTo<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria,
+      OrderPositionSearchCriteriaTo criteria2) {
 
     PaginatedListTo<OrderEto> orderEtos = findOrderEtos(criteria);
 
     List<OrderCto> page = new ArrayList<>(orderEtos.getResult().size());
     for (OrderEto order : orderEtos.getResult()) {
       // REVIEW <who> (hohwille) N+1 problem. Find a better and more efficient way to load the order positions.
-      page.add(findOrderCto(order));
+      page.add(findOrderCto(order, criteria2));
     }
 
     PaginatedListTo<OrderCto> result = new PaginatedListTo<>(page, orderEtos.getPagination());
@@ -70,11 +73,11 @@ public class UcFindOrderImpl extends AbstractOrderUc implements UcFindOrder {
 
   @Override
   @RolesAllowed(PermissionConstants.FIND_ORDER)
-  public OrderCto findOrderCto(OrderEto order) {
+  public OrderCto findOrderCto(OrderEto order, OrderPositionSearchCriteriaTo criteria) {
 
     OrderCto result = new OrderCto();
     result.setOrder(order);
-    List<OrderPositionEto> positions = this.salesManagement.findOrderPositionsByOrderId(order.getId());
+    List<OrderPositionEto> positions = this.salesManagement.findOrderPositionsByOrderId(order.getId(), criteria);
     result.setPositions(positions);
     return result;
   }

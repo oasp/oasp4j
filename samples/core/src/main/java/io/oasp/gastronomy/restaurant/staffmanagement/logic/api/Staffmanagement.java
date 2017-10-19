@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Interface for StaffManagement component.
  *
+ * @author etomety
  */
 public interface Staffmanagement {
 

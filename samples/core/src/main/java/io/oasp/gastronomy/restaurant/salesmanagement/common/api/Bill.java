@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * This is the interface for a {@link Bill}. It represents the actual payment for an {@link Order}.
  *
+ * @author hohwille
  */
 public interface Bill extends ApplicationEntity {
 

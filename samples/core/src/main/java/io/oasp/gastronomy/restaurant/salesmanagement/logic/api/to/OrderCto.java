@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * {@link AbstractCto CTO} for an {@link #getOrder() order} with its {@link #getPositions() positions}.
  *
+ * @author hohwille
  */
 public class OrderCto extends AbstractCto {
 

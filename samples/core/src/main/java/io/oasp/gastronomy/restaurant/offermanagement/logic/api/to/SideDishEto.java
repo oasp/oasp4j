@@ -5,6 +5,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.common.api.SideDish;
 /**
  * The {@link io.oasp.module.basic.common.api.to.AbstractEto ETO} for a {@link SideDish}.
  *
+ * @author jozitz
  */
 public class SideDishEto extends ProductEto implements SideDish {
 

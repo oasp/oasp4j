@@ -5,6 +5,7 @@ import io.oasp.gastronomy.restaurant.general.logic.api.to.BinaryObjectEto;
 /**
  * This is the interface for a {@link Product} of the restaurant.
  *
+ * @author hohwille
  */
 public interface Product extends MenuItem {
 

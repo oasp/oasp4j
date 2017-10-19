@@ -7,6 +7,7 @@ import io.oasp.module.jpa.dataaccess.api.MasterDataDao;
 /**
  * {@link ApplicationRevisionedDao Data Access Object} for {@link SideDishEntity}.
  *
+ * @author hohwille
  */
 public interface SideDishDao extends ApplicationRevisionedDao<SideDishEntity>, MasterDataDao<SideDishEntity> {
 

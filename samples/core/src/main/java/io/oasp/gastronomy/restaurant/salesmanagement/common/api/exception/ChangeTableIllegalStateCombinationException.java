@@ -9,6 +9,7 @@ import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
  * This exception is thrown if a table has a specific state(occupied) that is illegal for the UcChangeTableImpl and
  * caused it to fail.
  *
+ * @author fawinter
  */
 public class ChangeTableIllegalStateCombinationException extends ApplicationBusinessException {
 

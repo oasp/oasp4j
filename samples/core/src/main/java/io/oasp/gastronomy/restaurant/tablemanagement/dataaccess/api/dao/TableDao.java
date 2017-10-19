@@ -11,6 +11,7 @@ import java.util.List;
 /**
  * {@link ApplicationDao Data Access Object} for {@link TableEntity} entity.
  *
+ * @author hohwille
  */
 public interface TableDao extends ApplicationDao<TableEntity>, MasterDataDao<TableEntity> {
 

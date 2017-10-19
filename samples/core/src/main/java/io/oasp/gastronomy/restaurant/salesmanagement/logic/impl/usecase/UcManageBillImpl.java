@@ -33,6 +33,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.impl.paymentadapter.P
 /**
  * Implementation of {@link UcManageBill}.
  *
+ * @author jozitz
  */
 @Named
 @UseCase

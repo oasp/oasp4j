@@ -9,6 +9,7 @@ import java.io.Serializable;
  * This class acts as a simple POJO. The creditor acts as the receiver of the transfered total amount. The total amount
  * will be charged the debtor.
  *
+ * @author etomety
  */
 public class PaymentTransactionData implements Serializable {
 

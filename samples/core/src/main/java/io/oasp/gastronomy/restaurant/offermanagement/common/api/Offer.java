@@ -8,6 +8,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferSt
  * restaurant. The combined {@link Product}s are a {@link Meal}, a {@link SideDish}, and a {@link Drink}. All of them
  * are optional but at least one of the three has to be present in a valid {@link Offer}.
  *
+ * @author hohwille
  */
 public interface Offer extends MenuItem {
 

@@ -29,6 +29,7 @@ import com.mysema.query.types.path.EntityPathBase;
 /**
  * Implementation of {@link ProductDao}.
  *
+ * @author loverbec
  */
 @Named
 public class ProductDaoImpl extends ApplicationMasterDataDaoImpl<ProductEntity> implements ProductDao {

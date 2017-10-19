@@ -11,6 +11,7 @@ import org.hibernate.envers.Audited;
  * The {@link io.oasp.gastronomy.restaurant.general.dataaccess.api.ApplicationPersistenceEntity persistent entity} for
  * {@link Meal}.
  *
+ * @author loverbec
  */
 @Entity
 @DiscriminatorValue("Meal")

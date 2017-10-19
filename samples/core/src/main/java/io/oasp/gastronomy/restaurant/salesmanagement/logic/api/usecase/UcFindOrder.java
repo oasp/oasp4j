@@ -1,16 +1,18 @@
 package io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase;
 
+import java.util.List;
+
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
+import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-
-import java.util.List;
 
 /**
  * Interface of {@link io.oasp.gastronomy.restaurant.general.logic.base.AbstractUc use case} to get specific or all
  * {@link OrderEto orders}.
  *
+ * @author mvielsac
  */
 public interface UcFindOrder {
 
@@ -24,13 +26,13 @@ public interface UcFindOrder {
    * @param criteria the {@link OrderSearchCriteriaTo}.
    * @return the {@link List} of matching {@link OrderCto}s.
    */
-  PaginatedListTo<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria);
+  PaginatedListTo<OrderCto> findOrderCtos(OrderSearchCriteriaTo criteria, OrderPositionSearchCriteriaTo criteria2);
 
   /**
    * @param order the {@link OrderEto}.
    * @return the corresponding {@link OrderCto} (order with order-positions).
    */
-  OrderCto findOrderCto(OrderEto order);
+  OrderCto findOrderCto(OrderEto order, OrderPositionSearchCriteriaTo criteria);
 
   /**
    * This method returns an {@link OrderEto order}.
@@ -52,5 +54,4 @@ public interface UcFindOrder {
    *         {@link OrderEto#getState() state} or {@code null} if no such {@link OrderEto order} exists.
    */
   OrderEto findOpenOrderForTable(long tableId);
-
 }

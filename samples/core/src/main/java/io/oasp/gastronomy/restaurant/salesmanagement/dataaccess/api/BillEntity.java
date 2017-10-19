@@ -3,7 +3,6 @@ package io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -21,6 +20,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.common.api.OrderPosition;
  * {@link ApplicationPersistenceEntity Entity} that represents the {@link Bill} related to one or multiple
  * {@link OrderPosition order positions}.
  *
+ * @author etomety
  */
 @Entity
 @Table(name = "Bill")
@@ -48,12 +48,7 @@ public class BillEntity extends ApplicationPersistenceEntity implements Bill {
    * @return the {@link List} of {@link OrderPositionEntity} objects associated with this {@link BillEntity}.
    */
   @ManyToMany(fetch = FetchType.EAGER)
-  @Column(name = "orderPositionsId")
-  @JoinTable(name = "BillOrderPosition", joinColumns = {
-  @JoinColumn(name = "billId") }, inverseJoinColumns = @JoinColumn(name = "orderPositionsId")
-
-  )
-
+  @JoinTable(name = "Bill_OrderPosition", joinColumns = { @JoinColumn(name = "Bill_id") })
   public List<OrderPositionEntity> getOrderPositions() {
 
     return this.orderPositions;

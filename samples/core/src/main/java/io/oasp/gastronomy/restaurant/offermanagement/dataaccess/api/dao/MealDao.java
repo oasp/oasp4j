@@ -7,6 +7,7 @@ import io.oasp.module.jpa.dataaccess.api.MasterDataDao;
 /**
  * {@link ApplicationRevisionedDao Data Access Object} for {@link MealEntity}.
  *
+ * @author hohwille
  */
 public interface MealDao extends ApplicationRevisionedDao<MealEntity>, MasterDataDao<MealEntity> {
 

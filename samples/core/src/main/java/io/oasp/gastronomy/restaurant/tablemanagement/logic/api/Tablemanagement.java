@@ -11,6 +11,7 @@ import javax.validation.Valid;
 /**
  * Interface for TableManagement component.
  *
+ * @author etomety
  */
 public interface Tablemanagement {
 
