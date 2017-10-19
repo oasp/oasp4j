@@ -29,6 +29,7 @@ public class TablemanagementWebServiceTest extends AbstractRestServiceTest {
   protected void doSetUp() {
 
     super.doSetUp();
+    getDbTestHelper().resetDatabase();
     this.tablemanagementWebService = this.serviceClientFactory.create(TablemanagementWebService.class);
   }
 
