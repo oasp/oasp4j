@@ -47,8 +47,7 @@ public class RestServiceExceptionMapper implements ResponseExceptionMapper<Throw
         try {
           ObjectMapper objectMapper = new ObjectMapper();
           Map<String, Object> jsonMap = objectMapper.readValue(json, Map.class);
-          Throwable exception = createException(jsonMap);
-          return exception;
+          return createException(jsonMap);
         } catch (IOException e) {
           return new IllegalStateException("Invocation of service", e);
         }
@@ -63,14 +62,12 @@ public class RestServiceExceptionMapper implements ResponseExceptionMapper<Throw
     String message = (String) jsonMap.get(ServiceConstants.KEY_MESSAGE);
     String uuid = (String) jsonMap.get(ServiceConstants.KEY_UUID);
 
-    Throwable exception = createException(code, message, UUID.fromString(uuid));
-    return exception;
+    return createException(code, message, UUID.fromString(uuid));
   }
 
   private Throwable createException(String code, String message, UUID uuid) {
 
-    Throwable exception = new ServiceInvocationFailedException(message, code, uuid, this.serviceName);
-    return exception;
+    return new ServiceInvocationFailedException(message, code, uuid, this.serviceName);
   }
 
 }
