@@ -24,6 +24,7 @@
     <module>batch</module>
     <module>web</module>
     <module>basic</module>
+    <module>csv</module>
   </modules>
 
   <dependencyManagement>
