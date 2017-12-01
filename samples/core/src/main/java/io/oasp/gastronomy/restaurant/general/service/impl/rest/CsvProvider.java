@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import io.oasp.gastronomy.restaurant.general.common.api.ThreadLocals;
 import io.oasp.gastronomy.restaurant.general.common.api.exception.IllegalHeaderValueException;
 import io.oasp.module.basic.csv.CsvFormat;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
@@ -42,7 +41,7 @@ import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 /**
  * Cette classe est responsable de la conversion entre Eto et ligne CSV. Elle est implicite dans la couche service. Pour
  * obtenir un retour CSV de l'API le client doit fournir le header HTTP
- * <code>{@link ThreadLocals#ACCEPT_COLUMNS Accept-Header}</code>. Pour envoyer du CSV le client doit fournir le header
+ * <code>Accept-Header</code>. Pour envoyer du CSV le client doit fournir le header
  * <code>Content-Header</code> indiquant le nom des colonnes (<b>le nom des attributs de l'ETO</b> ou des colonnes CSV
  * si les getters de l'ETO sont annotés par {@link JsonProperty @JsonProperty}) envoyées dans le body séparé par "," ou
  * ";".
@@ -121,7 +120,7 @@ import io.oasp.module.jpa.common.api.to.PaginatedListTo;
  *
  * <p>
  * Ce qui permet d'empêcher Jackson de serialiser tous les champs même ceux qui ne sont pas demandés par le client dans
- * son header {@link ThreadLocals#ACCEPT_COLUMNS}
+ * son header Accept-Columns
  * </p>
  *
  * @author mlavigne
