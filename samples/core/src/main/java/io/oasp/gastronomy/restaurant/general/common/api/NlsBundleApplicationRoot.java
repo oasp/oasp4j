@@ -74,4 +74,10 @@ public interface NlsBundleApplicationRoot extends NlsBundle {
       @Named("tableNumber") Long tableNumber);
   // END ARCHETYPE SKIP
 
+  /**
+   * @return
+   */
+  @NlsBundleMessage("The value {value} is not allowed for the header {name}")
+  NlsMessage errorIllegalHeaderValue(@Named("name") String name, @Named("value") Object value);
+
 }
