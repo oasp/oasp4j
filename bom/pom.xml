@@ -20,7 +20,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <cxf.version>3.1.8</cxf.version>
-    <mmm.util.version>7.3.0</mmm.util.version>
+    <mmm.util.version>7.5.1</mmm.util.version>
     <oasp.flatten.mode>bom</oasp.flatten.mode>
   </properties>
 
@@ -28,10 +28,11 @@
     <dependencies>
       <!-- *** EXTERNAL DEPENDENCIES *** -->
       <!-- BOM for localization -->
+      <!-- Library with general utilities as well as I18N and exception support -->
       <dependency>
-          <groupId>net.sf.m-m-m</groupId>
-        <artifactId>mmm-l10n-bom</artifactId>
-        <version>1.4.0</version>
+        <groupId>net.sf.m-m-m</groupId>
+        <artifactId>mmm-util-bom</artifactId>
+        <version>${mmm.util.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -58,42 +59,6 @@
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
         <version>17.0</version>
-      </dependency>
-      <!-- Library with general utilities as well as I18N and exception support -->
-      <dependency>
-        <groupId>net.sf.m-m-m</groupId>
-        <artifactId>mmm-util-core</artifactId>
-        <version>${mmm.util.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>net.sf.m-m-m</groupId>
-        <artifactId>mmm-util-io</artifactId>
-        <version>${mmm.util.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>net.sf.m-m-m</groupId>
-        <artifactId>mmm-util-entity</artifactId>
-        <version>${mmm.util.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>net.sf.m-m-m</groupId>
-        <artifactId>mmm-util-pojo</artifactId>
-        <version>${mmm.util.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>net.sf.m-m-m</groupId>
-        <artifactId>mmm-util-validation</artifactId>
-        <version>${mmm.util.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>net.sf.m-m-m</groupId>
-        <artifactId>mmm-util-search</artifactId>
-        <version>${mmm.util.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>net.sf.m-m-m</groupId>
-        <artifactId>mmm-util-cli</artifactId>
-        <version>${mmm.util.version}</version>
       </dependency>
       <!-- Library with advanced collection support -->
       <dependency>

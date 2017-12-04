@@ -7,11 +7,12 @@ import java.util.UUID;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
+import net.sf.mmm.util.exception.api.ServiceInvocationFailedException;
+
 import org.apache.cxf.jaxrs.client.ResponseExceptionMapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.oasp.module.service.common.api.client.exception.ServiceInvocationFailedException;
 import io.oasp.module.service.common.api.constants.ServiceConstants;
 
 /**
@@ -33,6 +34,7 @@ public class RestServiceExceptionMapper implements ResponseExceptionMapper<Throw
    *        {@link io.oasp.module.service.common.api.Service} that failed.
    */
   public RestServiceExceptionMapper(String service) {
+
     super();
     this.serviceName = service;
   }
