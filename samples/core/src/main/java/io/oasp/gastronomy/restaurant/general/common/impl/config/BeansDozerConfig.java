@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Java bean configuration for Dozer
- *
  */
 @Configuration
 @ComponentScan(basePackages = { "io.oasp.module.beanmapping" })

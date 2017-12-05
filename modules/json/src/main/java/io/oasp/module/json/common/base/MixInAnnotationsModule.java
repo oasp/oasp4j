@@ -1,4 +1,4 @@
-package io.oasp.module.rest.service.impl.json;
+package io.oasp.module.json.common.base;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 /**
  * A {@link SimpleModule} to extend Jackson to mixin annotations for polymorphic types.
  *
+ * @since 3.0.0
  */
 public class MixInAnnotationsModule extends SimpleModule {
 
@@ -20,8 +21,8 @@ public class MixInAnnotationsModule extends SimpleModule {
    */
   public MixInAnnotationsModule(Class<?>... polymorphicClasses) {
 
-    super("oasp.PolymorphyModule", new Version(1, 0, 0, null, ObjectMapperFactory.GROUP_ID,
-        ObjectMapperFactory.ARTIFACT_ID));
+    super("oasp.PolymorphyModule",
+        new Version(1, 0, 0, null, ObjectMapperFactory.GROUP_ID, ObjectMapperFactory.ARTIFACT_ID));
     this.polymorphicClasses = polymorphicClasses;
   }
 
@@ -36,7 +37,7 @@ public class MixInAnnotationsModule extends SimpleModule {
   /**
    * The blueprint class for the following JSON-annotation allowing to convert from JSON to POJO and vice versa
    *
-     */
+   */
   @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.PROPERTY, property = "@type")
   public static class JacksonPolymorphicAnnotation {
 
