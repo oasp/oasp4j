@@ -78,6 +78,12 @@ public interface ServiceConfig {
   String VALUE_AUTH_OAUTH = "oauth";
 
   /**
+   * The value of {@link #KEY_SEGMENT_AUTH authentication} for JWT.
+   **/
+
+  String VALUE_AUTH_JWT = "jwt";
+
+  /**
    * @return the root {@link ConfigProperties}-node with the configuration for services.
    */
   ConfigProperties asConfig();

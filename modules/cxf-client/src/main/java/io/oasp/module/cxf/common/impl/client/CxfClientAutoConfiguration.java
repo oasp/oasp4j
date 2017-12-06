@@ -12,6 +12,7 @@ import io.oasp.module.service.common.impl.ServiceClientFactoryImpl;
 import io.oasp.module.service.common.impl.discovery.ServiceDiscovererImplConfig;
 import io.oasp.module.service.common.impl.header.ServiceHeaderCustomizerBasicAuth;
 import io.oasp.module.service.common.impl.header.ServiceHeaderCustomizerCorrelationId;
+import io.oasp.module.service.common.impl.header.ServiceHeaderCustomizerJwt;
 import io.oasp.module.service.common.impl.header.ServiceHeaderCustomizerOAuth;
 
 /**
@@ -77,4 +78,12 @@ public class CxfClientAutoConfiguration {
     return new ServiceHeaderCustomizerOAuth();
   }
 
+  /**
+   * @return an implementation of {@link ServiceHeaderCustomizer} for JWT support.
+   */
+  @Bean
+  public ServiceHeaderCustomizer ServiceHeaderCustomizerJwt() {
+
+    return new ServiceHeaderCustomizerJwt();
+  }
 }

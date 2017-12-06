@@ -105,6 +105,16 @@ public class ServiceClientConfigBuilder {
   }
 
   /**
+   * Use OAuth {@link #auth(String) authentication}.
+   *
+   * @return this instance for fluent API calls.
+   */
+  public ServiceClientConfigBuilder authJwt() {
+
+    return auth(ServiceConfig.VALUE_AUTH_JWT);
+  }
+
+  /**
    * @param authentication the {@link ServiceConfig#KEY_SEGMENT_AUTH authentication} type.
    * @return this instance for fluent API calls.
    */
