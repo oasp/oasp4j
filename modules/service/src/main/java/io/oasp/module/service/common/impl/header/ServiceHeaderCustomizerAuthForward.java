@@ -27,7 +27,7 @@ public class ServiceHeaderCustomizerAuthForward implements ServiceHeaderCustomiz
   public void addHeaders(ServiceHeaderContext<?> context) {
 
     String auth = context.getConfig().getChildValue(ServiceConfig.KEY_SEGMENT_AUTH);
-    if (!ServiceConfig.VALUE_AUTH_FORWARD.contains(auth)) {
+    if (!ServiceConfig.VALUE_AUTH_FORWARD.equals(auth)) {
       return;
     }
     SecurityContext securityContext = SecurityContextHolder.getContext();
