@@ -109,10 +109,19 @@ public class ServiceClientConfigBuilder {
    *
    * @return this instance for fluent API calls.
    */
-  public ServiceClientConfigBuilder authJwt() {
+  public ServiceClientConfigBuilder authForward() {
 
-    return auth(ServiceConfig.VALUE_AUTH_JWT);
+    return auth(ServiceConfig.VALUE_AUTH_FORWARD);
   }
+  // public ServiceClientConfigBuilder authForward() {
+  //
+  // List<String> authVals = ServiceConfig.VALUE_AUTH_FORWARD;
+  // Iterator<String> authValsItr = authVals.iterator();
+  // while (authValsItr.hasNext()) {
+  // this.map.put(ServiceConfig.KEY_SEGMENT_AUTH, authValsItr.next());
+  // }
+  // return this;
+  // }
 
   /**
    * @param authentication the {@link ServiceConfig#KEY_SEGMENT_AUTH authentication} type.

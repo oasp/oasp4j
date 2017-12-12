@@ -11,17 +11,15 @@ import io.oasp.module.service.common.api.header.ServiceHeaderCustomizer;
  * @author ssarmoka
  *
  */
-public class ServiceHeaderCustomizerJwt implements ServiceHeaderCustomizer {
+public class ServiceHeaderCustomizerAuthForward implements ServiceHeaderCustomizer {
 
   private static final String AUTHORIZATION = "Authorization";
-
-  private static final String CONTENT_TYPE = "Content-Type";
 
   /**
    *
    * The constructor.
    */
-  public ServiceHeaderCustomizerJwt() {
+  public ServiceHeaderCustomizerAuthForward() {
     super();
   }
 
@@ -29,18 +27,16 @@ public class ServiceHeaderCustomizerJwt implements ServiceHeaderCustomizer {
   public void addHeaders(ServiceHeaderContext<?> context) {
 
     String auth = context.getConfig().getChildValue(ServiceConfig.KEY_SEGMENT_AUTH);
-    if (!"jwt".equals(auth)) {
+    if (!ServiceConfig.VALUE_AUTH_FORWARD.contains(auth)) {
       return;
     }
     SecurityContext securityContext = SecurityContextHolder.getContext();
     if (securityContext == null) {
       return;
     }
-
     String authorizationHeader = context.getConfig().getChildValue(AUTHORIZATION);
-    String contentType = context.getConfig().getChildValue(CONTENT_TYPE);
     context.setHeader(AUTHORIZATION, authorizationHeader + "");
-    context.setHeader(CONTENT_TYPE, contentType);
+
   }
 
 }
