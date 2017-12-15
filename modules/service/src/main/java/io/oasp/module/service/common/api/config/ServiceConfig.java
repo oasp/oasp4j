@@ -78,6 +78,12 @@ public interface ServiceConfig {
   String VALUE_AUTH_OAUTH = "oauth";
 
   /**
+   * The value of {@link #KEY_SEGMENT_AUTH authentication} for Basic, Oauth,JWT.
+   **/
+
+  String VALUE_AUTH_FORWARD = "authForward";
+
+  /**
    * @return the root {@link ConfigProperties}-node with the configuration for services.
    */
   ConfigProperties asConfig();

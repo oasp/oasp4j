@@ -92,7 +92,7 @@ class EmptyConfigProperties implements ConfigProperties {
   @Override
   public MutableConfigProperties inherit(ConfigProperties parent) {
 
-    if (parent == null) {
+    if (parent == null || parent.isEmpty()) {
       return new MutableConfigPropertiesImpl("");
     }
     if (parent instanceof MutableConfigProperties) {
