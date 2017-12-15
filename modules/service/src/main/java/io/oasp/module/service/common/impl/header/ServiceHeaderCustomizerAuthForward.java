@@ -35,7 +35,7 @@ public class ServiceHeaderCustomizerAuthForward implements ServiceHeaderCustomiz
       return;
     }
     String authorizationHeader = context.getConfig().getChildValue(AUTHORIZATION);
-    context.setHeader(AUTHORIZATION, authorizationHeader + "");
+    context.setHeader(AUTHORIZATION, authorizationHeader);
 
   }
 
