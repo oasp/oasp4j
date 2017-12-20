@@ -7,31 +7,18 @@
     <artifactId>oasp4j</artifactId>
     <version>dev-SNAPSHOT</version>
   </parent>
-  <artifactId>oasp4j-modules</artifactId>
+  <artifactId>oasp4j-starters</artifactId>
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
-  <description>Reusable modules of the Open Application Standard Platform for Java (OASP4J).</description>
+  <description>Spring-boot starters of the Open Application Standard Platform for Java (OASP4J).</description>
 
   <modules>
-    <module>logging</module>
-    <module>test</module>
-    <module>configuration</module>
-    <module>beanmapping</module>
-    <module>service</module>
-    <module>json</module>
-    <module>rest</module>
-    <module>cxf-client</module>
-    <module>cxf-client-rest</module>
-    <module>cxf-client-ws</module>
-    <module>cxf-server</module>
-    <module>cxf-server-rest</module>
-    <module>cxf-server-ws</module>
-    <module>security</module>
-    <module>jpa</module>
-    <module>jpa-envers</module>
-    <module>batch</module>
-    <module>web</module>
-    <module>basic</module>
+    <module>starter-cxf-client</module>
+    <module>starter-cxf-client-rest</module>
+    <module>starter-cxf-client-ws</module>
+    <module>starter-cxf-server</module>
+    <module>starter-cxf-server-rest</module>
+    <module>starter-cxf-server-ws</module>
   </modules>
 
   <dependencyManagement>
