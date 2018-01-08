@@ -31,6 +31,11 @@ import org.junit.Before;
  * }
  * </pre>
  *
+ * Additional value is provided by {@link #isInitialSetup()} that may be helpful for specific implementations of
+ * {@link #doSetUp()} where you want to do some cleanup only once for the test-class rather than for every test method.
+ * Unlike {@link org.junit.BeforeClass} this can be used in non-static method code so you have access to injected
+ * dependencies.
+ *
  * @author shuber, jmolinar
  */
 public abstract class BaseTest extends Assertions {

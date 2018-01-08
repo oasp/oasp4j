@@ -29,6 +29,7 @@
     <module>security</module>
     <module>jpa</module>
     <module>jpa-envers</module>
+    <module>test-jpa</module>
     <module>batch</module>
     <module>web</module>
     <module>basic</module>
