@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.Servlet;
 
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONArray;
@@ -45,6 +46,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderCto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.service.api.rest.SalesmanagementRestService;
+import io.oasp.module.service.common.api.client.ServiceClientFactory;
 
 /**
  * This class serves as an example of how to perform a subsystem test (e.g., call a *RestService interface). The test
@@ -53,18 +55,24 @@ import io.oasp.gastronomy.restaurant.salesmanagement.service.api.rest.Salesmanag
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = { SalesmanagementRestTestConfig.class })
-@TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement" })
+@TestPropertySource(properties = { "flyway.locations=filesystem:src/test/resources/db/tablemanagement",
+"service.client.app.restaurant.user.login=waiter" })
 public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest {
 
   private final HttpHeaders AUTHENTIFICATED_HEADERS = getAuthentificatedHeaders();
 
   private SalesmanagementRestService service;
 
+  private Servlet servlet;
+
   @Inject
   private SalesmanagementRestServiceTestHelper helper;
 
   @Inject
   private TestRestTemplate template;
+
+  @Inject
+  private ServiceClientFactory serviceClientFactory;
 
   /**
    * Provides initialization previous to the creation of the text fixture.
@@ -74,7 +82,7 @@ public class SalesmanagementHttpRestServiceTest extends AbstractRestServiceTest 
 
     super.doSetUp();
     getDbTestHelper().resetDatabase();
-    this.service = getRestTestClientBuilder().build(SalesmanagementRestService.class, "waiter");
+    this.service = this.serviceClientFactory.create(SalesmanagementRestService.class);
   }
 
   /**

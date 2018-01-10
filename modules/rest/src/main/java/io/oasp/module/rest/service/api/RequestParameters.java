@@ -20,6 +20,7 @@ import javax.ws.rs.core.UriInfo;
  * and required parameters. The methods provided here throw according exceptions such as {@link BadRequestException} and
  * already support conversion of values.
  *
+ * @since 2.0.0
  */
 public class RequestParameters {
 
@@ -43,8 +44,8 @@ public class RequestParameters {
    * @param key is the {@link java.util.Map#get(Object) key} of the parameter to get.
    * @param targetType is the {@link Class} reflecting the type to convert the value to. Supports common Java standard
    *        types such as {@link String}, {@link Long}, {@link Double}, {@link BigDecimal}, etc.
-   * @param required - {@code true} if the value is required and a {@link BadRequestException} is thrown if it is
-   *        not present, {@code false} otherwise (if optional).
+   * @param required - {@code true} if the value is required and a {@link BadRequestException} is thrown if it is not
+   *        present, {@code false} otherwise (if optional).
    * @return the value for the given <code>key</code> converted to the given <code>targetType</code>. May be
    *         {@code null} if <code>required</code> is {@code false} .
    * @throws WebApplicationException if an error occurred. E.g. {@link BadRequestException} if a required parameter is

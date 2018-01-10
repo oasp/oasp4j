@@ -34,27 +34,50 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.oasp.module.service.common.api.constants.ServiceConstants;
+
 /**
- * This is an implementation of {@link ExceptionMapper} that acts as generic exception facade for REST services.
+ * This is an implementation of {@link ExceptionMapper} that acts as generic exception facade for REST services. It
+ * {@link #toResponse(Throwable) maps} {@link Throwable exceptions} to an according HTTP status code and JSON result as
+ * defined by <a href="https://github.com/oasp-forge/oasp4j-wiki/wiki/guide-rest#error-results">OASP REST error
+ * specification</a>.
  *
- * the exception handling class for all upcoming exceptions thrown at REST requests. Each type of possible thrown
- * exception will be fetched within the method "toResponse".
- *
+ * @since 2.0.0
  */
 @Provider
 public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
 
-  /** JSON key for {@link Throwable#getMessage() error message}. */
-  public static final String KEY_MESSAGE = "message";
+  /**
+   * JSON key for {@link Throwable#getMessage() error message}.
+   *
+   * @deprecated use {@link ServiceConstants#KEY_MESSAGE}.
+   */
+  @Deprecated
+  public static final String KEY_MESSAGE = ServiceConstants.KEY_MESSAGE;
 
-  /** JSON key for {@link NlsRuntimeException#getUuid() error ID}. */
-  public static final String KEY_UUID = "uuid";
+  /**
+   * JSON key for {@link NlsRuntimeException#getUuid() error ID}.
+   *
+   * @deprecated use {@link ServiceConstants#KEY_UUID}.
+   */
+  @Deprecated
+  public static final String KEY_UUID = ServiceConstants.KEY_UUID;
 
-  /** JSON key for {@link NlsRuntimeException#getCode() error code}. */
-  public static final String KEY_CODE = "code";
+  /**
+   * JSON key for {@link NlsRuntimeException#getCode() error code}.
+   *
+   * @deprecated use {@link ServiceConstants#KEY_CODE}.
+   */
+  @Deprecated
+  public static final String KEY_CODE = ServiceConstants.KEY_CODE;
 
-  /** JSON key for {@link NlsRuntimeException#getCode() errors}. */
-  public static final String KEY_ERRORS = "errors";
+  /**
+   * JSON key for (validation) errors.
+   *
+   * @deprecated use {@link ServiceConstants#KEY_ERRORS}.
+   */
+  @Deprecated
+  public static final String KEY_ERRORS = ServiceConstants.KEY_ERRORS;
 
   /** Logger instance. */
   private static final Logger LOG = LoggerFactory.getLogger(RestServiceExceptionFacade.class);
@@ -453,17 +476,17 @@ public class RestServiceExceptionFacade implements ExceptionMapper<Throwable> {
 
     Map<String, Object> jsonMap = new HashMap<>();
     if (message != null) {
-      jsonMap.put(KEY_MESSAGE, message);
+      jsonMap.put(ServiceConstants.KEY_MESSAGE, message);
     }
     if (code != null) {
-      jsonMap.put(KEY_CODE, code);
+      jsonMap.put(ServiceConstants.KEY_CODE, code);
     }
     if (uuid != null) {
-      jsonMap.put(KEY_UUID, uuid.toString());
+      jsonMap.put(ServiceConstants.KEY_UUID, uuid.toString());
     }
 
     if (errorsMap != null) {
-      jsonMap.put(KEY_ERRORS, errorsMap);
+      jsonMap.put(ServiceConstants.KEY_ERRORS, errorsMap);
     }
 
     String responseMessage = "";

@@ -38,15 +38,22 @@
       <artifactId>oasp4j-security</artifactId>
     </dependency>
 
-
     <dependency>
-      <groupId>io.oasp.java.modules</groupId>
-      <artifactId>oasp4j-rest</artifactId>
+      <groupId>io.oasp.java.starters</groupId>
+      <artifactId>oasp4j-starter-cxf-client-rest</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.oasp.java.starters</groupId>
+      <artifactId>oasp4j-starter-cxf-client-ws</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>io.oasp.java.modules</groupId>
-      <artifactId>oasp4j-basic</artifactId>
+      <groupId>io.oasp.java.starters</groupId>
+      <artifactId>oasp4j-starter-cxf-server-rest</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.oasp.java.starters</groupId>
+      <artifactId>oasp4j-starter-cxf-server-ws</artifactId>
     </dependency>
 
     <dependency>
@@ -88,19 +95,6 @@
       <artifactId>spring-web</artifactId>
     </dependency>
 
-    <!-- Spring Security -->
-    <!--
-      <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-web</artifactId>
-      </dependency>
-
-      <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-config</artifactId>
-      </dependency>
-    -->
-
     <!-- for Object Relational Mapping (JPA/Hibernate) -->
     <dependency>
       <groupId>org.springframework</groupId>
@@ -141,38 +135,7 @@
     <!-- CXF for REST and Webservices -->
     <dependency>
       <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-rt-frontend-jaxws</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>asm</groupId>
-          <artifactId>asm</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-rt-rs-client</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-rt-rs-service-description</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-rt-transports-http</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.fasterxml.jackson.jaxrs</groupId>
-      <artifactId>jackson-jaxrs-json-provider</artifactId>
     </dependency>
 
     <!-- Web Sockets -->
@@ -225,11 +188,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web-services</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>com.mysema.querydsl</groupId>
       <artifactId>querydsl-apt</artifactId>
       <version>3.4.3</version>
@@ -248,8 +206,8 @@
       <version>1.3.0</version>
     <scope>test</scope>
     </dependency>
-	
-	<!-- Uncomment the following dependency if the database used is MariaDB 10.0.27 -->
+
+	  <!-- Uncomment the following dependency if the database used is MariaDB 10.0.27 -->
     <!--
       <dependency>
         <groupId>org.mariadb.jdbc</groupId>
@@ -257,7 +215,6 @@
         <version>1.5.4</version>
       </dependency>
     -->
-
 
     <!-- Uncomment the following dependency if the database used is Oracle 11g -->
     <!--
@@ -268,7 +225,7 @@
       </dependency>
      -->
 
-	<!-- Comment the following dependency if the database that is used is not PostGres 9.5.4 -->
+    <!-- Comment the following dependency if the database that is used is PostGres 9 -->
     <!--
     <dependency>
       <groupId>org.postgresql</groupId>
