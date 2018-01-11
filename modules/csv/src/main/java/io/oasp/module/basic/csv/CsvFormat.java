@@ -14,7 +14,10 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,12 +31,17 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.PropertyFilter;
 import com.fasterxml.jackson.databind.ser.PropertyWriter;
@@ -94,7 +102,7 @@ public class CsvFormat {
   /** may be <code>null</code> */
   protected final String charset;
 
-  protected final DateFormat dateFormat;
+  protected final DateFormat[] dateFormats;
 
   @Deprecated // delete when Pull Request is merged : https://github.com/FasterXML/jackson-dataformats-text/pull/46
   private boolean endingLineSeparator = true;
@@ -129,14 +137,14 @@ public class CsvFormat {
    */
   @Deprecated // delete when Pull Request is merged : https://github.com/FasterXML/jackson-dataformats-text/pull/46
   protected CsvFormat(final List<String> columns, final CsvMapper mapper, final CsvSchema schema, final String charset,
-      final DateFormat dateFormat, final boolean endingLineSeparator) {
+      final DateFormat[] dateFormats, final boolean endingLineSeparator) {
     Objects.requireNonNull(mapper);
     Objects.requireNonNull(schema);
     this.columns = columns;
     this.mapper = mapper;
     this.schema = schema;
     this.charset = charset;
-    this.dateFormat = dateFormat;
+    this.dateFormats = dateFormats;
     this.endingLineSeparator = endingLineSeparator;
   }
 
@@ -160,14 +168,14 @@ public class CsvFormat {
    */
   @Deprecated // delete when Pull Request is merged : https://github.com/FasterXML/jackson-dataformats-text/pull/46
   public CsvFormat(CsvFormat base, CsvSchema newSchema, final boolean endingLineSeparator) {
-    this(base.columns, base.mapper, newSchema, base.charset, base.dateFormat, endingLineSeparator);
+    this(base.columns, base.mapper, newSchema, base.charset, base.dateFormats, endingLineSeparator);
   }
 
   /**
    * @param columns
    * @return
    */
-  public static CsvMapper buildMapper(final List<String> columns, final DateFormat dateFormat) {
+  public static CsvMapper buildMapper(final List<String> columns, final DateFormat[] dateFormats) {
 
     final CsvMapper mapper = new CsvMapper();
 
@@ -180,12 +188,57 @@ public class CsvFormat {
     }
     // mapper.configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true);
 
-    if (dateFormat != null) {
-      mapper.setDateFormat(dateFormat);
+    if (dateFormats != null && dateFormats.length > 0) {
+
+      // Multiple formats ?
+      if (dateFormats.length > 1) {
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(Date.class, new MultiDateDeserializer(dateFormats)); // TODO : withDateFormats
+        mapper.registerModule(module);
+      }
+
+      // We also set default date format which is required for writing
+      mapper.setDateFormat(dateFormats[0]);
     }
+
     // mapper.configure(Feature.STRICT_CHECK_FOR_QUOTING, true);
 
     return mapper;
+  }
+
+  /**
+   * Handle multiple DateFormat
+   *
+   * @author MLAVIGNE
+   */
+  public static final class MultiDateDeserializer extends StdDeserializer<Date> {
+
+    private static final long serialVersionUID = 837636597643725045L;
+
+    private DateFormat[] dateFormats;
+
+    /**
+     * The constructor.
+     */
+    public MultiDateDeserializer(DateFormat[] dateFormats) {
+      super(Date.class);
+      this.dateFormats = dateFormats;
+    }
+
+    @Override
+    public Date deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+
+      final String date = jp.getText();
+      for (DateFormat dateFormat : this.dateFormats) {
+        try {
+          return dateFormat.parse(date);
+        } catch (ParseException e) {
+          // TODO : check associated regex instead of throwing/catching Exception
+        }
+      }
+      throw new JsonParseException(jp,
+          String.format("Unparseable date: \"%s\". Supported formats: %s", date, Arrays.toString(this.dateFormats)));
+    }
   }
 
   /**
@@ -290,7 +343,7 @@ public class CsvFormat {
    */
   public CsvFormat withColumns(final List<String> columns) {
 
-    final CsvMapper mapper = buildMapper(columns, this.dateFormat);
+    final CsvMapper mapper = buildMapper(columns, this.dateFormats);
     CsvSchema schema = buildSchema(columns) // TODO : use copy constructor
         .withColumnSeparator(this.schema.getColumnSeparator())
         .withLineSeparator(new String(this.schema.getLineSeparator())).withQuoteChar((char) this.schema.getQuoteChar())
@@ -306,7 +359,7 @@ public class CsvFormat {
      * schema.withoutEndingLineSeparator(); }
      */
     // FIXME keep header
-    return new CsvFormat(columns, mapper, schema, this.charset, this.dateFormat, this.endingLineSeparator);
+    return new CsvFormat(columns, mapper, schema, this.charset, this.dateFormats, this.endingLineSeparator);
   }
 
   /**
@@ -406,7 +459,7 @@ public class CsvFormat {
 
   public CsvFormat withCharset(final String charset) {
 
-    return new CsvFormat(this.columns, this.mapper, this.schema, charset, this.dateFormat, this.endingLineSeparator);
+    return new CsvFormat(this.columns, this.mapper, this.schema, charset, this.dateFormats, this.endingLineSeparator);
   }
 
   public CsvFormat withEncoding(final String encoding) {
@@ -415,12 +468,47 @@ public class CsvFormat {
   }
 
   /**
-   * @param simpleDateFormat
-   * @return
+   * @param dateFormat example : {@link SimpleDateFormat}
+   * @return this
    */
   public CsvFormat withDateFormat(DateFormat dateFormat) {
 
-    return new CsvFormat(this.columns, buildMapper(this.columns, dateFormat), this.schema, this.charset, dateFormat,
+    return withDateFormats(dateFormat);
+  }
+
+  /**
+   * @param patterns {@link SimpleDateFormat} pattern
+   * @return this
+   */
+  public CsvFormat withDateFormat(String patterns) {
+
+    return withDateFormats(patterns);
+  }
+
+  /**
+   * Jackson does not allow multiple DateFormats. This method will use a MultiDateDeserializer to allow them.
+   *
+   * @param patterns {@link SimpleDateFormat} patterns
+   * @return this CsvFormat instance
+   */
+  public CsvFormat withDateFormats(String... patterns) {
+
+    final DateFormat[] dateFormats = new DateFormat[patterns.length];
+    for (int i = 0; i < patterns.length; i++) {
+      dateFormats[i] = new SimpleDateFormat(patterns[i]);
+    }
+    return withDateFormats(dateFormats);
+  }
+
+  /**
+   * Jackson does not allow multiple DateFormats. This method will use a MultiDateDeserializer to allow them.
+   *
+   * @param dateFormats example : {@link SimpleDateFormat}
+   * @return this CsvFormat instance
+   */
+  public CsvFormat withDateFormats(DateFormat... dateFormats) {
+
+    return new CsvFormat(this.columns, buildMapper(this.columns, dateFormats), this.schema, this.charset, dateFormats,
         this.endingLineSeparator);
   }
 
@@ -430,7 +518,7 @@ public class CsvFormat {
    */
   public CsvFormat withoutDateFormat() {
 
-    return new CsvFormat(this.columns, buildMapper(this.columns, null), this.schema, this.charset, this.dateFormat,
+    return new CsvFormat(this.columns, buildMapper(this.columns, null), this.schema, this.charset, null,
         this.endingLineSeparator);
   }
 
@@ -567,6 +655,9 @@ public class CsvFormat {
   }
 
   /**
+   * Don't forget to annotate your ETO with <code>@JsonFilter(CsvFormat.FILTER)</code> to avoid
+   * "JsonGenerationException: Unrecognized column" exception.
+   *
    * @param out
    * @param type
    * @return
@@ -584,6 +675,9 @@ public class CsvFormat {
    * <pre>
    * this.writerFor(value).writeValue(this.getWriterForCharset(out), value)
    * </pre>
+   *
+   * Don't forget to annotate your ETO with <code>@JsonFilter(CsvFormat.FILTER)</code> to avoid
+   * "JsonGenerationException: Unrecognized column" exception.
    *
    * @param out
    * @param value
@@ -624,6 +718,9 @@ public class CsvFormat {
    * <pre>
    * this.writerFor(value).writeValue(resultFile, value)
    * </pre>
+   *
+   * Don't forget to annotate your ETO with <code>@JsonFilter(CsvFormat.FILTER)</code> to avoid
+   * "JsonGenerationException: Unrecognized column" exception.
    *
    * @param value
    * @return
@@ -666,6 +763,9 @@ public class CsvFormat {
    * <pre>
    * this.writerFor(value).writeValueAsString(value)
    * </pre>
+   *
+   * Don't forget to annotate your ETO with <code>@JsonFilter(CsvFormat.FILTER)</code> to avoid
+   * "JsonGenerationException: Unrecognized column" exception.
    *
    * @param value
    * @return

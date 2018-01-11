@@ -421,7 +421,7 @@ public class CsvFormatTest extends ModuleTest {
    * {@link com.orange.grace.traducteur.general.service.impl.rest.CsvFormat#withDateFormat(java.text.DateFormat)}.
    */
   @Test
-  public void testWithDateFormat() throws Exception {
+  public void testWithDateFormatWrite() throws Exception {
 
     final Eto eto = new Eto();
     eto.setComment("comment_value1");
@@ -432,6 +432,67 @@ public class CsvFormatTest extends ModuleTest {
 
     final CsvFormat format =
         this.twoColumns.withColumns("code,date").withDateFormat(new SimpleDateFormat("dd/MM/yyyy"));
+
+    final StringBuilder sb = new StringBuilder();
+    sb.append(",23/10/2017").append(defaultLineSeparator);
+    assertThatWrittenContent(eto, format).isEqualTo(sb.toString());
+  }
+
+  /**
+   * Test method for
+   * {@link com.orange.grace.traducteur.general.service.impl.rest.CsvFormat#withDateFormat(java.text.DateFormat)}.
+   */
+  @Test
+  public void testWithDateFormat() throws Exception {
+
+    final CsvFormat format = this.twoColumns.withColumns("code,date").withDateFormats("dd/MM/yyyy");
+
+    assertThat(format.readValue("CODE1,22/05/1987", Eto.class).getDate()).isEqualTo("1987-05-22");
+  }
+
+  /**
+   * Test method for
+   * {@link com.orange.grace.traducteur.general.service.impl.rest.CsvFormat#withDateFormat(java.text.DateFormat)}.
+   */
+  @Test
+  public void testWithDateFormats() throws Exception {
+
+    final CsvFormat format = this.twoColumns.withColumns("code,date").withDateFormats("dd/MM/yyyy", "dd-MM-yyyy");
+
+    assertThat(format.readValue("CODE1,22/05/1987", Eto.class).getDate()).isEqualTo("1987-05-22");
+    assertThat(format.readValue("CODE1,22-05-1987", Eto.class).getDate()).isEqualTo("1987-05-22");
+  }
+
+  /**
+   * Test method for
+   * {@link com.orange.grace.traducteur.general.service.impl.rest.CsvFormat#withDateFormat(java.text.DateFormat)}.
+   */
+  @Test(expected = JsonMappingException.class)
+  public void testWithDateFormatsKO() throws Exception {
+
+    final CsvFormat format = this.twoColumns.withColumns("code,date").withDateFormats("dd/MM/yyyy", "dd-MM-yyyy");
+
+    assertThat(format.readValue("CODE1,22/05/1987", Eto.class).getDate()).isEqualTo("1987-05-22");
+    assertThat(format.readValue("CODE1,22-05-1987", Eto.class).getDate()).isEqualTo("1987-05-22");
+    format.readValue("CODE1,22|05|1987", Eto.class); // unknown format
+  }
+
+  /**
+   * Test method for
+   * {@link com.orange.grace.traducteur.general.service.impl.rest.CsvFormat#withDateFormat(java.text.DateFormat)}.
+   */
+  @Test
+  public void testWithDateFormatsWrite() throws Exception {
+
+    final Eto eto = new Eto();
+    eto.setComment("comment_value1");
+    final Calendar cal = Calendar.getInstance();
+    cal.clear();
+    cal.set(2017, 9, 23);
+    eto.setDate(cal.getTime());
+
+    final CsvFormat format =
+        this.twoColumns.withColumns("code,date").withDateFormats("dd/MM/yyyy", "dd-MM-yyyy");
 
     final StringBuilder sb = new StringBuilder();
     sb.append(",23/10/2017").append(defaultLineSeparator);
