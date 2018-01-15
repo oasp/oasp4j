@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>io.oasp.java.dev</groupId>
-    <artifactId>oasp4j</artifactId>
+    <artifactId>oasp4j-boms</artifactId>
     <version>dev-SNAPSHOT</version>
   </parent>
   <groupId>io.oasp.java</groupId>
@@ -26,6 +26,14 @@
 
   <dependencyManagement>
     <dependencies>
+      <!-- *** INTERNAL DEPENDENCIES *** -->
+      <dependency>
+        <groupId>io.oasp.java.boms</groupId>
+        <artifactId>oasp4j-minimal-bom</artifactId>
+        <version>${oasp4j.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
       <!-- *** EXTERNAL DEPENDENCIES *** -->
       <!-- BOM for localization -->
       <!-- Library with general utilities as well as I18N and exception support -->
@@ -235,132 +243,6 @@
         <version>1.1.3</version>
       </dependency>
 
-      <!-- *** INTERNAL DEPENDENCIES *** -->
-      <dependency>
-        <groupId>io.oasp.java.modules</groupId>
-        <artifactId>oasp4j-test</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.modules</groupId>
-        <artifactId>oasp4j-logging</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.modules</groupId>
-        <artifactId>oasp4j-basic</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.modules</groupId>
-        <artifactId>oasp4j-batch</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.modules</groupId>
-        <artifactId>oasp4j-beanmapping</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.modules</groupId>
-        <artifactId>oasp4j-configuration</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.modules</groupId>
-        <artifactId>oasp4j-security</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.modules</groupId>
-        <artifactId>oasp4j-service</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.modules</groupId>
-        <artifactId>oasp4j-json</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.modules</groupId>
-        <artifactId>oasp4j-rest</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.modules</groupId>
-        <artifactId>oasp4j-cxf-client</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.modules</groupId>
-        <artifactId>oasp4j-cxf-client-rest</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.modules</groupId>
-        <artifactId>oasp4j-cxf-client-ws</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.modules</groupId>
-        <artifactId>oasp4j-cxf-server</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.modules</groupId>
-        <artifactId>oasp4j-cxf-server-rest</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.modules</groupId>
-        <artifactId>oasp4j-cxf-server-ws</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.starters</groupId>
-        <artifactId>oasp4j-starter-cxf-client</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.starters</groupId>
-        <artifactId>oasp4j-starter-cxf-client-rest</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.starters</groupId>
-        <artifactId>oasp4j-starter-cxf-client-ws</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.starters</groupId>
-        <artifactId>oasp4j-starter-cxf-server</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.starters</groupId>
-        <artifactId>oasp4j-starter-cxf-server-rest</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.starters</groupId>
-        <artifactId>oasp4j-starter-cxf-server-ws</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.modules</groupId>
-        <artifactId>oasp4j-jpa</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.modules</groupId>
-        <artifactId>oasp4j-jpa-envers</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.oasp.java.modules</groupId>
-        <artifactId>oasp4j-web</artifactId>
-        <version>${project.version}</version>
-      </dependency>
     </dependencies>
   </dependencyManagement>
 

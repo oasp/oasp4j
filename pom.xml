@@ -12,7 +12,7 @@
   <inceptionYear>2014</inceptionYear>
 
   <modules>
-    <module>bom</module>
+    <module>boms</module>
     <module>modules</module>
     <module>starters</module>
     <module>templates</module>
