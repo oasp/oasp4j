@@ -1,5 +1,6 @@
 package io.oasp.module.jpa.common.api.to;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.oasp.module.basic.common.api.to.AbstractTo;
@@ -100,6 +101,18 @@ public class SearchCriteriaTo extends AbstractTo {
   public List<OrderByTo> getSort() {
 
     return this.sort;
+  }
+
+  /**
+   * @param orderBy the {@link OrderByTo} to add to {@link #getSort() sort}. {@link List} will be created if
+   *        {@code null}.
+   */
+  public void addSort(OrderByTo orderBy) {
+
+    if (this.sort == null) {
+      this.sort = new ArrayList<>();
+    }
+    this.sort.add(orderBy);
   }
 
   /**

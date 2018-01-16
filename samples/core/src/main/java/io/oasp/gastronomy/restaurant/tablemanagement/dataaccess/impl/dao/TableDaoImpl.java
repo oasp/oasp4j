@@ -1,6 +1,16 @@
 package io.oasp.gastronomy.restaurant.tablemanagement.dataaccess.impl.dao;
 
-import static com.mysema.query.alias.Alias.$;
+import static com.querydsl.core.alias.Alias.$;
+
+import java.util.List;
+
+import javax.inject.Named;
+import javax.persistence.Query;
+
+import com.querydsl.core.alias.Alias;
+import com.querydsl.core.types.dsl.EntityPathBase;
+import com.querydsl.jpa.impl.JPAQuery;
+
 import io.oasp.gastronomy.restaurant.general.common.api.constants.NamedQueries;
 import io.oasp.gastronomy.restaurant.general.dataaccess.base.dao.ApplicationMasterDataDaoImpl;
 import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableState;
@@ -10,15 +20,6 @@ import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableSearchCri
 import io.oasp.module.jpa.common.api.to.OrderByTo;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-
-import java.util.List;
-
-import javax.inject.Named;
-import javax.persistence.Query;
-
-import com.mysema.query.alias.Alias;
-import com.mysema.query.jpa.impl.JPAQuery;
-import com.mysema.query.types.path.EntityPathBase;
 
 /**
  * Implementation of {@link TableDao}.
@@ -53,7 +54,7 @@ public class TableDaoImpl extends ApplicationMasterDataDaoImpl<TableEntity> impl
 
     TableEntity table = Alias.alias(TableEntity.class);
     EntityPathBase<TableEntity> alias = $(table);
-    JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
+    JPAQuery<TableEntity> query = new JPAQuery<TableEntity>(getEntityManager()).from(alias);
 
     Long waiterId = criteria.getWaiterId();
     if (waiterId != null) {
@@ -71,10 +72,11 @@ public class TableDaoImpl extends ApplicationMasterDataDaoImpl<TableEntity> impl
     // Add order by fields
     addOrderBy(query, alias, table, criteria.getSort());
 
-    return findPaginated(criteria, query, alias);
+    return findPaginated(criteria, query);
   }
 
-  private void addOrderBy(JPAQuery query, EntityPathBase<TableEntity> alias, TableEntity table, List<OrderByTo> sort) {
+  private void addOrderBy(JPAQuery<?> query, EntityPathBase<TableEntity> alias, TableEntity table,
+      List<OrderByTo> sort) {
 
     if (sort != null && !sort.isEmpty()) {
       for (OrderByTo orderEntry : sort) {

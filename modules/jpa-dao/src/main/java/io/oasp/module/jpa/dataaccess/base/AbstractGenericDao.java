@@ -19,14 +19,14 @@ import net.sf.mmm.util.search.base.AbstractSearchCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mysema.query.jpa.impl.JPAQuery;
-import com.mysema.query.types.Expression;
+import com.querydsl.core.types.Expression;
+import com.querydsl.jpa.impl.JPAQuery;
 
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-import io.oasp.module.jpa.common.api.to.PaginationResultTo;
 import io.oasp.module.jpa.common.api.to.PaginationTo;
 import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
 import io.oasp.module.jpa.dataaccess.api.GenericDao;
+import io.oasp.module.jpa.dataaccess.api.QueryDslHelper;
 
 /**
  * This is the abstract base-implementation of the {@link GenericDao} interface.
@@ -35,8 +35,8 @@ import io.oasp.module.jpa.dataaccess.api.GenericDao;
  * @param <E> is the generic type of the managed {@link PersistenceEntity}.
  *
  */
-// @Repository
-public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> implements GenericDao<ID, E> {
+public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> extends QueryDslHelper
+    implements GenericDao<ID, E> {
 
   /** Logger instance. */
   private static final Logger LOG = LoggerFactory.getLogger(AbstractGenericDao.class);
@@ -226,101 +226,34 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
    *
    * @param criteria contains information about the requested page.
    * @param query is a query which is preconfigured with the desired conditions for the search.
-   * @param expr is used for the final mapping from the SQL result to the entities.
    * @return a paginated list.
    */
-  protected PaginatedListTo<E> findPaginated(SearchCriteriaTo criteria, JPAQuery query, Expression<E> expr) {
+  protected PaginatedListTo<E> findPaginated(SearchCriteriaTo criteria, JPAQuery<E> query) {
 
-    applyCriteria(criteria, query);
-
-    PaginationTo pagination = criteria.getPagination();
-
-    PaginationResultTo paginationResult = createPaginationResult(pagination, query);
-
-    applyPagination(pagination, query);
-    List<E> paginatedList = query.list(expr);
-
-    return new PaginatedListTo<>(paginatedList, paginationResult);
+    return findPaginated(criteria, query, true);
   }
 
   /**
-   * Creates a {@link PaginationResultTo pagination result} for the given {@code pagination} and {@code query}.
+   * Returns a paginated list of entities according to the supplied {@link SearchCriteriaTo criteria}.
    * <p>
-   * Needs to be called before pagination is applied to the {@code query}.
-   *
-   * @param pagination contains information about the requested page.
-   * @param query is a query preconfigured with the desired conditions for the search.
-   * @return information about the applied pagination.
-   */
-  protected PaginationResultTo createPaginationResult(PaginationTo pagination, JPAQuery query) {
-
-    Long total = calculateTotalBeforePagination(pagination, query);
-
-    return new PaginationResultTo(pagination, total);
-  }
-
-  /**
-   * Calculates the total number of entities the given {@link JPAQuery query} would return without pagination applied.
+   * Applies {@code limit} and {@code offset} values to the supplied {@code query} according to the supplied
+   * {@link PaginationTo pagination} information inside {@code criteria}.
    * <p>
-   * Needs to be called before pagination is applied to the {@code query}.
+   * If a {@link PaginationTo#isTotal() total count} of available entities is requested, will also execute a second
+   * query, without pagination parameters applied, to obtain said count.
+   * <p>
+   * Will install a query timeout if {@link SearchCriteriaTo#getSearchTimeout()} is not null.
    *
-   * @param pagination is the pagination information as requested by the client.
-   * @param query is the {@link JPAQuery query} for which to calculate the total.
-   * @return the total count, or {@literal null} if {@link PaginationTo#isTotal()} is {@literal false}.
+   * @param criteria contains information about the requested page.
+   * @param query is a query which is preconfigured with the desired conditions for the search.
+   * @param applySortOrder - {@code true} to automatically {@link #applySortOrder(List, JPAQuery) apply} the
+   *        {@link SearchCriteriaTo#getSort() sort order} from the given {@link SearchCriteriaTo}, {@code false}
+   *        otherwise (to apply manually for complex queries).
+   * @return a paginated list.
    */
-  protected Long calculateTotalBeforePagination(PaginationTo pagination, JPAQuery query) {
+  protected PaginatedListTo<E> findPaginated(SearchCriteriaTo criteria, JPAQuery<E> query, boolean applySortOrder) {
 
-    Long total = null;
-    if (pagination.isTotal()) {
-      total = query.clone().count();
-    }
-
-    return total;
-  }
-
-  /**
-   * Applies the {@link PaginationTo pagination criteria} to the given {@link JPAQuery}.
-   *
-   * @param pagination is the {@link PaginationTo pagination criteria} to apply.
-   * @param query is the {@link JPAQuery} to apply to.
-   */
-  protected void applyPagination(PaginationTo pagination, JPAQuery query) {
-
-    if (pagination == PaginationTo.NO_PAGINATION) {
-      return;
-    }
-
-    Integer limit = pagination.getSize();
-    if (limit != null) {
-      query.limit(limit);
-
-      int page = pagination.getPage();
-      if (page > 0) {
-        query.offset((page - 1) * limit);
-      }
-    }
-  }
-
-  /**
-   * Applies the meta-data of the given {@link AbstractSearchCriteria search criteria} to the given {@link JPAQuery}.
-   *
-   * @param criteria is the {@link AbstractSearchCriteria search criteria} to apply.
-   * @param query is the {@link JPAQuery} to apply to.
-   */
-  protected void applyCriteria(AbstractSearchCriteria criteria, JPAQuery query) {
-
-    Integer limit = criteria.getMaximumHitCount();
-    if (limit != null) {
-      query.limit(limit);
-    }
-    int offset = criteria.getHitOffset();
-    if (offset > 0) {
-      query.offset(offset);
-    }
-    Long timeout = criteria.getSearchTimeout();
-    if (timeout != null) {
-      query.setHint("javax.persistence.query.timeout", timeout.intValue());
-    }
+    return findPaginatedGeneric(criteria, query, applySortOrder);
   }
 
   /**
@@ -328,7 +261,9 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
    *
    * @param criteria is the {@link AbstractSearchCriteria search criteria} to apply.
    * @param query is the {@link Query} to apply to.
+   * @deprecated please use {@link #applyCriteria(SearchCriteriaTo, JPAQuery)} instead.
    */
+  @Deprecated
   protected void applyCriteria(AbstractSearchCriteria criteria, Query query) {
 
     Integer limit = criteria.getMaximumHitCount();
@@ -341,7 +276,7 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
     }
     Long timeout = criteria.getSearchTimeout();
     if (timeout != null) {
-      query.setHint("javax.persistence.query.timeout", timeout.intValue());
+      query.setHint(QUERY_PROPERTY_TIMEOUT, timeout.intValue());
     }
   }
 
@@ -350,13 +285,12 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
    *
    * @param criteria is the {@link AbstractSearchCriteria search criteria} to apply.
    * @param query is the {@link JPAQuery} to apply to.
+   * @deprecated pointless method. Will be removed in a future release.
    */
-  protected void applyCriteria(SearchCriteriaTo criteria, JPAQuery query) {
+  @Deprecated
+  protected void applyCriteria(SearchCriteriaTo criteria, JPAQuery<?> query) {
 
-    Integer timeout = criteria.getSearchTimeout();
-    if (timeout != null) {
-      query.setHint("javax.persistence.query.timeout", timeout.intValue());
-    }
+    applyTimeout(query, criteria.getSearchTimeout());
   }
 
 }

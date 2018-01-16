@@ -1,6 +1,14 @@
 package io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.impl.dao;
 
-import static com.mysema.query.alias.Alias.$;
+import static com.querydsl.core.alias.Alias.$;
+
+import javax.inject.Named;
+import javax.persistence.TypedQuery;
+
+import com.querydsl.core.alias.Alias;
+import com.querydsl.core.types.dsl.EntityPathBase;
+import com.querydsl.jpa.impl.JPAQuery;
+
 import io.oasp.gastronomy.restaurant.general.common.api.constants.NamedQueries;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Role;
 import io.oasp.gastronomy.restaurant.general.dataaccess.base.dao.ApplicationMasterDataDaoImpl;
@@ -8,13 +16,6 @@ import io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api.StaffMemberE
 import io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api.dao.StaffMemberDao;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-
-import javax.inject.Named;
-import javax.persistence.TypedQuery;
-
-import com.mysema.query.alias.Alias;
-import com.mysema.query.jpa.impl.JPAQuery;
-import com.mysema.query.types.path.EntityPathBase;
 
 /**
  * Implementation of {@link StaffMemberDao}.
@@ -40,8 +41,8 @@ public class StaffMemberDaoImpl extends ApplicationMasterDataDaoImpl<StaffMember
   @Override
   public StaffMemberEntity findByLogin(String login) {
 
-    TypedQuery<StaffMemberEntity> query =
-        getEntityManager().createNamedQuery(NamedQueries.GET_STAFF_MEMBER_BY_LOGIN, StaffMemberEntity.class);
+    TypedQuery<StaffMemberEntity> query = getEntityManager().createNamedQuery(NamedQueries.GET_STAFF_MEMBER_BY_LOGIN,
+        StaffMemberEntity.class);
     query.setParameter("login", login);
     return query.getSingleResult();
   }
@@ -54,7 +55,7 @@ public class StaffMemberDaoImpl extends ApplicationMasterDataDaoImpl<StaffMember
 
     StaffMemberEntity staffMember = Alias.alias(StaffMemberEntity.class);
     EntityPathBase<StaffMemberEntity> alias = $(staffMember);
-    JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
+    JPAQuery<StaffMemberEntity> query = new JPAQuery<StaffMemberEntity>(getEntityManager()).from(alias);
 
     String firstName = criteria.getFirstName();
     if (firstName != null) {
@@ -73,6 +74,6 @@ public class StaffMemberDaoImpl extends ApplicationMasterDataDaoImpl<StaffMember
       query.where($(staffMember.getRole()).eq(role));
     }
 
-    return findPaginated(criteria, query, alias);
+    return findPaginated(criteria, query);
   }
 }

@@ -86,13 +86,13 @@
       <dependency>
         <groupId>cglib</groupId>
         <artifactId>cglib</artifactId>
-        <version>3.1</version>
+        <version>3.2.5</version>
       </dependency>
       <!-- Support for dynamic and type-safe JPA queries -->
       <dependency>
-        <groupId>com.mysema.querydsl</groupId>
+        <groupId>com.querydsl</groupId>
         <artifactId>querydsl-jpa</artifactId>
-        <version>3.4.3</version>
+        <version>4.1.4</version>
       </dependency>
       <!-- DataBase Connection Pooling -->
       <dependency>
@@ -347,6 +347,11 @@
         <version>${project.version}</version>
       </dependency>
       <dependency>
+        <groupId>io.oasp.java.starters</groupId>
+        <artifactId>oasp4j-starter-spring-data-jpa</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
         <groupId>io.oasp.java.modules</groupId>
         <artifactId>oasp4j-jpa</artifactId>
         <version>${project.version}</version>
@@ -354,6 +359,16 @@
       <dependency>
         <groupId>io.oasp.java.modules</groupId>
         <artifactId>oasp4j-jpa-envers</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.oasp.java.modules</groupId>
+        <artifactId>oasp4j-jpa-dao</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.oasp.java.modules</groupId>
+        <artifactId>oasp4j-jpa-spring-data</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

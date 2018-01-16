@@ -1,6 +1,18 @@
 package io.oasp.gastronomy.restaurant.offermanagement.dataaccess.impl.dao;
 
-import static com.mysema.query.alias.Alias.$;
+import static com.querydsl.core.alias.Alias.$;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Named;
+
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.alias.Alias;
+import com.querydsl.core.types.dsl.EntityPathBase;
+import com.querydsl.jpa.JPQLQuery;
+import com.querydsl.jpa.impl.JPAQuery;
+
 import io.oasp.gastronomy.restaurant.general.dataaccess.base.dao.ApplicationMasterDataDaoImpl;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.ProductSortByHitEntry;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.DrinkEntity;
@@ -14,17 +26,6 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 import io.oasp.module.jpa.common.api.to.PaginationResultTo;
 import io.oasp.module.jpa.common.api.to.PaginationTo;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Named;
-
-import com.mysema.query.BooleanBuilder;
-import com.mysema.query.alias.Alias;
-import com.mysema.query.jpa.JPQLQuery;
-import com.mysema.query.jpa.impl.JPAQuery;
-import com.mysema.query.types.path.EntityPathBase;
 
 /**
  * Implementation of {@link ProductDao}.
@@ -59,7 +60,7 @@ public class ProductDaoImpl extends ApplicationMasterDataDaoImpl<ProductEntity> 
     }
 
     ProductEntity product = Alias.alias(ProductEntity.class);
-    JPQLQuery query = new JPAQuery(getEntityManager()).from($(product));
+    JPQLQuery<ProductEntity> query = new JPAQuery<ProductEntity>(getEntityManager()).from($(product));
     BooleanBuilder builder = new BooleanBuilder();
 
     /*
@@ -83,22 +84,23 @@ public class ProductDaoImpl extends ApplicationMasterDataDaoImpl<ProductEntity> 
       builder.or($(product).instanceOf(SideDishEntity.class));
     }
 
+    query.where(builder);
     if (sortBy.getSortByEntry().equals(ProductSortByHitEntry.DESCRIPTION)) {
       if (sortBy.getOrderBy().isDesc()) {
-        query.where(builder).orderBy($(product.getDescription()).desc());
+        query.orderBy($(product.getDescription()).desc());
       } else {
-        query.where(builder).orderBy($(product.getDescription()).asc());
+        query.orderBy($(product.getDescription()).asc());
       }
     } else {
       if (sortBy.getOrderBy().isDesc()) {
-        query.where(builder).orderBy($(product.getId()).desc());
+        query.orderBy($(product.getId()).desc());
       } else {
-        query.where(builder).orderBy($(product.getId()).asc());
+        query.orderBy($(product.getId()).asc());
       }
 
     }
 
-    List<ProductEntity> result = query.list($(product));
+    List<ProductEntity> result = query.fetch();
     return result;
   }
 
@@ -107,7 +109,7 @@ public class ProductDaoImpl extends ApplicationMasterDataDaoImpl<ProductEntity> 
 
     ProductEntity product = Alias.alias(ProductEntity.class);
     EntityPathBase<ProductEntity> alias = $(product);
-    JPAQuery query = new JPAQuery(getEntityManager()).from(alias);
+    JPAQuery<ProductEntity> query = new JPAQuery<ProductEntity>(getEntityManager()).from(alias);
 
     String name = criteria.getName();
     if (name != null) {
@@ -143,6 +145,6 @@ public class ProductDaoImpl extends ApplicationMasterDataDaoImpl<ProductEntity> 
     }
     query.where(builder);
 
-    return findPaginated(criteria, query, alias);
+    return findPaginated(criteria, query);
   }
 }

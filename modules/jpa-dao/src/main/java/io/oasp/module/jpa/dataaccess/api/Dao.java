@@ -7,10 +7,8 @@ import net.sf.mmm.util.entity.api.PersistenceEntity;
  * {@link PersistenceEntity#getId() primary key}.
  *
  * @see GenericDao
- * @see AbstractPersistenceEntity
  *
  * @param <E> is the generic type of the {@link PersistenceEntity}.
- *
  */
 public interface Dao<E extends PersistenceEntity<Long>> extends GenericDao<Long, E> {
 
