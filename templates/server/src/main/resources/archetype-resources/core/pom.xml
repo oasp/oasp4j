@@ -57,6 +57,16 @@
       <artifactId>oasp4j-jpa-envers</artifactId>
     </dependency>
 
+    <!-- auto-configure datasource 
+      https://stackoverflow.com/questions/34964066/spring-boot-doesnt-use-datasource-properties 
+      https://github.com/oasp/oasp4j/issues/608
+      https://github.com/oasp/oasp4j/issues/613
+      -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-jdbc</artifactId>
+    </dependency>   
+
     <dependency>
       <groupId>io.oasp.java.modules</groupId>
       <artifactId>oasp4j-web</artifactId>
