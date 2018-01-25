@@ -7,7 +7,6 @@
     <artifactId>${rootArtifactId}</artifactId>
     <version>${version}</version>
   </parent>
-  <groupId>${groupId}</groupId>
   <artifactId>${rootArtifactId}-core</artifactId>
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
@@ -20,8 +19,9 @@
     </dependency>
 
     <dependency>
-      <groupId>io.oasp.java.modules</groupId>
-      <artifactId>oasp4j-logging</artifactId>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>${rootArtifactId}-api</artifactId>
+      <version>${project.version}</version>
     </dependency>
 
     <dependency>
@@ -57,15 +57,15 @@
       <artifactId>oasp4j-jpa-envers</artifactId>
     </dependency>
 
-    <!-- auto-configure datasource 
-      https://stackoverflow.com/questions/34964066/spring-boot-doesnt-use-datasource-properties 
+    <!-- auto-configure datasource
+      https://stackoverflow.com/questions/34964066/spring-boot-doesnt-use-datasource-properties
       https://github.com/oasp/oasp4j/issues/608
       https://github.com/oasp/oasp4j/issues/613
       -->
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-jdbc</artifactId>
-    </dependency>   
+    </dependency>
 
     <dependency>
       <groupId>io.oasp.java.modules</groupId>
@@ -187,7 +187,7 @@
         </exclusion>
       </exclusions>
     </dependency>
-         
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
@@ -240,7 +240,7 @@
     </dependency>
     -->
   </dependencies>
-  
+
   <profiles>
     <profile>
       <id>embedded</id>
@@ -256,7 +256,7 @@
       </dependencies>
     </profile>
   </profiles>
-  
+
   <build>
     <resources>
       <resource>

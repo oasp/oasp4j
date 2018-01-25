@@ -11,10 +11,13 @@
   <properties>
     <spring.boot.version>1.5.3.RELEASE</spring.boot.version>
     <java.version>1.7</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <oasp.test.excluded.groups>io.oasp.module.test.common.api.category.CategorySubsystemTest,io.oasp.module.test.common.api.category.CategorySystemTest</oasp.test.excluded.groups>
   </properties>
 
   <modules>
+    <module>api</module>
     <module>core</module>
 #if($earProjectName != '.')
     <module>${earProjectName}</module>

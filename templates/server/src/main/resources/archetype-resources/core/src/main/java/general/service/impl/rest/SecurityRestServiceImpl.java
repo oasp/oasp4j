@@ -6,6 +6,7 @@ package ${package}.general.service.impl.rest;
 import ${package}.general.common.api.exception.NoActiveUserException;
 import ${package}.general.common.api.security.UserData;
 import ${package}.general.common.api.to.UserDetailsClientTo;
+import ${package}.general.service.api.rest.SecurityRestService;
 
 import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
@@ -25,14 +26,10 @@ import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 
 /**
- * The security REST service provides access to the csrf token, the authenticated user's meta-data. Furthermore, it
- * provides functionality to check permissions and roles of the authenticated user.
- *
+ * Implementation of {@link SecurityRestService}.
  */
-@Path("/security/v1")
-@Named("SecurityRestService")
 @Transactional
-public class SecurityRestServiceImpl {
+public class SecurityRestServiceImpl implements SecurityRestService {
 
   /** Logger instance. */
   private static final Logger LOG = LoggerFactory.getLogger(SecurityRestServiceImpl.class);
@@ -42,16 +39,7 @@ public class SecurityRestServiceImpl {
    */
   private CsrfTokenRepository csrfTokenRepository;
 
-  /**
-   * Retrieves the CSRF token from the server session.
-   *
-   * @param request {@link HttpServletRequest} to retrieve the current session from
-   * @param response {@link HttpServletResponse} to send additional information
-   * @return the Spring Security {@link CsrfToken}
-   */
-  @Produces(MediaType.APPLICATION_JSON)
-  @GET
-  @Path("/csrftoken/")
+  @Override
   @PermitAll
   public CsrfToken getCsrfToken(@Context HttpServletRequest request, @Context HttpServletResponse response) {
 
@@ -66,15 +54,7 @@ public class SecurityRestServiceImpl {
     return token;
   }
 
-  /**
-   * Gets the profile of the user being currently logged in.
-   *
-   * @param request provided by the RS-Context
-   * @return the {@link UserData} taken from the Spring Security context
-   */
-  @Produces(MediaType.APPLICATION_JSON)
-  @GET
-  @Path("/currentuser/")
+  @Override
   @PermitAll
   public UserDetailsClientTo getCurrentUser(@Context HttpServletRequest request) {
 
