@@ -187,6 +187,10 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> im
    */
   protected Collection<ID> toCollection(Iterable<ID> ids) {
 
+    if (ids instanceof Collection) {
+      return (Collection<ID>) ids;
+    }
+
     final Collection<ID> idsList = new ArrayList<>();
     for (final ID id : ids) {
       idsList.add(id);
