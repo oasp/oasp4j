@@ -19,7 +19,6 @@ import io.oasp.module.basic.common.api.config.SpringProfileConstants;
 
 /**
  * This type provides web security configuration for testing purposes.
- *
  */
 @Configuration
 @EnableWebSecurity

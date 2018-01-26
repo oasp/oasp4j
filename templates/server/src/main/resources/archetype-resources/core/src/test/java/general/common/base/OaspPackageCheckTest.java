@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package}.general.common.base;
 
 import java.util.HashSet;
@@ -10,7 +7,6 @@ import net.sf.mmm.util.reflect.api.ReflectionUtil;
 import net.sf.mmm.util.reflect.base.ReflectionUtilImpl;
 
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import io.oasp.module.basic.common.api.reflect.OaspPackage;
@@ -20,7 +16,6 @@ import io.oasp.module.test.common.base.ModuleTest;
  * This test verifies that the entire code of your code-base is located in {@link OaspPackage${symbol_pound}isValid() valid OASP
  * packages}.
  */
-@Ignore("Currently fails, see ${symbol_pound}498")
 public class OaspPackageCheckTest extends ModuleTest {
 
   /**

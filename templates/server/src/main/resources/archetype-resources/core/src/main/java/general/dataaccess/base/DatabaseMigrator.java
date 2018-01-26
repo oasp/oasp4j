@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package}.general.dataaccess.base;
 
 import javax.sql.DataSource;
@@ -9,7 +6,6 @@ import org.flywaydb.core.Flyway;
 
 /**
  * Type to migrate the database. Gets initialized before hibernate.
- *
  */
 public class DatabaseMigrator {
 
