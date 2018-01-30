@@ -48,6 +48,37 @@
         remoteURI="${github.remoteURIs.oasp4j}"
         pushURI="https://github.com/oasp/oasp4j"/>
   </setupTask>
+  <setupTask
+      xsi:type="setup.workingsets:WorkingSetTask">
+    <workingSet
+        name="samples"
+        id="oasp4j.samples">
+      <predicate
+          xsi:type="predicates:NamePredicate"
+          pattern=".*-sample.*"/>
+    </workingSet>
+    <workingSet
+        name="template"
+        id="oasp4j.templates">
+      <predicate
+          xsi:type="predicates:NamePredicate"
+          pattern=".*-template.*"/>
+    </workingSet>
+    <workingSet
+        name="starter"
+        id="oasp4j.starter">
+      <predicate
+          xsi:type="predicates:NamePredicate"
+          pattern=".*-starter.*"/>
+    </workingSet>
+    <workingSet
+        name="modules"
+        id="oasp4j.modules">
+      <predicate
+          xsi:type="workingsets:ExclusionPredicate"
+          excludedWorkingSet="//@setupTasks.2/@workingSets.0 //@setupTasks.2/@workingSets.2 //@setupTasks.2/@workingSets.1"/>
+    </workingSet>
+  </setupTask>
   <stream name="master">
     <setupTask
         xsi:type="maven:MavenImportTask"
@@ -102,37 +133,6 @@
           </operand>
         </predicate>
       </sourceLocator>
-    </setupTask>
-    <setupTask
-        xsi:type="setup.workingsets:WorkingSetTask">
-      <workingSet
-          name="samples"
-          id="oasp4j.samples">
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="*-sample*"/>
-      </workingSet>
-      <workingSet
-          name="template"
-          id="oasp4j.templates">
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="*-template*"/>
-      </workingSet>
-      <workingSet
-          name="starter"
-          id="oasp4j.starter">
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="*-starter*"/>
-      </workingSet>
-      <workingSet
-          name="modules"
-          id="oasp4j.modules">
-        <predicate
-            xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@streams[name='develop']/@setupTasks.1/@workingSets.0 //@streams[name='develop']/@setupTasks.1/@workingSets.2 //@streams[name='develop']/@setupTasks.1/@workingSets.1"/>
-      </workingSet>
     </setupTask>
   </stream>
   <logicalProjectContainer
