@@ -6,15 +6,15 @@ import javax.jws.WebService;
 
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
-import io.oasp.gastronomy.restaurant.tablemanagement.service.api.ws.v1_0.TablemanagmentWebService;
+import io.oasp.gastronomy.restaurant.tablemanagement.service.api.ws.v1_0.TablemanagementWebService;
 
 /**
- * Implementation of {@link TablemanagmentWebService}.
+ * Implementation of {@link TablemanagementWebService}.
  *
  */
 @Named("TablemanagementWebService")
-@WebService(endpointInterface = "io.oasp.gastronomy.restaurant.tablemanagement.service.api.ws.v1_0.TablemanagmentWebService")
-public class TablemanagementWebServiceImpl implements TablemanagmentWebService {
+@WebService(endpointInterface = "io.oasp.gastronomy.restaurant.tablemanagement.service.api.ws.v1_0.TablemanagementWebService", portName = "TablemanagementWebService", serviceName = "TablemanagementWebService")
+public class TablemanagementWebServiceImpl implements TablemanagementWebService {
 
   private Tablemanagement tableManagement;
 

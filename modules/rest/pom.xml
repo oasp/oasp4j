@@ -24,8 +24,12 @@
       <artifactId>javax.ws.rs-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>oasp4j-service</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>oasp4j-json</artifactId>
     </dependency>
     <dependency>
       <groupId>javax.inject</groupId>

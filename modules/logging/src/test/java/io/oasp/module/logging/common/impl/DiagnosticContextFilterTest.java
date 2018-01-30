@@ -14,19 +14,12 @@ import org.springframework.test.util.ReflectionTestUtils;
 import io.oasp.module.test.common.base.ModuleTest;
 
 /**
- *
- * @author jmolinar
+ * Test of {@link DiagnosticContextFilter}.
  */
 public class DiagnosticContextFilterTest extends ModuleTest {
 
-  /**
-   *
-   */
   private static final String CORRELATION_ID_HEADER_NAME_PARAM = "correlationIdHttpHeaderName";
 
-  /**
-   *
-   */
   private static final String CORRELATION_ID_HEADER_NAME_PARAM_FIELD_NAME = "CORRELATION_ID_HEADER_NAME_PARAM";
 
   @Rule

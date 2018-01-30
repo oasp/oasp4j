@@ -17,7 +17,15 @@
     <module>test</module>
     <module>configuration</module>
     <module>beanmapping</module>
+    <module>service</module>
+    <module>json</module>
     <module>rest</module>
+    <module>cxf-client</module>
+    <module>cxf-client-rest</module>
+    <module>cxf-client-ws</module>
+    <module>cxf-server</module>
+    <module>cxf-server-rest</module>
+    <module>cxf-server-ws</module>
     <module>security</module>
     <module>jpa</module>
     <module>jpa-envers</module>
