@@ -1,8 +1,6 @@
-package io.oasp.module.jpa.common.api.to;
+package io.oasp.module.basic.common.api.to;
 
 import net.sf.mmm.util.exception.api.NlsIllegalArgumentException;
-
-import io.oasp.module.basic.common.api.to.AbstractTo;
 
 /**
  * Pagination information about a paginated query.

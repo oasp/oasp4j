@@ -30,8 +30,8 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionEto;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.salesmanagement.service.api.rest.SalesmanagementRestService;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-import io.oasp.module.jpa.common.api.to.PaginationTo;
+import io.oasp.module.basic.common.api.to.PaginatedListTo;
+import io.oasp.module.basic.common.api.to.PaginationTo;
 import io.oasp.module.service.common.api.client.ServiceClientFactory;
 
 /**

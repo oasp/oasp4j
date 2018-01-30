@@ -2,7 +2,7 @@ package io.oasp.gastronomy.restaurant.general.logic.base;
 
 
 import io.oasp.gastronomy.restaurant.general.common.base.AbstractBeanMapperSupport;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.basic.common.api.to.PaginatedListTo;
 
 import java.util.ArrayList;
 import java.util.Collection;

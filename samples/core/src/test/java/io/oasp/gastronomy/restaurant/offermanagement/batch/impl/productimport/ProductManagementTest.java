@@ -21,7 +21,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.Offermanagement;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductEto;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
-import io.oasp.module.jpa.common.api.to.OrderDirection;
+import io.oasp.module.basic.common.api.to.OrderDirection;
 import io.oasp.module.test.common.base.ComponentTest;
 
 /**

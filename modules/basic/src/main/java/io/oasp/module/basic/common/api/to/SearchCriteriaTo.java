@@ -1,8 +1,6 @@
-package io.oasp.module.jpa.common.api.to;
+package io.oasp.module.basic.common.api.to;
 
 import java.util.List;
-
-import io.oasp.module.basic.common.api.to.AbstractTo;
 
 /**
  * This is the interface for a {@link net.sf.mmm.util.transferobject.api.TransferObject transfer-object } with the

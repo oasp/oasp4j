@@ -5,7 +5,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.ProductEntit
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.basic.common.api.to.PaginatedListTo;
 import io.oasp.module.jpa.dataaccess.api.MasterDataDao;
 
 import java.util.List;

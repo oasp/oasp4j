@@ -1,7 +1,7 @@
 package io.oasp.gastronomy.restaurant.offermanagement.logic.api.to;
 
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.ProductSortByHitEntry;
-import io.oasp.module.jpa.common.api.to.OrderDirection;
+import io.oasp.module.basic.common.api.to.OrderDirection;
 
 /**
  *

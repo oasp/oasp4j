@@ -1,11 +1,9 @@
-package io.oasp.module.jpa.common.api.to;
+package io.oasp.module.basic.common.api.to;
 
 import java.util.List;
 
 import net.sf.mmm.util.entity.api.PersistenceEntity;
 import net.sf.mmm.util.transferobject.api.TransferObject;
-
-import io.oasp.module.basic.common.api.to.AbstractTo;
 
 /**
  * A paginated list of objects with additional pagination information.

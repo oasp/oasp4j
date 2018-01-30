@@ -32,7 +32,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcFindOrd
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageBill;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrder;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcManageOrderPosition;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.basic.common.api.to.PaginatedListTo;
 
 /**
  *

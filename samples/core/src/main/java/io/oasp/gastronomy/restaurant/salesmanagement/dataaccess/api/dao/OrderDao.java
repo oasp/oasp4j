@@ -3,7 +3,7 @@ package io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao;
 import io.oasp.gastronomy.restaurant.general.dataaccess.api.dao.ApplicationDao;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.basic.common.api.to.PaginatedListTo;
 
 import java.util.List;
 

@@ -1,6 +1,4 @@
-package io.oasp.module.jpa.common.api.to;
-
-import io.oasp.module.basic.common.api.to.AbstractTo;
+package io.oasp.module.basic.common.api.to;
 
 /**
  * Transfer object to transmit order criteria

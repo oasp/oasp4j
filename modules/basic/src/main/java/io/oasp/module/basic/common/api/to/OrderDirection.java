@@ -1,4 +1,4 @@
-package io.oasp.module.jpa.common.api.to;
+package io.oasp.module.basic.common.api.to;
 
 /**
  * {@link Enum} for sort order.

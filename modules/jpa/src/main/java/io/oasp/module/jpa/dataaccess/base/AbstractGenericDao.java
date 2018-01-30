@@ -25,10 +25,10 @@ import org.slf4j.LoggerFactory;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.Expression;
 
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-import io.oasp.module.jpa.common.api.to.PaginationResultTo;
-import io.oasp.module.jpa.common.api.to.PaginationTo;
-import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
+import io.oasp.module.basic.common.api.to.PaginatedListTo;
+import io.oasp.module.basic.common.api.to.PaginationResultTo;
+import io.oasp.module.basic.common.api.to.PaginationTo;
+import io.oasp.module.basic.common.api.to.SearchCriteriaTo;
 import io.oasp.module.jpa.dataaccess.api.GenericDao;
 
 /**

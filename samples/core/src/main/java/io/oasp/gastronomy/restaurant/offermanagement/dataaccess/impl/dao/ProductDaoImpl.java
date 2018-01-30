@@ -11,9 +11,9 @@ import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.ProductD
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-import io.oasp.module.jpa.common.api.to.PaginationResultTo;
-import io.oasp.module.jpa.common.api.to.PaginationTo;
+import io.oasp.module.basic.common.api.to.PaginatedListTo;
+import io.oasp.module.basic.common.api.to.PaginationResultTo;
+import io.oasp.module.basic.common.api.to.PaginationTo;
 
 import java.util.ArrayList;
 import java.util.List;

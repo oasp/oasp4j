@@ -15,7 +15,7 @@ import io.oasp.gastronomy.restaurant.tablemanagement.common.api.datatype.TableSt
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.tablemanagement.service.api.rest.TablemanagementRestService;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.basic.common.api.to.PaginatedListTo;
 import io.oasp.module.service.common.api.client.ServiceClientFactory;
 import io.oasp.module.service.common.api.client.config.ServiceClientConfigBuilder;
 
