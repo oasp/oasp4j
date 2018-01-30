@@ -131,6 +131,12 @@
                 xsi:type="predicates:NamePredicate"
                 pattern="oasp4j-modules"/>
           </operand>
+          <operand
+              xsi:type="predicates:NotPredicate">
+            <operand
+                xsi:type="predicates:NamePredicate"
+                pattern="oasp4j-starters"/>
+          </operand>
         </predicate>
       </sourceLocator>
     </setupTask>
