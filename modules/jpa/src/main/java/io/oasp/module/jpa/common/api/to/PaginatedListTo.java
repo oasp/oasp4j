@@ -13,7 +13,10 @@ import io.oasp.module.basic.common.api.to.AbstractTo;
  * @param <E> is the generic type of the objects. Will usually be a {@link PersistenceEntity persistent entity} when
  *        used in the data layer, or a {@link TransferObject transfer object}.
  *
+ * @deprecated has been moved to {@link io.oasp.module.basic.common.api.to.PaginatedListTo oasp-basic module}. Please
+ *             use the new implementation in favor of this unsupported one.
  */
+@Deprecated
 public class PaginatedListTo<E> extends AbstractTo {
 
   /** UID for serialization. */

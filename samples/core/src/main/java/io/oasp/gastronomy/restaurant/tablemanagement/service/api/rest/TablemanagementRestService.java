@@ -16,7 +16,7 @@ import io.oasp.gastronomy.restaurant.general.common.api.RestService;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.Tablemanagement;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableEto;
 import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableSearchCriteriaTo;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.basic.common.api.to.PaginatedListTo;
 
 /**
  * The service class for REST calls in order to execute the methods in {@link Tablemanagement}.

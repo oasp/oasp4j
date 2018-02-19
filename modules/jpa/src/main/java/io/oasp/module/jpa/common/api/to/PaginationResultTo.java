@@ -7,7 +7,10 @@ import io.oasp.module.basic.common.api.to.AbstractTo;
 /**
  * Pagination information about a paginated query.
  *
+ * @deprecated has been moved to {@link io.oasp.module.basic.common.api.to.PaginationResultTo oasp-basic module}. Please
+ *             use the new implementation in favor of this unsupported one.
  */
+@Deprecated
 public class PaginationResultTo extends AbstractTo {
 
   /** UID for serialization. */

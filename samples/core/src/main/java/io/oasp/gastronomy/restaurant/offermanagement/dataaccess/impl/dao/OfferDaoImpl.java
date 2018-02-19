@@ -13,7 +13,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.OfferDao
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSortBy;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.basic.common.api.to.PaginatedListTo;
 
 import java.util.ArrayList;
 import java.util.List;

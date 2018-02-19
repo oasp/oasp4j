@@ -12,7 +12,10 @@ import io.oasp.module.basic.common.api.to.AbstractTo;
  * This interface only holds the necessary settings for the pagination part of a query. For your individual search, you
  * extend {@link SearchCriteriaTo} to create a java bean with all the fields for your search.
  *
+ * @deprecated has been moved to {@link io.oasp.module.basic.common.api.to.SearchCriteriaTo oasp-basic module}. Please
+ *             use the new implementation in favor of this unsupported one.
  */
+@Deprecated
 public class SearchCriteriaTo extends AbstractTo {
 
   /** UID for serialization. */

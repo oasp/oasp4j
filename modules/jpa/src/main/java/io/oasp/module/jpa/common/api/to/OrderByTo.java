@@ -3,8 +3,12 @@ package io.oasp.module.jpa.common.api.to;
 import io.oasp.module.basic.common.api.to.AbstractTo;
 
 /**
- * Transfer object to transmit order criteria
+ * Transfer object to transmit order criteria.
+ *
+ * @deprecated has been moved to {@link io.oasp.module.basic.common.api.to.OrderByTo oasp-basic module}. Please use the
+ *             new implementation in favor of this unsupported one.
  */
+@Deprecated
 public class OrderByTo extends AbstractTo {
 
   private static final long serialVersionUID = 1L;

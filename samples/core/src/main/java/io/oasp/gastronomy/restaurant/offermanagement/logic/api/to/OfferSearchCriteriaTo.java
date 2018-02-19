@@ -2,7 +2,7 @@ package io.oasp.gastronomy.restaurant.offermanagement.logic.api.to;
 
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferState;
-import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
+import io.oasp.module.basic.common.api.to.SearchCriteriaTo;
 
 /**
  * This is the {@link SearchCriteriaTo search criteria} {@link net.sf.mmm.util.transferobject.api.TransferObject TO}

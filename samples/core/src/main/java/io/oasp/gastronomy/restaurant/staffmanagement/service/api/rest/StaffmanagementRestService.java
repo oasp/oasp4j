@@ -16,7 +16,7 @@ import io.oasp.gastronomy.restaurant.general.common.api.RestService;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.Staffmanagement;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberEto;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberSearchCriteriaTo;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.basic.common.api.to.PaginatedListTo;
 
 /**
  *

@@ -10,7 +10,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionE
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.usecase.UcFindOrder;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.base.usecase.AbstractOrderUc;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.basic.common.api.to.PaginatedListTo;
 
 import java.util.ArrayList;
 import java.util.List;

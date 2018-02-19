@@ -1,12 +1,9 @@
-package io.oasp.module.jpa.common.api.to;
+package io.oasp.module.basic.common.api.to;
 
 /**
  * {@link Enum} for sort order.
  *
- * @deprecated has been moved to {@link io.oasp.module.basic.common.api.to.OrderDirection oasp-basic module}. Please use
- *             the new implementation in favor of this unsupported one.
  */
-@Deprecated
 public enum OrderDirection {
 
   /** Sort in ascending order. */
