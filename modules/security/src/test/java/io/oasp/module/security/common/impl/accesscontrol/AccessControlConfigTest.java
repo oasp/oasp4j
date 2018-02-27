@@ -19,48 +19,67 @@ import io.oasp.module.test.common.base.ModuleTest;
  */
 public class AccessControlConfigTest extends ModuleTest {
 
+  /**
+   * Test of {@link AccessControlConfig#getAccessControl(String)} with top-level chief group.
+   */
   @Test
   // @RolesAllowed only used to ensure that the constant can be referenced here
   @RolesAllowed(AccessControlConfigSimple.PERMISSION_FIND_TABLE)
-  public void testSimple() {
+  public void testGetAccessControl() {
 
-    // given + when
+    // given
     AccessControlConfigSimple config = new AccessControlConfigSimple();
-    AccessControlGroup chief = (AccessControlGroup) config.getAccessControl(AccessControlConfigSimple.GROUP_CHIEF);
+    String groupChief = AccessControlConfigSimple.GROUP_CHIEF;
+
+    // when
+    AccessControlGroup chief = (AccessControlGroup) config.getAccessControl(groupChief);
 
     // then
     assertThat(chief).isNotNull();
-    assertThat(chief.getId()).isEqualTo(AccessControlConfigSimple.GROUP_CHIEF);
-    assertThat(flatten(chief.getPermissions())).containsExactly(AccessControlConfigSimple.PERMISSION_SAVE_OFFER,
-        AccessControlConfigSimple.PERMISSION_SAVE_PRODUCT, AccessControlConfigSimple.PERMISSION_SAVE_STAFF_MEMBER,
-        AccessControlConfigSimple.PERMISSION_DELETE_OFFER, AccessControlConfigSimple.PERMISSION_DELETE_PRODUCT,
-        AccessControlConfigSimple.PERMISSION_DELETE_STAFF_MEMBER,
+    assertThat(chief.getId()).isEqualTo(groupChief);
+    assertThat(flatten(chief.getPermissions())).containsExactlyInAnyOrder(
+        AccessControlConfigSimple.PERMISSION_SAVE_OFFER, AccessControlConfigSimple.PERMISSION_SAVE_PRODUCT,
+        AccessControlConfigSimple.PERMISSION_SAVE_STAFF_MEMBER, AccessControlConfigSimple.PERMISSION_DELETE_OFFER,
+        AccessControlConfigSimple.PERMISSION_DELETE_PRODUCT, AccessControlConfigSimple.PERMISSION_DELETE_STAFF_MEMBER,
         AccessControlConfigSimple.PERMISSION_DELETE_ORDER_POSITION, AccessControlConfigSimple.PERMISSION_DELETE_TABLE);
     AccessControlGroup waiter = getSingleInherit(chief);
     assertThat(waiter).isNotNull();
     assertThat(waiter.getId()).isEqualTo(AccessControlConfigSimple.GROUP_WAITER);
-    assertThat(flatten(waiter.getPermissions())).containsExactly(AccessControlConfigSimple.PERMISSION_SAVE_TABLE);
+    assertThat(flatten(waiter.getPermissions()))
+        .containsExactlyInAnyOrder(AccessControlConfigSimple.PERMISSION_SAVE_TABLE);
     AccessControlGroup barkeeper = getSingleInherit(waiter);
     assertThat(barkeeper).isNotNull();
     assertThat(barkeeper.getId()).isEqualTo(AccessControlConfigSimple.GROUP_BARKEEPER);
-    assertThat(flatten(barkeeper.getPermissions())).containsExactly(AccessControlConfigSimple.PERMISSION_FIND_BILL,
-        AccessControlConfigSimple.PERMISSION_SAVE_BILL, AccessControlConfigSimple.PERMISSION_DELETE_BILL,
-        AccessControlConfigSimple.PERMISSION_DELETE_ORDER);
+    assertThat(flatten(barkeeper.getPermissions())).containsExactlyInAnyOrder(
+        AccessControlConfigSimple.PERMISSION_FIND_BILL, AccessControlConfigSimple.PERMISSION_SAVE_BILL,
+        AccessControlConfigSimple.PERMISSION_DELETE_BILL, AccessControlConfigSimple.PERMISSION_DELETE_ORDER);
     AccessControlGroup cook = getSingleInherit(barkeeper);
     assertThat(cook).isNotNull();
     assertThat(cook.getId()).isEqualTo(AccessControlConfigSimple.GROUP_COOK);
-    assertThat(flatten(cook.getPermissions())).containsExactly(AccessControlConfigSimple.PERMISSION_FIND_ORDER,
-        AccessControlConfigSimple.PERMISSION_SAVE_ORDER, AccessControlConfigSimple.PERMISSION_FIND_ORDER_POSITION,
+    assertThat(flatten(cook.getPermissions())).containsExactlyInAnyOrder(
+        AccessControlConfigSimple.PERMISSION_FIND_ORDER, AccessControlConfigSimple.PERMISSION_SAVE_ORDER,
+        AccessControlConfigSimple.PERMISSION_FIND_ORDER_POSITION,
         AccessControlConfigSimple.PERMISSION_SAVE_ORDER_POSITION);
     AccessControlGroup readMasterData = getSingleInherit(cook);
     assertThat(readMasterData).isNotNull();
     assertThat(readMasterData.getId()).isEqualTo(AccessControlConfigSimple.GROUP_READ_MASTER_DATA);
-    assertThat(flatten(readMasterData.getPermissions())).containsExactly(
+    assertThat(flatten(readMasterData.getPermissions())).containsExactlyInAnyOrder(
         AccessControlConfigSimple.PERMISSION_FIND_OFFER, AccessControlConfigSimple.PERMISSION_FIND_PRODUCT,
         AccessControlConfigSimple.PERMISSION_FIND_STAFF_MEMBER, AccessControlConfigSimple.PERMISSION_FIND_TABLE);
     assertThat(readMasterData.getInherits()).isEmpty();
+  }
 
-    // and when
+  /**
+   * Test of {@link AccessControlConfig#collectAccessControlIds(String, Set)} with
+   * {@link AccessControlConfigSimple#GROUP_READ_MASTER_DATA}.
+   */
+  @Test
+  public void testCollectAccessControlIds4ReadMasterData() {
+
+    // given
+    AccessControlConfigSimple config = new AccessControlConfigSimple();
+
+    // when
     Set<String> permissions = new HashSet<>();
     config.collectAccessControlIds(AccessControlConfigSimple.GROUP_READ_MASTER_DATA, permissions);
 
@@ -68,10 +87,22 @@ public class AccessControlConfigTest extends ModuleTest {
     assertThat(permissions).containsExactlyInAnyOrder(AccessControlConfigSimple.GROUP_READ_MASTER_DATA,
         AccessControlConfigSimple.PERMISSION_FIND_OFFER, AccessControlConfigSimple.PERMISSION_FIND_PRODUCT,
         AccessControlConfigSimple.PERMISSION_FIND_STAFF_MEMBER, AccessControlConfigSimple.PERMISSION_FIND_TABLE);
+  }
 
-    // and when
-    permissions = new HashSet<>();
-    config.collectAccessControlIds(AccessControlConfigSimple.GROUP_CHIEF, permissions);
+  /**
+   * Test of {@link AccessControlConfig#collectAccessControlIds(String, Set)} with
+   * {@link AccessControlConfigSimple#GROUP_CHIEF}.
+   */
+  @Test
+  public void testCollectAccessControlIds4Chief() {
+
+    // given
+    AccessControlConfigSimple config = new AccessControlConfigSimple();
+    String groupChief = AccessControlConfigSimple.GROUP_CHIEF;
+
+    // when
+    Set<String> permissions = new HashSet<>();
+    config.collectAccessControlIds(groupChief, permissions);
 
     // then
     assertThat(permissions).containsExactlyInAnyOrder(AccessControlConfigSimple.GROUP_READ_MASTER_DATA,
@@ -88,10 +119,9 @@ public class AccessControlConfigTest extends ModuleTest {
         //
         AccessControlConfigSimple.GROUP_WAITER, AccessControlConfigSimple.PERMISSION_SAVE_TABLE,
         //
-        AccessControlConfigSimple.GROUP_CHIEF, AccessControlConfigSimple.PERMISSION_SAVE_OFFER,
-        AccessControlConfigSimple.PERMISSION_SAVE_PRODUCT, AccessControlConfigSimple.PERMISSION_SAVE_STAFF_MEMBER,
-        AccessControlConfigSimple.PERMISSION_DELETE_OFFER, AccessControlConfigSimple.PERMISSION_DELETE_PRODUCT,
-        AccessControlConfigSimple.PERMISSION_DELETE_STAFF_MEMBER,
+        groupChief, AccessControlConfigSimple.PERMISSION_SAVE_OFFER, AccessControlConfigSimple.PERMISSION_SAVE_PRODUCT,
+        AccessControlConfigSimple.PERMISSION_SAVE_STAFF_MEMBER, AccessControlConfigSimple.PERMISSION_DELETE_OFFER,
+        AccessControlConfigSimple.PERMISSION_DELETE_PRODUCT, AccessControlConfigSimple.PERMISSION_DELETE_STAFF_MEMBER,
         AccessControlConfigSimple.PERMISSION_DELETE_ORDER_POSITION, AccessControlConfigSimple.PERMISSION_DELETE_TABLE);
   }
 
