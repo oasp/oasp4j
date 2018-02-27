@@ -8,12 +8,12 @@ import com.querydsl.core.types.dsl.SimpleExpression;
 import com.querydsl.core.types.dsl.StringExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 
-import io.oasp.module.jpa.common.api.to.LikePatternSyntax;
+import io.oasp.module.basic.common.api.query.LikePatternSyntax;
+import io.oasp.module.basic.common.api.query.StringSearchConfigTo;
+import io.oasp.module.basic.common.api.query.StringSearchOperator;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 import io.oasp.module.jpa.common.api.to.PaginationTo;
 import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
-import io.oasp.module.jpa.common.api.to.StringSearchConfigTo;
-import io.oasp.module.jpa.common.api.to.StringSearchOperator;
 
 /**
  * Helper class for generic handling of {@link net.sf.mmm.util.entity.api.PersistenceEntity persistence entities} (based

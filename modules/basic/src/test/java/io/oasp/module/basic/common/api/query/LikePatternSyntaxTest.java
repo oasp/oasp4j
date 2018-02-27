@@ -1,7 +1,8 @@
-package io.oasp.module.jpa.common.api.to;
+package io.oasp.module.basic.common.api.query;
 
 import org.junit.Test;
 
+import io.oasp.module.basic.common.api.query.LikePatternSyntax;
 import io.oasp.module.test.common.base.ModuleTest;
 
 /**

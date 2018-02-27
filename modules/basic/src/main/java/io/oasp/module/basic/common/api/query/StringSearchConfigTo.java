@@ -1,4 +1,4 @@
-package io.oasp.module.jpa.common.api.to;
+package io.oasp.module.basic.common.api.query;
 
 import io.oasp.module.basic.common.api.to.AbstractTo;
 

@@ -1,4 +1,4 @@
-package io.oasp.module.jpa.common.api.to;
+package io.oasp.module.basic.common.api.query;
 
 /**
  * Enum defining available syntaxes for a match pattern in a LIKE-clause. While databases typically require {@link #SQL}
