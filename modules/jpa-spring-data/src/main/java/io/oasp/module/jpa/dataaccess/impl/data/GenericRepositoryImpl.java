@@ -17,7 +17,11 @@ import io.oasp.module.jpa.dataaccess.api.data.GenericRepository;
 
 /**
  * Implementation of {@link GenericRepository} based on {@link SimpleJpaRepository}. All repository interfaces derived
- * from {@link GenericRepository} will be based on this implementation at runtime.
+ * from {@link GenericRepository} will be based on this implementation at runtime.<br>
+ * <b>Note:</b> We do not use/extend {@link org.springframework.data.jpa.repository.support.QueryDslJpaRepository} as it
+ * forces you to use QueryDSL APT generation what is not desired. Therefore you will have no support for
+ * {@link org.springframework.data.querydsl.QueryDslPredicateExecutor}. However, we offer more flexible QueryDSL support
+ * anyhow. See {@link io.oasp.module.jpa.dataaccess.api.QueryDslUtil}.
  *
  * @param <E> generic type of the managed {@link #getEntityClass() entity}.
  * @param <ID> generic type of the {@link net.sf.mmm.util.entity.api.PersistenceEntity#getId() primary key} of the
@@ -25,8 +29,6 @@ import io.oasp.module.jpa.dataaccess.api.data.GenericRepository;
  *
  * @since 3.0.0
  */
-// QueryDslJpaRepository<E, ID> forces you to use QueryDSL APT generation what is not desired
-// therefore no support for QueryDslPredicateExecutor (we offer more flexible QueryDSL support anyhow)
 public class GenericRepositoryImpl<E, ID extends Serializable> extends SimpleJpaRepository<E, ID>
     implements GenericRepository<E, ID> {
 
