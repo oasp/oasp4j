@@ -1,10 +1,9 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package}.general.common.impl.security;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -16,47 +15,19 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import ${package}.general.common.api.UserProfile;
-import ${package}.general.common.api.Usermanagement;
-import ${package}.general.common.api.security.UserData;
 import io.oasp.module.security.common.api.accesscontrol.AccessControl;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlProvider;
-import io.oasp.module.security.common.api.accesscontrol.PrincipalAccessControlProvider;
 import io.oasp.module.security.common.base.accesscontrol.AccessControlGrantedAuthority;
 
 /**
- * This class represents a customized implementation of the {@link UserDetailsService} interface.<br/>
- * <br/>
- * It should be used in custom subclasses of {@link WebSecurityConfigurerAdapter} in the following way:
- * <ul>
- * <li>Inject a fully configured instance of {@link BaseUserDetailsService} into the subclass of
- * {@link WebSecurityConfigurerAdapter}</li>
- * <li>Override method {@code configure(HttpSecurity)} of {@link WebSecurityConfigurerAdapter}</li>
- * <li>Add the {@link BaseUserDetailsService} to the {@code HttpSecurity} object.</li>
- * </ul>
- * The following code snippet shows the above steps:<br/>
+ * Custom implementation of {@link UserDetailsService}.<br>
  *
- * <pre>
- * &${symbol_pound}64;Configuration
- * &${symbol_pound}64;EnableWebSecurity
- * public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
- *   // ...
- *   &${symbol_pound}64;Inject
- *   private UserDetailsService userDetailsService;
- *   // ...
- *   &${symbol_pound}64;Override
- *   public void configure(HttpSecurity http) throws Exception {
- *      http.userDetailsService(this.userDetailsService)... //add matchers and other stuff
- *   }
- * }
- * </pre>
- *
- * <br/>
- * For another example, have a look at {@link BaseWebSecurityConfig}.
+ * @see ${package}.general.service.impl.config.BaseWebSecurityConfig
  */
 @Named
 public class BaseUserDetailsService implements UserDetailsService {
@@ -64,25 +35,18 @@ public class BaseUserDetailsService implements UserDetailsService {
   /** Logger instance. */
   private static final Logger LOG = LoggerFactory.getLogger(BaseUserDetailsService.class);
 
-  private Usermanagement usermanagement;
-
   private AuthenticationManagerBuilder amBuilder;
 
   private AccessControlProvider accessControlProvider;
 
-  private PrincipalAccessControlProvider<UserProfile> principalAccessControlProvider;
-
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-    UserProfile principal = retrievePrincipal(username);
-    Set<GrantedAuthority> authorities = getAuthorities(principal);
+    Set<GrantedAuthority> authorities = getAuthorities(username);
     UserDetails user;
     try {
-      // amBuilder uses the InMemoryUserDetailsManager, because it is configured in BaseWebSecurityConfig
       user = getAmBuilder().getDefaultUserDetailsService().loadUserByUsername(username);
-      UserData userData = new UserData(user.getUsername(), user.getPassword(), authorities);
-      userData.setUserProfile(principal);
+      User userData = new User(user.getUsername(), user.getPassword(), authorities);
       return userData;
     } catch (Exception e) {
       e.printStackTrace();
@@ -95,19 +59,16 @@ public class BaseUserDetailsService implements UserDetailsService {
   /**
    * Returns the {@link GrantedAuthority}s of the user associated with the provided {@link UserProfile}.
    *
-   * @param principal the {@link UserProfile} of the user
+   * @param username the login of the user
    * @return the associated {@link GrantedAuthority}s
    * @throws AuthenticationException if no principal is retrievable for the given {@code username}
    */
-  protected Set<GrantedAuthority> getAuthorities(UserProfile principal) throws AuthenticationException {
+  protected Set<GrantedAuthority> getAuthorities(String username) throws AuthenticationException {
 
-    if (principal == null) {
-      LOG.warn("Principal must not be null.");
-      throw new IllegalArgumentException();
-    }
+    Objects.requireNonNull(username, "username");
     // determine granted authorities for spring-security...
     Set<GrantedAuthority> authorities = new HashSet<>();
-    Collection<String> accessControlIds = this.principalAccessControlProvider.getAccessControlIds(principal);
+    Collection<String> accessControlIds = getRoles(username);
     Set<AccessControl> accessControlSet = new HashSet<>();
     for (String id : accessControlIds) {
       boolean success = this.accessControlProvider.collectAccessControls(id, accessControlSet);
@@ -121,37 +82,12 @@ public class BaseUserDetailsService implements UserDetailsService {
     return authorities;
   }
 
-  /**
-   * @param username The {@code username} for which the {@code UserProfile} will be queried.
-   * @return An instance of type {@link UserProfile} obtained by querying the {@code username}.
-   */
-  protected UserProfile retrievePrincipal(String username) {
+  private Collection<String> getRoles(String username) {
 
-    try {
-      return this.usermanagement.findUserProfileByLogin(username);
-    } catch (RuntimeException e) {
-      e.printStackTrace();
-      UsernameNotFoundException exception = new UsernameNotFoundException("Authentication failed.", e);
-      LOG.warn("Failed to get user {}.", username, exception);
-      throw exception;
-    }
-  }
-
-  /**
-   * @return usermanagement
-   */
-  public Usermanagement getUsermanagement() {
-
-    return this.usermanagement;
-  }
-
-  /**
-   * @param usermanagement new value of {@link ${symbol_pound}getUsermanagement}.
-   */
-  @Inject
-  public void setUsermanagement(Usermanagement usermanagement) {
-
-    this.usermanagement = usermanagement;
+    Collection<String> roles = new ArrayList<>();
+    // TODO for a reasonable application you need to retrieve the roles of the user from a central IAM system
+    roles.add(username);
+    return roles;
   }
 
   /**
@@ -163,7 +99,7 @@ public class BaseUserDetailsService implements UserDetailsService {
   }
 
   /**
-   * @param amBuilder new value of {@link ${symbol_pound}getAmBuilder}.
+   * @param amBuilder new value of {@link #getAmBuilder}.
    */
   @Inject
   public void setAmBuilder(AuthenticationManagerBuilder amBuilder) {
@@ -180,29 +116,11 @@ public class BaseUserDetailsService implements UserDetailsService {
   }
 
   /**
-   * @param accessControlProvider new value of {@link ${symbol_pound}getAccessControlProvider}.
+   * @param accessControlProvider new value of {@link #getAccessControlProvider}.
    */
   @Inject
   public void setAccessControlProvider(AccessControlProvider accessControlProvider) {
 
     this.accessControlProvider = accessControlProvider;
-  }
-
-  /**
-   * @return principalAccessControlProvider
-   */
-  public PrincipalAccessControlProvider<UserProfile> getPrincipalAccessControlProvider() {
-
-    return this.principalAccessControlProvider;
-  }
-
-  /**
-   * @param principalAccessControlProvider new value of {@link ${symbol_pound}getPrincipalAccessControlProvider}.
-   */
-  @Inject
-  public void setPrincipalAccessControlProvider(
-      PrincipalAccessControlProvider<UserProfile> principalAccessControlProvider) {
-
-    this.principalAccessControlProvider = principalAccessControlProvider;
   }
 }

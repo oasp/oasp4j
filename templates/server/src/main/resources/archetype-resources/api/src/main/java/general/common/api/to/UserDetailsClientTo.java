@@ -1,10 +1,6 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package}.general.common.api.to;
 
 import ${package}.general.common.api.UserProfile;
-import ${package}.general.common.api.datatype.Role;
 import io.oasp.module.basic.common.api.to.AbstractTo;
 
 /**
@@ -12,7 +8,6 @@ import io.oasp.module.basic.common.api.to.AbstractTo;
  */
 public class UserDetailsClientTo extends AbstractTo implements UserProfile {
 
-  /** UID for serialization. */
   private static final long serialVersionUID = 1L;
 
   private Long id;
@@ -22,8 +17,6 @@ public class UserDetailsClientTo extends AbstractTo implements UserProfile {
   private String firstName;
 
   private String lastName;
-
-  private Role role;
 
   /**
    * The constructor.
@@ -57,16 +50,8 @@ public class UserDetailsClientTo extends AbstractTo implements UserProfile {
     return this.lastName;
   }
 
-  @Override
-  public Role getRole() {
-
-    return this.role;
-  }
-
   /**
-   * Sets the ID.
-   *
-   * @param id the ID to set
+   * @param id the new {@link #getId() ID}.
    */
   public void setId(Long id) {
 
@@ -74,7 +59,7 @@ public class UserDetailsClientTo extends AbstractTo implements UserProfile {
   }
 
   /**
-   * @param name the name to set
+   * @param name the new {@link #getName() login name}.
    */
   public void setName(String name) {
 
@@ -82,7 +67,7 @@ public class UserDetailsClientTo extends AbstractTo implements UserProfile {
   }
 
   /**
-   * @param firstName the firstName to set
+   * @param firstName the new {@link #getFirstName() first name}.
    */
   public void setFirstName(String firstName) {
 
@@ -90,19 +75,11 @@ public class UserDetailsClientTo extends AbstractTo implements UserProfile {
   }
 
   /**
-   * @param lastName the lastName to set
+   * @param lastName the new {@link #getLastName() last name}.
    */
   public void setLastName(String lastName) {
 
     this.lastName = lastName;
-  }
-
-  /**
-   * @param role the role to set
-   */
-  public void setRole(Role role) {
-
-    this.role = role;
   }
 
 }

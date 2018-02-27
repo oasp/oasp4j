@@ -1,22 +1,18 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package}.general.logic.impl;
-
-import ${package}.general.dataaccess.api.BinaryObjectEntity;
-import ${package}.general.dataaccess.api.dao.BinaryObjectDao;
-import ${package}.general.logic.api.to.BinaryObjectEto;
-import ${package}.general.logic.base.AbstractUc;
-import ${package}.general.logic.base.UcManageBinaryObject;
 
 import java.sql.Blob;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import ${package}.general.dataaccess.api.BinaryObjectEntity;
+import ${package}.general.dataaccess.api.dao.BinaryObjectDao;
+import ${package}.general.logic.api.UcManageBinaryObject;
+import ${package}.general.logic.api.to.BinaryObjectEto;
+import ${package}.general.logic.base.AbstractUc;
+
 /**
- * Implementation of the {@link UcManageBinaryObject} intreface.
- *
+ * Implementation of {@link UcManageBinaryObject}.
  */
 @Named
 public class UcManageBinaryObjectImpl extends AbstractUc implements UcManageBinaryObject {

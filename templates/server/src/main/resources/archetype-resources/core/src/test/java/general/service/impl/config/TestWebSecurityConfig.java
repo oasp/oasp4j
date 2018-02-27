@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -33,24 +34,22 @@ public class TestWebSecurityConfig extends BaseWebSecurityConfig {
   public void configure(HttpSecurity http) throws Exception {
 
     super.configure(http);
-    // usage of addFilter is sufficient for BasicAuthenticationFilter.class. The filter will be added according to the
-    // order defined in:
-    // http://docs.spring.io/autorepo/docs/spring-security/4.1.0.RC1/apidocs/org/springframework/security/config/annotation/web/builders/HttpSecurity.html${symbol_pound}addFilter-javax.servlet.Filter-
-    http.addFilter(basicAuthenticationFilter());
+    http.addFilterBefore(basicAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
-    // Use the following to disable csrf in tests
+    // Disable CSRF protection in tests for simpler testing of REST services
     http.csrf().disable();
-
-    LOG.debug("used non static class");
+    LOG.debug("*** CSRF disabled - this config should only be used in development environment ***");
   }
 
+  /**
+   * @return {@link BasicAuthenticationFilter}.
+   */
   @Bean
   protected BasicAuthenticationFilter basicAuthenticationFilter() throws Exception {
 
     AuthenticationEntryPoint authenticationEntryPoint = new BasicAuthenticationEntryPoint();
     BasicAuthenticationFilter basicAuthenticationFilter =
         new BasicAuthenticationFilter(authenticationManagerBean(), authenticationEntryPoint);
-    LOG.debug("created basicAuthenticationFilter");
     return basicAuthenticationFilter;
   }
 

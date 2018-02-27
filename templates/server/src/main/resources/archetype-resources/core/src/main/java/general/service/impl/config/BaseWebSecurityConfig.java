@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package}.general.service.impl.config;
 
 import javax.inject.Inject;
@@ -35,7 +32,7 @@ import io.oasp.module.security.common.impl.rest.LogoutSuccessHandlerReturningOkH
  */
 public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  @Value("${symbol_dollar}{security.cors.enabled}")
+  @Value("#[[$]]#{security.cors.enabled}")
   boolean corsEnabled = false;
 
   @Inject

@@ -120,7 +120,7 @@
 #elseif ($dbType != 'postgresql')
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>9.4.1211.jre7</version>
+      <!--<version>9.4.1211.jre7</version>-->
 #elseif ($dbType != 'mysql')
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
@@ -220,22 +220,19 @@
     </dependency>
 
     <dependency>
-      <groupId>com.mysema.querydsl</groupId>
+      <groupId>com.querydsl</groupId>
       <artifactId>querydsl-apt</artifactId>
-      <version>3.4.3</version>
       <scope>provided</scope>
     </dependency>
 
     <dependency>
-      <groupId>com.mysema.querydsl</groupId>
+      <groupId>com.querydsl</groupId>
       <artifactId>querydsl-jpa</artifactId>
-      <version>3.7.1</version>
     </dependency>
 
     <dependency>
       <groupId>org.skyscreamer</groupId>
       <artifactId>jsonassert</artifactId>
-      <version>1.3.0</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -250,7 +247,6 @@
         <dependency>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-starter-tomcat</artifactId>
-          <version>${spring.boot.version}</version>
         </dependency>
       </dependencies>
     </profile>

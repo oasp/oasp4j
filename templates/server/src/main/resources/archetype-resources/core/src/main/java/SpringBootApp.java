@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package};
 
 import org.springframework.boot.SpringApplication;
@@ -10,6 +7,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 
 import io.oasp.module.jpa.dataaccess.api.AdvancedRevisionEntity;
 
+/**
+ * Main entry point of this {@link SpringBootApplication}. Simply run this class to start this app.
+ */
 @SpringBootApplication
 @EntityScan(basePackages = { "${package}" }, basePackageClasses = { AdvancedRevisionEntity.class })
 @EnableGlobalMethodSecurity(jsr250Enabled = true)

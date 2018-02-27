@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package}.general.service.impl.rest;
 
 import javax.inject.Named;
@@ -23,11 +20,7 @@ public class ApplicationObjectMapperFactory extends ObjectMapperFactory {
   public ApplicationObjectMapperFactory() {
 
     super();
-    // register polymorphic base classes
-    
+    // register polymorphic mapping here - see https://github.com/oasp-forge/oasp4j-wiki/wiki/guide-json#json-and-inheritance
 
-    NamedType[] subtypes;
-    // register mapping for polymorphic sub-classes
-    
   }
 }

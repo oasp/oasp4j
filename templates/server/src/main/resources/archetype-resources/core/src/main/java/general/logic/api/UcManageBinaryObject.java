@@ -1,7 +1,4 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
-package ${package}.general.logic.base;
+package ${package}.general.logic.api;
 
 import ${package}.general.logic.api.to.BinaryObjectEto;
 
