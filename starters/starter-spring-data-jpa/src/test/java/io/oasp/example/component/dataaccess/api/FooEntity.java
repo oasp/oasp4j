@@ -16,6 +16,8 @@ public class FooEntity extends TestApplicationPersistenceEntity implements Foo {
 
   private String message;
 
+  private String name;
+
   @Override
   public String getMessage() {
 
@@ -26,6 +28,18 @@ public class FooEntity extends TestApplicationPersistenceEntity implements Foo {
   public void setMessage(String message) {
 
     this.message = message;
+  }
+
+  @Override
+  public String getName() {
+
+    return this.name;
+  }
+
+  @Override
+  public void setName(String name) {
+
+    this.name = name;
   }
 
 }

@@ -462,7 +462,7 @@ public class QueryDslHelper {
     if (size == 1) {
       return expression.eq(inValues.iterator().next());
     }
-    int maxSizeOfInClause = DatabaseWorkaround.getInstance().getMaxSizeOfInClause();
+    int maxSizeOfInClause = DatabaseConfigProperties.getInstance().getMaxSizeOfInClause();
     if (size <= maxSizeOfInClause) {
       return expression.in(inValues);
     }

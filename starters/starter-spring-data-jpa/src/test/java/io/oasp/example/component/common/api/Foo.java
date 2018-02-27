@@ -8,4 +8,8 @@ public interface Foo extends TestApplicationEntity {
 
   void setMessage(String message);
 
+  String getName();
+
+  void setName(String name);
+
 }
