@@ -21,12 +21,12 @@ import io.oasp.example.TestApplication;
 import io.oasp.example.component.common.api.to.FooSearchCriteriaTo;
 import io.oasp.example.component.dataaccess.api.FooEntity;
 import io.oasp.example.component.dataaccess.api.FooRepository;
-import io.oasp.module.jpa.common.api.to.LikePatternSyntax;
+import io.oasp.module.basic.common.api.query.LikePatternSyntax;
+import io.oasp.module.basic.common.api.query.StringSearchConfigTo;
+import io.oasp.module.basic.common.api.query.StringSearchOperator;
 import io.oasp.module.jpa.common.api.to.OrderByTo;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-import io.oasp.module.jpa.common.api.to.StringSearchConfigTo;
-import io.oasp.module.jpa.common.api.to.StringSearchOperator;
 import io.oasp.module.test.common.base.ComponentTest;
 
 /**
