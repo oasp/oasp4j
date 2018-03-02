@@ -73,11 +73,32 @@
           <target>${java.version}</target>
         </configuration>
       </plugin>
+      
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <excludedGroups>${oasp.test.excluded.groups}</excludedGroups>
         </configuration>
+      </plugin>
+      
+      <!-- JaCoCo for test coverage -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default-prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>default-report</id>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
     <pluginManagement>
@@ -235,6 +256,11 @@
           <version>1.0.0-beta-3</version>
         </plugin>
         <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.0</version>
+        </plugin>
+        <plugin>
           <groupId>org.owasp</groupId>
           <artifactId>dependency-check-maven</artifactId>
           <version>3.1.1</version>
@@ -244,6 +270,18 @@
   </build>
 
   <profiles>
+    <profile>
+      <id>moduletest</id>
+      <properties>
+        <oasp.test.excluded.groups>io.oasp.module.test.common.api.category.CategoryComponentTest,io.oasp.module.test.common.api.category.CategorySubsystemTest,io.oasp.module.test.common.api.category.CategorySystemTest</oasp.test.excluded.groups>
+      </properties>
+    </profile>
+    <profile>
+      <id>componenttest</id>
+      <properties>
+        <oasp.test.excluded.groups>io.oasp.module.test.common.api.category.CategorySubsystemTest,io.oasp.module.test.common.api.category.CategorySystemTest</oasp.test.excluded.groups>
+      </properties>
+    </profile>
     <profile>
       <id>subsystemtest</id>
       <properties>
@@ -349,8 +387,7 @@
         <reportSets>
           <reportSet>
             <reports>
-              <!-- https://github.com/jeremylong/DependencyCheck/issues/386 -->
-              <!-- <report>aggregate</report> -->
+              <report>aggregate</report>
               <report>check</report>
             </reports>
           </reportSet>
