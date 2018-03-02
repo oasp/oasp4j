@@ -2,10 +2,6 @@ package ${package}.general.service.impl.rest;
 
 import javax.inject.Named;
 
-import com.fasterxml.jackson.databind.jsontype.NamedType;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-
-
 import io.oasp.module.json.common.base.ObjectMapperFactory;
 
 /**

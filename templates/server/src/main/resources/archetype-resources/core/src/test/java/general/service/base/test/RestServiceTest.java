@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import ${package}.SpringBootApp;
 import ${package}.general.common.base.test.DbTestHelper;
 import ${package}.general.common.base.test.TestUtil;
-import io.oasp.module.basic.common.api.config.SpringProfileConstants;
+
 import io.oasp.module.test.common.base.SubsystemTest;
 import io.oasp.module.service.common.api.client.ServiceClientFactory;
 

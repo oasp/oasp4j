@@ -13,16 +13,10 @@ import io.oasp.module.logging.common.api.DiagnosticContextFacade;
 import io.oasp.module.logging.common.impl.DiagnosticContextFacadeImpl;
 import io.oasp.module.logging.common.impl.DiagnosticContextFilter;
 import io.oasp.module.logging.common.impl.PerformanceLogFilter;
-
-import io.oasp.module.logging.common.api.DiagnosticContextFacade;
-import io.oasp.module.logging.common.impl.DiagnosticContextFacadeImpl;
-import io.oasp.module.logging.common.impl.DiagnosticContextFilter;
-import io.oasp.module.logging.common.impl.PerformanceLogFilter;
 import io.oasp.module.service.common.api.constants.ServiceConstants;
 
 /**
  * Registers a number of filters for web requests.
- *
  */
 @Configuration
 public class WebConfig {
@@ -30,9 +24,8 @@ public class WebConfig {
   private @Autowired AutowireCapableBeanFactory beanFactory;
 
   /**
-   * Register PerformanceLogFilter to log running time of requests.
-   *
-   * @return filter
+   * @return the {@link FilterRegistrationBean} to register the {@link PerformanceLogFilter} that will log all requests
+   *         with their duration and status code.
    */
   @Bean
   public FilterRegistrationBean performanceLogFilter() {
@@ -46,9 +39,7 @@ public class WebConfig {
   }
 
   /**
-   * Bean definition for DiagnosticContextFacade.
-   *
-   * @return DiagnosticContextFacade
+   * @return the {@link DiagnosticContextFacade} implementation.
    */
   @Bean(name = "DiagnosticContextFacade")
   public DiagnosticContextFacade diagnosticContextFacade() {
@@ -57,9 +48,8 @@ public class WebConfig {
   }
 
   /**
-   * Register DiagnosticContextFilter to log service calls with correlation id.
-   *
-   * @return filter
+   * @return the {@link FilterRegistrationBean} to register the {@link DiagnosticContextFilter} that adds the
+   *         correlation id as MDC so it will be included in all associated logs.
    */
   @Bean
   public FilterRegistrationBean diagnosticContextFilter() {
@@ -73,9 +63,7 @@ public class WebConfig {
   }
 
   /**
-   * Register SetCharacterEncodingFilter to convert specical characters correctly.
-   *
-   * @return filter
+   * @return the {@link FilterRegistrationBean} to register the {@link CharacterEncodingFilter} to set the encoding.
    */
   @Bean
   public FilterRegistrationBean setCharacterEncodingFilter() {

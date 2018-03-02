@@ -1,19 +1,19 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package}.general.dataaccess.api;
 
 import java.sql.Blob;
 
 import javax.persistence.Entity;
+#if ($dbType == 'postgresql')
+import org.hibernate.annotations.Type;
+#else
 import javax.persistence.Lob;
+#end
 import javax.persistence.Table;
 
 import ${package}.general.common.api.BinaryObject;
 
 /**
  * {@link ApplicationPersistenceEntity Entity} for {@link BinaryObject}. Contains the actual {@link Blob}.
- *
  */
 @Entity
 @Table(name = "BinaryObject")
@@ -49,15 +49,13 @@ public class BinaryObjectEntity extends ApplicationPersistenceEntity implements 
   }
 
   /**
-   * @return data
+   * @return the {@link Blob} data.
    */
-
-  /**
-   * Remove the following line completely (Type Annotation) in case of database other than PostGres and Uncomment the
-   * annotation for @Lob
-   */
-  // @Type(type = "org.hibernate.type.BinaryType")
+#if ($dbType == 'postgresql')
+  @Type(type = "org.hibernate.type.BinaryType")
+#else
   @Lob
+#end
   public Blob getData() {
 
     return this.data;

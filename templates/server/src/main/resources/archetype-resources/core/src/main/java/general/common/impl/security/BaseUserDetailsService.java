@@ -57,8 +57,6 @@ public class BaseUserDetailsService implements UserDetailsService {
   }
 
   /**
-   * Returns the {@link GrantedAuthority}s of the user associated with the provided {@link UserProfile}.
-   *
    * @param username the login of the user
    * @return the associated {@link GrantedAuthority}s
    * @throws AuthenticationException if no principal is retrievable for the given {@code username}
