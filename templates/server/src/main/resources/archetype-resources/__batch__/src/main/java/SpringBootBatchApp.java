@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package};
 
 import org.springframework.boot.SpringApplication;
@@ -26,6 +23,6 @@ public class SpringBootBatchApp {
    */
   public static void main(String[] args) {
 
-    SpringApplication.run(SpringBootApp.class, args);
+    SpringApplication.run(SpringBootBatchApp.class, args);
   }
 }
