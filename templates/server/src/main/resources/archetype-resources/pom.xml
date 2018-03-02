@@ -280,6 +280,11 @@
             </licenseMerges>
           </configuration>          
         </plugin>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>1.5.7.RELEASE</version>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>

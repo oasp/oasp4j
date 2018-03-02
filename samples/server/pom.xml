@@ -14,7 +14,7 @@
   <description>Server for the restaurant application - a simple example using the Open Application Standard Platform for Java (OASP4J).</description>
 
   <properties>
-      <java.version>1.7</java.version>
+    <java.version>1.7</java.version>
   </properties>
 
   <dependencies>
@@ -23,13 +23,13 @@
       <artifactId>oasp4j-sample-core</artifactId>
       <version>${project.version}</version>
     </dependency>
- </dependencies>
+  </dependencies>
 
   <profiles>
     <profile>
       <id>jsclient</id>
       <activation>
-        <!--<activeByDefault>true</activeByDefault>-->
+        <!--<activeByDefault>true</activeByDefault> -->
         <activeByDefault>false</activeByDefault>
       </activation>
       <build>
@@ -123,12 +123,12 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-            <configuration>
-              <mainClass>io.oasp.gastronomy.restaurant.SpringBootApp</mainClass>
-              <classifier>bootified</classifier>
-              <finalName>${project.artifactId}</finalName>
-            </configuration>
-                                <executions>
+        <configuration>
+          <mainClass>io.oasp.gastronomy.restaurant.SpringBootApp</mainClass>
+          <classifier>bootified</classifier>
+          <finalName>${project.artifactId}</finalName>
+        </configuration>
+        <executions>
           <execution>
             <goals>
               <goal>repackage</goal>
@@ -136,7 +136,6 @@
           </execution>
         </executions>
       </plugin>
-
     </plugins>
   </build>
 

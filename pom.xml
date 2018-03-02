@@ -350,6 +350,11 @@
           <artifactId>dependency-check-maven</artifactId>
           <version>3.1.1</version>
         </plugin>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>1.5.7.RELEASE</version>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
