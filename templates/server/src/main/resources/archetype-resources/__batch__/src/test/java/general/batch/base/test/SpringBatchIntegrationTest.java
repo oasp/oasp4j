@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import org.apache.commons.io.FileUtils;
+import org.flywaydb.core.Flyway;
 import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import ${package}.general.common.base.test.TestUtil;
-import ${package}.general.dataaccess.base.DatabaseMigrator;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlPermission;
 import io.oasp.module.security.common.base.accesscontrol.AccessControlGrantedAuthority;
 import io.oasp.module.test.common.base.ComponentTest;
@@ -32,20 +32,18 @@ public abstract class SpringBatchIntegrationTest extends ComponentTest {
 
   private static final Logger LOG = LoggerFactory.getLogger(SpringBatchIntegrationTest.class);
 
-  /**
-   * database migration helper
-   */
-  @Inject
-  protected DatabaseMigrator databaseMigrator;
-
   @Inject
   private JobLauncher jobLauncher;
+
+  @Inject
+  private Flyway flyway;
 
   @Override
   protected void doSetUp() {
 
     super.doSetUp();
-    this.databaseMigrator.migrate();
+    this.flyway.clean();
+    this.flyway.migrate();
   }
 
   @Override

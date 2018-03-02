@@ -60,11 +60,7 @@ public class OaspPackageCheckTest extends ModuleTest {
    */
   protected String getRootPackage2Scan(OaspPackage pkg) {
 
-    String root = pkg.getRoot();
-    if (root.startsWith("io.oasp")) {
-      return "io.oasp";
-    }
-    return root;
+    return pkg.getRoot() + "." + pkg.getApplication();
   }
 
 }
