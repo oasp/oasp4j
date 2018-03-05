@@ -5,26 +5,11 @@ import java.security.Principal;
 /**
  * This is the interface for the profile of a user interacting with this application.
  */
-public interface UserProfile extends Principal {
-  /**
-   * @return the technical ID of the user for calling REST services.
-   */
-  Long getId();
+public interface UserProfile {
 
   /**
-   * @return the unique login of the user for authentication and identification.
+   * @return the login of the user.
    */
-  @Override
-  String getName();
-
-  /**
-   * @return the first name of the users real name.
-   */
-  String getFirstName();
-
-  /**
-   * @return the last name of the users real name.
-   */
-  String getLastName();
+  String getLogin();
 
 }

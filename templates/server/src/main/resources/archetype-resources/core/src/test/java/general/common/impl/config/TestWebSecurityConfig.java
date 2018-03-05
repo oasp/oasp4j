@@ -1,7 +1,4 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
-package ${package}.general.service.impl.config;
+package ${package}.general.common.impl.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

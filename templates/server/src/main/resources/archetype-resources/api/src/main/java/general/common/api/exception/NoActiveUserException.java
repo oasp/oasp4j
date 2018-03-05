@@ -1,13 +1,9 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package}.general.common.api.exception;
 
 import ${package}.general.common.api.NlsBundleApplicationRoot;
 
 /**
  * Thrown when an operation is requested that requires a user to be logged in, but no such user exists.
- *
  */
 public class NoActiveUserException extends ApplicationBusinessException {
 
@@ -24,7 +20,7 @@ public class NoActiveUserException extends ApplicationBusinessException {
 
   /**
    * The constructor.
-   * 
+   *
    * @param cause The root cause of this exception.
    */
   public NoActiveUserException(Throwable cause) {

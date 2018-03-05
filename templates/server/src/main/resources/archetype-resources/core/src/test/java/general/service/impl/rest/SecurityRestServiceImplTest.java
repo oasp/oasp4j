@@ -10,12 +10,13 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
 import io.oasp.module.service.common.api.client.config.ServiceClientConfigBuilder;
+import it.pkg.general.service.api.rest.SecurityRestService;
 
+import ${package}.general.common.api.to.UserProfileTo;
 import ${package}.general.service.api.rest.SecurityRestService;
 import ${package}.general.service.base.test.RestServiceTest;
 
@@ -44,22 +45,35 @@ public class SecurityRestServiceImplTest extends RestServiceTest {
   }
 
   /**
-   * This test depends on the successful login which is tested by {@link #testLogin()}. Then, a csrf token is queried
-   * and checked.
+   * Test of {@code SecurityRestService.getCsrfToken()}.
    */
   @Test
-  @DirtiesContext
   public void testGetCsrfToken() {
 
     String login = "waiter";
     String password = "waiter";
     SecurityRestService securityService = getServiceClientFactory().create(SecurityRestService.class,
-        new ServiceClientConfigBuilder().authBasic().userLogin(login).userPassword(password).buildMap());
+        new ServiceClientConfigBuilder().host("localhost").authBasic().userLogin(login).userPassword(password)
+            .buildMap());
     CsrfToken csrfToken = securityService.getCsrfToken(null, null);
     assertThat(csrfToken.getHeaderName()).isEqualTo("X-CSRF-TOKEN");
     assertThat(csrfToken.getParameterName()).isEqualTo("_csrf");
     assertThat(csrfToken.getToken()).isNotNull();
     LOG.debug("Csrf Token: {}", csrfToken.getToken());
+  }
+
+  /**
+   * Test of {@link SecurityRestService#getCurrentUser()}.
+   */
+  @Test
+  public void testGetCurrentUser() {
+    String login = "waiter";
+    String password = "waiter";
+    SecurityRestService securityService = getServiceClientFactory().create(SecurityRestService.class,
+        new ServiceClientConfigBuilder().host("localhost").authBasic().userLogin(login).userPassword(password)
+            .buildMap());
+    UserProfileTo userProfile = securityService.getCurrentUser();
+    assertThat(userProfile.getLogin()).isEqualTo(login);
   }
 
   /**
