@@ -34,6 +34,18 @@
       velocity templates.
     -->
     <fileSet packaged="false" filtered="true" encoding="UTF-8">
+      <directory>api</directory>
+      <includes>
+        <include>**/*.*</include>
+      </includes>
+    </fileSet>
+    <fileSet packaged="false" filtered="true" encoding="UTF-8">
+      <directory>core</directory>
+      <excludes>
+        <include>**/*.*</include>
+      </excludes>
+    </fileSet>
+    <fileSet packaged="false" filtered="true" encoding="UTF-8">
       <directory>__earProjectName__</directory>
       <includes>
         <include>**/*.*</include>
@@ -46,52 +58,8 @@
         <include>**/*.*</include>
       </includes>
     </fileSet>
-    <!-- Include only DB specific DDL SQLs -->
-    <!--
-    <fileSet packaged="false" filtered="false" encoding="UTF-8">
-      <directory>core/src/main/resources/db/migration/1.0/__dbType__</directory>
-      <includes>
-        <include>**/*.*</include>
-      </includes>
-    </fileSet>
-    -->
   </fileSets>
   <modules>
-    <module id="api" dir="api" name="api">
-      <fileSets>
-        <fileSet filtered="true" packaged="true" encoding="UTF-8">
-          <directory>src/main/java</directory>
-        </fileSet>
-        <fileSet filtered="true" packaged="false" encoding="UTF-8">
-          <directory>src/main/resources</directory>
-        </fileSet>
-        <fileSet filtered="true" packaged="true" encoding="UTF-8">
-          <directory>src/test/java</directory>
-        </fileSet>
-        <fileSet filtered="true" packaged="false" encoding="UTF-8">
-          <directory>src/test/resources</directory>
-        </fileSet>
-      </fileSets>
-    </module>
-    <module id="core" dir="core" name="core">
-      <fileSets>
-        <fileSet filtered="true" packaged="true" encoding="UTF-8">
-          <directory>src/main/java</directory>
-        </fileSet>
-        <fileSet filtered="true" packaged="false" encoding="UTF-8">
-          <directory>src/main/resources</directory>
-          <excludes>
-            <exclude>db/migration/1.0/__dbType__/*.sql</exclude>
-          </excludes>
-        </fileSet>
-        <fileSet filtered="true" packaged="true" encoding="UTF-8">
-          <directory>src/test/java</directory>
-        </fileSet>
-        <fileSet filtered="true" packaged="false" encoding="UTF-8">
-          <directory>src/test/resources</directory>
-        </fileSet>
-      </fileSets>
-    </module>
     <module id="server" dir="server" name="server">
       <fileSets>
         <fileSet filtered="true" packaged="true" encoding="UTF-8">
@@ -108,10 +76,6 @@
         </fileSet>
         <fileSet filtered="false" packaged="false" encoding="UTF-8">
           <directory>src/main/webapp</directory>
-          <includes>
-            <include>**/*.jsp</include>
-            <include>**/*.xml</include>
-          </includes>
         </fileSet>
       </fileSets>
     </module>
