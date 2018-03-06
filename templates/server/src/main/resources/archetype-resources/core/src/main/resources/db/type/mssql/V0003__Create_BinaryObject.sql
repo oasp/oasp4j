@@ -1,8 +1,8 @@
 -- *** BinaryObject (BLOBs) ***
-CREATE TABLE BinaryObject (
-  id                  BIGINT NOT NULL AUTO_INCREMENT,
+CREATE TABLE BINARYOBJECT (
+  id                  BIGINT NOT NULL IDENTITY(10,1),
   modificationCounter INTEGER NOT NULL,
-  data                BLOB(2147483647),
+  data                varbinary(max),
   size                BIGINT NOT NULL,
   mimeType            VARCHAR(255),
   PRIMARY KEY (ID)

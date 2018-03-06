@@ -133,6 +133,10 @@
       <groupId>com.oracle</groupId>
       <artifactId>ojdbc6</artifactId>
       <version>11.2.0</version>
+#elseif ($dbType != 'mssql')
+      <groupId>com.microsoft.sqlserver</groupId>
+      <artifactId>mssql-jdbc</artifactId>
+      <version>6.4.0.jre8</version>
 #else
       <groupId>$dbType</groupId>
       <artifactId>$dbType</artifactId>

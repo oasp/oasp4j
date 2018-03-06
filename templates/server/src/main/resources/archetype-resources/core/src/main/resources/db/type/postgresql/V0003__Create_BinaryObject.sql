@@ -1,8 +1,8 @@
 -- *** BinaryObject (BLOBs) ***
-CREATE TABLE BinaryObject (
-  id                  BIGINT NOT NULL AUTO_INCREMENT,
+CREATE TABLE BINARYOBJECT (
+  id                  BIGSERIAL NOT NULL,
   modificationCounter INTEGER NOT NULL,
-  data                BLOB(2147483647),
+  data                BYTEA,
   size                BIGINT NOT NULL,
   mimeType            VARCHAR(255),
   PRIMARY KEY (ID)

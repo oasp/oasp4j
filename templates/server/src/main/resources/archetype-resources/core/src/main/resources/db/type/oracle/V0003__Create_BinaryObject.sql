@@ -5,5 +5,5 @@ CREATE TABLE BinaryObject (
   "data"              BLOB,
   "size"              NUMBER(10, 0) NOT NULL,
   mimeType            VARCHAR(255),
-  PRIMARY KEY (ID)
+  CONSTRAINT PK_BinaryObject_id PRIMARY KEY (ID)
 );
