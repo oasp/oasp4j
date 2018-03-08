@@ -40,6 +40,7 @@ public class TestWebSecurityConfig extends BaseWebSecurityConfig {
 
   /**
    * @return {@link BasicAuthenticationFilter}.
+   * @throws Exception on initialization error.
    */
   @Bean
   protected BasicAuthenticationFilter basicAuthenticationFilter() throws Exception {

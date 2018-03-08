@@ -14,7 +14,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
 import io.oasp.module.service.common.api.client.config.ServiceClientConfigBuilder;
-import it.pkg.general.service.api.rest.SecurityRestService;
 
 import ${package}.general.common.api.to.UserProfileTo;
 import ${package}.general.service.api.rest.SecurityRestService;

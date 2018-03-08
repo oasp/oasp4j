@@ -1,7 +1,5 @@
 package ${package}.general.common.api;
 
-import javax.inject.Named;
-
 import net.sf.mmm.util.nls.api.NlsBundle;
 import net.sf.mmm.util.nls.api.NlsBundleMessage;
 import net.sf.mmm.util.nls.api.NlsMessage;

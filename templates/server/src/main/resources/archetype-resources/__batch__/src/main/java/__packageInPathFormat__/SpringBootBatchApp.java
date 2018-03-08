@@ -10,6 +10,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 
 import io.oasp.module.jpa.dataaccess.api.AdvancedRevisionEntity;
 
+/**
+ * {@link SpringBootApplication} for running this batch.
+ */
 @SpringBootApplication(exclude = { EndpointAutoConfiguration.class, SecurityAutoConfiguration.class,
 SecurityFilterAutoConfiguration.class, })
 @EntityScan(basePackages = { "${package}" }, basePackageClasses = { AdvancedRevisionEntity.class })
