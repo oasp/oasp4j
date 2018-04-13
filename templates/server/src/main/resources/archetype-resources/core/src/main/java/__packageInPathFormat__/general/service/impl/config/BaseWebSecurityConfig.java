@@ -32,7 +32,7 @@ import io.oasp.module.security.common.impl.rest.LogoutSuccessHandlerReturningOkH
  */
 public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  @Value("#[[$]]#{security.cors.enabled}")
+  @Value("${security.cors.enabled}")
   boolean corsEnabled = false;
 
   @Inject
