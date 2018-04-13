@@ -4,7 +4,10 @@ import io.oasp.module.basic.common.api.to.AbstractTo;
 
 /**
  * Transfer object to transmit order criteria
+ * 
+ * @deprecated use org.springframework.data.domain.Sort instead
  */
+@Deprecated
 public class OrderByTo extends AbstractTo {
 
   private static final long serialVersionUID = 1L;

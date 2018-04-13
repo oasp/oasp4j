@@ -24,8 +24,8 @@ public class AbstractGenericDaoTest extends ComponentTest {
   private GenericDaoForceIncrementModificationTestBean testBean;
 
   /**
-   * Test of {@link GenericDao#forceIncrementModificationCounter(net.sf.mmm.util.entity.api.PersistenceEntity)}. Ensures
-   * that the modification counter is updated after the call of that method when the transaction is closed.
+   * Test of {@link GenericDao#forceIncrementModificationCounter(Object)}. Ensures that the modification counter is
+   * updated after the call of that method when the transaction is closed.
    */
   @Test
   public void testForceIncrementModificationCounter() {

@@ -11,8 +11,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 
 import io.oasp.example.component.common.api.Foo;
 import io.oasp.example.component.common.api.to.FooSearchCriteriaTo;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-import io.oasp.module.jpa.dataaccess.api.QueryDslUtil;
+import io.oasp.module.jpa.dataaccess.api.QueryUtil;
 import io.oasp.module.jpa.dataaccess.api.data.DefaultRepository;
 
 /**
@@ -31,17 +30,17 @@ public interface FooRepository extends DefaultRepository<FooEntity> {
 
   /**
    * @param criteria the {@link FooSearchCriteriaTo} with the criteria to search.
-   * @return the {@link PaginatedListTo} of the {@link FooEntity} objects that matched the search.
+   * @return the {@link Page} of the {@link FooEntity} objects that matched the search.
    */
-  default PaginatedListTo<FooEntity> findByCriteria(FooSearchCriteriaTo criteria) {
+  default Page<FooEntity> findByCriteria(FooSearchCriteriaTo criteria) {
 
     FooEntity alias = newDslAlias();
     JPAQuery<FooEntity> query = newDslQuery(alias);
     String message = criteria.getMessage();
     if ((message != null) && !message.isEmpty()) {
-      QueryDslUtil.get().whereString(query, $(alias.getMessage()), message, criteria.getMessageOption());
+      QueryUtil.get().whereString(query, $(alias.getMessage()), message, criteria.getMessageOption());
     }
-    return QueryDslUtil.get().findPaginated(criteria, query);
+    return QueryUtil.get().findPaginated(criteria.getPageable(), query, false);
   }
 
 }

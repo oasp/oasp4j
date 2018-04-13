@@ -17,7 +17,7 @@
   <dependencies>
    <dependency>
       <groupId>io.oasp.java.modules</groupId>
-      <artifactId>oasp4j-jpa</artifactId>
+      <artifactId>oasp4j-jpa-basic</artifactId>
     </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>

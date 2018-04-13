@@ -358,6 +358,11 @@
       </dependency>
       <dependency>
         <groupId>io.oasp.java.modules</groupId>
+        <artifactId>oasp4j-jpa-basic</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.oasp.java.modules</groupId>
         <artifactId>oasp4j-jpa-envers</artifactId>
         <version>${project.version}</version>
       </dependency>

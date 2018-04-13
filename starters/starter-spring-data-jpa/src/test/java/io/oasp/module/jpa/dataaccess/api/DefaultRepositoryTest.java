@@ -30,9 +30,6 @@ import io.oasp.example.component.dataaccess.api.FooRepository;
 import io.oasp.module.basic.common.api.query.LikePatternSyntax;
 import io.oasp.module.basic.common.api.query.StringSearchConfigTo;
 import io.oasp.module.basic.common.api.query.StringSearchOperator;
-import io.oasp.module.jpa.common.api.to.OrderByTo;
-import io.oasp.module.jpa.common.api.to.OrderDirection;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 import io.oasp.module.test.common.base.ComponentTest;
 
 /**
@@ -161,7 +158,8 @@ public class DefaultRepositoryTest extends ComponentTest {
     config.setIgnoreCase(true);
     config.setMatchSubstring(true);
     criteria.setMessageOption(config);
-    criteria.addSort(new OrderByTo("message", OrderDirection.DESC));
+    PageRequest pageable = new PageRequest(0, 100, new Sort(Direction.DESC, "message"));
+    criteria.setPageable(pageable);
     List<String> values = new ArrayList<>(Arrays.asList("MY_TEST", "Sometest", "Test", "Testing", "Xtest"));
     Collections.shuffle(values);
     for (String message : values) {
@@ -171,11 +169,11 @@ public class DefaultRepositoryTest extends ComponentTest {
     newFoo("Xxx");
 
     // when
-    PaginatedListTo<FooEntity> hits = this.fooRepository.findByCriteria(criteria);
+    Page<FooEntity> hits = this.fooRepository.findByCriteria(criteria);
 
     // then
     Collections.sort(values, (x, y) -> -x.compareTo(y));
-    assertThat(hits.getResult().stream().map(x -> x.getMessage()).collect(Collectors.toList()))
+    assertThat(hits.getContent().stream().map(x -> x.getMessage()).collect(Collectors.toList()))
         .containsExactlyElementsOf(values);
 
     // and when
@@ -183,7 +181,7 @@ public class DefaultRepositoryTest extends ComponentTest {
     hits = this.fooRepository.findByCriteria(criteria);
 
     // then
-    assertThat(hits.getResult().stream().map(x -> x.getMessage()).collect(Collectors.toList())).containsExactly("Xxx",
+    assertThat(hits.getContent().stream().map(x -> x.getMessage()).collect(Collectors.toList())).containsExactly("Xxx",
         "Aaa");
 
     // and when
@@ -192,7 +190,7 @@ public class DefaultRepositoryTest extends ComponentTest {
     hits = this.fooRepository.findByCriteria(criteria);
 
     // then
-    assertThat(hits.getResult().stream().map(x -> x.getMessage()).collect(Collectors.toList()))
+    assertThat(hits.getContent().stream().map(x -> x.getMessage()).collect(Collectors.toList()))
         .containsExactly("Testing", "Test");
 
     // and when
@@ -200,17 +198,19 @@ public class DefaultRepositoryTest extends ComponentTest {
     hits = this.fooRepository.findByCriteria(criteria);
 
     // then
-    assertThat(hits.getResult().stream().map(x -> x.getMessage()).collect(Collectors.toList())).containsExactly("Test");
+    assertThat(hits.getContent().stream().map(x -> x.getMessage()).collect(Collectors.toList()))
+        .containsExactly("Test");
 
     // and when
     criteria.setMessage("Test");
     config.setLikeSyntax(null);
     config.setOperator(StringSearchOperator.NE);
-    criteria.setSort(Arrays.asList(new OrderByTo("message")));
+    pageable = new PageRequest(0, 100, new Sort(Direction.ASC, "message"));
+    criteria.setPageable(pageable);
     hits = this.fooRepository.findByCriteria(criteria);
 
     // then
-    assertThat(hits.getResult().stream().map(x -> x.getMessage()).collect(Collectors.toList())).containsExactly("Aaa",
+    assertThat(hits.getContent().stream().map(x -> x.getMessage()).collect(Collectors.toList())).containsExactly("Aaa",
         "MY_TEST", "Sometest", "Testing", "Xtest", "Xxx");
   }
 

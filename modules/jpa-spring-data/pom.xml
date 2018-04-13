@@ -20,7 +20,7 @@
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>oasp4j-jpa</artifactId>
+      <artifactId>oasp4j-jpa-basic</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.data</groupId>

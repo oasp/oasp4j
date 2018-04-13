@@ -19,7 +19,7 @@ import com.querydsl.core.alias.Alias;
 import com.querydsl.jpa.impl.JPAQuery;
 
 import io.oasp.module.jpa.dataaccess.api.AdvancedRevisionEntity;
-import io.oasp.module.jpa.dataaccess.api.QueryDslUtil;
+import io.oasp.module.jpa.dataaccess.api.QueryUtil;
 import io.oasp.module.jpa.dataaccess.api.RevisionMetadata;
 import io.oasp.module.jpa.dataaccess.api.RevisionMetadataType;
 import io.oasp.module.jpa.dataaccess.api.data.GenericRevisionedRepository;
@@ -81,7 +81,7 @@ public class GenericRevisionedRepositoryImpl<E, ID extends Serializable> extends
           .from(Alias.$(rev));
       @SuppressWarnings("rawtypes")
       List revList = revisionList;
-      QueryDslUtil.get().whereIn(query, Alias.$(rev.getId()), (List<Long>) revList);
+      QueryUtil.get().whereIn(query, Alias.$(rev.getId()), (List<Long>) revList);
       query.orderBy(Alias.$(rev.getId()).asc());
       List<AdvancedRevisionEntity> resultList = query.fetch();
       return resultList.stream().map(x -> RevisionMetadataType.of(x)).collect(Collectors.toList());

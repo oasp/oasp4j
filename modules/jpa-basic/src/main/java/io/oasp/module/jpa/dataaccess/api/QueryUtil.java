@@ -1,7 +1,9 @@
 package io.oasp.module.jpa.dataaccess.api;
 
 import java.util.Collection;
-import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.SimpleExpression;
@@ -11,55 +13,15 @@ import com.querydsl.jpa.impl.JPAQuery;
 import io.oasp.module.basic.common.api.query.LikePatternSyntax;
 import io.oasp.module.basic.common.api.query.StringSearchConfigTo;
 import io.oasp.module.basic.common.api.query.StringSearchOperator;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-import io.oasp.module.jpa.common.api.to.PaginationTo;
-import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
 
 /**
- * Helper class for generic handling of {@link net.sf.mmm.util.entity.api.PersistenceEntity persistence entities} (based
- * on {@link javax.persistence.EntityManager}).
+ * Helper class for {@link #get() static access} to features of {@link QueryHelper}.
  *
  * @since 3.0.0
  */
-public class QueryDslUtil extends QueryDslHelper {
+public class QueryUtil extends QueryHelper {
 
-  private static final QueryDslUtil INSTANCE = new QueryDslUtil();
-
-  /**
-   * @param <E> generic type of the entity.
-   * @param criteria contains information about the requested page.
-   * @param query is a query which is preconfigured with the desired conditions for the search including search order.
-   * @return a paginated list.
-   * @see #findPaginated(SearchCriteriaTo, JPAQuery, boolean)
-   */
-  public <E> PaginatedListTo<E> findPaginated(SearchCriteriaTo criteria, JPAQuery<E> query) {
-
-    return findPaginatedGeneric(criteria, query, true);
-  }
-
-  /**
-   * Returns a paginated list of entities according to the supplied {@link SearchCriteriaTo criteria}.
-   * <p>
-   * Applies {@code limit} and {@code offset} values to the supplied {@code query} according to the supplied
-   * {@link PaginationTo pagination} information inside {@code criteria}.
-   * <p>
-   * If a {@link PaginationTo#isTotal() total count} of available entities is requested, will also execute a second
-   * query, without pagination parameters applied, to obtain said count.
-   * <p>
-   * Will install a query timeout if {@link SearchCriteriaTo#getSearchTimeout()} is not null.
-   *
-   * @param <E> generic type of the entity.
-   * @param criteria contains information about the requested page.
-   * @param query is a query which is preconfigured with the desired conditions for the search.
-   * @param applySortOrder - {@code true} to automatically {@link #applySortOrder(List, JPAQuery) apply} the
-   *        {@link SearchCriteriaTo#getSort() sort order} from the given {@link SearchCriteriaTo}, {@code false}
-   *        otherwise (to apply manually for complex queries).
-   * @return a paginated list.
-   */
-  public <E> PaginatedListTo<E> findPaginated(SearchCriteriaTo criteria, JPAQuery<E> query, boolean applySortOrder) {
-
-    return findPaginatedGeneric(criteria, query, true);
-  }
+  private static final QueryUtil INSTANCE = new QueryUtil();
 
   @Override
   public void whereLike(JPAQuery<?> query, StringExpression expression, String pattern, LikePatternSyntax syntax,
@@ -128,9 +90,24 @@ public class QueryDslUtil extends QueryDslHelper {
   }
 
   /**
-   * @return the {@link QueryDslUtil} instance.
+   * Returns a {@link Page} of entities according to the supplied {@link Pageable} and {@link JPAQuery}.
+   *
+   * @param <E> generic type of the entity.
+   * @param pageable contains information about the requested page and sorting.
+   * @param query is a query which is pre-configured with the desired conditions for the search.
+   * @param determineTotal - {@code true} to determine the {@link Page#getTotalElements() total number of hits},
+   *        {@code false} otherwise.
+   * @return a paginated list.
    */
-  public static QueryDslUtil get() {
+  public <E> Page<E> findPaginated(Pageable pageable, JPAQuery<E> query, boolean determineTotal) {
+
+    return findPaginatedGeneric(pageable, query, determineTotal);
+  }
+
+  /**
+   * @return the {@link QueryUtil} instance.
+   */
+  public static QueryUtil get() {
 
     return INSTANCE;
   }

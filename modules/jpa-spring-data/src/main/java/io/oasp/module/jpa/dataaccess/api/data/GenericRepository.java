@@ -17,7 +17,7 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.SimpleExpression;
 import com.querydsl.jpa.impl.JPADeleteClause;
 
-import io.oasp.module.jpa.dataaccess.api.QueryDslUtil;
+import io.oasp.module.jpa.dataaccess.api.QueryUtil;
 import io.oasp.module.jpa.dataaccess.api.feature.FeatureForceIncrementModificationCounter;
 
 /**
@@ -72,7 +72,7 @@ public interface GenericRepository<E, ID extends Serializable>
     // https://github.com/querydsl/querydsl/issues/2085
     @SuppressWarnings("unchecked")
     SimpleExpression<ID> idPath = Expressions.numberPath(idType, entityPath, "id");
-    BooleanExpression inClause = QueryDslUtil.get().newInClause(idPath, ids);
+    BooleanExpression inClause = QueryUtil.get().newInClause(idPath, ids);
     delete.where(inClause);
     return delete.execute();
   }

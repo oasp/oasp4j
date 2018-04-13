@@ -6,10 +6,15 @@ import java.util.List;
 import java.util.Locale;
 
 import net.sf.mmm.util.exception.api.IllegalCaseException;
-import net.sf.mmm.util.search.base.AbstractSearchCriteria;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.util.StringUtils;
 
 import com.querydsl.core.JoinExpression;
@@ -26,180 +31,18 @@ import com.querydsl.jpa.impl.JPAQuery;
 import io.oasp.module.basic.common.api.query.LikePatternSyntax;
 import io.oasp.module.basic.common.api.query.StringSearchConfigTo;
 import io.oasp.module.basic.common.api.query.StringSearchOperator;
-import io.oasp.module.jpa.common.api.to.OrderByTo;
-import io.oasp.module.jpa.common.api.to.OrderDirection;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
-import io.oasp.module.jpa.common.api.to.PaginationResultTo;
-import io.oasp.module.jpa.common.api.to.PaginationTo;
-import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
 
 /**
- * Class with utility methods for dealing with QueryDSL. Either extend this class or use {@link QueryDslUtil#get()}.
+ * Class with utility methods for dealing with queries. Either extend this class or use {@link QueryUtil#get()}.
  *
  * @since 3.0.0
  */
-public class QueryDslHelper {
+public class QueryHelper {
 
-  private static final Logger LOG = LoggerFactory.getLogger(QueryDslHelper.class);
+  private static final Logger LOG = LoggerFactory.getLogger(QueryHelper.class);
 
   /** JPA query property to configure the timeout in milliseconds. */
   protected static final String QUERY_PROPERTY_TIMEOUT = "javax.persistence.query.timeout";
-
-  /**
-   * Returns a paginated list of entities according to the supplied {@link SearchCriteriaTo criteria}.
-   * <p>
-   * Applies {@code limit} and {@code offset} values to the supplied {@code query} according to the supplied
-   * {@link PaginationTo pagination} information inside {@code criteria}.
-   * <p>
-   * If a {@link PaginationTo#isTotal() total count} of available entities is requested, will also execute a second
-   * query, without pagination parameters applied, to obtain said count.
-   * <p>
-   * Will install a query timeout if {@link SearchCriteriaTo#getSearchTimeout()} is not null.
-   *
-   * @param <E> generic type of the entity.
-   * @param criteria contains information about the requested page.
-   * @param query is a query which is preconfigured with the desired conditions for the search.
-   * @param applySortOrder - {@code true} to automatically {@link #applySortOrder(List, JPAQuery) apply} the
-   *        {@link SearchCriteriaTo#getSort() sort order} from the given {@link SearchCriteriaTo}, {@code false}
-   *        otherwise (to apply manually for complex queries).
-   * @return a paginated list.
-   */
-  protected <E> PaginatedListTo<E> findPaginatedGeneric(SearchCriteriaTo criteria, JPAQuery<E> query,
-      boolean applySortOrder) {
-
-    applyTimeout(query, criteria.getSearchTimeout());
-
-    PaginationTo pagination = criteria.getPagination();
-    PaginationResultTo paginationResult = createPaginationResult(pagination, query);
-    applyPagination(pagination, query);
-
-    if (applySortOrder) {
-      applySortOrder(criteria.getSort(), query);
-    }
-
-    List<E> paginatedList = query.fetch();
-
-    return new PaginatedListTo<>(paginatedList, paginationResult);
-  }
-
-  /**
-   * @param sort the {@link SearchCriteriaTo#getSort() sort order}.
-   * @param query the {@link JPAQuery} to modify.
-   */
-  @SuppressWarnings("rawtypes")
-  protected void applySortOrder(List<OrderByTo> sort, JPAQuery<?> query) {
-
-    if ((sort == null) || sort.isEmpty()) {
-      return;
-    }
-    PathBuilder<?> alias = findAlias(query);
-    for (OrderByTo orderBy : sort) {
-      String name = orderBy.getName();
-      ComparablePath<Comparable> path = alias.getComparable(name, Comparable.class);
-      OrderSpecifier<Comparable> orderSpecifier;
-      if (orderBy.getDirection() == OrderDirection.ASC) {
-        orderSpecifier = path.asc();
-      } else {
-        orderSpecifier = path.desc();
-      }
-      query.orderBy(orderSpecifier);
-    }
-  }
-
-  private <E> PathBuilder<E> findAlias(JPAQuery<E> query) {
-
-    String alias = null;
-    List<JoinExpression> joins = query.getMetadata().getJoins();
-    if ((joins != null) && !joins.isEmpty()) {
-      JoinExpression join = joins.get(0);
-      Expression<?> target = join.getTarget();
-      if (target instanceof EntityPath) {
-        alias = target.toString(); // no safe API
-      }
-    }
-    Class<E> type = query.getType();
-    if (alias == null) {
-      // should actually never happen, but fallback is provided as buest guess
-      alias = StringUtils.uncapitalize(type.getSimpleName());
-    }
-    return new PathBuilder<>(type, alias);
-  }
-
-  /**
-   * Creates a {@link PaginationResultTo pagination result} for the given {@code pagination} and {@code query}.
-   * <p>
-   * Needs to be called before pagination is applied to the {@code query}.
-   *
-   * @param pagination contains information about the requested page.
-   * @param query is a query preconfigured with the desired conditions for the search.
-   * @return information about the applied pagination.
-   */
-  protected PaginationResultTo createPaginationResult(PaginationTo pagination, JPAQuery<?> query) {
-
-    Long total = calculateTotalBeforePagination(pagination, query);
-    return new PaginationResultTo(pagination, total);
-  }
-
-  /**
-   * Calculates the total number of entities the given {@link JPAQuery query} would return without pagination applied.
-   * <p>
-   * Needs to be called before pagination is applied to the {@code query}.
-   *
-   * @param pagination is the pagination information as requested by the client.
-   * @param query is the {@link JPAQuery query} for which to calculate the total.
-   * @return the total count, or {@literal null} if {@link PaginationTo#isTotal()} is {@literal false}.
-   */
-  protected Long calculateTotalBeforePagination(PaginationTo pagination, JPAQuery<?> query) {
-
-    Long total = null;
-    if (pagination.isTotal()) {
-      total = query.clone().fetchCount();
-    }
-    return total;
-  }
-
-  /**
-   * Applies the {@link PaginationTo pagination criteria} to the given {@link JPAQuery}.
-   *
-   * @param pagination is the {@link PaginationTo pagination criteria} to apply.
-   * @param query is the {@link JPAQuery} to apply to.
-   */
-  protected void applyPagination(PaginationTo pagination, JPAQuery<?> query) {
-
-    if (pagination == PaginationTo.NO_PAGINATION) {
-      return;
-    }
-
-    Integer limit = pagination.getSize();
-    if (limit != null) {
-      query.limit(limit);
-
-      int page = pagination.getPage();
-      if (page > 0) {
-        query.offset((page - 1) * limit);
-      }
-    }
-  }
-
-  /**
-   * Applies the meta-data of the given {@link AbstractSearchCriteria search criteria} to the given {@link JPAQuery}.
-   *
-   * @param criteria is the {@link AbstractSearchCriteria search criteria} to apply.
-   * @param query is the {@link JPAQuery} to apply to.
-   */
-  protected void applyCriteria(AbstractSearchCriteria criteria, JPAQuery<?> query) {
-
-    Integer limit = criteria.getMaximumHitCount();
-    if (limit != null) {
-      query.limit(limit);
-    }
-    int offset = criteria.getHitOffset();
-    if (offset > 0) {
-      query.offset(offset);
-    }
-    Long timeout = criteria.getSearchTimeout();
-    applyTimeout(query, timeout);
-  }
 
   /**
    * @param query the {@link JPAQuery} to modify.
@@ -507,6 +350,80 @@ public class QueryDslHelper {
     if (inClause != null) {
       query.where(inClause);
     }
+  }
+
+  /**
+   * Returns a {@link Page} of entities according to the supplied {@link Pageable} and {@link JPAQuery}.
+   *
+   * @param <E> generic type of the entity.
+   * @param pageable contains information about the requested page and sorting.
+   * @param query is a query which is pre-configured with the desired conditions for the search.
+   * @param determineTotal - {@code true} to determine the {@link Page#getTotalElements() total number of hits},
+   *        {@code false} otherwise.
+   * @return a paginated list.
+   */
+  protected <E> Page<E> findPaginatedGeneric(Pageable pageable, JPAQuery<E> query, boolean determineTotal) {
+
+    long total = -1;
+    if (determineTotal) {
+      total = query.clone().fetchCount();
+    }
+    int offset = 0;
+    if (pageable != null) {
+      offset = pageable.getOffset();
+      query.offset(offset);
+      query.limit(pageable.getPageSize());
+      applySort(query, pageable.getSort());
+    }
+    List<E> hits = query.fetch();
+    if (total == -1) {
+      total = offset + hits.size();
+    }
+    return new PageImpl<>(hits, pageable, total);
+  }
+
+  /**
+   * @param query the {@link JPAQuery} to apply the {@link Sort} to.
+   * @param sort the {@link Sort} to apply as ORDER BY to the given {@link JPAQuery}.
+   */
+  @SuppressWarnings("rawtypes")
+  protected void applySort(JPAQuery<?> query, Sort sort) {
+
+    if (sort == null) {
+      return;
+    }
+    PathBuilder<?> alias = findAlias(query);
+    for (Order order : sort) {
+      String property = order.getProperty();
+      Direction direction = order.getDirection();
+      ComparablePath<Comparable> path = alias.getComparable(property, Comparable.class);
+      OrderSpecifier<Comparable> orderSpecifier;
+      if (direction == Direction.ASC) {
+        orderSpecifier = path.asc();
+      } else {
+        orderSpecifier = path.desc();
+      }
+      query.orderBy(orderSpecifier);
+    }
+  }
+
+  private <E> PathBuilder<E> findAlias(JPAQuery<E> query) {
+
+    String alias = null;
+    List<JoinExpression> joins = query.getMetadata().getJoins();
+    if ((joins != null) && !joins.isEmpty()) {
+      JoinExpression join = joins.get(0);
+      Expression<?> target = join.getTarget();
+      if (target instanceof EntityPath) {
+        alias = target.toString(); // no safe API
+      }
+    }
+    Class<E> type = query.getType();
+    if (alias == null) {
+      // should actually never happen, but fallback is provided as buest guess
+      alias = StringUtils.uncapitalize(type.getSimpleName());
+    }
+    return new PathBuilder<>(type, alias);
   }
 
 }

@@ -1,7 +1,6 @@
 package io.oasp.example.component.common.api.to;
 
 import io.oasp.module.basic.common.api.query.StringSearchConfigTo;
-import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
 
 /**
  * {@link SearchCriteriaTo} to find instances of {@link io.oasp.example.component.common.api.Foo}.
