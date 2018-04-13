@@ -1,12 +1,8 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package}.general.common.api.constants;
 
 /**
  * Contains constants for the keys of all
  * {@link io.oasp.module.security.common.api.accesscontrol.AccessControlPermission}s.
- *
  */
 public abstract class PermissionConstants {
 

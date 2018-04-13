@@ -35,8 +35,8 @@ public class DbTestHelper {
   }
 
   /**
-   * Calls {@link ${symbol_pound}dropDatabase()} internally, and migrates to the highest available migration (default) or to the
-   * {@code migrationVersion} specified by {@link ${symbol_pound}setMigrationVersion(String)}.
+   * Calls {@link #dropDatabase()} internally, and migrates to the highest available migration (default) or to the
+   * {@code migrationVersion} specified by {@link #setMigrationVersion(String)}.
    */
   public void resetDatabase() {
 

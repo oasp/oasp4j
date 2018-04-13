@@ -1,11 +1,7 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package}.general.common.api;
 
 /**
  * This is the interface for a {@link BinaryObject} of the ${rootArtifactId}.
- *
  */
 public interface BinaryObject extends ApplicationEntity {
 

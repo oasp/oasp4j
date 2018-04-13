@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package}.general.dataaccess.base.dao;
 
 import ${package}.general.dataaccess.api.dao.ApplicationDao;
@@ -12,8 +9,7 @@ import org.springframework.stereotype.Repository;
 /**
  * This is the abstract base implementation of {@link ApplicationDao}.
  *
- * @param <ENTITY> is the {@link ${symbol_pound}getEntityClass() type} of the managed entity.
- *
+ * @param <ENTITY> is the {@link #getEntityClass() type} of the managed entity.
  */
 @Repository
 public abstract class ApplicationDaoImpl<ENTITY extends MutablePersistenceEntity<Long>> extends

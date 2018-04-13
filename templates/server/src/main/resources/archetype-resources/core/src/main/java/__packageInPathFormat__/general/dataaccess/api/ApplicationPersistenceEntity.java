@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package}.general.dataaccess.api;
 
 import javax.persistence.GeneratedValue;
@@ -15,20 +12,19 @@ import io.oasp.module.jpa.dataaccess.api.MutablePersistenceEntity;
 
 /**
  * Abstract Entity for all Entities with an id and a version field.
- *
  */
 @MappedSuperclass
 public abstract class ApplicationPersistenceEntity implements ApplicationEntity, MutablePersistenceEntity<Long> {
 
   private static final long serialVersionUID = 1L;
 
-  /** @see ${symbol_pound}getId() */
+  /** @see #getId() */
   private Long id;
 
-  /** @see ${symbol_pound}getModificationCounter() */
+  /** @see #getModificationCounter() */
   private int modificationCounter;
 
-  /** @see ${symbol_pound}getRevision() */
+  /** @see #getRevision() */
   private Number revision;
 
   /**
@@ -47,9 +43,6 @@ public abstract class ApplicationPersistenceEntity implements ApplicationEntity,
     return this.id;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public void setId(Long id) {
 
@@ -94,9 +87,9 @@ public abstract class ApplicationPersistenceEntity implements ApplicationEntity,
   }
 
   /**
-   * Method to extend {@link ${symbol_pound}toString()} logic.
+   * Method to extend {@link #toString()} logic.
    *
-   * @param buffer is the {@link StringBuilder} where to {@link StringBuilder${symbol_pound}append(Object) append} the string
+   * @param buffer is the {@link StringBuilder} where to {@link StringBuilder#append(Object) append} the string
    *        representation.
    */
   protected void toString(StringBuilder buffer) {

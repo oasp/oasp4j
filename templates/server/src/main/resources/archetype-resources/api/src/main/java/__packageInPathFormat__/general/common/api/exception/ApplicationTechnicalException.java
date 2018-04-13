@@ -1,20 +1,16 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package}.general.common.api.exception;
 
 import net.sf.mmm.util.nls.api.NlsMessage;
 
 /**
- * Abstract technical <i>checked</i> main exception.
- *
+ * Abstract base class for technical custom exceptions of this application.
  */
 public abstract class ApplicationTechnicalException extends ApplicationException {
 
   private static final long serialVersionUID = 1L;
 
   /**
-   * @param message the error {@link ${symbol_pound}getNlsMessage() message}.
+   * @param message the error {@link #getNlsMessage() message}.
    */
   public ApplicationTechnicalException(NlsMessage message) {
 
@@ -22,8 +18,8 @@ public abstract class ApplicationTechnicalException extends ApplicationException
   }
 
   /**
-   * @param cause the error {@link ${symbol_pound}getCause() cause}.
-   * @param message the error {@link ${symbol_pound}getNlsMessage() message}.
+   * @param cause the error {@link #getCause() cause}.
+   * @param message the error {@link #getNlsMessage() message}.
    */
   public ApplicationTechnicalException(Throwable cause, NlsMessage message) {
 

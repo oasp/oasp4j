@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package}.general.dataaccess.api.dao;
 
 import io.oasp.module.jpa.dataaccess.api.Dao;
@@ -9,7 +6,6 @@ import io.oasp.module.jpa.dataaccess.api.MutablePersistenceEntity;
 
 /**
  * Interface for all {@link GenericRevisionedDao DAOs} (Data Access Object) of this application.
- *
  *
  * @param <ENTITY> is the type of the managed entity.
  */

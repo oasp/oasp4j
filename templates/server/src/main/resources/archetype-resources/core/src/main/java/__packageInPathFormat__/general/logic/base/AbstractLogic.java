@@ -24,12 +24,6 @@ import net.sf.mmm.util.transferobject.api.TransferObject;
 public abstract class AbstractLogic extends AbstractBeanMapperSupport {
 
   /**
-   * The limit for {@link net.sf.mmm.util.search.base.AbstractSearchCriteria${symbol_pound}getMaximumHitCount() maximum hit count} for
-   * UI requests.
-   */
-  protected static final int MAXIMUM_HIT_LIMIT = 500;
-
-  /**
    * The constructor.
    */
   public AbstractLogic() {
@@ -58,13 +52,13 @@ public abstract class AbstractLogic extends AbstractBeanMapperSupport {
 
   /**
    * Creates a {@link Map} with all {@link GenericEntity entities} from the given {@link Collection} using their
-   * {@link GenericEntity${symbol_pound}getId() ID} as key. All {@link GenericEntity entities} without an
-   * {@link GenericEntity${symbol_pound}getId() ID} ({@code null}) will be ignored.
+   * {@link GenericEntity#getId() ID} as key. All {@link GenericEntity entities} without an
+   * {@link GenericEntity#getId() ID} ({@code null}) will be ignored.
    *
-   * @param <ID> is the generic type of the {@link GenericEntity${symbol_pound}getId() ID}.
+   * @param <ID> is the generic type of the {@link GenericEntity#getId() ID}.
    * @param <E> is the generic type of the {@link GenericEntity entity}.
    * @param entities is the {@link Collection} of {@link GenericEntity entities}.
-   * @return a {@link Map} mapping from {@link GenericEntity${symbol_pound}getId() ID} to {@link GenericEntity entity}.
+   * @return a {@link Map} mapping from {@link GenericEntity#getId() ID} to {@link GenericEntity entity}.
    */
   protected static <ID, E extends GenericEntity<ID>> Map<ID, E> getEntityMap(Collection<E> entities) {
 
@@ -83,13 +77,13 @@ public abstract class AbstractLogic extends AbstractBeanMapperSupport {
    * persistence and <code>listToSave</code> is the new list that shall be saved. In other words this method selects the
    * {@link GenericEntity entities} from <code>currentList</code> that are not contained in <code>listToSave</code>.
    *
-   * @param <ID> is the generic type of the {@link GenericEntity${symbol_pound}getId() ID}.
+   * @param <ID> is the generic type of the {@link GenericEntity#getId() ID}.
    * @param <E> is the generic type of the {@link GenericEntity entity}.
    * @param currentEntities is the {@link Collection} of the {@link GenericEntity entities} currently persisted. We
-   *        assume that all objects in this list have an {@link GenericEntity${symbol_pound}getId() ID} value (that is not
+   *        assume that all objects in this list have an {@link GenericEntity#getId() ID} value (that is not
    *        {@code null}).
    * @param entitiesToSave is the {@link Collection} that contains the {@link GenericEntity entities} that shall be
-   *        saved. It may contain {@link GenericEntity entities} that have no {@link GenericEntity${symbol_pound}getId() ID} that
+   *        saved. It may contain {@link GenericEntity entities} that have no {@link GenericEntity#getId() ID} that
    *        shall be newly created.
    * @return the {@link List} with the {@link GenericEntity entities} to delete.
    */

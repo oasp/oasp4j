@@ -13,14 +13,14 @@ import io.oasp.module.basic.common.api.reflect.OaspPackage;
 import io.oasp.module.test.common.base.ModuleTest;
 
 /**
- * This test verifies that the entire code of your code-base is located in {@link OaspPackage${symbol_pound}isValid() valid OASP
+ * This test verifies that the entire code of your code-base is located in {@link OaspPackage#isValid() valid OASP
  * packages}.
  */
 public class OaspPackageCheckTest extends ModuleTest {
 
   /**
    * Scans all the packages of this application root pacakge namespace. Will verify that these are
-   * {@link OaspPackage${symbol_pound}isValid() valid OASP packages}.
+   * {@link OaspPackage#isValid() valid OASP packages}.
    */
   @Test
   public void testPackages() {

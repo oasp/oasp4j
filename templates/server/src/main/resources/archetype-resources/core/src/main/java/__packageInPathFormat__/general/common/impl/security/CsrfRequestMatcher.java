@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package}.general.common.impl.security;
 
 import java.util.regex.Pattern;
@@ -14,11 +11,10 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
  * a correct CSRF token.
  *
  * @see <a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery">Cross-site request forgery</a>
- *
  */
 public class CsrfRequestMatcher implements RequestMatcher {
 
-  private static final Pattern HTTP_METHOD_PATTERN = Pattern.compile("^GET${symbol_dollar}");
+  private static final Pattern HTTP_METHOD_PATTERN = Pattern.compile("^GET$");
 
   private static final String[] PATH_PREFIXES_WITHOUT_CSRF_PROTECTION =
       { "/login", "/logout", "/services/rest/login", "/websocket" };

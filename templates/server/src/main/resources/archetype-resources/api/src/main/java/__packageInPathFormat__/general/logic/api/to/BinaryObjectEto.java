@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package}.general.logic.api.to;
 
 import ${package}.general.common.api.BinaryObject;
@@ -8,7 +5,6 @@ import io.oasp.module.basic.common.api.to.AbstractEto;
 
 /**
  * The {@link io.oasp.module.basic.common.api.to.AbstractEto ETO} for a {@link BinaryObject}.
- *
  */
 public class BinaryObjectEto extends AbstractEto implements BinaryObject {
 

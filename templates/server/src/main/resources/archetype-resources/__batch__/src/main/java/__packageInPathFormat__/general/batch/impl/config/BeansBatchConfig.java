@@ -1,6 +1,3 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 package ${package}.general.batch.impl.config;
 
 import javax.inject.Inject;
@@ -22,7 +19,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 /**
  * This class contains the configuration like jobLauncher,Jobrepository etc.
  */
-
 import io.oasp.module.batch.common.impl.JobLauncherWithAdditionalRestartCapabilities;
 
 /**
@@ -178,7 +174,6 @@ public class BeansBatchConfig {
   }
 
   /**
-   *
    * @return transactionManager
    */
   public PlatformTransactionManager getTransactionManager() {
@@ -187,7 +182,6 @@ public class BeansBatchConfig {
   }
 
   /**
-   *
    * @param transactionManager the transactionManager to set
    */
   @Inject

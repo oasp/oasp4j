@@ -17,7 +17,6 @@ import ${package}.general.logic.base.AbstractUc;
 @Named
 public class UcManageBinaryObjectImpl extends AbstractUc implements UcManageBinaryObject {
 
-  /** @see ${symbol_pound}binaryObjectDao */
   private BinaryObjectDao binaryObjectDao;
 
   /**

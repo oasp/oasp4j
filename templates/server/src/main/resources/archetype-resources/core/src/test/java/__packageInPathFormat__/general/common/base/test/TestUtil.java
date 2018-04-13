@@ -4,9 +4,9 @@ import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+#[[
 /**
  * This is a utility for testing. It allows to simulate authentication for component testing.
- *
  */
 public class TestUtil {
 
@@ -21,11 +21,11 @@ public class TestUtil {
   }
 
   /**
-   * Logs off any {@link ${symbol_pound}login(String, String...) previously logged on user}.
+   * Logs off any {@link #login(String, String...) previously logged on user}.
    */
   public static void logout() {
 
     SecurityContextHolder.getContext().setAuthentication(null);
   }
-
 }
+]]#
