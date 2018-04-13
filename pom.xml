@@ -35,7 +35,6 @@
     <servicedoc.basePath>oasp4j-sample/services/rest</servicedoc.basePath>
     <servicedocgen.version>1.0.0-beta-3</servicedocgen.version>
     <javadoc.option.doclint></javadoc.option.doclint>
-    <!--<maven.archetype.version>2.2</maven.archetype.version>-->
     <maven.archetype.version>3.0.1</maven.archetype.version>
   </properties>
 
