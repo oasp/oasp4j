@@ -20,6 +20,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.common.api.datatype.Product
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderPositionEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.OrderPositionDao;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderPositionSearchCriteriaTo;
+import io.oasp.module.jpa.common.base.LegacyDaoQuerySupport;
 
 /**
  * Implementation of {@link OrderPositionDao}.
@@ -80,7 +81,7 @@ public class OrderPositionDaoImpl extends ApplicationDaoImpl<OrderPositionEntity
           .where($(offer.getMeal().getId()).isNotNull().or($(offer.getSideDish().getId()).isNotNull()));
       query.where($(orderPosition.getOfferId()).in(subQuery));
     }
-    applyPagination(criteria.getPagination(), query);
+    LegacyDaoQuerySupport.applyPagination(criteria.getPagination(), query);
     return query.fetch();
   }
 }

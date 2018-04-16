@@ -20,6 +20,7 @@ import io.oasp.gastronomy.restaurant.tablemanagement.logic.api.to.TableSearchCri
 import io.oasp.module.jpa.common.api.to.OrderByTo;
 import io.oasp.module.jpa.common.api.to.OrderDirection;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.jpa.common.base.LegacyDaoQuerySupport;
 
 /**
  * Implementation of {@link TableDao}.
@@ -72,7 +73,7 @@ public class TableDaoImpl extends ApplicationMasterDataDaoImpl<TableEntity> impl
     // Add order by fields
     addOrderBy(query, alias, table, criteria.getSort());
 
-    return findPaginated(criteria, query);
+    return LegacyDaoQuerySupport.findPaginated(criteria, query);
   }
 
   private void addOrderBy(JPAQuery<?> query, EntityPathBase<TableEntity> alias, TableEntity table,

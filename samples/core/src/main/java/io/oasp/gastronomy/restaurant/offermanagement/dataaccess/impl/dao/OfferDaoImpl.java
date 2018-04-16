@@ -25,6 +25,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferSortBy;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.jpa.common.base.LegacyDaoQuerySupport;
 
 /**
  * Implementation of {@link OfferDao}.
@@ -173,6 +174,6 @@ public class OfferDaoImpl extends ApplicationMasterDataDaoImpl<OfferEntity> impl
       query.where($(offer.getPrice()).loe(maxPrice));
     }
 
-    return findPaginated(criteria, query);
+    return LegacyDaoQuerySupport.findPaginated(criteria, query);
   }
 }

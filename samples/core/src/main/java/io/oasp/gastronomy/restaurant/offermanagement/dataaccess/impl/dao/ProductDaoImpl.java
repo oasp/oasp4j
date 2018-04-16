@@ -26,6 +26,7 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 import io.oasp.module.jpa.common.api.to.PaginationResultTo;
 import io.oasp.module.jpa.common.api.to.PaginationTo;
+import io.oasp.module.jpa.common.base.LegacyDaoQuerySupport;
 
 /**
  * Implementation of {@link ProductDao}.
@@ -145,6 +146,6 @@ public class ProductDaoImpl extends ApplicationMasterDataDaoImpl<ProductEntity> 
     }
     query.where(builder);
 
-    return findPaginated(criteria, query);
+    return LegacyDaoQuerySupport.findPaginated(criteria, query);
   }
 }

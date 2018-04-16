@@ -20,6 +20,7 @@ import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.OrderEntity;
 import io.oasp.gastronomy.restaurant.salesmanagement.dataaccess.api.dao.OrderDao;
 import io.oasp.gastronomy.restaurant.salesmanagement.logic.api.to.OrderSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.jpa.common.base.LegacyDaoQuerySupport;
 
 /**
  * Implementation of {@link OrderDao}.
@@ -78,6 +79,6 @@ public class OrderDaoImpl extends ApplicationDaoImpl<OrderEntity> implements Ord
       query.where($(order.getState()).eq(state));
     }
 
-    return findPaginated(criteria, query);
+    return LegacyDaoQuerySupport.findPaginated(criteria, query);
   }
 }

@@ -24,6 +24,21 @@ public class LegacyDaoQuerySupport {
 
   /**
    * Returns a paginated list of entities according to the supplied {@link SearchCriteriaTo criteria}.
+   *
+   * @see #findPaginated(SearchCriteriaTo, JPAQuery, Expression)
+   *
+   * @param <E> type to query
+   * @param criteria contains information about the requested page.
+   * @param query is a query which is preconfigured with the desired conditions for the search.
+   * @return a paginated list.
+   */
+  public static <E> PaginatedListTo<E> findPaginated(SearchCriteriaTo criteria, JPAQuery<E> query) {
+
+    return findPaginated(criteria, query, null);
+  }
+
+  /**
+   * Returns a paginated list of entities according to the supplied {@link SearchCriteriaTo criteria}.
    * <p>
    * Applies {@code limit} and {@code offset} values to the supplied {@code query} according to the supplied
    * {@link PaginationTo pagination} information inside {@code criteria}.
@@ -39,6 +54,7 @@ public class LegacyDaoQuerySupport {
    * @param expr is used for the final mapping from the SQL result to the entities.
    * @return a paginated list.
    */
+  @SuppressWarnings("unchecked")
   public static <E> PaginatedListTo<E> findPaginated(SearchCriteriaTo criteria, JPAQuery<?> query, Expression<E> expr) {
 
     applyCriteria(criteria, query);
@@ -48,7 +64,13 @@ public class LegacyDaoQuerySupport {
     PaginationResultTo paginationResult = createPaginationResult(pagination, query);
 
     applyPagination(pagination, query);
-    List<E> paginatedList = query.select(expr).fetch();
+    JPAQuery<E> finalQuery;
+    if (expr == null) {
+      finalQuery = (JPAQuery<E>) query;
+    } else {
+      finalQuery = query.select(expr);
+    }
+    List<E> paginatedList = finalQuery.fetch();
 
     return new PaginatedListTo<>(paginatedList, paginationResult);
   }
@@ -94,7 +116,7 @@ public class LegacyDaoQuerySupport {
    * @param pagination is the {@link PaginationTo pagination criteria} to apply.
    * @param query is the {@link JPAQuery} to apply to.
    */
-  protected static void applyPagination(PaginationTo pagination, JPAQuery<?> query) {
+  public static void applyPagination(PaginationTo pagination, JPAQuery<?> query) {
 
     if (pagination == PaginationTo.NO_PAGINATION) {
       return;

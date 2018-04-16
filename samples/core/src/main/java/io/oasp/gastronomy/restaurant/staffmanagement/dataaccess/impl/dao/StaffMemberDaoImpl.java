@@ -16,6 +16,7 @@ import io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api.StaffMemberE
 import io.oasp.gastronomy.restaurant.staffmanagement.dataaccess.api.dao.StaffMemberDao;
 import io.oasp.gastronomy.restaurant.staffmanagement.logic.api.to.StaffMemberSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
+import io.oasp.module.jpa.common.base.LegacyDaoQuerySupport;
 
 /**
  * Implementation of {@link StaffMemberDao}.
@@ -74,6 +75,6 @@ public class StaffMemberDaoImpl extends ApplicationMasterDataDaoImpl<StaffMember
       query.where($(staffMember.getRole()).eq(role));
     }
 
-    return findPaginated(criteria, query);
+    return LegacyDaoQuerySupport.findPaginated(criteria, query);
   }
 }
