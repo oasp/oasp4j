@@ -1,5 +1,7 @@
 package io.oasp.module.jpa.dataaccess.base;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import net.sf.mmm.util.entity.api.PersistenceEntity;
@@ -25,7 +28,6 @@ import io.oasp.module.jpa.dataaccess.api.QueryHelper;
  *
  * @param <ID> is the generic type if the {@link PersistenceEntity#getId() primary key}.
  * @param <E> is the generic type of the managed {@link PersistenceEntity}.
- *
  */
 public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> extends QueryHelper
     implements GenericDao<ID, E> {
@@ -163,11 +165,28 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> ex
     CriteriaQuery<E> query = builder.createQuery(getEntityClass());
     Root<E> root = query.from(getEntityClass());
     query.select(root);
-    query.where(root.get("id").in(ids));
+    query.where(root.get("id").in(toCollection(ids)));
     TypedQuery<E> typedQuery = getEntityManager().createQuery(query);
     List<E> resultList = typedQuery.getResultList();
     LOG.debug("Query for selection of {} objects returned {} hit(s).", getEntityName(), resultList.size());
     return resultList;
+  }
+
+  /**
+   * @param ids sequence of id
+   * @return a collection of these ids to use {@link Predicate#in(Collection)} for instance
+   */
+  protected Collection<ID> toCollection(Iterable<ID> ids) {
+
+    if (ids instanceof Collection) {
+      return (Collection<ID>) ids;
+    }
+
+    final Collection<ID> idsList = new ArrayList<>();
+    for (final ID id : ids) {
+      idsList.add(id);
+    }
+    return idsList;
   }
 
   @Override
