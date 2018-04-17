@@ -9,6 +9,7 @@ import org.hibernate.annotations.Type;
 import javax.persistence.Lob;
 #end
 import javax.persistence.Table;
+import javax.persistence.Column;
 
 import ${package}.general.common.api.BinaryObject;
 
@@ -56,6 +57,7 @@ public class BinaryObjectEntity extends ApplicationPersistenceEntity implements 
 #else
   @Lob
 #end
+  @Column(name = "content")
   public Blob getData() {
 
     return this.data;
@@ -69,6 +71,7 @@ public class BinaryObjectEntity extends ApplicationPersistenceEntity implements 
     this.data = data;
   }
 
+  @Column(name = "filesize")
   @Override
   public long getSize() {
 
