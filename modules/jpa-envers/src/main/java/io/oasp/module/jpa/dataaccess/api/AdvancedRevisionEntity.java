@@ -115,7 +115,6 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
   }
 
   @Override
-  @GeneratedValue(strategy = GenerationType.TABLE)
   public int getModificationCounter() {
 
     return 0;
