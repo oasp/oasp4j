@@ -58,6 +58,7 @@ public class DatabaseMigrator {
     final Flyway flyway = new Flyway();
     flyway.setDataSource(this.dataSource);
     flyway.setLocations(importTestDataPath);
+    flyway.setIgnoreMissingMigrations(true);
     flyway.migrate();
   }
 
