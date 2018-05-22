@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <artifactId>${artifactId}</artifactId>
   <groupId>${groupId}</groupId>
@@ -10,6 +11,8 @@
 
   <properties>
     <spring.boot.version>1.5.3.RELEASE</spring.boot.version>
+    <oasp4j.version>2.6.0-SNAPSHOT</oasp4j.version>
+    <flyway.version>4.2.0</flyway.version>
     <java.version>1.7</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -19,17 +22,22 @@
   <modules>
     <module>api</module>
     <module>core</module>
-#if ($earProjectName != '.')
+    #if ($earProjectName != '.')
     <module>${earProjectName}</module>
-#end
-#if ($batch == 'batch')
+    #end
+    #if ($batch == 'batch')
     <module>batch</module>
-#end
+    #end
     <module>server</module>
   </modules>
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-core</artifactId>
+        <version>${flyway.version}</version>
+      </dependency>
       <!-- BOM of spring-boot -->
       <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -42,7 +50,8 @@
       <dependency>
         <groupId>io.oasp.java</groupId>
         <artifactId>oasp4j-bom</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>${oasp4j.version}
+        </version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -276,7 +285,8 @@
             <useMissingFile>true</useMissingFile>
             <failOnMissing>true</failOnMissing>
             <licenseMerges>
-              <licenseMerge>Apache Software License, Version 2.0|The Apache Software License, Version 2.0|Apache 2.0|Apache License, Version 2.0</licenseMerge>
+              <licenseMerge>Apache Software License, Version 2.0|The Apache Software License, Version 2.0|Apache
+                2.0|Apache License, Version 2.0</licenseMerge>
             </licenseMerges>
           </configuration>
         </plugin>
@@ -325,7 +335,7 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-javadoc-plugin</artifactId>
-              <!--<version>3.0.0</version>-->
+              <!--<version>3.0.0</version> -->
               <configuration>
                 <additionalOptions>
                   <additionalOption>-Xdoclint:none</additionalOption>
@@ -398,8 +408,8 @@
       </build>
     </profile>
   </profiles>
-  
-#if ($dbType == 'oracle')
+
+  #if ($dbType == 'oracle')
   <repositories>
     <repository>
       <id>maven.oracle.com</id>
@@ -415,7 +425,7 @@
   <pluginRepositories>
     <pluginRepository>
       <id>maven.oracle.com</id>
-      <name>oracle-maven-repo</name> 
+      <name>oracle-maven-repo</name>
       <url>https://maven.oracle.com</url>
       <layout>default</layout>
       <releases>
@@ -425,7 +435,7 @@
     </pluginRepository>
   </pluginRepositories>
 
-#end
+  #end
   <reporting>
     <plugins>
       <plugin>
