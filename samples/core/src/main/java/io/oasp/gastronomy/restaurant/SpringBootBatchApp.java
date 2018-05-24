@@ -23,6 +23,6 @@ public class SpringBootBatchApp {
    */
   public static void main(String[] args) {
 
-    SpringApplication.run(SpringBootApp.class, args);
+    SpringApplication.run(SpringBootBatchApp.class, args);
   }
 }

@@ -4,6 +4,7 @@ package io.oasp.module.jpa.dataaccess.api;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,6 +40,7 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
 
   /** @see #getTimestamp() */
   @RevisionTimestamp
+  @Column(name = "\"timestamp\"")
   private long timestamp;
 
   /** @see #getDate() */
@@ -115,7 +117,6 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
   }
 
   @Override
-  @GeneratedValue(strategy = GenerationType.TABLE)
   public int getModificationCounter() {
 
     return 0;
