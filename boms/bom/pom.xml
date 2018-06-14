@@ -35,14 +35,31 @@
         <scope>import</scope>
       </dependency>
       <!-- *** EXTERNAL DEPENDENCIES *** -->
-      <!-- BOM for localization -->
       <!-- Library with general utilities as well as I18N and exception support -->
       <dependency>
         <groupId>net.sf.m-m-m</groupId>
-        <artifactId>mmm-util-bom</artifactId>
+        <artifactId>mmm-util-core</artifactId>
         <version>${mmm.util.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>net.sf.m-m-m</groupId>
+        <artifactId>mmm-util-core</artifactId>
+        <version>${mmm.util.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>net.sf.m-m-m</groupId>
+        <artifactId>mmm-util-validation</artifactId>
+        <version>${mmm.util.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>net.sf.m-m-m</groupId>
+        <artifactId>mmm-util-search</artifactId>
+        <version>${mmm.util.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>net.sf.m-m-m</groupId>
+        <artifactId>mmm-util-entity</artifactId>
+        <version>${mmm.util.version}</version>
       </dependency>
       <!-- JSR 250 for component/bean lifecycle management -->
       <dependency>
