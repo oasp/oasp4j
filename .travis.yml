@@ -3,7 +3,10 @@ dist: trusty
 jdk:
   - oraclejdk8
 install:
- - mvn install -pl :oasp4j-minimal-bom
+ - mvn -N install
+ - cd boms/minimal
+ - mvn install
+ - cd ../..
 script: 
  - mvn install
 sudo: false
