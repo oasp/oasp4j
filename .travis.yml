@@ -2,7 +2,7 @@ language: java
 dist: trusty
 jdk:
   - oraclejdk8
-before_script:
+install:
  - mvn install -pl :oasp4j-minimal-bom
 script: 
  - mvn install
