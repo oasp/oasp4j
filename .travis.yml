@@ -2,5 +2,7 @@ language: java
 dist: precise
 jdk:
   - oraclejdk7
-script: mvn install
+script: 
+ - mvn install -pl :oasp4j-minimal-bom
+ - mvn install
 sudo: false
