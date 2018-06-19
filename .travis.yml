@@ -1,6 +1,6 @@
 language: java
-dist: trusty
+dist: precise
 jdk:
-  - oraclejdk8
+  - oraclejdk7
 script: mvn install
 sudo: false
