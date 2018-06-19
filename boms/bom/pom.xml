@@ -43,11 +43,6 @@
       </dependency>
       <dependency>
         <groupId>net.sf.m-m-m</groupId>
-        <artifactId>mmm-util-core</artifactId>
-        <version>${mmm.util.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>net.sf.m-m-m</groupId>
         <artifactId>mmm-util-validation</artifactId>
         <version>${mmm.util.version}</version>
       </dependency>
