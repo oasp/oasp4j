@@ -1,9 +1,7 @@
 language: java
-dist: precise
-#dist: trusty
+dist: trusty
 jdk:
-  - oraclejdk7
-#  - oraclejdk8
+  - oraclejdk8
 install:
  - mvn -N install
  - cd boms/minimal
