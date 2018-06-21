@@ -11,7 +11,7 @@
 
   <properties>
     <spring.boot.version>1.5.3.RELEASE</spring.boot.version>
-    <oasp4j.version>2.6.0-SNAPSHOT</oasp4j.version>
+    <oasp4j.version>2.6.1-SNAPSHOT</oasp4j.version>
     <flyway.version>4.2.0</flyway.version>
     <java.version>1.7</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

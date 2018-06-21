@@ -16,6 +16,7 @@
     <oasp.port.range>81</oasp.port.range>
     <oasp.http.port>${oasp.port.range}81</oasp.http.port>
     <oasp.db.port>${oasp.port.range}43</oasp.db.port>
+    <flyway.version>4.2.0</flyway.version>
     <oasp.test.excluded.groups>io.oasp.module.test.common.api.category.CategorySystemTest</oasp.test.excluded.groups>
   </properties>
 
@@ -27,6 +28,11 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-core</artifactId>
+        <version>${flyway.version}</version>
+      </dependency>
       <!-- BOM of spring-boot -->
       <dependency>
         <groupId>org.springframework.boot</groupId>
