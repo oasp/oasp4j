@@ -2,11 +2,6 @@ language: java
 dist: trusty
 jdk:
   - oraclejdk8
-install:
- - mvn -N install
- - cd boms/minimal
- - mvn install
- - cd ../..
 script: 
  - mvn install
 sudo: false
