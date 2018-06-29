@@ -8,6 +8,7 @@ import java.util.Set;
 
 import net.sf.mmm.util.collection.base.NodeCycle;
 import net.sf.mmm.util.collection.base.NodeCycleException;
+import net.sf.mmm.util.exception.api.DuplicateObjectException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -125,6 +126,26 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
   public AccessControl getAccessControl(String nodeId) {
 
     return this.id2nodeMap.get(nodeId);
+  }
+
+  /**
+   * Registers the given {@link AccessControl} and may be used for configuration of access controls during
+   * bootstrapping. This method should not be used after the application startup (bootstrapping) has completed.
+   *
+   * @param accessControl the {@link AccessControl} to register.
+   */
+  protected void addAccessControl(AccessControl accessControl) {
+
+    String id = accessControl.getId();
+    AccessControl existing = this.id2nodeMap.get(id);
+    if (existing == null) {
+      this.id2nodeMap.put(id, accessControl);
+      LOG.debug("Registered access control {}", accessControl);
+    } else if (existing == accessControl) {
+      LOG.debug("Access control {} was already registered.", accessControl);
+    } else {
+      throw new DuplicateObjectException(accessControl, id, existing);
+    }
   }
 
   @Override
