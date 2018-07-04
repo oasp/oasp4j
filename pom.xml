@@ -635,5 +635,4 @@
       <url>file://${user.dir}/target/oasp4j/maven</url>
     </site>
   </distributionManagement>
-
 </project>
