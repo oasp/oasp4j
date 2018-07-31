@@ -19,6 +19,7 @@
     <module>starter-cxf-server</module>
     <module>starter-cxf-server-rest</module>
     <module>starter-cxf-server-ws</module>
+    <module>starter-spring-data-jpa</module>
   </modules>
 
   <dependencyManagement>
@@ -44,8 +45,9 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
+      <groupId>io.oasp.java.modules</groupId>
+      <artifactId>oasp4j-test</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

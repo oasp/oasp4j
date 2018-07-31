@@ -106,13 +106,13 @@
       <dependency>
         <groupId>cglib</groupId>
         <artifactId>cglib</artifactId>
-        <version>3.2.4</version>
+        <version>3.2.5</version>
       </dependency>
       <!-- Support for dynamic and type-safe JPA queries -->
       <dependency>
-        <groupId>com.mysema.querydsl</groupId>
+        <groupId>com.querydsl</groupId>
         <artifactId>querydsl-jpa</artifactId>
-        <version>3.4.3</version>
+        <version>4.1.4</version>
       </dependency>
       <!-- DataBase Connection Pooling -->
       <dependency>

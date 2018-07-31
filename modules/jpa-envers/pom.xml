@@ -12,12 +12,12 @@
   <version>${oasp4j.version}</version>
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
-  <description>JPA-based persistence infrastructure of the Open Application Standard Platform for Java (OASP4J).</description>
+  <description>JPA and envers support for Open Application Standard Platform for Java (OASP4J).</description>
 
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>oasp4j-jpa</artifactId>
+      <artifactId>oasp4j-jpa-dao</artifactId>
     </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>

@@ -7,7 +7,9 @@ import io.oasp.module.basic.common.api.to.AbstractTo;
 /**
  * Pagination information about a paginated query.
  *
+ * @deprecated use org.springframework.data.domain.Page instead.
  */
+@Deprecated
 public class PaginationResultTo extends AbstractTo {
 
   /** UID for serialization. */
@@ -26,6 +28,7 @@ public class PaginationResultTo extends AbstractTo {
    * The constructor.
    */
   public PaginationResultTo() {
+
     super();
   }
 
