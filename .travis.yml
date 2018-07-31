@@ -2,5 +2,6 @@ language: java
 dist: trusty
 jdk:
   - oraclejdk8
-script: mvn install
+script: 
+ - mvn install
 sudo: false
