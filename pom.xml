@@ -23,17 +23,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <oasp4j.version>3.0.0-SNAPSHOT</oasp4j.version>
-    <port.range>81</port.range>
     <oasp.flatten.mode>oss</oasp.flatten.mode>
     <spring.boot.version>1.5.3.RELEASE</spring.boot.version>
-    <js.client.dir>src/main/client</js.client.dir>
-    <servicedoc.info.title>OASP ${project.name} - Service Documentation</servicedoc.info.title>
-    <servicedoc.info.description>This is the documentation of the REST-Services of ${project.name}.</servicedoc.info.description>
-    <servicedoc.host>oasp-ci.cloudapp.net</servicedoc.host>
-    <servicedoc.port>80</servicedoc.port>
-    <!-- oasp4j-sample should actually be restaurant -->
-    <servicedoc.basePath>oasp4j-sample/services/rest</servicedoc.basePath>
-    <servicedocgen.version>1.0.0-beta-3</servicedocgen.version>
     <javadoc.option.doclint></javadoc.option.doclint>
     <maven.archetype.version>3.0.1</maven.archetype.version>
   </properties>
@@ -321,11 +312,6 @@
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
-          <artifactId>servicedocgen-maven-plugin</artifactId>
-          <version>${servicedocgen.version}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
           <artifactId>license-maven-plugin</artifactId>
           <version>1.14</version>        
           <configuration>
@@ -426,26 +412,6 @@
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
-        <artifactId>servicedocgen-maven-plugin</artifactId>
-        <configuration>
-          <descriptor>
-            <info>
-              <title>${servicedoc.info.title}</title>
-              <description>${servicedoc.info.description}</description>
-            </info>
-            <host>${servicedoc.host}</host>
-            <port>${servicedoc.port}</port>
-            <basePath>${servicedoc.basePath}</basePath>
-            <schemes>
-              <scheme>http</scheme>
-            </schemes>
-            <javadocs>
-            </javadocs>
-          </descriptor>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
         <reportSets>
           <reportSet>
@@ -468,17 +434,6 @@
       <properties>
         <javadoc.option.doclint>-Xdoclint:none</javadoc.option.doclint>
       </properties>
-    </profile>
-    <profile>
-      <id>all</id>
-      <activation>
-        <file>
-          <exists>pom.xml</exists>
-        </file>
-      </activation>
-      <modules>
-        <module>samples</module>
-      </modules>
     </profile>
     <profile>
       <id>security</id>
@@ -680,5 +635,4 @@
       <url>file://${user.dir}/target/oasp4j/maven</url>
     </site>
   </distributionManagement>
-
 </project>
