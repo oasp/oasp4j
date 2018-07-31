@@ -28,7 +28,10 @@
     <module>cxf-server-ws</module>
     <module>security</module>
     <module>jpa</module>
+    <module>jpa-basic</module>
+    <module>jpa-dao</module>
     <module>jpa-envers</module>
+    <module>jpa-spring-data</module>
     <module>test-jpa</module>
     <module>batch</module>
     <module>web</module>

@@ -6,10 +6,8 @@
 		<artifactId>${artifactId}</artifactId>
 		<version>${version}</version>
 	</parent>
-
-	<groupId>${groupId}</groupId>
 	<artifactId>${earProjectName}</artifactId>
-	<name>${earProjectName}</name>
+  <name>${project.artifactId}</name>
 	<description>Enterprise application packaging.</description>
 	<packaging>ear</packaging>
 

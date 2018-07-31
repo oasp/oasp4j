@@ -51,7 +51,8 @@ public class RestServiceExceptionMapper implements ResponseExceptionMapper<Throw
           Map<String, Object> jsonMap = objectMapper.readValue(json, Map.class);
           return createException(jsonMap);
         } catch (IOException e) {
-          return new IllegalStateException("Invocation of service", e);
+          return new ServiceInvocationFailedTechnicalException(e, e.getMessage(), e.getClass().getSimpleName(), null,
+              this.serviceName);
         }
       }
     }
@@ -70,6 +71,35 @@ public class RestServiceExceptionMapper implements ResponseExceptionMapper<Throw
   private Throwable createException(String code, String message, UUID uuid) {
 
     return new ServiceInvocationFailedException(message, code, uuid, this.serviceName);
+  }
+
+  /**
+   * Extends {@link ServiceInvocationFailedException} as {@link #isTechnical() technical} exception.
+   */
+  private static final class ServiceInvocationFailedTechnicalException extends ServiceInvocationFailedException {
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * The constructor.
+     *
+     * @param cause the {@link #getCause() cause} of this exception.
+     * @param message the {@link #getMessage() message}.
+     * @param code the {@link #getCode() code}.
+     * @param uuid {@link UUID} the {@link #getUuid() UUID}.
+     * @param service the name (e.g. {@link Class#getName() qualified name}) of the service that failed.
+     */
+    private ServiceInvocationFailedTechnicalException(Throwable cause, String message, String code, UUID uuid,
+        String service) {
+
+      super(cause, message, code, uuid, service);
+    }
+
+    @Override
+    public boolean isForUser() {
+
+      return false;
+    }
   }
 
 }

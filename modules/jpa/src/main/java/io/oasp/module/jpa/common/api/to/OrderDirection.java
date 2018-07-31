@@ -2,7 +2,8 @@ package io.oasp.module.jpa.common.api.to;
 
 /**
  * {@link Enum} for sort order.
- *
+ * 
+ * @deprecated user org.springframework.data.domain.Sort.Direction instead
  */
 public enum OrderDirection {
 
