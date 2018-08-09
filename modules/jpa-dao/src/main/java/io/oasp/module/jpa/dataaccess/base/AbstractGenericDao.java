@@ -20,6 +20,7 @@ import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.oasp.module.basic.common.api.reference.Ref;
 import io.oasp.module.jpa.dataaccess.api.GenericDao;
 import io.oasp.module.jpa.dataaccess.api.QueryHelper;
 
@@ -134,6 +135,15 @@ public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> ex
       throw new ObjectNotFoundUserException(getEntityClass().getSimpleName(), id);
     }
     return entity;
+  }
+
+  @Override
+  public E get(Ref<ID, E> reference) {
+
+    if (reference == null) {
+      return null;
+    }
+    return getEntityManager().getReference(getEntityClass(), reference.getId());
   }
 
   @Override

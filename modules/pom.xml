@@ -32,6 +32,7 @@
     <module>jpa-dao</module>
     <module>jpa-envers</module>
     <module>jpa-spring-data</module>
+    <module>test-jpa</module>
     <module>batch</module>
     <module>web</module>
     <module>basic</module>

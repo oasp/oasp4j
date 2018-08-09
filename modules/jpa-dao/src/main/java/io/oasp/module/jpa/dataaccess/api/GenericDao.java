@@ -7,6 +7,8 @@ import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
 
 import io.oasp.module.jpa.dataaccess.api.feature.FeatureForceIncrementModificationCounter;
 
+import io.oasp.module.basic.common.api.reference.Ref;
+
 /**
  * This is the interface for a <em>Data Access Object</em> (DAO). It acts as a manager responsible for the persistence
  * operations on a specific {@link PersistenceEntity entity} {@literal <E>}.<br/>
@@ -64,6 +66,14 @@ public interface GenericDao<ID, E extends PersistenceEntity<ID>> extends Feature
    * @throws IllegalArgumentException if {@code id} is {@code null}
    */
   E findOne(ID id) throws IllegalArgumentException;
+
+  /**
+   * @param reference the {@link Ref} to the {@link PersistenceEntity} to get. Typically an instance of
+   *        {@link io.oasp.module.basic.common.api.reference.IdRef}.
+   * @return the {@link PersistenceEntity} as {@link javax.persistence.EntityManager#getReference(Class, Object)
+   *         reference} for the given {@link Ref}. Will be {@code null} if the given {@link Ref} was {@code null}.
+   */
+  E get(Ref<ID, E> reference);
 
   /**
    * Returns whether an entity with the given id exists.

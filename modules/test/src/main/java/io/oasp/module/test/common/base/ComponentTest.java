@@ -15,7 +15,6 @@ import io.oasp.module.test.common.api.category.CategoryComponentTest;
  * extend this class.
  *
  * @see CategoryComponentTest
- *
  */
 @RunWith(SpringRunner.class)
 @TestExecutionListeners({ TransactionalTestExecutionListener.class, DependencyInjectionTestExecutionListener.class })
