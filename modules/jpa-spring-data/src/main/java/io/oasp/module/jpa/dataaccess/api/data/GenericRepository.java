@@ -5,7 +5,6 @@ import static com.querydsl.core.alias.Alias.$;
 import java.io.Serializable;
 import java.util.Collection;
 
-import net.sf.mmm.util.exception.api.ObjectNotFoundException;
 import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -42,16 +41,11 @@ public interface GenericRepository<E, ID extends Serializable>
   /**
    * @param id the {@link net.sf.mmm.util.entity.api.PersistenceEntity#getId() primary key}. May not be {@code null}.
    * @return the requested entity. Never {@code null}.
-   * @throws ObjectNotFoundException if the requested entity does not exist.
-   * @see #findOne(java.io.Serializable)
+   * @see #findById(java.io.Serializable)
    */
-  default E find(ID id) throws ObjectNotFoundException {
+  default E find(ID id) {
 
-    E entity = findOne(id);
-    if (entity == null) {
-      throw new ObjectNotFoundUserException(getEntityClass(), id);
-    }
-    return entity;
+    return findById(id).orElseThrow(() -> new ObjectNotFoundUserException(getEntityClass(), id));
   }
 
   /**

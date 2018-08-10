@@ -167,13 +167,13 @@ public class SpringBootBatchCommandLine {
       throws Exception {
 
     // get sources of configuration
-    Object[] configurationObjects = new Object[configurations.size()];
+    Class<?>[] configurationClasses = new Class[configurations.size()];
     for (int i = 0; i < configurations.size(); i++) {
 
-      configurationObjects[i] = getConfiguration(configurations.get(i));
+      configurationClasses[i] = Class.forName(configurations.get(i));
     }
 
-    SpringApplication app = new SpringApplication(configurationObjects);
+    SpringApplication app = new SpringApplication(configurationClasses);
 
     // no (web) server needed
     app.setWebEnvironment(false);
@@ -182,14 +182,14 @@ public class SpringBootBatchCommandLine {
     ConfigurableApplicationContext ctx = app.run(new String[0]);
 
     switch (operation) {
-    case START:
-      startBatch(ctx, jobName, parameters);
-      break;
-    case STOP:
-      stopBatch(ctx, jobName);
-      break;
-    default:
-      throw new RuntimeException("Unknown operation: " + operation);
+      case START:
+        startBatch(ctx, jobName, parameters);
+        break;
+      case STOP:
+        stopBatch(ctx, jobName);
+        break;
+      default:
+        throw new RuntimeException("Unknown operation: " + operation);
     }
 
   }

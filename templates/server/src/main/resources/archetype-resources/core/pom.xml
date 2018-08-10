@@ -99,7 +99,7 @@
 
     <!-- For Bean-Validation (JSR 303) -->
     <dependency>
-      <groupId>org.hibernate</groupId>
+      <groupId>org.hibernate.validator</groupId>
       <artifactId>hibernate-validator</artifactId>
     </dependency>
 
