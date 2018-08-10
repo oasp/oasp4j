@@ -35,8 +35,8 @@ public class DiagnosticContextFilterTest extends ModuleTest {
     DiagnosticContextFilter filter = new DiagnosticContextFilter();
 
     // exercise
-    String correlationIdHttpHeaderName =
-        (String) ReflectionTestUtils.getField(filter, CORRELATION_ID_HEADER_NAME_PARAM);
+    String correlationIdHttpHeaderName = (String) ReflectionTestUtils.getField(filter,
+        CORRELATION_ID_HEADER_NAME_PARAM);
 
     // verify
     assertThat(correlationIdHttpHeaderName).isNotNull();
@@ -56,8 +56,8 @@ public class DiagnosticContextFilterTest extends ModuleTest {
     filter.init(this.config);
 
     // verify
-    String correlationIdHttpHeaderName =
-        (String) ReflectionTestUtils.getField(filter, CORRELATION_ID_HEADER_NAME_PARAM);
+    String correlationIdHttpHeaderName = (String) ReflectionTestUtils.getField(filter,
+        CORRELATION_ID_HEADER_NAME_PARAM);
     assertThat(correlationIdHttpHeaderName).isNotNull()
         .isEqualTo(DiagnosticContextFilter.CORRELATION_ID_HEADER_NAME_DEFAULT);
   }
@@ -76,8 +76,8 @@ public class DiagnosticContextFilterTest extends ModuleTest {
     // exercise
     filter.init(this.config);
     // verify
-    String correlationIdHttpHeaderName =
-        (String) ReflectionTestUtils.getField(filter, CORRELATION_ID_HEADER_NAME_PARAM);
+    String correlationIdHttpHeaderName = (String) ReflectionTestUtils.getField(filter,
+        CORRELATION_ID_HEADER_NAME_PARAM);
     assertThat(correlationIdHttpHeaderName).isEqualTo(nonDefaultParameter);
   }
 }

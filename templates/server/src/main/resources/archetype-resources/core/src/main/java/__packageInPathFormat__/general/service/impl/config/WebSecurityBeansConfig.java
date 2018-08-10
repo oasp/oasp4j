@@ -2,6 +2,8 @@ package ${package}.general.service.impl.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
@@ -62,5 +64,16 @@ public class WebSecurityBeansConfig {
     // By default Spring-Security is setting the prefix "ROLE_" for all permissions/authorities.
     // We disable this undesired behavior here...
     return new DefaultRolesPrefixPostProcessor("");
+  }
+
+  /**
+   * This method provide a new instance of {@code DelegatingPasswordEncoder}}
+   *
+   * @return the newly create {@code DelegatingPasswordEncoder}}
+   */
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+
+    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
   }
 }

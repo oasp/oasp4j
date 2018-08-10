@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.WebApplicationContext;
 
 import io.oasp.module.logging.common.api.DiagnosticContextFacade;
 
@@ -38,6 +40,9 @@ public class DiagnosticContextFilter implements Filter {
 
   /** @see #setCorrelationIdHttpHeaderName(String) */
   private String correlationIdHttpHeaderName;
+
+  @Autowired
+  private WebApplicationContext webApplicationContext;
 
   private DiagnosticContextFacade diagnosticContextFacade;
 
@@ -141,8 +146,8 @@ public class DiagnosticContextFilter implements Filter {
         // ClassNotFoundException and use the fallback in the catch statement.
         ServletContext servletContext = config.getServletContext();
         org.springframework.web.context.WebApplicationContext springContext;
-        springContext =
-            org.springframework.web.context.support.WebApplicationContextUtils.getWebApplicationContext(servletContext);
+        springContext = org.springframework.web.context.support.WebApplicationContextUtils
+            .getWebApplicationContext(servletContext);
         this.diagnosticContextFacade = springContext.getBean(DiagnosticContextFacade.class);
       } catch (Throwable e) {
         LOG.warn("DiagnosticContextFacade not defined in spring. Falling back to default", e);

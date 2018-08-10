@@ -48,20 +48,20 @@ public class UcManageBinaryObjectImpl extends AbstractUc implements UcManageBina
   @Override
   public void deleteBinaryObject(Long binaryObjectId) {
 
-    this.binaryObjectRepository.delete(binaryObjectId);
+    this.binaryObjectRepository.deleteById(binaryObjectId);
 
   }
 
   @Override
   public BinaryObjectEto findBinaryObject(Long binaryObjectId) {
 
-    return getBeanMapper().map(this.binaryObjectRepository.findOne(binaryObjectId), BinaryObjectEto.class);
+    return getBeanMapper().map(this.binaryObjectRepository.find(binaryObjectId), BinaryObjectEto.class);
   }
 
   @Override
   public Blob getBinaryObjectBlob(Long binaryObjectId) {
 
-    return this.binaryObjectRepository.findOne(binaryObjectId).getData();
+    return this.binaryObjectRepository.find(binaryObjectId).getData();
   }
 
 }

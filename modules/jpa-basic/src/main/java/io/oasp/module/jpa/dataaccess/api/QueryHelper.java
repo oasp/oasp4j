@@ -368,7 +368,7 @@ public class QueryHelper {
     if (determineTotal) {
       total = query.clone().fetchCount();
     }
-    int offset = 0;
+    long offset = 0;
     if (pageable != null) {
       offset = pageable.getOffset();
       query.offset(offset);

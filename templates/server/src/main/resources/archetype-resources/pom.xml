@@ -10,10 +10,9 @@
   <description>Application based on the Open Application Standard Platform for Java (OASP4J).</description>
 
   <properties>
-    <spring.boot.version>1.5.3.RELEASE</spring.boot.version>
+    <spring.boot.version>2.0.4.RELEASE</spring.boot.version>
     <oasp4j.version>$[oasp4j.version]</oasp4j.version>
-    <flyway.version>4.2.0</flyway.version>
-    <java.version>1.7</java.version>
+    <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <oasp.test.excluded.groups>io.oasp.module.test.common.api.category.CategorySystemTest</oasp.test.excluded.groups>
@@ -33,11 +32,6 @@
 
   <dependencyManagement>
     <dependencies>
-      <dependency>
-        <groupId>org.flywaydb</groupId>
-        <artifactId>flyway-core</artifactId>
-        <version>${flyway.version}</version>
-      </dependency>
       <!-- BOM of spring-boot -->
       <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -293,7 +287,7 @@
         <plugin>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
-          <version>1.5.7.RELEASE</version>
+          <version>2.0.4.RELEASE</version>
         </plugin>
       </plugins>
     </pluginManagement>
