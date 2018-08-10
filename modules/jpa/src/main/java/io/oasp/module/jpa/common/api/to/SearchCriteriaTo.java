@@ -1,5 +1,6 @@
 package io.oasp.module.jpa.common.api.to;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.oasp.module.basic.common.api.to.AbstractTo;
@@ -12,7 +13,9 @@ import io.oasp.module.basic.common.api.to.AbstractTo;
  * This interface only holds the necessary settings for the pagination part of a query. For your individual search, you
  * extend {@link SearchCriteriaTo} to create a java bean with all the fields for your search.
  *
+ * @deprecated create your own TO and use org.springframework.data.domain.Pageable for pagination
  */
+@Deprecated
 public class SearchCriteriaTo extends AbstractTo {
 
   /** UID for serialization. */
@@ -100,6 +103,18 @@ public class SearchCriteriaTo extends AbstractTo {
   public List<OrderByTo> getSort() {
 
     return this.sort;
+  }
+
+  /**
+   * @param orderBy the {@link OrderByTo} to add to {@link #getSort() sort}. {@link List} will be created if
+   *        {@code null}.
+   */
+  public void addSort(OrderByTo orderBy) {
+
+    if (this.sort == null) {
+      this.sort = new ArrayList<>();
+    }
+    this.sort.add(orderBy);
   }
 
   /**

@@ -1,7 +1,6 @@
 package ${package}.general.logic.base;
 
 import ${package}.general.common.base.AbstractBeanMapperSupport;
-import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,25 +28,6 @@ public abstract class AbstractLogic extends AbstractBeanMapperSupport {
   public AbstractLogic() {
 
     super();
-  }
-
-  /**
-   * Maps a {@link PaginatedListTo paginated list} of persistent entities to a {@link PaginatedListTo paginated list} of
-   * transfer objects.
-   *
-   * @param <T> is the generic type of the {@link AbstractTransferObject transfer object}.
-   * @param <E> is the generic type of the {@link PersistenceEntity entity}.
-   * @param paginatedList is the paginated list to map from.
-   * @param klass is the target class to map the paginated entities to.
-   * @return a {@link PaginatedListTo paginated list of entity transfer objects}.
-   */
-  protected <T extends TransferObject, E extends PersistenceEntity<?>> PaginatedListTo<T> mapPaginatedEntityList(
-      PaginatedListTo<E> paginatedList, Class<T> klass) {
-
-    List<T> etoList = getBeanMapper().mapList(paginatedList.getResult(), klass);
-    PaginatedListTo<T> result = new PaginatedListTo<>(etoList, paginatedList.getPagination());
-
-    return result;
   }
 
   /**

@@ -4,7 +4,10 @@ import io.oasp.module.basic.common.api.to.AbstractTo;
 
 /**
  * Transfer object to transmit order criteria
+ * 
+ * @deprecated use org.springframework.data.domain.Sort instead
  */
+@Deprecated
 public class OrderByTo extends AbstractTo {
 
   private static final long serialVersionUID = 1L;
@@ -22,9 +25,30 @@ public class OrderByTo extends AbstractTo {
   }
 
   /**
-   * Returns the field 'name'.
+   * The constructor.
    *
-   * @return Value of name
+   * @param name the {@link #getName() field name}.
+   */
+  public OrderByTo(String name) {
+
+    this(name, OrderDirection.ASC);
+  }
+
+  /**
+   * The constructor.
+   *
+   * @param name the {@link #getName() field name}.
+   * @param direction the {@link #getDirection() sort order direction}.
+   */
+  public OrderByTo(String name, OrderDirection direction) {
+
+    super();
+    this.name = name;
+    this.direction = direction;
+  }
+
+  /**
+   * @return the name of the field to order by.
    */
   public String getName() {
 
@@ -32,9 +56,7 @@ public class OrderByTo extends AbstractTo {
   }
 
   /**
-   * Sets the field 'name'.
-   *
-   * @param name New value for name
+   * @param name the new value of {@link #getName()}.
    */
   public void setName(String name) {
 
@@ -42,19 +64,18 @@ public class OrderByTo extends AbstractTo {
   }
 
   /**
-   * Returns the field 'direction'.
-   *
-   * @return Value of direction
+   * @return the {@link OrderDirection} defining the sort order direction.
    */
   public OrderDirection getDirection() {
 
+    if (this.direction == null) {
+      return OrderDirection.ASC;
+    }
     return this.direction;
   }
 
   /**
-   * Sets the field 'direction'.
-   *
-   * @param direction New value for direction
+   * @param direction the new value of {@link #getDirection()}.
    */
   public void setDirection(OrderDirection direction) {
 

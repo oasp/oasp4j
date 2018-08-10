@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ${package}.general.dataaccess.api.BinaryObjectEntity;
-import ${package}.general.dataaccess.api.dao.BinaryObjectDao;
+import ${package}.general.dataaccess.api.dao.BinaryObjectRepository;
 import ${package}.general.logic.api.UcManageBinaryObject;
 import ${package}.general.logic.api.to.BinaryObjectEto;
 import ${package}.general.logic.base.AbstractUc;
@@ -17,23 +17,23 @@ import ${package}.general.logic.base.AbstractUc;
 @Named
 public class UcManageBinaryObjectImpl extends AbstractUc implements UcManageBinaryObject {
 
-  private BinaryObjectDao binaryObjectDao;
+  private BinaryObjectRepository binaryObjectRepository;
 
   /**
-   * @return binaryObjectDao
+   * @return {@link BinaryObjectRepository} instance.
    */
-  public BinaryObjectDao binaryObjectDao() {
+  public BinaryObjectRepository getBinaryObjectRepository() {
 
-    return this.binaryObjectDao;
+    return this.binaryObjectRepository;
   }
 
   /**
-   * @param binaryObjectDao the binaryObjectDao to set
+   * @param binaryObjectRepository the {@link BinaryObjectRepository} to set
    */
   @Inject
-  public void setBinaryObjectDao(BinaryObjectDao binaryObjectDao) {
+  public void setBinaryObjectRepository(BinaryObjectRepository binaryObjectRepository) {
 
-    this.binaryObjectDao = binaryObjectDao;
+    this.binaryObjectRepository = binaryObjectRepository;
   }
 
   @Override
@@ -41,27 +41,27 @@ public class UcManageBinaryObjectImpl extends AbstractUc implements UcManageBina
 
     BinaryObjectEntity binaryObjectEntity = getBeanMapper().map(binaryObjectEto, BinaryObjectEntity.class);
     binaryObjectEntity.setData(data);
-    this.binaryObjectDao.save(binaryObjectEntity);
+    this.binaryObjectRepository.save(binaryObjectEntity);
     return getBeanMapper().map(binaryObjectEntity, BinaryObjectEto.class);
   }
 
   @Override
   public void deleteBinaryObject(Long binaryObjectId) {
 
-    this.binaryObjectDao.delete(binaryObjectId);
+    this.binaryObjectRepository.deleteById(binaryObjectId);
 
   }
 
   @Override
   public BinaryObjectEto findBinaryObject(Long binaryObjectId) {
 
-    return getBeanMapper().map(this.binaryObjectDao.findOne(binaryObjectId), BinaryObjectEto.class);
+    return getBeanMapper().map(this.binaryObjectRepository.find(binaryObjectId), BinaryObjectEto.class);
   }
 
   @Override
   public Blob getBinaryObjectBlob(Long binaryObjectId) {
 
-    return this.binaryObjectDao.findOne(binaryObjectId).getData();
+    return this.binaryObjectRepository.find(binaryObjectId).getData();
   }
 
 }

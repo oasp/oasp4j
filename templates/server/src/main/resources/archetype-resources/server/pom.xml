@@ -13,7 +13,7 @@
   <description>Server for the ${rootArtifactId} application - a simple example using the Open Application Standard Platform for Java (OASP4J).</description>
 
   <properties>
-    <java.version>1.7</java.version>
+    <java.version>1.8</java.version>
   </properties>
 
   <dependencies>
@@ -29,10 +29,6 @@
       <version>${project.version}</version>
     </dependency>
     #end
-    <dependency>
-      <groupId>org.flywaydb</groupId>
-      <artifactId>flyway-core</artifactId>
-    </dependency>
   </dependencies>
 
   <profiles>
@@ -112,6 +108,7 @@
             <configuration>
               <packagingExcludes>WEB-INF/classes/config/application.properties</packagingExcludes>
               <warName>${project.artifactId}</warName>
+              <failOnMissingWebXml>false</failOnMissingWebXml>
             </configuration>
           </plugin>
         </plugins>

@@ -3,7 +3,7 @@ package io.oasp.module.service.common.impl.discovery;
 import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerInitializedEvent;
+import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.ApplicationListener;
 
 import io.oasp.module.basic.common.api.config.ConfigProperties;
@@ -24,8 +24,7 @@ import io.oasp.module.service.common.api.constants.ServiceConstants;
  *
  * @since 3.0.0
  */
-public class ServiceDiscovererImplConfig
-    implements ServiceDiscoverer, ApplicationListener<EmbeddedServletContainerInitializedEvent> {
+public class ServiceDiscovererImplConfig implements ServiceDiscoverer, ApplicationListener<WebServerInitializedEvent> {
 
   // @Value("${local.server.port}")
   private int localServerPort;
@@ -45,9 +44,9 @@ public class ServiceDiscovererImplConfig
   }
 
   @Override
-  public void onApplicationEvent(EmbeddedServletContainerInitializedEvent event) {
+  public void onApplicationEvent(WebServerInitializedEvent event) {
 
-    this.localServerPort = event.getEmbeddedServletContainer().getPort();
+    this.localServerPort = event.getWebServer().getPort();
   }
 
   @Override
@@ -107,8 +106,8 @@ public class ServiceDiscovererImplConfig
 
     String resolvedUrl = url2;
     resolvedUrl = resolvedUrl.replace(ServiceConstants.VARIABLE_APP, application);
-    resolvedUrl =
-        resolvedUrl.replace(ServiceConstants.VARIABLE_LOCAL_SERVER_PORT, Integer.toString(this.localServerPort));
+    resolvedUrl = resolvedUrl.replace(ServiceConstants.VARIABLE_LOCAL_SERVER_PORT,
+        Integer.toString(this.localServerPort));
     return resolvedUrl;
   }
 

@@ -1,14 +1,16 @@
 package io.oasp.module.jpa.common.api.to;
 
-import io.oasp.module.basic.common.api.to.AbstractTo;
-
 import net.sf.mmm.util.exception.api.NlsIllegalArgumentException;
+
+import io.oasp.module.basic.common.api.to.AbstractTo;
 
 /**
  * A {@link net.sf.mmm.util.transferobject.api.TransferObject transfer-object} containing criteria for paginating
  * queries.
  *
+ * @deprecated use org.springframework.data.domain.Pageable instead.
  */
+@Deprecated
 public class PaginationTo extends AbstractTo {
 
   /**
