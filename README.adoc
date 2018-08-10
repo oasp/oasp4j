@@ -2,6 +2,4 @@
 
 *Build status*
 
-stable: image:https://travis-ci.org/oasp/oasp4j.svg?branch=master["Build Status",link="https://travis-ci.org/oasp/oasp4j"]
-
-snapshot: image:https://travis-ci.org/oasp/oasp4j.svg?branch=develop["Build Status",link="https://travis-ci.org/oasp/oasp4j"]
+develop: image:https://travis-ci.org/oasp/oasp4j.svg?branch=develop["Build Status",link="https://travis-ci.org/oasp/oasp4j"]
