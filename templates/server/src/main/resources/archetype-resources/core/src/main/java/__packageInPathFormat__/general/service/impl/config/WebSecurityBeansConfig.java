@@ -67,9 +67,9 @@ public class WebSecurityBeansConfig {
   }
 
   /**
-   * This method provide a new instance of {@code DelegatingPasswordEncoder}}
+   * This method provide a new instance of {@code DelegatingPasswordEncoder}
    *
-   * @return the newly create {@code DelegatingPasswordEncoder}}
+   * @return the newly create {@code DelegatingPasswordEncoder}
    */
   @Bean
   public PasswordEncoder passwordEncoder() {
