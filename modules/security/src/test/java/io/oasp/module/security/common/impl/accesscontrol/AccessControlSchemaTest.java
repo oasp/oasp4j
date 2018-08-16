@@ -10,8 +10,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sf.mmm.util.collection.base.NodeCycleException;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
@@ -109,8 +107,8 @@ public class AccessControlSchemaTest extends ModuleTest {
     try {
       createProvider(SCHEMA_XML_CYCLIC);
       fail("Exception expected!");
-    } catch (NodeCycleException e) {
-      assertThat(e).hasMessageContaining("[Cook-->Chief-->Barkeeper]");
+    } catch (Exception e) {
+      assertThat(e).hasMessageContaining("Cook-->Chief-->Barkeeper");
     }
   }
 

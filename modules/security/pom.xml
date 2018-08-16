@@ -53,12 +53,6 @@
       <artifactId>jackson-databind</artifactId>
     </dependency>
 
-    <!-- Utilitiy -->
-    <dependency>
-      <groupId>net.sf.m-m-m</groupId>
-      <artifactId>mmm-util-core</artifactId>
-    </dependency>
-
     <!-- Test Dependencies -->
     <dependency>
       <groupId>io.oasp.java.modules</groupId>

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sf.mmm.util.exception.api.DuplicateObjectException;
-
 import io.oasp.module.security.common.api.accesscontrol.AccessControl;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlGroup;
 import io.oasp.module.security.common.api.accesscontrol.AccessControlPermission;
@@ -33,7 +31,7 @@ public abstract class AccessControlConfig extends AbstractAccessControlProvider 
     if (accessControl instanceof AccessControlPermission) {
       return (AccessControlPermission) accessControl;
     } else if (accessControl != null) {
-      throw new DuplicateObjectException(AccessControlPermission.class.getSimpleName(), id, accessControl);
+      throw new IllegalStateException("Duplicate access control for ID '" + id + "'.");
     }
     AccessControlPermission permission = new AccessControlPermission(id);
     addAccessControl(permission);

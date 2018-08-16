@@ -1,14 +1,11 @@
 package io.oasp.module.security.common.base.accesscontrol;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import net.sf.mmm.util.collection.base.NodeCycle;
-import net.sf.mmm.util.collection.base.NodeCycleException;
-import net.sf.mmm.util.exception.api.DuplicateObjectException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,8 +54,9 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
     Set<AccessControlGroup> toplevelGroups = new HashSet<>(groups);
     for (AccessControlGroup group : groups) {
       collectAccessControls(group, toplevelGroups);
-      NodeCycle<AccessControlGroup> nodeCycle = new NodeCycle<>(group);
-      checkForCyclicDependencies(group, nodeCycle);
+      List<AccessControlGroup> groupList = new ArrayList<>();
+      groupList.add(group);
+      checkForCyclicDependencies(group, groupList);
     }
   }
 
@@ -67,18 +65,25 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
    * graph}.
    *
    * @param group is the {@link AccessControlGroup} to check.
-   * @param nodeCycle the {@link NodeCycle} used to detect cycles.
+   * @param groupList the {@link List} of visited {@link AccessControlGroup}s used to detect cycles.
    */
-  protected void checkForCyclicDependencies(AccessControlGroup group, NodeCycle<AccessControlGroup> nodeCycle) {
+  protected void checkForCyclicDependencies(AccessControlGroup group, List<AccessControlGroup> groupList) {
 
     for (AccessControlGroup inheritedGroup : group.getInherits()) {
-      List<AccessControlGroup> inverseCycle = nodeCycle.getInverseCycle();
-      if (inverseCycle.contains(inheritedGroup)) {
-        throw new NodeCycleException(nodeCycle);
+      if (groupList.contains(inheritedGroup)) {
+        StringBuilder sb = new StringBuilder("A cyclic dependency of access control groups has been detected: \n");
+        for (int i = groupList.size() - 1; i >= 0; i--) {
+          AccessControlGroup node = groupList.get(i);
+          sb.append(node);
+          if (i > 0) {
+            sb.append("-->");
+          }
+        }
+        throw new IllegalStateException(sb.toString());
       }
-      inverseCycle.add(inheritedGroup);
-      checkForCyclicDependencies(inheritedGroup, nodeCycle);
-      AccessControlGroup removed = inverseCycle.remove(inverseCycle.size() - 1);
+      groupList.add(inheritedGroup);
+      checkForCyclicDependencies(inheritedGroup, groupList);
+      AccessControlGroup removed = groupList.remove(groupList.size() - 1);
       assert (removed == inheritedGroup);
     }
   }
@@ -144,7 +149,7 @@ public abstract class AbstractAccessControlProvider implements AccessControlProv
     } else if (existing == accessControl) {
       LOG.debug("Access control {} was already registered.", accessControl);
     } else {
-      throw new DuplicateObjectException(accessControl, id, existing);
+      throw new IllegalStateException("Duplicate access control with ID '" + id + "'.");
     }
   }
 
