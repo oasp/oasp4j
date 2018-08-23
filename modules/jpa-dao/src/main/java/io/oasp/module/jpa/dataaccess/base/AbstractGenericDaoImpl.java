@@ -30,18 +30,18 @@ import io.oasp.module.jpa.dataaccess.api.QueryHelper;
  * @param <ID> is the generic type if the {@link PersistenceEntity#getId() primary key}.
  * @param <E> is the generic type of the managed {@link PersistenceEntity}.
  */
-public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> extends QueryHelper
+public abstract class AbstractGenericDaoImpl<ID, E extends PersistenceEntity<ID>> extends QueryHelper
     implements GenericDao<ID, E> {
 
   /** Logger instance. */
-  private static final Logger LOG = LoggerFactory.getLogger(AbstractGenericDao.class);
+  private static final Logger LOG = LoggerFactory.getLogger(AbstractGenericDaoImpl.class);
 
   private EntityManager entityManager;
 
   /**
    * The constructor.
    */
-  public AbstractGenericDao() {
+  public AbstractGenericDaoImpl() {
 
     super();
   }

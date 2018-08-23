@@ -1,9 +1,10 @@
-package io.oasp.module.jpa.common.base;
+package io.oasp.module.jpa.dataaccess.base;
 
 import java.util.List;
 
 import javax.persistence.Query;
 
+import net.sf.mmm.util.entity.api.PersistenceEntity;
 import net.sf.mmm.util.search.base.AbstractSearchCriteria;
 
 import com.querydsl.core.types.Expression;
@@ -13,26 +14,37 @@ import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 import io.oasp.module.jpa.common.api.to.PaginationResultTo;
 import io.oasp.module.jpa.common.api.to.PaginationTo;
 import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
+import io.oasp.module.jpa.dataaccess.api.GenericDao;
 
 /**
- * @deprecated wird nur bereitgestellt, um die alte Funktionalität aus AbstractGenericDao für SearchCriteriaTo und die
- *             Paginierung temporär beibehalten zu können. Dieses Modul {@code oasp4j-jpa} wird in Zukunft nicht mehr
- *             unterstützt.
+ * This is the abstract base-implementation of the {@link GenericDao} interface.
+ *
+ * @param <ID> is the generic type if the {@link PersistenceEntity#getId() primary key}.
+ * @param <E> is the generic type of the managed {@link PersistenceEntity}.
+ * @deprecated use {@link AbstractGenericDaoImpl} instead. This class only contains the legacy support for searching and
+ *             paging.
  */
 @Deprecated
-public class LegacyDaoQuerySupport {
+public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> extends AbstractGenericDaoImpl<ID, E> {
+
+  /**
+   * The constructor.
+   */
+  public AbstractGenericDao() {
+
+    super();
+  }
 
   /**
    * Returns a paginated list of entities according to the supplied {@link SearchCriteriaTo criteria}.
    *
    * @see #findPaginated(SearchCriteriaTo, JPAQuery, Expression)
    *
-   * @param <E> type to query
    * @param criteria contains information about the requested page.
    * @param query is a query which is preconfigured with the desired conditions for the search.
    * @return a paginated list.
    */
-  public static <E> PaginatedListTo<E> findPaginated(SearchCriteriaTo criteria, JPAQuery<E> query) {
+  public PaginatedListTo<E> findPaginated(SearchCriteriaTo criteria, JPAQuery<E> query) {
 
     return findPaginated(criteria, query, null);
   }
@@ -48,14 +60,13 @@ public class LegacyDaoQuerySupport {
    * <p>
    * Will install a query timeout if {@link SearchCriteriaTo#getSearchTimeout()} is not null.
    *
-   * @param <E> type to query
    * @param criteria contains information about the requested page.
    * @param query is a query which is preconfigured with the desired conditions for the search.
    * @param expr is used for the final mapping from the SQL result to the entities.
    * @return a paginated list.
    */
   @SuppressWarnings("unchecked")
-  public static <E> PaginatedListTo<E> findPaginated(SearchCriteriaTo criteria, JPAQuery<?> query, Expression<E> expr) {
+  public PaginatedListTo<E> findPaginated(SearchCriteriaTo criteria, JPAQuery<?> query, Expression<E> expr) {
 
     applyCriteria(criteria, query);
 
@@ -84,7 +95,7 @@ public class LegacyDaoQuerySupport {
    * @param query is a query preconfigured with the desired conditions for the search.
    * @return information about the applied pagination.
    */
-  protected static PaginationResultTo createPaginationResult(PaginationTo pagination, JPAQuery<?> query) {
+  protected PaginationResultTo createPaginationResult(PaginationTo pagination, JPAQuery<?> query) {
 
     Long total = calculateTotalBeforePagination(pagination, query);
 
@@ -100,7 +111,7 @@ public class LegacyDaoQuerySupport {
    * @param query is the {@link JPAQuery query} for which to calculate the total.
    * @return the total count, or {@literal null} if {@link PaginationTo#isTotal()} is {@literal false}.
    */
-  protected static Long calculateTotalBeforePagination(PaginationTo pagination, JPAQuery<?> query) {
+  protected Long calculateTotalBeforePagination(PaginationTo pagination, JPAQuery<?> query) {
 
     Long total = null;
     if (pagination.isTotal()) {
@@ -116,7 +127,7 @@ public class LegacyDaoQuerySupport {
    * @param pagination is the {@link PaginationTo pagination criteria} to apply.
    * @param query is the {@link JPAQuery} to apply to.
    */
-  public static void applyPagination(PaginationTo pagination, JPAQuery<?> query) {
+  public void applyPagination(PaginationTo pagination, JPAQuery<?> query) {
 
     if (pagination == PaginationTo.NO_PAGINATION) {
       return;
@@ -139,7 +150,7 @@ public class LegacyDaoQuerySupport {
    * @param criteria is the {@link AbstractSearchCriteria search criteria} to apply.
    * @param query is the {@link JPAQuery} to apply to.
    */
-  protected static void applyCriteria(AbstractSearchCriteria criteria, JPAQuery<?> query) {
+  protected void applyCriteria(AbstractSearchCriteria criteria, JPAQuery<?> query) {
 
     Integer limit = criteria.getMaximumHitCount();
     if (limit != null) {
@@ -161,7 +172,7 @@ public class LegacyDaoQuerySupport {
    * @param criteria is the {@link AbstractSearchCriteria search criteria} to apply.
    * @param query is the {@link Query} to apply to.
    */
-  protected static void applyCriteria(AbstractSearchCriteria criteria, Query query) {
+  protected void applyCriteria(AbstractSearchCriteria criteria, Query query) {
 
     Integer limit = criteria.getMaximumHitCount();
     if (limit != null) {
@@ -183,7 +194,7 @@ public class LegacyDaoQuerySupport {
    * @param criteria is the {@link AbstractSearchCriteria search criteria} to apply.
    * @param query is the {@link JPAQuery} to apply to.
    */
-  protected static void applyCriteria(SearchCriteriaTo criteria, JPAQuery<?> query) {
+  protected void applyCriteria(SearchCriteriaTo criteria, JPAQuery<?> query) {
 
     Integer timeout = criteria.getSearchTimeout();
     if (timeout != null) {

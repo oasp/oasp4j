@@ -16,22 +16,21 @@ import io.oasp.module.jpa.dataaccess.api.RevisionMetadata;
 import io.oasp.module.jpa.dataaccess.impl.LazyRevisionMetadata;
 
 /**
- * This is the abstract base-implementation of a {@link AbstractGenericDao} using to manage the revision-control.
+ * This is the abstract base-implementation of a {@link AbstractGenericDaoImpl} with support for revision-control
+ * (historization) via <em>hibernate-envers</em>.
  *
  * @param <ID> is the type of the {@link MutablePersistenceEntity#getId() primary key} of the managed
  *        {@link MutablePersistenceEntity entity}.
  * @param <ENTITY> is the {@link #getEntityClass() type} of the managed entity.
- * @deprecated use {@link AbstractGenericRevisionedDaoImpl} instead. This class only contains the legacy support for
- *             searching and paging.
+ *
  */
-@Deprecated
-public abstract class AbstractGenericRevisionedDao<ID, ENTITY extends MutablePersistenceEntity<ID>>
-    extends AbstractGenericDao<ID, ENTITY> implements GenericRevisionedDao<ID, ENTITY> {
+public abstract class AbstractGenericRevisionedDaoImpl<ID, ENTITY extends MutablePersistenceEntity<ID>>
+    extends AbstractGenericDaoImpl<ID, ENTITY> implements GenericRevisionedDao<ID, ENTITY> {
 
   /**
    * The constructor.
    */
-  public AbstractGenericRevisionedDao() {
+  public AbstractGenericRevisionedDaoImpl() {
 
     super();
   }

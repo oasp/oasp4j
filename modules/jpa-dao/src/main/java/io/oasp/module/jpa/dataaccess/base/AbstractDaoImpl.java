@@ -10,13 +10,13 @@ import io.oasp.module.jpa.dataaccess.api.Dao;
  * @param <E> is the generic type of the {@link PersistenceEntity}.
  *
  */
-public abstract class AbstractDao<E extends PersistenceEntity<Long>> extends AbstractGenericDao<Long, E>
+public abstract class AbstractDaoImpl<E extends PersistenceEntity<Long>> extends AbstractGenericDaoImpl<Long, E>
     implements Dao<E> {
 
   /**
    * The constructor.
    */
-  public AbstractDao() {
+  public AbstractDaoImpl() {
 
     super();
   }
