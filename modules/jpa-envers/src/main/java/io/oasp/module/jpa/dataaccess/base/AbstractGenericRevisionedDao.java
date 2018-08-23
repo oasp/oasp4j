@@ -23,6 +23,7 @@ import io.oasp.module.jpa.dataaccess.impl.LazyRevisionMetadata;
  * @param <ENTITY> is the {@link #getEntityClass() type} of the managed entity.
  *
  */
+@Deprecated
 public abstract class AbstractGenericRevisionedDao<ID, ENTITY extends MutablePersistenceEntity<ID>>
     extends AbstractGenericDao<ID, ENTITY> implements GenericRevisionedDao<ID, ENTITY> {
 

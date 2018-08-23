@@ -1,6 +1,6 @@
 /* Copyright (c) The m-m-m Team, Licensed under the Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0 */
-package io.oasp.module.jpa.common.base;
+package io.oasp.module.jpa.dataaccess.base.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,29 +10,26 @@ import net.sf.mmm.util.exception.api.ObjectNotFoundException;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 
-import io.oasp.module.jpa.dataaccess.api.GenericRevisionedDao;
 import io.oasp.module.jpa.dataaccess.api.MutablePersistenceEntity;
 import io.oasp.module.jpa.dataaccess.api.RevisionMetadata;
+import io.oasp.module.jpa.dataaccess.api.dao.IGenericRevisionedDao;
 import io.oasp.module.jpa.dataaccess.impl.LazyRevisionMetadata;
 
 /**
- * This is the abstract base-implementation of a {@link AbstractGenericDao} using to manage the revision-control.
+ * This is the abstract base-implementation of a {@link AbstractGenericDaoImpl} using to manage the revision-control.
  *
  * @param <ID> is the type of the {@link MutablePersistenceEntity#getId() primary key} of the managed
  *        {@link MutablePersistenceEntity entity}.
  * @param <ENTITY> is the {@link #getEntityClass() type} of the managed entity.
  *
- * @deprecated It is only provided to support old functionality of DAO, instead use
- *             io.oasp.module.jpa.dataaccess.base.AbstractGenericRevisionedDao instead
  */
-@Deprecated
-public abstract class AbstractGenericRevisionedDao<ID, ENTITY extends MutablePersistenceEntity<ID>>
-    extends AbstractGenericDao<ID, ENTITY> implements GenericRevisionedDao<ID, ENTITY> {
+public abstract class AbstractGenericRevisionedDaoImpl<ID, ENTITY extends MutablePersistenceEntity<ID>>
+    extends AbstractGenericDaoImpl<ID, ENTITY> implements IGenericRevisionedDao<ID, ENTITY> {
 
   /**
    * The constructor.
    */
-  public AbstractGenericRevisionedDao() {
+  public AbstractGenericRevisionedDaoImpl() {
 
     super();
   }

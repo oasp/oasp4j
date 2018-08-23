@@ -17,7 +17,12 @@
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>oasp4j-jpa-dao</artifactId>
+      <artifactId>oasp4j-jpa</artifactId>
+    </dependency>
+    <!-- Not sure if we can change this -->
+    <dependency>
+      <groupId>io.oasp.java.modules</groupId>
+      <artifactId>oasp4j-jpa-dao-envers</artifactId>
     </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>

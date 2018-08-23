@@ -5,9 +5,8 @@ import java.util.List;
 import net.sf.mmm.util.entity.api.PersistenceEntity;
 import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
 
-import io.oasp.module.jpa.dataaccess.api.feature.FeatureForceIncrementModificationCounter;
-
 import io.oasp.module.basic.common.api.reference.Ref;
+import io.oasp.module.jpa.dataaccess.api.feature.FeatureForceIncrementModificationCounter;
 
 /**
  * This is the interface for a <em>Data Access Object</em> (DAO). It acts as a manager responsible for the persistence
@@ -30,6 +29,7 @@ import io.oasp.module.basic.common.api.reference.Ref;
  * @param <E> is the generic type of the {@link PersistenceEntity}.
  *
  */
+@Deprecated
 public interface GenericDao<ID, E extends PersistenceEntity<ID>> extends FeatureForceIncrementModificationCounter<E> {
 
   /**

@@ -1,11 +1,11 @@
 package io.oasp.example.component.dataaccess.api.dao;
 
 import io.oasp.example.component.dataaccess.api.BarEntity;
-import io.oasp.module.jpa.dataaccess.api.Dao;
+import io.oasp.module.jpa.dataaccess.api.dao.IDao;
 
 /**
- * {@link Dao} for {@link BarEntity}.
+ * {@link IDao} for {@link BarEntity}.
  */
-public interface BarDao extends Dao<BarEntity> {
+public interface BarDao extends IDao<BarEntity> {
 
 }

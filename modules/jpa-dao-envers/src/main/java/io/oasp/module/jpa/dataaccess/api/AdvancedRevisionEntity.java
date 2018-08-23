@@ -1,9 +1,10 @@
 /* Copyright (c) The m-m-m Team, Licensed under the Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0 */
-package io.oasp.module.jpa.dataaccess.base;
+package io.oasp.module.jpa.dataaccess.api;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -19,14 +20,10 @@ import org.hibernate.envers.RevisionTimestamp;
  * This is a custom {@link org.hibernate.envers.DefaultRevisionEntity revision entity} also containing the actual user.
  *
  * @see org.hibernate.envers.DefaultRevisionEntity
- * @deprecated If you want to have the backward compatibility with your existing code , please use this class else if
- *             you are starting the development of application from scratch, please use
- *             {@link io.oasp.module.jpa.dataaccess.api.AdvancedRevisionEntity}
  */
 @Entity
 @RevisionEntity(AdvancedRevisionListener.class)
 @Table(name = "RevInfo")
-@Deprecated
 public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
 
   /** UID for serialization. */
@@ -40,14 +37,15 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
 
   /** @see #getTimestamp() */
   @RevisionTimestamp
+  @Column(name = "\"timestamp\"")
   private long timestamp;
 
   /** @see #getDate() */
   private transient Date date;
 
-  /** @see #getUser() */
+  /** @see #getUserLogin() */
 
-  private String user;
+  private String userLogin;
 
   /**
    * The constructor.
@@ -102,17 +100,17 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
    * @return the login or id of the user that has created this revision.
    */
 
-  public String getUser() {
+  public String getUserLogin() {
 
-    return this.user;
+    return this.userLogin;
   }
 
   /**
-   * @param user is the new value of {@link #getUser()}.
+   * @param userLogin is the new value of {@link #getUserLogin()}.
    */
-  public void setUser(String user) {
+  public void setUserLogin(String userLogin) {
 
-    this.user = user;
+    this.userLogin = userLogin;
   }
 
   @Override

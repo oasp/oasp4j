@@ -6,7 +6,7 @@ import javax.transaction.Transactional;
 
 import io.oasp.example.component.dataaccess.api.BarEntity;
 import io.oasp.example.component.dataaccess.api.dao.BarDao;
-import io.oasp.module.jpa.dataaccess.api.GenericDao;
+import io.oasp.module.jpa.dataaccess.api.dao.IGenericDao;
 import io.oasp.module.jpa.dataaccess.base.AbstractGenericDaoTest;
 
 /**
@@ -36,7 +36,7 @@ public class BarDaoTxBean {
 
   /**
    * Loads the {@link BarEntity} with the given {@code id} and
-   * {@link GenericDao#forceIncrementModificationCounter(net.sf.mmm.util.entity.api.PersistenceEntity) increments the
+   * {@link IGenericDao#forceIncrementModificationCounter(net.sf.mmm.util.entity.api.PersistenceEntity) increments the
    * modification counter}.
    *
    * @param id of the {@link BarEntity} to load and increment.

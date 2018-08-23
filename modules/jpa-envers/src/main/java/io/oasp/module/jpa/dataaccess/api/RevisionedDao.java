@@ -6,7 +6,8 @@ package io.oasp.module.jpa.dataaccess.api;
  *
  * @param <ENTITY> is the type of the managed {@link MutablePersistenceEntity entity}.
  */
-public interface RevisionedDao<ENTITY extends MutablePersistenceEntity<Long>> extends
-    GenericRevisionedDao<Long, ENTITY> {
+@Deprecated
+public interface RevisionedDao<ENTITY extends MutablePersistenceEntity<Long>>
+    extends GenericRevisionedDao<Long, ENTITY> {
 
 }

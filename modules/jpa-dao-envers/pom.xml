@@ -8,16 +8,26 @@
     <version>dev-SNAPSHOT</version>
   </parent>
   <groupId>io.oasp.java.modules</groupId>
-  <artifactId>oasp4j-jpa</artifactId>
+  <artifactId>oasp4j-jpa-dao-envers</artifactId>
   <version>${oasp4j.version}</version>
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
-  <description>JPA-based persistence infrastructure of the Open Application Standard Platform for Java (OASP4J).</description>
+  <description>JPA and envers support for Open Application Standard Platform for Java (OASP4J).</description>
 
   <dependencies>
     <dependency>
-      <groupId>io.oasp.java.modules</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>oasp4j-jpa-dao</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-envers</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>oasp4j-test</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
