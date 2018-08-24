@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.persistence.Version;
-
+import org.hibernate.annotations.GenericGenerator;
 import ${package}.general.common.api.ApplicationEntity;
 import io.oasp.module.jpa.dataaccess.api.MutablePersistenceEntity;
 
@@ -37,7 +37,8 @@ public abstract class ApplicationPersistenceEntity implements ApplicationEntity,
 
   @Override
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy= GenerationType.AUTO,generator="native")
+  @GenericGenerator( name = "native", strategy = "native")
   public Long getId() {
 
     return this.id;
