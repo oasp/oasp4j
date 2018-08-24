@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import net.sf.mmm.util.entity.api.PersistenceEntity;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.envers.RevisionEntity;
 import org.hibernate.envers.RevisionNumber;
 import org.hibernate.envers.RevisionTimestamp;
@@ -32,7 +33,8 @@ public class AdvancedRevisionEntity implements PersistenceEntity<Long> {
 
   /** @see #getId() */
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+  @GenericGenerator(name = "native", strategy = "native")
   @RevisionNumber
   private Long id;
 
