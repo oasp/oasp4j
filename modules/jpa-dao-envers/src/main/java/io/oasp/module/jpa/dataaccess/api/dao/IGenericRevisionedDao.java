@@ -1,6 +1,6 @@
 /* Copyright (c) The m-m-m Team, Licensed under the Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0 */
-package io.oasp.module.jpa.dataaccess.api;
+package io.oasp.module.jpa.dataaccess.api.dao;
 
 import java.util.List;
 
@@ -9,8 +9,11 @@ import javax.persistence.PersistenceException;
 import net.sf.mmm.util.entity.api.RevisionedEntity;
 import net.sf.mmm.util.exception.api.ObjectNotFoundException;
 
+import io.oasp.module.jpa.dataaccess.api.MutablePersistenceEntity;
+import io.oasp.module.jpa.dataaccess.api.RevisionMetadata;
+
 /**
- * This is the interface for a {@link GenericDao} with the ability of revision-control. It organizes a revision-history
+ * This is the interface for a {@link IGenericDao} with the ability of revision-control. It organizes a revision-history
  * (journal) of the managed entities.
  *
  * @see RevisionedEntity
@@ -19,8 +22,7 @@ import net.sf.mmm.util.exception.api.ObjectNotFoundException;
  * @param <ENTITY> is the type of the managed entity.
  *
  */
-@Deprecated
-public interface GenericRevisionedDao<ID, ENTITY extends MutablePersistenceEntity<ID>> extends GenericDao<ID, ENTITY> {
+public interface IGenericRevisionedDao<ID, ENTITY extends MutablePersistenceEntity<ID>> extends IGenericDao<ID, ENTITY> {
 
   /**
    * This method will get the {@link List} of historic {@link MutablePersistenceEntity#getRevision() revisions} of the
@@ -67,9 +69,9 @@ public interface GenericRevisionedDao<ID, ENTITY extends MutablePersistenceEntit
    *
    * The behavior of this method depends on the revision-control strategy of the implementation. <br>
    * <ul>
-   * <li>In case of an <em>audit-proof revision-history</em> the deletion of the {@link RevisionedEntity#LATEST_REVISION
-   * latest revision} of an entity will only move it to the history while the deletion of a
-   * {@link RevisionedEntity#getRevision() historic entity} is NOT permitted and will cause a
+   * <li>In case of an <em>audit-proof revision-history</em> the deletion of the
+   * {@link RevisionedEntity#LATEST_REVISION latest revision} of an entity will only move it to the history while the
+   * deletion of a {@link RevisionedEntity#getRevision() historic entity} is NOT permitted and will cause a
    * {@link PersistenceException}.</li>
    * <li>In case of an <em>on-demand revision-history</em> the deletion of the {@link RevisionedEntity#LATEST_REVISION
    * latest revision} of an entity will either move it to the history or</li>

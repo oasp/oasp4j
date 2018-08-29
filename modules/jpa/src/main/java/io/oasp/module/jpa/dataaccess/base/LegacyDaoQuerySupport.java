@@ -1,4 +1,4 @@
-package io.oasp.module.jpa.common.base;
+package io.oasp.module.jpa.dataaccess.base;
 
 import java.util.List;
 

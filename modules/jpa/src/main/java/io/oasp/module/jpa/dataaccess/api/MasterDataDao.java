@@ -17,8 +17,7 @@ import net.sf.mmm.util.entity.api.PersistenceEntity;
  *
  */
 @Deprecated
-public interface RevisionedMasterDataDao<E extends MutablePersistenceEntity<Long>>
-    extends GenericRevisionedDao<Long, E> {
+public interface MasterDataDao<E extends PersistenceEntity<Long>> extends Dao<E> {
 
   /**
    * @return an {@link Iterable} with ALL managed entities from the persistent store. Not exposed to API by default as

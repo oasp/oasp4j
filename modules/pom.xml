@@ -31,6 +31,7 @@
     <module>jpa-basic</module>
     <module>jpa-dao</module>
     <module>jpa-envers</module>
+    <module>jpa-dao-envers</module>
     <module>jpa-spring-data</module>
     <module>test-jpa</module>
     <module>batch</module>
@@ -72,20 +73,20 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
-          <additionalDependencies> 
-            <additionalDependency> 
-              <groupId>javax.interceptor</groupId> 
-              <artifactId>javax.interceptor-api</artifactId> 
-              <version>1.2</version> 
-            </additionalDependency> 
+          <additionalDependencies>
+            <additionalDependency>
+              <groupId>javax.interceptor</groupId>
+              <artifactId>javax.interceptor-api</artifactId>
+              <version>1.2</version>
+            </additionalDependency>
           </additionalDependencies>
-          <!--<notree>true</notree>-->
+          <!--<notree>true</notree> -->
           <show>private</show>
           <encoding>${project.reporting.outputEncoding}</encoding>
           <charset>${project.build.sourceEncoding}</charset>
           <docfilessubdirs>true</docfilessubdirs>
           <stylesheetfile>${user.dir}/src/main/javadoc/stylesheet.css</stylesheetfile>
-          <!--<additionalparam>-Xdoclint:none -source ${java.version}</additionalparam>-->
+          <!--<additionalparam>-Xdoclint:none -source ${java.version}</additionalparam> -->
           <links>
             <link>http://docs.oracle.com/javase/7/docs/api/</link>
             <link>http://oasp.github.io/oasp4j/maven/apidocs/</link>

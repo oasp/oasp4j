@@ -1,4 +1,4 @@
-package io.oasp.module.jpa.dataaccess.base;
+package io.oasp.module.jpa.dataaccess.base.dao;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,27 +21,27 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.oasp.module.basic.common.api.reference.Ref;
-import io.oasp.module.jpa.dataaccess.api.GenericDao;
 import io.oasp.module.jpa.dataaccess.api.QueryHelper;
+import io.oasp.module.jpa.dataaccess.api.dao.IGenericDao;
 
 /**
- * This is the abstract base-implementation of the {@link GenericDao} interface.
+ * This is the abstract base-implementation of the {@link IGenericDao} interface.
  *
  * @param <ID> is the generic type if the {@link PersistenceEntity#getId() primary key}.
  * @param <E> is the generic type of the managed {@link PersistenceEntity}.
  */
-public abstract class AbstractGenericDao<ID, E extends PersistenceEntity<ID>> extends QueryHelper
-    implements GenericDao<ID, E> {
+public abstract class AbstractGenericDaoImpl<ID, E extends PersistenceEntity<ID>> extends QueryHelper
+    implements IGenericDao<ID, E> {
 
   /** Logger instance. */
-  private static final Logger LOG = LoggerFactory.getLogger(AbstractGenericDao.class);
+  private static final Logger LOG = LoggerFactory.getLogger(AbstractGenericDaoImpl.class);
 
   private EntityManager entityManager;
 
   /**
    * The constructor.
    */
-  public AbstractGenericDao() {
+  public AbstractGenericDaoImpl() {
 
     super();
   }
