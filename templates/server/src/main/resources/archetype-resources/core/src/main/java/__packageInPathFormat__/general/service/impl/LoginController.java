@@ -28,7 +28,7 @@ public class LoginController {
    * @param logout flag for successful logout
    * @return the view model
    */
-  @RequestMapping(value = "/login**", method = RequestMethod.GET)
+  @RequestMapping(value = "/login**", method = {RequestMethod.GET,RequestMethod.POST})
   public ModelAndView login(
       @RequestParam(value = "authentication_failed", required = false) boolean authentication_failed,
       @RequestParam(value = "invalid_session", required = false) boolean invalid_session,
