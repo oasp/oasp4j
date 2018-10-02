@@ -5,7 +5,7 @@ import javax.inject.Named;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.web.csrf.CsrfToken;
 
-import com.devonfw.poc.angular.general.common.api.to.PageableJsonDeserializer;
+import ${package}.general.common.api.to.PageableJsonDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import io.oasp.module.json.common.base.ObjectMapperFactory;
