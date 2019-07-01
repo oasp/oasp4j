@@ -1,5 +1,24 @@
 = The Open Application Standard Platform for Java
 
+[NOTE]
+===============================
+*OASP, the Open Application Standard Platform, has been superseded by devonfw*, the Open Source Standard Software Development Platform for state of the art Cloud Native Micro Service and Multi Platform Rich Web Apps, supported by Capgemini.
+
+See http://devonfw.com and on Github http://github.com/devonfw
+
+Individual stacks within OASP haven been renamed to a corresponding stack in devonfw. 
+
+For example:
+
+- OAPS4j -> devon4j
+- OASP4js -> devon4ng
+- OASP4NET -> devon4NET
+
+devonfw® is an exclusive and registered (European Trademark) tool of Capgemini. Capgemini reserves all intellectual and industrial property rights over but licenses the product under the Apache License, Version 2 – like OASP-  which makes it 100% Open Source.
+See: https://tldrlegal.com/license/apache-license-2.0-(apache-2.0)
+
+===============================
+
 *Build status*
 
 develop: image:https://travis-ci.org/oasp/oasp4j.svg?branch=develop["Build Status",link="https://travis-ci.org/oasp/oasp4j"]
