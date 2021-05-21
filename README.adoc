@@ -10,7 +10,7 @@ Individual products within OASP have been renamed to a corresponding one in devo
 
 For example:
 
-- OAPS4j -> devon4j
+- OASP4j -> devon4j
 - OASP4js -> devon4ng
 - OASP4NET -> devon4NET
 
